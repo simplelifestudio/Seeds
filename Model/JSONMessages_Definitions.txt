@@ -1,0 +1,98 @@
+0. MessageFormat
+{
+    "command": "AlohaRequest",
+    "paramList": 
+    {
+        "param1": "value1",
+        "param2": "value2",
+        "paramn": "valuen"
+    }
+}
+
+1. AlohaRequest
+{
+    "command": "AlohaRequest",
+    "paramList":
+    {
+    		"content":"Hello Seeds Server!"
+    }
+}
+
+2. AlohaResponse
+{
+		"command": "AlohaResponse",
+		"paramList":
+		{
+				"content":"Hello Seeds App!"
+		}
+}
+
+3. SeedsUpdateStatusByDatesRequest
+{
+    "command": "SeedsUpdateStatusByDatesRequest",
+    "paramList": {
+        "datelist": [
+            "2013-04-14",
+            "2013-04-15",
+            "2013-04-16"
+        ]
+    }
+}
+
+4. SeedsUpdateStatusByDatesResponse
+{
+    "command": "SeedsUpdateStatusByDatesResponse",
+    "paramList": {
+        	"2013-04-14":"READY",
+					"2013-04-15":"NO_UPDATE",
+					"2013-04-16":"NOT_READY"  
+    }
+}
+
+5. SeedsByDatesRequest
+{
+    "command": "SeedsByDatesRequest",
+    "paramList": {
+        "datelist": [
+            "2013-04-14",
+            "2013-04-15",
+            "2013-04-16"
+        ]
+    }
+}
+
+6. SeedsByDatesResponse
+{
+    "command": "SeedsByDatesResponse",
+    "paramList": {
+        "2013-04-14": [
+            {
+                "name": "AAAAA",
+                "size": "1.4G",
+                "piclinks": [
+                    "http://xxxx/pic1.jpg",
+                    "http://xxxx/pic2.jpg"
+                ]
+            },
+            {
+                "name": "BBBBB",
+                "size": "5.7G",
+                "piclinks": [
+                    "http://xxxx/pic1.jpg",
+                    "http://xxxx/pic2.jpg"
+                ]
+            }
+        ],
+        "2013-04-15": [
+            {
+                "name": "CCCCC",
+                "size": "",
+                "piclinks": [
+                    "http://xxxx/pic1.jpg",
+                    "http://xxxx/pic2.jpg"
+                ]
+            }
+        ],
+        "2013-04-16": []
+    }
+}
