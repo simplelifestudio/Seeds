@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C531833A17237FF700264530 /* CBModuleAbstractImpl.m */; };
+		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
+		C53183461723A17E00264530 /* DatabaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C53183451723A17E00264530 /* DatabaseModule.m */; };
 		C5964C081722290400CC1C0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C071722290400CC1C0A /* UIKit.framework */; };
 		C5964C0A1722290400CC1C0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C091722290400CC1C0A /* Foundation.framework */; };
 		C5964C0C1722290400CC1C0A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C0B1722290400CC1C0A /* CoreGraphics.framework */; };
@@ -29,6 +32,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C531833717237FF700264530 /* CBLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLog.h; sourceTree = "<group>"; };
+		C531833817237FF700264530 /* CBModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModule.h; sourceTree = "<group>"; };
+		C531833917237FF700264530 /* CBModuleAbstractImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModuleAbstractImpl.h; sourceTree = "<group>"; };
+		C531833A17237FF700264530 /* CBModuleAbstractImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBModuleAbstractImpl.m; sourceTree = "<group>"; };
+		C531833C17238C6900264530 /* GUIDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIDefinitions.h; sourceTree = "<group>"; };
+		C5318340172390A400264530 /* CommunicationModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommunicationModule.h; path = Seeds/CommunicationModule.h; sourceTree = "<group>"; };
+		C5318341172390A400264530 /* CommunicationModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommunicationModule.m; path = Seeds/CommunicationModule.m; sourceTree = "<group>"; };
+		C53183441723A17E00264530 /* DatabaseModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseModule.h; sourceTree = "<group>"; };
+		C53183451723A17E00264530 /* DatabaseModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseModule.m; sourceTree = "<group>"; };
 		C5964C041722290400CC1C0A /* Seeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Seeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5964C071722290400CC1C0A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C5964C091722290400CC1C0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -76,6 +88,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C531834317239FF300264530 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C531833717237FF700264530 /* CBLog.h */,
+				C531833817237FF700264530 /* CBModule.h */,
+				C531833917237FF700264530 /* CBModuleAbstractImpl.h */,
+				C531833A17237FF700264530 /* CBModuleAbstractImpl.m */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
 		C5964BFB1722290400CC1C0A = {
 			isa = PBXGroup;
 			children = (
@@ -129,8 +152,7 @@
 		C5964C4D1722498900CC1C0A /* GUI */ = {
 			isa = PBXGroup;
 			children = (
-				C5964C1F1722290400CC1C0A /* MainStoryboard_iPhone.storyboard */,
-				C5964C221722290400CC1C0A /* MainStoryboard_iPad.storyboard */,
+				C531833C17238C6900264530 /* GUIDefinitions.h */,
 				C5964C2D17222BF500CC1C0A /* SplashViewController.h */,
 				C5964C2E17222BF500CC1C0A /* SplashViewController.m */,
 				C5964C32172234C300CC1C0A /* HomeViewController.h */,
@@ -147,6 +169,8 @@
 				C5964C48172248AB00CC1C0A /* SeedPictureViewController.m */,
 				C5964C521722D87200CC1C0A /* SeedListTableCell.h */,
 				C5964C531722D87200CC1C0A /* SeedListTableCell.m */,
+				C5964C1F1722290400CC1C0A /* MainStoryboard_iPhone.storyboard */,
+				C5964C221722290400CC1C0A /* MainStoryboard_iPad.storyboard */,
 			);
 			name = GUI;
 			sourceTree = "<group>";
@@ -154,6 +178,8 @@
 		C5964C4E1722499300CC1C0A /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				C53183441723A17E00264530 /* DatabaseModule.h */,
+				C53183451723A17E00264530 /* DatabaseModule.m */,
 			);
 			name = Database;
 			sourceTree = "<group>";
@@ -161,16 +187,11 @@
 		C5964C4F172249A000CC1C0A /* Communication */ = {
 			isa = PBXGroup;
 			children = (
+				C5318340172390A400264530 /* CommunicationModule.h */,
+				C5318341172390A400264530 /* CommunicationModule.m */,
 			);
 			name = Communication;
 			path = ..;
-			sourceTree = "<group>";
-		};
-		C5964C50172249B500CC1C0A /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Utils;
 			sourceTree = "<group>";
 		};
 		C5964C5117224A1800CC1C0A /* Sources */ = {
@@ -178,10 +199,10 @@
 			children = (
 				C5964C161722290400CC1C0A /* AppDelegate.h */,
 				C5964C171722290400CC1C0A /* AppDelegate.m */,
+				C531834317239FF300264530 /* Common */,
 				C5964C4F172249A000CC1C0A /* Communication */,
 				C5964C4E1722499300CC1C0A /* Database */,
 				C5964C4D1722498900CC1C0A /* GUI */,
-				C5964C50172249B500CC1C0A /* Utils */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -263,6 +284,9 @@
 				C5964C4317223A9200CC1C0A /* SeedDetailViewController.m in Sources */,
 				C5964C49172248AB00CC1C0A /* SeedPictureViewController.m in Sources */,
 				C5964C541722D87200CC1C0A /* SeedListTableCell.m in Sources */,
+				C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */,
+				C5318342172390A400264530 /* CommunicationModule.m in Sources */,
+				C53183461723A17E00264530 /* DatabaseModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +421,7 @@
 				C5964C2C1722290400CC1C0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
