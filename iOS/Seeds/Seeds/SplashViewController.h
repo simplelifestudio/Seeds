@@ -10,4 +10,11 @@
 
 @interface SplashViewController : UIViewController
 
+@property (nonatomic, weak) IBOutlet UILabel *progressLabel;
+@property (nonatomic, weak) IBOutlet UIProgressView *progressView;
+
+-(void) loadAnyNecessaryStuff;
+-(void) startFadingSplashScreen;
+-(void) finishFadingSplashScreen;
+
 @end

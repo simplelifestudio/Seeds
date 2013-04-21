@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "CommunicationModule.h"
+#import "DatabaseModule.h"
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+@property (strong, nonatomic) CommunicationModule *communicationModule;
+@property (strong, nonatomic) DatabaseModule *databaseModule;
 
 @end

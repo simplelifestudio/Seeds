@@ -10,9 +10,15 @@
 
 @interface SplashViewController ()
 
+@property (nonatomic, strong) NSThread *loadStuffThread;
+
 @end
 
 @implementation SplashViewController
+
+@synthesize progressLabel;
+@synthesize progressView;
+@synthesize loadStuffThread = _loadStuffThread;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,7 +32,92 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+
+    _loadStuffThread = [[NSThread alloc] initWithTarget:self selector:@selector(loadAnyNecessaryStuff)  object:nil];
+    [_loadStuffThread start];
+}
+
+- (void)viewDidUnload
+{
+    [self setLoadStuffThread:nil];
+    [self setProgressLabel:nil];
+    [self setProgressView:nil];
+    
+    [super viewDidUnload];
+}
+
+- (void)startFadingSplashScreen
+{
+	[UIView beginAnimations:nil context:nil]; // begins animation block
+	[UIView setAnimationDuration:0.75];        // sets animation duration
+	[UIView setAnimationDelegate:self];        // sets delegate for this block
+	[UIView setAnimationDidStopSelector:@selector(finishFadingSplashScreen)];   // calls the finishFadingSplashScreen method when the animation is done (or done fading out)
+	self.view.alpha = 0.0;       // Fades the alpha channel of this view to "0.0" over the animationDuration of "0.75" seconds
+	[UIView commitAnimations];   // commits the animation block.  This Block is done.
+}
+
+- (void) finishFadingSplashScreen
+{
+    [self performSegueWithIdentifier:@"splash2navigation" sender:self];
+}
+
+- (void) loadAnyNecessaryStuff
+{
+    // All CBModules should start here
+    AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    
+    // Communication Module
+    appDelegate.communicationModule = [[CommunicationModule alloc] initWithIsIndividualThreadNecessary:FALSE];
+    [appDelegate.communicationModule initModule];
+    [self updateProgress:appDelegate.communicationModule.moduleIdentity andPercents:0.5];
+    [appDelegate.communicationModule startService];
+
+    // Database Module
+    appDelegate.databaseModule = [[DatabaseModule alloc] initWithIsIndividualThreadNecessary:FALSE];
+    [appDelegate.databaseModule initModule];
+    [self updateProgress:appDelegate.databaseModule.moduleIdentity andPercents:1.0];    
+    [appDelegate.databaseModule startService];
+    
+    // Switch back to Splash UI
+    [self performSelectorOnMainThread:@selector(startFadingSplashScreen) withObject:self waitUntilDone:YES];
+}
+
+-(void) updateProgress:(NSString*) text andPercents:(float) percents
+{
+    [[NSRunLoop currentRunLoop]runUntilDate:[NSDate distantPast]];
+    [self performSelectorOnMainThread:@selector(updateProgressText:) withObject:text waitUntilDone:NO];
+    NSNumber *percentsVal = [NSNumber numberWithFloat:percents];
+    [self performSelectorOnMainThread:@selector(updateProgressPercents:) withObject:percentsVal waitUntilDone:NO];
+}
+
+-(void) updateProgressText:(NSString*) text
+{
+    if ([self.progressLabel isHidden])
+    {
+        [self.progressLabel setHidden:FALSE];
+    }
+    
+    NSMutableString* str = [NSMutableString stringWithString:@"Loading: "];
+    text = (nil != text) ? text : @"";
+    [str appendString:text];
+    
+    [self.progressLabel setText:str];
+}
+
+-(void) updateProgressPercents:(NSNumber*) percentsVal
+{
+    if ([self.progressView isHidden])
+    {
+        [self.progressView setHidden:FALSE];
+    }
+    
+    [self.progressView setProgress:percentsVal.floatValue animated:TRUE];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    // Return YES for supported orientations
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (void)didReceiveMemoryWarning

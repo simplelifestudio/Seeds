@@ -11,4 +11,8 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+
+    #import "CBLog.h"
+    #import "GUIDefinitions.h"
+    #import "AppDelegate.h"
 #endif

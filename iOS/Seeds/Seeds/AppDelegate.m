@@ -10,6 +10,9 @@
 
 @implementation AppDelegate
 
+@synthesize communicationModule = _communicationModule;
+@synthesize databaseModule = _databaseModule;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
