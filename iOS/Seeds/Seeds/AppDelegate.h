@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+// System Module Declaration List
 @property (strong, nonatomic) CommunicationModule *communicationModule;
 @property (strong, nonatomic) DatabaseModule *databaseModule;
 

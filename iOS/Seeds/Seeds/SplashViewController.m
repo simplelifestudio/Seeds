@@ -97,7 +97,7 @@
         [self.progressLabel setHidden:FALSE];
     }
     
-    NSMutableString* str = [NSMutableString stringWithString:@"Loading: "];
+    NSMutableString* str = [NSMutableString stringWithString:NSLocalizedString(@"Loading: ", nil)];
     text = (nil != text) ? text : @"";
     [str appendString:text];
     

@@ -12,8 +12,8 @@
 
 -(void) initModule
 {
-    [self setModuleIdentity:@"Database Module"];
-    [self.serviceThread setName:@"Database Module Thread"];
+    [self setModuleIdentity:NSLocalizedString(@"Database Module", nil)];
+    [self.serviceThread setName:NSLocalizedString(@"Database Module Thread", nil)];
     [self setKeepAlive:FALSE];
 }
 

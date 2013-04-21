@@ -10,6 +10,7 @@
 		C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C531833A17237FF700264530 /* CBModuleAbstractImpl.m */; };
 		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
 		C53183461723A17E00264530 /* DatabaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C53183451723A17E00264530 /* DatabaseModule.m */; };
+		C53183491723D6A900264530 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C531834B1723D6A900264530 /* Localizable.strings */; };
 		C5964C081722290400CC1C0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C071722290400CC1C0A /* UIKit.framework */; };
 		C5964C0A1722290400CC1C0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C091722290400CC1C0A /* Foundation.framework */; };
 		C5964C0C1722290400CC1C0A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C0B1722290400CC1C0A /* CoreGraphics.framework */; };
@@ -41,6 +42,11 @@
 		C5318341172390A400264530 /* CommunicationModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommunicationModule.m; path = Seeds/CommunicationModule.m; sourceTree = "<group>"; };
 		C53183441723A17E00264530 /* DatabaseModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatabaseModule.h; sourceTree = "<group>"; };
 		C53183451723A17E00264530 /* DatabaseModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatabaseModule.m; sourceTree = "<group>"; };
+		C531834A1723D6A900264530 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C531834C1723D76500264530 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/MainStoryboard_iPhone.storyboard"; sourceTree = "<group>"; };
+		C531834D1723D76600264530 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = "zh-Hans"; path = "zh-Hans.lproj/MainStoryboard_iPad.storyboard"; sourceTree = "<group>"; };
+		C531834E1723D76600264530 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		C531834F1723D76600264530 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		C5964C041722290400CC1C0A /* Seeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Seeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5964C071722290400CC1C0A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C5964C091722290400CC1C0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -171,6 +177,7 @@
 				C5964C531722D87200CC1C0A /* SeedListTableCell.m */,
 				C5964C1F1722290400CC1C0A /* MainStoryboard_iPhone.storyboard */,
 				C5964C221722290400CC1C0A /* MainStoryboard_iPad.storyboard */,
+				C531834B1723D6A900264530 /* Localizable.strings */,
 			);
 			name = GUI;
 			sourceTree = "<group>";
@@ -242,6 +249,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = C5964BFB1722290400CC1C0A;
 			productRefGroup = C5964C051722290400CC1C0A /* Products */;
@@ -264,6 +272,7 @@
 				C5964C1E1722290400CC1C0A /* Default-568h@2x.png in Resources */,
 				C5964C211722290400CC1C0A /* MainStoryboard_iPhone.storyboard in Resources */,
 				C5964C241722290400CC1C0A /* MainStoryboard_iPad.storyboard in Resources */,
+				C53183491723D6A900264530 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,10 +302,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		C531834B1723D6A900264530 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C531834A1723D6A900264530 /* en */,
+				C531834E1723D76600264530 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		C5964C101722290400CC1C0A /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				C5964C111722290400CC1C0A /* en */,
+				C531834F1723D76600264530 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -305,6 +324,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C5964C201722290400CC1C0A /* en */,
+				C531834C1723D76500264530 /* zh-Hans */,
 			);
 			name = MainStoryboard_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -313,6 +333,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				C5964C231722290400CC1C0A /* en */,
+				C531834D1723D76600264530 /* zh-Hans */,
 			);
 			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";

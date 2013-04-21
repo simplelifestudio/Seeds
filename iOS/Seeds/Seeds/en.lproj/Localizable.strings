@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  Seeds
+
+  Created by Patrick Deng on 13-4-21.
+  Copyright (c) 2013年 SimpleLife Studio. All rights reserved.
+*/
+
+"Communication Module" = "Communication Module";
+"Communication Module Thread" = "Communication Module Thread";
+"Database Module" = "Database Module";
+"Database Module Thread" = "Database Module Thread";
+"Loading: " = "Loading: ";

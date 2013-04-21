@@ -12,8 +12,8 @@
 
 -(void) initModule
 {
-    [self setModuleIdentity:@"Communication Module"];
-    [self.serviceThread setName:@"Communication Module Thread"];
+    [self setModuleIdentity:NSLocalizedString(@"Communication Module", nil)];
+    [self.serviceThread setName:NSLocalizedString(@"Communication Module Thread", nil)];
     [self setKeepAlive:FALSE];
 }
 
