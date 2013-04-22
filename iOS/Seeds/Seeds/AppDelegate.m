@@ -44,6 +44,10 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    // Here to release all modules.
+    [self.communicationModule releaseModule];
+    [self.databaseModule releaseModule];
 }
 
 @end
