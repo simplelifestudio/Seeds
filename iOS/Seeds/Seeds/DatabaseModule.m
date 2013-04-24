@@ -12,14 +12,16 @@
 
 @interface DatabaseModule()
 {
+
 }
 
--(NSString*) sqlite3DatabaseFilePath;
+@property (nonatomic, strong) NSString* databaseFilePath;
 
 @end
 
 @implementation DatabaseModule
 
+@synthesize databaseFilePath = _databaseFilePath;
 @synthesize databaseQueue = _databaseQueue;
 
 -(void) initModule
@@ -28,7 +30,7 @@
     [self.serviceThread setName:NSLocalizedString(@"Database Module Thread", nil)];
     [self setKeepAlive:FALSE];
     
-    _databaseQueue = [FMDatabaseQueue databaseQueueWithPath:self.sqlite3DatabaseFilePath];
+    _databaseQueue = [FMDatabaseQueue databaseQueueWithPath:self.databaseFilePath];
 }
 
 -(void) releaseModule
@@ -47,21 +49,31 @@
 -(void) processService
 {
     [NSThread sleepForTimeInterval:1.0];
-    DLog(@"SQLite3 Database File Path: %@", self.sqlite3DatabaseFilePath);
+    DLog(@"SQLite3 Database File Path: %@", self.databaseFilePath);
     
     id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
     DLog(@"Seed count: %d",[seedDAO countAllSeeds]);
-//    NSArray* seeds = [seedDAO getAllSeeds];
-//    for (Seed* seed in seeds)
-//    {
-//        DLog(@"Seed {id=%d, name=%@, size=%@, torrentLink=%@}", seed.seedId, seed.name, seed.size, seed.torrentLink);
-//    }
+    NSArray* seeds = [seedDAO getAllSeeds];
+    for (Seed* seed in seeds)
+    {
+        DLog(@"Seed {id=%d, name=%@, size=%@, torrentLink=%@, favorite=%@}", seed.seedId, seed.name, seed.size, seed.torrentLink, (seed.favorite) ? @"YES" : @"NO");
+        
+//        DLog(@"Seed(%d) has been favorited: %@", seed.seedId, [seedDAO favoriteSeed:seed andFlag:YES] ? @"successfully." : @"unsuccessfully");
+    }
 }
 
--(NSString*) sqlite3DatabaseFilePath
+-(NSString*) databaseFilePath
 {
-    NSString* databasePath = [[NSBundle mainBundle] pathForResource:DATABASE_FILE_NAME ofType:DATABASE_FILE_TYPE];
-    return databasePath;
+    if (nil == _databaseFilePath)
+    {
+        //databaseFilePath = [[NSBundle mainBundle] pathForResource:DATABASE_FILE_NAME ofType:DATABASE_FILE_TYPE];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];        
+        _databaseFilePath = [documentsDirectory stringByAppendingPathComponent:DATABASE_FILE_FULL_NAME];
+    }
+    
+    return _databaseFilePath;
 }
 
 @end
