@@ -51,7 +51,11 @@
     
     id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
     DLog(@"Seed count: %d",[seedDAO countAllSeeds]);
-    [seedDAO getAllSeeds];
+//    NSArray* seeds = [seedDAO getAllSeeds];
+//    for (Seed* seed in seeds)
+//    {
+//        DLog(@"Seed {id=%d, name=%@, size=%@, torrentLink=%@}", seed.seedId, seed.name, seed.size, seed.torrentLink);
+//    }
 }
 
 -(NSString*) sqlite3DatabaseFilePath
