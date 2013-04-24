@@ -75,6 +75,7 @@
             
             [array addObject:seed];
         }
+        [resultSet close];
         
         [db close];
     }];
@@ -82,74 +83,50 @@
     return array;
 }
 
--(BOOL) updateSeed:(Seed*) seed
+-(BOOL) updateSeed:(NSInteger) seedId withParameterDictionary:(NSMutableDictionary*) paramDic
 {
     __block BOOL flag = NO;
     
-    [databaseQueue inDatabase:^(FMDatabase* db)
+    if (nil != paramDic && 0 < paramDic.count)
     {
-        [db open];
-        
-        if (nil != seed)
-        {
-            NSMutableDictionary* dictionaryArgs = [NSMutableDictionary dictionary];
-            
-            [dictionaryArgs setObject:@"NewText1" forKey:@"a"];
-            [dictionaryArgs setObject:@"NewText2" forKey:@"b"];
-            [dictionaryArgs setObject:@"OneMoreText" forKey:@"OneMore"];
-            
-            NSMutableString* sql = [NSMutableString stringWithString:@"update "];
-            [sql appendString:TABLE_SEED];
-            [sql appendString:@" set "];
-            [sql appendString:TABLE_SEED_COLUMN_TYPE];
-            [sql appendString:@" = "];
-            [sql appendString:seed.type];
-            [sql appendString:@", "];
-            [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
-            [sql appendString:@" = "];
-            [sql appendString:seed.publishDate];
-            [sql appendString:@", "];
-            [sql appendString:TABLE_SEED_COLUMN_NAME];
-            [sql appendString:@" = "];
-            [sql appendString:seed.name];
-            [sql appendString:@", "];
-            [sql appendString:TABLE_SEED_COLUMN_SIZE];
-            [sql appendString:@" = "];
-            [sql appendString:seed.size];
-            [sql appendString:@", "];
-            [sql appendString:TABLE_SEED_COLUMN_FORMAT];
-            [sql appendString:@" = "];
-            [sql appendString:seed.format];
-            [sql appendString:@", "];
-            [sql appendString:TABLE_SEED_COLUMN_TORRENTLINK];
-            [sql appendString:@" = "];
-            [sql appendString:seed.torrentLink];
-            [sql appendString:@", "];
-            [sql appendString:TABLE_SEED_COLUMN_FAVORITE];
-            [sql appendString:@" = "];
-            [sql appendString:(seed.favorite) ? @"1" : @"0"];
-            [sql appendString:@", "];
-            [sql appendString:TABLE_SEED_COLUMN_MOSAIC];
-            [sql appendString:@" = "];
-            [sql appendString:(seed.mosaic) ? @"1" : @"0"];
-            [sql appendString:@", "];
-            [sql appendString:TABLE_SEED_COLUMN_HASH];
-            [sql appendString:@" = "];
-            [sql appendString:seed.hash];
-            [sql appendString:@", "];
-            [sql appendString:TABLE_SEED_COLUMN_MEMO];
-            [sql appendString:@" = "];
-            [sql appendString:seed.memo];
-            [sql appendString:@" WHERE "];
-            [sql appendString:TABLE_SEED_COLUMN_SEEDID];
-            [sql appendString:@" = "];
-            [sql appendString:[NSString stringWithFormat: @"%d", seed.seedId]];
-            
-            flag = [db executeUpdate:sql];
-        }
-        
-        [db close];
-    }];
+        [databaseQueue inDatabase:^(FMDatabase* db)
+         {
+             [db open];
+             
+             __block NSMutableString* sql = [NSMutableString stringWithString:@"update "];
+             [sql appendString:TABLE_SEED];
+             [sql appendString:@" set "];
+             
+             __block NSInteger paramCount = paramDic.count;
+             [paramDic enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSString* value, BOOL *stop)
+             {
+                 [sql appendString:key];
+                 [sql appendString:@" = "];
+//                 [sql appendString:@"'"];
+                 [sql appendString:@":"];
+                 [sql appendString:key];
+//                 [sql appendString:@"'"];
+                 if (1 < paramCount)
+                 {
+                     [sql appendString:@", "];
+                 }
+                 
+                 paramCount--;
+             }];
+             
+             [sql appendString:@" WHERE "];
+             [sql appendString:TABLE_SEED_COLUMN_SEEDID];
+             [sql appendString:@" = "];
+             [sql appendString:@"'"];
+             [sql appendString:[NSString stringWithFormat: @"%d", seedId]];
+             [sql appendString:@"'"];
+             
+             DLog(@"sql = %@", sql);
+             flag = [db executeUpdate:sql withParameterDictionary:paramDic];
+             
+             [db close];
+         }];
+    }
     
     return flag;
 }
@@ -160,9 +137,12 @@
     
     if (nil != seed)
     {
-        seed.favorite = favorite;
+        NSString* favoriteStr = [NSString stringWithFormat:@"%d", (favorite) ? 1 : 0];
         
-        flag = [self updateSeed:seed];
+        NSMutableDictionary* paramDic = [NSMutableDictionary dictionaryWithCapacity:1];
+        [paramDic setObject:favoriteStr forKey:TABLE_SEED_COLUMN_FAVORITE];
+        
+        flag = [self updateSeed:seed.seedId withParameterDictionary:paramDic];
     }
     
     return flag;

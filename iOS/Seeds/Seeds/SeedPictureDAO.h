@@ -21,6 +21,7 @@
 
 -(NSInteger) countAllSeedPictures;
 -(NSArray*) getAllSeedPictures;
+-(BOOL) updateSeedPicture:(NSInteger) seedPictureId withParameterDictionary:(NSMutableDictionary*) paramDic; // paramDic should only be used for key(NSString*)=value(NSString*)
 -(NSArray*) getSeedPicturesBySeedId:(NSInteger) seedId;
 -(BOOL) deleteSeedPicturesBySeedId:(NSInteger) seedId;
 -(BOOL) deleteAllSeedPictures;

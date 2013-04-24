@@ -69,11 +69,54 @@
             
             [array addObject:seedPicture];
         }
+        [resultSet close];
         
         [db close];
     }];
     
     return array;
+}
+
+-(BOOL) updateSeedPicture:(NSInteger) seedPictureId withParameterDictionary:(NSMutableDictionary*) paramDic
+{
+    __block BOOL flag = NO;
+    
+    if (nil != paramDic && 0 < paramDic.count)
+    {
+        [databaseQueue inDatabase:^(FMDatabase* db)
+         {
+             [db open];
+             
+             __block NSMutableString* sql = [NSMutableString stringWithString:@"update "];
+             [sql appendString:TABLE_SEEDPICTURE];
+             [sql appendString:@" set "];
+             
+             __block NSInteger paramCount = paramDic.count;
+             [paramDic enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSString* value, BOOL *stop)
+              {
+                  [sql appendString:key];
+                  [sql appendString:@" = "];
+                  [sql appendString:[NSString stringWithFormat:@"%@", value]];
+                  if (0 < paramCount)
+                  {
+                      [sql appendString:@", "];
+                  }
+                  
+                  paramCount--;
+              }];
+             
+             [sql appendString:@" WHERE "];
+             [sql appendString:TABLE_SEEDPICTURE_COLUMN_PICTUREID];
+             [sql appendString:@" = "];
+             [sql appendString:[NSString stringWithFormat: @"%d", seedPictureId]];
+             
+             flag = [db executeUpdate:sql];
+             
+             [db close];
+         }];
+    }
+    
+    return flag;
 }
 
 -(NSArray*) getSeedPicturesBySeedId:(NSInteger) seedId
