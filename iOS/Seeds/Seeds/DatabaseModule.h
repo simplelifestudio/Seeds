@@ -8,6 +8,21 @@
 
 #import "CBModuleAbstractImpl.h"
 
+#import <sqlite3.h>
+
+#import "FMDatabase.h"
+#import "FMDatabaseAdditions.h"
+#import "FMDatabasePool.h"
+#import "FMDatabaseQueue.h"
+#import "FMResultSet.h"
+
+#define DATABASE_FILE_NAME @"Seeds_App_Database"
+#define DATABASE_FILE_TYPE @"db"
+
+enum ServiceDay {TheDayBefore = 0, Yesterday = 1, Today = 2};
+
 @interface DatabaseModule : CBModuleAbstractImpl
+
+@property (atomic, strong) FMDatabaseQueue *databaseQueue;
 
 @end
