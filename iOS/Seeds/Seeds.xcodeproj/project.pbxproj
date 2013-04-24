@@ -148,6 +148,7 @@
 		C54BB5621725733D00035EBA /* fmdb */ = {
 			isa = PBXGroup;
 			children = (
+				C54BB56B1725733D00035EBA /* fmdb.m */,
 				C54BB5631725733D00035EBA /* FMDatabase.h */,
 				C54BB5641725733D00035EBA /* FMDatabase.m */,
 				C54BB5651725733D00035EBA /* FMDatabaseAdditions.h */,
@@ -156,7 +157,6 @@
 				C54BB5681725733D00035EBA /* FMDatabasePool.m */,
 				C54BB5691725733D00035EBA /* FMDatabaseQueue.h */,
 				C54BB56A1725733D00035EBA /* FMDatabaseQueue.m */,
-				C54BB56B1725733D00035EBA /* fmdb.m */,
 				C54BB56C1725733D00035EBA /* FMResultSet.h */,
 				C54BB56D1725733D00035EBA /* FMResultSet.m */,
 			);
