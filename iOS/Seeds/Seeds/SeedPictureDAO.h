@@ -19,8 +19,12 @@
 
 @protocol SeedPictureDAO <NSObject, DAO>
 
+-(NSArray*) resultSet2SeedPictureList:(FMResultSet*) rs;
+-(Seed*) resultSet2SeedPicture:(FMResultSet*) rs;
+
 -(NSInteger) countAllSeedPictures;
 -(NSArray*) getAllSeedPictures;
+-(SeedPicture*) getFirstSeedPicture:(NSInteger) seedId;
 -(BOOL) updateSeedPicture:(NSInteger) seedPictureId withParameterDictionary:(NSMutableDictionary*) paramDic; // paramDic should only be used for key(NSString*)=value(NSString*)
 -(NSArray*) getSeedPicturesBySeedId:(NSInteger) seedId;
 -(BOOL) deleteSeedPicturesBySeedId:(NSInteger) seedId;
