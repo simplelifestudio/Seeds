@@ -10,10 +10,16 @@
 
 @implementation SeedListTableCell
 
+@synthesize thumbnailImageView = _thumbnailImageView;
+@synthesize nameLabel = _nameLabel;
+@synthesize formatLabel = _formatLabel;
+@synthesize mosaicLabel = _mosaicLabel;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
+    if (self)
+    {
         // Initialization code
     }
     return self;
@@ -24,6 +30,17 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(void) fillSeed:(Seed*) seed
+{
+    if (nil != seed)
+    {
+        [_nameLabel setText:seed.name];
+        [_sizeLabel setText:seed.size];
+        [_formatLabel setText:seed.format];
+        [_mosaicLabel setText:(seed.mosaic) ? @"有码" : @"无码"];
+    }
 }
 
 @end

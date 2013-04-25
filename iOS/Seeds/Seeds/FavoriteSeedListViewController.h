@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "SeedListTableCell.h"
+
 @interface FavoriteSeedListViewController : UITableViewController
 
 @end

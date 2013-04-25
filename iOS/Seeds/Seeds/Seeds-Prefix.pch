@@ -15,4 +15,8 @@
     #import "CBLog.h"
     #import "GUIDefinitions.h"
     #import "AppDelegate.h"
+    #import "DAOFactory.h"
+    #import "SeedDAO.h"
+    #import "SeedPictureDAO.h"
+
 #endif

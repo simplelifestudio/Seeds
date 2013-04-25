@@ -10,4 +10,12 @@
 
 @interface SeedListTableCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *formatLabel;
+@property (weak, nonatomic) IBOutlet UILabel *mosaicLabel;
+
+-(void) fillSeed:(Seed*) seed;
+
 @end

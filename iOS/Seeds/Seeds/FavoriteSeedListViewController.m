@@ -9,6 +9,9 @@
 #import "FavoriteSeedListViewController.h"
 
 @interface FavoriteSeedListViewController ()
+{
+    NSArray* favoriteSeedList;
+}
 
 @end
 
@@ -17,7 +20,8 @@
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -32,8 +36,21 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+    favoriteSeedList = [seedDAO getFavoriteSeeds];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO];
     
-    [self.navigationController setNavigationBarHidden:FALSE];
+    [self.tableView reloadData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+//    [self.navigationController setNavigationBarHidden:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,26 +63,58 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return favoriteSeedList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *CellIdentifier = CELL_ID_SEEDLISTTABLECELL;
     
-    // Configure the cell...
+#if UI_RENDER_SEEDLISTTABLECELL
+//    static BOOL nibsRegistered = NO;
+//    if (!nibsRegistered)
+//    {
+//        UINib *nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
+//        [tableView registerNib:nib forCellReuseIdentifier:CellIdentifier];
+//        nibsRegistered = YES;
+//    }
+//    [self.tableView registerClass:[SeedListTableCell class] forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
+//    SeedListTableCell *cell = (SeedListTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    SeedListTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil)
+    {
+        cell = [[SeedListTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+#else
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+#endif
+    
+    Seed* seed = [favoriteSeedList objectAtIndex:indexPath.row];
+
+#if UI_RENDER_SEEDLISTTABLECELL
+    [cell fillSeed:seed];
+#else
+    [cell.textLabel setText:seed.name];
+#endif
     
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CELL_HEIGHT_SEEDLISTTABLECELL;
 }
 
 /*

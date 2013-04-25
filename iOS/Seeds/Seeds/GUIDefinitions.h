@@ -16,4 +16,8 @@
 #define SEGUE_ID_SEEDLIST2SEEDDETAIL @"seedlist2seeddetail"
 #define SEGUE_ID_SEEDDETAIL2SEEDPICTURE @"seeddetail2seedpicture"
 
+#define UI_RENDER_SEEDLISTTABLECELL 1
+#define CELL_ID_SEEDLISTTABLECELL @"SeedListTableCell"
+#define CELL_HEIGHT_SEEDLISTTABLECELL 100
+
 #endif
