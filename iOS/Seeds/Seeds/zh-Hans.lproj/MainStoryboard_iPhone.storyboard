@@ -143,6 +143,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="收藏列表" id="PZD-7a-Tps" userLabel="favoriteListNavigationItem"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <segue destination="5lx-bb-B2j" kind="push" identifier="favoriteseedlist2seeddetail" id="sl2-Vu-zE7"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YY1-aN-3SA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -406,10 +409,16 @@
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
         </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
+        </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="sl2-Vu-zE7"/>
+    </inferredMetricsTieBreakers>
 </document>
