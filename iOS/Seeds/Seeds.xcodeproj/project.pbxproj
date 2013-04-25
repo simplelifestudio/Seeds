@@ -11,7 +11,6 @@
 		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
 		C53183461723A17E00264530 /* DatabaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C53183451723A17E00264530 /* DatabaseModule.m */; };
 		C53183491723D6A900264530 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C531834B1723D6A900264530 /* Localizable.strings */; };
-		C533E9AF1729705E00073ABE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C533E9AE1729705E00073ABE /* MapKit.framework */; };
 		C533E9C6172970AB00073ABE /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C533E9B2172970AB00073ABE /* MKAnnotationView+WebCache.m */; };
 		C533E9C7172970AB00073ABE /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C533E9B4172970AB00073ABE /* SDImageCache.m */; };
 		C533E9C8172970AB00073ABE /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = C533E9B6172970AB00073ABE /* SDWebImageCompat.m */; };
@@ -22,6 +21,8 @@
 		C533E9CD172970AB00073ABE /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = C533E9C1172970AB00073ABE /* SDWebImagePrefetcher.m */; };
 		C533E9CE172970AB00073ABE /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C533E9C3172970AB00073ABE /* UIButton+WebCache.m */; };
 		C533E9CF172970AB00073ABE /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C533E9C5172970AB00073ABE /* UIImageView+WebCache.m */; };
+		C533E9D11729712200073ABE /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C533E9D01729712100073ABE /* ImageIO.framework */; };
+		C533E9D2172971AD00073ABE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C533E9AE1729705E00073ABE /* MapKit.framework */; };
 		C54BB56E1725733D00035EBA /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C54BB5641725733D00035EBA /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C54BB56F1725733D00035EBA /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C54BB5661725733D00035EBA /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C54BB5701725733D00035EBA /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = C54BB5681725733D00035EBA /* FMDatabasePool.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -93,6 +94,7 @@
 		C533E9C3172970AB00073ABE /* UIButton+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+WebCache.m"; sourceTree = "<group>"; };
 		C533E9C4172970AB00073ABE /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
 		C533E9C5172970AB00073ABE /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
+		C533E9D01729712100073ABE /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		C54BB5631725733D00035EBA /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		C54BB5641725733D00035EBA /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		C54BB5651725733D00035EBA /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -158,7 +160,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C57CF27F1724DB660002B054 /* libsqlite3.0.dylib in Frameworks */,
-				C533E9AF1729705E00073ABE /* MapKit.framework in Frameworks */,
+				C533E9D2172971AD00073ABE /* MapKit.framework in Frameworks */,
+				C533E9D11729712200073ABE /* ImageIO.framework in Frameworks */,
 				C5964C081722290400CC1C0A /* UIKit.framework in Frameworks */,
 				C5964C0A1722290400CC1C0A /* Foundation.framework in Frameworks */,
 				C5964C0C1722290400CC1C0A /* CoreGraphics.framework in Frameworks */,
@@ -237,7 +240,6 @@
 		C5964BFB1722290400CC1C0A = {
 			isa = PBXGroup;
 			children = (
-				C533E9AE1729705E00073ABE /* MapKit.framework */,
 				C5964C0D1722290400CC1C0A /* Seeds */,
 				C5964C061722290400CC1C0A /* Frameworks */,
 				C5964C051722290400CC1C0A /* Products */,
@@ -256,6 +258,8 @@
 			isa = PBXGroup;
 			children = (
 				C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */,
+				C533E9D01729712100073ABE /* ImageIO.framework */,
+				C533E9AE1729705E00073ABE /* MapKit.framework */,
 				C5964C071722290400CC1C0A /* UIKit.framework */,
 				C5964C091722290400CC1C0A /* Foundation.framework */,
 				C5964C0B1722290400CC1C0A /* CoreGraphics.framework */,
@@ -574,6 +578,7 @@
 				GCC_PREFIX_HEADER = "Seeds/Seeds-Prefix.pch";
 				INFOPLIST_FILE = "Seeds/Seeds-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -586,6 +591,7 @@
 				GCC_PREFIX_HEADER = "Seeds/Seeds-Prefix.pch";
 				INFOPLIST_FILE = "Seeds/Seeds-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
