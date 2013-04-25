@@ -24,6 +24,48 @@
     }
 }
 
+-(NSArray*) resultSet2SeedList:(FMResultSet*) rs
+{
+    NSMutableArray* array = [NSMutableArray arrayWithCapacity:0];
+    
+    if (nil != rs)
+    {
+        while ([rs next])
+        {
+            Seed* seed = [[Seed alloc] init];
+            
+            seed.seedId = [rs intForColumn:TABLE_SEED_COLUMN_SEEDID];
+            seed.type = [rs stringForColumn:TABLE_SEED_COLUMN_TYPE];
+            seed.publishDate = [rs stringForColumn:TABLE_SEED_COLUMN_PUBLISHDATE];
+            seed.name = [rs stringForColumn:TABLE_SEED_COLUMN_NAME];
+            seed.size = [rs stringForColumn:TABLE_SEED_COLUMN_SIZE];
+            seed.format = [rs stringForColumn:TABLE_SEED_COLUMN_FORMAT];
+            seed.torrentLink = [rs stringForColumn:TABLE_SEED_COLUMN_TORRENTLINK];
+            seed.favorite = [rs boolForColumn:TABLE_SEED_COLUMN_FAVORITE];
+            seed.mosaic = [rs boolForColumn:TABLE_SEED_COLUMN_MOSAIC];
+            seed.hash = [rs stringForColumn:TABLE_SEED_COLUMN_HASH];
+            seed.memo = [rs stringForColumn:TABLE_SEED_COLUMN_MEMO];
+            
+            [array addObject:seed];
+        }
+    }
+    
+    return array;
+}
+
+-(Seed*) resultSet2Seed:(FMResultSet*) rs
+{
+    Seed* seed;
+    
+    NSArray* seedList = [self resultSet2SeedList:rs];
+    if (0 < seedList.count)
+    {
+        seed = [seedList objectAtIndex:0];
+    }
+    
+    return seed;
+}
+
 -(NSInteger) countAllSeeds
 {
     __block NSInteger count = 0;
@@ -47,7 +89,7 @@
 
 -(NSArray*) getAllSeeds
 {
-    __block NSMutableArray* array = [NSMutableArray arrayWithCapacity:0];
+    __block NSArray* array = [NSMutableArray arrayWithCapacity:0];
     
     [databaseQueue inDatabase:^(FMDatabase* db)
     {
@@ -57,26 +99,9 @@
         [sql appendString:TABLE_SEED];
         
         FMResultSet* resultSet = [db executeQuery:sql];
-        while ([resultSet next])
-        {
-            Seed* seed = [[Seed alloc] init];
-            
-            seed.seedId = [resultSet intForColumn:TABLE_SEED_COLUMN_SEEDID];
-            seed.type = [resultSet stringForColumn:TABLE_SEED_COLUMN_TYPE];
-            seed.publishDate = [resultSet stringForColumn:TABLE_SEED_COLUMN_PUBLISHDATE];
-            seed.name = [resultSet stringForColumn:TABLE_SEED_COLUMN_NAME];
-            seed.size = [resultSet stringForColumn:TABLE_SEED_COLUMN_SIZE];
-            seed.format = [resultSet stringForColumn:TABLE_SEED_COLUMN_FORMAT];
-            seed.torrentLink = [resultSet stringForColumn:TABLE_SEED_COLUMN_TORRENTLINK];
-            seed.favorite = [resultSet boolForColumn:TABLE_SEED_COLUMN_FAVORITE];
-            seed.mosaic = [resultSet boolForColumn:TABLE_SEED_COLUMN_MOSAIC];
-            seed.hash = [resultSet stringForColumn:TABLE_SEED_COLUMN_HASH];
-            seed.memo = [resultSet stringForColumn:TABLE_SEED_COLUMN_MEMO];
-            
-            [array addObject:seed];
-        }
+        array = [self resultSet2SeedList:resultSet];
+
         [resultSet close];
-        
         [db close];
     }];
     
@@ -129,6 +154,28 @@
     }
     
     return flag;
+}
+
+-(NSArray*) getFavoriteSeeds
+{
+    __block NSArray* array = [NSMutableArray arrayWithCapacity:0];
+    
+    [databaseQueue inDatabase:^(FMDatabase* db)
+    {
+        [db open];
+        
+        NSMutableString* sql = [NSMutableString stringWithString:@"select * from "];
+        [sql appendString:TABLE_SEED];
+        [sql appendString:@" where favorite = '1'"];
+
+        FMResultSet* resultSet = [db executeQuery:sql];
+        array = [self resultSet2SeedList:resultSet];
+        
+        [resultSet close];
+        [db close];
+    }];
+    
+    return array;
 }
 
 -(BOOL) favoriteSeed:(Seed*) seed andFlag:(BOOL) favorite
