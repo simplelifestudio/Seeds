@@ -8,6 +8,12 @@
 
 #import "SeedListTableCell.h"
 
+@interface SeedListTableCell()
+{
+    NSString* thumbnailLink;
+}
+@end
+
 @implementation SeedListTableCell
 
 @synthesize thumbnailImageView = _thumbnailImageView;
@@ -39,7 +45,15 @@
         [_nameLabel setText:seed.name];
         [_sizeLabel setText:seed.size];
         [_formatLabel setText:seed.format];
-        [_mosaicLabel setText:(seed.mosaic) ? @"有码" : @"无码"];
+        [_mosaicLabel setText:(seed.mosaic) ? NSLocalizedString(@"Mosaic", nil) : NSLocalizedString(@"No-Mosaic", nil)];
+    }
+}
+
+-(void) fillSeedPicture:(SeedPicture*) picture
+{
+    if (nil != picture)
+    {
+        thumbnailLink = picture.pictureLink;
     }
 }
 

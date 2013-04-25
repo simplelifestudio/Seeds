@@ -11,6 +11,7 @@
 @interface FavoriteSeedListViewController ()
 {
     NSArray* favoriteSeedList;
+    NSArray* firstSeedPictureList;
 }
 
 @end
@@ -39,6 +40,14 @@
 
     id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
     favoriteSeedList = [seedDAO getFavoriteSeeds];
+    
+    NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:favoriteSeedList.count];
+    id<SeedPictureDAO> seedPictureDAO = [DAOFactory getSeedPictureDAO];
+    for (Seed* seed in favoriteSeedList)
+    {
+        SeedPicture* picture = [seedPictureDAO getFirstSeedPicture:seed.seedId];
+        [pictureArray addObject:picture];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -102,9 +111,11 @@
 #endif
     
     Seed* seed = [favoriteSeedList objectAtIndex:indexPath.row];
+    SeedPicture* firstSeedPicture = [firstSeedPictureList objectAtIndex:indexPath.row];
 
 #if UI_RENDER_SEEDLISTTABLECELL
     [cell fillSeed:seed];
+    [cell fillSeedPicture:firstSeedPicture];
 #else
     [cell.textLabel setText:seed.name];
 #endif

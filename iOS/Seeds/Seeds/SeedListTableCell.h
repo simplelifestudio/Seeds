@@ -17,5 +17,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *mosaicLabel;
 
 -(void) fillSeed:(Seed*) seed;
+-(void) fillSeedPicture:(SeedPicture*) picture;
 
 @end
