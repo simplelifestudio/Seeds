@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 #import "SeedListTableCell.h"
+#import "SDWebImageDownloader.h"
+#import "SDWebImageManager.h"
 
 @interface FavoriteSeedListViewController : UITableViewController
 

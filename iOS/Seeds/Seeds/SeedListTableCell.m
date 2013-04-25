@@ -10,7 +10,7 @@
 
 @interface SeedListTableCell()
 {
-    NSString* thumbnailLink;
+
 }
 @end
 
@@ -52,8 +52,9 @@
 -(void) fillSeedPicture:(SeedPicture*) picture
 {
     if (nil != picture)
-    {
-        thumbnailLink = picture.pictureLink;
+    {        
+//        [_thumbnailImageView setImageWithURL:[NSURL URLWithString:thumbnailLink]
+//                       placeholderImage:nil];
     }
 }
 

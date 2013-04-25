@@ -48,6 +48,7 @@
         SeedPicture* picture = [seedPictureDAO getFirstSeedPicture:seed.seedId];
         [pictureArray addObject:picture];
     }
+    firstSeedPictureList = pictureArray;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -111,11 +112,45 @@
 #endif
     
     Seed* seed = [favoriteSeedList objectAtIndex:indexPath.row];
-    SeedPicture* firstSeedPicture = [firstSeedPictureList objectAtIndex:indexPath.row];
+    SeedPicture* picture = [firstSeedPictureList objectAtIndex:indexPath.row];
 
+    NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
+//    [SDWebImageDownloader.sharedDownloader downloadImageWithURL:imageURL
+//                                                        options:0
+//                                                       progress:^(NSUInteger receivedSize, long long expectedSize)
+//     {
+//         // progression tracking code
+//         DLog(@"Seed(%d)'s thumbnail downloaded %d of %l", seed.seedId, receivedSize, expectedSize);
+//     }
+//                                                      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+//     {
+//         if (image && finished)
+//         {
+//             // do something with image
+//         }
+//     }];
+
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    [manager
+        downloadWithURL:imageURL
+        options:0
+        progress:^(NSUInteger receivedSize, long long expectedSize)
+        {
+            // progression tracking code
+            DLog(@"Seed(%d)'s thumbnail downloaded %d of %lld", seed.seedId, receivedSize, expectedSize);
+        }
+        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+        {
+            if (image)
+            {
+                // do something with image
+                [cell.thumbnailImageView setImage:image];
+            }
+    }];
+    
 #if UI_RENDER_SEEDLISTTABLECELL
     [cell fillSeed:seed];
-    [cell fillSeedPicture:firstSeedPicture];
+    [cell fillSeedPicture:picture];
 #else
     [cell.textLabel setText:seed.name];
 #endif
