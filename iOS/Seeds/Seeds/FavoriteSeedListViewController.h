@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 #import "SeedListTableCell.h"
+
+#import "UIImageView+WebCache.h"
 #import "SDWebImageDownloader.h"
 #import "SDWebImageManager.h"
 
