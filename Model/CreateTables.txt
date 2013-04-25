@@ -1,0 +1,24 @@
+CREATE  TABLE `Seeds`.`Seed` (
+  `ID` INT NOT NULL AUTO_INCREMENT ,
+  `Name` VARCHAR(256) NOT NULL ,
+  `Size` VARCHAR(64) NOT NULL ,
+  `Format` VARCHAR(64) NULL ,
+  `Hash` VARCHAR(64) NULL ,
+  `Mosaic` VARCHAR(10) NULL ,
+  `TorrentLink` VARCHAR(256) NOT NULL ,
+  `SaveDate` DATETIME NULL ,
+  `Memo` VARCHAR(256) NULL ,
+  `Type` VARCHAR(64) NOT NULL ,
+  PRIMARY KEY (`ID`) ,
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) );
+
+
+
+CREATE  TABLE `Seeds`.`PreviewPic` (
+  `SeedID` INT NOT NULL ,
+  `PicID` INT NOT NULL ,
+  `PicLink` VARCHAR(256) NULL ,
+  `Memo` VARCHAR(256) NULL ,
+  UNIQUE INDEX `SeedID_UNIQUE` (`SeedID` ASC) ,
+  PRIMARY KEY (`SeedID`, `Index`) );
+
