@@ -1,0 +1,178 @@
+<map version="freeplane 1.2.0">
+<!--To view this file, download free mind mapping software Freeplane from http://freeplane.sourceforge.net -->
+<node TEXT="&#x6211;&#x4eec;&#x7684;&#x672a;&#x6765;" ID="ID_1723255651" CREATED="1283093380553" MODIFIED="1365302605790"><hook NAME="MapStyle" zoom="1.464">
+    <properties show_note_icons="true"/>
+
+<map_styles>
+<stylenode LOCALIZED_TEXT="styles.root_node">
+<stylenode LOCALIZED_TEXT="styles.predefined" POSITION="right">
+<stylenode LOCALIZED_TEXT="default" MAX_WIDTH="600" COLOR="#000000" STYLE="as_parent">
+<font NAME="SansSerif" SIZE="10" BOLD="false" ITALIC="false"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="defaultstyle.details"/>
+<stylenode LOCALIZED_TEXT="defaultstyle.note"/>
+<stylenode LOCALIZED_TEXT="defaultstyle.floating">
+<edge STYLE="hide_edge"/>
+<cloud COLOR="#f0f0f0" SHAPE="ROUND_RECT"/>
+</stylenode>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.user-defined" POSITION="right">
+<stylenode LOCALIZED_TEXT="styles.topic" COLOR="#18898b" STYLE="fork">
+<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.subtopic" COLOR="#cc3300" STYLE="fork">
+<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.subsubtopic" COLOR="#669900">
+<font NAME="Liberation Sans" SIZE="10" BOLD="true"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.important">
+<icon BUILTIN="yes"/>
+</stylenode>
+</stylenode>
+<stylenode LOCALIZED_TEXT="styles.AutomaticLayout" POSITION="right">
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level.root" COLOR="#000000">
+<font SIZE="18"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,1" COLOR="#0033ff">
+<font SIZE="16"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,2" COLOR="#00b439">
+<font SIZE="14"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,3" COLOR="#990000">
+<font SIZE="12"/>
+</stylenode>
+<stylenode LOCALIZED_TEXT="AutomaticLayout.level,4" COLOR="#111111">
+<font SIZE="10"/>
+</stylenode>
+</stylenode>
+</stylenode>
+</map_styles>
+</hook>
+<hook NAME="AutomaticEdgeColor" COUNTER="11"/>
+<node TEXT="&#x5403;" POSITION="right" ID="ID_612808079" CREATED="1365302613987" MODIFIED="1365302614036">
+<edge COLOR="#ff0000"/>
+<node TEXT="&#x627e;&#x996d;&#x5e97;" ID="ID_1452855266" CREATED="1365302620223" MODIFIED="1365302622873"/>
+<node TEXT="&#x81ea;&#x52a9;&#x9910;" ID="ID_383449721" CREATED="1365302765390" MODIFIED="1365302768887"/>
+<node TEXT="&#x5728;&#x7ebf;&#x8ba2;&#x9910;" ID="ID_1935000552" CREATED="1365504367812" MODIFIED="1365504380637">
+<node TEXT="&#x5728;&#x7ebf;&#x8ba2;&#x86cb;&#x7cd5;" ID="ID_352447818" CREATED="1365504392309" MODIFIED="1365504401338"/>
+<node TEXT="&#x5728;&#x7ebf;&#x8ba2;&#x6c34;&#x679c;" ID="ID_1986831305" CREATED="1365504405794" MODIFIED="1365504584280" BACKGROUND_COLOR="#ffff00"/>
+<node TEXT="&#x5728;&#x7ebf;&#x8ba2;&#x5feb;&#x9910;" ID="ID_586656187" CREATED="1365504421784" MODIFIED="1365504426492"/>
+</node>
+</node>
+<node TEXT="&#x7a7f;" POSITION="right" ID="ID_1270454996" CREATED="1365302613987" MODIFIED="1365302614056">
+<edge COLOR="#0000ff"/>
+<node TEXT="&#x8bd5;&#x8863;" ID="ID_1790637143" CREATED="1365504187353" MODIFIED="1365504203724"/>
+</node>
+<node TEXT="&#x4f4f;" POSITION="right" ID="ID_635259351" CREATED="1365302614052" MODIFIED="1365302614062">
+<edge COLOR="#00ff00"/>
+<node TEXT="&#x79df;&#x623f;" ID="ID_594177516" CREATED="1365302629666" MODIFIED="1365302629666">
+<node TEXT="&#x627e;&#x623f;&#x5b50;" ID="ID_1579820172" CREATED="1365302633934" MODIFIED="1366032287345" BACKGROUND_COLOR="#ffff33"/>
+<node TEXT="&#x5408;&#x79df;" ID="ID_624444993" CREATED="1365302643325" MODIFIED="1365302645342"/>
+<node TEXT="&#x77ed;&#x79df;" ID="ID_294305083" CREATED="1365504301912" MODIFIED="1365504304623"/>
+</node>
+<node TEXT="&#x4e70;&#x623f;" ID="ID_1387993045" CREATED="1365302629666" MODIFIED="1365302629666"/>
+<node TEXT="&#x88c5;&#x4fee;" ID="ID_1497656067" CREATED="1365504279192" MODIFIED="1365504280998">
+<node TEXT="&#x88c5;&#x4fee;&#x8d2d;&#x7269;&#x5e73;&#x53f0;" ID="ID_1162707517" CREATED="1365504282017" MODIFIED="1365504285575"/>
+</node>
+</node>
+<node TEXT="&#x884c;" POSITION="right" ID="ID_1563488348" CREATED="1365302614060" MODIFIED="1365302614088">
+<edge COLOR="#ff00ff"/>
+<node TEXT="&#x516c;&#x4ea4;" ID="ID_1390223633" CREATED="1365302654374" MODIFIED="1365302654374">
+<node TEXT="&#x7ebf;&#x8def;&#x67e5;&#x8be2;" ID="ID_1785334763" CREATED="1365302669597" MODIFIED="1365302701435"/>
+<node TEXT="&#x7ad9;&#x70b9;&#x67e5;&#x8be2;" ID="ID_1139848285" CREATED="1365302702578" MODIFIED="1365302704900"/>
+<node TEXT="&#x57fa;&#x4e8e;&#x5f53;&#x524d;&#x4f4d;&#x7f6e;&#x7684;&#x6df7;&#x5408;&#x67e5;&#x8be2;" ID="ID_855279255" CREATED="1365302705826" MODIFIED="1365302715683"/>
+</node>
+<node TEXT="&#x51fa;&#x79df;&#x8f66;" ID="ID_263690124" CREATED="1365302654374" MODIFIED="1365302654374"/>
+<node TEXT="&#x5730;&#x94c1;" ID="ID_771627759" CREATED="1365302654395" MODIFIED="1365302654395"/>
+<node TEXT="&#x81ea;&#x9a7e;" ID="ID_1832683847" CREATED="1365302654412" MODIFIED="1365302654412"/>
+<node TEXT="&#x65c5;&#x6e38;&#x5e73;&#x53f0;" ID="ID_75694940" CREATED="1365505689865" MODIFIED="1365505695897"/>
+</node>
+<node TEXT="&#x73a9;" POSITION="right" ID="ID_1976953539" CREATED="1365302759743" MODIFIED="1365302763656">
+<edge COLOR="#00007c"/>
+<node TEXT="KTV" ID="ID_455455728" CREATED="1365302769734" MODIFIED="1365302771056"/>
+<node TEXT="&#x6e38;&#x620f;" ID="ID_875015196" CREATED="1365302757551" MODIFIED="1365504113496"/>
+<node TEXT="&#x5065;&#x8eab;" ID="ID_924629720" CREATED="1365505617757" MODIFIED="1365505619675"/>
+</node>
+<node TEXT="&#x793e;&#x4f1a;&#x6d3b;&#x52a8;" POSITION="right" ID="ID_442889334" CREATED="1365503963492" MODIFIED="1365504081909">
+<edge COLOR="#007c00"/>
+<node TEXT="&#x54a8;&#x8be2;" ID="ID_1617367952" CREATED="1365504084869" MODIFIED="1365504088599">
+<node TEXT="&#x6cd5;&#x5f8b;" ID="ID_1353688458" CREATED="1365504089535" MODIFIED="1365504092664">
+<node TEXT="&#x5f8b;&#x5e08;&#x6709;&#x507f;&#x54a8;&#x8be2;&#x5e73;&#x53f0;" ID="ID_1979628586" CREATED="1365507589672" MODIFIED="1366032318204"/>
+</node>
+<node TEXT="&#x533b;&#x7597;" ID="ID_196122766" CREATED="1365504093177" MODIFIED="1365504095596"/>
+<node TEXT="&#x6559;&#x80b2;" ID="ID_419293099" CREATED="1365504098937" MODIFIED="1365504101259"/>
+<node TEXT="&#x8d22;&#x52a1;" ID="ID_1211053886" CREATED="1366032474242" MODIFIED="1366032478700"/>
+</node>
+<node TEXT="&#x4ea4;&#x53cb;" ID="ID_841096739" CREATED="1365302614066" MODIFIED="1365504108338">
+<node TEXT="&#x77ed;&#x89c6;&#x9891;&#x4ea4;&#x53cb;" ID="ID_164237922" CREATED="1365504615817" MODIFIED="1365643682154" BACKGROUND_COLOR="#ffff00"><richcontent TYPE="NOTE">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      &#38543;&#26426;&#25645;&#32447;
+    </p>
+    <p>
+      &#36890;&#36807;&#28857;&#20987;&#24191;&#21578;&#30340;&#26041;&#24335;&#32493;&#26102;&#38388;
+    </p>
+    <p>
+      &#21487;&#20197;&#32771;&#34385;&#25226;&#20301;&#32622;&#20449;&#24687;&#21152;&#36827;&#26469;
+    </p>
+    <p>
+      
+    </p>
+    <p>
+      &#38382;&#39064;&#65306;&#21069;&#26399;&#30340;&#26262;&#20154;&#27668;&#21487;&#33021;&#20250;&#26377;&#38382;&#39064;
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+<node TEXT="&#x57fa;&#x4e8e;LBS&#x7684;&#x8bba;&#x575b;" ID="ID_286454684" CREATED="1365504639232" MODIFIED="1365505464402" BACKGROUND_COLOR="#ffff00"><richcontent TYPE="NOTE">
+
+<html>
+  <head>
+    
+  </head>
+  <body>
+    <p>
+      &#31867;&#20284;&#20110;&#21457;&#19968;&#26465;&#25105;&#24819;&#21507;&#27700;&#26524;&#25110;&#32773;&#25105;&#24819;&#20080;&#20108;&#25163;&#33258;&#34892;&#36710;&#30340;&#20449;&#24687;&#65292;&#21334;&#27700;&#26524;&#30340;&#21830;&#23478;&#25110;&#32773;&#20854;&#20182;&#20154;&#23601;&#21487;&#20197;&#24212;&#31572;&#24182;&#36865;&#36135;&#19978;&#38376;
+    </p>
+    <p>
+      
+    </p>
+    <p>
+      
+    </p>
+  </body>
+</html>
+</richcontent>
+</node>
+</node>
+<node TEXT="&#x5a5a;&#x5e86;" ID="ID_1576187045" CREATED="1365586979810" MODIFIED="1365586986257"/>
+</node>
+<node TEXT="&#x5de5;&#x4f5c;" POSITION="right" ID="ID_178398794" CREATED="1365504131233" MODIFIED="1365504136949">
+<edge COLOR="#7c007c"/>
+<node TEXT="&#x9500;&#x552e;" ID="ID_493934598" CREATED="1365504147055" MODIFIED="1365504151401"/>
+<node TEXT="&#x5de5;&#x5177;" ID="ID_664412324" CREATED="1365504151924" MODIFIED="1365504158287">
+<node TEXT="&#x6539;&#x8fdb;&#x5de5;&#x4f5c;&#x6d41;&#x7a0b;" ID="ID_1067567313" CREATED="1365504159577" MODIFIED="1365504164825"/>
+<node TEXT="&#x9002;&#x5408;&#x79fb;&#x52a8;&#x4e92;&#x8054;&#x7f51;&#x7684;&#x5f00;&#x53d1;&#x8f85;&#x52a9;&#x5de5;&#x5177;" ID="ID_1644251287" CREATED="1366032497526" MODIFIED="1366032536194"/>
+</node>
+</node>
+<node TEXT="&#x57fa;&#x4e8e;&#x5148;&#x8fdb;&#x6280;&#x672f;&#x7684;&#x4e8c;&#x6b21;&#x5f00;&#x53d1;" POSITION="right" ID="ID_1735149461" CREATED="1365506073128" MODIFIED="1365506083223">
+<edge COLOR="#007c7c"/>
+<node TEXT="google glass" ID="ID_1463788093" CREATED="1365506087959" MODIFIED="1365506094090"/>
+<node TEXT="&#x624b;&#x8868;" ID="ID_1092457216" CREATED="1365506094578" MODIFIED="1365506099995"/>
+<node TEXT="leap motion" ID="ID_1163485390" CREATED="1365506100582" MODIFIED="1365506124164"/>
+<node TEXT="myo" ID="ID_1209942501" CREATED="1365506125060" MODIFIED="1365506126768"/>
+<node TEXT="&#x6212;&#x6307;" ID="ID_954147796" CREATED="1365506147708" MODIFIED="1365506149414">
+<node TEXT="&#x8fd1;&#x573a;&#x652f;&#x4ed8;" ID="ID_1466242447" CREATED="1365506187833" MODIFIED="1365506197758"/>
+<node TEXT="GPS" ID="ID_1899644824" CREATED="1365506198970" MODIFIED="1365506200704"/>
+</node>
+</node>
+</node>
+</map>
