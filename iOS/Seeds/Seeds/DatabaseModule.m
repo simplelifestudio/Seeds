@@ -59,7 +59,7 @@
     {
         DLog(@"Seed {id=%d, name=%@, size=%@, torrentLink=%@, favorite=%@}", seed.seedId, seed.name, seed.size, seed.torrentLink, (seed.favorite) ? @"YES" : @"NO");
         
-//        DLog(@"Seed(%d) has been favorited: %@", seed.seedId, [seedDAO favoriteSeed:seed andFlag:YES] ? @"successfully." : @"unsuccessfully");
+        DLog(@"Seed(%d) has been favorited: %@", seed.seedId, [seedDAO favoriteSeed:seed andFlag:YES] ? @"successfully." : @"unsuccessfully");
     }
 }
 

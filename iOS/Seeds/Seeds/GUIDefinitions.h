@@ -21,4 +21,10 @@
 #define CELL_ID_SEEDLISTTABLECELL @"SeedListTableCell"
 #define CELL_HEIGHT_SEEDLISTTABLECELL 100
 
+#define CELL_ID_SEEDPICTURECOLLECTIONCELL @"SeedPictureCollectionCell"
+
+#define IMAGE_PLACEHOLDER_TABLECELL @"image_tablecell_placeholder"
+#define IMAGE_PLACEHOLDER_COLLECTIONCELL @"image_collectioncell_placeholder"
+#define IMAGE_PLACEHOLDER_PICTUREVIEW @"image_pictureView_placeholder"
+
 #endif

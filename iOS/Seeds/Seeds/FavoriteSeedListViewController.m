@@ -12,6 +12,7 @@
 {
     NSArray* favoriteSeedList;
     NSArray* firstSeedPictureList;
+    Seed* selectedSeed;
 }
 
 @end
@@ -54,8 +55,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO];
-    
     [self.tableView reloadData];
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -114,22 +116,11 @@
     Seed* seed = [favoriteSeedList objectAtIndex:indexPath.row];
     SeedPicture* picture = [firstSeedPictureList objectAtIndex:indexPath.row];
 
+    NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:NSLocalizedString(IMAGE_PLACEHOLDER_TABLECELL, nil) ofType:@"png"];
+    UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
+    [cell.thumbnailImageView setImage:placeHolderImage];
+    
     NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
-//    [SDWebImageDownloader.sharedDownloader downloadImageWithURL:imageURL
-//                                                        options:0
-//                                                       progress:^(NSUInteger receivedSize, long long expectedSize)
-//     {
-//         // progression tracking code
-//         DLog(@"Seed(%d)'s thumbnail downloaded %d of %l", seed.seedId, receivedSize, expectedSize);
-//     }
-//                                                      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
-//     {
-//         if (image && finished)
-//         {
-//             // do something with image
-//         }
-//     }];
-
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     [manager
         downloadWithURL:imageURL
@@ -213,6 +204,22 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    
+    selectedSeed = [favoriteSeedList objectAtIndex:indexPath.row];
+
+    [self performSegueWithIdentifier:SEGUE_ID_FAVORITESEEDLIST2SEEDDETAIL sender:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:SEGUE_ID_FAVORITESEEDLIST2SEEDDETAIL])
+    {
+        if ([segue.destinationViewController isKindOfClass:[SeedDetailViewController class]])
+        {
+            SeedDetailViewController* seedDetailViewController = segue.destinationViewController;
+            [seedDetailViewController setSeed:selectedSeed];
+        }
+    }
 }
 
 @end

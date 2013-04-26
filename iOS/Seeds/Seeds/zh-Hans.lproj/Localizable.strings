@@ -13,3 +13,6 @@
 "Loading: " = "加载：";
 "Mosaic" = "有码";
 "No-Mosaic" = "无码";
+"image_tablecell_placeholder" = "image_tablecell_placeholder_cn";
+"image_collectioncell_placeholder" = "image_collectioncell_placeholder_cn";
+"image_pictureView_placeholder" = "image_pictureView_placeholder_cn";

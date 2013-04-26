@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "SDWebImageManager.h"
+
 @interface SeedPictureViewController : UIViewController
+
+@property (nonatomic, strong) SeedPicture* seedPicture;
+
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end

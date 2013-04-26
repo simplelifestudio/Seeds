@@ -32,11 +32,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES];
+    
+    [super viewWillAppear:animated];    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
 //    [self.navigationController setNavigationBarHidden:NO];
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning

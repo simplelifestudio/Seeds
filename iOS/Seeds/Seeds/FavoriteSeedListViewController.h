@@ -14,6 +14,8 @@
 #import "SDWebImageDownloader.h"
 #import "SDWebImageManager.h"
 
+#import "SeedDetailViewController.h"
+
 @interface FavoriteSeedListViewController : UITableViewController
 
 @end

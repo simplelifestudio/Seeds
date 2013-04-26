@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SeedDetailViewController : UIViewController
+#import "SeedPictureCollectionCell.h"
+#import "SeedPictureViewController.h"
+
+#import "SDWebImageManager.h"
+
+@interface SeedDetailViewController : UICollectionViewController
+
+@property (nonatomic, strong) Seed* seed;
 
 @end
