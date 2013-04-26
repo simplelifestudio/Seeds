@@ -53,6 +53,7 @@
     
     id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
     DLog(@"Seed count: %d",[seedDAO countAllSeeds]);
+    
     NSArray* seeds = [seedDAO getAllSeeds];
     for (Seed* seed in seeds)
     {
@@ -66,11 +67,42 @@
 {
     if (nil == _databaseFilePath)
     {
-        //databaseFilePath = [[NSBundle mainBundle] pathForResource:DATABASE_FILE_NAME ofType:DATABASE_FILE_TYPE];
+        NSString* dbFileInXcodeProject = [[NSBundle mainBundle] pathForResource:DATABASE_FILE_NAME ofType:DATABASE_FILE_TYPE];
+        DLog(@"Database File in Xcode Project: %@", dbFileInXcodeProject);
+
+        NSArray* documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDir = [documentPaths objectAtIndex:0];
+        _databaseFilePath = [documentsDir stringByAppendingPathComponent:DATABASE_FILE_FULL_NAME];
+        DLog(@"Database File in App Sandbox: %@", _databaseFilePath);
         
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = [paths objectAtIndex:0];        
-        _databaseFilePath = [documentsDirectory stringByAppendingPathComponent:DATABASE_FILE_FULL_NAME];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        BOOL optCode = [fileManager fileExistsAtPath:_databaseFilePath];
+        DLog(@"Database File in App Sandbox exists: %@", (optCode) ? @"YES" : @"NO");
+        
+        NSError* error;
+        BOOL needCopy = NO;
+        if (optCode)
+        {
+            NSDictionary *attr = [fileManager attributesOfItemAtPath:_databaseFilePath error:&error];
+            int fileSize = [[attr objectForKey: NSFileSize] intValue];
+            if(0 >= fileSize)
+            {
+                needCopy = YES;
+            }
+        }
+        else
+        {
+            needCopy = YES;
+        }
+
+        if (needCopy)
+        {
+            DLog(@"Database File need re-copy: %@", (needCopy) ? @"YES" : @"NO");
+            optCode = [fileManager removeItemAtPath:_databaseFilePath error:nil];
+            DLog(@"Database File in App Sandbox removed: %@", (optCode) ? @"YES" : @"NO");
+            optCode = [fileManager copyItemAtPath:dbFileInXcodeProject toPath:_databaseFilePath error:&error];
+            DLog(@"Database File in App Sandbox copied: %@", (optCode) ? @"YES" : @"NO");
+        }
     }
     
     return _databaseFilePath;
