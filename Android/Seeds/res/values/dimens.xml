@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="seeds_team_name">30dp</dimen>
+    <dimen name="seeds_datalist_topmargin">50dp</dimen>
+    <dimen name="seeds_datalist_interval">40dp</dimen>
+    <dimen name="seeds_datalist_leftmargin">15dp</dimen>
+    <dimen name="seeds_datalist_rightmargin">15dp</dimen>
+</resources>
