@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/befyesterday_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/seeds_datalist_leftmargin"
+        android:layout_marginRight="@dimen/seeds_datalist_rightmargin"
+        android:layout_marginTop="@dimen/seeds_datalist_topmargin"
+        android:text="@string/seeds_befyesterday" />
+
+    <Button
+        android:id="@+id/yesterday_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/seeds_datalist_leftmargin"
+        android:layout_marginRight="@dimen/seeds_datalist_rightmargin"
+        android:layout_marginTop="@dimen/seeds_datalist_interval"
+        android:text="@string/seeds_yesterday" />
+
+    <Button
+        android:id="@+id/today_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/seeds_datalist_leftmargin"
+        android:layout_marginRight="@dimen/seeds_datalist_rightmargin"
+        android:layout_marginTop="@dimen/seeds_datalist_interval"
+        android:text="@string/seeds_today" />
+
+    <Button
+        android:id="@+id/update_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="90dp"
+        android:layout_marginRight="90dp"
+        android:layout_marginTop="@dimen/seeds_datalist_interval"
+        android:text="@string/seeds_update" />
+      
+    
+</LinearLayout>
