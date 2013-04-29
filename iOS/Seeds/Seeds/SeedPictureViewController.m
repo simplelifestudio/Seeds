@@ -33,12 +33,35 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [_imageView setUserInteractionEnabled:YES];
-    _scrollView.delegate = self; 
+    [self setupScrollView];
+}
+
+- (void)setupScrollView
+{
+    _scrollView.delegate = self;    
+    
+    _scrollView.showsVerticalScrollIndicator = NO;
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.bouncesZoom = TRUE;
+    _scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
+    _scrollView.maximumZoomScale = 2.0;
+    _scrollView.minimumZoomScale = 1.0;
+    _scrollView.scrollsToTop = NO;
+    _scrollView.userInteractionEnabled = YES;
+    
+    UITapGestureRecognizer *scrollViewDoubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
+    [scrollViewDoubleTap setNumberOfTapsRequired:2];
+    [_scrollView addGestureRecognizer:scrollViewDoubleTap];
+    
+    UITapGestureRecognizer *scrollViewSingleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollviewSingleTapped:)];
+    [scrollViewSingleTap requireGestureRecognizerToFail:scrollViewDoubleTap];
+    [_scrollView addGestureRecognizer:scrollViewSingleTap];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self.navigationController setNavigationBarHidden:YES];
+    
     NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:NSLocalizedString(IMAGE_PLACEHOLDER_PICTUREVIEW, nil) ofType:@"png"];
     UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
     [self.imageView setImage:placeHolderImage];
@@ -116,6 +139,87 @@
      }];
     
     [super viewWillAppear:animated];
+}
+
+- (void)scrollViewDoubleTapped:(UITapGestureRecognizer *)recognizer
+{
+    CGFloat zs = _scrollView.zoomScale;
+    if (_scrollView.zoomScale < _scrollView.maximumZoomScale)
+    {
+        zs = zs + 1;
+    }
+    else
+    {
+        zs = _scrollView.minimumZoomScale;
+    }
+
+//    _scrollView.zoomScale = zs;
+    [self updateZoomScaleWithGesture:recognizer newScale:zs];
+    
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.3];
+    [UIView commitAnimations];
+}
+
+- (void)scrollviewSingleTapped:(UITapGestureRecognizer *)recognizer
+{
+//    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated:TRUE];
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return _imageView;
+}
+
+-(void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale
+{
+//    CGFloat zs = _scrollView.zoomScale;
+//    zs = MAX(zs, 1.0);
+//    zs = MIN(zs, 2.0);
+//    _scrollView.zoomScale = zs;
+//    
+//    [UIView beginAnimations:nil context:NULL];
+//    [UIView setAnimationDuration:0.3];
+//    [UIView commitAnimations];
+}
+
+- (void)updateZoomScale:(CGFloat)newScale
+{
+    CGPoint center = CGPointMake(_imageView.bounds.size.width / 2.0, _imageView.bounds.size.height / 2.0);
+    [self updateZoomScale:newScale withCenter:center];
+}
+
+- (void)updateZoomScaleWithGesture:(UIGestureRecognizer *)gestureRecognizer newScale:(CGFloat)newScale
+{
+    CGPoint center = [gestureRecognizer locationInView:gestureRecognizer.view];
+    [self updateZoomScale:newScale withCenter:center];
+}
+
+- (void)updateZoomScale:(CGFloat)newScale withCenter:(CGPoint)center
+{
+    if (_scrollView.zoomScale != newScale)
+    {
+        CGRect zoomRect = [self zoomRectForScale:newScale withCenter:center];
+        [_scrollView zoomToRect:zoomRect animated:YES];
+    }
+}
+
+- (CGRect)zoomRectForScale:(float)scale withCenter:(CGPoint)center
+{
+    scale = MIN(scale, _scrollView.maximumZoomScale);
+    scale = MAX(scale, _scrollView.minimumZoomScale);
+    
+    CGRect zoomRect;
+    
+    // the zoom rect is in the content view's coordinates.
+    zoomRect.size.width = _scrollView.frame.size.width / scale;
+    zoomRect.size.height = _scrollView.frame.size.height / scale;
+    // choose an origin so as to get the right center.
+    zoomRect.origin.x = center.x - (zoomRect.size.width / 2.0);
+    zoomRect.origin.y = center.y - (zoomRect.size.height / 2.0);
+
+    return zoomRect;
 }
 
 - (void)didReceiveMemoryWarning
