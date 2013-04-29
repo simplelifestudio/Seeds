@@ -16,6 +16,9 @@
 
 @synthesize seedPicture = _seedPicture;
 
+@synthesize imageView = _imageView;
+@synthesize scrollView = _scrollView;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -30,6 +33,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [_imageView setUserInteractionEnabled:YES];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -54,6 +59,26 @@
          {
              // do something with image
              [self.imageView setImage:image];
+             [self.imageView sizeToFit];
+             
+             CGSize imageSize = image.size;
+             [self.scrollView setContentSize:imageSize];
+             
+             DLog(@"ViewController's Frame: %f, %f, %f, %f", self.view.frame
+                  .origin.x, self.view.frame.origin.y
+                  , self.view.frame
+                  .size.width, self.view.frame.size.height);
+             DLog(@"ScrollView's Frame: %f, %f, %f, %f", self.scrollView.frame
+                  .origin.x, self.scrollView.frame.origin.y
+                  , self.scrollView.frame
+                  .size.width, self.scrollView.frame.size.height);
+             DLog(@"ImageView Frame: %f, %f, %f, %f", self.imageView.frame
+                  .origin.x, self.imageView.frame.origin.y
+                  , self.imageView.frame
+                  .size.width, self.imageView.frame.size.height);
+             DLog(@"Image Size: %f, %f", image
+                  .size.width, image.size.height);
+             
          }
      }];
     
