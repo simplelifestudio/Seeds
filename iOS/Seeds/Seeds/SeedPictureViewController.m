@@ -34,7 +34,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [_imageView setUserInteractionEnabled:YES];
-    
+    _scrollView.delegate = self; 
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -57,27 +57,70 @@
      {
          if (image)
          {
-             // do something with image
-             [self.imageView setImage:image];
-             [self.imageView sizeToFit];
+             [_imageView setImage:image];
+             [_imageView sizeToFit];
              
-             CGSize imageSize = image.size;
-             [self.scrollView setContentSize:imageSize];
+             CGFloat imageW = image.size.width;
+             CGFloat imageH = image.size.height;
              
-             DLog(@"ViewController's Frame: %f, %f, %f, %f", self.view.frame
-                  .origin.x, self.view.frame.origin.y
-                  , self.view.frame
-                  .size.width, self.view.frame.size.height);
-             DLog(@"ScrollView's Frame: %f, %f, %f, %f", self.scrollView.frame
-                  .origin.x, self.scrollView.frame.origin.y
-                  , self.scrollView.frame
-                  .size.width, self.scrollView.frame.size.height);
-             DLog(@"ImageView Frame: %f, %f, %f, %f", self.imageView.frame
-                  .origin.x, self.imageView.frame.origin.y
-                  , self.imageView.frame
-                  .size.width, self.imageView.frame.size.height);
-             DLog(@"Image Size: %f, %f", image
-                  .size.width, image.size.height);
+             CGFloat scrollViewW = _scrollView.frame.size.width;
+             CGFloat scrollViewH = _scrollView.frame.size.height;
+             CGFloat scrollViewX = _scrollView.frame.origin.x;
+             CGFloat scrollViewY = _scrollView.frame.origin.y;
+             
+             CGFloat selfViewW = self.view.frame.size.width;
+             CGFloat selfViewH = self.view.frame.size.height;
+             CGFloat selfViewX = self.view.frame.origin.x;
+             CGFloat selfViewY = self.view.frame.origin.y;
+
+             CGFloat imageViewW = _imageView.frame.size.width;
+             CGFloat imageViewH = _imageView.frame.size.height;
+             CGFloat imageViewX = _imageView.frame.origin.x;
+             CGFloat imageViewY = _imageView.frame.origin.y;
+             
+             if (imageW > selfViewW && imageH > selfViewH)
+             {
+                 CGFloat w = selfViewW;
+                 CGFloat h = imageH * (selfViewW / imageW);
+                 CGFloat x = 0;
+                 CGFloat y = (h <= selfViewH) ? (abs(selfViewH - h) / 2) : 0;
+                 _imageView.frame = CGRectMake(x, y, w, h);
+                 _scrollView.contentSize = CGSizeMake(selfViewW, imageH * (selfViewW / imageW));                 
+             }
+             else if(imageW > selfViewW)
+             {
+                 CGFloat w = selfViewW;
+                 CGFloat h = imageH * (selfViewW / imageW);
+                 CGFloat x = 0;
+                 CGFloat y = (h <= selfViewH) ? (abs(selfViewH - h) / 2) : 0;
+                 _imageView.frame = CGRectMake(x, y, w, h);
+                 _scrollView.contentSize = CGSizeMake(selfViewW, imageH * (selfViewW / imageW));
+             }
+             else if(imageH > selfViewH)
+             {
+                 CGFloat w = imageW * (selfViewH / imageH);
+                 CGFloat h = imageH;
+                 CGFloat x = (w <= selfViewW) ? (abs(selfViewW - w) / 2) : w;
+                 CGFloat y = 0;
+                 _imageView.frame = CGRectMake(x, y, w, h);
+                 _scrollView.contentSize = CGSizeMake(imageW * (selfViewH / imageH), selfViewH);
+             }
+             else
+             {
+                 CGFloat x = imageViewX = abs(scrollViewW - imageW) / 2.0;
+                 CGFloat y = imageViewY = abs(scrollViewH - imageH) / 2.0;
+                 
+                 _imageView.frame = CGRectMake(x, y, imageW, imageH);
+                 _scrollView.contentSize = image.size;
+             }
+             
+             DLog(@"ViewController's Frame: %f, %f, %f, %f", selfViewX, selfViewY
+                  , selfViewW, selfViewH);
+             DLog(@"ScrollView's Frame: %f, %f, %f, %f", scrollViewX, scrollViewY
+                  , scrollViewW, scrollViewH);
+             DLog(@"ImageView Frame: %f, %f, %f, %f", imageViewX, imageViewY
+                  , imageViewW, imageViewH);
+             DLog(@"Image Size: %f, %f", imageW, imageH);
              
          }
      }];
