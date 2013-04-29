@@ -328,7 +328,7 @@
                                 <connections>
                                     <outlet property="image" destination="fp5-K9-XqI" id="GIZ-WG-IQe"/>
                                     <outlet property="label" destination="txd-xe-689" id="bzE-eY-QUG"/>
-                                    <segue destination="OuC-oU-7J8" kind="push" identifier="seeddetail2seedpicture" id="MSj-cl-EjW"/>
+                                    <segue destination="OuC-oU-7J8" kind="modal" identifier="seeddetail2seedpicture" modalTransitionStyle="crossDissolve" id="MSj-cl-EjW"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
