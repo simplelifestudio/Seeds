@@ -37,6 +37,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self.navigationController setNavigationBarHidden:NO];
+    
     if (nil != _seed)
     {
         id<SeedPictureDAO> seedPictureDAO = [DAOFactory getSeedPictureDAO];
