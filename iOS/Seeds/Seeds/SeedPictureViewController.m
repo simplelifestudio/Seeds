@@ -78,16 +78,7 @@
              CGFloat imageViewX = _imageView.frame.origin.x;
              CGFloat imageViewY = _imageView.frame.origin.y;
              
-             if (imageW > selfViewW && imageH > selfViewH)
-             {
-                 CGFloat w = selfViewW;
-                 CGFloat h = imageH * (selfViewW / imageW);
-                 CGFloat x = 0;
-                 CGFloat y = (h <= selfViewH) ? (abs(selfViewH - h) / 2) : 0;
-                 _imageView.frame = CGRectMake(x, y, w, h);
-                 _scrollView.contentSize = CGSizeMake(selfViewW, imageH * (selfViewW / imageW));                 
-             }
-             else if(imageW > selfViewW)
+             if(imageW > selfViewW)
              {
                  CGFloat w = selfViewW;
                  CGFloat h = imageH * (selfViewW / imageW);
@@ -107,8 +98,8 @@
              }
              else
              {
-                 CGFloat x = imageViewX = abs(scrollViewW - imageW) / 2.0;
-                 CGFloat y = imageViewY = abs(scrollViewH - imageH) / 2.0;
+                 CGFloat x = imageViewX = abs(scrollViewW - imageW) / 2;
+                 CGFloat y = imageViewY = abs(scrollViewH - imageH) / 2;
                  
                  _imageView.frame = CGRectMake(x, y, imageW, imageH);
                  _scrollView.contentSize = image.size;
@@ -121,7 +112,6 @@
              DLog(@"ImageView Frame: %f, %f, %f, %f", imageViewX, imageViewY
                   , imageViewW, imageViewH);
              DLog(@"Image Size: %f, %f", imageW, imageH);
-             
          }
      }];
     

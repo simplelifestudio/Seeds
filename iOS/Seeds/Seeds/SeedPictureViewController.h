@@ -10,7 +10,7 @@
 
 #import "SDWebImageManager.h"
 
-@interface SeedPictureViewController : UIViewController
+@interface SeedPictureViewController : UIViewController <UIScrollViewDelegate, UIScrollViewAccessibilityDelegate>
 
 @property (nonatomic, strong) SeedPicture* seedPicture;
 
