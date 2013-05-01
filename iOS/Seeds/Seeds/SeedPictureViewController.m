@@ -125,7 +125,11 @@
                  minimumScale = scrollViewW / imageViewW;
 
                  CGFloat minimumImageViewH = imageViewH * minimumScale;
-                 imageViewY = abs(selfViewH - minimumImageViewH) / 2;
+
+                 if (minimumImageViewH < selfViewH)
+                 {
+                     imageViewY = abs(selfViewH - minimumImageViewH) / 2;
+                 }
              }
 
              _imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
@@ -234,10 +238,12 @@
     return zoomRect;
 }
 
-- (CGPoint)adjustPointIntoImageView:(CGPoint)center {
+- (CGPoint)adjustPointIntoImageView:(CGPoint)center
+{
     BOOL contains = CGRectContainsPoint(_imageView.frame, center);
     
-    if (!contains) {
+    if (!contains)
+    {
         center.x = center.x / _scrollView.zoomScale;
         center.y = center.y / _scrollView.zoomScale;
         
