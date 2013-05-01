@@ -62,6 +62,7 @@
 		C5A94417172AC1AA00D6FB85 /* image_tablecell_placeholder_en.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A94413172AC1AA00D6FB85 /* image_tablecell_placeholder_en.png */; };
 		C5A9441B172ACC9B00D6FB85 /* image_pictureView_placeholder_cn.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A94419172ACC9B00D6FB85 /* image_pictureView_placeholder_cn.png */; };
 		C5A9441C172ACC9B00D6FB85 /* image_pictureView_placeholder_en.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A9441A172ACC9B00D6FB85 /* image_pictureView_placeholder_en.png */; };
+		C5AB63451730A7CD00A3F1E6 /* SeedPictureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -167,6 +168,8 @@
 		C5A94413172AC1AA00D6FB85 /* image_tablecell_placeholder_en.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_tablecell_placeholder_en.png; sourceTree = "<group>"; };
 		C5A94419172ACC9B00D6FB85 /* image_pictureView_placeholder_cn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_pictureView_placeholder_cn.png; sourceTree = "<group>"; };
 		C5A9441A172ACC9B00D6FB85 /* image_pictureView_placeholder_en.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_pictureView_placeholder_en.png; sourceTree = "<group>"; };
+		C5AB63431730A7CD00A3F1E6 /* SeedPictureScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedPictureScrollView.h; sourceTree = "<group>"; };
+		C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedPictureScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -297,6 +300,8 @@
 				C5964C4217223A9200CC1C0A /* SeedDetailViewController.m */,
 				C5964C47172248AB00CC1C0A /* SeedPictureViewController.h */,
 				C5964C48172248AB00CC1C0A /* SeedPictureViewController.m */,
+				C5AB63431730A7CD00A3F1E6 /* SeedPictureScrollView.h */,
+				C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */,
 				C5964C521722D87200CC1C0A /* SeedListTableCell.h */,
 				C5964C531722D87200CC1C0A /* SeedListTableCell.m */,
 				C5A9440D172AA15A00D6FB85 /* SeedPictureCollectionCell.h */,
@@ -523,6 +528,7 @@
 				C5A9440B172A8FB200D6FB85 /* UIButton+WebCache.m in Sources */,
 				C5A9440C172A8FB200D6FB85 /* UIImageView+WebCache.m in Sources */,
 				C5A9440F172AA15A00D6FB85 /* SeedPictureCollectionCell.m in Sources */,
+				C5AB63451730A7CD00A3F1E6 /* SeedPictureScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
