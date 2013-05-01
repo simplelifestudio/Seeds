@@ -46,15 +46,15 @@
     _scrollView.decelerationRate = UIScrollViewDecelerationRateFast;
     _scrollView.maximumZoomScale = 2.0;
     _scrollView.minimumZoomScale = 1.0;
-    _scrollView.scrollsToTop = NO;
+    _scrollView.scrollsToTop = YES;
     _scrollView.userInteractionEnabled = YES;
     
-    UITapGestureRecognizer *scrollViewDoubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
-    [scrollViewDoubleTap setNumberOfTapsRequired:2];
-    [_scrollView addGestureRecognizer:scrollViewDoubleTap];
+//    UITapGestureRecognizer *scrollViewDoubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
+//    [scrollViewDoubleTap setNumberOfTapsRequired:2];
+//    [_scrollView addGestureRecognizer:scrollViewDoubleTap];
     
     UITapGestureRecognizer *scrollViewSingleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollviewSingleTapped:)];
-    [scrollViewSingleTap requireGestureRecognizerToFail:scrollViewDoubleTap];
+//    [scrollViewSingleTap requireGestureRecognizerToFail:scrollViewDoubleTap];
     [_scrollView addGestureRecognizer:scrollViewSingleTap];
 }
 
@@ -82,7 +82,7 @@
          {
              [_imageView setImage:image];
              [_imageView sizeToFit];
-             
+
              CGFloat imageW = image.size.width;
              CGFloat imageH = image.size.height;
              
@@ -101,32 +101,42 @@
              CGFloat imageViewX = _imageView.frame.origin.x;
              CGFloat imageViewY = _imageView.frame.origin.y;
              
-             if(imageW > selfViewW)
+             CGFloat minimumScale;
+             
+             // imageViewW < selfViewW and imageViewH < selfViewH
+             // imageViewW < selfViewW and imageViewH >= selfViewH
+             // imageViewW >= selfViewW and imageViewH >= selfViewH
+             // imageViewW >= selfViewW and imageViewH < selfViewH
+
+             if (imageViewW < selfViewW)
              {
-                 CGFloat w = selfViewW;
-                 CGFloat h = imageH * (selfViewW / imageW);
-                 CGFloat x = 0;
-                 CGFloat y = (h <= selfViewH) ? (abs(selfViewH - h) / 2) : 0;
-                 _imageView.frame = CGRectMake(x, y, w, h);
-                 _scrollView.contentSize = CGSizeMake(selfViewW, imageH * (selfViewW / imageW));
-             }
-             else if(imageH > selfViewH)
-             {
-                 CGFloat w = imageW * (selfViewH / imageH);
-                 CGFloat h = imageH;
-                 CGFloat x = (w <= selfViewW) ? (abs(selfViewW - w) / 2) : w;
-                 CGFloat y = 0;
-                 _imageView.frame = CGRectMake(x, y, w, h);
-                 _scrollView.contentSize = CGSizeMake(imageW * (selfViewH / imageH), selfViewH);
+                 minimumScale = 1.0;
+                 CGFloat minimumImageViewH = imageViewH * minimumScale;
+
+                 imageViewX = abs(selfViewW - imageViewW) / 2;
+
+                 if (minimumImageViewH < selfViewH)
+                 {
+                     imageViewY = abs(selfViewH - minimumImageViewH) / 2;
+                 }
              }
              else
              {
-                 CGFloat x = imageViewX = abs(scrollViewW - imageW) / 2;
-                 CGFloat y = imageViewY = abs(scrollViewH - imageH) / 2;
-                 
-                 _imageView.frame = CGRectMake(x, y, imageW, imageH);
-                 _scrollView.contentSize = image.size;
+                 minimumScale = scrollViewW / imageViewW;
+
+                 CGFloat minimumImageViewH = imageViewH * minimumScale;
+                 imageViewY = abs(selfViewH - minimumImageViewH) / 2;
              }
+
+             _imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
+             
+             _scrollView.minimumZoomScale = minimumScale;
+             _scrollView.zoomScale = minimumScale;
+
+             _scrollView.contentSize = _imageView.frame.size;
+             [_scrollView addSubview:_imageView];
+
+//             [_scrollView zoomToRect:CGRectMake(0, 0, imageViewW, imageViewH) animated:NO];             
              
              DLog(@"ViewController's Frame: %f, %f, %f, %f", selfViewX, selfViewY
                   , selfViewW, selfViewH);
@@ -153,7 +163,6 @@
         zs = _scrollView.minimumZoomScale;
     }
 
-//    _scrollView.zoomScale = zs;
     [self updateZoomScaleWithGesture:recognizer newScale:zs];
     
     [UIView beginAnimations:nil context:NULL];
@@ -163,7 +172,6 @@
 
 - (void)scrollviewSingleTapped:(UITapGestureRecognizer *)recognizer
 {
-//    [self.navigationController popViewControllerAnimated:YES];
     [self dismissModalViewControllerAnimated:TRUE];
 }
 
@@ -172,16 +180,19 @@
     return _imageView;
 }
 
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
+{
+
+}
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView
+{
+    
+}
+
 -(void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(float)scale
 {
-//    CGFloat zs = _scrollView.zoomScale;
-//    zs = MAX(zs, 1.0);
-//    zs = MIN(zs, 2.0);
-//    _scrollView.zoomScale = zs;
-//    
-//    [UIView beginAnimations:nil context:NULL];
-//    [UIView setAnimationDuration:0.3];
-//    [UIView commitAnimations];
+
 }
 
 - (void)updateZoomScale:(CGFloat)newScale
@@ -193,6 +204,7 @@
 - (void)updateZoomScaleWithGesture:(UIGestureRecognizer *)gestureRecognizer newScale:(CGFloat)newScale
 {
     CGPoint center = [gestureRecognizer locationInView:gestureRecognizer.view];
+    center = [self adjustPointIntoImageView:center];
     [self updateZoomScale:newScale withCenter:center];
 }
 
@@ -220,6 +232,28 @@
     zoomRect.origin.y = center.y - (zoomRect.size.height / 2.0);
 
     return zoomRect;
+}
+
+- (CGPoint)adjustPointIntoImageView:(CGPoint)center {
+    BOOL contains = CGRectContainsPoint(_imageView.frame, center);
+    
+    if (!contains) {
+        center.x = center.x / _scrollView.zoomScale;
+        center.y = center.y / _scrollView.zoomScale;
+        
+        // adjust center with bounds and scale to be a point within the image view bounds
+        CGRect imageViewBounds = _imageView.bounds;
+        
+        center.x = MAX(center.x, imageViewBounds.origin.x);
+        center.x = MIN(center.x, imageViewBounds.origin.x + imageViewBounds.size.height);
+        
+        center.y = MAX(center.y, imageViewBounds.origin.y);
+        center.y = MIN(center.y, imageViewBounds.origin.y + imageViewBounds.size.width);
+        
+        return center;
+    }
+    
+    return CGPointZero;
 }
 
 - (void)didReceiveMemoryWarning
