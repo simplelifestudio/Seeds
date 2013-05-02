@@ -64,6 +64,11 @@
     if (self.delegate && [self.delegate conformsToProtocol:@protocol(CircularProgressDelegate)])
     {
         [self.delegate didUpdateProgressView];
+        
+        if (progressVal == 1)
+        {
+            [self.delegate didFisnishProgressView];
+        }
     }
 }
 

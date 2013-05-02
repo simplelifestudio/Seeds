@@ -61,12 +61,8 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    SeedPictureCollectionCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL forIndexPath:indexPath];
+    __block SeedPictureCollectionCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL forIndexPath:indexPath];
     SeedPicture* picture = [seedPictures objectAtIndex:indexPath.row];
-
-    NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:NSLocalizedString(IMAGE_PLACEHOLDER_COLLECTIONCELL, nil) ofType:@"png"];
-    UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
-    [cell.image setImage:placeHolderImage];
     
     NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
@@ -77,12 +73,16 @@
      {
          // progression tracking code
          DLog(@"SeedPicture(%d)'s thumbnail(%@) downloaded %d of %lld", picture.pictureId, picture.pictureLink, receivedSize, expectedSize);
+         
+         float progressVal = (float)receivedSize / (float)expectedSize;
+         [cell.circularProgressView updateProgressCircle:progressVal];
      }
      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
      {
          if (image)
          {
-             // do something with image
+//#warning Why below line can't be moved?
+             [cell.circularProgressView removeFromSuperview];
              cell.image.image = image;
          }
      }];

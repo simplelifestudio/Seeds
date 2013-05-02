@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SeedPictureCollectionCell : UICollectionViewCell
+#import "CircularProgressView.h"
+
+@interface SeedPictureCollectionCell : UICollectionViewCell <CircularProgressDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UILabel *label;
+
+@property (strong, nonatomic) CircularProgressView* circularProgressView;
 
 @end

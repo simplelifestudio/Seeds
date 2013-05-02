@@ -26,6 +26,9 @@
 
 @protocol CircularProgressDelegate <NSObject>
 
+@required
+- (void)registerCircularProgressDelegate;
 - (void)didUpdateProgressView;
+- (void)didFisnishProgressView;
 
 @end

@@ -12,6 +12,7 @@
 #import "SeedPictureViewController.h"
 
 #import "SDWebImageManager.h"
+#import "CircularProgressView.h"
 
 @interface SeedDetailViewController : UICollectionViewController
 
