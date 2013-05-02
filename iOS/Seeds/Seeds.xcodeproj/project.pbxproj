@@ -59,6 +59,10 @@
 		C5AB1135173260D9007EEE25 /* CircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB1134173260D9007EEE25 /* CircularProgressView.m */; };
 		C5AB11381732793B007EEE25 /* GUIStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11371732793B007EEE25 /* GUIStyle.m */; };
 		C5AB113F1732BF2C007EEE25 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB113E1732BF2C007EEE25 /* MBProgressHUD.m */; };
+		C5AB11481732BFEE007EEE25 /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11421732BFEE007EEE25 /* TFHpple.m */; };
+		C5AB11491732BFEE007EEE25 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11441732BFEE007EEE25 /* TFHppleElement.m */; };
+		C5AB114A1732BFEE007EEE25 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11471732BFEE007EEE25 /* XPathQuery.m */; };
+		C5AB114C1732C01C007EEE25 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */; };
 		C5AB63451730A7CD00A3F1E6 /* SeedPictureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */; };
 		C5AB63501730B95A00A3F1E6 /* todo_list.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */; };
 		C5AB63581730C1ED00A3F1E6 /* CBUIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */; };
@@ -166,6 +170,13 @@
 		C5AB11371732793B007EEE25 /* GUIStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUIStyle.m; sourceTree = "<group>"; };
 		C5AB113D1732BF2C007EEE25 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		C5AB113E1732BF2C007EEE25 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		C5AB11411732BFEE007EEE25 /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
+		C5AB11421732BFEE007EEE25 /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
+		C5AB11431732BFEE007EEE25 /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
+		C5AB11441732BFEE007EEE25 /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
+		C5AB11461732BFEE007EEE25 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
+		C5AB11471732BFEE007EEE25 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
+		C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		C5AB63431730A7CD00A3F1E6 /* SeedPictureScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedPictureScrollView.h; sourceTree = "<group>"; };
 		C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedPictureScrollView.m; sourceTree = "<group>"; };
 		C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = todo_list.rtf; sourceTree = "<group>"; };
@@ -178,6 +189,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5AB114C1732C01C007EEE25 /* libxml2.2.dylib in Frameworks */,
 				C57CF27F1724DB660002B054 /* libsqlite3.0.dylib in Frameworks */,
 				C533E9D2172971AD00073ABE /* MapKit.framework in Frameworks */,
 				C533E9D11729712200073ABE /* ImageIO.framework in Frameworks */,
@@ -224,6 +236,7 @@
 		C57CF282172565100002B054 /* 3rd Libs */ = {
 			isa = PBXGroup;
 			children = (
+				C5AB11401732BFEE007EEE25 /* Hpple */,
 				C5AB113C1732BF2C007EEE25 /* MBProgressHUD */,
 				C5A943ED172A8FB200D6FB85 /* SDWebImage */,
 				C54BB5621725733D00035EBA /* fmdb */,
@@ -251,6 +264,7 @@
 		C5964C061722290400CC1C0A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */,
 				C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */,
 				C533E9D01729712100073ABE /* ImageIO.framework */,
 				C533E9AE1729705E00073ABE /* MapKit.framework */,
@@ -411,6 +425,27 @@
 			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
+		C5AB11401732BFEE007EEE25 /* Hpple */ = {
+			isa = PBXGroup;
+			children = (
+				C5AB11411732BFEE007EEE25 /* TFHpple.h */,
+				C5AB11421732BFEE007EEE25 /* TFHpple.m */,
+				C5AB11431732BFEE007EEE25 /* TFHppleElement.h */,
+				C5AB11441732BFEE007EEE25 /* TFHppleElement.m */,
+				C5AB11451732BFEE007EEE25 /* XPath */,
+			);
+			path = Hpple;
+			sourceTree = "<group>";
+		};
+		C5AB11451732BFEE007EEE25 /* XPath */ = {
+			isa = PBXGroup;
+			children = (
+				C5AB11461732BFEE007EEE25 /* XPathQuery.h */,
+				C5AB11471732BFEE007EEE25 /* XPathQuery.m */,
+			);
+			path = XPath;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -539,6 +574,9 @@
 				C5AB1135173260D9007EEE25 /* CircularProgressView.m in Sources */,
 				C5AB11381732793B007EEE25 /* GUIStyle.m in Sources */,
 				C5AB113F1732BF2C007EEE25 /* MBProgressHUD.m in Sources */,
+				C5AB11481732BFEE007EEE25 /* TFHpple.m in Sources */,
+				C5AB11491732BFEE007EEE25 /* TFHppleElement.m in Sources */,
+				C5AB114A1732BFEE007EEE25 /* XPathQuery.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,10 +689,12 @@
 		C5964C2B1722290400CC1C0A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "Don't Code Sign";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Seeds/Seeds-Prefix.pch";
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "Seeds/Seeds-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "";
@@ -668,10 +708,12 @@
 		C5964C2C1722290400CC1C0A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "Don't Code Sign";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Seeds/Seeds-Prefix.pch";
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "Seeds/Seeds-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "";
