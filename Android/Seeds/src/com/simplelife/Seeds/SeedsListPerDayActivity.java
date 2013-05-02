@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -36,6 +37,7 @@ public class SeedsListPerDayActivity extends Activity {
 	protected String tDate;
 	protected String tFirstImgUrl;
 	protected int tSeedId;
+	protected List<Integer> tSeedIdList;
 	
 	// For log purpose
 	private static final String LOGCLASS = "SeedsListPerDay"; 
@@ -44,12 +46,16 @@ public class SeedsListPerDayActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		// setTheme(android.R.style.Theme_Translucent_NoTitleBar);
 		// Set the list view layout
 		setContentView(R.layout.activity_seeds_listperday);
 		
 		// Retrieve the date info parameter
 		Bundle bundle = getIntent().getExtras();
 		String tPassinDate = bundle.getString("date");
+		
+		// Initialize the tSeedIdList
+		tSeedIdList = new ArrayList();
 		
 		Log.i(LOGCLASS, "Working on ListPerDay, passin "+ tPassinDate); 
 	    // Judge the current time
@@ -110,7 +116,10 @@ public class SeedsListPerDayActivity extends Activity {
 			Intent intent = new Intent(SeedsListPerDayActivity.this, SeedsDetailsActivity.class);
 			// Pass the date info
 		    Bundle bundle = new Bundle();
-		    bundle.putInt("seedid", tSeedId);
+		    
+		    Log.i(LOGCLASS,"Click event detected, the position is "+position);
+		    Log.i(LOGCLASS,"Click event detected, the seedId is "+tSeedIdList.get(position));
+		    bundle.putInt("seedid", (Integer) tSeedIdList.get(position));
 		    intent.putExtras(bundle);
 			startActivity(intent);
 		}
@@ -125,12 +134,23 @@ public class SeedsListPerDayActivity extends Activity {
 		// Put a warning info here in case the DBHandler is null
 		SQLiteDatabase tDB = mDBHandler.getDatabase("Seeds_App_Database.db"); 
 		
+		Log.i(LOGCLASS, "DB instance retrieved, query now");
 		// Query the database
 		// NOTE: Modify here if the format of publishDate field in db is not string
+		/*Cursor tResult = tDB.rawQuery(
+				"select seedId,name,size,format,torrentLink from Seed where publishDate=\"?\"",
+				new String[]{tDate});*/
+		
+		tDate = "2013-04-26";
 		Cursor tResult = tDB.rawQuery(
 				"select seedId,name,size,format,torrentLink from Seed where publishDate=?",
 				new String[]{tDate});
-
+				
+		/*Cursor tResult = tDB.rawQuery(
+				"select name,size,format,torrentLink from Seed",
+				null);*/
+				
+		Log.i(LOGCLASS, "The size of the tResult is  "+ tResult.getCount());
 		tResult.moveToFirst(); 
 		while (!tResult.isAfterLast()) 
 	    { 
@@ -151,11 +171,18 @@ public class SeedsListPerDayActivity extends Activity {
 			
 			tImgResult.moveToFirst();
 			// Think twice if we really need a while loop here
-			while (!tImgResult.isAfterLast())
+			if(!tImgResult.isAfterLast())
 			{
-				tFirstImgUrl = tImgResult.getString(tImgResult.getColumnIndex("pictureLink"));				
-			    break;	
+				// Always get the first image
+				tFirstImgUrl = tImgResult.getString(tImgResult.getColumnIndex("pictureLink"));												
 			}
+			else
+			{
+				// No resource for this seed
+				tFirstImgUrl = "Nothing To Show";
+			}
+
+			Log.i(LOGCLASS, "The Image URL is  "+ tFirstImgUrl);
 			map.put(KEY_TITLE, tResult.getString(tResult.getColumnIndex(KEY_TITLE)));
 			map.put(KEY_SIZE, tResult.getString(tResult.getColumnIndex(KEY_SIZE)));
 			map.put(KEY_FORMAT, tResult.getString(tResult.getColumnIndex(KEY_FORMAT)));
@@ -164,8 +191,12 @@ public class SeedsListPerDayActivity extends Activity {
 			// Add the instance into the array
 			seedsList.add(map);
 			
+			// Record the seedId info
+			tSeedIdList.add(tSeedId);
+			
 			// Move to the next result
 	        tResult.moveToNext(); 
+	        	       
 	    }
 		
 	    tResult.close(); 
