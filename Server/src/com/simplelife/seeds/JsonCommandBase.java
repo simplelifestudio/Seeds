@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 
 import net.sf.json.JSONObject;
 
-public class JsonCommandBase implements JsonCommandInterface {
+public class JsonCommandBase implements IJsonCommand {
 
 	
 	@Override
