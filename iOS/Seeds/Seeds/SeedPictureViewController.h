@@ -11,6 +11,7 @@
 #import "SDWebImageManager.h"
 
 #import "SeedPictureScrollView.h"
+#import "CircularProgressView.h"
 
 @interface SeedPictureViewController : UIViewController
 

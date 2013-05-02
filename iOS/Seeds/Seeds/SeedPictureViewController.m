@@ -8,7 +8,9 @@
 
 #import "SeedPictureViewController.h"
 
-@interface SeedPictureViewController () <SeedPictureScrollViewDelegate>
+#import "CBUIUtils.h"
+
+@interface SeedPictureViewController () <SeedPictureScrollViewDelegate, CircularProgressDelegate>
 
 @end
 
@@ -106,9 +108,23 @@
 {
     [self.navigationController setNavigationBarHidden:YES];
     
-    NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:NSLocalizedString(IMAGE_PLACEHOLDER_PICTUREVIEW, nil) ofType:@"png"];
-    UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
-    [_scrollView displayImage:placeHolderImage];
+//    NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:NSLocalizedString(IMAGE_PLACEHOLDER_PICTUREVIEW, nil) ofType:@"png"];
+//    UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
+//    [_scrollView displayImage:placeHolderImage];
+    
+//    UIActivityIndicatorView* indView = [self progressInd];
+//    [_scrollView addSubview:indView];
+
+    UIColor *backColor = [UIColor colorWithRed:236.0/255.0 green:236.0/255.0 blue:236.0/255.0 alpha:1.0];
+    UIColor *progressColor = [UIColor colorWithRed:82.0/255.0 green:135.0/255.0 blue:237.0/255.0 alpha:1.0];
+    
+    //alloc CircularProgressView instance
+    __block CircularProgressView* circularProgressView = [[CircularProgressView alloc] initWithFrame:CGRectMake(41, 57, 238, 238) backColor:backColor progressColor:progressColor lineWidth:30];
+    //set CircularProgressView delegate
+    circularProgressView.delegate = self;
+    //add CircularProgressView
+    [self.view addSubview:circularProgressView];
+
     
     NSURL* imageURL = [NSURL URLWithString:_seedPicture.pictureLink];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
@@ -119,16 +135,27 @@
      {
          // progression tracking code
          DLog(@"SeedPicture(%d)'s thumbnail(%@) downloaded %d of %lld", _seedPicture.pictureId, _seedPicture.pictureLink, receivedSize, expectedSize);
+         
+         float progressVal = (float)receivedSize / (float)expectedSize;
+         [circularProgressView updateProgressCircle:progressVal];
      }
      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
      {
          if (image)
          {
+             [circularProgressView setHidden:YES];
+             [circularProgressView removeFromSuperview];
              [_scrollView displayImage:image];
          }
      }];
     
     [super viewWillAppear:animated];
+}
+
+- (void)didUpdateProgressView
+{
+//    //update timelabel
+//    self.timeLabel.text = [NSString stringWithFormat:@"%@/%@",[self formatTime:(int)self.circularProgressView.player.currentTime],[self formatTime:(int)self.circularProgressView.player.duration]];
 }
 
 - (void)scrollviewSingleTapped:(UITapGestureRecognizer *)recognizer

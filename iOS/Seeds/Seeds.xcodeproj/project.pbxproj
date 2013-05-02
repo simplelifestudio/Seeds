@@ -62,9 +62,11 @@
 		C5A94417172AC1AA00D6FB85 /* image_tablecell_placeholder_en.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A94413172AC1AA00D6FB85 /* image_tablecell_placeholder_en.png */; };
 		C5A9441B172ACC9B00D6FB85 /* image_pictureView_placeholder_cn.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A94419172ACC9B00D6FB85 /* image_pictureView_placeholder_cn.png */; };
 		C5A9441C172ACC9B00D6FB85 /* image_pictureView_placeholder_en.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A9441A172ACC9B00D6FB85 /* image_pictureView_placeholder_en.png */; };
+		C5AB1135173260D9007EEE25 /* CircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB1134173260D9007EEE25 /* CircularProgressView.m */; };
 		C5AB63451730A7CD00A3F1E6 /* SeedPictureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */; };
 		C5AB63501730B95A00A3F1E6 /* todo_list.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */; };
 		C5AB63551730BDCA00A3F1E6 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63541730BDCA00A3F1E6 /* MBProgressHUD.m */; };
+		C5AB63581730C1ED00A3F1E6 /* CBUIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -170,11 +172,15 @@
 		C5A94413172AC1AA00D6FB85 /* image_tablecell_placeholder_en.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_tablecell_placeholder_en.png; sourceTree = "<group>"; };
 		C5A94419172ACC9B00D6FB85 /* image_pictureView_placeholder_cn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_pictureView_placeholder_cn.png; sourceTree = "<group>"; };
 		C5A9441A172ACC9B00D6FB85 /* image_pictureView_placeholder_en.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image_pictureView_placeholder_en.png; sourceTree = "<group>"; };
+		C5AB1133173260D9007EEE25 /* CircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularProgressView.h; sourceTree = "<group>"; };
+		C5AB1134173260D9007EEE25 /* CircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularProgressView.m; sourceTree = "<group>"; };
 		C5AB63431730A7CD00A3F1E6 /* SeedPictureScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedPictureScrollView.h; sourceTree = "<group>"; };
 		C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedPictureScrollView.m; sourceTree = "<group>"; };
 		C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = todo_list.rtf; sourceTree = "<group>"; };
 		C5AB63531730BDCA00A3F1E6 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		C5AB63541730BDCA00A3F1E6 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		C5AB63561730C1ED00A3F1E6 /* CBUIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBUIUtils.h; sourceTree = "<group>"; };
+		C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBUIUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +203,8 @@
 		C531834317239FF300264530 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C5AB63561730C1ED00A3F1E6 /* CBUIUtils.h */,
+				C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */,
 				C531833717237FF700264530 /* CBLog.h */,
 				C531833817237FF700264530 /* CBModule.h */,
 				C531833917237FF700264530 /* CBModuleAbstractImpl.h */,
@@ -292,6 +300,8 @@
 		C5964C4D1722498900CC1C0A /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				C5AB1133173260D9007EEE25 /* CircularProgressView.h */,
+				C5AB1134173260D9007EEE25 /* CircularProgressView.m */,
 				C531833C17238C6900264530 /* GUIDefinitions.h */,
 				C5964C2D17222BF500CC1C0A /* SplashViewController.h */,
 				C5964C2E17222BF500CC1C0A /* SplashViewController.m */,
@@ -547,6 +557,8 @@
 				C5A9440F172AA15A00D6FB85 /* SeedPictureCollectionCell.m in Sources */,
 				C5AB63451730A7CD00A3F1E6 /* SeedPictureScrollView.m in Sources */,
 				C5AB63551730BDCA00A3F1E6 /* MBProgressHUD.m in Sources */,
+				C5AB63581730C1ED00A3F1E6 /* CBUIUtils.m in Sources */,
+				C5AB1135173260D9007EEE25 /* CircularProgressView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

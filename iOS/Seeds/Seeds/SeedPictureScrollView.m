@@ -8,6 +8,8 @@
 
 #import "SeedPictureScrollView.h"
 
+#import "CBUIUtils.h"
+
 #define kZoomStep 2
 
 @interface SeedPictureScrollView () <UIScrollViewDelegate>
@@ -218,7 +220,7 @@
 - (void)displayImage:(UIImage *)image
 {
     assert(self.photoViewDelegate != nil);
-    [self.imageView removeFromSuperview];
+    [CBUIUtils removeSubViews:self];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
     imageView.userInteractionEnabled = TRUE;
     [self addSubview:imageView];
@@ -312,7 +314,11 @@
 
 - (void)handleScrollViewDoubleTap:(UIGestureRecognizer *)gestureRecognizer
 {
-    if (self.imageView.image == nil) return;
+    if (self.imageView.image == nil)
+    {
+        return;
+    }
+    
     CGPoint center =[self adjustPointIntoImageView:[gestureRecognizer locationInView:gestureRecognizer.view]];
     
     if (!CGPointEqualToPoint(center, CGPointZero))
