@@ -17,7 +17,7 @@
 
 @implementation SeedPictureCollectionCell
 
-@synthesize circularProgressView = _circularProgressVew;
+@synthesize circularProgressView = _circularProgressView;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -35,7 +35,7 @@
     CGFloat x = self.center.x - radius / 2;
     CGFloat y = self.center.y - radius / 2;
     NSInteger lineWidth = 10;
-    _circularProgressVew = [[CircularProgressView alloc] initWithFrame:CGRectMake(x, y, radius, radius) backColor:COLOR_CIRCULAR_PROGRESS_BACKGROUND progressColor:COLOR_CIRCULAR_PROGRESS lineWidth:lineWidth];
+    _circularProgressView = [[CircularProgressView alloc] initWithFrame:CGRectMake(x, y, radius, radius) backColor:COLOR_CIRCULAR_PROGRESS_BACKGROUND progressColor:COLOR_CIRCULAR_PROGRESS lineWidth:lineWidth];
     [self registerCircularProgressDelegate];
     
     [super awakeFromNib];
@@ -43,13 +43,13 @@
 
 - (CircularProgressView*) circularProgerssView
 {
-    return _circularProgressVew;
+    return _circularProgressView;
 }
 
 - (void)registerCircularProgressDelegate
 {
     self.circularProgressView.delegate = self;
-    [self addSubview:_circularProgressVew];
+    [self addSubview:_circularProgressView];
 }
 
 - (void)didUpdateProgressView
@@ -59,7 +59,12 @@
 
 - (void)didFisnishProgressView
 {
-    [_circularProgressVew removeFromSuperview];
+    [_circularProgressView removeFromSuperview];
+}
+
+- (void) dealloc
+{
+    [self setCircularProgressView:nil];
 }
 
 /*

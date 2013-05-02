@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SeedListTableCell : UITableViewCell
+#import "CircularProgressView.h"
+
+@interface SeedListTableCell : UITableViewCell <CircularProgressDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *formatLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mosaicLabel;
+
+@property (strong, nonatomic) CircularProgressView* circularProgressView;
 
 -(void) fillSeed:(Seed*) seed;
 -(void) fillSeedPicture:(SeedPicture*) picture;

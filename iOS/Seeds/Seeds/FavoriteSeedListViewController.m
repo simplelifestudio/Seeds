@@ -116,9 +116,9 @@
     Seed* seed = [favoriteSeedList objectAtIndex:indexPath.row];
     SeedPicture* picture = [firstSeedPictureList objectAtIndex:indexPath.row];
 
-    NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:NSLocalizedString(IMAGE_PLACEHOLDER_TABLECELL, nil) ofType:@"png"];
-    UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
-    [cell.thumbnailImageView setImage:placeHolderImage];
+//    NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:NSLocalizedString(IMAGE_PLACEHOLDER_TABLECELL, nil) ofType:@"png"];
+//    UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
+//    [cell.thumbnailImageView setImage:placeHolderImage];
     
     NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
@@ -129,11 +129,16 @@
         {
             // progression tracking code
             DLog(@"Seed(%d)'s thumbnail downloaded %d of %lld", seed.seedId, receivedSize, expectedSize);
+            
+            float progressVal = (float)receivedSize / (float)expectedSize;
+            [cell.circularProgressView updateProgressCircle:progressVal];
         }
         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
         {
             if (image)
             {
+                //#warning Why below line can't be moved?
+                [cell.circularProgressView removeFromSuperview];
                 // do something with image
                 [cell.thumbnailImageView setImage:image];
             }
