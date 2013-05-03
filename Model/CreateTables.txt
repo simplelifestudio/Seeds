@@ -8,7 +8,7 @@ CREATE  TABLE `Seeds`.`Seed` (
   `TorrentLink` VARCHAR(256) NOT NULL ,
   `SaveDate` DATETIME NULL ,
   `Memo` VARCHAR(256) NULL ,
-  `Type` VARCHAR(64) NOT NULL ,
+  `Source` VARCHAR(64) NOT NULL ,
   PRIMARY KEY (`ID`) ,
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) );
 
