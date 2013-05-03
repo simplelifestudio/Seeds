@@ -1,9 +1,9 @@
 //
 //  CBUIUtils.h
-//  iSignal
+//  Seeds
 //
-//  Created by Patrick Deng on 11-8-22.
-//  Copyright 2011 CodeBeaver. All rights reserved.
+//  Created by Patrick Deng on 13-5-3.
+//  Copyright (c) 2013年 SimpleLife Studio. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
