@@ -23,6 +23,11 @@ public class MyNodeVisitor extends NodeVisitor {
 	
 	public void visitTag(Tag tag) 
 	{
+		if (_AnalyzeFlag != AnalyzeFlag.FilmInfo)
+		{
+			return;
+		}
+		
 		if(isImageLink(tag))
     	{
 			System.out.println(getImageLink(tag.getText()));
@@ -40,6 +45,7 @@ public class MyNodeVisitor extends NodeVisitor {
     		
     	if (isFilmName(string.getText()))
     	{
+    		_AnalyzeFlag = AnalyzeFlag.FilmInfo;
     		System.out.println("\n\nÓ°Æ¬Ãû³Æ£º" + string.getText());
     	}
     	else if(isFilmFormat(string.getText()))
