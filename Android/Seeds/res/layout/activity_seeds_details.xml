@@ -1,25 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fillViewport="true" >
+    android:fillViewport="true"
+    android:gravity="left" >
 
     <RelativeLayout
         android:id="@+id/details_header"
         android:layout_width="match_parent"
         android:layout_height="40dip"
         android:background="#dbdbdc" >
-
-        <TextView
-            android:id="@+id/tv_netease_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dip"
-            android:paddingLeft="100dp"
-            android:text="@string/seeds_details_top"
-            android:textColor="@android:color/black"
-            android:textSize="20sp" />
         
         <!-- LinearLayout 
 	        android:gravity="center"
@@ -50,6 +40,18 @@
         	android:layout_centerVertical="true"
         	android:gravity="right"			
 			android:src="@drawable/arrow" />
+
+	    <TextView
+	        android:id="@+id/Seeds_Title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:layout_centerVertical="true"
+	        android:gravity="center|fill"
+	        android:text="@string/seeds_details_top"
+	        android:textColor="@android:color/black"
+	        android:textSize="20sp" />
+
 	</RelativeLayout>
 
     <LinearLayout
@@ -104,21 +106,23 @@
 				android:background="@android:color/white">
 		       
 	        	<LinearLayout
-	            	android:id="@+id/layout_circle_images"
-	            	android:layout_width="match_parent"
-	            	android:layout_height="15dp"
-	            	android:layout_marginTop="10dp"
-	            	android:layout_marginRight="30dp"
-	            	android:layout_marginLeft="15dp"
-	            	android:gravity="right">	                    
+	        	    android:id="@+id/layout_circle_images"
+	        	    android:layout_width="match_parent"
+	        	    android:layout_height="15dp"
+	        	    android:layout_marginLeft="15dp"
+	        	    android:layout_marginRight="30dp"
+	        	    android:layout_marginTop="10dp"
+	        	    android:gravity="center" >
+	                    
 	        	</LinearLayout>
 	        	
 	        	<LinearLayout
-			    	android:id="@+id/linearLayout_divider"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:orientation="vertical"
-					android:background="@drawable/divider_horizontal_line" >
+	        	    android:id="@+id/linearLayout_divider"
+	        	    android:layout_width="fill_parent"
+	        	    android:layout_height="wrap_content"
+	        	    android:background="@drawable/divider_horizontal_line"
+	        	    android:orientation="vertical" >
+
 				</LinearLayout>
 			    	
 	    	</LinearLayout>
@@ -133,15 +137,37 @@
 			    	android:background="@android:color/white">
 	            	
         	    	<TextView
-            	    	android:id="@+id/seed_info"
-            			android:layout_width="wrap_content"
-            			android:layout_height="wrap_content"
-            			android:layout_centerVertical="true"
-            			android:layout_marginLeft="10dip"
-            			android:paddingLeft="100dp"
-            			android:text="Put the seed info here!!"
-            			android:textColor="@android:color/black"
-            			android:textSize="20sp" />
+        	    	    android:id="@+id/seed_info_name"
+        	    	    android:layout_width="fill_parent"
+        	    	    android:layout_height="wrap_content"
+        	    	    android:layout_gravity="center_vertical|center_horizontal"
+        	    	    android:text="Put the seed info here!!"
+        	    	    android:textColor="@android:color/black"
+        	    	    android:textSize="15sp" />
+        	    	<TextView
+        	    	    android:id="@+id/seed_info_format"
+        	    	    android:layout_width="fill_parent"
+        	    	    android:layout_height="wrap_content"
+        	    	    android:layout_gravity="center_vertical|center_horizontal"
+        	    	    android:text="Put the seed info here!!"
+        	    	    android:textColor="@android:color/black"
+        	    	    android:textSize="15sp" />
+        	    	<TextView
+        	    	    android:id="@+id/seed_info_size"
+        	    	    android:layout_width="fill_parent"
+        	    	    android:layout_height="wrap_content"
+        	    	    android:layout_gravity="center_vertical|center_horizontal"
+        	    	    android:text="Put the seed info here!!"
+        	    	    android:textColor="@android:color/black"
+        	    	    android:textSize="15sp" />
+        	    	<TextView
+        	    	    android:id="@+id/seed_info_link"
+        	    	    android:layout_width="fill_parent"
+        	    	    android:layout_height="wrap_content"
+        	    	    android:layout_gravity="center_vertical|center_horizontal"
+        	    	    android:text="Put the seed info here!!"
+        	    	    android:textColor="@android:color/black"
+        	    	    android:textSize="15sp" />
         				                
 	        	</LinearLayout>
 

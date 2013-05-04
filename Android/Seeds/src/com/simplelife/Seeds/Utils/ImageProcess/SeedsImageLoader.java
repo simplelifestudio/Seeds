@@ -47,8 +47,6 @@ public class SeedsImageLoader {
 	public void DisplayImage(String url, ImageView imageView, int type) {
 		Log.i(tag,"Trying to display the image, url=" + url);
 		
-		// Set the scale type
-		//imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 		if(url == "Nothing To Show")
 		{
 			// Nothing to show here
@@ -112,7 +110,9 @@ public class SeedsImageLoader {
 		             resizedBitmap = Bitmap.createBitmap(origBitmap,0,0,width,height,matrix,true); 
 		         }  
 		     } 
-			origBitmap.recycle();
+			// origBitmap.recycle();
+			// Is it correct
+			//origBitmap= resizedBitmap;
 			
 		}
 		
@@ -179,14 +179,11 @@ public class SeedsImageLoader {
 			BitmapFactory.Options o = new BitmapFactory.Options();
 			o.inJustDecodeBounds = true;
 			BitmapFactory.decodeStream(new FileInputStream(f), null, o);
-			/*BitmapFactory.decodeStream(
-					new FileInputStream(new FileInputStream(f), 32*1024), 
-					null, o);*/
 			
-			final int REQUIRED_SIZE = 70;		
-			//final int REQUIRED_SIZE = 280;
+			//final int REQUIRED_SIZE = 70;		
+			final int REQUIRED_SIZE = 280;
 			int width_tmp = o.outWidth, height_tmp = o.outHeight;
-			Log.i(tag,"Decoding bitmap, widthtmp="+width_tmp+"heightmp="+height_tmp);
+			//Log.i(tag,"Decoding bitmap, widthtmp="+width_tmp+"heightmp="+height_tmp);
 			while (true) {
 				if (width_tmp / 2 < REQUIRED_SIZE
 						|| height_tmp / 2 < REQUIRED_SIZE)
@@ -197,12 +194,6 @@ public class SeedsImageLoader {
 			}
 
 			BitmapFactory.Options o2 = new BitmapFactory.Options();
-			// Temp solution here to prevent the app from crashing
-			/*while(height_tmp > 240)
-			{
-				height_tmp /= 2;
-				scale *= 2;
-			}*/
 			o2.inSampleSize = scale;
 			return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
 			//return BitmapFactory.decodeStream(

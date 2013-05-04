@@ -39,28 +39,31 @@ public final class R {
         public static final int seedslist_selector=0x7f020012;
     }
     public static final class id {
-        public static final int NavigateHome=0x7f08000f;
-        public static final int NavigateTitle=0x7f08000e;
+        public static final int NavigateHome=0x7f080012;
+        public static final int NavigateTitle=0x7f080011;
+        public static final int Seeds_Title=0x7f080006;
         public static final int befyesterday_btn=0x7f080000;
         public static final int details_header=0x7f080004;
-        public static final int gotoGrid=0x7f080006;
+        public static final int gotoGrid=0x7f080005;
         public static final int image_slide_page=0x7f080009;
         public static final int layout_circle_images=0x7f08000a;
         public static final int linearLayout_divider=0x7f08000b;
         public static final int linearlayout_images_slide=0x7f080008;
         public static final int linearlayout_news_main=0x7f080007;
-        public static final int list_image=0x7f080012;
-        public static final int menu_settings=0x7f080017;
-        public static final int seed_info=0x7f08000c;
-        public static final int seeds_format=0x7f080015;
-        public static final int seeds_list=0x7f080010;
-        public static final int seeds_size=0x7f080014;
-        public static final int seeds_title=0x7f080013;
-        public static final int textView1=0x7f080016;
-        public static final int thumbnail=0x7f080011;
+        public static final int list_image=0x7f080015;
+        public static final int menu_settings=0x7f08001a;
+        public static final int seed_info_format=0x7f08000d;
+        public static final int seed_info_link=0x7f08000f;
+        public static final int seed_info_name=0x7f08000c;
+        public static final int seed_info_size=0x7f08000e;
+        public static final int seeds_format=0x7f080018;
+        public static final int seeds_list=0x7f080013;
+        public static final int seeds_size=0x7f080017;
+        public static final int seeds_title=0x7f080016;
+        public static final int textView1=0x7f080019;
+        public static final int thumbnail=0x7f080014;
         public static final int today_btn=0x7f080002;
-        public static final int top_navigate=0x7f08000d;
-        public static final int tv_netease_top=0x7f080005;
+        public static final int top_navigate=0x7f080010;
         public static final int update_btn=0x7f080003;
         public static final int yesterday_btn=0x7f080001;
     }
