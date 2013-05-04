@@ -10,15 +10,21 @@
 
 @implementation CommunicationModule
 
+@synthesize spider = _spider;
+
 -(void) initModule
 {
     [self setModuleIdentity:NSLocalizedString(@"Communication Module", nil)];
     [self.serviceThread setName:NSLocalizedString(@"Communication Module Thread", nil)];
     [self setKeepAlive:FALSE];
+    
+    _spider = [[SeedsSpider alloc] init];
 }
 
 -(void) releaseModule
 {
+    [self setSpider:nil];
+    
     [super releaseModule];
 }
 

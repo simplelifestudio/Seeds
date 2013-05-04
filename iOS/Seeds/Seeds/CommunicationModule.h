@@ -7,7 +7,10 @@
 //
 
 #import "CBModuleAbstractImpl.h"
+#import "SeedsSpider.h"
 
 @interface CommunicationModule : CBModuleAbstractImpl
+
+@property (nonatomic, strong) SeedsSpider* spider;
 
 @end

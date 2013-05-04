@@ -63,6 +63,8 @@
 		C5AB11491732BFEE007EEE25 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11441732BFEE007EEE25 /* TFHppleElement.m */; };
 		C5AB114A1732BFEE007EEE25 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11471732BFEE007EEE25 /* XPathQuery.m */; };
 		C5AB114C1732C01C007EEE25 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */; };
+		C5AB114F17333A90007EEE25 /* SeedsSpider.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB114E17333A90007EEE25 /* SeedsSpider.m */; };
+		C5AB115217333EA6007EEE25 /* CBDateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB115117333EA6007EEE25 /* CBDateUtils.m */; };
 		C5AB63451730A7CD00A3F1E6 /* SeedPictureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */; };
 		C5AB63501730B95A00A3F1E6 /* todo_list.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */; };
 		C5AB63581730C1ED00A3F1E6 /* CBUIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */; };
@@ -177,6 +179,10 @@
 		C5AB11461732BFEE007EEE25 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
 		C5AB11471732BFEE007EEE25 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
 		C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
+		C5AB114D17333A90007EEE25 /* SeedsSpider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedsSpider.h; sourceTree = "<group>"; };
+		C5AB114E17333A90007EEE25 /* SeedsSpider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedsSpider.m; sourceTree = "<group>"; };
+		C5AB115017333EA6007EEE25 /* CBDateUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBDateUtils.h; sourceTree = "<group>"; };
+		C5AB115117333EA6007EEE25 /* CBDateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBDateUtils.m; sourceTree = "<group>"; };
 		C5AB63431730A7CD00A3F1E6 /* SeedPictureScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedPictureScrollView.h; sourceTree = "<group>"; };
 		C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedPictureScrollView.m; sourceTree = "<group>"; };
 		C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = todo_list.rtf; sourceTree = "<group>"; };
@@ -205,6 +211,8 @@
 		C531834317239FF300264530 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C5AB115017333EA6007EEE25 /* CBDateUtils.h */,
+				C5AB115117333EA6007EEE25 /* CBDateUtils.m */,
 				C5AB63561730C1ED00A3F1E6 /* CBUIUtils.h */,
 				C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */,
 				C531833717237FF700264530 /* CBLog.h */,
@@ -363,6 +371,8 @@
 			children = (
 				C5318340172390A400264530 /* CommunicationModule.h */,
 				C5318341172390A400264530 /* CommunicationModule.m */,
+				C5AB114D17333A90007EEE25 /* SeedsSpider.h */,
+				C5AB114E17333A90007EEE25 /* SeedsSpider.m */,
 			);
 			name = Communication;
 			path = ..;
@@ -577,6 +587,8 @@
 				C5AB11481732BFEE007EEE25 /* TFHpple.m in Sources */,
 				C5AB11491732BFEE007EEE25 /* TFHppleElement.m in Sources */,
 				C5AB114A1732BFEE007EEE25 /* XPathQuery.m in Sources */,
+				C5AB114F17333A90007EEE25 /* SeedsSpider.m in Sources */,
+				C5AB115217333EA6007EEE25 /* CBDateUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

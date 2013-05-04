@@ -71,6 +71,8 @@
     [appDelegate.communicationModule initModule];
     [self updateProgress:appDelegate.communicationModule.moduleIdentity andPercents:0.5];
     [appDelegate.communicationModule startService];
+//    SeedsSpider* spider = appDelegate.communicationModule.spider;
+//    [spider pullSeedsInfo];
 
     // Database Module
     appDelegate.databaseModule = [[DatabaseModule alloc] initWithIsIndividualThreadNecessary:FALSE];
