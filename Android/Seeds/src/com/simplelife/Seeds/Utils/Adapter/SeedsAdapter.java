@@ -62,7 +62,7 @@ public class SeedsAdapter extends BaseAdapter {
 		size.setText(seedList.get(SeedsListPerDayActivity.KEY_SIZE));
 		format.setText(seedList.get(SeedsListPerDayActivity.KEY_FORMAT));
 		imageLoader.DisplayImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL),
-				thumb_image);
+				thumb_image,0);
 		return vi;
 	}
 }

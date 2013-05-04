@@ -156,7 +156,7 @@ public class SeedsServlet extends HttpServlet {
 	 *            : output stream of http response
 	 */
 	private void executeCommand(JSONObject jsonObj, PrintWriter out) {
-		JsonCommandInterface jsonCmd = JsonCommandFactory.CreateJsonCommand(jsonObj);
+		IJsonCommand jsonCmd = JsonCommandFactory.CreateJsonCommand(jsonObj);
 		jsonCmd.Execute(jsonObj, out);
 	}
 }

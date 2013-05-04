@@ -20,7 +20,7 @@ public class SeedsStartActivity extends Activity {
 		
 		// Fade in and fade out
 		AlphaAnimation fadeShow = new AlphaAnimation(0.3f,1.0f);
-		fadeShow.setDuration(2000);
+		fadeShow.setDuration(1000);
 		startView.startAnimation(fadeShow);
 		
 		// Start the DB process

@@ -1,5 +1,6 @@
 package com.simplelife.Seeds.Utils.ImageProcess;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,6 +20,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.simplelife.Seeds.R;
@@ -30,6 +33,8 @@ public class SeedsImageLoader {
 	private Map<ImageView, String> imageViews = Collections
 			.synchronizedMap(new WeakHashMap<ImageView, String>());
 	ExecutorService executorService;
+	
+	private static String tag = "ImageLoader"; // for LogCat
 
 	public SeedsImageLoader(Context context) {
 		tFileCache = new SeedsFileCache(context);
@@ -39,16 +44,95 @@ public class SeedsImageLoader {
 	// Change a image, I do not like black one...
 	final int stub_id = R.drawable.no_image;
 
-	public void DisplayImage(String url, ImageView imageView) {
+	public void DisplayImage(String url, ImageView imageView, int type) {
+		Log.i(tag,"Trying to display the image, url=" + url);
+		
+		// Set the scale type
+		//imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+		if(url == "Nothing To Show")
+		{
+			// Nothing to show here
+			Log.i(tag,"Nothing to show inside this view!");
+			imageView.setImageResource(stub_id);
+			return;
+		}
+		
 		imageViews.put(imageView, url);
 		Bitmap bitmap = tMemoryCache.get(url);
+		Bitmap bitmapToShow;
 		if (bitmap != null)
-			imageView.setImageBitmap(bitmap);
+		{
+			Log.i(tag,"Bitmap already exists, Resize the bitmapurl=" + url);
+			bitmapToShow = resizeBitmap(bitmap,type);
+			imageView.setImageBitmap(bitmapToShow);
+		}
 		else {
+			//Log.i(tag,"Dowload the image, url=" + url);
 			queuePhoto(url, imageView);
 			imageView.setImageResource(stub_id);
 		}
 	}
+	
+	private Bitmap resizeBitmap(Bitmap origBitmap, int type) {
+		Bitmap resizedBitmap = null;
+		// New to modify here
+		//int newWidth = 640;
+		float newWidth = 540;
+		
+		if(0 == type)
+		{
+			resizedBitmap = origBitmap;
+		}
+		else if(1 == type)
+		{
+			int width  = origBitmap.getWidth();
+			int height = origBitmap.getHeight();
+			float temp = ((float)height)/((float)width);
+			int newHeight = (int)((newWidth)*temp);
+			if(newHeight > 960)
+			{
+				newHeight = 960;
+				newWidth  = newHeight / temp;				
+			}
+			Log.i(tag,"Resizing bitmap, width="+width+" height="+height);
+			Log.i(tag,"Resizing bitmap, newWidth="+newWidth+" newHeight="+newHeight);
+			
+			float scaleWidth = ((float)newWidth)/width;
+			float scaleHeight = ((float)newHeight)/height;
+			Log.i(tag,"Resizing bitmap, scaleWidth="+scaleWidth+"scaleHeight="+scaleHeight);
+			Matrix matrix = new Matrix();
+			matrix.postScale(scaleWidth, scaleHeight);
+			//resizedBitmap = Bitmap.createBitmap(origBitmap,0,0,width,height,matrix,true);
+			try {  
+		    	 resizedBitmap = Bitmap.createBitmap(origBitmap,0,0,width,height,matrix,true);
+		     } catch (OutOfMemoryError e) {  
+		         while(resizedBitmap == null) {  
+		             System.gc();  
+		             System.runFinalization();  
+		             resizedBitmap = Bitmap.createBitmap(origBitmap,0,0,width,height,matrix,true); 
+		         }  
+		     } 
+			origBitmap.recycle();
+			
+		}
+		
+		return resizedBitmap;
+	}
+	
+	/*
+	public int FetchImage(String url) {
+		Bitmap bitmap = tMemoryCache.get(url);
+		if (bitmap != null)
+		{
+			return bitmap;
+		}
+		else
+		{
+			queuePhoto(url, imageView);
+			imageView.setImageResource(stub_id);			
+		}
+		
+	}*/
 
 	private void queuePhoto(String url, ImageView imageView) {
 		PhotoToLoad p = new PhotoToLoad(url, imageView);
@@ -67,6 +151,7 @@ public class SeedsImageLoader {
 		try {
 			Bitmap bitmap = null;
 			URL imageUrl = new URL(url);
+			Log.i(tag,"Working on fetching the image from internet,url=" + imageUrl);
 			HttpURLConnection conn = (HttpURLConnection) imageUrl
 					.openConnection();
 			conn.setConnectTimeout(30000);
@@ -74,8 +159,10 @@ public class SeedsImageLoader {
 			conn.setInstanceFollowRedirects(true);
 			InputStream is = conn.getInputStream();
 			OutputStream os = new FileOutputStream(f);
+			//Log.i(tag,"Working on fetching the image InputStream=" + is);
 			copyStream(is, os);
-			os.close();
+			
+			//os.close();
 			bitmap = decodeFile(f);
 			return bitmap;
 		} catch (Exception ex) {
@@ -88,14 +175,18 @@ public class SeedsImageLoader {
 	private Bitmap decodeFile(File f) {
 		try {
 
+			int scale = 1;
 			BitmapFactory.Options o = new BitmapFactory.Options();
 			o.inJustDecodeBounds = true;
 			BitmapFactory.decodeStream(new FileInputStream(f), null, o);
-
+			/*BitmapFactory.decodeStream(
+					new FileInputStream(new FileInputStream(f), 32*1024), 
+					null, o);*/
 			
-			final int REQUIRED_SIZE = 70;
+			final int REQUIRED_SIZE = 70;		
+			//final int REQUIRED_SIZE = 280;
 			int width_tmp = o.outWidth, height_tmp = o.outHeight;
-			int scale = 1;
+			Log.i(tag,"Decoding bitmap, widthtmp="+width_tmp+"heightmp="+height_tmp);
 			while (true) {
 				if (width_tmp / 2 < REQUIRED_SIZE
 						|| height_tmp / 2 < REQUIRED_SIZE)
@@ -106,8 +197,17 @@ public class SeedsImageLoader {
 			}
 
 			BitmapFactory.Options o2 = new BitmapFactory.Options();
+			// Temp solution here to prevent the app from crashing
+			/*while(height_tmp > 240)
+			{
+				height_tmp /= 2;
+				scale *= 2;
+			}*/
 			o2.inSampleSize = scale;
 			return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+			//return BitmapFactory.decodeStream(
+			//		new BufferedInputStream(new FileInputStream(f), 32*1024),
+			//		null,o2);
 		} catch (FileNotFoundException e) {
 		}
 		return null;
@@ -165,7 +265,9 @@ public class SeedsImageLoader {
 			if (imageViewReused(photoToLoad))
 				return;
 			if (bitmap != null)
-				photoToLoad.imageView.setImageBitmap(bitmap);
+				//bitmapToShow = resizeBitmap(bitmap,type);
+				//photoToLoad.imageView.setImageBitmap(bitmap);
+				photoToLoad.imageView.setImageBitmap(resizeBitmap(bitmap,1));
 			else
 				photoToLoad.imageView.setImageResource(stub_id);
 		}

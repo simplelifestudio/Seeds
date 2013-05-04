@@ -1,7 +1,9 @@
 package com.simplelife.Seeds.Utils.ImageProcess;
 
 import java.io.File;
+
 import android.content.Context;
+import android.util.Log;
  
 public class SeedsFileCache {
      
@@ -11,11 +13,12 @@ public class SeedsFileCache {
         
     	// Find a place to cache the images
         if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED))
-            cacheDir = new File(android.os.Environment.getExternalStorageDirectory(),"SeedsList");
+            cacheDir = new File(android.os.Environment.getExternalStorageDirectory(),"Seeds");
         else
             cacheDir=context.getCacheDir();
         if(!cacheDir.exists())
             cacheDir.mkdirs();
+        Log.i("SeedsFileCache","Working on creating the cache folder " + cacheDir);
     }
      
     public File getFile(String url){

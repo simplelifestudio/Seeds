@@ -5,10 +5,10 @@
     android:fillViewport="true" >
 
     <RelativeLayout
-        android:id="@+id/layout_top"
+        android:id="@+id/details_header"
         android:layout_width="match_parent"
         android:layout_height="40dip"
-        android:background="#990000" >
+        android:background="#dbdbdc" >
 
         <TextView
             android:id="@+id/tv_netease_top"
@@ -16,115 +16,137 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dip"
-            android:textSize="20sp"
-            android:textColor="@android:color/white"
-            android:text="@string/seeds_details_top" />
+            android:paddingLeft="100dp"
+            android:text="@string/seeds_details_top"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
         
-    </RelativeLayout>
-    
-    <!-- com.image.indicator.control.ScrollViewExtend
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"-->
-        
-	    <LinearLayout 
-	        android:id="@+id/linearlayout_news_main"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="vertical">
-	        
-	        <LinearLayout 
-		        android:id="@+id/linearlayout_images_slide"
-		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
-		        android:orientation="vertical">
-	        
-	        <RelativeLayout
-		       android:id="@+id/relativelayout_image_slide"
-		       android:layout_width="wrap_content"
-		       android:layout_height="wrap_content"
-		       android:orientation="vertical"
-		       android:focusable="true" >
-	       
-		       <android.support.v4.view.ViewPager
-			       android:id="@+id/image_slide_page"
-			       android:layout_width="fill_parent"
-			       android:layout_height="280dip"
-			       android:focusable="true" />
+        <!-- LinearLayout 
+	        android:gravity="center"
+		    android:layout_gravity="center_vertical" 
+		    android:orientation="vertical"
+		    android:layout_width="wrap_content" 
+		    android:layout_height="wrap_content" 
+		    android:layout_centerVertical="true"
+		    android:layout_marginLeft="5dip">
+		
+		    	<TextView android:textSize="13.5sp" 
+					android:gravity="center" 
+					android:paddingLeft="100dp" 
+					android:clickable="true" 
+					android:text="@string/seeds_details_top" 
+					android:layout_width="71dp"
+					android:textColor="@android:color/black"
+					android:layout_height="33dp" />
+		
+		</LinearLayout-->
 	
-		       <RelativeLayout
-		           android:id="@+id/layout_title_text"
-		           android:layout_width="match_parent"
-		           android:layout_height="30dp"
-		           android:layout_alignParentBottom="true"
-		           android:layout_alignParentLeft="true"
-		           android:background="#55000000"
-		           style="@style/Transparent" >
+	    <ImageView
+			android:id="@+id/gotoGrid"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+        	android:layout_marginRight="5dip"
+        	android:layout_centerVertical="true"
+        	android:gravity="right"			
+			android:src="@drawable/arrow" />
+	</RelativeLayout>
 
-		           <RelativeLayout
-		               android:id="@+id/layout_bar_image"
-		               android:layout_width="match_parent"
-		               android:layout_height="1dip"
-		               android:layout_alignParentLeft="true"
-		               android:layout_alignParentTop="true"
-		               android:background="@drawable/image_page_bg" >
-		           </RelativeLayout>
-	           
-	           </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/linearlayout_news_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/details_header"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical" >
+
+		<LinearLayout 
+	    	android:id="@+id/linearlayout_images_slide"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+		    android:layout_gravity="center_horizontal"
+			android:orientation="vertical">
+	        
+	    	<!-- RelativeLayout
+			    android:id="@+id/relativelayout_image_slide"
+		    	android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:orientation="vertical"
+		    	android:focusable="true" -->
+	       
+		    	<android.support.v4.view.ViewPager
+		    	    android:id="@+id/image_slide_page"
+		    	    android:layout_width="wrap_content"
+		    	    android:layout_height="320dip"
+		    	    android:layout_gravity="center_horizontal"
+		    	    android:focusable="true"
+		    	    android:gravity="center"
+		    	     />
+
+		    	<!--  android:layout_height="320dip"
+		    	android:layout_gravity="center_horizontal"
+		    	    android:scaleType="centerInside"-->
 	    	
-	    	</RelativeLayout>
+	    	<!-- /RelativeLayout-->
 	    	
-	    	</LinearLayout>
+		</LinearLayout>
 	    	
-	        <LinearLayout 
-	            android:layout_height="match_parent"
-	            android:layout_width="fill_parent"
-	            android:orientation="vertical">
+		<LinearLayout 
+	    	android:layout_height="match_parent"
+	    	android:layout_width="fill_parent"
+	    	android:orientation="vertical">
 	            
-	            <LinearLayout
-			        android:layout_width="match_parent"
-			        android:layout_height="35dp"
-			        android:orientation="vertical"
-			        android:background="@android:color/white">
+	    	<LinearLayout
+	        	android:layout_width="match_parent"
+	        	android:layout_height="35dp"
+				android:orientation="vertical"
+				android:background="@android:color/white">
 		       
-	                <LinearLayout
-	                    android:id="@+id/layout_circle_images"
-	                    android:layout_width="match_parent"
-	                    android:layout_height="15dp"
-	                    android:layout_marginTop="10dp"
-	                    android:layout_marginRight="30dp"
-	                    android:layout_marginLeft="15dp"
-	                    android:gravity="right">
-	                    
-	                </LinearLayout>
-	        	
-	            	<LinearLayout
-				        android:id="@+id/linearLayout_divider"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:orientation="vertical"
-				        android:background="@drawable/divider_horizontal_line" >
-			    	</LinearLayout>
-			    	
+	        	<LinearLayout
+	            	android:id="@+id/layout_circle_images"
+	            	android:layout_width="match_parent"
+	            	android:layout_height="15dp"
+	            	android:layout_marginTop="10dp"
+	            	android:layout_marginRight="30dp"
+	            	android:layout_marginLeft="15dp"
+	            	android:gravity="right">	                    
 	        	</LinearLayout>
 	        	
-	            <LinearLayout
-			        android:layout_width="match_parent"
-			        android:layout_height="fill_parent"
-			        android:orientation="vertical"
-			        android:background="@android:color/white">
-	            	
-					<ImageView
-				        android:id="@+id/imageView1"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:src="@drawable/item_topic" />
-	                
-	            </LinearLayout>
+	        	<LinearLayout
+			    	android:id="@+id/linearLayout_divider"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="vertical"
+					android:background="@drawable/divider_horizontal_line" >
+				</LinearLayout>
+			    	
+	    	</LinearLayout>
 	        	
-	        </LinearLayout>
-	    
-	    </LinearLayout>
-	    
-    <!--  /com.image.indicator.control.ScrollViewExtend-->
-    
+	    	<com.simplelife.Seeds.Utils.Control.SeedsScrollViewExtend
+            	android:layout_width="match_parent"
+            	android:layout_height="fill_parent">
+	        	<LinearLayout
+		        	android:layout_width="match_parent"
+			    	android:layout_height="fill_parent"
+			    	android:orientation="vertical"
+			    	android:background="@android:color/white">
+	            	
+        	    	<TextView
+            	    	android:id="@+id/seed_info"
+            			android:layout_width="wrap_content"
+            			android:layout_height="wrap_content"
+            			android:layout_centerVertical="true"
+            			android:layout_marginLeft="10dip"
+            			android:paddingLeft="100dp"
+            			android:text="Put the seed info here!!"
+            			android:textColor="@android:color/black"
+            			android:textSize="20sp" />
+        				                
+	        	</LinearLayout>
+
+	    	</com.simplelife.Seeds.Utils.Control.SeedsScrollViewExtend>	        	
+	        
+		</LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

@@ -13,10 +13,10 @@ public class JsonCommandFactory {
 	private final static String _jsonCommandSeedsByDatesReq = "SeedsByDatesRequest";
 	private final static String _jsonCommandSeedsByDatesRes = "SeedsByDatesResponse";
 	
-	public static JsonCommandInterface CreateJsonCommand(JSONObject jsonObj)
+	public static IJsonCommand CreateJsonCommand(JSONObject jsonObj)
 	{
 		String command = jsonObj.getString(_jsonCommandKeyword);
-		JsonCommandInterface jsonCmd = null;
+		IJsonCommand jsonCmd = null;
 		if (command == _jsonCommandAlohaReq)
 		{
 			jsonCmd = new JsonCommandAlohaReq();

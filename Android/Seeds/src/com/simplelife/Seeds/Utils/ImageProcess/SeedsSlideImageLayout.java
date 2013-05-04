@@ -3,8 +3,10 @@ package com.simplelife.Seeds.Utils.ImageProcess;
 import java.util.ArrayList;
 
 import com.simplelife.Seeds.R;
+import com.simplelife.Seeds.SeedsListPerDayActivity;
 
 import android.app.Activity;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -27,25 +29,34 @@ public class SeedsSlideImageLayout {
 	// To indicate the current image
 	private int pageIndex = 0;
 	
+	public SeedsImageLoader imageLoader; 
+	
 	public SeedsSlideImageLayout(Activity activity) {
 
 		this.activity = activity;
 		
 		// Initialize the image list
 		imageList = new ArrayList<ImageView>();
+		
+		imageLoader = new SeedsImageLoader(activity.getApplicationContext());
 	}
 	
-	public View getSlideImageLayout(int index){
+	public View getSlideImageLayout(String imageUrl){
+	//public View getSlideImageLayout(int index){
 		LinearLayout imageLinerLayout = new LinearLayout(activity);
 		LinearLayout.LayoutParams imageLinerLayoutParames = new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.WRAP_CONTENT, 
 				LinearLayout.LayoutParams.WRAP_CONTENT,
-				1);
+				Gravity.CENTER);
 		
 		ImageView iv = new ImageView(activity);
-		iv.setBackgroundResource(index);
+		//iv.setBackgroundResource(index);		
+		imageLoader.DisplayImage(imageUrl,iv,1);
+		
 		iv.setOnClickListener(new ImageOnClickListener());
-		imageLinerLayout.addView(iv,imageLinerLayoutParames);
+		imageLinerLayout.setGravity(Gravity.CENTER);
+		//iv.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+		imageLinerLayout.addView(iv,imageLinerLayoutParames);		
 		imageList.add(iv);
 		
 		return imageLinerLayout;
