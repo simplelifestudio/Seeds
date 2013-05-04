@@ -73,7 +73,9 @@
     [appDelegate.communicationModule startService];
 //    SeedsSpider* spider = appDelegate.communicationModule.spider;
 //    [spider pullSeedsInfo];
-
+    ServerAgent* serverAgent = appDelegate.communicationModule.serverAgent;
+    [serverAgent alohaTest];
+    
     // Database Module
     appDelegate.databaseModule = [[DatabaseModule alloc] initWithIsIndividualThreadNecessary:FALSE];
     [appDelegate.databaseModule initModule];

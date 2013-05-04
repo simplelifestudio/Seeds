@@ -8,9 +8,11 @@
 
 #import "CBModuleAbstractImpl.h"
 #import "SeedsSpider.h"
+#import "ServerAgent.h"
 
 @interface CommunicationModule : CBModuleAbstractImpl
 
 @property (nonatomic, strong) SeedsSpider* spider;
+@property (nonatomic, strong) ServerAgent* serverAgent;
 
 @end

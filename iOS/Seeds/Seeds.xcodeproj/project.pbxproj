@@ -75,6 +75,8 @@
 		C5AB116E1734BAA4007EEE25 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11641734BAA4007EEE25 /* AFXMLRequestOperation.m */; };
 		C5AB116F1734BAA4007EEE25 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11661734BAA4007EEE25 /* UIImageView+AFNetworking.m */; };
 		C5AB11711734BB21007EEE25 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5AB11701734BB20007EEE25 /* MobileCoreServices.framework */; };
+		C5AB11741734EF39007EEE25 /* ServerAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11731734EF39007EEE25 /* ServerAgent.m */; };
+		C5AB1177173524B2007EEE25 /* JSONMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB1176173524B2007EEE25 /* JSONMessage.m */; };
 		C5AB63451730A7CD00A3F1E6 /* SeedPictureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */; };
 		C5AB63501730B95A00A3F1E6 /* todo_list.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */; };
 		C5AB63581730C1ED00A3F1E6 /* CBUIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */; };
@@ -213,6 +215,11 @@
 		C5AB11651734BAA4007EEE25 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		C5AB11661734BAA4007EEE25 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		C5AB11701734BB20007EEE25 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		C5AB11721734EF39007EEE25 /* ServerAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerAgent.h; sourceTree = "<group>"; };
+		C5AB11731734EF39007EEE25 /* ServerAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerAgent.m; sourceTree = "<group>"; };
+		C5AB1175173524B2007EEE25 /* JSONMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONMessage.h; sourceTree = "<group>"; };
+		C5AB1176173524B2007EEE25 /* JSONMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONMessage.m; sourceTree = "<group>"; };
+		C5AB11781735461C007EEE25 /* JSONMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONMessageDelegate.h; sourceTree = "<group>"; };
 		C5AB63431730A7CD00A3F1E6 /* SeedPictureScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedPictureScrollView.h; sourceTree = "<group>"; };
 		C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedPictureScrollView.m; sourceTree = "<group>"; };
 		C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = todo_list.rtf; sourceTree = "<group>"; };
@@ -406,6 +413,11 @@
 				C5318341172390A400264530 /* CommunicationModule.m */,
 				C5AB114D17333A90007EEE25 /* SeedsSpider.h */,
 				C5AB114E17333A90007EEE25 /* SeedsSpider.m */,
+				C5AB11721734EF39007EEE25 /* ServerAgent.h */,
+				C5AB11731734EF39007EEE25 /* ServerAgent.m */,
+				C5AB1175173524B2007EEE25 /* JSONMessage.h */,
+				C5AB1176173524B2007EEE25 /* JSONMessage.m */,
+				C5AB11781735461C007EEE25 /* JSONMessageDelegate.h */,
 			);
 			name = Communication;
 			path = ..;
@@ -657,6 +669,8 @@
 				C5AB116D1734BAA4007EEE25 /* AFURLConnectionOperation.m in Sources */,
 				C5AB116E1734BAA4007EEE25 /* AFXMLRequestOperation.m in Sources */,
 				C5AB116F1734BAA4007EEE25 /* UIImageView+AFNetworking.m in Sources */,
+				C5AB11741734EF39007EEE25 /* ServerAgent.m in Sources */,
+				C5AB1177173524B2007EEE25 /* JSONMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

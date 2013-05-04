@@ -11,6 +11,7 @@
 @implementation CommunicationModule
 
 @synthesize spider = _spider;
+@synthesize serverAgent = _serverAgent;
 
 -(void) initModule
 {
@@ -19,12 +20,13 @@
     [self setKeepAlive:FALSE];
     
     _spider = [[SeedsSpider alloc] init];
+    _serverAgent = [[ServerAgent alloc] init];
 }
 
 -(void) releaseModule
 {
     [self setSpider:nil];
-    
+    [self setServerAgent:nil];
     [super releaseModule];
 }
 
@@ -37,9 +39,7 @@
 
 -(void) processService
 {
-    
     [NSThread sleepForTimeInterval:1.0];
-    
 }
 
 
