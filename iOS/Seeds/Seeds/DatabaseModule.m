@@ -79,7 +79,7 @@
         BOOL optCode = [fileManager fileExistsAtPath:_databaseFilePath];
         DLog(@"Database File in App Sandbox exists: %@", (optCode) ? @"YES" : @"NO");
         
-        NSError* error;
+        NSError* error = nil;
         BOOL needCopy = NO;
         if (optCode)
         {

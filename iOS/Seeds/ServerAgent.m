@@ -30,7 +30,7 @@
             {
 //                NSDictionary* message = (NSDictionary*)JSON;
                 
-                NSError* error = [[NSError alloc] init];
+                NSError* error = nil;
                 NSDictionary* messageContent = [NSJSONSerialization JSONObjectWithData:JSON options:NSJSONReadingMutableLeaves error:&error];
                 
                 JSONMessage* responseMessage = [JSONMessage constructWithContent:messageContent];

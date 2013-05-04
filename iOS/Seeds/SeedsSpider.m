@@ -38,7 +38,7 @@
     [titleStr appendString:@"]"];
     [titleStr appendString:@"最新BT合集"];
 
-    NSError *error = [[NSError alloc] init];
+    NSError* error = nil;
 #warning http://stackoverflow.com/questions/9584663/datawithcontentsofurl-and-http-302-redirects
     NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:LINK_SEEDLIST_CHANNEL] options:NSDataReadingMappedIfSafe error:&error];
     DLog(@"Access Link: %@ end error = %d", LINK_SEEDLIST_CHANNEL, [error code]);
@@ -68,7 +68,7 @@
     
     if (nil != link && 0 < link.length)
     {
-        NSError* error = [[NSError alloc] init];
+        NSError* error = nil;
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:link] options:NSDataReadingMappedIfSafe error:&error];
         DLog(@"Access Link: %@ end error = %d", link, [error code]);
         
