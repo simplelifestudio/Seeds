@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 
+// 测试中文注释
 @implementation AppDelegate
 
 @synthesize communicationModule = _communicationModule;
