@@ -41,6 +41,10 @@
         <activity
             android:name="com.simplelife.Seeds.SeedsDetailsActivity"  >          
         </activity>
+        
+        <activity
+            android:name="com.simplelife.Seeds.SeedsReviewActivity"  >          
+        </activity>
     
     </application>
 

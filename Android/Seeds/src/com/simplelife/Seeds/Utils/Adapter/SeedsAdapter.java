@@ -57,7 +57,7 @@ public class SeedsAdapter extends BaseAdapter {
 		HashMap<String, String> seedList = new HashMap<String, String>();
 		seedList = data.get(position);
 
-		// 设置ListView的相关值
+		// Set the values for the list view
 		title.setText(seedList.get(SeedsListPerDayActivity.KEY_TITLE));
 		size.setText(seedList.get(SeedsListPerDayActivity.KEY_SIZE));
 		format.setText(seedList.get(SeedsListPerDayActivity.KEY_FORMAT));

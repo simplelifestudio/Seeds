@@ -1,6 +1,5 @@
 package com.simplelife.Seeds.Utils.ImageProcess;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -43,7 +42,7 @@ public class SeedsImageLoader {
 
 	// Change a image, I do not like black one...
 	final int stub_id = R.drawable.no_image;
-
+	
 	public void DisplayImage(String url, ImageView imageView, int type) {
 		Log.i(tag,"Trying to display the image, url=" + url);
 		

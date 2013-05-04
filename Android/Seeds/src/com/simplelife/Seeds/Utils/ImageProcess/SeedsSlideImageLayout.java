@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Matrix;
 import android.graphics.PointF;
+import android.os.Bundle;
 import android.util.FloatMath;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,6 +21,10 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
 import com.simplelife.Seeds.R;
+import com.simplelife.Seeds.SeedsDateListActivity;
+import com.simplelife.Seeds.SeedsDetailsActivity;
+import com.simplelife.Seeds.SeedsListPerDayActivity;
+import com.simplelife.Seeds.SeedsReviewActivity;
 
 /**
  * Generate Image slide layout
@@ -128,14 +134,23 @@ public class SeedsSlideImageLayout {
     	public void onClick(View v) {
     		// TODO Auto-generated method stub
     		//Toast.makeText(activity, "Excellent Image!!", Toast.LENGTH_SHORT).show();
-    		Log.i("SeedsImageLoader: ","Image Clicking Event!");
+    		/*Log.i("SeedsImageLoader: ","Image Clicking Event!");
     		myImageView = new ImageView(activity);
     		imageLoader.DisplayImage(mImageUrl,myImageView,1);
     		myImageView.setOnTouchListener(new ImageOnTouchListener());
     		final AlertDialog dialog = new AlertDialog.Builder(activity).create();
 
             dialog.setView(myImageView); 
-            dialog.show();
+            dialog.show();*/
+    		
+			Log.i("SeedsImageLoader: ", "Working on directing to the details ");
+			// Redirect to the new page
+			Intent intent = new Intent(activity, SeedsReviewActivity.class);
+			// Pass the date info
+		    Bundle bundle = new Bundle();
+		    bundle.putString("imgLink", mImageUrl);
+		    intent.putExtras(bundle);
+		    activity.startActivity(intent);
     		    		
     	}
     }
