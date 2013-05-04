@@ -144,11 +144,21 @@ public class SeedsDetailsActivity extends Activity{
 			tSeedInfo.moveToNext();			
 	    }
 		
-		TextView tTextView = (TextView)findViewById(R.id.seed_info);
-		//tTextView.setText("Put the seedinfo here!!");
-		//tTextView.setText(seedName.);		
-				
 		setContentView(tImgViewGroup);		
+		
+		// Show the details info of the seed
+		TextView tTextViewName   = (TextView)findViewById(R.id.seed_info_name);
+		TextView tTextViewFormat = (TextView)findViewById(R.id.seed_info_format);
+		TextView tTextViewSize   = (TextView)findViewById(R.id.seed_info_size);
+		TextView tTextViewLink   = (TextView)findViewById(R.id.seed_info_link);
+		if(null != seedName)
+			  tTextViewName.setText("Name:   "+seedName);
+		if(null != seedFormat)
+			tTextViewFormat.setText("Format: "+seedFormat);
+		if(null != seedSize)
+			  tTextViewSize.setText("Size:      "+seedSize);
+		if(null != seedLink)
+			  tTextViewLink.setText("Torrent: "+seedLink);
 		
 		// Setup ViewPager
 		tViewPager.setAdapter(new SeedsSlideImageAdapter());  
