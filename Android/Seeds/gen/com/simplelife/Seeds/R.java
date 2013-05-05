@@ -23,20 +23,22 @@ public final class R {
         public static final int divider_horizontal_line=0x7f020002;
         public static final int dot_none=0x7f020003;
         public static final int dot_selected=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int image01=0x7f020006;
-        public static final int image02=0x7f020007;
-        public static final int image03=0x7f020008;
-        public static final int image04=0x7f020009;
-        public static final int image05=0x7f02000a;
-        public static final int image_page_bg=0x7f02000b;
-        public static final int item_topic=0x7f02000c;
-        public static final int no_image=0x7f02000d;
-        public static final int rihanna=0x7f02000e;
-        public static final int seedsgradient_bg=0x7f02000f;
-        public static final int seedsgradient_bg_hover=0x7f020010;
-        public static final int seedsimage_bg=0x7f020011;
-        public static final int seedslist_selector=0x7f020012;
+        public static final int grid=0x7f020005;
+        public static final int grid_view=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int image01=0x7f020008;
+        public static final int image02=0x7f020009;
+        public static final int image03=0x7f02000a;
+        public static final int image04=0x7f02000b;
+        public static final int image05=0x7f02000c;
+        public static final int image_page_bg=0x7f02000d;
+        public static final int item_topic=0x7f02000e;
+        public static final int no_image=0x7f02000f;
+        public static final int rihanna=0x7f020010;
+        public static final int seedsgradient_bg=0x7f020011;
+        public static final int seedsgradient_bg_hover=0x7f020012;
+        public static final int seedsimage_bg=0x7f020013;
+        public static final int seedslist_selector=0x7f020014;
     }
     public static final class id {
         public static final int NavigateHome=0x7f080014;

@@ -39,7 +39,7 @@
         	android:layout_marginRight="5dip"
         	android:layout_centerVertical="true"
         	android:gravity="right"			
-			android:src="@drawable/arrow" />
+			android:src="@drawable/grid" />
 
 	    <TextView
 	        android:id="@+id/Seeds_Title"
