@@ -34,12 +34,35 @@ public class SeedsImageLoader {
 	ExecutorService executorService;
 	
 	private static String tag = "ImageLoader"; // for LogCat
+	
+	// Store the size of the current bitmap
+	private int mImgWidth  = 540; // Default Value
+	private int mImgHeight = 960; // Default Value
 
 	public SeedsImageLoader(Context context) {
 		tFileCache = new SeedsFileCache(context);
 		executorService = Executors.newFixedThreadPool(5);
 	}
 
+	// Note: We will finally change below methods into an array
+	// which can be used to map the width and height to img url
+	private void setCurrentImgWidth(int width){
+		mImgWidth = width;
+	}
+	
+	private void setCurrentImgHeight(int height){
+		mImgHeight = height;
+	}
+	
+	public int getCurrentImgWidth(){
+		return mImgWidth;
+	}
+	
+	public int getCurrentImgHeight(){
+		return mImgHeight;
+	}
+	
+	
 	// Change a image, I do not like black one...
 	final int stub_id = R.drawable.no_image;
 	
@@ -62,6 +85,10 @@ public class SeedsImageLoader {
 			Log.i(tag,"Bitmap already exists, Resize the bitmapurl=" + url);
 			bitmapToShow = resizeBitmap(bitmap,type);
 			imageView.setImageBitmap(bitmapToShow);
+			
+			// Set the current img size
+			setCurrentImgWidth(bitmapToShow.getWidth());
+			setCurrentImgHeight(bitmapToShow.getHeight());
 		}
 		else {
 			//Log.i(tag,"Dowload the image, url=" + url);
@@ -74,7 +101,7 @@ public class SeedsImageLoader {
 		Bitmap resizedBitmap = null;
 		// New to modify here
 		//int newWidth = 640;
-		float newWidth = 540;
+		float newWidth = 640;
 		
 		if(0 == type)
 		{
@@ -96,7 +123,7 @@ public class SeedsImageLoader {
 			
 			float scaleWidth = ((float)newWidth)/width;
 			float scaleHeight = ((float)newHeight)/height;
-			Log.i(tag,"Resizing bitmap, scaleWidth="+scaleWidth+"scaleHeight="+scaleHeight);
+
 			Matrix matrix = new Matrix();
 			matrix.postScale(scaleWidth, scaleHeight);
 			//resizedBitmap = Bitmap.createBitmap(origBitmap,0,0,width,height,matrix,true);
@@ -180,9 +207,9 @@ public class SeedsImageLoader {
 			BitmapFactory.decodeStream(new FileInputStream(f), null, o);
 			
 			//final int REQUIRED_SIZE = 70;		
-			final int REQUIRED_SIZE = 280;
+			final int REQUIRED_SIZE = 200;
 			int width_tmp = o.outWidth, height_tmp = o.outHeight;
-			//Log.i(tag,"Decoding bitmap, widthtmp="+width_tmp+"heightmp="+height_tmp);
+
 			while (true) {
 				if (width_tmp / 2 < REQUIRED_SIZE
 						|| height_tmp / 2 < REQUIRED_SIZE)
@@ -255,9 +282,14 @@ public class SeedsImageLoader {
 			if (imageViewReused(photoToLoad))
 				return;
 			if (bitmap != null)
-				//bitmapToShow = resizeBitmap(bitmap,type);
-				//photoToLoad.imageView.setImageBitmap(bitmap);
-				photoToLoad.imageView.setImageBitmap(resizeBitmap(bitmap,1));
+			{
+				Bitmap bitmapToShow = resizeBitmap(bitmap,1);
+				photoToLoad.imageView.setImageBitmap(bitmapToShow);
+				//photoToLoad.imageView.setImageBitmap(resizeBitmap(bitmap,1));
+			    // Set the current img size
+			    setCurrentImgWidth(bitmapToShow.getWidth());
+			    setCurrentImgHeight(bitmapToShow.getHeight());
+			}
 			else
 				photoToLoad.imageView.setImageResource(stub_id);
 		}

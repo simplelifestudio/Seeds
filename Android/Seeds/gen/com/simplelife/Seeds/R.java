@@ -42,7 +42,7 @@ public final class R {
         public static final int NavigateHome=0x7f080014;
         public static final int NavigateTitle=0x7f080013;
         public static final int Seeds_FullScreen_ProgressBar=0x7f080010;
-        public static final int Seeds_Review=0x7f080011;
+        public static final int Seeds_LinearLayout_ViewArea=0x7f080011;
         public static final int Seeds_Title=0x7f080006;
         public static final int befyesterday_btn=0x7f080000;
         public static final int details_header=0x7f080004;

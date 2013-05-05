@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#000"
-    android:gravity="center" >
+    android:layout_height="fill_parent">
+   
+	<LinearLayout
+    	android:id="@+id/Seeds_LinearLayout_ViewArea"
+    	android:orientation="vertical"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:background="@android:color/black"	>
+	</LinearLayout>
 
-    <ImageView
-        android:id="@+id/Seeds_Review"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/hello_world"
-        android:src="@drawable/rihanna" />
-
-</LinearLayout>
+</RelativeLayout> 
