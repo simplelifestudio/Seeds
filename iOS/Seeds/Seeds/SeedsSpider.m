@@ -23,7 +23,26 @@
 #define ATTR_MOSAIC @"有碼無碼"
 #define ATTR_TORRENTLINK @"Link URL:"
 
+@interface SeedsSpider()
+{
+    SeedsVisitor* visitor;
+}
+
+@end
+
 @implementation SeedsSpider
+
+-(id) init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        visitor = [[SeedsVisitor alloc] init];
+    }
+    
+    return self;
+}
 
 -(NSString*) pullSeedListLinkByDate:(NSDate *)date
 {
@@ -78,44 +97,8 @@
         DLog(@"xql = %@", xql);
         
         NSArray* elements = [doc searchWithXPathQuery:xql];
-        BOOL seedCheck = NO;
-        Seed* seed = [[Seed alloc] init];
-        NSString* keyAttr = nil;
-        for (TFHppleElement* element in elements)
-        {
-            NSString* text = element.content;
-            if (nil != text && 0 < text.length)
-            {
-                DLog(@"text() = %@", text);
-
-                // Parse name
-                NSRange range = [text rangeOfString:ATTR_NAME];
-                if (0 < range.length )
-                {
-                    continue;
-                }
-                
-                // Parse format
-                range = [text rangeOfString:ATTR_FORMAT];
-                
-                // Parse size
-                range = [text rangeOfString:ATTR_SIZE];
-                
-                // Parse mosaic
-
-                
-                // Parse torrentLink
-                
-                if (seedCheck)
-                {
-                    [seedList addObject:seed];
-                }
-                else
-                {
-                    DLog(@"Seed has been ignored as missing key attribute: %@", keyAttr);
-                }
-            }
-        }
+        NSArray* seeds = [visitor seedsFromTFHppleElements:elements];
+        [seedList addObjectsFromArray:seeds];
     }
     
     return seedList;

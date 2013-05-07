@@ -10,6 +10,9 @@
 "Communication Module Thread" = "Communication Module Thread";
 "Database Module" = "Database Module";
 "Database Module Thread" = "Database Module Thread";
+"Spider Module" = "Spider Module";
+"Spider Module Thread" = "Spider Module Thread";
+
 "Loading: " = "Loading: ";
 "Mosaic" = "Mosaic";
 "No-Mosaic" = "No-Mosaic";

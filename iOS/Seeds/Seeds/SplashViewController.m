@@ -71,10 +71,12 @@
     [appDelegate.communicationModule initModule];
     [self updateProgress:appDelegate.communicationModule.moduleIdentity andPercents:0.5];
     [appDelegate.communicationModule startService];
-//    SeedsSpider* spider = appDelegate.communicationModule.spider;
-//    [spider pullSeedsInfo];
-    ServerAgent* serverAgent = appDelegate.communicationModule.serverAgent;
-    [serverAgent alohaTest];
+
+    // Spider Module
+    appDelegate.spiderModule = [[SpiderModule alloc] initWithIsIndividualThreadNecessary:FALSE];
+    [appDelegate.spiderModule initModule];
+    [self updateProgress:appDelegate.spiderModule.moduleIdentity andPercents:0.7];
+    [appDelegate.spiderModule startService];
     
     // Database Module
     appDelegate.databaseModule = [[DatabaseModule alloc] initWithIsIndividualThreadNecessary:FALSE];

@@ -13,6 +13,7 @@
 
 @synthesize communicationModule = _communicationModule;
 @synthesize databaseModule = _databaseModule;
+@synthesize spiderModule = _spiderModule;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -50,6 +51,7 @@
     // Here to release all modules.
     [self.communicationModule releaseModule];
     [self.databaseModule releaseModule];
+    [self.spiderModule releaseModule];
 }
 
 @end

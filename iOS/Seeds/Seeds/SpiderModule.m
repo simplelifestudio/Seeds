@@ -1,32 +1,30 @@
 //
-//  CommunicationModule.m
+//  SpiderModule.m
 //  Seeds
 //
-//  Created by Patrick Deng on 13-4-21.
+//  Created by Patrick Deng on 13-5-7.
 //  Copyright (c) 2013年 SimpleLife Studio. All rights reserved.
 //
 
-#import "CommunicationModule.h"
+#import "SpiderModule.h"
 
-@implementation CommunicationModule
+@implementation SpiderModule
 
 @synthesize spider = _spider;
-@synthesize serverAgent = _serverAgent;
 
 -(void) initModule
 {
-    [self setModuleIdentity:NSLocalizedString(@"Communication Module", nil)];
-    [self.serviceThread setName:NSLocalizedString(@"Communication Module Thread", nil)];
+    [self setModuleIdentity:NSLocalizedString(@"Spider Module", nil)];
+    [self.serviceThread setName:NSLocalizedString(@"Spider Module Thread", nil)];
     [self setKeepAlive:FALSE];
     
     _spider = [[SeedsSpider alloc] init];
-    _serverAgent = [[ServerAgent alloc] init];
 }
 
 -(void) releaseModule
 {
     [self setSpider:nil];
-    [self setServerAgent:nil];
+
     [super releaseModule];
 }
 
@@ -40,7 +38,7 @@
 -(void) processService
 {
     [NSThread sleepForTimeInterval:1.0];
-//    [_serverAgent alohaTest];
+    [_spider pullSeedsInfo];
 }
 
 

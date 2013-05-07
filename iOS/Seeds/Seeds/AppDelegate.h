@@ -10,6 +10,7 @@
 
 #import "CommunicationModule.h"
 #import "DatabaseModule.h"
+#import "SpiderModule.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -18,5 +19,6 @@
 // System Module Declaration List
 @property (strong, nonatomic) CommunicationModule *communicationModule;
 @property (strong, nonatomic) DatabaseModule *databaseModule;
+@property (strong, nonatomic) SpiderModule *spiderModule;
 
 @end

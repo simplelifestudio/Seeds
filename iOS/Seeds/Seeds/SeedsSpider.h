@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "CBDateUtils.h"
-
 #import "TFHpple.h"
+
+#import "CBDateUtils.h"
+#import "SeedsVisitor.h"
 
 @interface SeedsSpider : NSObject
 
