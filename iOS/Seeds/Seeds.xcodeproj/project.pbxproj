@@ -13,6 +13,9 @@
 		C53183491723D6A900264530 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C531834B1723D6A900264530 /* Localizable.strings */; };
 		C533E9D11729712200073ABE /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C533E9D01729712100073ABE /* ImageIO.framework */; };
 		C533E9D2172971AD00073ABE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C533E9AE1729705E00073ABE /* MapKit.framework */; };
+		C546E6E7173883CC00AEADDA /* JSONMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E1173883CC00AEADDA /* JSONMessage.m */; };
+		C546E6E8173883CC00AEADDA /* SeedsSpider.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E4173883CC00AEADDA /* SeedsSpider.m */; };
+		C546E6E9173883CC00AEADDA /* ServerAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E6173883CC00AEADDA /* ServerAgent.m */; };
 		C54BB56E1725733D00035EBA /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = C54BB5641725733D00035EBA /* FMDatabase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C54BB56F1725733D00035EBA /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C54BB5661725733D00035EBA /* FMDatabaseAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C54BB5701725733D00035EBA /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = C54BB5681725733D00035EBA /* FMDatabasePool.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -63,7 +66,6 @@
 		C5AB11491732BFEE007EEE25 /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11441732BFEE007EEE25 /* TFHppleElement.m */; };
 		C5AB114A1732BFEE007EEE25 /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11471732BFEE007EEE25 /* XPathQuery.m */; };
 		C5AB114C1732C01C007EEE25 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */; };
-		C5AB114F17333A90007EEE25 /* SeedsSpider.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB114E17333A90007EEE25 /* SeedsSpider.m */; };
 		C5AB115217333EA6007EEE25 /* CBDateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB115117333EA6007EEE25 /* CBDateUtils.m */; };
 		C5AB11671734BAA4007EEE25 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11551734BAA4007EEE25 /* AFHTTPClient.m */; };
 		C5AB11681734BAA4007EEE25 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11571734BAA4007EEE25 /* AFHTTPRequestOperation.m */; };
@@ -75,8 +77,6 @@
 		C5AB116E1734BAA4007EEE25 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11641734BAA4007EEE25 /* AFXMLRequestOperation.m */; };
 		C5AB116F1734BAA4007EEE25 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11661734BAA4007EEE25 /* UIImageView+AFNetworking.m */; };
 		C5AB11711734BB21007EEE25 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5AB11701734BB20007EEE25 /* MobileCoreServices.framework */; };
-		C5AB11741734EF39007EEE25 /* ServerAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11731734EF39007EEE25 /* ServerAgent.m */; };
-		C5AB1177173524B2007EEE25 /* JSONMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB1176173524B2007EEE25 /* JSONMessage.m */; };
 		C5AB63451730A7CD00A3F1E6 /* SeedPictureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */; };
 		C5AB63501730B95A00A3F1E6 /* todo_list.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */; };
 		C5AB63581730C1ED00A3F1E6 /* CBUIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */; };
@@ -98,6 +98,13 @@
 		C531834F1723D76600264530 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		C533E9AE1729705E00073ABE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C533E9D01729712100073ABE /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		C546E6E0173883CC00AEADDA /* JSONMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONMessage.h; path = Seeds/JSONMessage.h; sourceTree = "<group>"; };
+		C546E6E1173883CC00AEADDA /* JSONMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONMessage.m; path = Seeds/JSONMessage.m; sourceTree = "<group>"; };
+		C546E6E2173883CC00AEADDA /* JSONMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONMessageDelegate.h; path = Seeds/JSONMessageDelegate.h; sourceTree = "<group>"; };
+		C546E6E3173883CC00AEADDA /* SeedsSpider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SeedsSpider.h; path = Seeds/SeedsSpider.h; sourceTree = "<group>"; };
+		C546E6E4173883CC00AEADDA /* SeedsSpider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeedsSpider.m; path = Seeds/SeedsSpider.m; sourceTree = "<group>"; };
+		C546E6E5173883CC00AEADDA /* ServerAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerAgent.h; path = Seeds/ServerAgent.h; sourceTree = "<group>"; };
+		C546E6E6173883CC00AEADDA /* ServerAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerAgent.m; path = Seeds/ServerAgent.m; sourceTree = "<group>"; };
 		C54BB5631725733D00035EBA /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		C54BB5641725733D00035EBA /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		C54BB5651725733D00035EBA /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -191,8 +198,6 @@
 		C5AB11461732BFEE007EEE25 /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
 		C5AB11471732BFEE007EEE25 /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
 		C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
-		C5AB114D17333A90007EEE25 /* SeedsSpider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedsSpider.h; sourceTree = "<group>"; };
-		C5AB114E17333A90007EEE25 /* SeedsSpider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedsSpider.m; sourceTree = "<group>"; };
 		C5AB115017333EA6007EEE25 /* CBDateUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBDateUtils.h; sourceTree = "<group>"; };
 		C5AB115117333EA6007EEE25 /* CBDateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBDateUtils.m; sourceTree = "<group>"; };
 		C5AB11541734BAA4007EEE25 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
@@ -215,11 +220,6 @@
 		C5AB11651734BAA4007EEE25 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		C5AB11661734BAA4007EEE25 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		C5AB11701734BB20007EEE25 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		C5AB11721734EF39007EEE25 /* ServerAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerAgent.h; sourceTree = "<group>"; };
-		C5AB11731734EF39007EEE25 /* ServerAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerAgent.m; sourceTree = "<group>"; };
-		C5AB1175173524B2007EEE25 /* JSONMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONMessage.h; sourceTree = "<group>"; };
-		C5AB1176173524B2007EEE25 /* JSONMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONMessage.m; sourceTree = "<group>"; };
-		C5AB11781735461C007EEE25 /* JSONMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONMessageDelegate.h; sourceTree = "<group>"; };
 		C5AB63431730A7CD00A3F1E6 /* SeedPictureScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedPictureScrollView.h; sourceTree = "<group>"; };
 		C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedPictureScrollView.m; sourceTree = "<group>"; };
 		C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = todo_list.rtf; sourceTree = "<group>"; };
@@ -409,15 +409,15 @@
 		C5964C4F172249A000CC1C0A /* Communication */ = {
 			isa = PBXGroup;
 			children = (
+				C546E6E0173883CC00AEADDA /* JSONMessage.h */,
+				C546E6E1173883CC00AEADDA /* JSONMessage.m */,
+				C546E6E2173883CC00AEADDA /* JSONMessageDelegate.h */,
+				C546E6E3173883CC00AEADDA /* SeedsSpider.h */,
+				C546E6E4173883CC00AEADDA /* SeedsSpider.m */,
+				C546E6E5173883CC00AEADDA /* ServerAgent.h */,
+				C546E6E6173883CC00AEADDA /* ServerAgent.m */,
 				C5318340172390A400264530 /* CommunicationModule.h */,
 				C5318341172390A400264530 /* CommunicationModule.m */,
-				C5AB114D17333A90007EEE25 /* SeedsSpider.h */,
-				C5AB114E17333A90007EEE25 /* SeedsSpider.m */,
-				C5AB11721734EF39007EEE25 /* ServerAgent.h */,
-				C5AB11731734EF39007EEE25 /* ServerAgent.m */,
-				C5AB1175173524B2007EEE25 /* JSONMessage.h */,
-				C5AB1176173524B2007EEE25 /* JSONMessage.m */,
-				C5AB11781735461C007EEE25 /* JSONMessageDelegate.h */,
 			);
 			name = Communication;
 			path = ..;
@@ -658,7 +658,6 @@
 				C5AB11481732BFEE007EEE25 /* TFHpple.m in Sources */,
 				C5AB11491732BFEE007EEE25 /* TFHppleElement.m in Sources */,
 				C5AB114A1732BFEE007EEE25 /* XPathQuery.m in Sources */,
-				C5AB114F17333A90007EEE25 /* SeedsSpider.m in Sources */,
 				C5AB115217333EA6007EEE25 /* CBDateUtils.m in Sources */,
 				C5AB11671734BAA4007EEE25 /* AFHTTPClient.m in Sources */,
 				C5AB11681734BAA4007EEE25 /* AFHTTPRequestOperation.m in Sources */,
@@ -669,8 +668,9 @@
 				C5AB116D1734BAA4007EEE25 /* AFURLConnectionOperation.m in Sources */,
 				C5AB116E1734BAA4007EEE25 /* AFXMLRequestOperation.m in Sources */,
 				C5AB116F1734BAA4007EEE25 /* UIImageView+AFNetworking.m in Sources */,
-				C5AB11741734EF39007EEE25 /* ServerAgent.m in Sources */,
-				C5AB1177173524B2007EEE25 /* JSONMessage.m in Sources */,
+				C546E6E7173883CC00AEADDA /* JSONMessage.m in Sources */,
+				C546E6E8173883CC00AEADDA /* SeedsSpider.m in Sources */,
+				C546E6E9173883CC00AEADDA /* ServerAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
