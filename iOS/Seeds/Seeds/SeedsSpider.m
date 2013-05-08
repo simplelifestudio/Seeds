@@ -135,6 +135,7 @@
     NSArray* last3Days = [CBDateUtils lastThreeDays];
     for (NSDate* day in last3Days)
     {
+        NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
         // Step 2:
         BOOL hasSyncBefore = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
         if (!hasSyncBefore)
@@ -145,12 +146,29 @@
             {
                 // Step 4:
                 NSArray* seedList = [self pullSeedsFromLink:channelLink];
+                [self fillCommonInfoToSeeds:seedList dateStr:dateStr];
                 
                 // Step 5:
-                // TODO: Clear records with same day in database, and then save seed list into database
+                id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+
+                BOOL optSuccess = [seedDAO deleteSeedsByDate:dateStr];
+                if (optSuccess)
+                {
+                    optSuccess = [seedDAO insertSeeds:seedList];
+                    if (!optSuccess)
+                    {
+                        // TODO: Need feedback on UI
+                        DLog(@"Fail to save seed records into table with date: %@", dateStr);
+                    }
+                }
+                else
+                {
+                    // TODO: Need feedback on UI
+                    DLog(@"Fail to clear seed table with date: %@", dateStr);
+                }
                 
                 // Step 6:
-                BOOL hasSyncYet = YES;
+                BOOL hasSyncYet = optSuccess;
                 [[UserDefaultsModule sharedInstance] setThisDaySync:day sync:hasSyncYet];
             }
             else
@@ -159,6 +177,19 @@
                 NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
                 DLog(@"Seeds channel link can't be found with date: %@", dateStr);
             }
+        }
+    }
+}
+
+-(void) fillCommonInfoToSeeds:(NSArray*) seeds dateStr:(NSString*) dateStr
+{
+    if (nil != seeds)
+    {
+        for (Seed* seed in seeds)
+        {
+            [seed setType:@"AV"];
+            [seed setPublishDate:dateStr];
+            [seed setFavorite:NO];
         }
     }
 }

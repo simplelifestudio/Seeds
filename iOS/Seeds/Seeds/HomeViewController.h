@@ -10,4 +10,8 @@
 
 @interface HomeViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIButton *syncButton;
+
+- (IBAction)onClickSyncButton:(id)sender;
+
 @end

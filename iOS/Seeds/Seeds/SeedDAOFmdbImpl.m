@@ -253,8 +253,8 @@
             NSMutableString* sql = [NSMutableString stringWithString:@"insert into "];
             [sql appendString:TABLE_SEED];
             [sql appendString:@" ("];
-            [sql appendString:TABLE_SEED_COLUMN_SEEDID];
-            [sql appendString:@", "];
+//            [sql appendString:TABLE_SEED_COLUMN_SEEDID];
+//            [sql appendString:@", "];
             [sql appendString:TABLE_SEED_COLUMN_TYPE];
             [sql appendString:@", "];
             [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
@@ -275,21 +275,87 @@
             [sql appendString:@", "];
             [sql appendString:TABLE_SEED_COLUMN_MEMO];
             [sql appendString:@") values ("];
-            [sql appendString:@"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"];
+            [sql appendString:@"?, ?, ?, ?, ?, ?, ?, ?, ?, ?"];
             [sql appendString:@")"];
             
-            flag = [db executeUpdate:sql, seed.seedId, seed.type, seed.publishDate, seed.name, seed.size, seed.format, seed.torrentLink, seed.favorite, seed.mosaic, seed.hash, seed.memo];
+            BOOL hadError = [db hadError];
+            
+            flag = [db executeUpdate:sql, seed.type, seed.publishDate, seed.name, seed.size, seed.format, seed.torrentLink, (seed.favorite) ? @"1" : @"0", (seed.mosaic) ? @"1" : @"0", seed.hash, seed.memo];
+            hadError = [db hadError];
+            if (hadError)
+            {
+                NSLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+            }
+            if (!flag)
+            {
+                DLog(@"Fail to insert seed record with name: %@", seed.name);
+            }
         }
         
         [db close];
     }];
+    
+//    [databaseQueue inTransaction:^(FMDatabase* db, BOOL* rollback)
+//    {
+//        BOOL optSuccess = [db open];
+//        
+//        if (nil != seed)
+//        {
+//            NSMutableString* sql = [NSMutableString stringWithString:@"insert into "];
+//            [sql appendString:TABLE_SEED];
+//            [sql appendString:@" ("];
+//            [sql appendString:TABLE_SEED_COLUMN_SEEDID];
+//            [sql appendString:@", "];
+//            [sql appendString:TABLE_SEED_COLUMN_TYPE];
+//            [sql appendString:@", "];
+//            [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
+//            [sql appendString:@", "];
+//            [sql appendString:TABLE_SEED_COLUMN_NAME];
+//            [sql appendString:@", "];
+//            [sql appendString:TABLE_SEED_COLUMN_SIZE];
+//            [sql appendString:@", "];
+//            [sql appendString:TABLE_SEED_COLUMN_FORMAT];
+//            [sql appendString:@", "];
+//            [sql appendString:TABLE_SEED_COLUMN_TORRENTLINK];
+//            [sql appendString:@", "];
+//            [sql appendString:TABLE_SEED_COLUMN_FAVORITE];
+//            [sql appendString:@", "];
+//            [sql appendString:TABLE_SEED_COLUMN_MOSAIC];
+//            [sql appendString:@", "];
+//            [sql appendString:TABLE_SEED_COLUMN_HASH];
+//            [sql appendString:@", "];
+//            [sql appendString:TABLE_SEED_COLUMN_MEMO];
+//            [sql appendString:@") values ("];
+//            [sql appendString:@"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"];
+//            [sql appendString:@")"];
+//            
+//            flag = [db executeUpdate:sql, seed.seedId, seed.type, seed.publishDate, seed.name, seed.size, seed.format, seed.torrentLink, seed.favorite, seed.mosaic, seed.hash, seed.memo];
+//            if (flag)
+//            {
+//                DLog(@"Seed table has %d records after insert operation.", [self countAllSeeds]);
+//            }
+//            else
+//            {
+//                DLog(@"Fail to insert seed record with name: %@", seed.name);
+//            }
+//        }
+//        
+//        [db close];
+//    }];
     
     return flag;
 }
 
 -(BOOL) insertSeeds:(NSArray*) seeds
 {
-    return NO;
+    BOOL flag = NO;
+    
+    for (Seed* seed in seeds)
+    {
+        [self insertSeed:seed];
+    }
+    
+    return flag;
 }
 
 @end

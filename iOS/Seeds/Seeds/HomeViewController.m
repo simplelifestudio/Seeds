@@ -17,7 +17,8 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -47,6 +48,18 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidUnload
+{
+    [self setSyncButton:nil];
+    [super viewDidUnload];
+}
+
+- (IBAction)onClickSyncButton:(id)sender
+{
+    SpiderModule* spiderModule = [SpiderModule sharedInstance];
+    [spiderModule.spider pullSeedsInfo];
 }
 
 @end
