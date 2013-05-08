@@ -79,7 +79,7 @@
     [appDelegate.communicationModule startService];
 
     // Spider Module
-    appDelegate.spiderModule = [[SpiderModule alloc] initWithIsIndividualThreadNecessary:NO];
+    appDelegate.spiderModule = [SpiderModule sharedInstance];
     [appDelegate.spiderModule initModule];
     [self updateProgress:appDelegate.spiderModule.moduleIdentity andPercents:0.7];
     [appDelegate.spiderModule startService];

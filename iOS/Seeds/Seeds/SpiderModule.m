@@ -12,6 +12,21 @@
 
 @synthesize spider = _spider;
 
++(id)sharedInstance
+{
+    static SpiderModule* sharedInstance;
+    static dispatch_once_t done;
+    dispatch_once
+    (
+     &done,
+     ^
+     {
+         sharedInstance = [[SpiderModule alloc] initWithIsIndividualThreadNecessary:NO];
+     }
+     );
+    return sharedInstance;
+}
+
 -(void) initModule
 {
     [self setModuleIdentity:NSLocalizedString(@"Spider Module", nil)];
@@ -38,7 +53,6 @@
 -(void) processService
 {
     [NSThread sleepForTimeInterval:1.0];
-    [_spider pullSeedsInfo];
 }
 
 
