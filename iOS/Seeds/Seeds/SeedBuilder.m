@@ -82,7 +82,7 @@
     }
     else
     {
-        DLog(@"Seed in builder is illegal: %@", seed);
+//        DLog(@"Seed object in builder is illegal: %@", seed);
     }
     
     [self resetSeed];
