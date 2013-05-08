@@ -42,7 +42,17 @@
     BOOL flag2 = [CBStringUtils isSubstringIncluded:content subString:@"有码无码"];
     BOOL flag3 = [CBStringUtils isSubstringIncluded:content subString:@"是否有碼"];
     BOOL flag4 = [CBStringUtils isSubstringIncluded:content subString:@"是否有码"];
-    flag = (flag1 | flag2 | flag3 | flag4);    
+    BOOL flag5 = [CBStringUtils isSubstringIncluded:content subString:@"有／無碼"];
+    BOOL flag6 = [CBStringUtils isSubstringIncluded:content subString:@"影片類別"];
+    flag = (flag1 | flag2 | flag3 | flag4 | flag5 | flag6);
+    return flag;
+}
+
+-(BOOL) isSeedHashNode
+{
+    BOOL flag = NO;
+    NSString* content = self.content;
+    flag = [CBStringUtils isSubstringIncluded:content subString:@"哈希"];
     return flag;
 }
 
@@ -92,12 +102,17 @@
     return [self parseContent];
 }
 
--(NSString*) parseSeedTorrentLink
+-(NSString*) parseSeedMosaic
 {
     return [self parseContent];
 }
 
--(NSString*) parseSeedMosaic
+-(NSString*) parseSeedHash
+{
+    return [self parseContent];
+}
+
+-(NSString*) parseSeedTorrentLink
 {
     return [self parseContent];
 }

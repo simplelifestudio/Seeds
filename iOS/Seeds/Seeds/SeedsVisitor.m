@@ -37,7 +37,9 @@
             {
                 if ([element isSeedNameNode])
                 {
+                    // Seed object begins
                     [_builder resetSeed];
+                    
                     NSString* attrVal = [element parseSeedName];
                     [_builder fillSeedWithAttribute:TABLE_SEED_COLUMN_NAME attrVal:attrVal];
                 }
@@ -56,6 +58,11 @@
                     NSString* attrVal = [element parseSeedMosaic];
                     [_builder fillSeedWithAttribute:TABLE_SEED_COLUMN_MOSAIC attrVal:attrVal];
                 }
+                else if ([element isSeedHashNode])
+                {
+                    NSString* attrVal = [element parseSeedHash];
+                    [_builder fillSeedWithAttribute:TABLE_SEED_COLUMN_HASH attrVal:attrVal];
+                }
                 else if ([element isSeedTorrentLinkNode])
                 {
                     NSString* attrVal = [element parseSeedTorrentLink];
@@ -66,6 +73,7 @@
                     {
                         [seedList addObject:seed];
                     }
+                    // Seed object ends
                 }
                 else if ([element isSeedPictureLinkNode])
                 {
