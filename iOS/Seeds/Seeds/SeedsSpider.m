@@ -146,7 +146,7 @@
             {
                 // Step 4:
                 NSArray* seedList = [self pullSeedsFromLink:channelLink];
-                [self fillCommonInfoToSeeds:seedList dateStr:dateStr];
+                [self fillCommonInfoToSeeds:seedList date:day];
                 
                 // Step 5:
                 id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
@@ -181,13 +181,14 @@
     }
 }
 
--(void) fillCommonInfoToSeeds:(NSArray*) seeds dateStr:(NSString*) dateStr
+-(void) fillCommonInfoToSeeds:(NSArray*) seeds date:(NSDate*) day
 {
     if (nil != seeds)
     {
         for (Seed* seed in seeds)
         {
             [seed setType:@"AV"];
+            NSString* dateStr = [CBDateUtils dateStringInLocalTimeZoneWithStandardFormat:day];
             [seed setPublishDate:dateStr];
             [seed setFavorite:NO];
         }
