@@ -13,6 +13,8 @@
 #import "CBDateUtils.h"
 #import "SeedsVisitor.h"
 
+#define SEEDLIST_LINK_DATE_FORMAT @"M-dd"
+
 @interface SeedsSpider : NSObject
 
 -(NSString*) pullSeedListLinkByDate:(NSDate*) date;

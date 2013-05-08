@@ -9,6 +9,11 @@
 #import "CBModuleAbstractImpl.h"
 #import "CBSharedInstance.h"
 
+#define USERDEFAULTS_KEY_SYNCSTATUSBYDAY @"syncStatusByDay:"
+
 @interface UserDefaultsModule : CBModuleAbstractImpl <CBSharedInstance>
+
+-(BOOL) isThisDaySync:(NSDate*) day;
+-(void) setThisDaySync:(NSDate*) day sync:(BOOL) sync;
 
 @end

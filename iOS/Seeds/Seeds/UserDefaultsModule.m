@@ -49,4 +49,39 @@
     [NSThread sleepForTimeInterval:1.0];
 }
 
+-(BOOL) isThisDaySync:(NSDate*) day
+{
+    BOOL flag = NO;
+    if (nil != day)
+    {
+        NSString* key = [self combineKey_syncStatusByDay:day];
+        flag = [[NSUserDefaults standardUserDefaults] boolForKey:key];
+    }
+    return flag;
+}
+
+-(void) setThisDaySync:(NSDate*) day sync:(BOOL) sync
+{
+    if (nil != day)
+    {
+        NSString* key = [self combineKey_syncStatusByDay:day];
+        [[NSUserDefaults standardUserDefaults] setBool:sync forKey:key];
+    }
+}
+
+-(NSString*) combineKey_syncStatusByDay:(NSDate*) day
+{
+    if (nil != day)
+    {
+        NSMutableString* key = [NSMutableString string];
+        [key appendString:USERDEFAULTS_KEY_SYNCSTATUSBYDAY];
+        NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
+        [key appendString:dateStr];
+        
+        return key;
+    }
+    
+    return nil;
+}
+
 @end

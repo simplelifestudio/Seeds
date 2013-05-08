@@ -13,8 +13,6 @@
 #define LINK_SEEDLIST_CHANNEL @"http://"SEEDS_SERVER_IP"/forumdisplay.php?fid=55"
 #define LINK_SEEDLIST @"http://"SEEDS_SERVER_IP"/viewthread.php?tid=931724&extra=page%3D1"
 
-#define SEEDLIST_LINK_DATE_FORMAT @"M-dd"
-
 #define SEEDLIST_LINK_PAGENUM_START 1
 #define SEEDLIST_LINK_PAGENUM_END 10
 
@@ -138,24 +136,29 @@
     for (NSDate* day in last3Days)
     {
         // Step 2:
-        
-        // Step 3:
-        NSString* channelLink = [self pullSeedListLinkByDate:day];
-        if (nil != channelLink && 0 < channelLink.length)
+        BOOL hasSyncBefore = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
+        if (!hasSyncBefore)
         {
-            // Step 4:
-            NSArray* seedList = [self pullSeedsFromLink:channelLink];
-            
-            // Step 5:
-            // TODO: Save seed list into database
-            
-            // Step 6:
-        }
-        else
-        {
-            // TODO: Need feedback on UI
-            NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
-            DLog(@"Seeds channel link can't be found with date: %@", dateStr);
+            // Step 3:
+            NSString* channelLink = [self pullSeedListLinkByDate:day];
+            if (nil != channelLink && 0 < channelLink.length)
+            {
+                // Step 4:
+                NSArray* seedList = [self pullSeedsFromLink:channelLink];
+                
+                // Step 5:
+                // TODO: Clear records with same day in database, and then save seed list into database
+                
+                // Step 6:
+                BOOL hasSyncYet = YES;
+                [[UserDefaultsModule sharedInstance] setThisDaySync:day sync:hasSyncYet];
+            }
+            else
+            {
+                // TODO: Need feedback on UI
+                NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
+                DLog(@"Seeds channel link can't be found with date: %@", dateStr);
+            }
         }
     }
 }
