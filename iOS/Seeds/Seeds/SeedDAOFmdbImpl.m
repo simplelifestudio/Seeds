@@ -250,38 +250,35 @@
         
         if (nil != seed)
         {
-            if (nil != seed)
-            {
-                NSMutableString* sql = [NSMutableString stringWithString:@"insert into "];
-                [sql appendString:TABLE_SEED];
-                [sql appendString:@" ("];
-                [sql appendString:TABLE_SEED_COLUMN_SEEDID];
-                [sql appendString:@", "];
-                [sql appendString:TABLE_SEED_COLUMN_TYPE];
-                [sql appendString:@", "];
-                [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
-                [sql appendString:@", "];
-                [sql appendString:TABLE_SEED_COLUMN_NAME];
-                [sql appendString:@", "];
-                [sql appendString:TABLE_SEED_COLUMN_SIZE];
-                [sql appendString:@", "];
-                [sql appendString:TABLE_SEED_COLUMN_FORMAT];
-                [sql appendString:@", "];
-                [sql appendString:TABLE_SEED_COLUMN_TORRENTLINK];
-                [sql appendString:@", "];
-                [sql appendString:TABLE_SEED_COLUMN_FAVORITE];
-                [sql appendString:@", "];
-                [sql appendString:TABLE_SEED_COLUMN_MOSAIC];
-                [sql appendString:@", "];
-                [sql appendString:TABLE_SEED_COLUMN_HASH];
-                [sql appendString:@", "];
-                [sql appendString:TABLE_SEED_COLUMN_MEMO];
-                [sql appendString:@") values ("];
-                [sql appendString:@"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"];
-                [sql appendString:@")"];
-                
-                flag = [db executeUpdate:sql, seed.seedId, seed.type, seed.publishDate, seed.name, seed.size, seed.format, seed.torrentLink, seed.favorite, seed.mosaic, seed.hash, seed.memo];
-            }
+            NSMutableString* sql = [NSMutableString stringWithString:@"insert into "];
+            [sql appendString:TABLE_SEED];
+            [sql appendString:@" ("];
+            [sql appendString:TABLE_SEED_COLUMN_SEEDID];
+            [sql appendString:@", "];
+            [sql appendString:TABLE_SEED_COLUMN_TYPE];
+            [sql appendString:@", "];
+            [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
+            [sql appendString:@", "];
+            [sql appendString:TABLE_SEED_COLUMN_NAME];
+            [sql appendString:@", "];
+            [sql appendString:TABLE_SEED_COLUMN_SIZE];
+            [sql appendString:@", "];
+            [sql appendString:TABLE_SEED_COLUMN_FORMAT];
+            [sql appendString:@", "];
+            [sql appendString:TABLE_SEED_COLUMN_TORRENTLINK];
+            [sql appendString:@", "];
+            [sql appendString:TABLE_SEED_COLUMN_FAVORITE];
+            [sql appendString:@", "];
+            [sql appendString:TABLE_SEED_COLUMN_MOSAIC];
+            [sql appendString:@", "];
+            [sql appendString:TABLE_SEED_COLUMN_HASH];
+            [sql appendString:@", "];
+            [sql appendString:TABLE_SEED_COLUMN_MEMO];
+            [sql appendString:@") values ("];
+            [sql appendString:@"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"];
+            [sql appendString:@")"];
+            
+            flag = [db executeUpdate:sql, seed.seedId, seed.type, seed.publishDate, seed.name, seed.size, seed.format, seed.torrentLink, seed.favorite, seed.mosaic, seed.hash, seed.memo];
         }
         
         [db close];
