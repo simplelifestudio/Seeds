@@ -29,6 +29,7 @@
 -(NSArray*) getSeedPicturesBySeedId:(NSInteger) seedId;
 -(BOOL) deleteSeedPicturesBySeedId:(NSInteger) seedId;
 -(BOOL) deleteAllSeedPictures;
--(BOOL) insertSeedPicture:(SeedPicture*) seedPictures;
+-(BOOL) insertSeedPicture:(SeedPicture*) seedPicture;
+-(BOOL) insertSeedPictures:(NSArray*) seedPictures;
 
 @end

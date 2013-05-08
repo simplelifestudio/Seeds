@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "UserDefaultsModule.h"
 #import "CommunicationModule.h"
 #import "DatabaseModule.h"
 #import "SpiderModule.h"
@@ -17,6 +18,7 @@
 @property (strong, nonatomic) UIWindow *window;
 
 // System Module Declaration List
+@property (strong, nonatomic) UserDefaultsModule *userDefaultsModule;
 @property (strong, nonatomic) CommunicationModule *communicationModule;
 @property (strong, nonatomic) DatabaseModule *databaseModule;
 @property (strong, nonatomic) SpiderModule *spiderModule;

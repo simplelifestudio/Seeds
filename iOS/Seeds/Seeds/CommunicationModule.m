@@ -40,8 +40,6 @@
 -(void) processService
 {
     [NSThread sleepForTimeInterval:1.0];
-//    [_serverAgent alohaTest];
 }
-
 
 @end

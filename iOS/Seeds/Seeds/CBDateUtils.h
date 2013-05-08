@@ -21,6 +21,6 @@
 
 +(NSDate *) dateFromStringWithFormat:(NSString *)dateString andFormat:(NSString *) formatString;
 
-+(NSArray*) getContinuousThreeDays;
++(NSArray*) lastThreeDays;
 
 @end

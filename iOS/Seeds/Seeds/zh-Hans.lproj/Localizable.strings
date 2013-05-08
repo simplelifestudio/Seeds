@@ -12,6 +12,8 @@
 "Database Module Thread" = "数据库模块线程";
 "Spider Module" = "爬虫模块";
 "Spider Module Thread" = "爬虫模块线程";
+"UserDefaults Module" = "配置管理模块";
+"UserDefaults Module Thread" = "配置管理模块线程";
 
 "Loading: " = "加载：";
 "Mosaic" = "有码";

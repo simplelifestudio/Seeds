@@ -290,4 +290,9 @@
     return flag;
 }
 
+-(BOOL) insertSeeds:(NSArray*) seeds
+{
+    return NO;
+}
+
 @end

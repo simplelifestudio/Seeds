@@ -263,4 +263,9 @@
     return flag;
 }
 
+-(BOOL) insertSeedPictures:(NSArray*) seedPictures
+{
+    return NO;
+}
+
 @end

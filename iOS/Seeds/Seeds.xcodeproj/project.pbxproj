@@ -85,6 +85,7 @@
 		C5AB63501730B95A00A3F1E6 /* todo_list.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */; };
 		C5AB63581730C1ED00A3F1E6 /* CBUIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */; };
 		C5ADC852173930E1007F59D7 /* CBStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC851173930E1007F59D7 /* CBStringUtils.m */; };
+		C5ADC856173A2DE7007F59D7 /* UserDefaultsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -240,6 +241,8 @@
 		C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBUIUtils.m; sourceTree = "<group>"; };
 		C5ADC850173930E1007F59D7 /* CBStringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBStringUtils.h; sourceTree = "<group>"; };
 		C5ADC851173930E1007F59D7 /* CBStringUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBStringUtils.m; sourceTree = "<group>"; };
+		C5ADC854173A2DE7007F59D7 /* UserDefaultsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultsModule.h; sourceTree = "<group>"; };
+		C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultsModule.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -461,6 +464,7 @@
 				C5964C161722290400CC1C0A /* AppDelegate.h */,
 				C5964C171722290400CC1C0A /* AppDelegate.m */,
 				C531834317239FF300264530 /* Common */,
+				C5ADC853173A2DB5007F59D7 /* UserDefaults */,
 				C5964C4F172249A000CC1C0A /* Communication */,
 				C546E6F317388A1500AEADDA /* Spider */,
 				C5964C4E1722499300CC1C0A /* Database */,
@@ -558,6 +562,15 @@
 				C5AB11661734BAA4007EEE25 /* UIImageView+AFNetworking.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		C5ADC853173A2DB5007F59D7 /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				C5ADC854173A2DE7007F59D7 /* UserDefaultsModule.h */,
+				C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */,
+			);
+			name = UserDefaults;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -709,6 +722,7 @@
 				C546E6F917388CCA00AEADDA /* SpiderModule.m in Sources */,
 				C546E6FF17391E9200AEADDA /* SeedBuilder.m in Sources */,
 				C5ADC852173930E1007F59D7 /* CBStringUtils.m in Sources */,
+				C5ADC856173A2DE7007F59D7 /* UserDefaultsModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

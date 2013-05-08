@@ -12,6 +12,8 @@
 "Database Module Thread" = "Database Module Thread";
 "Spider Module" = "Spider Module";
 "Spider Module Thread" = "Spider Module Thread";
+"UserDefaults Module" = "UserDefaults Module";
+"UserDefaults Module Thread" = "UserDefaults Module Thread";
 
 "Loading: " = "Loading: ";
 "Mosaic" = "Mosaic";

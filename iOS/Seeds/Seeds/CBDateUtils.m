@@ -44,23 +44,23 @@
 	return date;
 }
 
-+(NSArray*) getContinuousThreeDays
++(NSArray*) lastThreeDays
 {
     NSMutableArray* array = [NSMutableArray arrayWithCapacity:3];
     
     NSTimeInterval secondsPerDay = 24 * 60 * 60;
-    
-    NSDate *tomorrow = [[NSDate alloc]
-                        initWithTimeIntervalSinceNow:secondsPerDay];
     
     NSDate *today = [NSDate date];
     
     NSDate *yesterday = [[NSDate alloc]
                          initWithTimeIntervalSinceNow:-secondsPerDay];
 
-    [array addObject:tomorrow];
-    [array addObject:today];
+    NSDate *theDayBefore = [[NSDate alloc]
+                            initWithTimeIntervalSinceNow:-secondsPerDay*2];
+
+    [array addObject:theDayBefore];
     [array addObject:yesterday];
+    [array addObject:today];
     
     return array;
 }

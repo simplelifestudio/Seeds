@@ -66,20 +66,26 @@
     // All CBModules should start here
     AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     
+    // UserDefaults Module
+    appDelegate.userDefaultsModule = [[UserDefaultsModule alloc] initWithIsIndividualThreadNecessary:NO];
+    [appDelegate.userDefaultsModule initModule];
+    [self updateProgress:appDelegate.userDefaultsModule.moduleIdentity andPercents:0.2];
+    [appDelegate.userDefaultsModule startService];
+    
     // Communication Module
-    appDelegate.communicationModule = [[CommunicationModule alloc] initWithIsIndividualThreadNecessary:FALSE];
+    appDelegate.communicationModule = [[CommunicationModule alloc] initWithIsIndividualThreadNecessary:NO];
     [appDelegate.communicationModule initModule];
     [self updateProgress:appDelegate.communicationModule.moduleIdentity andPercents:0.5];
     [appDelegate.communicationModule startService];
 
     // Spider Module
-    appDelegate.spiderModule = [[SpiderModule alloc] initWithIsIndividualThreadNecessary:FALSE];
+    appDelegate.spiderModule = [[SpiderModule alloc] initWithIsIndividualThreadNecessary:NO];
     [appDelegate.spiderModule initModule];
     [self updateProgress:appDelegate.spiderModule.moduleIdentity andPercents:0.7];
     [appDelegate.spiderModule startService];
     
     // Database Module
-    appDelegate.databaseModule = [[DatabaseModule alloc] initWithIsIndividualThreadNecessary:FALSE];
+    appDelegate.databaseModule = [[DatabaseModule alloc] initWithIsIndividualThreadNecessary:NO];
     [appDelegate.databaseModule initModule];
     [self updateProgress:appDelegate.databaseModule.moduleIdentity andPercents:1.0];    
     [appDelegate.databaseModule startService];

@@ -11,6 +11,7 @@
 // 测试中文注释
 @implementation AppDelegate
 
+@synthesize userDefaultsModule = _userDefaultsModule;
 @synthesize communicationModule = _communicationModule;
 @synthesize databaseModule = _databaseModule;
 @synthesize spiderModule = _spiderModule;
@@ -49,9 +50,10 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     
     // Here to release all modules.
-    [self.communicationModule releaseModule];
-    [self.databaseModule releaseModule];
     [self.spiderModule releaseModule];
+    [self.databaseModule releaseModule];
+    [self.communicationModule releaseModule];
+    [self.userDefaultsModule releaseModule];
 }
 
 @end

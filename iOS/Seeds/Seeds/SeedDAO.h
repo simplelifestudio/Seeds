@@ -35,6 +35,7 @@
 -(BOOL) deleteSeedsByDate:(NSString*) dateStr;
 -(BOOL) deleteAllSeeds;
 -(BOOL) insertSeed:(Seed*) seed;
+-(BOOL) insertSeeds:(NSArray*) seeds;
 
 -(NSArray*) getFavoriteSeeds;
 -(BOOL) favoriteSeed:(Seed*) seed andFlag:(BOOL) favorite;
