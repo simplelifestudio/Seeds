@@ -22,4 +22,6 @@
 @property (nonatomic) BOOL mosaic;
 @property (nonatomic, strong) NSString* memo;
 
+@property (nonatomic, strong) NSMutableArray* seedPictures;
+
 @end

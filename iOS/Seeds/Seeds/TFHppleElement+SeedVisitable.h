@@ -18,6 +18,7 @@
 -(BOOL) isSeedMosaicNode;
 -(BOOL) isSeedHashNode;
 -(BOOL) isSeedTorrentLinkNode;
+-(BOOL) isSeedPictureLinkNode;
 
 -(NSString*) parseSeedName;
 -(NSString*) parseSeedSize;
@@ -25,6 +26,7 @@
 -(NSString*) parseSeedMosaic;
 -(NSString*) parseSeedHash;
 -(NSString*) parseSeedTorrentLink;
+-(NSString*) parseSeedPictureLink;
 
 -(NSString*) parseContent;
 

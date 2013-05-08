@@ -22,4 +22,16 @@
 @synthesize mosaic = _mosaic;
 @synthesize memo = _memo;
 
+@synthesize seedPictures = _seedPictures;
+
+-(id) init
+{
+    self = [super init];
+    if (self)
+    {
+        _seedPictures = [NSMutableArray arrayWithCapacity:0];
+    }
+    return self;
+}
+
 @end

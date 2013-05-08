@@ -93,11 +93,11 @@
         
         TFHpple* doc = [[TFHpple alloc] initWithHTMLData:data];
 
-        NSString* xql = @"//text()";
+        NSString* xql = @"//text() | //a | //img";
         DLog(@"xql = %@", xql);
         
         NSArray* elements = [doc searchWithXPathQuery:xql];
-        NSArray* seeds = [visitor seedsFromTFHppleElements:elements];
+        NSArray* seeds = [visitor visitNodes:elements];
         [seedList addObjectsFromArray:seeds];
     }
     

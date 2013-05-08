@@ -29,7 +29,7 @@
 
 -(void) fillSeedWithAttribute:(NSString*) attrName attrVal:(NSString*)attrVal
 {
-    if (nil != attrName && 0 < attrName.length && nil != attrVal)
+    if (nil != attrName && 0 < attrName.length)
     {
         if ([attrName isEqualToString:TABLE_SEED_COLUMN_NAME])
         {
@@ -43,9 +43,25 @@
         {
             [seed setSize:attrVal];
         }
+        else if ([attrName isEqualToString:TABLE_SEED_COLUMN_MOSAIC])
+        {
+            BOOL flag1 = nil != attrVal;
+            BOOL flag2 = [CBStringUtils isSubstringIncluded:attrVal subString:@"无"];
+            BOOL flag3 = [CBStringUtils isSubstringIncluded:attrVal subString:@"無"];
+            BOOL mosaic = (flag1 | flag2 | flag3) ? NO : YES;
+            [seed setMosaic:mosaic];
+        }
+        else if ([attrName isEqualToString:TABLE_SEED_COLUMN_HASH])
+        {
+            [seed setHash:attrVal];
+        }
         else if ([attrName isEqualToString:TABLE_SEED_COLUMN_TORRENTLINK])
         {
             [seed setTorrentLink:attrVal];
+        }
+        else if ([attrName isEqualToString:TABLE_SEEDPICTURE_COLUMN_PICTURELINK])
+        {
+            [seed.seedPictures addObject:attrVal];
         }
     }
 }

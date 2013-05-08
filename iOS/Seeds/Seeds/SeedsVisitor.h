@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 #import "TFHppleElement+SeedVisitable.h"
-#import "TFHppleElement+SeedPictureVisitable.h"
 #import "TFHppleElement.h"
 #import "SeedBuilder.h"
 
@@ -17,6 +16,9 @@
 
 @property (nonatomic, strong) SeedBuilder* builder;
 
--(NSArray*) seedsFromTFHppleElements:(NSArray*) elements;
+-(NSArray*) visitNodes:(NSArray*) elements;
+-(void) visitTextNode:(TFHppleElement*) element;
+-(void) visitImageNode:(TFHppleElement*) element;
+-(void) visitAnchorNode:(TFHppleElement*) element;
 
 @end

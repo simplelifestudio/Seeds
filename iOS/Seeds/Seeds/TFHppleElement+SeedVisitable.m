@@ -59,8 +59,16 @@
 -(BOOL) isSeedTorrentLinkNode
 {
     BOOL flag = NO;
-    NSString* content = self.content;    
-    flag = [CBStringUtils isSubstringIncluded:content subString:@"http://www.maxp2p.com/link.php?ref="];
+//    NSString* content = self.content;    
+//    flag = [CBStringUtils isSubstringIncluded:content subString:@"http://www.maxp2p.com/link.php?ref="];
+    flag = [self.tagName isEqualToString:@"a"];
+    return flag;
+}
+
+-(BOOL) isSeedPictureLinkNode
+{
+    BOOL flag = NO;
+    flag = [self.tagName isEqualToString:@"img"];
     return flag;
 }
 
@@ -74,6 +82,14 @@
         content = [content substringFromIndex:range.location + 1];
         content = [CBStringUtils trimString:content];
         return content;
+    }
+    
+    range = [content rangeOfString:STR_COLON];
+    if (0 < range.length)
+    {
+        content = [content substringFromIndex:range.location + 1];
+        content = [CBStringUtils trimString:content];
+        return content;        
     }
     
     range = [content rangeOfString:STR_BRACKET_RIGHT];
@@ -114,7 +130,14 @@
 
 -(NSString*) parseSeedTorrentLink
 {
-    return [self parseContent];
+    NSString* link = [self.attributes valueForKey:@"href"];
+    return link;
+}
+
+-(NSString*) parseSeedPictureLink
+{
+    NSString* link = [self.attributes valueForKey:@"src"];
+    return link;
 }
 
 @end

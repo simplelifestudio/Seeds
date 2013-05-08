@@ -16,7 +16,6 @@
 		C546E6E7173883CC00AEADDA /* JSONMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E1173883CC00AEADDA /* JSONMessage.m */; };
 		C546E6E8173883CC00AEADDA /* SeedsSpider.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E4173883CC00AEADDA /* SeedsSpider.m */; };
 		C546E6E9173883CC00AEADDA /* ServerAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E6173883CC00AEADDA /* ServerAgent.m */; };
-		C546E6EE1738862F00AEADDA /* TFHppleElement+SeedPictureVisitable.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6EB1738862F00AEADDA /* TFHppleElement+SeedPictureVisitable.m */; };
 		C546E6EF1738862F00AEADDA /* TFHppleElement+SeedVisitable.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6ED1738862F00AEADDA /* TFHppleElement+SeedVisitable.m */; };
 		C546E6F21738866B00AEADDA /* SeedsVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6F11738866B00AEADDA /* SeedsVisitor.m */; };
 		C546E6F917388CCA00AEADDA /* SpiderModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6F817388CCA00AEADDA /* SpiderModule.m */; };
@@ -111,8 +110,6 @@
 		C546E6E4173883CC00AEADDA /* SeedsSpider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedsSpider.m; sourceTree = "<group>"; };
 		C546E6E5173883CC00AEADDA /* ServerAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ServerAgent.h; path = Seeds/ServerAgent.h; sourceTree = "<group>"; };
 		C546E6E6173883CC00AEADDA /* ServerAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ServerAgent.m; path = Seeds/ServerAgent.m; sourceTree = "<group>"; };
-		C546E6EA1738862F00AEADDA /* TFHppleElement+SeedPictureVisitable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TFHppleElement+SeedPictureVisitable.h"; sourceTree = "<group>"; };
-		C546E6EB1738862F00AEADDA /* TFHppleElement+SeedPictureVisitable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TFHppleElement+SeedPictureVisitable.m"; sourceTree = "<group>"; };
 		C546E6EC1738862F00AEADDA /* TFHppleElement+SeedVisitable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TFHppleElement+SeedVisitable.h"; sourceTree = "<group>"; };
 		C546E6ED1738862F00AEADDA /* TFHppleElement+SeedVisitable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TFHppleElement+SeedVisitable.m"; sourceTree = "<group>"; };
 		C546E6F01738866B00AEADDA /* SeedsVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedsVisitor.h; sourceTree = "<group>"; };
@@ -288,8 +285,6 @@
 				C546E6F817388CCA00AEADDA /* SpiderModule.m */,
 				C546E6E3173883CC00AEADDA /* SeedsSpider.h */,
 				C546E6E4173883CC00AEADDA /* SeedsSpider.m */,
-				C546E6EA1738862F00AEADDA /* TFHppleElement+SeedPictureVisitable.h */,
-				C546E6EB1738862F00AEADDA /* TFHppleElement+SeedPictureVisitable.m */,
 				C546E6EC1738862F00AEADDA /* TFHppleElement+SeedVisitable.h */,
 				C546E6ED1738862F00AEADDA /* TFHppleElement+SeedVisitable.m */,
 				C546E6F01738866B00AEADDA /* SeedsVisitor.h */,
@@ -709,7 +704,6 @@
 				C546E6E7173883CC00AEADDA /* JSONMessage.m in Sources */,
 				C546E6E8173883CC00AEADDA /* SeedsSpider.m in Sources */,
 				C546E6E9173883CC00AEADDA /* ServerAgent.m in Sources */,
-				C546E6EE1738862F00AEADDA /* TFHppleElement+SeedPictureVisitable.m in Sources */,
 				C546E6EF1738862F00AEADDA /* TFHppleElement+SeedVisitable.m in Sources */,
 				C546E6F21738866B00AEADDA /* SeedsVisitor.m in Sources */,
 				C546E6F917388CCA00AEADDA /* SpiderModule.m in Sources */,
