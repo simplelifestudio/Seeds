@@ -8,8 +8,8 @@
 
 void testPool(NSString *dbPath);
 void FMDBReportABugFunction();
-/*
-int main (int argc, const char * argv[]) {
+
+int __main (int argc, const char * argv[]) {
     
 @autoreleasepool {
     
@@ -1016,7 +1016,7 @@ int main (int argc, const char * argv[]) {
     
     return 0;
 }
-*/
+
 /*
  Test the various FMDatabasePool things.
 */
