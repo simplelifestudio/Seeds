@@ -17,12 +17,6 @@
 #define DATE_HOLDER @"$DATE$"
 #define SEEDLIST_LINK_TITLE @"["DATE_HOLDER"]BT合集"
 
-#define ATTR_NAME @"影片名稱"
-#define ATTR_FORMAT @"文件類型"
-#define ATTR_SIZE @"影片大小"
-#define ATTR_MOSAIC @"有碼無碼"
-#define ATTR_TORRENTLINK @"Link URL:"
-
 @interface SeedsSpider()
 {
     SeedsVisitor* visitor;
