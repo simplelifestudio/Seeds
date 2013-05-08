@@ -138,6 +138,8 @@
         NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
         // Step 2:
         BOOL hasSyncBefore = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
+        DLog(@"Seeds in %@ have been synchronized yet? %@", dateStr, (hasSyncBefore) ? @"YES" : @"NO");
+        // TODO: Need feedback on UI
         if (!hasSyncBefore)
         {
             // Step 3:
