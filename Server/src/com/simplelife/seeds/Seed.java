@@ -13,6 +13,7 @@ public class Seed {
 	private String TorrentLink;
 	private Date SaveDate;
 	private String Memo;
+	private Set PicList;
 	/**
 	 * @return the iD
 	 */

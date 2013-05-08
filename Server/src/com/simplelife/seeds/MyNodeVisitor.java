@@ -10,8 +10,10 @@ import org.htmlparser.visitors.NodeVisitor;
 
 public class MyNodeVisitor extends NodeVisitor {
 	private Logger _logger = Logger.getLogger("MyNodeVistor");
-	private AnalyzeFlag _AnalyzeFlag = AnalyzeFlag.Init;
-	private enum AnalyzeFlag
+	private AnalyzeStatus _analyzeStatus = AnalyzeStatus.Init;
+	private Seed _seed;
+	
+	private enum AnalyzeStatus
 	{
 		Init, FilmInfo, Link;
 	}
@@ -23,50 +25,60 @@ public class MyNodeVisitor extends NodeVisitor {
 	
 	public void visitTag(Tag tag) 
 	{
-		if (_AnalyzeFlag != AnalyzeFlag.FilmInfo)
+		if (_analyzeStatus != AnalyzeStatus.FilmInfo)
 		{
 			return;
 		}
 		
 		if(isImageLink(tag))
     	{
-			System.out.println(getImageLink(tag.getText()));
+			
+			_logger.log(Level.INFO,getImageLink(tag.getText()));
     	}
     	//_logger.log(Level.INFO, "This is Tag:"+tag.getText());
     }
 	
     public void visitStringNode (Text string)    {
-    	if (_AnalyzeFlag == AnalyzeFlag.Link)
+    	if (_analyzeStatus == AnalyzeStatus.Link)
     	{
     		// TODO: save to db
-    		System.out.println("Torrent link：" + string.getText());
+    		_logger.log(Level.INFO,"Torrent link：" + string.getText());
     		return;
     	}
     		
     	if (isFilmName(string.getText()))
     	{
-    		_AnalyzeFlag = AnalyzeFlag.FilmInfo;
-    		System.out.println("\n\n影片名称：" + string.getText());
+    		_analyzeStatus = AnalyzeStatus.FilmInfo;
+    		_seed = new Seed();
+    		_seed.setName(string.getText());
+    		_logger.log(Level.INFO,"\n\n影片名称：" + string.getText());
     	}
     	else if(isFilmFormat(string.getText()))
     	{
-    		System.out.println("影片格式：" + string.getText());
+    		_seed.setFormat(string.getText());
+    		_logger.log(Level.INFO,"影片格式：" + string.getText());
     	}
     	else if(isFilmSize(string.getText()))
     	{
-    		System.out.println("影片大小：" + string.getText());
+    		_seed.setSize(string.getText());
+    		_logger.log(Level.INFO,"影片大小：" + string.getText());
     	}
     	else if(isFilmMosaic(string.getText()))
     	{
-    		System.out.println("有码无码：" + string.getText());
+    		_seed.setMosaic(string.getText());
+    		_logger.log(Level.INFO,"有码无码：" + string.getText());
     	}
     	else if(isTorrentLink(string.getText()))
     	{
-    		_AnalyzeFlag = AnalyzeFlag.Link;
+    		if (_analyzeStatus == AnalyzeStatus.FilmInfo)
+    		{
+    			_analyzeStatus = AnalyzeStatus.Link;
+    		}
     	}
     	else if(isHash(string.getText()))
     	{
-    		System.out.println("哈希校验：" + string.getText());
+    		_seed.setHash(string.getText());
+    		_logger.log(Level.INFO,"哈希校验：" + string.getText());
     	}
 
     	
@@ -79,7 +91,7 @@ public class MyNodeVisitor extends NodeVisitor {
     	//_logger.log(Level.INFO,"beginParsing");
     }
     public void visitEndTag (Tag tag){
-    	_AnalyzeFlag = AnalyzeFlag.Init;
+    	_analyzeStatus = AnalyzeStatus.Init;
     	//_logger.log(Level.INFO,"visitEndTag:"+tag.getText());
     }
     public void finishedParsing () {
