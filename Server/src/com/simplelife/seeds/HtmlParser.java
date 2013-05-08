@@ -1,37 +1,22 @@
 package com.simplelife.seeds;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.FileInputStream;
-import java.io.File;
 
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.*;
 
-import org.htmlparser.visitors.NodeVisitor;
-import org.htmlparser.visitors.TextExtractingVisitor;
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
-import org.htmlparser.Remark;
-import org.htmlparser.Tag;
-import org.htmlparser.Text;
 import org.htmlparser.filters.*;
 import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.*;
 
-import com.sun.org.apache.xalan.internal.xsltc.NodeIterator;
 
 
 
@@ -39,7 +24,7 @@ public class HtmlParser implements ISourceParser {
 	private String _htmlLink;
 	private Logger _logger = Logger.getLogger("HtmlParser");
 	private final int _parse_days = 3;
-	private final String _encode = "GBK";
+	//private final String _encode = "GBK";
 	private List<String> _keyWordList = new ArrayList<String>();
 
 	public HtmlParser()
@@ -61,18 +46,6 @@ public class HtmlParser implements ISourceParser {
 		
 	}
 
-	private boolean checkLink(String htmlLink) {
-		if (htmlLink.indexOf("://") < 0) {
-			return false;
-		}
-		return true;
-	}
-	
-	private String getLinkByField(String field)
-	{
-		return null;
-	}
-	
 	public boolean dateNeedParse(String title)
 	{
 		int start = title.indexOf('[');

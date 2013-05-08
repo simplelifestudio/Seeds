@@ -101,9 +101,9 @@ public class SeedsServlet extends HttpServlet {
 	 */
 	private String readCommand(HttpServletRequest request) {
 		
-		return "{\n    \"command\": \"AlohaRequest\",\n    \"paramList\":\n    {\n    		\"content\":\"Hello Seeds Server!\"\n    }\n}\n";
+		//return "{\n    \"command\": \"AlohaRequest\",\n    \"paramList\":\n    {\n    		\"content\":\"Hello Seeds Server!\"\n    }\n}\n";
 		
-		/*
+		
 		StringBuffer json = new StringBuffer();
 		String line = null;
 		try {
@@ -115,7 +115,7 @@ public class SeedsServlet extends HttpServlet {
 			System.out.println(e.toString());
 		}
 		return json.toString();
-		*/
+		
 	}
 
 	/**

@@ -19,6 +19,7 @@
         <property name="TorrentLink"/>
         <property name="SaveDate"/>
         <property name="Memo"/>
+        <property name="Source"/>
     </class>
 
 </hibernate-mapping>
