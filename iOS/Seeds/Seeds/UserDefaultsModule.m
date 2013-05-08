@@ -10,6 +10,21 @@
 
 @implementation UserDefaultsModule
 
++(id)sharedInstance
+{
+    static UserDefaultsModule* sharedInstance;
+    static dispatch_once_t done;
+    dispatch_once
+    (
+        &done,
+        ^
+        {
+            sharedInstance = [[UserDefaultsModule alloc] initWithIsIndividualThreadNecessary:NO];
+        }
+    );
+    return sharedInstance;
+}
+
 -(void) initModule
 {
     [self setModuleIdentity:NSLocalizedString(@"UserDefaults Module", nil)];

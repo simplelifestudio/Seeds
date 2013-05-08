@@ -67,7 +67,7 @@
     AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     
     // UserDefaults Module
-    appDelegate.userDefaultsModule = [[UserDefaultsModule alloc] initWithIsIndividualThreadNecessary:NO];
+    appDelegate.userDefaultsModule = [UserDefaultsModule sharedInstance];
     [appDelegate.userDefaultsModule initModule];
     [self updateProgress:appDelegate.userDefaultsModule.moduleIdentity andPercents:0.2];
     [appDelegate.userDefaultsModule startService];

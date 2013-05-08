@@ -243,6 +243,7 @@
 		C5ADC851173930E1007F59D7 /* CBStringUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBStringUtils.m; sourceTree = "<group>"; };
 		C5ADC854173A2DE7007F59D7 /* UserDefaultsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultsModule.h; sourceTree = "<group>"; };
 		C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultsModule.m; sourceTree = "<group>"; };
+		C5ADC857173A3148007F59D7 /* CBSharedInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBSharedInstance.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +278,7 @@
 				C531833817237FF700264530 /* CBModule.h */,
 				C531833917237FF700264530 /* CBModuleAbstractImpl.h */,
 				C531833A17237FF700264530 /* CBModuleAbstractImpl.m */,
+				C5ADC857173A3148007F59D7 /* CBSharedInstance.h */,
 			);
 			name = Common;
 			sourceTree = "<group>";

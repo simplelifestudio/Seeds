@@ -7,7 +7,8 @@
 //
 
 #import "CBModuleAbstractImpl.h"
+#import "CBSharedInstance.h"
 
-@interface UserDefaultsModule : CBModuleAbstractImpl
+@interface UserDefaultsModule : CBModuleAbstractImpl <CBSharedInstance>
 
 @end
