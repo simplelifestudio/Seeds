@@ -14,6 +14,7 @@
 #define TABLE_SEED @"seed"
 #define TABLE_SEED_COLUMN_SEEDID @"seedId"
 #define TABLE_SEED_COLUMN_TYPE @"type"
+#define TABLE_SEED_COLUMN_SOURCE @"source"
 #define TABLE_SEED_COLUMN_PUBLISHDATE @"publishDate"
 #define TABLE_SEED_COLUMN_NAME @"name"
 #define TABLE_SEED_COLUMN_SIZE @"size"

@@ -36,6 +36,7 @@
             
             seed.seedId = [rs intForColumn:TABLE_SEED_COLUMN_SEEDID];
             seed.type = [rs stringForColumn:TABLE_SEED_COLUMN_TYPE];
+            seed.source = [rs stringForColumn:TABLE_SEED_COLUMN_SOURCE];
             seed.publishDate = [rs stringForColumn:TABLE_SEED_COLUMN_PUBLISHDATE];
             seed.name = [rs stringForColumn:TABLE_SEED_COLUMN_NAME];
             seed.size = [rs stringForColumn:TABLE_SEED_COLUMN_SIZE];
@@ -267,6 +268,8 @@
 //            [sql appendString:@" ("];
 //            [sql appendString:TABLE_SEED_COLUMN_TYPE];
 //            [sql appendString:@", "];
+//            [sql appendString:TABLE_SEED_COLUMN_SOURCE];
+//            [sql appendString:@", "];
 //            [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
 //            [sql appendString:@", "];
 //            [sql appendString:TABLE_SEED_COLUMN_NAME];
@@ -285,12 +288,12 @@
 //            [sql appendString:@", "];
 //            [sql appendString:TABLE_SEED_COLUMN_MEMO];
 //            [sql appendString:@") values ("];
-//            [sql appendString:@"?, ?, ?, ?, ?, ?, ?, ?, ?, ?"];
+//            [sql appendString:@"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"];
 //            [sql appendString:@")"];
 //            
 //            BOOL hadError = [db hadError];
 //            
-//            flag = [db executeUpdate:sql, seed.type, seed.publishDate, seed.name, seed.size, seed.format, seed.torrentLink, (seed.favorite) ? @"1" : @"0", (seed.mosaic) ? @"1" : @"0", seed.hash, seed.memo];
+//            flag = [db executeUpdate:sql, seed.type, seed.source, seed.publishDate, seed.name, seed.size, seed.format, seed.torrentLink, (seed.favorite) ? @"1" : @"0", (seed.mosaic) ? @"1" : @"0", seed.hash, seed.memo];
 //            hadError = [db hadError];
 //            if (hadError)
 //            {
@@ -316,6 +319,8 @@
             [sql appendString:@" ("];
             [sql appendString:TABLE_SEED_COLUMN_TYPE];
             [sql appendString:@", "];
+            [sql appendString:TABLE_SEED_COLUMN_SOURCE];
+            [sql appendString:@", "];
             [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
             [sql appendString:@", "];
             [sql appendString:TABLE_SEED_COLUMN_NAME];
@@ -339,7 +344,7 @@
             
             BOOL hadError = [db hadError];
             
-            flag = [db executeUpdate:sql, seed.type, seed.publishDate, seed.name, seed.size, seed.format, seed.torrentLink, (seed.favorite) ? @"1" : @"0", (seed.mosaic) ? @"1" : @"0", seed.hash, seed.memo];
+            flag = [db executeUpdate:sql, seed.type, seed.source, seed.publishDate, seed.name, seed.size, seed.format, seed.torrentLink, (seed.favorite) ? @"1" : @"0", (seed.mosaic) ? @"1" : @"0", seed.hash, seed.memo];
             hadError = [db hadError];
             if (hadError)
             {

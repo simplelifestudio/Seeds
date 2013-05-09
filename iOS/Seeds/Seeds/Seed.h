@@ -12,6 +12,7 @@
 
 @property (nonatomic) NSInteger seedId;
 @property (nonatomic, strong) NSString* type;
+@property (nonatomic, strong) NSString* source;
 @property (nonatomic, strong) NSString* publishDate;
 @property (nonatomic, strong) NSString* name;
 @property (nonatomic, strong) NSString* size;

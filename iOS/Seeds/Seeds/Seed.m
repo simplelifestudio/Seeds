@@ -12,6 +12,7 @@
 
 @synthesize seedId = _seedId;
 @synthesize type = _type;
+@synthesize source = _source;
 @synthesize publishDate = _publishDate;
 @synthesize name = _name;
 @synthesize size = _size;

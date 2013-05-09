@@ -50,17 +50,6 @@
 {
     [NSThread sleepForTimeInterval:0.5];
     DLog(@"SQLite3 Database File Path: %@", self.databaseFilePath);
-    
-//    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-//    DLog(@"Seed count: %d",[seedDAO countAllSeeds]);
-//    
-//    NSArray* seeds = [seedDAO getAllSeeds];
-//    for (Seed* seed in seeds)
-//    {
-//        DLog(@"Seed {id=%d, name=%@, size=%@, torrentLink=%@, favorite=%@}", seed.seedId, seed.name, seed.size, seed.torrentLink, (seed.favorite) ? @"YES" : @"NO");
-//        
-//        DLog(@"Seed(%d) has been favorited: %@", seed.seedId, [seedDAO favoriteSeed:seed andFlag:YES] ? @"successfully." : @"unsuccessfully");
-//    }
 }
 
 -(NSString*) databaseFilePath
