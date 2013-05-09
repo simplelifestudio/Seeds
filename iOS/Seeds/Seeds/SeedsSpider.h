@@ -13,6 +13,8 @@
 #import "CBDateUtils.h"
 #import "SeedsVisitor.h"
 
+#import "MBProgressHUD.h"
+
 #define SEEDLIST_LINK_DATE_FORMAT @"M-dd"
 
 @interface SeedsSpider : NSObject
@@ -20,6 +22,6 @@
 -(NSString*) pullSeedListLinkByDate:(NSDate*) date;
 -(NSArray*) pullSeedsFromLink:(NSString*) link;
 
--(void) pullSeedsInfo;
+-(void) pullSeedsInfo:(MBProgressHUD*) HUD;
 
 @end

@@ -9,7 +9,9 @@
 #import "HomeViewController.h"
 
 @interface HomeViewController ()
-
+{
+    MBProgressHUD* HUD;
+}
 @end
 
 @implementation HomeViewController
@@ -58,8 +60,23 @@
 
 - (IBAction)onClickSyncButton:(id)sender
 {
+	HUD = [[MBProgressHUD alloc] initWithView:self.view];
+	[self.view addSubview:HUD];
+	HUD.delegate = self;
+
+	[HUD showWhileExecuting:@selector(syncSeedsInfoTask) onTarget:self withObject:nil animated:YES];
+}
+
+- (void)syncSeedsInfoTask
+{
     SpiderModule* spiderModule = [SpiderModule sharedInstance];
-    [spiderModule.spider pullSeedsInfo];
+    [spiderModule.spider pullSeedsInfo:HUD];
+}
+
+- (void)hudWasHidden:(MBProgressHUD *)hud
+{
+	[HUD removeFromSuperview];
+	HUD = nil;
 }
 
 @end

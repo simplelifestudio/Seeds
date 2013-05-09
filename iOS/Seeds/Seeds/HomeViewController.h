@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HomeViewController : UIViewController
+#import "MBProgressHUD.h"
+
+@interface HomeViewController : UIViewController <MBProgressHUDDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *syncButton;
 

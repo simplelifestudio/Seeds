@@ -19,6 +19,8 @@
 #define DATE_HOLDER @"$DATE$"
 #define SEEDLIST_LINK_TITLE @"["DATE_HOLDER"]BT合集"
 
+#define HUD_DISPLAY_1S sleep(1)
+
 @interface SeedsSpider()
 {
     SeedsVisitor* visitor;
@@ -122,65 +124,110 @@
 }
 
 // Should be processed in single background thread
--(void)pullSeedsInfo
+-(void)pullSeedsInfo:(MBProgressHUD*) HUD
 {    
     // Step 1: 根据当日时间（例如5月8日）获取今天、昨天、前天三个时间标（例如[5-08]，[5-07]，[5-06]）
     // Step 2: 在本地KV缓存中，检查时间标对应的数据同步状态：（a. 已同步；b. 未同步），如果是未同步状态，则继续下一步，反之停止操作
     // Step 3: 依次对前天、昨天、今天三个时间标进行Seeds发布页链接的抓取（搜索范围：主题列表页面的第1页至第10页）
     // Step 4: 对Seeds发布页面进行分析获取Seed List
-    // Step 5: 删除数据库中原有相同时间标的所有记录，再将新数据保存入数据库（事务操作）
-    // Step 6: 更新本地KV缓存中时间标的对应数据同步状态
+    // Step 5: 删除数据库中原有相同时间标的所有记录
+    // Step 6: 再将新数据保存入数据库（事务操作）
+    // Step 7: 更新本地KV缓存中时间标的对应数据同步状态
+    
+	HUD.labelText = @"Pulling";
+    HUD.minSize = CGSizeMake(135.f, 135.f);
+    HUD_DISPLAY_1S;
     
     // Step 1:
+    HUD.detailsLabelText = @"Stamps Computing";
+    HUD_DISPLAY_1S;
+    
     NSArray* last3Days = [CBDateUtils lastThreeDays];
     for (NSDate* day in last3Days)
     {
         NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
+        
         // Step 2:
+        HUD.detailsLabelText = @"Status Checking";
+        HUD_DISPLAY_1S;
+        
         BOOL hasSyncBefore = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
         DLog(@"Seeds in %@ have been synchronized yet? %@", dateStr, (hasSyncBefore) ? @"YES" : @"NO");
-        // TODO: Need feedback on UI
         if (!hasSyncBefore)
         {
             // Step 3:
+            HUD.detailsLabelText = @"Link Analyzing";
+            HUD_DISPLAY_1S;
+            
             NSString* channelLink = [self pullSeedListLinkByDate:day];
             if (nil != channelLink && 0 < channelLink.length)
             {
                 // Step 4:
+                HUD.detailsLabelText = @"Seeds Pulling";
+                HUD_DISPLAY_1S;
+                
                 NSArray* seedList = [self pullSeedsFromLink:channelLink];
                 [self fillCommonInfoToSeeds:seedList date:day];
                 
                 // Step 5:
+                HUD.labelText = @"Saving";
+                HUD.detailsLabelText = @"Seeds Clearing";
+                HUD_DISPLAY_1S;
+            
                 id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-
                 BOOL optSuccess = [seedDAO deleteSeedsByDate:dateStr];
                 if (optSuccess)
                 {
+                    // Step 6:
+                    HUD.detailsLabelText = @"Seeds Saving";
+                    HUD_DISPLAY_1S;
+                    
                     optSuccess = [seedDAO insertSeeds:seedList];
                     if (!optSuccess)
                     {
-                        // TODO: Need feedback on UI
                         DLog(@"Fail to save seed records into table with date: %@", dateStr);
+                        
+                        HUD.detailsLabelText = @"Fail Saving";
+                        HUD_DISPLAY_1S;
                     }
                 }
                 else
                 {
-                    // TODO: Need feedback on UI
                     DLog(@"Fail to clear seed table with date: %@", dateStr);
+                    
+                    HUD.detailsLabelText = @"Fail Clearing";
+                    HUD_DISPLAY_1S;
                 }
                 
-                // Step 6:
+                // Step 7:
+                HUD.detailsLabelText = @"Status Saving";
+                HUD_DISPLAY_1S;
+                
                 BOOL hasSyncYet = optSuccess;
                 [[UserDefaultsModule sharedInstance] setThisDaySync:day sync:hasSyncYet];
             }
             else
             {
-                // TODO: Need feedback on UI
                 NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
                 DLog(@"Seeds channel link can't be found with date: %@", dateStr);
+                
+                HUD.detailsLabelText = @"Fail Analyzing";
+                HUD_DISPLAY_1S;
             }
         }
+        else
+        {
+            DLog(@"Day: %@ has been sync before.", dateStr);
+            
+            HUD.detailsLabelText = @"Pulled Yet";
+            HUD_DISPLAY_1S;
+        }
     }
+    
+    HUD.mode = MBProgressHUDModeText;
+    HUD.labelText = @"Completed";
+    HUD.detailsLabelText = nil;
+    HUD_DISPLAY_1S;
 }
 
 -(void) fillCommonInfoToSeeds:(NSArray*) seeds date:(NSDate*) day
