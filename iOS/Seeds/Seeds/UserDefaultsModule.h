@@ -13,6 +13,8 @@
 
 @interface UserDefaultsModule : CBModuleAbstractImpl <CBSharedInstance>
 
+-(void) resetDefaults;
+
 -(BOOL) isThisDaySync:(NSDate*) day;
 -(void) setThisDaySync:(NSDate*) day sync:(BOOL) sync;
 

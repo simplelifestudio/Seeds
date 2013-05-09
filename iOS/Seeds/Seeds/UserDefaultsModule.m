@@ -49,6 +49,12 @@
     [NSThread sleepForTimeInterval:0.5];
 }
 
+-(void) resetDefaults
+{
+    [NSUserDefaults resetStandardUserDefaults];
+    DLog(@"UserDefaults has been reset.")
+}
+
 -(BOOL) isThisDaySync:(NSDate*) day
 {
     BOOL flag = NO;
