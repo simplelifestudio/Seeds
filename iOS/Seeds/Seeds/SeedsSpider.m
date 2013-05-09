@@ -19,7 +19,7 @@
 #define DATE_HOLDER @"$DATE$"
 #define SEEDLIST_LINK_TITLE @"["DATE_HOLDER"]BT合集"
 
-#define HUD_DISPLAY_1S sleep(2)
+#define HUD_DISPLAY_1S sleep(1.2)
 
 @interface SeedsSpider()
 {
@@ -191,7 +191,7 @@
                 HUD_DISPLAY_1S;
             
                 id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-                BOOL optSuccess = [seedDAO deleteSeedsByDate:dateStr];
+                BOOL optSuccess = [seedDAO deleteSeedsByDate:day];
                 if (optSuccess)
                 {
                     // Step 6:
@@ -253,7 +253,7 @@
         for (Seed* seed in seeds)
         {
             [seed setType:@"AV"];
-            NSString* dateStr = [CBDateUtils dateStringInLocalTimeZoneWithStandardFormat:day];
+            NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:STARDARD_DATE_FORMAT andDate:day];
             [seed setPublishDate:dateStr];
             [seed setFavorite:NO];
         }

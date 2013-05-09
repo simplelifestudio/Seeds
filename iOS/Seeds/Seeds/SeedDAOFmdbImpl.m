@@ -195,7 +195,7 @@
     return flag;
 }
 
--(BOOL) deleteSeedsByDate:(NSString*) dateStr
+-(BOOL) deleteSeedsByDate:(NSDate*) date
 {
     __block BOOL flag = NO;
     
@@ -203,16 +203,28 @@
     {
         [db open];
         
-        if (nil != dateStr)
+        if (nil != date)
         {
             NSMutableString* sql = [NSMutableString stringWithString:@"delete from "];
             [sql appendString:TABLE_SEED];
             [sql appendString:@" where "];
             [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
             [sql appendString:@" = "];
+            [sql appendString:@"'"];
+            NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:STARDARD_DATE_FORMAT andDate:date];
             [sql appendString:dateStr];
+            [sql appendString:@"'"];
             
             flag = [db executeUpdate:sql];
+            BOOL hadError = [db hadError];
+            if (hadError)
+            {
+                NSLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+            }
+            if (!flag)
+            {
+                DLog(@"Fail to delete seed records with date: %@", dateStr);
+            }
         }
         
         [db close];
