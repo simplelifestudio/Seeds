@@ -18,3 +18,19 @@
 "Loading: " = "Loading: ";
 "Mosaic" = "Mosaic";
 "No-Mosaic" = "No-Mosaic";
+
+"Preparing" = "Preparing";
+"Stamps Computing" = "Stamps Computing";
+"Pulling" = "Pulling";
+"Status Checking" = "Status Checking";
+"Link Analyzing" = "Link Analyzing";
+"Seeds Parsing" = "Seeds Parsing";
+"Saving" = "Saving";
+"Seeds Clearing" = "Seeds Clearing";
+"Seeds Saving" = "Seeds Saving";
+"Fail Saving" = "Fail Saving";
+"Fail Clearing" = "Fail Clearing";
+"Status Saving" = "Status Saving";
+"Fail Analyzing" = "Fail Analyzing";
+"Pulled Yet" = "Pulled Yet";
+"Completed" = "Completed";

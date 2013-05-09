@@ -18,3 +18,19 @@
 "Loading: " = "加载：";
 "Mosaic" = "有码";
 "No-Mosaic" = "无码";
+
+"Preparing" = "准备";
+"Stamps Computing" = "日期计算";
+"Pulling" = "抓取";
+"Status Checking" = "状态检测";
+"Link Analyzing" = "链接分析";
+"Seeds Parsing" = "种子解析";
+"Saving" = "保存";
+"Seeds Clearing" = "种子清除";
+"Seeds Saving" = "种子保存";
+"Fail Saving" = "保存失败";
+"Fail Clearing" = "清除失败";
+"Status Saving" = "状态保存";
+"Fail Analyzing" = "分析失败";
+"Pulled Yet" = "已抓取过";
+"Completed" = "完成";

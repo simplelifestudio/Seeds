@@ -19,7 +19,7 @@
 #define DATE_HOLDER @"$DATE$"
 #define SEEDLIST_LINK_TITLE @"["DATE_HOLDER"]BT合集"
 
-#define HUD_DISPLAY_1S sleep(1)
+#define HUD_DISPLAY_1S sleep(2)
 
 @interface SeedsSpider()
 {
@@ -134,44 +134,60 @@
     // Step 6: 再将新数据保存入数据库（事务操作）
     // Step 7: 更新本地KV缓存中时间标的对应数据同步状态
     
-	HUD.labelText = @"Pulling";
+    [[UserDefaultsModule sharedInstance] resetDefaults];
+    
+    HUD.mode = MBProgressHUDModeText;
+	HUD.labelText = NSLocalizedString(@"Preparing", nil);
     HUD.minSize = CGSizeMake(135.f, 135.f);
     HUD_DISPLAY_1S;
     
     // Step 1:
-    HUD.detailsLabelText = @"Stamps Computing";
+    HUD.mode = MBProgressHUDModeIndeterminate;
+//    HUD.labelText = @"Pulling";
+    HUD.detailsLabelText = NSLocalizedString(@"Stamps Computing", nil);
     HUD_DISPLAY_1S;
     
     NSArray* last3Days = [CBDateUtils lastThreeDays];
     for (NSDate* day in last3Days)
     {
         NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
-        
+        NSMutableString* hudStr1 = [NSMutableString stringWithCapacity:0];
+        [hudStr1 appendString:dateStr];
+        [hudStr1 appendString:STR_SPACE];
+        [hudStr1 appendString:NSLocalizedString(@"Pulling", nil)];
+
         // Step 2:
-        HUD.detailsLabelText = @"Status Checking";
+        HUD.labelText = hudStr1;
+        HUD.detailsLabelText = NSLocalizedString(@"Status Checking", nil);
         HUD_DISPLAY_1S;
         
         BOOL hasSyncBefore = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
+        hasSyncBefore = NO;
         DLog(@"Seeds in %@ have been synchronized yet? %@", dateStr, (hasSyncBefore) ? @"YES" : @"NO");
         if (!hasSyncBefore)
         {
             // Step 3:
-            HUD.detailsLabelText = @"Link Analyzing";
+            HUD.detailsLabelText = NSLocalizedString(@"Link Analyzing", nil);
             HUD_DISPLAY_1S;
             
             NSString* channelLink = [self pullSeedListLinkByDate:day];
             if (nil != channelLink && 0 < channelLink.length)
             {
                 // Step 4:
-                HUD.detailsLabelText = @"Seeds Pulling";
+                HUD.detailsLabelText = NSLocalizedString(@"Seeds Parsing", nil);
                 HUD_DISPLAY_1S;
                 
                 NSArray* seedList = [self pullSeedsFromLink:channelLink];
                 [self fillCommonInfoToSeeds:seedList date:day];
                 
                 // Step 5:
-                HUD.labelText = @"Saving";
-                HUD.detailsLabelText = @"Seeds Clearing";
+                NSMutableString* hudStr2 = [NSMutableString stringWithCapacity:0];
+                [hudStr2 appendString:dateStr];
+                [hudStr2 appendString:STR_SPACE];
+                [hudStr2 appendString:NSLocalizedString(@"Saving", nil)];
+                
+                HUD.labelText = hudStr2;
+                HUD.detailsLabelText = NSLocalizedString(@"Seeds Clearing", nil);
                 HUD_DISPLAY_1S;
             
                 id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
@@ -179,7 +195,7 @@
                 if (optSuccess)
                 {
                     // Step 6:
-                    HUD.detailsLabelText = @"Seeds Saving";
+                    HUD.detailsLabelText = NSLocalizedString(@"Seeds Saving", nil);
                     HUD_DISPLAY_1S;
                     
                     optSuccess = [seedDAO insertSeeds:seedList];
@@ -187,7 +203,7 @@
                     {
                         DLog(@"Fail to save seed records into table with date: %@", dateStr);
                         
-                        HUD.detailsLabelText = @"Fail Saving";
+                        HUD.detailsLabelText = NSLocalizedString(@"Fail Saving", nil);
                         HUD_DISPLAY_1S;
                     }
                 }
@@ -195,12 +211,12 @@
                 {
                     DLog(@"Fail to clear seed table with date: %@", dateStr);
                     
-                    HUD.detailsLabelText = @"Fail Clearing";
+                    HUD.detailsLabelText = NSLocalizedString(@"Fail Clearing", nil);
                     HUD_DISPLAY_1S;
                 }
                 
                 // Step 7:
-                HUD.detailsLabelText = @"Status Saving";
+                HUD.detailsLabelText = NSLocalizedString(@"Status Saving", nil);
                 HUD_DISPLAY_1S;
                 
                 BOOL hasSyncYet = optSuccess;
@@ -211,7 +227,7 @@
                 NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
                 DLog(@"Seeds channel link can't be found with date: %@", dateStr);
                 
-                HUD.detailsLabelText = @"Fail Analyzing";
+                HUD.detailsLabelText = NSLocalizedString(@"Fail Analyzing", nil);
                 HUD_DISPLAY_1S;
             }
         }
@@ -219,13 +235,13 @@
         {
             DLog(@"Day: %@ has been sync before.", dateStr);
             
-            HUD.detailsLabelText = @"Pulled Yet";
+            HUD.detailsLabelText = NSLocalizedString(@"Pulled Yet", nil);
             HUD_DISPLAY_1S;
         }
     }
     
     HUD.mode = MBProgressHUDModeText;
-    HUD.labelText = @"Completed";
+    HUD.labelText = NSLocalizedString(@"Completed", nil);
     HUD.detailsLabelText = nil;
     HUD_DISPLAY_1S;
 }

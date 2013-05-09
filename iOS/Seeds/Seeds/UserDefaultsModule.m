@@ -52,6 +52,7 @@
 -(void) resetDefaults
 {
     [NSUserDefaults resetStandardUserDefaults];
+    
     DLog(@"UserDefaults has been reset.")
 }
 
