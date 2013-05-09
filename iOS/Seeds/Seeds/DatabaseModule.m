@@ -48,7 +48,7 @@
 
 -(void) processService
 {
-    [NSThread sleepForTimeInterval:1.0];
+    [NSThread sleepForTimeInterval:0.5];
     DLog(@"SQLite3 Database File Path: %@", self.databaseFilePath);
     
 //    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];

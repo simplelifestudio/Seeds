@@ -52,7 +52,7 @@
 
 -(void) processService
 {
-    [NSThread sleepForTimeInterval:1.0];
+    [NSThread sleepForTimeInterval:0.5];
 }
 
 
