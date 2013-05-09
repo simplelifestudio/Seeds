@@ -339,7 +339,7 @@
             [sql appendString:@", "];
             [sql appendString:TABLE_SEED_COLUMN_MEMO];
             [sql appendString:@") values ("];
-            [sql appendString:@"?, ?, ?, ?, ?, ?, ?, ?, ?, ?"];
+            [sql appendString:@"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"];
             [sql appendString:@")"];
             
             BOOL hadError = [db hadError];
