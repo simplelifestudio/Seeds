@@ -61,7 +61,10 @@
         }
         else if ([attrName isEqualToString:TABLE_SEEDPICTURE_COLUMN_PICTURELINK])
         {
-            [seed.seedPictures addObject:attrVal];
+            SeedPicture* picture = [[SeedPicture alloc] init];
+            picture.pictureLink = attrVal;
+            
+            [seed.seedPictures addObject:picture];
         }
     }
 }
