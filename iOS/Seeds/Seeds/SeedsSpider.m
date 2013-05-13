@@ -253,7 +253,7 @@
         for (Seed* seed in seeds)
         {
             [seed setType:@"AV"];
-            [seed setType:@"咪咪爱"];
+            [seed setSource:@"咪咪爱"];
             NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:STARDARD_DATE_FORMAT andDate:day];
             [seed setPublishDate:dateStr];
             [seed setFavorite:NO];
