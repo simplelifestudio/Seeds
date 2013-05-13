@@ -237,24 +237,21 @@
          
          if (nil != seedPicture)
          {
-             if (nil != seedPicture)
-             {
-                 NSMutableString* sql = [NSMutableString stringWithString:@"insert into "];
-                 [sql appendString:TABLE_SEEDPICTURE];
-                 [sql appendString:@" ("];
-                 [sql appendString:TABLE_SEEDPICTURE_COLUMN_PICTUREID];
-                 [sql appendString:@", "];
-                 [sql appendString:TABLE_SEEDPICTURE_COLUMN_SEEDID];
-                 [sql appendString:@", "];
-                 [sql appendString:TABLE_SEEDPICTURE_COLUMN_PICTURELINK];
-                 [sql appendString:@", "];
-                 [sql appendString:TABLE_SEEDPICTURE_COLUMN_MEMO];
-                 [sql appendString:@") values ("];
-                 [sql appendString:@"?, ?, ?, ?"];
-                 [sql appendString:@")"];
-                 
-                 flag = [db executeUpdate:sql, seedPicture.pictureId, seedPicture.seedId, seedPicture.pictureLink, seedPicture.memo];
-             }
+             NSMutableString* sql = [NSMutableString stringWithString:@"insert into "];
+             [sql appendString:TABLE_SEEDPICTURE];
+             [sql appendString:@" ("];
+             [sql appendString:TABLE_SEEDPICTURE_COLUMN_PICTUREID];
+             [sql appendString:@", "];
+             [sql appendString:TABLE_SEEDPICTURE_COLUMN_SEEDID];
+             [sql appendString:@", "];
+             [sql appendString:TABLE_SEEDPICTURE_COLUMN_PICTURELINK];
+             [sql appendString:@", "];
+             [sql appendString:TABLE_SEEDPICTURE_COLUMN_MEMO];
+             [sql appendString:@") values ("];
+             [sql appendString:@"?, ?, ?, ?"];
+             [sql appendString:@")"];
+             
+             flag = [db executeUpdate:sql, seedPicture.pictureId, seedPicture.seedId, seedPicture.pictureLink, seedPicture.memo];
          }
          
          [db close];

@@ -343,14 +343,73 @@
             [sql appendString:@")"];
             
             BOOL hadError = [db hadError];
-            
             flag = [db executeUpdate:sql, seed.type, seed.source, seed.publishDate, seed.name, seed.size, seed.format, seed.torrentLink, (seed.favorite) ? @"1" : @"0", (seed.mosaic) ? @"1" : @"0", seed.hash, seed.memo];
             hadError = [db hadError];
             if (hadError)
             {
                 NSLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
             }
-            if (!flag)
+
+            [db close];
+            [db open];
+            
+            if (flag)
+            {
+                sql = [NSMutableString stringWithCapacity:0];
+                [sql appendString:@"select max("];
+                [sql appendString:TABLE_SEED_COLUMN_SEEDID];
+                [sql appendString:@") from "];
+                [sql appendString:TABLE_SEED];
+                
+                FMResultSet* resultSet = [db executeQuery:sql];
+                if ([resultSet next])
+                {
+                    NSInteger maxSeedId = [resultSet intForColumnIndex:0];
+                    
+                    NSArray* seedPictures = seed.seedPictures;
+                    if (nil != seedPictures)
+                    {
+                        for (SeedPicture* picture in seedPictures)
+                        {
+                            if (nil != picture)
+                            {
+                                // Can't use NSInteger or int here as FMDB issue
+                                NSNumber* oSeedId = [NSNumber numberWithInteger:maxSeedId];
+                                
+                                NSMutableString* sql = [NSMutableString stringWithString:@"insert into "];
+                                [sql appendString:TABLE_SEEDPICTURE];
+                                [sql appendString:@" ("];
+                                [sql appendString:TABLE_SEEDPICTURE_COLUMN_SEEDID];
+                                [sql appendString:@", "];
+                                [sql appendString:TABLE_SEEDPICTURE_COLUMN_PICTURELINK];
+                                [sql appendString:@", "];
+                                [sql appendString:TABLE_SEEDPICTURE_COLUMN_MEMO];
+                                [sql appendString:@") values ("];
+                                [sql appendString:@"?, ?, ?"];
+                                [sql appendString:@")"];
+                                
+                                hadError = [db hadError];
+                                flag = [db executeUpdate:sql, oSeedId, picture.pictureLink, picture.memo];
+                                hadError = [db hadError];
+                                if (hadError)
+                                {
+                                    DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+                                }
+                            }
+                            else
+                            {
+                                DLog(@"Seed picture object is ignored as nil.");
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    DLog(@"Fail to insert seed picture record.");
+                    [db rollback];
+                }
+            }
+            else
             {
                 DLog(@"Fail to insert seed record with name: %@", seed.name);
             }
