@@ -30,15 +30,34 @@
 {
     if (nil != string)
     {
+        unichar spaceChar = ' ';
+        unichar nbspChar = 160;
+        
         unichar c;
-        while((0 < string.length) && (c = [string characterAtIndex:0]) == ' ')
+        while (0 < string.length)
         {
-            string = [string substringFromIndex:1];
+            c = [string characterAtIndex:0];
+            if (c == spaceChar || c == nbspChar)
+            {
+                string = [string substringFromIndex:1];
+            }
+            else
+            {
+                break;
+            }
         }
         
-        while((0 < string.length) && (c = [string characterAtIndex:string.length - 1]) == ' ')
+        while (1 < string.length)
         {
-            string = [string substringToIndex:string.length - 1];
+            c = [string characterAtIndex:string.length - 1];
+            if (c == spaceChar || c == nbspChar)
+            {
+                string = [string substringToIndex:string.length - 1];
+            }
+            else
+            {
+                break;
+            }
         }
     }
     
