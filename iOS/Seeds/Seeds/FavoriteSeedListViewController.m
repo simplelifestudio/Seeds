@@ -43,10 +43,14 @@
     favoriteSeedList = [seedDAO getFavoriteSeeds];
     
     NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:favoriteSeedList.count];
-    id<SeedPictureDAO> seedPictureDAO = [DAOFactory getSeedPictureDAO];
     for (Seed* seed in favoriteSeedList)
     {
-        SeedPicture* picture = [seedPictureDAO getFirstSeedPicture:seed.seedId];
+        SeedPicture* picture = nil;
+        if (nil != seed.seedPictures && 0 < seed.seedPictures.count)
+        {
+            picture = seed.seedPictures[0];
+        }
+
         [pictureArray addObject:picture];
     }
     firstSeedPictureList = pictureArray;
@@ -115,34 +119,32 @@
     
     Seed* seed = [favoriteSeedList objectAtIndex:indexPath.row];
     SeedPicture* picture = [firstSeedPictureList objectAtIndex:indexPath.row];
-
-//    NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:NSLocalizedString(IMAGE_PLACEHOLDER_TABLECELL, nil) ofType:@"png"];
-//    UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
-//    [cell.thumbnailImageView setImage:placeHolderImage];
-    
-    NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
-    SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    [manager
-        downloadWithURL:imageURL
-        options:0
-        progress:^(NSUInteger receivedSize, long long expectedSize)
-        {
-            // progression tracking code
-            DLog(@"Seed(%d)'s thumbnail downloaded %d of %lld", seed.seedId, receivedSize, expectedSize);
-            
-            float progressVal = (float)receivedSize / (float)expectedSize;
-            [cell.circularProgressView updateProgressCircle:progressVal];
-        }
-        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
-        {
-            if (image)
-            {
-                //#warning Why below line can't be moved?
-                [cell.circularProgressView removeFromSuperview];
-                // do something with image
-                [cell.thumbnailImageView setImage:image];
-            }
-    }];
+    if (nil != picture)
+    {        
+        NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
+        SDWebImageManager *manager = [SDWebImageManager sharedManager];
+        [manager
+         downloadWithURL:imageURL
+         options:0
+         progress:^(NSUInteger receivedSize, long long expectedSize)
+         {
+             // progression tracking code
+             DLog(@"Seed(%d)'s thumbnail downloaded %d of %lld", seed.seedId, receivedSize, expectedSize);
+             
+             float progressVal = (float)receivedSize / (float)expectedSize;
+             [cell.circularProgressView updateProgressCircle:progressVal];
+         }
+         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+         {
+             if (image)
+             {
+                 //#warning Why below line can't be moved?
+                 [cell.circularProgressView removeFromSuperview];
+                 // do something with image
+                 [cell.thumbnailImageView setImage:image];
+             }
+         }];
+    }
     
 #if UI_RENDER_SEEDLISTTABLECELL
     [cell fillSeed:seed];
