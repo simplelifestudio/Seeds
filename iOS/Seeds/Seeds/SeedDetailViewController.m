@@ -10,7 +10,7 @@
 
 @interface SeedDetailViewController ()
 {
-    NSArray* seedPictures;
+
 }
 
 @end
@@ -39,12 +39,6 @@
 {
     [self.navigationController setNavigationBarHidden:NO];
     
-    if (nil != _seed)
-    {
-        id<SeedPictureDAO> seedPictureDAO = [DAOFactory getSeedPictureDAO];
-        seedPictures = [seedPictureDAO getSeedPicturesBySeedId:_seed.seedId];
-    }
-    
     [super viewWillAppear:animated];    
 }
 
@@ -56,13 +50,21 @@
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
 {
-    return seedPictures.count;
+    NSInteger num = 0;
+    
+    if (nil != _seed && nil != _seed.seedPictures)
+    {
+        num = _seed.seedPictures.count;
+    }
+    
+    return num;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
     __block SeedPictureCollectionCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL forIndexPath:indexPath];
-    SeedPicture* picture = [seedPictures objectAtIndex:indexPath.row];
+    
+    SeedPicture* picture = [_seed.seedPictures objectAtIndex:indexPath.row];
     
     NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
@@ -81,12 +83,12 @@
      {
          if (image)
          {
-//#warning Why below line can't be moved?
+             //#warning Why below line can't be moved?
              [cell.circularProgressView removeFromSuperview];
              cell.image.image = image;
          }
      }];
-    cell.label.text = [NSString stringWithFormat:@"%d", picture.pictureId];    
+    cell.label.text = [NSString stringWithFormat:@"%d", picture.pictureId];
     
     return cell;
 }
@@ -100,13 +102,12 @@
         if ([[segue destinationViewController] isKindOfClass:[SeedPictureViewController class]])
         {
             NSIndexPath *selectedIndexPath = [[self.collectionView indexPathsForSelectedItems] objectAtIndex:0];
-            SeedPicture* selctedPicture = [seedPictures objectAtIndex:selectedIndexPath.row];
+            SeedPicture* selctedPicture = [_seed.seedPictures objectAtIndex:selectedIndexPath.row];
             
             SeedPictureViewController* seedPictureViewController = segue.destinationViewController;
             [seedPictureViewController setSeedPicture:selctedPicture];
         }
     }
 }
-
 
 @end

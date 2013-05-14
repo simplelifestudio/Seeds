@@ -12,6 +12,10 @@
 {
     __weak FMDatabaseQueue* databaseQueue;
 }
+
+-(NSArray*) resultSet2SeedList:(FMResultSet*) rs databaseHandler:(FMDatabase*) db;
+-(Seed*) resultSet2Seed:(FMResultSet*) rs databaseHandler:(FMDatabase*) db;
+
 @end
 
 @implementation SeedDAOFmdbImpl
@@ -24,7 +28,7 @@
     }
 }
 
--(NSArray*) resultSet2SeedList:(FMResultSet*) rs
+-(NSArray*) resultSet2SeedList:(FMResultSet*) rs databaseHandler:(FMDatabase *)db
 {
     NSMutableArray* array = [NSMutableArray arrayWithCapacity:0];
     
@@ -47,6 +51,32 @@
             seed.hash = [rs stringForColumn:TABLE_SEED_COLUMN_HASH];
             seed.memo = [rs stringForColumn:TABLE_SEED_COLUMN_MEMO];
             
+            NSMutableString* sql = [NSMutableString stringWithString:@"select * from "];
+            [sql appendString:TABLE_SEEDPICTURE];
+            [sql appendString:@" WHERE "];
+            [sql appendString:TABLE_SEEDPICTURE_COLUMN_SEEDID];
+            [sql appendString:@" = "];
+            [sql appendString:[NSString stringWithFormat:@"%d", seed.seedId]];
+            
+            FMResultSet* seedPictureResultSet = [db executeQuery:sql];
+            NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:0];
+            if (nil != seedPictureResultSet)
+            {
+                while ([seedPictureResultSet next])
+                {
+                    SeedPicture* seedPicture = [[SeedPicture alloc] init];
+                    
+                    seedPicture.pictureId = [seedPictureResultSet intForColumn:TABLE_SEEDPICTURE_COLUMN_PICTUREID];
+                    seedPicture.seedId = [seedPictureResultSet intForColumn:TABLE_SEEDPICTURE_COLUMN_SEEDID];
+                    seedPicture.pictureLink = [seedPictureResultSet stringForColumn:TABLE_SEEDPICTURE_COLUMN_PICTURELINK];
+                    seedPicture.memo = [seedPictureResultSet stringForColumn:TABLE_SEEDPICTURE_COLUMN_MEMO];
+                    
+                    [pictureArray addObject:seedPicture];
+                }
+            }
+            [seedPictureResultSet close];
+            seed.seedPictures = pictureArray;
+            
             [array addObject:seed];
         }
     }
@@ -54,11 +84,11 @@
     return array;
 }
 
--(Seed*) resultSet2Seed:(FMResultSet*) rs
+-(Seed*) resultSet2Seed:(FMResultSet*) rs databaseHandler:(FMDatabase *)db
 {
     Seed* seed;
     
-    NSArray* seedList = [self resultSet2SeedList:rs];
+    NSArray* seedList = [self resultSet2SeedList:rs databaseHandler:db];
     if (0 < seedList.count)
     {
         seed = [seedList objectAtIndex:0];
@@ -100,7 +130,7 @@
         [sql appendString:TABLE_SEED];
         
         FMResultSet* resultSet = [db executeQuery:sql];
-        array = [self resultSet2SeedList:resultSet];
+        array = [self resultSet2SeedList:resultSet databaseHandler:db];
 
         [resultSet close];
         [db close];
@@ -168,7 +198,7 @@
         [sql appendString:@" where favorite = '1'"];
 
         FMResultSet* resultSet = [db executeQuery:sql];
-        array = [self resultSet2SeedList:resultSet];
+        array = [self resultSet2SeedList:resultSet databaseHandler:db];
         
         [resultSet close];
         [db close];
@@ -374,7 +404,8 @@
     
     for (Seed* seed in seeds)
     {
-        flag = [self insertSeed:seed];
+        BOOL flagOfOneTime = [self insertSeed:seed];
+        flag = flagOfOneTime ? YES : NO;
     }
     
     return flag;

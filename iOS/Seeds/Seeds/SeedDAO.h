@@ -27,9 +27,6 @@
 
 @protocol SeedDAO <NSObject, DAO>
 
--(NSArray*) resultSet2SeedList:(FMResultSet*) rs;
--(Seed*) resultSet2Seed:(FMResultSet*) rs;
-
 -(NSInteger) countAllSeeds;
 -(NSArray*) getAllSeeds;
 -(BOOL) updateSeed:(NSInteger) seedId withParameterDictionary:(NSMutableDictionary*) paramDic; // paramDic should only be used for key(NSString*)=value(NSString*)

@@ -65,10 +65,12 @@
 
 -(void) fillSeedPicture:(SeedPicture*) picture
 {
-    if (nil != picture)
-    {        
-//        [_thumbnailImageView setImageWithURL:[NSURL URLWithString:thumbnailLink]
-//                       placeholderImage:nil];
+    if (nil == picture)
+    {
+        [self.circularProgressView removeFromSuperview];
+        NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:@"noImage_tableCell" ofType:@"png"];
+        UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
+        [_thumbnailImageView setImage:placeHolderImage];
     }
 }
 

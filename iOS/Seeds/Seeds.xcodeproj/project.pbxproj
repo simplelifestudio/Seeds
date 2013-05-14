@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5203CDE1742829B00D917F7 /* noImage_tableCell.png in Resources */ = {isa = PBXBuildFile; fileRef = C5203CDC1742829B00D917F7 /* noImage_tableCell.png */; };
+		C5203CDF1742829B00D917F7 /* noImage_tableCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5203CDD1742829B00D917F7 /* noImage_tableCell@2x.png */; };
+		C5203CE21742848200D917F7 /* noImage_collectionCell.png in Resources */ = {isa = PBXBuildFile; fileRef = C5203CE01742848200D917F7 /* noImage_collectionCell.png */; };
+		C5203CE31742848200D917F7 /* noImage_collectionCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5203CE11742848200D917F7 /* noImage_collectionCell@2x.png */; };
 		C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C531833A17237FF700264530 /* CBModuleAbstractImpl.m */; };
 		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
 		C53183461723A17E00264530 /* DatabaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C53183451723A17E00264530 /* DatabaseModule.m */; };
@@ -89,6 +93,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C5203CDC1742829B00D917F7 /* noImage_tableCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noImage_tableCell.png; sourceTree = "<group>"; };
+		C5203CDD1742829B00D917F7 /* noImage_tableCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noImage_tableCell@2x.png"; sourceTree = "<group>"; };
+		C5203CE01742848200D917F7 /* noImage_collectionCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noImage_collectionCell.png; sourceTree = "<group>"; };
+		C5203CE11742848200D917F7 /* noImage_collectionCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noImage_collectionCell@2x.png"; sourceTree = "<group>"; };
 		C531833717237FF700264530 /* CBLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLog.h; sourceTree = "<group>"; };
 		C531833817237FF700264530 /* CBModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModule.h; sourceTree = "<group>"; };
 		C531833917237FF700264530 /* CBModuleAbstractImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModuleAbstractImpl.h; sourceTree = "<group>"; };
@@ -506,6 +514,10 @@
 		C5A94418172ACC1000D6FB85 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C5203CE01742848200D917F7 /* noImage_collectionCell.png */,
+				C5203CE11742848200D917F7 /* noImage_collectionCell@2x.png */,
+				C5203CDC1742829B00D917F7 /* noImage_tableCell.png */,
+				C5203CDD1742829B00D917F7 /* noImage_tableCell@2x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -637,6 +649,10 @@
 				C53183491723D6A900264530 /* Localizable.strings in Resources */,
 				C57CF2811724DBE10002B054 /* Seeds_App_Database.db in Resources */,
 				C5AB63501730B95A00A3F1E6 /* todo_list.rtf in Resources */,
+				C5203CDE1742829B00D917F7 /* noImage_tableCell.png in Resources */,
+				C5203CDF1742829B00D917F7 /* noImage_tableCell@2x.png in Resources */,
+				C5203CE21742848200D917F7 /* noImage_collectionCell.png in Resources */,
+				C5203CE31742848200D917F7 /* noImage_collectionCell@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,9 +19,6 @@
 
 @protocol SeedPictureDAO <NSObject, DAO>
 
--(NSArray*) resultSet2SeedPictureList:(FMResultSet*) rs;
--(Seed*) resultSet2SeedPicture:(FMResultSet*) rs;
-
 -(NSInteger) countAllSeedPictures;
 -(NSArray*) getAllSeedPictures;
 -(SeedPicture*) getFirstSeedPicture:(NSInteger) seedId;

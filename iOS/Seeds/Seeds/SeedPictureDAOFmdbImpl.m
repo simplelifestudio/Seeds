@@ -13,6 +13,9 @@
     __weak FMDatabaseQueue* databaseQueue;
 }
 
+-(NSArray*) resultSet2SeedPictureList:(FMResultSet*) rs;
+-(Seed*) resultSet2SeedPicture:(FMResultSet*) rs;
+
 @end
 
 @implementation SeedPictureDAOFmdbImpl
