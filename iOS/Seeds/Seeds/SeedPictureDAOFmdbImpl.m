@@ -251,7 +251,9 @@
              [sql appendString:@"?, ?, ?, ?"];
              [sql appendString:@")"];
              
-             flag = [db executeUpdate:sql, seedPicture.pictureId, seedPicture.seedId, seedPicture.pictureLink, seedPicture.memo];
+             // NOTE: Can't use NSInteger or int here as FMDB issue
+             NSNumber* oSeedId = [NSNumber numberWithInteger:seedPicture.seedId];
+             flag = [db executeUpdate:sql, seedPicture.pictureId, oSeedId, seedPicture.pictureLink, seedPicture.memo];
          }
          
          [db close];
