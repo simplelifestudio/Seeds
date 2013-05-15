@@ -30,7 +30,17 @@
 					android:layout_height="33dp" />
 		
 		</LinearLayout-->
-	
+
+    	<Button
+        	android:id="@+id/favorite_btn"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_marginLeft="2dip"
+        	android:layout_centerVertical="true"
+        	android:gravity="left"
+        	android:text="@string/seeds_Favorite" />
+    	
 	    <ImageView
 			android:id="@+id/gotoGrid"
 			android:layout_width="wrap_content"

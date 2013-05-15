@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+
+import com.simplelife.Seeds.Utils.DBProcess.SeedsDBAdapter;
 import com.simplelife.Seeds.Utils.DBProcess.SeedsDBManager;
 
 public class SeedsStartActivity extends Activity {
@@ -24,7 +26,8 @@ public class SeedsStartActivity extends Activity {
 		startView.startAnimation(fadeShow);
 		
 		// Start the DB process
-		SeedsDBManager.initManager(getApplication()); 
+		//SeedsDBManager.initManager(getApplication());
+		SeedsDBAdapter.initAdapter(getApplication());
 		
 		// Stay for a moments and redirect
 		fadeShow.setAnimationListener(new AnimationListener()

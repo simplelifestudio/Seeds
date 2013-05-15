@@ -1,5 +1,7 @@
 package com.simplelife.Seeds;
 
+import com.simplelife.Seeds.Utils.NetworkProcess.SeedsNetworkProcess;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -197,6 +199,7 @@ public class SeedsDateListActivity extends Activity {
 						// Communicate with server
 						// As a temp solution to make the dialog move on,
 						// set a stub code here to drive the dialog
+						SeedsNetworkProcess.sendAlohaReqMsg();
 						Thread.sleep(tSleepSeconds * 1000);						
 					} catch (Exception e) {
 						// Show the error message here

@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.simplelife.Seeds.Utils.Adapter.SeedsAdapter;
+import com.simplelife.Seeds.Utils.DBProcess.SeedsDBAdapter;
 import com.simplelife.Seeds.Utils.DBProcess.SeedsDBManager;
 
 public class SeedsListPerDayActivity extends Activity {
@@ -129,12 +130,11 @@ public class SeedsListPerDayActivity extends Activity {
 		ArrayList<HashMap<String, String>> seedsList = new ArrayList<HashMap<String, String>>();
 
 		// Retrieve the DB process handler to get data 
-		SeedsDBManager mDBHandler = SeedsDBManager.getManager();
+		// SeedsDBManager mDBHandler = SeedsDBManager.getManager();
+		SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();
 		
 		// Put a warning info here in case the DBHandler is null
-		SQLiteDatabase tDB = mDBHandler.getDatabase("Seeds_App_Database.db"); 
-		
-		Log.i(LOGCLASS, "DB instance retrieved, query now");
+		// SQLiteDatabase tDB = mDBHandler.getDatabase("Seeds_App_Database.db"); 
 		// Query the database
 		// NOTE: Modify here if the format of publishDate field in db is not string
 		/*Cursor tResult = tDB.rawQuery(
@@ -142,13 +142,11 @@ public class SeedsListPerDayActivity extends Activity {
 				new String[]{tDate});*/
 		
 		tDate = "2013-04-26";
-		Cursor tResult = tDB.rawQuery(
-				"select seedId,name,size,format,torrentLink from Seed where publishDate=?",
-				new String[]{tDate});
-				
 		/*Cursor tResult = tDB.rawQuery(
-				"select name,size,format,torrentLink from Seed",
-				null);*/
+				"select seedId,name,size,format,torrentLink from Seed where publishDate=?",
+				new String[]{tDate});*/
+		
+		Cursor tResult = mDBAdapter.getSeedEntryViaPublishDate(tDate);		
 				
 		Log.i(LOGCLASS, "The size of the tResult is  "+ tResult.getCount());
 		tResult.moveToFirst(); 
@@ -165,9 +163,11 @@ public class SeedsListPerDayActivity extends Activity {
 			Log.i(LOGCLASS, "The SeedID is  "+ tSeedId);
 			Log.i(LOGCLASS, "The Title is  "+ tResult.getString(tResult.getColumnIndex(KEY_TITLE)));
 			
-			Cursor tImgResult = tDB.rawQuery(
+			/*Cursor tImgResult = tDB.rawQuery(
 					"select pictureLink from SeedPicture where seedId=?",
-					new String[]{Integer.toString(tSeedId)});
+					new String[]{Integer.toString(tSeedId)});*/
+			
+			Cursor tImgResult = mDBAdapter.getSeedPicEntryViaSeedId(tSeedId);
 			
 			tImgResult.moveToFirst();
 			// Think twice if we really need a while loop here
