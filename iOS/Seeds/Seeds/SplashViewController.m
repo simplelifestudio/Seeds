@@ -69,26 +69,32 @@
     // UserDefaults Module
     appDelegate.userDefaultsModule = [UserDefaultsModule sharedInstance];
     [appDelegate.userDefaultsModule initModule];
-    [self updateProgress:appDelegate.userDefaultsModule.moduleIdentity andPercents:0.2];
+    [self updateProgress:appDelegate.userDefaultsModule.moduleIdentity andPercents:0.1];
     [appDelegate.userDefaultsModule startService];
     
     // Communication Module
     appDelegate.communicationModule = [[CommunicationModule alloc] initWithIsIndividualThreadNecessary:NO];
     [appDelegate.communicationModule initModule];
-    [self updateProgress:appDelegate.communicationModule.moduleIdentity andPercents:0.5];
+    [self updateProgress:appDelegate.communicationModule.moduleIdentity andPercents:0.3];
     [appDelegate.communicationModule startService];
 
     // Spider Module
     appDelegate.spiderModule = [SpiderModule sharedInstance];
     [appDelegate.spiderModule initModule];
-    [self updateProgress:appDelegate.spiderModule.moduleIdentity andPercents:0.7];
+    [self updateProgress:appDelegate.spiderModule.moduleIdentity andPercents:0.5];
     [appDelegate.spiderModule startService];
     
     // Database Module
     appDelegate.databaseModule = [[DatabaseModule alloc] initWithIsIndividualThreadNecessary:NO];
     [appDelegate.databaseModule initModule];
-    [self updateProgress:appDelegate.databaseModule.moduleIdentity andPercents:1.0];    
+    [self updateProgress:appDelegate.databaseModule.moduleIdentity andPercents:0.9];
     [appDelegate.databaseModule startService];
+    
+    // Transmission Module
+    appDelegate.transmissionModule = [[TransmissionModule alloc] initWithIsIndividualThreadNecessary:NO];
+    [appDelegate.transmissionModule initModule];
+    [self updateProgress:appDelegate.transmissionModule.moduleIdentity andPercents:1.0];
+    [appDelegate.transmissionModule startService];
     
     // Switch back to Splash UI
     [self performSelectorOnMainThread:@selector(startFadingSplashScreen) withObject:self waitUntilDone:YES];
