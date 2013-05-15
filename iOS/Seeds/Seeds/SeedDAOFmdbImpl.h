@@ -10,6 +10,8 @@
 
 #import "SeedDAO.h"
 
+#define SQL_FOREIGN_KEY_ENABLE @"PRAGMA foreign_keys=1"
+
 @interface SeedDAOFmdbImpl : NSObject <SeedDAO>
 
 @end

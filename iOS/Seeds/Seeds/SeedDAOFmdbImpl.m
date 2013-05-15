@@ -234,6 +234,8 @@
         
         if (nil != date)
         {
+            flag = [db executeUpdate:SQL_FOREIGN_KEY_ENABLE];
+            
             NSMutableString* sql = [NSMutableString stringWithString:@"delete from "];
             [sql appendString:TABLE_SEED];
             [sql appendString:@" where "];
@@ -262,6 +264,92 @@
     return flag;
 }
 
+-(BOOL) deleteAllSeedsExceptFavoritedOrLastThreeDayRecords:(NSArray*) last3Days
+{
+    __block BOOL flag = NO;
+    
+    if (nil != last3Days && 3 == last3Days.count)
+    {
+        [databaseQueue inDatabase:^(FMDatabase* db)
+         {
+             [db open];
+             
+             flag = [db executeUpdate:SQL_FOREIGN_KEY_ENABLE];
+             
+             NSMutableString* sql = [NSMutableString stringWithString:@"delete from "];
+             [sql appendString:TABLE_SEED];
+             [sql appendString:@" where "];
+             [sql appendString:TABLE_SEED_COLUMN_FAVORITE];
+             [sql appendString:@" = "];
+             [sql appendString:@"'"];
+             [sql appendString:[NSString stringWithFormat:@"%d", 0]];
+             [sql appendString:@"'"];
+             for (NSDate* day in last3Days)
+             {
+                 NSString* dayStr = [CBDateUtils dateStringInLocalTimeZone:STARDARD_DATE_FORMAT andDate:day];
+                 
+                 [sql appendString:@" and "];
+                 [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
+                 [sql appendString:@" <> "];
+                 [sql appendString:@"'"];
+                 [sql appendString:dayStr];
+                 [sql appendString:@"'"];
+             }
+             
+             flag = [db executeUpdate:sql];
+             BOOL hadError = [db hadError];
+             if (hadError)
+             {
+                 NSLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+             }
+             if (!flag)
+             {
+                 DLog(@"Fail to delete all un-favorite seed records.");
+             }
+             
+             [db close];
+         }];
+    }
+    
+    return flag;
+}
+
+-(BOOL) deleteUnFavoriteSeeds
+{
+    __block BOOL flag = NO;
+    
+    [databaseQueue inDatabase:^(FMDatabase* db)
+     {
+         [db open];
+         
+         flag = [db executeUpdate:SQL_FOREIGN_KEY_ENABLE];
+         
+         NSMutableString* sql = [NSMutableString stringWithString:@"delete from "];
+         [sql appendString:TABLE_SEED];
+         [sql appendString:@" where "];
+         [sql appendString:TABLE_SEED_COLUMN_FAVORITE];
+         [sql appendString:@" = "];
+         [sql appendString:@"'"];
+         [sql appendString:[NSString stringWithFormat:@"%d", 0]];
+         [sql appendString:@"'"];
+             
+         flag = [db executeUpdate:sql];
+         BOOL hadError = [db hadError];
+         if (hadError)
+         {
+             NSLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+         }
+         if (!flag)
+         {
+             DLog(@"Fail to delete all un-favorite seed records.");
+         }
+         
+         [db close];
+     }];
+    
+    return flag;
+}
+
 -(BOOL) deleteAllSeeds
 {
     __block BOOL flag = NO;
@@ -270,11 +358,12 @@
     {
         [db open];
         
+        flag = [db executeUpdate:SQL_FOREIGN_KEY_ENABLE];
+        
         NSMutableString* sql = [NSMutableString stringWithString:@"delete from "];
         [sql appendString:TABLE_SEED];
-        
         flag = [db executeUpdate:sql];
-
+        
         [db close];
     }];
     
