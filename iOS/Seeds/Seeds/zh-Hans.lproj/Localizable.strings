@@ -14,6 +14,8 @@
 "Spider Module Thread" = "爬虫模块线程";
 "UserDefaults Module" = "配置管理模块";
 "UserDefaults Module Thread" = "配置管理模块线程";
+"Transmission Module" = "传输模块";
+"Transmission Module Thread" = "传输模块线程";
 
 "Loading: " = "加载：";
 "Mosaic" = "有码";

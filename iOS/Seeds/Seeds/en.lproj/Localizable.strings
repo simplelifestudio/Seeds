@@ -14,6 +14,8 @@
 "Spider Module Thread" = "Spider Module Thread";
 "UserDefaults Module" = "UserDefaults Module";
 "UserDefaults Module Thread" = "UserDefaults Module Thread";
+"Transmission Module" = "Transmission Module";
+"Transmission Module Thread" = "Transmission Module Thread";
 
 "Loading: " = "Loading: ";
 "Mosaic" = "Mosaic";
