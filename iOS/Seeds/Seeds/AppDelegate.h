@@ -12,6 +12,7 @@
 #import "CommunicationModule.h"
 #import "DatabaseModule.h"
 #import "SpiderModule.h"
+#import "TransmissionModule.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -22,5 +23,6 @@
 @property (strong, nonatomic) CommunicationModule *communicationModule;
 @property (strong, nonatomic) DatabaseModule *databaseModule;
 @property (strong, nonatomic) SpiderModule *spiderModule;
+@property (strong, nonatomic) TransmissionModule *transmissionModule;
 
 @end

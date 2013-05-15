@@ -15,6 +15,7 @@
 @synthesize communicationModule = _communicationModule;
 @synthesize databaseModule = _databaseModule;
 @synthesize spiderModule = _spiderModule;
+@synthesize transmissionModule = _transmissionModule;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -50,6 +51,7 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     
     // Here to release all modules.
+    [self.transmissionModule releaseModule];
     [self.spiderModule releaseModule];
     [self.databaseModule releaseModule];
     [self.communicationModule releaseModule];

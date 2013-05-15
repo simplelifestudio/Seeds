@@ -45,6 +45,7 @@
 		C5203D4F1743BE1600D917F7 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5203D2E1743BE1600D917F7 /* README.txt */; };
 		C5203D5A1743BEB400D917F7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5203D591743BEB400D917F7 /* CFNetwork.framework */; };
 		C5203D5C1743BEC500D917F7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5203D5B1743BEC500D917F7 /* Security.framework */; };
+		C5203D601743BFD500D917F7 /* TransmissionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D5F1743BFD500D917F7 /* TransmissionModule.m */; };
 		C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C531833A17237FF700264530 /* CBModuleAbstractImpl.m */; };
 		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
 		C53183461723A17E00264530 /* DatabaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C53183451723A17E00264530 /* DatabaseModule.m */; };
@@ -196,6 +197,8 @@
 		C5203D2E1743BE1600D917F7 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		C5203D591743BEB400D917F7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C5203D5B1743BEC500D917F7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		C5203D5E1743BFD500D917F7 /* TransmissionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransmissionModule.h; sourceTree = "<group>"; };
+		C5203D5F1743BFD500D917F7 /* TransmissionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransmissionModule.m; sourceTree = "<group>"; };
 		C531833717237FF700264530 /* CBLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLog.h; sourceTree = "<group>"; };
 		C531833817237FF700264530 /* CBModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModule.h; sourceTree = "<group>"; };
 		C531833917237FF700264530 /* CBModuleAbstractImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModuleAbstractImpl.h; sourceTree = "<group>"; };
@@ -524,6 +527,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		C5203D5D1743BFA600D917F7 /* Transmission */ = {
+			isa = PBXGroup;
+			children = (
+				C5203D5E1743BFD500D917F7 /* TransmissionModule.h */,
+				C5203D5F1743BFD500D917F7 /* TransmissionModule.m */,
+			);
+			name = Transmission;
+			sourceTree = "<group>";
+		};
 		C531834317239FF300264530 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -732,6 +744,7 @@
 				C5964C4F172249A000CC1C0A /* Communication */,
 				C546E6F317388A1500AEADDA /* Spider */,
 				C5964C4E1722499300CC1C0A /* Database */,
+				C5203D5D1743BFA600D917F7 /* Transmission */,
 				C5964C4D1722498900CC1C0A /* GUI */,
 			);
 			name = Sources;
@@ -1027,6 +1040,7 @@
 				C5203D4C1743BE1600D917F7 /* DDTTYLogger.m in Sources */,
 				C5203D4D1743BE1600D917F7 /* ContextFilterLogFormatter.m in Sources */,
 				C5203D4E1743BE1600D917F7 /* DispatchQueueLogFormatter.m in Sources */,
+				C5203D601743BFD500D917F7 /* TransmissionModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
