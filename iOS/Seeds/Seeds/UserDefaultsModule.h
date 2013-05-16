@@ -11,7 +11,11 @@
 
 #define USERDEFAULTS_KEY_SYNCSTATUSBYDAY @"syncStatusByDay:"
 
+#define PERSISTENTDOMAIN_SYNCSTATUSBYDAY @"syncStatusByDay"
+
 @interface UserDefaultsModule : CBModuleAbstractImpl <CBSharedInstance>
+
+@property (atomic, strong) NSUserDefaults* userDefaults;
 
 -(void) resetDefaults;
 

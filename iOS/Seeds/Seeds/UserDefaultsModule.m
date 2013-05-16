@@ -25,11 +25,15 @@
     return sharedInstance;
 }
 
+@synthesize userDefaults = _userDefaults;
+
 -(void) initModule
 {
     [self setModuleIdentity:NSLocalizedString(@"UserDefaults Module", nil)];
     [self.serviceThread setName:NSLocalizedString(@"UserDefaults Module Thread", nil)];
     [self setKeepAlive:FALSE];
+    
+    _userDefaults = [NSUserDefaults standardUserDefaults];
 }
 
 -(void) releaseModule
@@ -51,8 +55,8 @@
 
 -(void) resetDefaults
 {
-    [NSUserDefaults resetStandardUserDefaults];
-    
+    [_userDefaults removePersistentDomainForName:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
+    [_userDefaults setPersistentDomain:[NSDictionary dictionary] forName:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
     DLog(@"UserDefaults has been reset.")
 }
 
@@ -62,7 +66,22 @@
     if (nil != day)
     {
         NSString* key = [self combineKey_syncStatusByDay:day];
-        flag = [[NSUserDefaults standardUserDefaults] boolForKey:key];
+        
+        NSDictionary* dic = [_userDefaults persistentDomainForName:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
+        if (nil == dic)
+        {
+            dic = [NSMutableDictionary dictionaryWithObject:(flag ? @"YES" : @"NO") forKey:key];
+            [_userDefaults setPersistentDomain:dic forName:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
+            [_userDefaults synchronize];
+        }
+        else
+        {
+            id obj = [dic objectForKey:key];
+            if ([obj isEqualToString:@"YES"])
+            {
+                flag = YES;
+            }
+        }
     }
     return flag;
 }
@@ -72,7 +91,16 @@
     if (nil != day)
     {
         NSString* key = [self combineKey_syncStatusByDay:day];
-        [[NSUserDefaults standardUserDefaults] setBool:sync forKey:key];
+        NSDictionary* dic = [_userDefaults persistentDomainForName:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
+        if (nil == dic)
+        {
+            dic = [NSMutableDictionary dictionary];
+        }
+        dic = [NSMutableDictionary dictionaryWithDictionary:dic];
+        
+        [dic setValue:sync ? @"YES" : @"NO" forKey:key];
+        [_userDefaults setPersistentDomain:dic forName:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
+        [_userDefaults synchronize];
     }
 }
 

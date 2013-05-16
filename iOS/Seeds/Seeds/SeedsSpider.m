@@ -135,8 +135,6 @@
     // Step 7: 更新本地KV缓存中时间标的对应数据同步状态
     // Step 8: 删除数据库中原有的，处于这三天之前的，非收藏状态的所有记录
     
-    [[UserDefaultsModule sharedInstance] resetDefaults];
-    
     HUD.mode = MBProgressHUDModeText;
 	HUD.labelText = NSLocalizedString(@"Preparing", nil);
     HUD.minSize = CGSizeMake(135.f, 135.f);
@@ -163,7 +161,6 @@
         HUD_DISPLAY(1);
         
         BOOL hasSyncBefore = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
-        hasSyncBefore = NO;
         DLog(@"Seeds in %@ have been synchronized yet? %@", dateStr, (hasSyncBefore) ? @"YES" : @"NO");
         if (!hasSyncBefore)
         {            
@@ -228,7 +225,7 @@
                 DLog(@"Seeds channel link can't be found with date: %@", dateStr);
                 
                 HUD.detailsLabelText = NSLocalizedString(@"Fail Analyzing", nil);
-                HUD_DISPLAY(3)
+                HUD_DISPLAY(2)
             }
         }
         else
@@ -236,7 +233,7 @@
             DLog(@"Day: %@ has been sync before.", dateStr);
             
             HUD.detailsLabelText = NSLocalizedString(@"Pulled Yet", nil);
-            HUD_DISPLAY(3)
+            HUD_DISPLAY(2)
         }
     }
     
