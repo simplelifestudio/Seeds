@@ -1,4 +1,4 @@
-package com.simplelife.Seeds.Utils.NetworkProcess;
+package com.simplelife.seeds.android.Utils.NetworkProcess;
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-import com.simplelife.Seeds.Utils.JSONProcess.SeedsJSONMessage;
+import com.simplelife.seeds.android.Utils.JSONProcess.SeedsJSONMessage;
 
 public class SeedsNetworkProcess {
 	

@@ -1,4 +1,4 @@
-package com.simplelife.Seeds.Utils.JSONProcess;
+package com.simplelife.seeds.android.Utils.JSONProcess;
 
 import org.json.JSONException;
 import org.json.JSONObject;

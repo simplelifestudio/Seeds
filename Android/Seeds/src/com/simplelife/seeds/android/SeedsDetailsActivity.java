@@ -1,4 +1,4 @@
-package com.simplelife.Seeds;
+package com.simplelife.seeds.android;
 
 import java.util.ArrayList;
 
@@ -22,10 +22,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.simplelife.Seeds.Utils.DBProcess.SeedsDBAdapter;
-import com.simplelife.Seeds.Utils.DBProcess.SeedsDBManager;
-import com.simplelife.Seeds.Utils.ImageProcess.SeedsImageLoader;
-import com.simplelife.Seeds.Utils.ImageProcess.SeedsSlideImageLayout;
+import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
+import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBManager;
+import com.simplelife.seeds.android.Utils.ImageProcess.SeedsImageLoader;
+import com.simplelife.seeds.android.Utils.ImageProcess.SeedsSlideImageLayout;
 
 public class SeedsDetailsActivity extends Activity{
 	
@@ -55,9 +55,15 @@ public class SeedsDetailsActivity extends Activity{
 	// Button to save to favorites
 	private Button myFavoriteBtn;
 	
+	// Database adapter
+	private SeedsDBAdapter mDBAdapter;
+	
 	// Progress dialog for setting as favorite operation
 	private ProgressDialog tProgressDialog = null;
 	
+	// Favorite tag
+	private boolean tFavTag = false;
+
 	private int[] slideImages = {
 			R.drawable.image01,
 			R.drawable.image02,
@@ -80,13 +86,22 @@ public class SeedsDetailsActivity extends Activity{
 		
 		// Retrieve the date info parameter
 		Bundle bundle = getIntent().getExtras();
-		tSeedId = bundle.getInt("seedid");		
+		tSeedId = bundle.getInt("seedid");
+		
+		// Retrieve the adapter instance
+		mDBAdapter = SeedsDBAdapter.getAdapter();
 		
 		// Initialization
 		initViews();
 		
 		// Retrieve the favorite button
 		myFavoriteBtn = (Button) findViewById(R.id.favorite_btn);
+		
+		// Check if this seed has already been saved to favorite
+		if(mDBAdapter.isSeedSaveToFavorite(tSeedId))
+		{
+			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
+		}
 		
 		// Listen on the favorite button
 		myFavoriteBtn.setOnClickListener(myFavoriteBtnListener);
@@ -273,7 +288,16 @@ public class SeedsDetailsActivity extends Activity{
 		@Override
 		public void onClick(View v) {
 			
-			tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Please wait...", true, false);
+			if(mDBAdapter.isSeedSaveToFavorite(tSeedId))
+			{
+				tFavTag = true;
+				tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Please wait...", true, false);
+			}
+			else
+			{
+				tFavTag = false;
+				tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Cancelling Favorites...", "Please wait...", true, false);
+			}
 			
 			// Set up a thread to operate with the database
 			new Thread() {				
@@ -283,16 +307,18 @@ public class SeedsDetailsActivity extends Activity{
 						// Get the DB adapter instance
 						SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();
 						
-						// Set the favorite key to true
-						if (mDBAdapter.updateSeedEntryFav(tSeedId, true))
+						// Set the favorite key 
+						if (tFavTag)
 						{
-		                    //Show the success info
-							Log.i("SeedsDetails", "Set to favorite successful!!");
-		            		tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Done!", true, false);							
-						}else
+							mDBAdapter.updateSeedEntryFav(tSeedId,false);
+							tFavTag = false;
+							tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Cancelling Favorites...", "Done!", true, false);
+						}
+						else
 						{
-							Log.i("SeedsDetails", "Set to favorite fail!!");
-							tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Failed!!", true, false);
+							mDBAdapter.updateSeedEntryFav(tSeedId,true);
+							tFavTag = true;
+							tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Done!", true, false);							
 						}
 	            		
 	            		// Hang on for a moment
@@ -318,7 +344,16 @@ public class SeedsDetailsActivity extends Activity{
               
             switch (msg.what) {
             	
-            	case 1:                                                               		
+            	case 1:
+            		// Check if this seed has already been saved to favorite
+            		if(mDBAdapter.isSeedSaveToFavorite(tSeedId))
+            		{
+            			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
+            		}
+            		else
+            		{
+            			myFavoriteBtn.setText(R.string.seeds_Favorite);
+            		}
             		//close the ProgressDialog
                     tProgressDialog.dismiss(); 
                     break;

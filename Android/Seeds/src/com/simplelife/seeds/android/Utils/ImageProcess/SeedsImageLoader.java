@@ -1,4 +1,4 @@
-package com.simplelife.Seeds.Utils.ImageProcess;
+package com.simplelife.seeds.android.Utils.ImageProcess;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +23,7 @@ import android.graphics.Matrix;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.simplelife.Seeds.R;
+import com.simplelife.seeds.android.R;
 
 public class SeedsImageLoader {
 

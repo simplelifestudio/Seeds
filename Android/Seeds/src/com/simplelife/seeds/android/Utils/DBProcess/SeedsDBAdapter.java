@@ -1,6 +1,6 @@
-package com.simplelife.Seeds.Utils.DBProcess;
+package com.simplelife.seeds.android.Utils.DBProcess;
 
-import com.simplelife.Seeds.SeedsEntity;
+import com.simplelife.seeds.android.SeedsEntity;
 
 import android.content.ContentValues;
 import android.content.Context;  
@@ -171,6 +171,22 @@ public class SeedsDBAdapter {
 	    return mCursor;
 	}
 
+ 	public Cursor getSeedPicFirstEntryViaSeedId(int _seedId) throws SQLException
+	{
+	    Cursor mCursor = mSQLiteDatabase.query(true, 
+	    		DATABASE_TABLE_SEEDPIC, 
+	    		new String[]{KEY_ID_SEEDPIC,KEY_PICTURELINK}, 
+	    		KEY_ID_SEED+ "=" + _seedId,
+	    		null,null,null,null,null);
+	    
+	    if(mCursor!=null)
+	    {
+	        mCursor.moveToFirst();
+	    }
+	   
+	    return mCursor;
+	}
+ 	
  	public Cursor getSeedPicEntryViaSeedId(int _seedId) throws SQLException
 	{
 	    Cursor mCursor = mSQLiteDatabase.query(true, 
@@ -189,13 +205,32 @@ public class SeedsDBAdapter {
  	
  	public boolean updateSeedEntryFav(int _seedId, boolean _favTag) {  
  
- 		String where = KEY_ID_SEED + "=" + _seedId;  
+ 		String where = KEY_ID_SEED + "=" + _seedId;
  		
  		ContentValues contentValues = new ContentValues();  
  		// Fill in the ContentValue based on the new object  
  		contentValues.put(KEY_FAVORITE, _favTag);
 
  		return mSQLiteDatabase.update(DATABASE_TABLE_SEED, contentValues, where, null) > 0;  
- 	}  
+ 	}
+ 	
+ 	public boolean isSeedSaveToFavorite(int _seedId){
+	    
+ 		Cursor mCursor = mSQLiteDatabase.query(true, 
+	    		DATABASE_TABLE_SEED, 
+	    		new String[]{KEY_FAVORITE}, 
+	    		KEY_ID_SEED+ "=" + _seedId,
+	    		null,null,null,null,null);
+	    
+	    if(mCursor!=null)
+	    {
+	        mCursor.moveToFirst();
+	    }
+	    
+	    if (1 == mCursor.getInt(mCursor.getColumnIndex(KEY_FAVORITE)))
+	    	return true;
+	    else
+	    	return false;
+ 	}
  	 
 }

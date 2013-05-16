@@ -1,9 +1,8 @@
-package com.simplelife.Seeds.Utils.ImageProcess;
+package com.simplelife.seeds.android.Utils.ImageProcess;
 
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Matrix;
 import android.graphics.PointF;
@@ -20,11 +19,8 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 
-import com.simplelife.Seeds.R;
-import com.simplelife.Seeds.SeedsDateListActivity;
-import com.simplelife.Seeds.SeedsDetailsActivity;
-import com.simplelife.Seeds.SeedsListPerDayActivity;
-import com.simplelife.Seeds.SeedsReviewActivity;
+import com.simplelife.seeds.android.R;
+import com.simplelife.seeds.android.SeedsReviewActivity;
 
 /**
  * Generate Image slide layout

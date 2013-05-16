@@ -1,4 +1,4 @@
-package com.simplelife.Seeds;
+package com.simplelife.seeds.android;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,8 +8,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 
-import com.simplelife.Seeds.Utils.DBProcess.SeedsDBAdapter;
-import com.simplelife.Seeds.Utils.DBProcess.SeedsDBManager;
+import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
+import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBManager;
 
 public class SeedsStartActivity extends Activity {
 

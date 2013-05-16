@@ -1,4 +1,4 @@
-package com.simplelife.Seeds.Utils.ImageProcess;
+package com.simplelife.seeds.android.Utils.ImageProcess;
 
 import java.io.File;
 

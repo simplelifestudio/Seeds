@@ -31,14 +31,31 @@
         android:layout_marginTop="@dimen/seeds_datalist_interval"
         android:text="@string/seeds_today" />
 
-    <Button
-        android:id="@+id/update_btn"
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="90dp"
-        android:layout_marginRight="90dp"
-        android:layout_marginTop="@dimen/seeds_datalist_interval"
-        android:text="@string/seeds_update" />
-      
-    
+        android:orientation="horizontal" >
+    	
+    	<Button
+        	android:id="@+id/favlist_btn"
+        	android:layout_width="100dip"
+        	android:layout_height="wrap_content"
+        	android:gravity="center"
+        	android:layout_marginLeft="35dip"
+        	android:layout_alignParentLeft="true"
+        	android:layout_marginTop="@dimen/seeds_datalist_interval"
+        	android:text="@string/seeds_favoritelist" /> 
+        <Button
+        	android:id="@+id/update_btn"
+        	android:layout_width="100dip"
+        	android:layout_height="wrap_content"
+        	android:layout_marginRight="35dip"
+        	android:layout_marginTop="@dimen/seeds_datalist_interval"
+        	android:gravity="center"
+        	android:layout_alignParentRight="true"
+        	android:text="@string/seeds_update" />
+
+     
+
+	</RelativeLayout>
 </LinearLayout>
