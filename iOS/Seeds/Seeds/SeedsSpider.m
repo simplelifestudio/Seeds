@@ -8,6 +8,8 @@
 
 #import "SeedsSpider.h"
 
+#import "TorrentDownloadAgent.h"
+
 #define SEEDS_SERVER_IP @"174.123.15.31"
 #define LINK_SEEDLIST_CHANNEL_PAGE @"&page="
 #define LINK_SEEDLIST_CHANNEL @"http://"SEEDS_SERVER_IP"/forumdisplay.php?fid=55"
@@ -134,6 +136,8 @@
     // Step 6: 再将新数据保存入数据库（事务操作）
     // Step 7: 更新本地KV缓存中时间标的对应数据同步状态
     // Step 8: 删除数据库中原有的，处于这三天之前的，非收藏状态的所有记录
+    
+//    [[UserDefaultsModule sharedInstance] resetDefaults];
     
     HUD.mode = MBProgressHUDModeText;
 	HUD.labelText = NSLocalizedString(@"Preparing", nil);

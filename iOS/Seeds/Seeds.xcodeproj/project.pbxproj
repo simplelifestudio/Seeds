@@ -46,6 +46,8 @@
 		C5203D5A1743BEB400D917F7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5203D591743BEB400D917F7 /* CFNetwork.framework */; };
 		C5203D5C1743BEC500D917F7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5203D5B1743BEC500D917F7 /* Security.framework */; };
 		C5203D601743BFD500D917F7 /* TransmissionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D5F1743BFD500D917F7 /* TransmissionModule.m */; };
+		C5203D6F17451F7600D917F7 /* TorrentDownloadAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D6E17451F7500D917F7 /* TorrentDownloadAgent.m */; };
+		C5203D721745204900D917F7 /* CBPathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D711745204900D917F7 /* CBPathUtils.m */; };
 		C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C531833A17237FF700264530 /* CBModuleAbstractImpl.m */; };
 		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
 		C53183461723A17E00264530 /* DatabaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C53183451723A17E00264530 /* DatabaseModule.m */; };
@@ -199,6 +201,10 @@
 		C5203D5B1743BEC500D917F7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C5203D5E1743BFD500D917F7 /* TransmissionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransmissionModule.h; sourceTree = "<group>"; };
 		C5203D5F1743BFD500D917F7 /* TransmissionModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransmissionModule.m; sourceTree = "<group>"; };
+		C5203D6D17451F7500D917F7 /* TorrentDownloadAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TorrentDownloadAgent.h; path = Seeds/TorrentDownloadAgent.h; sourceTree = "<group>"; };
+		C5203D6E17451F7500D917F7 /* TorrentDownloadAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TorrentDownloadAgent.m; path = Seeds/TorrentDownloadAgent.m; sourceTree = "<group>"; };
+		C5203D701745204900D917F7 /* CBPathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPathUtils.h; sourceTree = "<group>"; };
+		C5203D711745204900D917F7 /* CBPathUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBPathUtils.m; sourceTree = "<group>"; };
 		C531833717237FF700264530 /* CBLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLog.h; sourceTree = "<group>"; };
 		C531833817237FF700264530 /* CBModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModule.h; sourceTree = "<group>"; };
 		C531833917237FF700264530 /* CBModuleAbstractImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModuleAbstractImpl.h; sourceTree = "<group>"; };
@@ -541,10 +547,12 @@
 			children = (
 				C5AB115017333EA6007EEE25 /* CBDateUtils.h */,
 				C5AB115117333EA6007EEE25 /* CBDateUtils.m */,
-				C5AB63561730C1ED00A3F1E6 /* CBUIUtils.h */,
-				C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */,
+				C5203D701745204900D917F7 /* CBPathUtils.h */,
+				C5203D711745204900D917F7 /* CBPathUtils.m */,
 				C5ADC850173930E1007F59D7 /* CBStringUtils.h */,
 				C5ADC851173930E1007F59D7 /* CBStringUtils.m */,
+				C5AB63561730C1ED00A3F1E6 /* CBUIUtils.h */,
+				C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */,
 				C531833717237FF700264530 /* CBLog.h */,
 				C531833817237FF700264530 /* CBModule.h */,
 				C531833917237FF700264530 /* CBModuleAbstractImpl.h */,
@@ -727,6 +735,8 @@
 				C546E6E2173883CC00AEADDA /* JSONMessageDelegate.h */,
 				C546E6E5173883CC00AEADDA /* ServerAgent.h */,
 				C546E6E6173883CC00AEADDA /* ServerAgent.m */,
+				C5203D6D17451F7500D917F7 /* TorrentDownloadAgent.h */,
+				C5203D6E17451F7500D917F7 /* TorrentDownloadAgent.m */,
 				C5318340172390A400264530 /* CommunicationModule.h */,
 				C5318341172390A400264530 /* CommunicationModule.m */,
 			);
@@ -1041,6 +1051,8 @@
 				C5203D4D1743BE1600D917F7 /* ContextFilterLogFormatter.m in Sources */,
 				C5203D4E1743BE1600D917F7 /* DispatchQueueLogFormatter.m in Sources */,
 				C5203D601743BFD500D917F7 /* TransmissionModule.m in Sources */,
+				C5203D6F17451F7600D917F7 /* TorrentDownloadAgent.m in Sources */,
+				C5203D721745204900D917F7 /* CBPathUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
