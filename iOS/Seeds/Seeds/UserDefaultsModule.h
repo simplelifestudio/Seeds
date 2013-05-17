@@ -22,4 +22,9 @@
 -(BOOL) isThisDaySync:(NSDate*) day;
 -(void) setThisDaySync:(NSDate*) day sync:(BOOL) sync;
 
+-(NSMutableDictionary*) persistentDomainForName:(NSString*) name;
+-(void) setValueForKeyInPersistentDomain:(id) value forKey:(NSString*) key inPersistentDomain:(NSString*) domain;
+-(id) getValueForKeyInPersistentDomain:(NSString*) key inPersistentDomain:(NSString*) domain;
+-(void) resetDefaultsInPersistentDomain:(NSString*) domain;
+
 @end
