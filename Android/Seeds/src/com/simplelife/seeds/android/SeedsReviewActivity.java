@@ -1,4 +1,4 @@
-package com.simplelife.Seeds;
+package com.simplelife.seeds.android;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -18,8 +18,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.simplelife.Seeds.Utils.ImageProcess.SeedsImageLoader;
-import com.simplelife.Seeds.Utils.ImageProcess.SeedsImageLoadingDialog;
+import com.simplelife.seeds.android.Utils.ImageProcess.SeedsImageLoader;
+import com.simplelife.seeds.android.Utils.ImageProcess.SeedsImageLoadingDialog;
 
 @SuppressLint("HandlerLeak")
 public class SeedsReviewActivity extends Activity {

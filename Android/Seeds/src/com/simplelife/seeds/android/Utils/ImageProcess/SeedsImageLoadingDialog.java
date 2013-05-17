@@ -1,6 +1,6 @@
-package com.simplelife.Seeds.Utils.ImageProcess;
+package com.simplelife.seeds.android.Utils.ImageProcess;
 
-import com.simplelife.Seeds.R;
+import com.simplelife.seeds.android.R;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -30,7 +30,17 @@
 					android:layout_height="33dp" />
 		
 		</LinearLayout-->
-	
+
+    	<Button
+        	android:id="@+id/favorite_btn"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+        	android:layout_marginLeft="2dip"
+        	android:layout_centerVertical="true"
+        	android:gravity="left"
+        	android:text="@string/seeds_Favorite" />
+    	
 	    <ImageView
 			android:id="@+id/gotoGrid"
 			android:layout_width="wrap_content"
@@ -127,7 +137,7 @@
 			    	
 	    	</LinearLayout>
 	        	
-	    	<com.simplelife.Seeds.Utils.Control.SeedsScrollViewExtend
+	    	<com.simplelife.seeds.android.Utils.Control.SeedsScrollViewExtend
             	android:layout_width="match_parent"
             	android:layout_height="fill_parent">
 	        	<LinearLayout
@@ -171,7 +181,7 @@
         				                
 	        	</LinearLayout>
 
-	    	</com.simplelife.Seeds.Utils.Control.SeedsScrollViewExtend>	        	
+	    	</com.simplelife.seeds.android.Utils.Control.SeedsScrollViewExtend>	        	
 	        
 		</LinearLayout>
     </LinearLayout>

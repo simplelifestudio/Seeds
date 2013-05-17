@@ -1,4 +1,4 @@
-package com.simplelife.Seeds.Utils.Adapter;
+package com.simplelife.seeds.android.Utils.Adapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,9 +12,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.simplelife.Seeds.R;
-import com.simplelife.Seeds.SeedsListPerDayActivity;
-import com.simplelife.Seeds.Utils.ImageProcess.SeedsImageLoader;
+import com.simplelife.seeds.android.R;
+import com.simplelife.seeds.android.SeedsListPerDayActivity;
+import com.simplelife.seeds.android.Utils.ImageProcess.SeedsImageLoader;
 
 public class SeedsAdapter extends BaseAdapter {
 

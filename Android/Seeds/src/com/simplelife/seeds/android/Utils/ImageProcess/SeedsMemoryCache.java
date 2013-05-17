@@ -1,4 +1,4 @@
-package com.simplelife.Seeds.Utils.ImageProcess;
+package com.simplelife.seeds.android.Utils.ImageProcess;
 
 import java.lang.ref.SoftReference;
 import java.util.Collections;

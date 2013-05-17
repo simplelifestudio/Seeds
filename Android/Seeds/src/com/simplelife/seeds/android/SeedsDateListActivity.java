@@ -1,4 +1,6 @@
-package com.simplelife.Seeds;
+package com.simplelife.seeds.android;
+
+import com.simplelife.seeds.android.Utils.NetworkProcess.SeedsNetworkProcess;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -18,6 +20,7 @@ public class SeedsDateListActivity extends Activity {
 	private Button myYesterdayBtn;
 	private Button myTodayBtn;
 	private Button myUpdateBtn;
+	private Button myFavListBtn;
 	private ProgressDialog tProgressDialog = null; 	
 	
 	// Below two fields should be removed or changed in final version
@@ -44,13 +47,15 @@ public class SeedsDateListActivity extends Activity {
 		// Locate those buttons
 		myBefYesterdayBtn = (Button) findViewById(R.id.befyesterday_btn);
 		myYesterdayBtn    = (Button) findViewById(R.id.yesterday_btn);
-		myTodayBtn  = (Button) findViewById(R.id.today_btn);
-		myUpdateBtn = (Button) findViewById(R.id.update_btn);
+		myTodayBtn   = (Button) findViewById(R.id.today_btn);
+		myUpdateBtn  = (Button) findViewById(R.id.update_btn);
+		myFavListBtn =  (Button) findViewById(R.id.favlist_btn);
 		
 		// Setup the click listener
 		myBefYesterdayBtn.setOnClickListener(myBefYesterdayBtnListener);
 		myYesterdayBtn.setOnClickListener(myYesterdayBtnListener);
 		myTodayBtn.setOnClickListener(myTodayBtnListener);
+		myFavListBtn.setOnClickListener(myFavListBtnListener);
 		
 		Log.i(LOGCLASS, "Working on setting the ProgressDialog style"); 
 		// Set the progress style as spinner
@@ -176,6 +181,46 @@ public class SeedsDateListActivity extends Activity {
 		}
 	};
 	
+	private View.OnClickListener myFavListBtnListener = new View.OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			//Log.v("MyListView4", "myAdapter");
+			// To-DO:
+			// 1. Start the seeds update job, communicate with server
+			// 2. Need a progress bar here.
+			// 3. Stay inside the activity if the update finished
+			// Show the dialog
+			tProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", "Please wait...", true, false);
+			
+			// Set up a thread to communicate with server
+			new Thread() {
+				
+				@Override
+				public void run() {
+					try {
+						// Communicate with server
+						// As a temp solution to make the dialog move on,
+						// set a stub code here to drive the dialog
+						Thread.sleep(tSleepSeconds * 1000);						
+					} catch (Exception e) {
+						// Show the error message here
+					}
+					Message t_MsgListData = new Message();
+					t_MsgListData.what = MESSAGETYPE_UPDATE;
+					handler.sendMessage(t_MsgListData);					
+				}
+			}.start();
+			
+			Intent intent = new Intent(SeedsDateListActivity.this, SeedsListPerDayActivity.class);
+			// Pass the date info
+		    Bundle bundle = new Bundle();
+		    bundle.putString("date", "favlist");
+		    intent.putExtras(bundle);
+			startActivity(intent);			
+		}
+	};
+	
 	private View.OnClickListener myUpdateBtnListener = new View.OnClickListener() {
 
 		@Override
@@ -197,6 +242,7 @@ public class SeedsDateListActivity extends Activity {
 						// Communicate with server
 						// As a temp solution to make the dialog move on,
 						// set a stub code here to drive the dialog
+						SeedsNetworkProcess.sendAlohaReqMsg();
 						Thread.sleep(tSleepSeconds * 1000);						
 					} catch (Exception e) {
 						// Show the error message here

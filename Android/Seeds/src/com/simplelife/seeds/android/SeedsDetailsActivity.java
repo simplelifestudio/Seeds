@@ -1,11 +1,15 @@
-package com.simplelife.Seeds;
+package com.simplelife.seeds.android;
 
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -14,12 +18,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.simplelife.Seeds.Utils.DBProcess.SeedsDBManager;
-import com.simplelife.Seeds.Utils.ImageProcess.SeedsImageLoader;
-import com.simplelife.Seeds.Utils.ImageProcess.SeedsSlideImageLayout;
+import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
+import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBManager;
+import com.simplelife.seeds.android.Utils.ImageProcess.SeedsImageLoader;
+import com.simplelife.seeds.android.Utils.ImageProcess.SeedsSlideImageLayout;
 
 public class SeedsDetailsActivity extends Activity{
 	
@@ -46,6 +52,18 @@ public class SeedsDetailsActivity extends Activity{
 	// Clarify the ImageLoader
 	public SeedsImageLoader tImageLoader;
 	
+	// Button to save to favorites
+	private Button myFavoriteBtn;
+	
+	// Database adapter
+	private SeedsDBAdapter mDBAdapter;
+	
+	// Progress dialog for setting as favorite operation
+	private ProgressDialog tProgressDialog = null;
+	
+	// Favorite tag
+	private boolean tFavTag = false;
+
 	private int[] slideImages = {
 			R.drawable.image01,
 			R.drawable.image02,
@@ -70,9 +88,24 @@ public class SeedsDetailsActivity extends Activity{
 		Bundle bundle = getIntent().getExtras();
 		tSeedId = bundle.getInt("seedid");
 		
+		// Retrieve the adapter instance
+		mDBAdapter = SeedsDBAdapter.getAdapter();
+		
 		// Initialization
 		initViews();
-	}
+		
+		// Retrieve the favorite button
+		myFavoriteBtn = (Button) findViewById(R.id.favorite_btn);
+		
+		// Check if this seed has already been saved to favorite
+		if(mDBAdapter.isSeedSaveToFavorite(tSeedId))
+		{
+			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
+		}
+		
+		// Listen on the favorite button
+		myFavoriteBtn.setOnClickListener(myFavoriteBtnListener);
+	}	
 	
 	private void initViews(){
 		// The area of the images
@@ -249,6 +282,86 @@ public class SeedsDetailsActivity extends Activity{
             }
         }  
     }
+    
+	private View.OnClickListener myFavoriteBtnListener = new View.OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			
+			if(mDBAdapter.isSeedSaveToFavorite(tSeedId))
+			{
+				tFavTag = true;
+				tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Please wait...", true, false);
+			}
+			else
+			{
+				tFavTag = false;
+				tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Cancelling Favorites...", "Please wait...", true, false);
+			}
+			
+			// Set up a thread to operate with the database
+			new Thread() {				
+				@Override
+				public void run() {
+					try {
+						// Get the DB adapter instance
+						SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();
+						
+						// Set the favorite key 
+						if (tFavTag)
+						{
+							mDBAdapter.updateSeedEntryFav(tSeedId,false);
+							tFavTag = false;
+							tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Cancelling Favorites...", "Done!", true, false);
+						}
+						else
+						{
+							mDBAdapter.updateSeedEntryFav(tSeedId,true);
+							tFavTag = true;
+							tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Done!", true, false);							
+						}
+	            		
+	            		// Hang on for a moment
+	            		Thread.sleep(2000);
+						
+					} catch (Exception e) {
+						// Show the error message here
+					}
+
+					Message t_MsgListData = new Message();
+					t_MsgListData.what = 1;
+					handler.sendMessage(t_MsgListData);					
+				}
+			}.start();
+		}
+	};
+	
+    // Define a handler to process the progress update
+	private Handler handler = new Handler(){  
+  
+        @Override  
+        public void handleMessage(Message msg) {  
+              
+            switch (msg.what) {
+            	
+            	case 1:
+            		// Check if this seed has already been saved to favorite
+            		if(mDBAdapter.isSeedSaveToFavorite(tSeedId))
+            		{
+            			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
+            		}
+            		else
+            		{
+            			myFavoriteBtn.setText(R.string.seeds_Favorite);
+            		}
+            		//close the ProgressDialog
+                    tProgressDialog.dismiss(); 
+                    break;
+                // Or try something here
+            }
+             
+        }
+    };  
 
 		
 }

@@ -1,4 +1,4 @@
-package com.simplelife.Seeds.Utils.JSONProcess;
+package com.simplelife.seeds.android.Utils.JSONProcess;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,22 +19,22 @@ public class SeedsJSONMessage {
 	
 	public static JSONObject SeedsConstructMsg(String MsgType, JSONObject paramList){
 		
-		JSONObject SeedsMsgAlohaReq = new JSONObject();
+		JSONObject SeedsMsg = new JSONObject();
 		try {    		    
 		    // Put in command and its value
-		    SeedsMsgAlohaReq.put("command", MsgType);
+			SeedsMsg.put("command", MsgType);
 		    
 		    if (paramList != null)
 		    {
 		        // Put in the paramList
-		        SeedsMsgAlohaReq.put("paramList",paramList);
+		    	SeedsMsg.put("paramList",paramList);
 		    }
 		    		  
 		} catch (JSONException ex) {    
 		    throw new RuntimeException(ex);  
 		}
 		
-		return SeedsMsgAlohaReq;	
+		return SeedsMsg;	
 	}
 	
 

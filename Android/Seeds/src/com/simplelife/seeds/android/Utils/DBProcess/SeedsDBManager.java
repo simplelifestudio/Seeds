@@ -1,4 +1,4 @@
-package com.simplelife.Seeds.Utils.DBProcess;
+package com.simplelife.seeds.android.Utils.DBProcess;
 
 import java.io.File;  
 import java.io.FileOutputStream;  

@@ -1,4 +1,4 @@
-package com.simplelife.Seeds;
+package com.simplelife.seeds.android;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,7 +9,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,8 +18,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.simplelife.Seeds.Utils.Adapter.SeedsAdapter;
-import com.simplelife.Seeds.Utils.DBProcess.SeedsDBManager;
+import com.simplelife.seeds.android.Utils.Adapter.SeedsAdapter;
+import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
 
 public class SeedsListPerDayActivity extends Activity {
 
@@ -60,6 +59,10 @@ public class SeedsListPerDayActivity extends Activity {
 		Log.i(LOGCLASS, "Working on ListPerDay, passin "+ tPassinDate); 
 	    // Judge the current time
 		Calendar tCal = Calendar.getInstance();
+		if(tPassinDate.equals("favlist"))
+		{
+			
+		}
 		if(tPassinDate.equals("befyesterday"))
 		{
 			// A simple calculation
@@ -129,26 +132,14 @@ public class SeedsListPerDayActivity extends Activity {
 		ArrayList<HashMap<String, String>> seedsList = new ArrayList<HashMap<String, String>>();
 
 		// Retrieve the DB process handler to get data 
-		SeedsDBManager mDBHandler = SeedsDBManager.getManager();
+		SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();
 		
-		// Put a warning info here in case the DBHandler is null
-		SQLiteDatabase tDB = mDBHandler.getDatabase("Seeds_App_Database.db"); 
-		
-		Log.i(LOGCLASS, "DB instance retrieved, query now");
-		// Query the database
-		// NOTE: Modify here if the format of publishDate field in db is not string
 		/*Cursor tResult = tDB.rawQuery(
 				"select seedId,name,size,format,torrentLink from Seed where publishDate=\"?\"",
 				new String[]{tDate});*/
 		
-		tDate = "2013-04-26";
-		Cursor tResult = tDB.rawQuery(
-				"select seedId,name,size,format,torrentLink from Seed where publishDate=?",
-				new String[]{tDate});
-				
-		/*Cursor tResult = tDB.rawQuery(
-				"select name,size,format,torrentLink from Seed",
-				null);*/
+		tDate = "2013-04-26";		
+		Cursor tResult = mDBAdapter.getSeedEntryViaPublishDate(tDate);		
 				
 		Log.i(LOGCLASS, "The size of the tResult is  "+ tResult.getCount());
 		tResult.moveToFirst(); 
@@ -165,16 +156,18 @@ public class SeedsListPerDayActivity extends Activity {
 			Log.i(LOGCLASS, "The SeedID is  "+ tSeedId);
 			Log.i(LOGCLASS, "The Title is  "+ tResult.getString(tResult.getColumnIndex(KEY_TITLE)));
 			
-			Cursor tImgResult = tDB.rawQuery(
+			/*Cursor tImgResult = tDB.rawQuery(
 					"select pictureLink from SeedPicture where seedId=?",
-					new String[]{Integer.toString(tSeedId)});
+					new String[]{Integer.toString(tSeedId)});*/
+			
+			Cursor tImgResult = mDBAdapter.getSeedPicFirstEntryViaSeedId(tSeedId);
 			
 			tImgResult.moveToFirst();
 			// Think twice if we really need a while loop here
 			if(!tImgResult.isAfterLast())
 			{
 				// Always get the first image
-				tFirstImgUrl = tImgResult.getString(tImgResult.getColumnIndex("pictureLink"));												
+				tFirstImgUrl = tImgResult.getString(tImgResult.getColumnIndex("pictureLink"));
 			}
 			else
 			{
