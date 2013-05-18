@@ -48,6 +48,7 @@
 		C5203D601743BFD500D917F7 /* TransmissionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D5F1743BFD500D917F7 /* TransmissionModule.m */; };
 		C5203D6F17451F7600D917F7 /* TorrentDownloadAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D6E17451F7500D917F7 /* TorrentDownloadAgent.m */; };
 		C5203D721745204900D917F7 /* CBPathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D711745204900D917F7 /* CBPathUtils.m */; };
+		C5203D75174714D100D917F7 /* CBModuleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D74174714D000D917F7 /* CBModuleManager.m */; };
 		C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C531833A17237FF700264530 /* CBModuleAbstractImpl.m */; };
 		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
 		C53183461723A17E00264530 /* DatabaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C53183451723A17E00264530 /* DatabaseModule.m */; };
@@ -205,6 +206,8 @@
 		C5203D6E17451F7500D917F7 /* TorrentDownloadAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TorrentDownloadAgent.m; path = Seeds/TorrentDownloadAgent.m; sourceTree = "<group>"; };
 		C5203D701745204900D917F7 /* CBPathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBPathUtils.h; sourceTree = "<group>"; };
 		C5203D711745204900D917F7 /* CBPathUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBPathUtils.m; sourceTree = "<group>"; };
+		C5203D73174714D000D917F7 /* CBModuleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModuleManager.h; sourceTree = "<group>"; };
+		C5203D74174714D000D917F7 /* CBModuleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBModuleManager.m; sourceTree = "<group>"; };
 		C531833717237FF700264530 /* CBLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLog.h; sourceTree = "<group>"; };
 		C531833817237FF700264530 /* CBModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModule.h; sourceTree = "<group>"; };
 		C531833917237FF700264530 /* CBModuleAbstractImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModuleAbstractImpl.h; sourceTree = "<group>"; };
@@ -558,6 +561,8 @@
 				C531833917237FF700264530 /* CBModuleAbstractImpl.h */,
 				C531833A17237FF700264530 /* CBModuleAbstractImpl.m */,
 				C5ADC857173A3148007F59D7 /* CBSharedInstance.h */,
+				C5203D73174714D000D917F7 /* CBModuleManager.h */,
+				C5203D74174714D000D917F7 /* CBModuleManager.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -1053,6 +1058,7 @@
 				C5203D601743BFD500D917F7 /* TransmissionModule.m in Sources */,
 				C5203D6F17451F7600D917F7 /* TorrentDownloadAgent.m in Sources */,
 				C5203D721745204900D917F7 /* CBPathUtils.m in Sources */,
+				C5203D75174714D100D917F7 /* CBModuleManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

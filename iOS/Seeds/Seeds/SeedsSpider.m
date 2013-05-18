@@ -137,7 +137,7 @@
     // Step 7: 更新本地KV缓存中时间标的对应数据同步状态
     // Step 8: 删除数据库中原有的，处于这三天之前的，非收藏状态的所有记录
     
-//    [[UserDefaultsModule sharedInstance] resetDefaults];
+//    [[UserDefaultsModule sharedInstance] resetDefaults]; // For test only
     
     HUD.mode = MBProgressHUDModeText;
 	HUD.labelText = NSLocalizedString(@"Preparing", nil);

@@ -10,4 +10,8 @@
 
 @interface TransmissionModule : CBModuleAbstractImpl
 
+-(void) startHTTPServer;
+-(NSInteger) httpServerPort;
+-(void) stopHTTPServer;
+
 @end

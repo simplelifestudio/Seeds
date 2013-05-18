@@ -24,6 +24,21 @@
 @synthesize databaseFilePath = _databaseFilePath;
 @synthesize databaseQueue = _databaseQueue;
 
++(id)sharedInstance
+{
+    static DatabaseModule* sharedInstance;
+    static dispatch_once_t done;
+    dispatch_once
+    (
+     &done,
+     ^
+     {
+         sharedInstance = [[DatabaseModule alloc] initWithIsIndividualThreadNecessary:NO];
+     }
+     );
+    return sharedInstance;
+}
+
 -(void) initModule
 {
     [self setModuleIdentity:NSLocalizedString(@"Database Module", nil)];

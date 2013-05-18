@@ -17,6 +17,8 @@
 @synthesize moduleIdentity;
 @synthesize serviceThread;
 
+@synthesize moduleWeightFactor = _moduleWeightFactor;
+
 - (id)initWithIsIndividualThreadNecessary:(BOOL) necessary
 {
     self.isIndividualThreadNecessary = necessary;
@@ -29,6 +31,7 @@
     self = [super init];
     if (self) 
     {
+        _moduleWeightFactor = 0.1;
     }
     
     return self;
