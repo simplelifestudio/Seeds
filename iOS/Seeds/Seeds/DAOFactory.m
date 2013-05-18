@@ -12,19 +12,17 @@
 
 +(id<SeedDAO>) getSeedDAO
 {
-    AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    
+    DatabaseModule* databaseModule = [DatabaseModule sharedInstance];
     SeedDAOFmdbImpl* seedDAO = [[SeedDAOFmdbImpl alloc] init];
-    [seedDAO attachDatabaseHandler:appDelegate.databaseModule.databaseQueue];
+    [seedDAO attachDatabaseHandler:databaseModule.databaseQueue];
     return seedDAO;
 }
 
 +(id<SeedPictureDAO>) getSeedPictureDAO
 {
-    AppDelegate* appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    
+    DatabaseModule* databaseModule = [DatabaseModule sharedInstance];
     SeedPictureDAOFmdbImpl* seedPictureDAO = [[SeedPictureDAOFmdbImpl alloc] init];
-    [seedPictureDAO attachDatabaseHandler:appDelegate.databaseModule.databaseQueue];
+    [seedPictureDAO attachDatabaseHandler:databaseModule.databaseQueue];
     return seedPictureDAO;
 }
 

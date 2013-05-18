@@ -11,11 +11,20 @@
 
 #define USERDEFAULTS_KEY_SYNCSTATUSBYDAY @"syncStatusByDay:"
 
+#define PERSISTENTDOMAIN_SYNCSTATUSBYDAY @"syncStatusByDay"
+
 @interface UserDefaultsModule : CBModuleAbstractImpl <CBSharedInstance>
+
+@property (atomic, strong) NSUserDefaults* userDefaults;
 
 -(void) resetDefaults;
 
 -(BOOL) isThisDaySync:(NSDate*) day;
 -(void) setThisDaySync:(NSDate*) day sync:(BOOL) sync;
+
+-(NSMutableDictionary*) persistentDomainForName:(NSString*) name;
+-(void) setValueForKeyInPersistentDomain:(id) value forKey:(NSString*) key inPersistentDomain:(NSString*) domain;
+-(id) getValueForKeyInPersistentDomain:(NSString*) key inPersistentDomain:(NSString*) domain;
+-(void) resetDefaultsInPersistentDomain:(NSString*) domain;
 
 @end

@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSString *moduleIdentity;
 @property (nonatomic, strong) NSThread *serviceThread;
 
+@property (nonatomic) float moduleWeightFactor;
+
 -(void) initModule;
 -(void) startService;
 -(void) processService;

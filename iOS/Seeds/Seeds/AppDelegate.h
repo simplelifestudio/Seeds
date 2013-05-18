@@ -14,15 +14,12 @@
 #import "SpiderModule.h"
 #import "TransmissionModule.h"
 
+#import "CBModuleManager.h"
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-// System Module Declaration List
-@property (strong, nonatomic) UserDefaultsModule *userDefaultsModule;
-@property (strong, nonatomic) CommunicationModule *communicationModule;
-@property (strong, nonatomic) DatabaseModule *databaseModule;
-@property (strong, nonatomic) SpiderModule *spiderModule;
-@property (strong, nonatomic) TransmissionModule *transmissionModule;
+@property (strong, nonatomic) CBModuleManager* moduleManager;
 
 @end

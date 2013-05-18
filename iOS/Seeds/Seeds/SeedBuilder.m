@@ -29,7 +29,7 @@
 
 -(void) fillSeedWithAttribute:(NSString*) attrName attrVal:(NSString*)attrVal
 {
-    if (nil != attrName && 0 < attrName.length)
+    if (nil != attrName && 0 < attrName.length && nil != attrVal && 0 < attrVal.length)
     {
         if ([attrName isEqualToString:TABLE_SEED_COLUMN_NAME])
         {

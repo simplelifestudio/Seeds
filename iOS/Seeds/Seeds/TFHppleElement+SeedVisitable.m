@@ -7,6 +7,8 @@
 //
 
 #import "TFHppleElement+SeedVisitable.h"
+// Only for macro definition: BASEURL_TORRENTCODE
+#import "TorrentDownloadAgent.h"
 
 @implementation TFHppleElement (SeedVisitable)
 
@@ -59,9 +61,13 @@
 -(BOOL) isSeedTorrentLinkNode
 {
     BOOL flag = NO;
-//    NSString* content = self.content;    
-//    flag = [CBStringUtils isSubstringIncluded:content subString:@"http://www.maxp2p.com/link.php?ref="];
+
     flag = [self.tagName isEqualToString:@"a"];
+    if (flag)
+    {
+        NSString* attrVal = [self parseSeedTorrentLink];
+        flag = [CBStringUtils isSubstringIncluded:attrVal subString:BASEURL_TORRENTCODE];
+    }
     return flag;
 }
 

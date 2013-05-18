@@ -25,11 +25,15 @@
     return sharedInstance;
 }
 
+@synthesize userDefaults = _userDefaults;
+
 -(void) initModule
 {
     [self setModuleIdentity:NSLocalizedString(@"UserDefaults Module", nil)];
     [self.serviceThread setName:NSLocalizedString(@"UserDefaults Module Thread", nil)];
     [self setKeepAlive:FALSE];
+    
+    _userDefaults = [NSUserDefaults standardUserDefaults];
 }
 
 -(void) releaseModule
@@ -51,9 +55,59 @@
 
 -(void) resetDefaults
 {
-    [NSUserDefaults resetStandardUserDefaults];
+    [self resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
+}
+
+-(void) resetDefaultsInPersistentDomain:(NSString*) domain
+{
+    if (nil != domain && 0 < domain.length)
+    {
+        [_userDefaults removePersistentDomainForName:domain];
+        NSDictionary* newDic = [NSDictionary dictionary];
+        [_userDefaults setPersistentDomain:newDic forName:domain];
+        DLog(@"UserDefaults in persistent domain: %@ has been reset.", domain);
+    }
+}
+
+-(NSMutableDictionary*) persistentDomainForName:(NSString*) name
+{
+    NSMutableDictionary* mutableDic = nil;
     
-    DLog(@"UserDefaults has been reset.")
+    if (nil != name && 0 < name.length)
+    {
+        mutableDic = [NSMutableDictionary dictionary];
+        NSDictionary* dic = [_userDefaults persistentDomainForName:name];
+        if (nil != dic)
+        {
+            [mutableDic setDictionary:dic];
+        }
+    }
+    
+    return mutableDic;
+}
+
+-(void) setValueForKeyInPersistentDomain:(id) value forKey:(NSString*) key inPersistentDomain:(NSString*) domain
+{
+    NSMutableDictionary* dic = [self persistentDomainForName:domain];
+    if (nil != dic)
+    {
+        [dic setObject:value forKey:key];
+        [_userDefaults setPersistentDomain:dic forName:domain];
+        [_userDefaults synchronize];
+    }
+}
+
+-(id) getValueForKeyInPersistentDomain:(NSString*) key inPersistentDomain:(NSString*) domain
+{
+    id value = nil;
+    
+    if (nil != domain && 0 < domain.length && nil != key && 0 < key.length)
+    {
+        NSMutableDictionary* dic = [self persistentDomainForName:domain];
+        value = [dic objectForKey:key];
+    }
+    
+    return value;
 }
 
 -(BOOL) isThisDaySync:(NSDate*) day
@@ -62,7 +116,11 @@
     if (nil != day)
     {
         NSString* key = [self combineKey_syncStatusByDay:day];
-        flag = [[NSUserDefaults standardUserDefaults] boolForKey:key];
+        id value = [self getValueForKeyInPersistentDomain:key inPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
+        if ([value isEqualToString:@"YES"])
+        {
+            flag = YES;
+        }
     }
     return flag;
 }
@@ -72,7 +130,8 @@
     if (nil != day)
     {
         NSString* key = [self combineKey_syncStatusByDay:day];
-        [[NSUserDefaults standardUserDefaults] setBool:sync forKey:key];
+        NSString* sVal = (sync) ? @"YES" : @"NO";
+        [self setValueForKeyInPersistentDomain:sVal forKey:key inPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
     }
 }
 

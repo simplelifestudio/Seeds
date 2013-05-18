@@ -24,6 +24,21 @@
 @synthesize databaseFilePath = _databaseFilePath;
 @synthesize databaseQueue = _databaseQueue;
 
++(id)sharedInstance
+{
+    static DatabaseModule* sharedInstance;
+    static dispatch_once_t done;
+    dispatch_once
+    (
+     &done,
+     ^
+     {
+         sharedInstance = [[DatabaseModule alloc] initWithIsIndividualThreadNecessary:NO];
+     }
+     );
+    return sharedInstance;
+}
+
 -(void) initModule
 {
     [self setModuleIdentity:NSLocalizedString(@"Database Module", nil)];
@@ -59,8 +74,8 @@
         NSString* dbFileInXcodeProject = [[NSBundle mainBundle] pathForResource:DATABASE_FILE_NAME ofType:DATABASE_FILE_TYPE];
         DLog(@"Database File in Xcode Project: %@", dbFileInXcodeProject);
 
-        NSArray* documentPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDir = [documentPaths objectAtIndex:0];
+        NSString *documentsDir = [CBPathUtils documentsDirectoryPath];
+        
         _databaseFilePath = [documentsDir stringByAppendingPathComponent:DATABASE_FILE_FULL_NAME];
         DLog(@"Database File in App Sandbox: %@", _databaseFilePath);
         

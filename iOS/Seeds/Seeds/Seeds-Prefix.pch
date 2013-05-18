@@ -13,6 +13,7 @@
     #import <Foundation/Foundation.h>
 
     #import "CBLog.h"
+    #import "CBPathUtils.h"
     #import "GUIStyle.h"
     #import "AppDelegate.h"
     #import "DAOFactory.h"

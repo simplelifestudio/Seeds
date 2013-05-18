@@ -7,7 +7,16 @@
 //
 
 #import "CBModuleAbstractImpl.h"
+#import "CBNetworkUtils.h"
 
-@interface TransmissionModule : CBModuleAbstractImpl
+#define HTTP_SERVER_NAME @"Seeds Http Server"
+
+@interface TransmissionModule : CBModuleAbstractImpl <CBSharedInstance>
+
+-(void) startHTTPServer;
+-(void) stopHTTPServer;
+
+-(NSInteger) httpServerPort;
+-(NSString*) httpServerName;
 
 @end
