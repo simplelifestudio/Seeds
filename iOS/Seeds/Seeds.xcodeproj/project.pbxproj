@@ -52,6 +52,17 @@
 		C5203D7817477E8400D917F7 /* TransmitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D7717477E8400D917F7 /* TransmitViewController.m */; };
 		C5203D7B1747910400D917F7 /* CBNetworkUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D7A1747910200D917F7 /* CBNetworkUtils.m */; };
 		C5203D7E17479C8600D917F7 /* ConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D7D17479C8400D917F7 /* ConfigViewController.m */; };
+		C5203D991747A89F00D917F7 /* CBFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D981747A89D00D917F7 /* CBFileUtils.m */; };
+		C5203DA11747B94F00D917F7 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C5203DA01747B94C00D917F7 /* libz.1.2.5.dylib */; };
+		C5203DEB1747D56300D917F7 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = C5203DD81747D55B00D917F7 /* ioapi.c */; };
+		C5203DEC1747D56300D917F7 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = C5203DDA1747D55B00D917F7 /* mztools.c */; };
+		C5203DED1747D56300D917F7 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = C5203DDC1747D55B00D917F7 /* unzip.c */; };
+		C5203DEE1747D56300D917F7 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = C5203DDE1747D55B00D917F7 /* zip.c */; };
+		C5203DEF1747D56300D917F7 /* FileInZipInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DE21747D56300D917F7 /* FileInZipInfo.m */; };
+		C5203DF01747D56400D917F7 /* ZipException.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DE41747D56300D917F7 /* ZipException.m */; };
+		C5203DF11747D56400D917F7 /* ZipFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DE61747D56300D917F7 /* ZipFile.m */; };
+		C5203DF21747D56400D917F7 /* ZipReadStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DE81747D56300D917F7 /* ZipReadStream.m */; };
+		C5203DF31747D56400D917F7 /* ZipWriteStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DEA1747D56300D917F7 /* ZipWriteStream.m */; };
 		C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C531833A17237FF700264530 /* CBModuleAbstractImpl.m */; };
 		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
 		C53183461723A17E00264530 /* DatabaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C53183451723A17E00264530 /* DatabaseModule.m */; };
@@ -217,6 +228,27 @@
 		C5203D7A1747910200D917F7 /* CBNetworkUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBNetworkUtils.m; sourceTree = "<group>"; };
 		C5203D7C17479C8200D917F7 /* ConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigViewController.h; sourceTree = "<group>"; };
 		C5203D7D17479C8400D917F7 /* ConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigViewController.m; sourceTree = "<group>"; };
+		C5203D971747A89B00D917F7 /* CBFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBFileUtils.h; sourceTree = "<group>"; };
+		C5203D981747A89D00D917F7 /* CBFileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBFileUtils.m; sourceTree = "<group>"; };
+		C5203DA01747B94C00D917F7 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
+		C5203DD81747D55B00D917F7 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		C5203DD91747D55B00D917F7 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		C5203DDA1747D55B00D917F7 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		C5203DDB1747D55B00D917F7 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		C5203DDC1747D55B00D917F7 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		C5203DDD1747D55B00D917F7 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		C5203DDE1747D55B00D917F7 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		C5203DDF1747D55B00D917F7 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		C5203DE11747D56300D917F7 /* FileInZipInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileInZipInfo.h; sourceTree = "<group>"; };
+		C5203DE21747D56300D917F7 /* FileInZipInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileInZipInfo.m; sourceTree = "<group>"; };
+		C5203DE31747D56300D917F7 /* ZipException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipException.h; sourceTree = "<group>"; };
+		C5203DE41747D56300D917F7 /* ZipException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipException.m; sourceTree = "<group>"; };
+		C5203DE51747D56300D917F7 /* ZipFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipFile.h; sourceTree = "<group>"; };
+		C5203DE61747D56300D917F7 /* ZipFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipFile.m; sourceTree = "<group>"; };
+		C5203DE71747D56300D917F7 /* ZipReadStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipReadStream.h; sourceTree = "<group>"; };
+		C5203DE81747D56300D917F7 /* ZipReadStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipReadStream.m; sourceTree = "<group>"; };
+		C5203DE91747D56300D917F7 /* ZipWriteStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipWriteStream.h; sourceTree = "<group>"; };
+		C5203DEA1747D56300D917F7 /* ZipWriteStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipWriteStream.m; sourceTree = "<group>"; };
 		C531833717237FF700264530 /* CBLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLog.h; sourceTree = "<group>"; };
 		C531833817237FF700264530 /* CBModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModule.h; sourceTree = "<group>"; };
 		C531833917237FF700264530 /* CBModuleAbstractImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModuleAbstractImpl.h; sourceTree = "<group>"; };
@@ -379,6 +411,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5203DA11747B94F00D917F7 /* libz.1.2.5.dylib in Frameworks */,
 				C5203D5C1743BEC500D917F7 /* Security.framework in Frameworks */,
 				C5203D5A1743BEB400D917F7 /* CFNetwork.framework in Frameworks */,
 				C5AB11711734BB21007EEE25 /* MobileCoreServices.framework in Frameworks */,
@@ -554,11 +587,45 @@
 			name = Transmission;
 			sourceTree = "<group>";
 		};
+		C5203DD71747D55700D917F7 /* MiniZip */ = {
+			isa = PBXGroup;
+			children = (
+				C5203DD81747D55B00D917F7 /* ioapi.c */,
+				C5203DD91747D55B00D917F7 /* ioapi.h */,
+				C5203DDA1747D55B00D917F7 /* mztools.c */,
+				C5203DDB1747D55B00D917F7 /* mztools.h */,
+				C5203DDC1747D55B00D917F7 /* unzip.c */,
+				C5203DDD1747D55B00D917F7 /* unzip.h */,
+				C5203DDE1747D55B00D917F7 /* zip.c */,
+				C5203DDF1747D55B00D917F7 /* zip.h */,
+			);
+			path = MiniZip;
+			sourceTree = "<group>";
+		};
+		C5203DE01747D55B00D917F7 /* Objective-Zip */ = {
+			isa = PBXGroup;
+			children = (
+				C5203DE11747D56300D917F7 /* FileInZipInfo.h */,
+				C5203DE21747D56300D917F7 /* FileInZipInfo.m */,
+				C5203DE31747D56300D917F7 /* ZipException.h */,
+				C5203DE41747D56300D917F7 /* ZipException.m */,
+				C5203DE51747D56300D917F7 /* ZipFile.h */,
+				C5203DE61747D56300D917F7 /* ZipFile.m */,
+				C5203DE71747D56300D917F7 /* ZipReadStream.h */,
+				C5203DE81747D56300D917F7 /* ZipReadStream.m */,
+				C5203DE91747D56300D917F7 /* ZipWriteStream.h */,
+				C5203DEA1747D56300D917F7 /* ZipWriteStream.m */,
+			);
+			path = "Objective-Zip";
+			sourceTree = "<group>";
+		};
 		C531834317239FF300264530 /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				C5AB115017333EA6007EEE25 /* CBDateUtils.h */,
 				C5AB115117333EA6007EEE25 /* CBDateUtils.m */,
+				C5203D971747A89B00D917F7 /* CBFileUtils.h */,
+				C5203D981747A89D00D917F7 /* CBFileUtils.m */,
 				C5203D701745204900D917F7 /* CBPathUtils.h */,
 				C5203D711745204900D917F7 /* CBPathUtils.m */,
 				C5ADC850173930E1007F59D7 /* CBStringUtils.h */,
@@ -616,6 +683,8 @@
 		C57CF282172565100002B054 /* 3rd Libs */ = {
 			isa = PBXGroup;
 			children = (
+				C5203DD71747D55700D917F7 /* MiniZip */,
+				C5203DE01747D55B00D917F7 /* Objective-Zip */,
 				C5203CE41743BE1600D917F7 /* CocoaHTTPServer */,
 				C5AB11531734BAA4007EEE25 /* AFNetworking */,
 				C5AB11401732BFEE007EEE25 /* Hpple */,
@@ -646,6 +715,7 @@
 		C5964C061722290400CC1C0A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C5203DA01747B94C00D917F7 /* libz.1.2.5.dylib */,
 				C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */,
 				C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */,
 				C5203D5B1743BEC500D917F7 /* Security.framework */,
@@ -1077,6 +1147,16 @@
 				C5203D7817477E8400D917F7 /* TransmitViewController.m in Sources */,
 				C5203D7B1747910400D917F7 /* CBNetworkUtils.m in Sources */,
 				C5203D7E17479C8600D917F7 /* ConfigViewController.m in Sources */,
+				C5203D991747A89F00D917F7 /* CBFileUtils.m in Sources */,
+				C5203DEB1747D56300D917F7 /* ioapi.c in Sources */,
+				C5203DEC1747D56300D917F7 /* mztools.c in Sources */,
+				C5203DED1747D56300D917F7 /* unzip.c in Sources */,
+				C5203DEE1747D56300D917F7 /* zip.c in Sources */,
+				C5203DEF1747D56300D917F7 /* FileInZipInfo.m in Sources */,
+				C5203DF01747D56400D917F7 /* ZipException.m in Sources */,
+				C5203DF11747D56400D917F7 /* ZipFile.m in Sources */,
+				C5203DF21747D56400D917F7 /* ZipReadStream.m in Sources */,
+				C5203DF31747D56400D917F7 /* ZipWriteStream.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1197,6 +1277,12 @@
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "Seeds/Seeds-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Seeds/zipzap\"",
+					"\"$(SRCROOT)/Seeds/include\"",
+					"\"$(SRCROOT)/Seeds\"",
+				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1216,6 +1302,12 @@
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = "Seeds/Seeds-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Seeds/zipzap\"",
+					"\"$(SRCROOT)/Seeds/include\"",
+					"\"$(SRCROOT)/Seeds\"",
+				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
