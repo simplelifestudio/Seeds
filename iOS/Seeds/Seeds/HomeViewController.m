@@ -11,6 +11,9 @@
 @interface HomeViewController ()
 {
     MBProgressHUD* HUD;
+    
+    UIBarButtonItem* backBarItem;
+    UIBarButtonItem* stopBarItem;
 }
 @end
 
@@ -30,6 +33,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    backBarItem = self.navigationItem.backBarButtonItem;
+    stopBarItem = [[UIBarButtonItem alloc] init];
+    stopBarItem.title = NSLocalizedString(@"Stop", nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -41,8 +47,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-//    [self.navigationController setNavigationBarHidden:NO];
-    
     [super viewWillDisappear:animated];
 }
 
@@ -55,6 +59,7 @@
 - (void)viewDidUnload
 {
     [self setSyncButton:nil];
+    [self setTransButton:nil];
     [super viewDidUnload];
 }
 
@@ -77,6 +82,19 @@
 {
 	[HUD removeFromSuperview];
 	HUD = nil;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:SEGUE_ID_HOME2TRANSMIT])
+    {
+        backBarItem = self.navigationItem.backBarButtonItem;
+        self.navigationItem.backBarButtonItem = stopBarItem;
+    }
+    else
+    {
+        self.navigationItem.backBarButtonItem = backBarItem;
+    }
 }
 
 @end

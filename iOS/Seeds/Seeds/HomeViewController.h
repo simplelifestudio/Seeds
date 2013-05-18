@@ -13,6 +13,7 @@
 @interface HomeViewController : UIViewController <MBProgressHUDDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *syncButton;
+@property (weak, nonatomic) IBOutlet UIButton *transButton;
 
 - (IBAction)onClickSyncButton:(id)sender;
 

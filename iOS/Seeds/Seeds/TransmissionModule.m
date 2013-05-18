@@ -57,6 +57,8 @@
 	// Tell the server to broadcast its presence via Bonjour.
 	// This allows browsers such as Safari to automatically discover our service.
 	[httpServer setType:@"_http._tcp."];
+
+	[httpServer setName:HTTP_SERVER_NAME];
 	
 	// Normally there's no need to run our server on any specific port.
 	// Technologies like Bonjour allow clients to dynamically discover the server's port at runtime.
@@ -108,6 +110,18 @@
     }
     
     return port;
+}
+
+-(NSString*) httpServerName
+{
+    NSString* name = nil;
+    
+    if (nil != httpServer)
+    {
+        name = [CBNetworkUtils hostName];
+    }
+    
+    return name;
 }
 
 @end
