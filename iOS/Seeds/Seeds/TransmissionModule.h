@@ -8,7 +8,7 @@
 
 #import "CBModuleAbstractImpl.h"
 
-@interface TransmissionModule : CBModuleAbstractImpl
+@interface TransmissionModule : CBModuleAbstractImpl <CBSharedInstance>
 
 -(void) startHTTPServer;
 -(NSInteger) httpServerPort;

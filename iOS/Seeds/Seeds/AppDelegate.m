@@ -37,7 +37,7 @@
     databaseModule.moduleWeightFactor = 0.4;
     [_moduleManager registerModule:databaseModule];
     
-    id<CBModule> transmissionModule = [[TransmissionModule alloc] initWithIsIndividualThreadNecessary:NO];
+    id<CBModule> transmissionModule = [TransmissionModule sharedInstance];
     transmissionModule.moduleWeightFactor = 0.1;
     [_moduleManager registerModule:transmissionModule];
     

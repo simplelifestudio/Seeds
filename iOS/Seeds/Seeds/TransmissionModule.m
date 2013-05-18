@@ -19,6 +19,21 @@
 
 @implementation TransmissionModule
 
++(id)sharedInstance
+{
+    static TransmissionModule* sharedInstance;
+    static dispatch_once_t done;
+    dispatch_once
+    (
+     &done,
+     ^
+     {
+         sharedInstance = [[TransmissionModule alloc] initWithIsIndividualThreadNecessary:NO];
+     }
+     );
+    return sharedInstance;
+}
+
 -(void) initModule
 {
     [self setModuleIdentity:NSLocalizedString(@"Transmission Module", nil)];
