@@ -26,7 +26,6 @@ public class SeedsStartActivity extends Activity {
 		startView.startAnimation(fadeShow);
 		
 		// Start the DB process
-		//SeedsDBManager.initManager(getApplication());
 		SeedsDBAdapter.initAdapter(getApplication());
 		
 		// Stay for a moments and redirect

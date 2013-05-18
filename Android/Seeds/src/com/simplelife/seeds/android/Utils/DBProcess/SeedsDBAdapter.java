@@ -154,22 +154,36 @@ public class SeedsDBAdapter {
  
  	public Cursor getSeedEntryViaPublishDate(String _pdDate) throws SQLException
 	{
-	    Log.i("SeedsDBAdapter", "Working on query the seed entries via publish date = "+_pdDate);
  		Cursor mCursor = mSQLiteDatabase.query(true, 
 	    		DATABASE_TABLE_SEED, 
 	    		new String[]{KEY_ID_SEED, KEY_NAME, KEY_SIZE, KEY_FORMAT, KEY_TORRENTLINK}, 
 	    		KEY_PUBLISHDATE+ "='" + _pdDate + "'",
 	    		null,null,null,null,null);
-	    /*Cursor mCursor = mSQLiteDatabase.rawQuery(
-				"select seedId,name,size,format,torrentLink from Seed where publishDate=?",
-				new String[]{_pdDate});*/
-	    if(mCursor!=null)
+
+ 		if(mCursor!=null)
 	    {
 	        mCursor.moveToFirst();
 	    }
 	   
 	    return mCursor;
 	}
+ 	
+ 	public Cursor getSeedEntryViaFavTag() throws SQLException
+ 	{
+ 		Cursor mCursor = mSQLiteDatabase.query(true, 
+	    		DATABASE_TABLE_SEED, 
+	    		new String[]{KEY_ID_SEED, KEY_NAME, KEY_SIZE, KEY_FORMAT, KEY_TORRENTLINK}, 
+	    		KEY_FAVORITE+ "=1",
+	    		null,null,null,null,null);
+
+ 		if(mCursor!=null)
+	    {
+	        mCursor.moveToFirst();
+	    }
+	   
+	    return mCursor;
+ 		
+ 	}
 
  	public Cursor getSeedPicFirstEntryViaSeedId(int _seedId) throws SQLException
 	{

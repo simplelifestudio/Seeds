@@ -17,5 +17,6 @@
     <string name="seeds_Favorite">收藏</string>
     <string name="seeds_UnFavorite">取消收藏</string>
     <string name="seeds_favoritelist">收藏列表</string>
+    <string name="seeds_preffilename">com.simplelife.seeds.SEEDS_STATUS_BYDATE</string>
 
 </resources>

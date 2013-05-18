@@ -1,10 +1,11 @@
 package com.simplelife.seeds.android;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+
+import com.simplelife.seeds.android.Utils.Adapter.SeedsAdapter;
+import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,14 +16,10 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
-import com.simplelife.seeds.android.Utils.Adapter.SeedsAdapter;
-import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
-
-public class SeedsListPerDayActivity extends Activity {
-
+public class SeedsFavListActivity extends Activity{
 	// Let us define some parameters here
 	//public static final String KEY_SONG = "song"; // parent node
 	//public static final String KEY_ID = "id";
@@ -39,7 +36,7 @@ public class SeedsListPerDayActivity extends Activity {
 	protected List<Integer> tSeedIdList;
 	
 	// For log purpose
-	private static final String LOGCLASS = "SeedsListPerDay"; 
+	private static final String LOGCLASS = "SeedsFavList"; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,34 +44,11 @@ public class SeedsListPerDayActivity extends Activity {
 		
 		// setTheme(android.R.style.Theme_Translucent_NoTitleBar);
 		// Set the list view layout
-		setContentView(R.layout.activity_seeds_listperday);
-		
-		// Retrieve the date info parameter
-		Bundle bundle = getIntent().getExtras();
-		//String tPassinDate = bundle.getString("date");
-		String tDate = bundle.getString("date");
-		
+		setContentView(R.layout.activity_seeds_favlist);
+				
 		// Initialize the tSeedIdList
 		tSeedIdList = new ArrayList();
 		
-		//Log.i(LOGCLASS, "Working on ListPerDay, passin "+ tPassinDate); 
-	    // Judge the current time
-		/*
-		Calendar tCal = Calendar.getInstance();
-		if(tPassinDate.equals("befyesterday"))
-		{
-			// A simple calculation
-			tCal.add(Calendar.DATE, -2);
-			tDate = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());			
-		}else if(tPassinDate.equals("yesterday"))
-		{
-			tCal.add(Calendar.DATE, -1);
-			tDate = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());			
-		}else
-		{
-			tDate = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());
-		}*/
-		Log.i(LOGCLASS, "The Date is  "+ tDate); 
 		// Start a new thread to get the data
 		new Thread(new Runnable() {
 			@Override
@@ -97,7 +71,7 @@ public class SeedsListPerDayActivity extends Activity {
 				tListView = (ListView)findViewById(R.id.seeds_list);
 				
 				ArrayList<HashMap<String, String>> seedsList = (ArrayList<HashMap<String, String>>)msg.obj;
-				tAdapter = new SeedsAdapter(SeedsListPerDayActivity.this, seedsList);
+				tAdapter = new SeedsAdapter(SeedsFavListActivity.this, seedsList);
 				tListView.setAdapter(tAdapter);
 
 				// Bund the click listener
@@ -112,35 +86,27 @@ public class SeedsListPerDayActivity extends Activity {
 		public void onItemClick(AdapterView<?> parent, View view,
 				int position, long id) {
 			
-			//System.out.println("----->OnClick");
-			// TODO:Redirect to the details page
-			Intent intent = new Intent(SeedsListPerDayActivity.this, SeedsDetailsActivity.class);
+			// Redirect to the details page
+			Intent intent = new Intent(SeedsFavListActivity.this, SeedsDetailsActivity.class);
 			// Pass the date info
 		    Bundle bundle = new Bundle();
 		    
-		    Log.i(LOGCLASS,"Click event detected, the position is "+position);
-		    Log.i(LOGCLASS,"Click event detected, the seedId is "+tSeedIdList.get(position));
 		    bundle.putInt("seedid", (Integer) tSeedIdList.get(position));
 		    intent.putExtras(bundle);
 			startActivity(intent);
 		}
 	}
-
+	
 	private ArrayList<HashMap<String, String>> getList() {
 		ArrayList<HashMap<String, String>> seedsList = new ArrayList<HashMap<String, String>>();
 
 		// Retrieve the DB process handler to get data 
 		SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();
 		
-		/*Cursor tResult = tDB.rawQuery(
-				"select seedId,name,size,format,torrentLink from Seed where publishDate=\"?\"",
-				new String[]{tDate});*/
-		
-		tDate = "2013-04-26";		
-		Cursor tResult = mDBAdapter.getSeedEntryViaPublishDate(tDate);		
+		// Get the seeds entries according to the favorite tag
+		Cursor tResult = mDBAdapter.getSeedEntryViaFavTag();		
 				
 		Log.i(LOGCLASS, "The size of the tResult is  "+ tResult.getCount());
-		tResult.moveToFirst(); 
 		while (!tResult.isAfterLast()) 
 	    { 
 			// 0 -- seedId, 1 -- name
@@ -153,11 +119,7 @@ public class SeedsListPerDayActivity extends Activity {
 			// For debug purpose
 			Log.i(LOGCLASS, "The SeedID is  "+ tSeedId);
 			Log.i(LOGCLASS, "The Title is  "+ tResult.getString(tResult.getColumnIndex(KEY_TITLE)));
-			
-			/*Cursor tImgResult = tDB.rawQuery(
-					"select pictureLink from SeedPicture where seedId=?",
-					new String[]{Integer.toString(tSeedId)});*/
-			
+						
 			Cursor tImgResult = mDBAdapter.getSeedPicFirstEntryViaSeedId(tSeedId);
 			
 			tImgResult.moveToFirst();
@@ -173,7 +135,6 @@ public class SeedsListPerDayActivity extends Activity {
 				tFirstImgUrl = "Nothing To Show";
 			}
 
-			Log.i(LOGCLASS, "The Image URL is  "+ tFirstImgUrl);
 			map.put(KEY_TITLE, tResult.getString(tResult.getColumnIndex(KEY_TITLE)));
 			map.put(KEY_SIZE, tResult.getString(tResult.getColumnIndex(KEY_SIZE)));
 			map.put(KEY_FORMAT, tResult.getString(tResult.getColumnIndex(KEY_FORMAT)));
@@ -194,5 +155,5 @@ public class SeedsListPerDayActivity extends Activity {
 		
 		return seedsList;	
 	}
-		
+
 }

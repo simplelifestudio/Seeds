@@ -1,11 +1,22 @@
 package com.simplelife.seeds.android;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import org.apache.http.client.ClientProtocolException;
+import org.json.JSONException;
+
 import com.simplelife.seeds.android.Utils.NetworkProcess.SeedsNetworkProcess;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -22,6 +33,13 @@ public class SeedsDateListActivity extends Activity {
 	private Button myUpdateBtn;
 	private Button myFavListBtn;
 	private ProgressDialog tProgressDialog = null; 	
+	
+	// Date in string format
+	private String mDateBefYesterday;
+	private String mDateYesterday;
+	private String mDateToday;
+	private ArrayList<String>  mDateArray;
+	private SharedPreferences mSharedPref;
 	
 	// Below two fields should be removed or changed in final version
 	private int tSleepSeconds = 1; 
@@ -60,15 +78,28 @@ public class SeedsDateListActivity extends Activity {
 		Log.i(LOGCLASS, "Working on setting the ProgressDialog style"); 
 		// Set the progress style as spinner
 		//tProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); 
-		myUpdateBtn.setOnClickListener(myUpdateBtnListener);		
+		myUpdateBtn.setOnClickListener(myUpdateBtnListener);
+		
+		// Calculate the date
+		Calendar tCal = Calendar.getInstance();
+		mDateToday = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());
+		tCal.add(Calendar.DATE, -1);
+		mDateYesterday = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());
+		tCal.add(Calendar.DATE, -1);
+		mDateBefYesterday = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());
+		
+		// Initialize the date array list
+		mDateArray = new ArrayList<String> ();
+		
+		// Get the shared preference file instance
+		mSharedPref = getSharedPreferences(
+		        getString(R.string.seeds_preffilename), Context.MODE_PRIVATE);		
 	}
 	
 	private View.OnClickListener myBefYesterdayBtnListener = new View.OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
-			//Log.v("", "");
-			// TO-DO:
 			// 1. Start the seeds update job, communicate with server
 			// 2. Need a progress bar here.
 			// Redirect to the seeds list page
@@ -80,10 +111,16 @@ public class SeedsDateListActivity extends Activity {
 				@Override
 				public void run() {
 					try {
-						// Communicate with server
-						// As a temp solution to make the dialog move on,
-						// set a stub code here to drive the dialog
-						Thread.sleep(tSleepSeconds * 1000);						
+						// Only when the seeds info have not been updated
+						if (!isSeedsInfoUpdated(mDateBefYesterday))
+						{
+						    // Populate the date array
+						    mDateArray.clear();
+						    mDateArray.add(mDateBefYesterday);
+						
+						    updateSeedsInfo(mDateArray);
+						}
+						
 					} catch (Exception e) {
 						// Show the error message here
 					}
@@ -212,11 +249,7 @@ public class SeedsDateListActivity extends Activity {
 				}
 			}.start();
 			
-			Intent intent = new Intent(SeedsDateListActivity.this, SeedsListPerDayActivity.class);
-			// Pass the date info
-		    Bundle bundle = new Bundle();
-		    bundle.putString("date", "favlist");
-		    intent.putExtras(bundle);
+			Intent intent = new Intent(SeedsDateListActivity.this, SeedsFavListActivity.class);
 			startActivity(intent);			
 		}
 	};
@@ -274,7 +307,45 @@ public class SeedsDateListActivity extends Activity {
             }
              
         }
-    };  
+    }; 
+    
+    private boolean isSeedsInfoUpdated(String tDate){
+    	
+    	// Retrieve the seeds info status by date via the shared preference file
+    	return mSharedPref.getBoolean(tDate,false);    	
+    }
+    
+    private void updateSeedsInfoStatus(String tDate, Boolean tTag){
+    	
+    	// Retrieve the seeds info status by date via the shared preference file
+    	SharedPreferences.Editor editor = mSharedPref.edit();
+    	editor.putBoolean(tDate, tTag);
+    	editor.commit();    	
+    }
+    
+    private void updateSeedsInfo(ArrayList<String> tDateArray){
+    	
+    	// Notify progress dialog to show the status
+    	tProgressDialog.setMessage("Retrieving Seeds info status...");
+    	
+    	// Communicate with server to retrieve the seeds info
+		try {
+			SeedsNetworkProcess.sendUpdateStatusReqMsg(tDateArray);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		tProgressDialog.setMessage("Analyze Seeds info status...");
+		
+
+    }
      
 
 }
