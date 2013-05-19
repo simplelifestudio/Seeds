@@ -52,7 +52,7 @@ public class SeedsListPerDayActivity extends Activity {
 		// Retrieve the date info parameter
 		Bundle bundle = getIntent().getExtras();
 		//String tPassinDate = bundle.getString("date");
-		String tDate = bundle.getString("date");
+		tDate = bundle.getString("date");
 		
 		// Initialize the tSeedIdList
 		tSeedIdList = new ArrayList();
@@ -136,7 +136,7 @@ public class SeedsListPerDayActivity extends Activity {
 				"select seedId,name,size,format,torrentLink from Seed where publishDate=\"?\"",
 				new String[]{tDate});*/
 		
-		tDate = "2013-04-26";		
+		//tDate = "2013-04-26";		
 		Cursor tResult = mDBAdapter.getSeedEntryViaPublishDate(tDate);		
 				
 		Log.i(LOGCLASS, "The size of the tResult is  "+ tResult.getCount());
