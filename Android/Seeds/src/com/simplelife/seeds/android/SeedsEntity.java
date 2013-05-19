@@ -47,6 +47,10 @@ public class SeedsEntity {
 		picLinks = new ArrayList<String>();
 	}
 	
+	public void addPicLink(String inPicLink){
+		picLinks.add(inPicLink);
+	}
+	
 	public void setSeedType(String inType){
 		this.type = inType;
 	}
@@ -81,6 +85,7 @@ public class SeedsEntity {
 	
 	public void setSeedMosaic(String inMosaic){
 		//this.mosaic = inMosaic;
+		this.mosaic = false;
 	}
 	
 	public void setSeedMemo(String inMemo){
@@ -90,9 +95,53 @@ public class SeedsEntity {
 	public void setSeedFavorite(boolean inFavorite){
 		this.favorite = inFavorite;
 	}
-	
-	public void addPicLink(String inPicLink){
-		picLinks.add(inPicLink);
+	public String getSeedType(){
+		return this.type;
 	}
-
+	
+	public String getSeedSource(){
+		return this.source;
+	}
+	
+	public String getSeedPublishDate(){
+		return this.publishDate;
+	}
+	
+	public String getSeedName(){
+		return this.name;
+	}
+	
+	public String getSeedSize(){
+		return this.size;
+	}
+	
+	public String getSeedFormat(){
+		return this.format;
+	}
+	
+	public String getSeedTorrentLink(){
+		return this.torrentLink;
+	}
+	
+	public String getSeedHash(){
+		return this.hash;
+	}
+	
+	public boolean getSeedMosaic(){
+		//this.mosaic = inMosaic;
+		return this.mosaic;
+	}
+	
+	public String getSeedMemo(){
+		return this.memo;
+	}
+	
+	public boolean getSeedFavorite(){
+		return this.favorite;
+	}
+	
+	public ArrayList<String> getPicLinks(){
+		return this.picLinks;
+	}
+	
 }
