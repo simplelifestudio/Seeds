@@ -16,6 +16,7 @@
 
 @synthesize addressLabel = _addressLabel;
 @synthesize statusLabel = _statusLabel;
+@synthesize consoleView = _consoleView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -83,6 +84,7 @@
 {
     [self setAddressLabel:nil];
     [self setStatusLabel:nil];
+    [self setConsoleView:nil];
     [super viewDidUnload];
 }
 @end
