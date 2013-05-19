@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "MBProgressHUD.h"
+#import "SeedsSpider.h"
 
-@interface HomeViewController : UIViewController <MBProgressHUDDelegate>
+@interface HomeViewController : UIViewController <MBProgressHUDDelegate, SeedsSpiderDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton *syncButton;
 @property (weak, nonatomic) IBOutlet UIButton *transButton;

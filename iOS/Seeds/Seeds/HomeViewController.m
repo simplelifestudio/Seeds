@@ -8,6 +8,8 @@
 
 #import "HomeViewController.h"
 
+#define HUD_DISPLAY(x) sleep(x);
+
 @interface HomeViewController ()
 {
     MBProgressHUD* HUD;
@@ -36,6 +38,9 @@
     backBarItem = self.navigationItem.backBarButtonItem;
     stopBarItem = [[UIBarButtonItem alloc] init];
     stopBarItem.title = NSLocalizedString(@"Stop", nil);
+    
+    SpiderModule* spiderModule = [SpiderModule sharedInstance];
+    [spiderModule.spider setDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -75,7 +80,7 @@
 - (void)syncSeedsInfoTask
 {
     SpiderModule* spiderModule = [SpiderModule sharedInstance];
-    [spiderModule.spider pullSeedsInfo:HUD];
+    [spiderModule.spider pullSeedsInfo];
 }
 
 - (void)hudWasHidden:(MBProgressHUD *)hud
@@ -95,6 +100,41 @@
     {
         self.navigationItem.backBarButtonItem = backBarItem;
     }
+}
+
+-(void) spiderStarted:(NSString*) majorStatus
+{
+    HUD.mode = MBProgressHUDModeText;
+    HUD.minSize = CGSizeMake(135.f, 135.f);
+    
+    [self updateHUDTextStatus:majorStatus minorStatus:nil];
+        
+    HUD_DISPLAY(1)
+        
+    HUD.mode = MBProgressHUDModeIndeterminate;
+}
+
+-(void) spiderIsProcessing:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
+{
+    [self updateHUDTextStatus:majorStatus minorStatus:minorStatus];
+    HUD_DISPLAY(1)
+}
+
+-(void) spiderFinished:(NSString*) majorStatus
+{
+    HUD.mode = MBProgressHUDModeText;
+    [self updateHUDTextStatus:majorStatus minorStatus:nil];
+    HUD_DISPLAY(2)
+}
+
+-(void) updateHUDTextStatus:(NSString*) majorStatus minorStatus:(NSString*)minorStatus
+{
+    if (nil != majorStatus && 0 < majorStatus.length)
+    {
+        HUD.labelText = majorStatus;
+    }
+    
+    HUD.detailsLabelText = minorStatus;
 }
 
 @end

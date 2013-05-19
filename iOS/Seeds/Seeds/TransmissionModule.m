@@ -59,6 +59,7 @@
 	[httpServer setType:@"_http._tcp."];
 
 	[httpServer setName:HTTP_SERVER_NAME];
+    [httpServer setPort:HTTP_SERVER_PORT];
 	
 	// Normally there's no need to run our server on any specific port.
 	// Technologies like Bonjour allow clients to dynamically discover the server's port at runtime.
