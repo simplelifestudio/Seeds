@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
@@ -56,7 +57,7 @@ public class SeedsNetworkProcess {
 	    Log.i("response :", token);	
 	}
 	
-	public static void sendUpdateStatusReqMsg(ArrayList<String> inDateArray) throws JSONException, ClientProtocolException, IOException {
+	public static boolean sendUpdateStatusReqMsg(ArrayList<String> inDateArray, String respInString) throws JSONException, ClientProtocolException, IOException {
 		
         // Prepare network parameters
 	    DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -86,6 +87,57 @@ public class SeedsNetworkProcess {
 		// Retrieve the response
 		HttpResponse response = httpClient.execute(postMethod);
 		
+        // Check the response context
+		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+            
+            respInString = EntityUtils.toString(response.getEntity());
+            return true;
+            // String strsResult = strResult.replace("\r", "");            
+        } else {
+        	Log.i("NetworkProcess","UpdateStatusReq Message sending failed!");
+        	return false;           
+        }
+		
+	}
+	
+	public static boolean sendSeedsByDateReqMsg (ArrayList<String> inDateArray, String respInString) throws JSONException, ClientProtocolException, IOException {
+        // Prepare network parameters
+	    DefaultHttpClient httpClient = new DefaultHttpClient();
+	    HttpPost postMethod = new HttpPost(mServerUrl);
+	    
+		Log.i("NetworkProcess","Sending SeedsByDate Message!");
+		
+	    // Create UpdateStatusReq Message
+		JSONObject paramList = new JSONObject();
+		JSONArray  dateList  = new JSONArray();
+		int arraySize = inDateArray.size();
+		for(int i =0 ; i < arraySize; i++)
+		{
+		    String tDate = inDateArray.get(i);
+		    dateList.put(tDate);		    
+		}
+		paramList.put("datelist",dateList);
+		
+		JSONObject updateStatusReq = SeedsJSONMessage.SeedsConstructMsg(SeedsJSONMessage.SeedsByDatesRequest, paramList);
+		
+	    // Send the request
+		postMethod.setEntity(new StringEntity(updateStatusReq.toString()));
+		
+		Log.i("NetworkProcess","SeedsByDate Message "+updateStatusReq.toString());
+		
+		// Retrieve the response
+		HttpResponse response = httpClient.execute(postMethod);
+		
+        // Check the response context
+		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+            
+            respInString = EntityUtils.toString(response.getEntity());
+            return true;
+            // String strsResult = strResult.replace("\r", "");            
+        } else {
+        	Log.i("NetworkProcess","SeedsByDate Message sending failed!");
+        	return false;           
+        }
 	}
 
 }
