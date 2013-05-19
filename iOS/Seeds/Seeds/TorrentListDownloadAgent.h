@@ -14,9 +14,9 @@
 
 @required
 
--(void) torrentListDownloadStarted;
--(void) torrentListDownloadFinished;
--(void) torrentListDownloadInProgress:(NSString*) progress;
+-(void) torrentListDownloadStarted:(NSString*) majorStatus;
+-(void) torrentListDownloadFinished:(NSString*) majorStatus;
+-(void) torrentListDownloadInProgress:(NSString*) majorStatus minorStatus:(NSString*) minorStatus;
 
 @end
 
@@ -25,7 +25,7 @@
 @property (nonatomic, strong) id<TorrentListDownloadAgentDelegate> listDownloadDelegate;
 @property (nonatomic, strong) id<TorrentDownloadAgentDelegate> singleDownloadDelegate;
 
--(id) initWithTorrentLinks:(NSArray*) torrentLinks downloadPath:(NSString*) path;
+-(void) addSeeds:(NSArray*) seeds downloadPath:(NSString*) path;
 -(void) downloadWithDelegate:(id<TorrentListDownloadAgentDelegate>) listDelegate;
 
 @end

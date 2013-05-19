@@ -10,8 +10,9 @@
 
 @interface TorrentListDownloadAgent()
 {
-
-
+    NSInteger torrentCounts;
+    NSInteger torrentIndex;
+    NSInteger failedCount;
 }
 
 @property (atomic, strong) NSMutableArray* torrentDownloadAgentList;
@@ -25,15 +26,22 @@
 
 @synthesize torrentDownloadAgentList = _torrentDownloadAgentList;
 
--(id) initWithTorrentLinks:(NSArray *)torrentLinks downloadPath:(NSString *)path
+-(id) init
 {
     self = [super init];
     if (self)
     {
-        [self initTorrentDownloadAgentList:torrentLinks downloadPath:path];
+        _torrentDownloadAgentList = [NSMutableArray arrayWithCapacity:0];
+        torrentCounts = 0;
+        torrentIndex = 0;
+        failedCount = 0;
     }
-    
     return self;
+}
+
+-(void) addSeeds:(NSArray *)seeds downloadPath:(NSString *)path
+{
+    [self addTorrentDownloadAgentList:seeds downloadPath:path];
 }
 
 -(void) downloadWithDelegate:(id<TorrentListDownloadAgentDelegate>) listDelegate
@@ -41,85 +49,109 @@
     _listDownloadDelegate = listDelegate;
     _singleDownloadDelegate = self;
     
-    if ([_listDownloadDelegate respondsToSelector:@selector(torrentListDownloadStarted)])
+    torrentCounts = _torrentDownloadAgentList.count;
+    if (0 == torrentCounts)
     {
-        [_listDownloadDelegate torrentListDownloadStarted];
+        if ([_listDownloadDelegate respondsToSelector:@selector(torrentListDownloadFinished:)])
+        {
+            [_listDownloadDelegate torrentListDownloadFinished:NSLocalizedString(@"Sync Yet", nil)];
+        }
     }
-    
-    [self launchNextTorrentDownloadProcess];
+    else
+    {
+        if ([_listDownloadDelegate respondsToSelector:@selector(torrentListDownloadStarted:)])
+        {
+            [_listDownloadDelegate torrentListDownloadStarted:NSLocalizedString(@"Torrents Downloading", nil)];
+        }
+        
+        [self launchNextTorrentDownloadProcess];
+    }
 }
 
 -(void) launchNextTorrentDownloadProcess
 {
-    if (0 < _torrentDownloadAgentList.count)
+    if (0 < _torrentDownloadAgentList.count)// && 4 > torrentIndex)
     {
+        torrentIndex += 1;
         TorrentDownloadAgent* torrentDownloadAgent = [_torrentDownloadAgentList objectAtIndex:0];
         [torrentDownloadAgent downloadWithDelegate:self];
+        [_torrentDownloadAgentList removeObjectAtIndex:0];
     }
     else
     {
-        if ([_listDownloadDelegate respondsToSelector:@selector(torrentListDownloadFinished)])
+        if ([_listDownloadDelegate respondsToSelector:@selector(torrentListDownloadFinished:)])
         {
-            [_listDownloadDelegate torrentListDownloadFinished];
+            [_listDownloadDelegate torrentListDownloadFinished:NSLocalizedString(@"Completed", nil)];
         }        
     }
 }
 
 -(void) torrentDownloadStarted:(NSString*) torrentCode
 {
-    if ([_listDownloadDelegate respondsToSelector:@selector(torrentListDownloadInProgress:)])
-    {
-        [_listDownloadDelegate torrentListDownloadInProgress:torrentCode];
-    }
+//    DLog(@"Started to download torrent with code:%@", torrentCode);
 }
 
 -(void) torrentDownloadFinished:(NSString*) torrentCode
 {
-    if ([_listDownloadDelegate respondsToSelector:@selector(torrentListDownloadInProgress:)])
-    {
-        [_listDownloadDelegate torrentListDownloadInProgress:torrentCode];
-    }
+//    DLog(@"Finished to download torrent with code:%@", torrentCode);
 }
 
 -(void) torrentDownloadFailed:(NSString*) torrentCode error:(NSError*) error
 {
-    [self launchNextTorrentDownloadProcess];
-    
-    if ([_listDownloadDelegate respondsToSelector:@selector(torrentListDownloadInProgress:)])
+    DLog(@"Failed to download torrent with code:%@ for error:%@", torrentCode, [error description]);
+    failedCount += 1;
+}
+
+-(NSString*) computeMinorStatusString
+{
+    NSMutableString* minorStatus = [NSMutableString string];
+    [minorStatus appendString:[NSString stringWithFormat:@"%d", torrentIndex]];
+    [minorStatus appendString:@" of "];
+    [minorStatus appendString:[NSString stringWithFormat:@"%d", torrentCounts]];
+
+    if (0 < failedCount)
     {
-        [_listDownloadDelegate torrentListDownloadInProgress:torrentCode];
+        [minorStatus appendString:@" (ERR:"];
+        [minorStatus appendString:[NSString stringWithFormat:@"%d", failedCount]];
+        [minorStatus appendString:@")"];
     }
+    
+    return minorStatus;
 }
 
 -(void) torrentSaveFinished:(NSString*) torrentCode filePath:(NSString*) filePath
 {
-    [self launchNextTorrentDownloadProcess];
-    
-    if ([_listDownloadDelegate respondsToSelector:@selector(torrentListDownloadInProgress:)])
+    if ([_listDownloadDelegate respondsToSelector:@selector(torrentListDownloadInProgress:minorStatus:)])
     {
-        [_listDownloadDelegate torrentListDownloadInProgress:torrentCode];
+        NSString* majorStatus = NSLocalizedString(@"Torrents Downloading", nil);
+        NSString* minorStatus = [self computeMinorStatusString];
+        [_listDownloadDelegate torrentListDownloadInProgress:majorStatus minorStatus:minorStatus];
     }
+    
+    [self launchNextTorrentDownloadProcess];
 }
 
 -(void) torrentSaveFailed:(NSString*) torrentCode filePath:(NSString*) filePath
 {
-    [self launchNextTorrentDownloadProcess];
-    
-    if ([_listDownloadDelegate respondsToSelector:@selector(torrentListDownloadInProgress:)])
+    DLog(@"Failed to save torrent file with code:%@ in path:%@", torrentCode, filePath);
+    failedCount += 1;    
+    if ([_listDownloadDelegate respondsToSelector:@selector(torrentListDownloadInProgress:minorStatus:)])
     {
-        [_listDownloadDelegate torrentListDownloadInProgress:torrentCode];
+        NSString* majorStatus = NSLocalizedString(@"Torrents Downloading", nil);
+        NSString* minorStatus = [self computeMinorStatusString];
+        [_listDownloadDelegate torrentListDownloadInProgress:majorStatus minorStatus:minorStatus];
     }
+    [self launchNextTorrentDownloadProcess];
 }
 
--(void) initTorrentDownloadAgentList:(NSArray*) torrentLinks downloadPath:(NSString*)path
+-(void) addTorrentDownloadAgentList:(NSArray*) seeds downloadPath:(NSString*)path
 {
-    NSAssert(nil != torrentLinks, @"TorrentL links array can't be nil.");
+    NSAssert(nil != seeds, @"TorrentL links array can't be nil.");
     NSAssert(nil != path, @"Download path can't be nil.");
     
-    _torrentDownloadAgentList = [NSMutableArray arrayWithCapacity:torrentLinks.count];
-    for (NSString* torrentLink in torrentLinks)
+    for (Seed* seed in seeds)
     {
-        TorrentDownloadAgent* torrentDownloadAgent = [[TorrentDownloadAgent alloc] initWithTorrentLink:torrentLink downloadPath:path];
+        TorrentDownloadAgent* torrentDownloadAgent = [[TorrentDownloadAgent alloc] initWithSeed:seed downloadPath:path];
         [_torrentDownloadAgentList addObject:torrentDownloadAgent];
     }
 }

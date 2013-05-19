@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "AFNetworking.h"
+
 #define BASEURL_TORRENT @"http://www.maxp2p.com/"
 #define BASEURL_TORRENTCODE @"http://www.maxp2p.com/link.php?ref="
 #define FORM_ATTRKEY_REF @"ref"
@@ -30,7 +32,7 @@ typedef void (^TorrentDownloadFailBlock)(AFHTTPRequestOperation *operation, NSEr
 
 @property (nonatomic, strong) id<TorrentDownloadAgentDelegate> delegate;
 
--(id) initWithTorrentLink:(NSString*) torrentLink downloadPath:(NSString*) path;
+-(id) initWithSeed:(Seed*) seed downloadPath:(NSString*) path;
 
 -(void) download:(TorrentDownloadSuccessBlock) successBlock failBlock:(TorrentDownloadFailBlock) failBlock;
 -(void) downloadWithDelegate:(id<TorrentDownloadAgentDelegate>) delegate;

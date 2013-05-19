@@ -35,6 +35,9 @@
 "Status Saving" = "状态保存";
 "Fail Analyzing" = "分析失败";
 "Pulled Yet" = "已抓取过";
+"Sync Yet" = "已同步过";
 "Completed" = "完成";
+
+"Torrents Downloading" = "种子下载";
 
 "Stop" = "停止";

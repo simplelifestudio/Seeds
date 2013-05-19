@@ -25,12 +25,12 @@
 
 @synthesize delegate = _delegate;
 
--(id) initWithTorrentLink:(NSString*) link downloadPath:(NSString *)path
+-(id) initWithSeed:(Seed*) seed downloadPath:(NSString *)path
 {
     self = [super init];
     if (self)
     {
-        [self computeCodeFromLink:link];
+        [self computeCodeFromLink:seed.torrentLink];
         [self computeDownloadFullPath:path];
     }
     

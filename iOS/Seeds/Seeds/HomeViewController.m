@@ -8,7 +8,7 @@
 
 #import "HomeViewController.h"
 
-#define HUD_DISPLAY(x) sleep(x);
+#define HUD_DISPLAY(x) usleep(0);
 
 @interface HomeViewController ()
 {
@@ -40,7 +40,7 @@
     stopBarItem.title = NSLocalizedString(@"Stop", nil);
     
     SpiderModule* spiderModule = [SpiderModule sharedInstance];
-    [spiderModule.spider setDelegate:self];
+    [spiderModule.spider setSeedsSpiderDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -106,11 +106,11 @@
 {
     HUD.mode = MBProgressHUDModeText;
     HUD.minSize = CGSizeMake(135.f, 135.f);
-    
+        
     [self updateHUDTextStatus:majorStatus minorStatus:nil];
-        
+    
     HUD_DISPLAY(1)
-        
+    
     HUD.mode = MBProgressHUDModeIndeterminate;
 }
 
@@ -124,6 +124,7 @@
 {
     HUD.mode = MBProgressHUDModeText;
     [self updateHUDTextStatus:majorStatus minorStatus:nil];
+    
     HUD_DISPLAY(2)
 }
 

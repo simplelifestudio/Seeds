@@ -10,6 +10,7 @@
 
 #import "MBProgressHUD.h"
 #import "SeedsSpider.h"
+#import "TorrentListDownloadAgent.h"
 
 @interface HomeViewController : UIViewController <MBProgressHUDDelegate, SeedsSpiderDelegate>
 

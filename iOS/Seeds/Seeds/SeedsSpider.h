@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 
 #import "TFHpple.h"
+#import "MBProgressHUD.h"
 
 #import "CBDateUtils.h"
-#import "SeedsVisitor.h"
 
-#import "MBProgressHUD.h"
+#import "SeedsVisitor.h"
+#import "TorrentListDownloadAgent.h"
 
 #define SEEDLIST_LINK_DATE_FORMAT @"M-dd"
 
@@ -25,9 +26,10 @@
 
 @end
 
-@interface SeedsSpider : NSObject
+@interface SeedsSpider : NSObject <TorrentListDownloadAgentDelegate>
 
-@property (nonatomic, strong) id<SeedsSpiderDelegate> delegate;
+@property (nonatomic, strong) id<SeedsSpiderDelegate> seedsSpiderDelegate;
+@property (nonatomic, strong) id<TorrentListDownloadAgentDelegate> torrentListDownloadAgentDelegate;
 
 -(NSString*) pullSeedListLinkByDate:(NSDate*) date;
 -(NSArray*) pullSeedsFromLink:(NSString*) link;
