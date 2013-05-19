@@ -10,16 +10,14 @@
 
 @implementation CBFileUtils
 
-+(NSString*) newZipFileWithFiles:(NSString*) zipFileName zipFiles:(NSArray*) files;
++(NSString*) newZipFileWithFiles:(NSString*) zipFilePath zipFiles:(NSArray*) files;
 {
-    NSString* zipFilePath = nil;
+    NSAssert(nil != zipFilePath && 0 < zipFilePath.length, @"Invalid zip file path.");
     
-    if (nil != zipFileName && 0 < zipFileName.length && nil != files && 0 < files.count)
-    {
-        NSString* documentsDir = [CBPathUtils documentsDirectoryPath];
-        zipFilePath = [documentsDir stringByAppendingPathComponent:zipFileName];
-        
+    if (nil != files && 0 < files.count)
+    {        
         ZipFile *zip = [[ZipFile alloc] initWithFileName:zipFilePath mode:ZipFileModeCreate];
+
         for (NSString* file in files)
         {
             NSString* fileName = [file lastPathComponent];
@@ -29,7 +27,7 @@
                 NSData* fileData = [self dataFromFile:file];
                 [writeStream writeData:fileData];
                 [writeStream finishedWriting];
-                [zip close];
+
             }
             @catch (NSException *e)
             {
@@ -42,6 +40,7 @@
                 
             }
         }
+        [zip close];
     }
     
     return zipFilePath;
@@ -66,6 +65,40 @@
     }
     
     return data;
+}
+
++(NSArray*) filesInDirectory:(NSString*) directoryPath fileExtendName:(NSString*) extendName
+{
+    NSMutableArray* files = [NSMutableArray array];
+    
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSDirectoryEnumerator *dirEnum = [fm enumeratorAtPath:directoryPath];
+    
+    NSString* file;
+    while ((file = [dirEnum nextObject]))
+    {
+        BOOL filter = NO;
+        
+        if (nil != extendName && 0 < extendName)
+        {
+            if ([[file pathExtension] isEqualToString: extendName])
+            {
+                filter = YES;
+            }
+        }
+        else
+        {
+            filter = YES;
+        }
+        
+        if (filter)
+        {
+            NSString* fileFullPath = [directoryPath stringByAppendingPathComponent:file];
+            [files addObject:fileFullPath];
+        }
+    }
+    
+    return files;
 }
 
 //+(NSString*) createZipArchiveWithFiles:(NSArray*)files andPassword:(NSString*)password

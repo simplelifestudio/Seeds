@@ -8,6 +8,8 @@
 
 #import "TransmitViewController.h"
 
+#import "CBFileUtils.h"
+
 @interface TransmitViewController ()
 
 @end
@@ -43,9 +45,23 @@
     [self.navigationController setNavigationBarHidden:NO];
 
     [self updateLabels];
+    
+    NSArray* last3Days = [CBDateUtils lastThreeDays];
+    NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
+    for (NSDate* day in last3Days)
+    {
+        NSString* dayStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
+        NSString* dayFolderPath = [documentsPath stringByAppendingPathComponent:dayStr];
+        NSArray* files = [CBFileUtils filesInDirectory:dayFolderPath fileExtendName:@"torrent"];
+        NSMutableString* zipName = [NSMutableString stringWithString:dayStr];
+        [zipName appendString:@".zip"];
+        NSString* zipFilePath = [dayFolderPath stringByAppendingPathComponent:zipName];
+        zipFilePath = [CBFileUtils newZipFileWithFiles:zipFilePath zipFiles:files];
+        DLog(@"New zip file created:%@", zipFilePath);
+    }
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+- (void)viewDidDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     

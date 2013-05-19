@@ -281,8 +281,9 @@
         // Create date folder if necessary
         NSString* dateStr = (NSString*)key;
         NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
-        documentsPath = [documentsPath stringByAppendingString:@"/"];
-        NSString* dateFolderPath = [documentsPath stringByAppendingString:dateStr];
+//        documentsPath = [documentsPath stringByAppendingString:@"/"];
+//        NSString* dateFolderPath = [documentsPath stringByAppendingString:dateStr];
+        NSString* dateFolderPath = [documentsPath stringByAppendingPathComponent:dateStr];
 
         NSFileManager* fm = [NSFileManager defaultManager];
         BOOL flag = NO;
