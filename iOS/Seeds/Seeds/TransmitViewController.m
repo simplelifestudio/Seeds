@@ -34,7 +34,6 @@
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = NSLocalizedString(@"Stop", nil);
     self.navigationItem.backBarButtonItem = backItem;
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -43,6 +42,14 @@
     [self.navigationController setNavigationBarHidden:NO];
 
     [self updateLabels];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    TransmissionModule* transmitModule = [TransmissionModule sharedInstance];
+    [transmitModule stopHTTPServer];
 }
 
 - (void)updateLabels
