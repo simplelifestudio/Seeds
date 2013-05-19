@@ -17,11 +17,21 @@
 
 #define SEEDLIST_LINK_DATE_FORMAT @"M-dd"
 
+@protocol SeedsSpiderDelegate <NSObject>
+
+-(void) spiderStarted:(NSString*) majorStatus;
+-(void) spiderIsProcessing:(NSString*) majorStatus minorStatus:(NSString*) minorStatus;
+-(void) spiderFinished:(NSString*) majorStatus;
+
+@end
+
 @interface SeedsSpider : NSObject
+
+@property (nonatomic, strong) id<SeedsSpiderDelegate> delegate;
 
 -(NSString*) pullSeedListLinkByDate:(NSDate*) date;
 -(NSArray*) pullSeedsFromLink:(NSString*) link;
 
--(void) pullSeedsInfo:(MBProgressHUD*) HUD;
+-(void) pullSeedsInfo;
 
 @end

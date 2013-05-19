@@ -32,9 +32,7 @@
 		C5203D411743BE1600D917F7 /* DAVResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D121743BE1600D917F7 /* DAVResponse.m */; };
 		C5203D421743BE1600D917F7 /* DELETEResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D141743BE1600D917F7 /* DELETEResponse.m */; };
 		C5203D431743BE1600D917F7 /* PUTResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D161743BE1600D917F7 /* PUTResponse.m */; };
-		C5203D451743BE1600D917F7 /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5203D1A1743BE1600D917F7 /* About.txt */; };
 		C5203D461743BE1600D917F7 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D1C1743BE1600D917F7 /* GCDAsyncSocket.m */; };
-		C5203D471743BE1600D917F7 /* About.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5203D1E1743BE1600D917F7 /* About.txt */; };
 		C5203D481743BE1600D917F7 /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D201743BE1600D917F7 /* DDAbstractDatabaseLogger.m */; };
 		C5203D491743BE1600D917F7 /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D221743BE1600D917F7 /* DDASLLogger.m */; };
 		C5203D4A1743BE1600D917F7 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D241743BE1600D917F7 /* DDFileLogger.m */; };
@@ -42,7 +40,6 @@
 		C5203D4C1743BE1600D917F7 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D281743BE1600D917F7 /* DDTTYLogger.m */; };
 		C5203D4D1743BE1600D917F7 /* ContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D2B1743BE1600D917F7 /* ContextFilterLogFormatter.m */; };
 		C5203D4E1743BE1600D917F7 /* DispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D2D1743BE1600D917F7 /* DispatchQueueLogFormatter.m */; };
-		C5203D4F1743BE1600D917F7 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = C5203D2E1743BE1600D917F7 /* README.txt */; };
 		C5203D5A1743BEB400D917F7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5203D591743BEB400D917F7 /* CFNetwork.framework */; };
 		C5203D5C1743BEC500D917F7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5203D5B1743BEC500D917F7 /* Security.framework */; };
 		C5203D601743BFD500D917F7 /* TransmissionModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203D5F1743BFD500D917F7 /* TransmissionModule.m */; };
@@ -63,6 +60,7 @@
 		C5203DF11747D56400D917F7 /* ZipFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DE61747D56300D917F7 /* ZipFile.m */; };
 		C5203DF21747D56400D917F7 /* ZipReadStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DE81747D56300D917F7 /* ZipReadStream.m */; };
 		C5203DF31747D56400D917F7 /* ZipWriteStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DEA1747D56300D917F7 /* ZipWriteStream.m */; };
+		C5203DFC17485A8600D917F7 /* TorrentListDownloadAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DFB17485A8500D917F7 /* TorrentListDownloadAgent.m */; };
 		C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C531833A17237FF700264530 /* CBModuleAbstractImpl.m */; };
 		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
 		C53183461723A17E00264530 /* DatabaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C53183451723A17E00264530 /* DatabaseModule.m */; };
@@ -193,10 +191,8 @@
 		C5203D141743BE1600D917F7 /* DELETEResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DELETEResponse.m; sourceTree = "<group>"; };
 		C5203D151743BE1600D917F7 /* PUTResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PUTResponse.h; sourceTree = "<group>"; };
 		C5203D161743BE1600D917F7 /* PUTResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PUTResponse.m; sourceTree = "<group>"; };
-		C5203D1A1743BE1600D917F7 /* About.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = About.txt; sourceTree = "<group>"; };
 		C5203D1B1743BE1600D917F7 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		C5203D1C1743BE1600D917F7 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
-		C5203D1E1743BE1600D917F7 /* About.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = About.txt; sourceTree = "<group>"; };
 		C5203D1F1743BE1600D917F7 /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAbstractDatabaseLogger.h; sourceTree = "<group>"; };
 		C5203D201743BE1600D917F7 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAbstractDatabaseLogger.m; sourceTree = "<group>"; };
 		C5203D211743BE1600D917F7 /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDASLLogger.h; sourceTree = "<group>"; };
@@ -211,7 +207,6 @@
 		C5203D2B1743BE1600D917F7 /* ContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContextFilterLogFormatter.m; sourceTree = "<group>"; };
 		C5203D2C1743BE1600D917F7 /* DispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DispatchQueueLogFormatter.h; sourceTree = "<group>"; };
 		C5203D2D1743BE1600D917F7 /* DispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DispatchQueueLogFormatter.m; sourceTree = "<group>"; };
-		C5203D2E1743BE1600D917F7 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		C5203D591743BEB400D917F7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		C5203D5B1743BEC500D917F7 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C5203D5E1743BFD500D917F7 /* TransmissionModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransmissionModule.h; sourceTree = "<group>"; };
@@ -249,6 +244,8 @@
 		C5203DE81747D56300D917F7 /* ZipReadStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipReadStream.m; sourceTree = "<group>"; };
 		C5203DE91747D56300D917F7 /* ZipWriteStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipWriteStream.h; sourceTree = "<group>"; };
 		C5203DEA1747D56300D917F7 /* ZipWriteStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipWriteStream.m; sourceTree = "<group>"; };
+		C5203DFA17485A8500D917F7 /* TorrentListDownloadAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TorrentListDownloadAgent.h; path = Seeds/TorrentListDownloadAgent.h; sourceTree = "<group>"; };
+		C5203DFB17485A8500D917F7 /* TorrentListDownloadAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TorrentListDownloadAgent.m; path = Seeds/TorrentListDownloadAgent.m; sourceTree = "<group>"; };
 		C531833717237FF700264530 /* CBLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLog.h; sourceTree = "<group>"; };
 		C531833817237FF700264530 /* CBModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModule.h; sourceTree = "<group>"; };
 		C531833917237FF700264530 /* CBModuleAbstractImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModuleAbstractImpl.h; sourceTree = "<group>"; };
@@ -540,7 +537,6 @@
 		C5203D191743BE1600D917F7 /* CocoaAsyncSocket */ = {
 			isa = PBXGroup;
 			children = (
-				C5203D1A1743BE1600D917F7 /* About.txt */,
 				C5203D1B1743BE1600D917F7 /* GCDAsyncSocket.h */,
 				C5203D1C1743BE1600D917F7 /* GCDAsyncSocket.m */,
 			);
@@ -550,7 +546,6 @@
 		C5203D1D1743BE1600D917F7 /* CocoaLumberjack */ = {
 			isa = PBXGroup;
 			children = (
-				C5203D1E1743BE1600D917F7 /* About.txt */,
 				C5203D1F1743BE1600D917F7 /* DDAbstractDatabaseLogger.h */,
 				C5203D201743BE1600D917F7 /* DDAbstractDatabaseLogger.m */,
 				C5203D211743BE1600D917F7 /* DDASLLogger.h */,
@@ -573,7 +568,6 @@
 				C5203D2B1743BE1600D917F7 /* ContextFilterLogFormatter.m */,
 				C5203D2C1743BE1600D917F7 /* DispatchQueueLogFormatter.h */,
 				C5203D2D1743BE1600D917F7 /* DispatchQueueLogFormatter.m */,
-				C5203D2E1743BE1600D917F7 /* README.txt */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -820,6 +814,8 @@
 		C5964C4F172249A000CC1C0A /* Communication */ = {
 			isa = PBXGroup;
 			children = (
+				C5318340172390A400264530 /* CommunicationModule.h */,
+				C5318341172390A400264530 /* CommunicationModule.m */,
 				C546E6E0173883CC00AEADDA /* JSONMessage.h */,
 				C546E6E1173883CC00AEADDA /* JSONMessage.m */,
 				C546E6E2173883CC00AEADDA /* JSONMessageDelegate.h */,
@@ -827,8 +823,8 @@
 				C546E6E6173883CC00AEADDA /* ServerAgent.m */,
 				C5203D6D17451F7500D917F7 /* TorrentDownloadAgent.h */,
 				C5203D6E17451F7500D917F7 /* TorrentDownloadAgent.m */,
-				C5318340172390A400264530 /* CommunicationModule.h */,
-				C5318341172390A400264530 /* CommunicationModule.m */,
+				C5203DFA17485A8500D917F7 /* TorrentListDownloadAgent.h */,
+				C5203DFB17485A8500D917F7 /* TorrentListDownloadAgent.m */,
 			);
 			name = Communication;
 			path = ..;
@@ -1020,9 +1016,6 @@
 				C5203CDF1742829B00D917F7 /* noImage_tableCell@2x.png in Resources */,
 				C5203CE21742848200D917F7 /* noImage_collectionCell.png in Resources */,
 				C5203CE31742848200D917F7 /* noImage_collectionCell@2x.png in Resources */,
-				C5203D451743BE1600D917F7 /* About.txt in Resources */,
-				C5203D471743BE1600D917F7 /* About.txt in Resources */,
-				C5203D4F1743BE1600D917F7 /* README.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1157,6 +1150,7 @@
 				C5203DF11747D56400D917F7 /* ZipFile.m in Sources */,
 				C5203DF21747D56400D917F7 /* ZipReadStream.m in Sources */,
 				C5203DF31747D56400D917F7 /* ZipWriteStream.m in Sources */,
+				C5203DFC17485A8600D917F7 /* TorrentListDownloadAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
