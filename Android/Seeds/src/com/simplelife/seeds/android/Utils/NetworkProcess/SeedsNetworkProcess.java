@@ -1,5 +1,6 @@
 package com.simplelife.seeds.android.Utils.NetworkProcess;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EncodingUtils;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +25,7 @@ import com.simplelife.seeds.android.Utils.JSONProcess.SeedsJSONMessage;
 
 public class SeedsNetworkProcess {
 	
-	private static String mServerUrl = "http://192.168.1.104:8080/Seeds/messageListener";
+	private static String mServerUrl = "http://192.168.1.104:8080/Seeds/messageListener";	
 	
 	public SeedsNetworkProcess(){
 		
@@ -59,7 +61,7 @@ public class SeedsNetworkProcess {
 	
 	public static boolean sendUpdateStatusReqMsg(ArrayList<String> inDateArray, String respInString) throws JSONException, ClientProtocolException, IOException {
 		
-        // Prepare network parameters
+		// Prepare network parameters
 	    DefaultHttpClient httpClient = new DefaultHttpClient();
 	    ResponseHandler <String> resonseHandler = new BasicResponseHandler();
 	    HttpPost postMethod = new HttpPost(mServerUrl);
@@ -102,7 +104,7 @@ public class SeedsNetworkProcess {
 	
 	public static boolean sendSeedsByDateReqMsg (ArrayList<String> inDateArray, String respInString) throws JSONException, ClientProtocolException, IOException {
         // Prepare network parameters
-	    DefaultHttpClient httpClient = new DefaultHttpClient();
+		DefaultHttpClient httpClient = new DefaultHttpClient();
 	    HttpPost postMethod = new HttpPost(mServerUrl);
 	    
 		Log.i("NetworkProcess","Sending SeedsByDate Message!");
@@ -138,6 +140,6 @@ public class SeedsNetworkProcess {
         	Log.i("NetworkProcess","SeedsByDate Message sending failed!");
         	return false;           
         }
-	}
+	}	
 
 }

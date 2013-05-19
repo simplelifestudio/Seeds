@@ -84,7 +84,10 @@ public class SeedsJSONMessage {
 		int numOfDate = inDateList.size();
 		for (int index = 0; index < numOfDate; index++)
 		{
-			JSONArray tSeedsArray = tParamList.getJSONArray(inDateList.get(index));
+			String tDate = inDateList.get(index);
+			Log.i("SeedsJSONMessage","Date to get: " + tDate);
+			JSONArray tSeedsArray = tParamList.getJSONArray(tDate);
+			
 			int numOfSeeds = tSeedsArray.length();
 			for (int index2 = 0; index2 < numOfSeeds; index2++)
 			{
@@ -101,14 +104,13 @@ public class SeedsJSONMessage {
 				tSeedsEntity.setSeedMosaic(tSeedsInfo.getString(SeedsDBAdapter.KEY_MOSAIC));
 				tSeedsEntity.setSeedFavorite(false);
 				// Parse picture links
-				JSONArray  tPicList  = tSeedsInfo.getJSONArray(SeedsDBAdapter.KEY_PICLINKS);
+				JSONArray tPicList  = tSeedsInfo.getJSONArray(SeedsDBAdapter.KEY_PICLINKS);
 				int numOfPicLinks = tPicList.length();
 				for (int index3 = 0; index3 < numOfPicLinks; index3++)
 				{
 					tSeedsEntity.addPicLink(tPicList.getString(index3));
 				}
-				
-				retSeedsList.add(tSeedsEntity);
+				retSeedsList.add(tSeedsEntity);				
 			}
 		}
 		

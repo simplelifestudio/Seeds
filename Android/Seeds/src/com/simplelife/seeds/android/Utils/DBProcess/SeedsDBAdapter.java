@@ -1,5 +1,8 @@
 package com.simplelife.seeds.android.Utils.DBProcess;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.simplelife.seeds.android.SeedsEntity;
 
 import android.content.ContentValues;
@@ -112,31 +115,59 @@ public class SeedsDBAdapter {
  		mSQLiteDatabase.close();   
  	}  
  
-	public long insertEntryToSeed(SeedsEntity _seedsEntity)
+	public boolean insertEntryToSeed(SeedsEntity _seedsEntity) throws Exception
 	{	    
 		ContentValues initialValues = new ContentValues();
-	    initialValues.put(KEY_TYPE, _seedsEntity.type);
-	    initialValues.put(KEY_SOURCE, _seedsEntity.source);
-	    initialValues.put(KEY_PUBLISHDATE, _seedsEntity.publichDate);
-	    initialValues.put(KEY_NAME, _seedsEntity.name);
-	    initialValues.put(KEY_SIZE, _seedsEntity.size);
-	    initialValues.put(KEY_FORMAT, _seedsEntity.format);
-	    initialValues.put(KEY_TORRENTLINK, _seedsEntity.torrentLink);
-	    initialValues.put(KEY_HASH, _seedsEntity.hash);
-	    initialValues.put(KEY_MOSAIC, _seedsEntity.mosaic);
-	    initialValues.put(KEY_MEMO, _seedsEntity.memo);
-	    initialValues.put(KEY_FAVORITE, _seedsEntity.favorite);
+	    initialValues.put(KEY_TYPE, _seedsEntity.getSeedType());
+	    initialValues.put(KEY_SOURCE, _seedsEntity.getSeedSource());
+	    initialValues.put(KEY_PUBLISHDATE, _seedsEntity.getSeedPublishDate());
+	    initialValues.put(KEY_NAME, _seedsEntity.getSeedName());
+	    initialValues.put(KEY_SIZE, _seedsEntity.getSeedSize());
+	    initialValues.put(KEY_FORMAT, _seedsEntity.getSeedFormat());
+	    initialValues.put(KEY_TORRENTLINK, _seedsEntity.getSeedTorrentLink());
+	    initialValues.put(KEY_HASH, _seedsEntity.getSeedHash());
+	    initialValues.put(KEY_MOSAIC, _seedsEntity.getSeedMosaic());
+	    initialValues.put(KEY_MEMO, _seedsEntity.getSeedMemo());
+	    initialValues.put(KEY_FAVORITE, _seedsEntity.getSeedFavorite());
 	    
-	    return mSQLiteDatabase.insert(DATABASE_TABLE_SEED, null, initialValues);
+	    // Start transaction
+	    mSQLiteDatabase.beginTransaction();
+	    try{
+	    	// First insert the entry into table SEED
+	    	// NOTE: the return value is actually row id, while we are seeing that
+	    	// the row id value is identical with the primary key ID seedId, hence
+	    	// we are treating the row id here as the seedId
+	    	//long tSeedId = mSQLiteDatabase.insert(DATABASE_TABLE_SEED, null, initialValues);
+	    	long tSeedId = mSQLiteDatabase.insert(DATABASE_TABLE_SEED, KEY_ID_SEED, initialValues);
+	    	
+	    	Log.i("SeedsDBAdapter", "Insert operation returen tSeedId = "+tSeedId);
+	    	
+	    	// Then insert those picture links into table SEEDPIC
+	    	ArrayList<String> tPicList = _seedsEntity.getPicLinks(); 
+	    	int numOfPicLinks = tPicList.size();
+	    	for (int index = 0; index < numOfPicLinks; index++)
+	    	{
+	    		insertEntryToSeedPic(tSeedId, tPicList.get(index));
+	    	}	    	
+	    	
+	    	mSQLiteDatabase.setTransactionSuccessful();
+	    }catch(Exception e){
+	    	mSQLiteDatabase.endTransaction();
+	    	throw e;	    	
+	    }finally{
+	    	mSQLiteDatabase.endTransaction();
+	    }
+	    	    
+	    return true;
 	}
 	
-	public long insertEntryToSeedPic(int _seedId, String _picUrl)
+	public long insertEntryToSeedPic(long _seedId, String _picUrl)
 	{
 	    ContentValues initialValues = new ContentValues();
-	    initialValues.put(KEY_ID_SEEDPIC, _seedId);
+	    initialValues.put(KEY_ID_SEED, _seedId);
 	    initialValues.put(KEY_PICTURELINK, _picUrl);
 	    
-	    return mSQLiteDatabase.insert(DATABASE_TABLE_SEEDPIC, null, initialValues);
+	    return mSQLiteDatabase.insert(DATABASE_TABLE_SEEDPIC, KEY_ID_SEEDPIC, initialValues);
 	} 	
  
  	public boolean removeSeedEntry(int _seedId) {  
@@ -160,7 +191,7 @@ public class SeedsDBAdapter {
 	    		new String[]{KEY_ID_SEED, KEY_NAME, KEY_SIZE, KEY_FORMAT, KEY_TORRENTLINK}, 
 	    		KEY_PUBLISHDATE+ "='" + _pdDate + "'",
 	    		null,null,null,null,null);
-
+ 		
  		if(mCursor!=null)
 	    {
 	        mCursor.moveToFirst();
