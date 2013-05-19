@@ -41,6 +41,9 @@
     transmissionModule.moduleWeightFactor = 0.1;
     [_moduleManager registerModule:transmissionModule];
     
+    // Forbid auto sleep
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
+    
     return YES;
 }
 							
