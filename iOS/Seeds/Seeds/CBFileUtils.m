@@ -10,26 +10,43 @@
 
 @implementation CBFileUtils
 
-/*
- NSString *documentsDir = [CBPathUtils documentsDirectoryPath];
- 
- NSString* torrentFullPath = [documentsDir stringByAppendingPathComponent:@"TDIsOck5la.torrent"];
- 
- NSString *filePath = [documentsDir stringByAppendingPathComponent:@"test.zip"];
- 
- ZipFile *zipFile = [[ZipFile alloc] initWithFileName:filePath mode:ZipFileModeCreate];
- 
- //向当前Zip文件中添加文件需要使用ZipFileModeAppend模式
- ZipWriteStream *writeStream = [zipFile writeFileInZipWithName:@"TDIsOck5la.torrent" compressionLevel:ZipCompressionLevelNone];
- //yourfilename是存入的文件名
- //compressionLevel指示压缩率级别，可以选择ZipCompressionLevelFast(最快), ZipCompressionLevelBest(最大压缩率)，ZipCompressionLevelNone(不压缩)
- //如果使用密码和CRC校验可以使用另外的写入函数
- NSData* data = [CBFileUtils dataFromFile:torrentFullPath];
- [writeStream writeData:data];
- //data是需要压入的文件内容(NSData类型)
- [writeStream finishedWriting];
- [zipFile close];
- */
++(NSString*) newZipFileWithFiles:(NSString*) zipFileName zipFiles:(NSArray*) files;
+{
+    NSString* zipFilePath = nil;
+    
+    if (nil != zipFileName && 0 < zipFileName.length && nil != files && 0 < files.count)
+    {
+        NSString* documentsDir = [CBPathUtils documentsDirectoryPath];
+        zipFilePath = [documentsDir stringByAppendingPathComponent:zipFileName];
+        
+        ZipFile *zip = [[ZipFile alloc] initWithFileName:zipFilePath mode:ZipFileModeCreate];
+        for (NSString* file in files)
+        {
+            NSString* fileName = [file lastPathComponent];
+            @try
+            {
+                ZipWriteStream* writeStream = [zip writeFileInZipWithName:fileName compressionLevel:ZipCompressionLevelNone];
+                NSData* fileData = [self dataFromFile:file];
+                [writeStream writeData:fileData];
+                [writeStream finishedWriting];
+                [zip close];
+            }
+            @catch (NSException *e)
+            {
+                DLog(@"Failed to add file: %@ into zip.", fileName);
+                DLog(@"Exception caught: %@ - %@", [[e class] description], [e description]);
+                continue;
+            }
+            @finally
+            {
+                
+            }
+        }
+    }
+    
+    return zipFilePath;
+}
+
 +(NSData*) dataFromFile:(NSString *)filePath
 {
     NSData *data = nil;
@@ -40,6 +57,7 @@
     }
     @catch (NSException *e)
     {
+        DLog(@"Failed to read data from file : %@", filePath);
         DLog(@"Exception caught: %@ - %@", [[e class] description], [e description]);
     }
     @finally

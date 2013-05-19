@@ -21,6 +21,7 @@
 //// Need 3rd lib: ZipArchive support
 //+(NSString*) createZipArchiveWithFiles:(NSArray*)files andPassword:(NSString*)password;
 
++(NSString*) newZipFileWithFiles:(NSString*) zipFileName zipFiles:(NSArray*) files;
 +(NSData*) dataFromFile:(NSString*) filePath;
 
 @end
