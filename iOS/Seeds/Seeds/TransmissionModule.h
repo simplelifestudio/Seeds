@@ -10,6 +10,7 @@
 #import "CBNetworkUtils.h"
 
 #define HTTP_SERVER_NAME @"Seeds Http Server"
+#define HTTP_SERVER_PORT 8964
 
 @interface TransmissionModule : CBModuleAbstractImpl <CBSharedInstance>
 
