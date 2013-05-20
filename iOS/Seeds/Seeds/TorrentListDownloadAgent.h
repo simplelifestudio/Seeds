@@ -10,6 +10,10 @@
 
 #import "TorrentDownloadAgent.h"
 
+#define FOLDER_TORRENTS @"torrents"
+#define FILE_EXTENDNAME_DOT_TORRENT @".torrent"
+//#define FILE_EXTENDNAME_TORRENT @"torrent"
+
 @protocol TorrentListDownloadAgentDelegate <NSObject>
 
 @required

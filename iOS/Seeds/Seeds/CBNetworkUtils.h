@@ -10,6 +10,6 @@
 
 @interface CBNetworkUtils : NSObject
 
-+(NSString*) hostName;
++(NSString*) hostNameInWiFi;
 
 @end

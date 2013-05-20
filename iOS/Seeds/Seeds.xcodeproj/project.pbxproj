@@ -140,6 +140,7 @@
 		C5AB63581730C1ED00A3F1E6 /* CBUIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */; };
 		C5ADC852173930E1007F59D7 /* CBStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC851173930E1007F59D7 /* CBStringUtils.m */; };
 		C5ADC856173A2DE7007F59D7 /* UserDefaultsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */; };
+		C5F8AC4E174A3B72001E30D1 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = C5F8AC4D174A3B72001E30D1 /* index.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -401,6 +402,7 @@
 		C5ADC854173A2DE7007F59D7 /* UserDefaultsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultsModule.h; sourceTree = "<group>"; };
 		C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultsModule.m; sourceTree = "<group>"; };
 		C5ADC857173A3148007F59D7 /* CBSharedInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBSharedInstance.h; sourceTree = "<group>"; };
+		C5F8AC4D174A3B72001E30D1 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -737,6 +739,7 @@
 		C5964C0E1722290400CC1C0A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C5F8AC4C174A3B60001E30D1 /* Web */,
 				C5A94418172ACC1000D6FB85 /* Images */,
 				C5964C0F1722290400CC1C0A /* Seeds-Info.plist */,
 				C5964C101722290400CC1C0A /* InfoPlist.strings */,
@@ -950,6 +953,14 @@
 			name = UserDefaults;
 			sourceTree = "<group>";
 		};
+		C5F8AC4C174A3B60001E30D1 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				C5F8AC4D174A3B72001E30D1 /* index.html */,
+			);
+			name = Web;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1016,6 +1027,7 @@
 				C5203CDF1742829B00D917F7 /* noImage_tableCell@2x.png in Resources */,
 				C5203CE21742848200D917F7 /* noImage_collectionCell.png in Resources */,
 				C5203CE31742848200D917F7 /* noImage_collectionCell@2x.png in Resources */,
+				C5F8AC4E174A3B72001E30D1 /* index.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

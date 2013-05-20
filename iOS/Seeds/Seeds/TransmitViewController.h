@@ -10,8 +10,6 @@
 
 @interface TransmitViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
-@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (weak, nonatomic) IBOutlet UITextView *consoleView;
 
 @end

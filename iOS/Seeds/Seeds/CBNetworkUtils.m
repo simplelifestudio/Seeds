@@ -20,7 +20,7 @@
 
 @implementation CBNetworkUtils
 
-+ (NSString*)hostName
++ (NSString*)hostNameInWiFi
 {
 	struct ifaddrs *addrs;
 	const struct ifaddrs *cursor;
@@ -30,7 +30,7 @@
 	
 	if (error)
 	{
-		NSLog(@"%@", gai_strerror(error));
+		DLog(@"Failed to obtain IP address with error: %d", error);
 	}
 	for (cursor = addrs; cursor; cursor = cursor->ifa_next)
 	{
@@ -41,7 +41,7 @@
                [@"en1" isEqualToString:ifa_name])
 			{
 				hostname = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)cursor->ifa_addr)->sin_addr)];
-				NSLog(@"hostname:%@",hostname);
+				DLog(@"hostname:%@",hostname);
 				break;
 			}
 		}

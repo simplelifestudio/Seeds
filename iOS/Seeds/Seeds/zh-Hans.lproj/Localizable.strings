@@ -41,3 +41,13 @@
 "Torrents Downloading" = "种子下载";
 
 "Stop" = "停止";
+
+"Transmission module is initializing..." = "传输模块初始化...";
+"Torrent files are preparing..." = "种子文件准备中...";
+"Torrent files are packaging..." = "种子文件打包中...";
+"Web page is generating..." = "网页生成中...";
+"Web page generation is fail." = "网页生成失败。";
+"HTTP server is initializing..." = "HTTP服务器初始化...";
+"HTTP server started..." = "HTTP服务器已经启动...";
+"HTTP server failed to start." = "HTTP服务器启动失败。";
+"HTTP server address:" = "HTTP服务器地址：";
