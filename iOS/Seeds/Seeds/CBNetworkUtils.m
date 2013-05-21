@@ -20,6 +20,8 @@
 
 #import "Reachability.h"
 
+static Reachability* hostReach;
+
 @implementation CBNetworkUtils
 
 + (NSString*)hostNameInWiFi
@@ -58,7 +60,7 @@
     
     BOOL flag = NO;
     
-    Reachability *r = [Reachability reachabilityWithHostName:hostName];
+    Reachability *r = [Reachability reachabilityWithHostname:hostName];
     switch ([r currentReachabilityStatus])
     {
         case NotReachable: // No Connection
@@ -83,24 +85,6 @@
 + (BOOL) is3GEnabled
 {
     return ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != NotReachable);
-}
-
-+ (BOOL) listenHostViaInternet:(NSString*) hostName observer:(id) observer selector:(SEL) selector
-{
-    NSAssert(nil != hostName && 0 < hostName.length, @"Illegal hostName");
-    NSAssert(nil != observer, @"Nil observer");
-    
-    [[NSNotificationCenter defaultCenter] addObserver:observer
-                                             selector:@selector(selector)
-                                                 name: kReachabilityChangedNotification
-                                               object: nil];
-    Reachability* hostReach = [Reachability reachabilityWithHostName:hostName];
-    BOOL flag = [hostReach startNotifier];
-    if (!flag)
-    {
-        DLog(@"Failed to listen host name:%@", hostName);
-    }
-    return flag;
 }
 
 @end

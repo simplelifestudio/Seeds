@@ -8,7 +8,31 @@
 
 #import "CommunicationModule.h"
 
+#import "Reachability.h"
+
+@interface CommunicationModule()
+{
+
+}
+
+@end
+
 @implementation CommunicationModule
+
++(id)sharedInstance
+{
+    static CommunicationModule* sharedInstance;
+    static dispatch_once_t done;
+    dispatch_once
+    (
+     &done,
+     ^
+     {
+         sharedInstance = [[CommunicationModule alloc] initWithIsIndividualThreadNecessary:NO];
+     }
+     );
+    return sharedInstance;
+}
 
 @synthesize spider = _spider;
 @synthesize serverAgent = _serverAgent;
@@ -21,12 +45,64 @@
     
     _spider = [[SeedsSpider alloc] init];
     _serverAgent = [[ServerAgent alloc] init];
+    
+    [self registerReachability];
+}
+
+- (void)registerReachability
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged:)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
+    
+    Reachability* hostReach = [Reachability reachabilityWithHostname:RACHABILITY_HOST];
+    [hostReach startNotifier];    
+}
+
+- (void) unregisterReachability
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)reachabilityChanged:(NSNotification *)note
+{
+    Reachability* curReach = [note object];
+    NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
+    NetworkStatus status = [curReach currentReachabilityStatus];
+    [curReach connectionRequired];
+    
+    switch (status)
+    {
+        case NotReachable:
+        {
+            DLog(@"App's reachability changed to 'NotReachable'.");
+            break;
+        }
+        case ReachableViaWiFi:
+        {
+            DLog(@"App's reachability changed to 'ReachableViaWiFi'.");
+            break;
+        }
+        case ReachableViaWWAN:
+        {
+            DLog(@"App's reachability changed to 'ReachableViaWWAN'.");
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
 }
 
 -(void) releaseModule
 {
+    [self unregisterReachability];
+    
     [self setSpider:nil];
     [self setServerAgent:nil];
+    
     [super releaseModule];
 }
 

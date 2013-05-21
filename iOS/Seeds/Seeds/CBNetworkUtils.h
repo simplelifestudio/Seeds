@@ -19,6 +19,4 @@
 
 +(BOOL) isInternetConnectable:(NSString*) hostName;
 
-+(BOOL) listenHostViaInternet:(NSString*) hostName observer:(id) observer selector:(SEL) selector;
-
 @end

@@ -10,7 +10,12 @@
 #import "SeedsSpider.h"
 #import "ServerAgent.h"
 
-@interface CommunicationModule : CBModuleAbstractImpl
+#define RACHABILITY_HOST @"www.apple.com"
+
+@interface CommunicationModule : CBModuleAbstractImpl <CBSharedInstance>
+{
+
+}
 
 @property (nonatomic, strong) SeedsSpider* spider;
 @property (nonatomic, strong) ServerAgent* serverAgent;
