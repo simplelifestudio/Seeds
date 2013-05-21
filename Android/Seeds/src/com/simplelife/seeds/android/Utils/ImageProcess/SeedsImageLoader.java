@@ -64,7 +64,8 @@ public class SeedsImageLoader {
 	
 	
 	// Change a image, I do not like black one...
-	final int stub_id = R.drawable.no_image;
+	//final int stub_id = R.drawable.no_image;
+	final int stub_id = R.drawable.empty_photo;
 	
 	public void DisplayImage(String url, ImageView imageView, int type) {
 		Log.i(tag,"Trying to display the image, url=" + url);

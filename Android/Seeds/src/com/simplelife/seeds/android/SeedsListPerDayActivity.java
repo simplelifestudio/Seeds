@@ -1,8 +1,6 @@
 package com.simplelife.seeds.android;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,23 +55,6 @@ public class SeedsListPerDayActivity extends Activity {
 		// Initialize the tSeedIdList
 		tSeedIdList = new ArrayList();
 		
-		//Log.i(LOGCLASS, "Working on ListPerDay, passin "+ tPassinDate); 
-	    // Judge the current time
-		/*
-		Calendar tCal = Calendar.getInstance();
-		if(tPassinDate.equals("befyesterday"))
-		{
-			// A simple calculation
-			tCal.add(Calendar.DATE, -2);
-			tDate = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());			
-		}else if(tPassinDate.equals("yesterday"))
-		{
-			tCal.add(Calendar.DATE, -1);
-			tDate = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());			
-		}else
-		{
-			tDate = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());
-		}*/
 		Log.i(LOGCLASS, "The Date is  "+ tDate); 
 		// Start a new thread to get the data
 		new Thread(new Runnable() {

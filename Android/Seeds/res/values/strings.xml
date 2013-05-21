@@ -18,5 +18,16 @@
     <string name="seeds_UnFavorite">取消收藏</string>
     <string name="seeds_favoritelist">收藏列表</string>
     <string name="seeds_preffilename">com.simplelife.seeds.SEEDS_STATUS_BYDATE</string>
+    <string name="seeds_startverify">Password Please</string>
+    <string name="seeds_pwdmessage">Enter the password</string>
+    <string name="seeds_pwdsend">Send</string>
+    <string name="seeds_verify_menu_settings">Settings</string>
+    <string name="title_activity_display_message">Wrong Password</string>
+    
+    <!-- Below parameters come from the gridview open source tool Bitmapfun -->
+    <string name="clear_cache_menu">Clear Caches</string>
+    <string name="clear_cache_complete_toast">Caches have been cleared</string>
+    <string name="imageview_description">Image Thumbnail</string>
+    <string name="no_network_connection_toast">No network connection found</string>
 
 </resources>

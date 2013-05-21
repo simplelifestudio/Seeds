@@ -45,6 +45,21 @@ public class SeedsEntity {
 	
 	public SeedsEntity(){
 		picLinks = new ArrayList<String>();
+		initSeedsValues();
+	}
+	
+	private void initSeedsValues(){
+		type = "AV";
+		source = "N/A";
+		publishDate = "N/A";
+		name = "N/A";		
+		size = "N/A";
+		format = "N/A";
+		torrentLink = "N/A";
+		hash = "N/A";
+		mosaic = false;
+		memo = "N/A";
+		favorite = false;
 	}
 	
 	public void addPicLink(String inPicLink){
