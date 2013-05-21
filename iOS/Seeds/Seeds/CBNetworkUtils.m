@@ -18,6 +18,8 @@
 #include <arpa/inet.h>
 #include <ifaddrs.h>
 
+#import "Reachability.h"
+
 @implementation CBNetworkUtils
 
 + (NSString*)hostNameInWiFi
@@ -48,6 +50,57 @@
 	}
 	freeifaddrs(addrs);
 	return hostname;
+}
+
++(BOOL) isInternetConnectable:(NSString*) hostName
+{
+    NSAssert(nil != hostName && 0 < hostName.length, @"Illegal hostName");
+    
+    BOOL flag = NO;
+    
+    Reachability *r = [Reachability reachabilityWithHostName:hostName];
+    switch ([r currentReachabilityStatus])
+    {
+        case NotReachable: // No Connection
+            flag = NO;
+            break;
+        case ReachableViaWWAN: // 3G
+            flag = YES;
+            break;
+        case ReachableViaWiFi: // WiFi
+            flag = YES;
+            break;
+    }
+    
+    return flag;
+}
+
++ (BOOL) isWiFiEnabled
+{
+    return ([[Reachability reachabilityForLocalWiFi] currentReachabilityStatus] != NotReachable);
+}
+
++ (BOOL) is3GEnabled
+{
+    return ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != NotReachable);
+}
+
++ (BOOL) listenHostViaInternet:(NSString*) hostName observer:(id) observer selector:(SEL) selector
+{
+    NSAssert(nil != hostName && 0 < hostName.length, @"Illegal hostName");
+    NSAssert(nil != observer, @"Nil observer");
+    
+    [[NSNotificationCenter defaultCenter] addObserver:observer
+                                             selector:@selector(selector)
+                                                 name: kReachabilityChangedNotification
+                                               object: nil];
+    Reachability* hostReach = [Reachability reachabilityWithHostName:hostName];
+    BOOL flag = [hostReach startNotifier];
+    if (!flag)
+    {
+        DLog(@"Failed to listen host name:%@", hostName);
+    }
+    return flag;
 }
 
 @end

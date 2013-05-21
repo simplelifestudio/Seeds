@@ -141,6 +141,8 @@
 		C5ADC852173930E1007F59D7 /* CBStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC851173930E1007F59D7 /* CBStringUtils.m */; };
 		C5ADC856173A2DE7007F59D7 /* UserDefaultsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */; };
 		C5F8AC4E174A3B72001E30D1 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = C5F8AC4D174A3B72001E30D1 /* index.html */; };
+		C5F8AC50174B9807001E30D1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */; };
+		C5F8AC5B174B9C5A001E30D1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F8AC5A174B9C5A001E30D1 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -403,6 +405,9 @@
 		C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultsModule.m; sourceTree = "<group>"; };
 		C5ADC857173A3148007F59D7 /* CBSharedInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBSharedInstance.h; sourceTree = "<group>"; };
 		C5F8AC4D174A3B72001E30D1 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		C5F8AC59174B9C5A001E30D1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		C5F8AC5A174B9C5A001E30D1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -410,6 +415,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5F8AC50174B9807001E30D1 /* SystemConfiguration.framework in Frameworks */,
 				C5203DA11747B94F00D917F7 /* libz.1.2.5.dylib in Frameworks */,
 				C5203D5C1743BEC500D917F7 /* Security.framework in Frameworks */,
 				C5203D5A1743BEB400D917F7 /* CFNetwork.framework in Frameworks */,
@@ -622,6 +628,8 @@
 				C5AB115117333EA6007EEE25 /* CBDateUtils.m */,
 				C5203D971747A89B00D917F7 /* CBFileUtils.h */,
 				C5203D981747A89D00D917F7 /* CBFileUtils.m */,
+				C5203D791747910100D917F7 /* CBNetworkUtils.h */,
+				C5203D7A1747910200D917F7 /* CBNetworkUtils.m */,
 				C5203D701745204900D917F7 /* CBPathUtils.h */,
 				C5203D711745204900D917F7 /* CBPathUtils.m */,
 				C5ADC850173930E1007F59D7 /* CBStringUtils.h */,
@@ -635,8 +643,6 @@
 				C5ADC857173A3148007F59D7 /* CBSharedInstance.h */,
 				C5203D73174714D000D917F7 /* CBModuleManager.h */,
 				C5203D74174714D000D917F7 /* CBModuleManager.m */,
-				C5203D791747910100D917F7 /* CBNetworkUtils.h */,
-				C5203D7A1747910200D917F7 /* CBNetworkUtils.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -679,6 +685,7 @@
 		C57CF282172565100002B054 /* 3rd Libs */ = {
 			isa = PBXGroup;
 			children = (
+				C5F8AC58174B9C5A001E30D1 /* Reachability */,
 				C5203DD71747D55700D917F7 /* MiniZip */,
 				C5203DE01747D55B00D917F7 /* Objective-Zip */,
 				C5203CE41743BE1600D917F7 /* CocoaHTTPServer */,
@@ -714,6 +721,7 @@
 				C5203DA01747B94C00D917F7 /* libz.1.2.5.dylib */,
 				C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */,
 				C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */,
+				C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */,
 				C5203D5B1743BEC500D917F7 /* Security.framework */,
 				C5203D591743BEB400D917F7 /* CFNetwork.framework */,
 				C5AB11701734BB20007EEE25 /* MobileCoreServices.framework */,
@@ -961,6 +969,15 @@
 			name = Web;
 			sourceTree = "<group>";
 		};
+		C5F8AC58174B9C5A001E30D1 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				C5F8AC59174B9C5A001E30D1 /* Reachability.h */,
+				C5F8AC5A174B9C5A001E30D1 /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1163,6 +1180,7 @@
 				C5203DF21747D56400D917F7 /* ZipReadStream.m in Sources */,
 				C5203DF31747D56400D917F7 /* ZipWriteStream.m in Sources */,
 				C5203DFC17485A8600D917F7 /* TorrentListDownloadAgent.m in Sources */,
+				C5F8AC5B174B9C5A001E30D1 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
