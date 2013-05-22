@@ -16,6 +16,8 @@
 "UserDefaults Module Thread" = "UserDefaults Module Thread";
 "Transmission Module" = "Transmission Module";
 "Transmission Module Thread" = "Transmission Module Thread";
+"GUI Module" = "GUI Module";
+"GUI Module Thread" = "GUI Module Thread";
 
 "Loading: " = "Loading: ";
 "Mosaic" = "Mosaic";

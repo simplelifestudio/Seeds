@@ -8,7 +8,10 @@
 
 #import "CommunicationModule.h"
 
+#import "GUIModule.h"
+
 #import "Reachability.h"
+#import "MBProgressHUD.h"
 
 @interface CommunicationModule()
 {
@@ -75,17 +78,22 @@
     switch (status)
     {
         case NotReachable:
-        {
+        {            
             DLog(@"App's reachability changed to 'NotReachable'.");
             break;
         }
         case ReachableViaWiFi:
         {
+            GUIModule* guiModule = [GUIModule sharedInstance];
+            [guiModule showHUD:@"WiFi Connected"];
+            
             DLog(@"App's reachability changed to 'ReachableViaWiFi'.");
             break;
         }
         case ReachableViaWWAN:
         {
+
+            
             DLog(@"App's reachability changed to 'ReachableViaWWAN'.");
             break;
         }

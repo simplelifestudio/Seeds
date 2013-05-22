@@ -8,6 +8,9 @@
 
 #import "HomeViewController.h"
 
+#import "SpiderModule.h"
+#import "GUIModule.h"
+
 #define HUD_DISPLAY(x) usleep(0);
 
 @interface HomeViewController ()
@@ -41,6 +44,9 @@
     
     SpiderModule* spiderModule = [SpiderModule sharedInstance];
     [spiderModule.spider setSeedsSpiderDelegate:self];
+    
+    GUIModule* guiModule = [GUIModule sharedInstance];
+    guiModule.homeViewController = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
