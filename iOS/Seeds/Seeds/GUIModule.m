@@ -59,10 +59,15 @@
     if (nil != _homeViewController)
     {
         UIView* view = _homeViewController.navigationController.visibleViewController.view;
+        
         MBProgressHUD* HUD = [[MBProgressHUD alloc] initWithView:view];
         [view addSubview:HUD];
+        
         HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = @"WiFi Connected";
+        HUD.minSize = CGSizeMake(135.f, 135.f);
+        
+        HUD.labelText = status;
+        
         [HUD show:YES];
         [HUD hide:YES afterDelay:2];
     }
