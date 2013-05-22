@@ -61,6 +61,7 @@
 		C5203DF21747D56400D917F7 /* ZipReadStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DE81747D56300D917F7 /* ZipReadStream.m */; };
 		C5203DF31747D56400D917F7 /* ZipWriteStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DEA1747D56300D917F7 /* ZipWriteStream.m */; };
 		C5203DFC17485A8600D917F7 /* TorrentListDownloadAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DFB17485A8500D917F7 /* TorrentListDownloadAgent.m */; };
+		C522BA31174CF1FA001FC7BD /* GUIModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C522BA30174CF1FA001FC7BD /* GUIModule.m */; };
 		C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C531833A17237FF700264530 /* CBModuleAbstractImpl.m */; };
 		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
 		C53183461723A17E00264530 /* DatabaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C53183451723A17E00264530 /* DatabaseModule.m */; };
@@ -249,6 +250,8 @@
 		C5203DEA1747D56300D917F7 /* ZipWriteStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipWriteStream.m; sourceTree = "<group>"; };
 		C5203DFA17485A8500D917F7 /* TorrentListDownloadAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TorrentListDownloadAgent.h; path = Seeds/TorrentListDownloadAgent.h; sourceTree = "<group>"; };
 		C5203DFB17485A8500D917F7 /* TorrentListDownloadAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TorrentListDownloadAgent.m; path = Seeds/TorrentListDownloadAgent.m; sourceTree = "<group>"; };
+		C522BA2F174CF1FA001FC7BD /* GUIModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIModule.h; sourceTree = "<group>"; };
+		C522BA30174CF1FA001FC7BD /* GUIModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUIModule.m; sourceTree = "<group>"; };
 		C531833717237FF700264530 /* CBLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLog.h; sourceTree = "<group>"; };
 		C531833817237FF700264530 /* CBModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModule.h; sourceTree = "<group>"; };
 		C531833917237FF700264530 /* CBModuleAbstractImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModuleAbstractImpl.h; sourceTree = "<group>"; };
@@ -764,6 +767,8 @@
 		C5964C4D1722498900CC1C0A /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				C522BA2F174CF1FA001FC7BD /* GUIModule.h */,
+				C522BA30174CF1FA001FC7BD /* GUIModule.m */,
 				C5AB11361732793B007EEE25 /* GUIStyle.h */,
 				C5AB11371732793B007EEE25 /* GUIStyle.m */,
 				C5AB1133173260D9007EEE25 /* CircularProgressView.h */,
@@ -1181,6 +1186,7 @@
 				C5203DF31747D56400D917F7 /* ZipWriteStream.m in Sources */,
 				C5203DFC17485A8600D917F7 /* TorrentListDownloadAgent.m in Sources */,
 				C5F8AC5F174BC3B9001E30D1 /* Reachability.m in Sources */,
+				C522BA31174CF1FA001FC7BD /* GUIModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
