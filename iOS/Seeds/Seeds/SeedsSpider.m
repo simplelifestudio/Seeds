@@ -289,7 +289,11 @@
             
             NSFileManager* fm = [NSFileManager defaultManager];
             NSError* error = nil;
-            if (![fm fileExistsAtPath:torrentsPath])
+            if ([fm fileExistsAtPath:torrentsPath])
+            {
+                directoryIsReady = YES;
+            }
+            else
             {
                 directoryIsReady = [fm createDirectoryAtPath:torrentsPath withIntermediateDirectories:NO attributes:nil error:&error];
             }
