@@ -21,7 +21,7 @@
 
 @implementation TransmissionModule
 
-DEFINE_SINGLETON_FOR_CLASS(TransmissionModule)
+SINGLETON(TransmissionModule)
 
 -(void) initModule
 {

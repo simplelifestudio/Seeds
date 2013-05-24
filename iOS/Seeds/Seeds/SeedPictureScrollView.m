@@ -10,8 +10,6 @@
 
 #import "CBUIUtils.h"
 
-#define kZoomStep 2
-
 @interface SeedPictureScrollView () <UIScrollViewDelegate>
 
 @property (weak, nonatomic) UIImageView *imageView;

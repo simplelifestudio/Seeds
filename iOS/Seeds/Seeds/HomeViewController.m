@@ -11,8 +11,6 @@
 #import "SpiderModule.h"
 #import "GUIModule.h"
 
-#define HUD_DISPLAY(x) usleep(0);
-
 @interface HomeViewController ()
 {
     MBProgressHUD* HUD;

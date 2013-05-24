@@ -24,7 +24,7 @@
 @synthesize databaseFilePath = _databaseFilePath;
 @synthesize databaseQueue = _databaseQueue;
 
-DEFINE_SINGLETON_FOR_CLASS(DatabaseModule)
+SINGLETON(DatabaseModule)
 
 -(void) initModule
 {

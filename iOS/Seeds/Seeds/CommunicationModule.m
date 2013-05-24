@@ -22,7 +22,7 @@
 
 @implementation CommunicationModule
 
-DEFINE_SINGLETON_FOR_CLASS(CommunicationModule)
+SINGLETON(CommunicationModule)
 
 @synthesize spider = _spider;
 @synthesize serverAgent = _serverAgent;

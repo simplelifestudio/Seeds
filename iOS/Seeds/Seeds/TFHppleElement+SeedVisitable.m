@@ -7,8 +7,6 @@
 //
 
 #import "TFHppleElement+SeedVisitable.h"
-// Only for macro definition: BASEURL_TORRENTCODE
-#import "TorrentDownloadAgent.h"
 
 @implementation TFHppleElement (SeedVisitable)
 

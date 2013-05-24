@@ -12,7 +12,7 @@
 //\
 //+ (className*) sharedInstance;
 
-#define DEFINE_SINGLETON_FOR_CLASS(className) \
+#define SINGLETON(className) \
 \
 + (className*) sharedInstance \
 { \

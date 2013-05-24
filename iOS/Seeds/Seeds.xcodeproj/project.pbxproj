@@ -147,6 +147,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C50FD40A174FBC1600E5D316 /* AppDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDefinitions.h; sourceTree = "<group>"; };
 		C5203CDC1742829B00D917F7 /* noImage_tableCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noImage_tableCell.png; sourceTree = "<group>"; };
 		C5203CDD1742829B00D917F7 /* noImage_tableCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noImage_tableCell@2x.png"; sourceTree = "<group>"; };
 		C5203CE01742848200D917F7 /* noImage_collectionCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noImage_collectionCell.png; sourceTree = "<group>"; };
@@ -849,6 +850,7 @@
 		C5964C5117224A1800CC1C0A /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				C50FD40A174FBC1600E5D316 /* AppDefinitions.h */,
 				C5964C161722290400CC1C0A /* AppDelegate.h */,
 				C5964C171722290400CC1C0A /* AppDelegate.m */,
 				C531834317239FF300264530 /* Common */,

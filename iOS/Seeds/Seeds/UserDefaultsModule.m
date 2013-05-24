@@ -10,7 +10,7 @@
 
 @implementation UserDefaultsModule
 
-DEFINE_SINGLETON_FOR_CLASS(UserDefaultsModule)
+SINGLETON(UserDefaultsModule)
 
 @synthesize userDefaults = _userDefaults;
 

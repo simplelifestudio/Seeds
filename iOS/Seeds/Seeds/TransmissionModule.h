@@ -9,11 +9,6 @@
 #import "CBModuleAbstractImpl.h"
 #import "CBNetworkUtils.h"
 
-#define HTTP_SERVER_NAME @"Seeds Http Server"
-#define HTTP_SERVER_PORT 8964
-
-#define FILE_EXTENDNAME_DOT_ZIP @".zip"
-
 @interface TransmissionModule : CBModuleAbstractImpl <CBSharedInstance>
 
 -(BOOL) startHTTPServer;

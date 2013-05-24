@@ -8,9 +8,6 @@
 
 #import "ServerAgent.h"
 
-#define BASEURL_SEEDSSERVER @"http://106.187.36.105"
-#define PATH_MESSAGELISTENER @"/seeds/messageListener"
-
 @interface ServerAgent()
 {
     

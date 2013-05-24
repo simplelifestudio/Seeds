@@ -10,17 +10,6 @@
 
 #import "TorrentListDownloadAgent.h"
 
-#define SEEDS_SERVER_IP @"174.123.15.31"
-#define LINK_SEEDLIST_CHANNEL_PAGE @"&page="
-#define LINK_SEEDLIST_CHANNEL @"http://"SEEDS_SERVER_IP"/forumdisplay.php?fid=55"
-#define LINK_SEEDLIST @"http://"SEEDS_SERVER_IP"/viewthread.php?tid=931724&extra=page%3D1"
-
-#define SEEDLIST_LINK_PAGENUM_START 1
-#define SEEDLIST_LINK_PAGENUM_END 10
-
-#define DATE_HOLDER @"$DATE$"
-#define SEEDLIST_LINK_TITLE @"["DATE_HOLDER"]BT合集"
-
 @interface SeedsSpider()
 {
     SeedsVisitor* visitor;

@@ -10,10 +10,6 @@
 
 #import "AFNetworking.h"
 
-#define BASEURL_TORRENT @"http://www.maxp2p.com/"
-#define BASEURL_TORRENTCODE @"http://www.maxp2p.com/link.php?ref="
-#define FORM_ATTRKEY_REF @"ref"
-
 @protocol TorrentDownloadAgentDelegate <NSObject>
 
 @required

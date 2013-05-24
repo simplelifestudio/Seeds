@@ -8,16 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#define JSONMESSAGE_KEY_COMMAND @"command"
-#define JSONMESSAGE_KEY_PARAMLIST @"paramList"
-
-#define JSONMESSAGE_COMMAND_ALOHAREQUEST @"AlohaRequest"
-#define JSONMESSAGE_COMMAND_ALOHARESPONSE @"AlohaResponse"
-#define JSONMESSAGE_COMMAND_SEEDSUPDATESTATUSBYDATESREQUEST @"SeedsUpdateStatusByDatesRequest"
-#define JSONMESSAGE_COMMAND_SEEDSUPDATESTATUSBYDATESRESPONSE @"SeedsUpdateStatusByDatesResponse"
-#define JSONMESSAGE_COMMAND_SEEDSBYDATESREQUEST @"SeedsByDatesRequest"
-#define JSONMESSAGE_COMMAND_SEEDSBYDATESRESPONSE @"SeedsByDatesResponse"
-
 typedef enum 
 {
     AlohaRequest,

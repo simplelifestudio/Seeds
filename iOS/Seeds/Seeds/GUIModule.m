@@ -12,7 +12,7 @@
 
 @synthesize homeViewController = _homeViewController;
 
-DEFINE_SINGLETON_FOR_CLASS(GUIModule)
+SINGLETON(GUIModule)
 
 -(void) initModule
 {

@@ -10,8 +10,6 @@
 #import "SeedsSpider.h"
 #import "ServerAgent.h"
 
-#define RACHABILITY_HOST @"www.apple.com"
-
 @interface CommunicationModule : CBModuleAbstractImpl <CBSharedInstance>
 {
 

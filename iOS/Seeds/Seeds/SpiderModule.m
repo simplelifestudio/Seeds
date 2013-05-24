@@ -12,7 +12,7 @@
 
 @synthesize spider = _spider;
 
-DEFINE_SINGLETON_FOR_CLASS(SpiderModule)
+SINGLETON(SpiderModule)
 
 -(void) initModule
 {

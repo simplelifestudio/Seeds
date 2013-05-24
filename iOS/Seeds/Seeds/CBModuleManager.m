@@ -17,7 +17,7 @@
 
 @implementation CBModuleManager
 
-DEFINE_SINGLETON_FOR_CLASS(CBModuleManager)
+SINGLETON(CBModuleManager)
 
 -(id) init
 {
