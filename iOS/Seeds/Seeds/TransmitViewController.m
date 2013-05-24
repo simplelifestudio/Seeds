@@ -29,7 +29,7 @@
     // Step 40: 动态生成index.html页面，包含前天、昨天、今天三个时间标对应的torrent文件zip包下载链接
     // Step 50: 启动HTTP服务器
     // Step 60: 更新HTTP服务器的地址和端口信息至UI
-    
+
     TransmissionModule* transmitModule = [TransmissionModule sharedInstance];    
     
     // Step 10:
@@ -114,8 +114,15 @@
     if (nil == consoleInfo)
     {
         consoleInfo = [NSMutableString string];
+        
+        NSString* originText = _consoleView.text;
+        if (nil != originText && 0 < originText.length)
+        {
+            [consoleInfo appendString:originText];
+            [consoleInfo appendString:@"\n"];
+        }
     }
-    
+
     if (nil != info && 0 < info.length)
     {
         [consoleInfo appendString:info];
