@@ -10,20 +10,7 @@
 
 @implementation UserDefaultsModule
 
-+(id)sharedInstance
-{
-    static UserDefaultsModule* sharedInstance;
-    static dispatch_once_t done;
-    dispatch_once
-    (
-        &done,
-        ^
-        {
-            sharedInstance = [[UserDefaultsModule alloc] initWithIsIndividualThreadNecessary:NO];
-        }
-    );
-    return sharedInstance;
-}
+DEFINE_SINGLETON_FOR_CLASS(UserDefaultsModule)
 
 @synthesize userDefaults = _userDefaults;
 

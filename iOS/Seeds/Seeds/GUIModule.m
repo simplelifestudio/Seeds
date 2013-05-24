@@ -12,20 +12,7 @@
 
 @synthesize homeViewController = _homeViewController;
 
-+(id)sharedInstance
-{
-    static GUIModule* sharedInstance;
-    static dispatch_once_t done;
-    dispatch_once
-    (
-     &done,
-     ^
-     {
-         sharedInstance = [[GUIModule alloc] initWithIsIndividualThreadNecessary:NO];
-     }
-     );
-    return sharedInstance;
-}
+DEFINE_SINGLETON_FOR_CLASS(GUIModule)
 
 -(void) initModule
 {

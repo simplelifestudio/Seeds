@@ -22,20 +22,7 @@
 
 @implementation CommunicationModule
 
-+(id)sharedInstance
-{
-    static CommunicationModule* sharedInstance;
-    static dispatch_once_t done;
-    dispatch_once
-    (
-     &done,
-     ^
-     {
-         sharedInstance = [[CommunicationModule alloc] initWithIsIndividualThreadNecessary:NO];
-     }
-     );
-    return sharedInstance;
-}
+DEFINE_SINGLETON_FOR_CLASS(CommunicationModule)
 
 @synthesize spider = _spider;
 @synthesize serverAgent = _serverAgent;

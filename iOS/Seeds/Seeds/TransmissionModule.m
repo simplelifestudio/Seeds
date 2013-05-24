@@ -21,20 +21,7 @@
 
 @implementation TransmissionModule
 
-+(id)sharedInstance
-{
-    static TransmissionModule* sharedInstance;
-    static dispatch_once_t done;
-    dispatch_once
-    (
-     &done,
-     ^
-     {
-         sharedInstance = [[TransmissionModule alloc] initWithIsIndividualThreadNecessary:NO];
-     }
-     );
-    return sharedInstance;
-}
+DEFINE_SINGLETON_FOR_CLASS(TransmissionModule)
 
 -(void) initModule
 {

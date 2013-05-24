@@ -17,20 +17,7 @@
 
 @implementation CBModuleManager
 
-+(id)sharedInstance
-{
-    static CBModuleManager* sharedInstance;
-    static dispatch_once_t done;
-    dispatch_once
-    (
-     &done,
-     ^
-     {
-         sharedInstance = [[CBModuleManager alloc] init];
-     }
-     );
-    return sharedInstance;
-}
+DEFINE_SINGLETON_FOR_CLASS(CBModuleManager)
 
 -(id) init
 {

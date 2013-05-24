@@ -12,20 +12,7 @@
 
 @synthesize spider = _spider;
 
-+(id)sharedInstance
-{
-    static SpiderModule* sharedInstance;
-    static dispatch_once_t done;
-    dispatch_once
-    (
-     &done,
-     ^
-     {
-         sharedInstance = [[SpiderModule alloc] initWithIsIndividualThreadNecessary:NO];
-     }
-     );
-    return sharedInstance;
-}
+DEFINE_SINGLETON_FOR_CLASS(SpiderModule)
 
 -(void) initModule
 {
