@@ -8,6 +8,9 @@
 
 #import "ServerAgent.h"
 
+#define BASEURL_SEEDSSERVER @"http://106.187.36.105"
+#define PATH_MESSAGELISTENER @"/seeds/messageListener"
+
 @interface ServerAgent()
 {
     
@@ -23,11 +26,11 @@
     
     NSMutableURLRequest* request = nil;
     
-    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://106.187.36.105"]];
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:BASEURL_SEEDSSERVER]];
     [httpClient setParameterEncoding:AFJSONParameterEncoding];
     request = [httpClient
                requestWithMethod:@"POST"
-               path:@"/seeds/messageListener"
+               path:PATH_MESSAGELISTENER
                parameters:message.body];
     
     return request;
