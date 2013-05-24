@@ -44,7 +44,7 @@ public class SeedsStartActivity extends Activity {
 	}
 	
 	private void redirectTo(){       
-		Intent intent = new Intent(this, SeedsDateListActivity.class);
+		Intent intent = new Intent(this, SeedsPasswordActivity.class);
 		startActivity(intent);
 		finish();
 	}

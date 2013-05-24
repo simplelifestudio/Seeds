@@ -25,7 +25,7 @@ import com.simplelife.seeds.android.Utils.JSONProcess.SeedsJSONMessage;
 
 public class SeedsNetworkProcess {
 	
-	private static String mServerUrl = "http://192.168.1.104:8080/Seeds/messageListener";	
+	private static String mServerUrl = "http://192.168.1.103:8080/seeds/messageListener";	
 	
 	public SeedsNetworkProcess(){
 		
@@ -59,12 +59,13 @@ public class SeedsNetworkProcess {
 	    Log.i("response :", token);	
 	}
 	
-	public static boolean sendUpdateStatusReqMsg(ArrayList<String> inDateArray, String respInString) throws JSONException, ClientProtocolException, IOException {
+	public static String sendUpdateStatusReqMsg(ArrayList<String> inDateArray) throws JSONException, ClientProtocolException, IOException {
 		
 		// Prepare network parameters
 	    DefaultHttpClient httpClient = new DefaultHttpClient();
 	    ResponseHandler <String> resonseHandler = new BasicResponseHandler();
 	    HttpPost postMethod = new HttpPost(mServerUrl);
+	    String respInString;
 	    
 		Log.i("NetworkProcess","Sending UpdateStatus Message!");
 		
@@ -93,19 +94,21 @@ public class SeedsNetworkProcess {
 		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
             
             respInString = EntityUtils.toString(response.getEntity());
-            return true;
+            Log.i("NetworkProcess","Receive response msg: "+ respInString);
+            return respInString;
             // String strsResult = strResult.replace("\r", "");            
         } else {
         	Log.i("NetworkProcess","UpdateStatusReq Message sending failed!");
-        	return false;           
+        	return null;           
         }
 		
 	}
 	
-	public static boolean sendSeedsByDateReqMsg (ArrayList<String> inDateArray, String respInString) throws JSONException, ClientProtocolException, IOException {
+	public static String sendSeedsByDateReqMsg (ArrayList<String> inDateArray ) throws JSONException, ClientProtocolException, IOException {
         // Prepare network parameters
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 	    HttpPost postMethod = new HttpPost(mServerUrl);
+	    String respInString;
 	    
 		Log.i("NetworkProcess","Sending SeedsByDate Message!");
 		
@@ -134,11 +137,11 @@ public class SeedsNetworkProcess {
 		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
             
             respInString = EntityUtils.toString(response.getEntity());
-            return true;
+            return respInString;
             // String strsResult = strResult.replace("\r", "");            
         } else {
         	Log.i("NetworkProcess","SeedsByDate Message sending failed!");
-        	return false;           
+        	return null;           
         }
 	}	
 

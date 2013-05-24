@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
 import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBManager;
+import com.simplelife.seeds.android.Utils.GridView.GridViewUI.ImageGridActivity;
 import com.simplelife.seeds.android.Utils.ImageProcess.SeedsImageLoader;
 import com.simplelife.seeds.android.Utils.ImageProcess.SeedsSlideImageLayout;
 
@@ -54,6 +55,9 @@ public class SeedsDetailsActivity extends Activity{
 	
 	// Button to save to favorites
 	private Button myFavoriteBtn;
+	
+	// Image view to change to gridview
+	private ImageView mGotoGridView;
 	
 	// Database adapter
 	private SeedsDBAdapter mDBAdapter;
@@ -105,6 +109,11 @@ public class SeedsDetailsActivity extends Activity{
 		
 		// Listen on the favorite button
 		myFavoriteBtn.setOnClickListener(myFavoriteBtnListener);
+		
+		// Retrieve the gotoGrid option
+		mGotoGridView = (ImageView) findViewById(R.id.gotoGrid);
+		mGotoGridView.setOnClickListener(myGotoGridViewListener);
+		
 	}	
 	
 	private void initViews(){
@@ -333,6 +342,16 @@ public class SeedsDetailsActivity extends Activity{
 					handler.sendMessage(t_MsgListData);					
 				}
 			}.start();
+		}
+	};
+	
+	private View.OnClickListener myGotoGridViewListener = new View.OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+		    // Redirect to the new page
+		    Intent intent = new Intent(SeedsDetailsActivity.this, ImageGridActivity.class);
+		    startActivity(intent);
 		}
 	};
 	

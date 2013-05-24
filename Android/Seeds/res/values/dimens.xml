@@ -5,4 +5,7 @@
     <dimen name="seeds_datalist_interval">40dp</dimen>
     <dimen name="seeds_datalist_leftmargin">15dp</dimen>
     <dimen name="seeds_datalist_rightmargin">15dp</dimen>
+    <dimen name="image_thumbnail_size">100dp</dimen>
+    <dimen name="image_thumbnail_spacing">1dp</dimen>
+    <dimen name="image_detail_pager_margin">80dp</dimen>
 </resources>
