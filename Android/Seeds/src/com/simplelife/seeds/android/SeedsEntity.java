@@ -1,9 +1,15 @@
 package com.simplelife.seeds.android;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SeedsEntity {
+public class SeedsEntity implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	// Seed ID primary key of table Seed
 	public int seedId;
 	
@@ -40,6 +46,9 @@ public class SeedsEntity {
 	// Favorite tag for the seed
 	public boolean favorite;
 	
+	// A tag to indicate whether the picLinks is null
+	public boolean isPicAvail;
+	
 	// The picture array for the seed
 	public ArrayList<String> picLinks;
 	
@@ -60,10 +69,15 @@ public class SeedsEntity {
 		mosaic = false;
 		memo = "N/A";
 		favorite = false;
+		isPicAvail = false;
 	}
 	
 	public void addPicLink(String inPicLink){
 		picLinks.add(inPicLink);
+	}
+	
+	public void setSeedId(int inId){
+		this.seedId = inId;
 	}
 	
 	public void setSeedType(String inType){
@@ -110,6 +124,15 @@ public class SeedsEntity {
 	public void setSeedFavorite(boolean inFavorite){
 		this.favorite = inFavorite;
 	}
+	
+	public void setSeedIsPicAvail(boolean inTag){
+		this.isPicAvail = inTag;
+	}
+	
+	public int getSeedId(){
+		return this.seedId;
+	}
+	
 	public String getSeedType(){
 		return this.type;
 	}
@@ -153,6 +176,10 @@ public class SeedsEntity {
 	
 	public boolean getSeedFavorite(){
 		return this.favorite;
+	}
+	
+	public boolean getSeedIsPicAvail(){
+		return this.isPicAvail;
 	}
 	
 	public ArrayList<String> getPicLinks(){
