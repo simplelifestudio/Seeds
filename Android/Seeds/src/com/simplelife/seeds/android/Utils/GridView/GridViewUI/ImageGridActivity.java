@@ -17,6 +17,8 @@
 package com.simplelife.seeds.android.Utils.GridView.GridViewUI;
 
 import com.simplelife.seeds.android.BuildConfig;
+import com.simplelife.seeds.android.SeedsEntity;
+import com.simplelife.seeds.android.Utils.GridView.GridViewProvider.Images;
 import com.simplelife.seeds.android.Utils.GridView.GridViewUtil.Utils;
 
 import android.os.Bundle;
@@ -35,6 +37,11 @@ public class ImageGridActivity extends FragmentActivity {
             Utils.enableStrictMode();
         }
         super.onCreate(savedInstanceState);
+        
+		// Load the seeds info
+		SeedsEntity mSeedsEntity = (SeedsEntity) getIntent().getSerializableExtra("seedObj");
+		
+		Images.setSeedsEntity(mSeedsEntity);
 
         if (getSupportFragmentManager().findFragmentByTag(TAG) == null) {
             final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
