@@ -25,7 +25,7 @@ import com.simplelife.seeds.android.Utils.JSONProcess.SeedsJSONMessage;
 
 public class SeedsNetworkProcess {
 	
-	private static String mServerUrl = "http://192.168.1.103:8080/seeds/messageListener";	
+	private static String mServerUrl = "http://106.187.38.52:80/seeds/messageListener";	
 	
 	public SeedsNetworkProcess(){
 		
@@ -140,7 +140,7 @@ public class SeedsNetworkProcess {
             return respInString;
             // String strsResult = strResult.replace("\r", "");            
         } else {
-        	Log.i("NetworkProcess","SeedsByDate Message sending failed!");
+        	Log.i("NetworkProcess","SeedsByDate Message sending failed! Status Code: "+response.getStatusLine().getStatusCode());
         	return null;           
         }
 	}	
