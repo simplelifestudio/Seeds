@@ -1,6 +1,5 @@
 package com.simplelife.seeds.android;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,7 +7,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.util.EncodingUtils;
 import org.json.JSONException;
 
 import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
@@ -22,7 +20,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -56,6 +53,7 @@ public class SeedsDateListActivity extends Activity {
 	final int MESSAGETYPE_TODAY   = 102;
 	final int MESSAGETYPE_UPDATE  = 103;
 	final int MESSAGETYPE_STAYSTILL = 104;
+	final int MESSAGETYPE_UPDATEDIALOG = 105;
 	
 	// For log purpose
 	private static final String LOGCLASS = "SeedsDateList"; 
@@ -124,8 +122,12 @@ public class SeedsDateListActivity extends Activity {
 				public void run() {
 					try {
 						// Only when the seeds info have not been updated
+						updateDialogStatus("Connecting to Server...");
+						Thread.sleep(20000);
+						
 						if (!isSeedsInfoUpdated(mDateBefYesterday))
 							opeStatus = updateSeedsInfo(mDateBefYesterday);
+						
 					} catch (Exception e) {
 						// Show the error message here
 					}
@@ -286,13 +288,24 @@ public class SeedsDateListActivity extends Activity {
 		}
 	};
 	
+	private void updateDialogStatus(String inContents){
+		
+		Message t_MsgListData = new Message();
+		t_MsgListData.what = MESSAGETYPE_UPDATEDIALOG;
+		
+	    Bundle bundle = new Bundle();
+	    bundle.putString("status", inContents);	    
+		t_MsgListData.setData(bundle);
+		handler.sendMessage(t_MsgListData);					
+		
+	}
+	
     // Define a handler to process the progress update
 	private Handler handler = new Handler(){  
   
         @Override  
         public void handleMessage(Message msg) {  
               
-		    tProgressDialog.dismiss();
         	switch (msg.what) {
             	
             	case MESSAGETYPE_BEFYEST:
@@ -317,6 +330,7 @@ public class SeedsDateListActivity extends Activity {
         		    bundle.putString("date", mDateYesterday);
         		    intent.putExtras(bundle);
         			startActivity(intent);
+        		    tProgressDialog.dismiss();
         			break;
             	}
             	case MESSAGETYPE_TODAY:
@@ -328,12 +342,26 @@ public class SeedsDateListActivity extends Activity {
         		    bundle.putString("date", mDateToday);
         		    intent.putExtras(bundle);
         			startActivity(intent);
+        		    tProgressDialog.dismiss();
         			break;
-            	}            
+            	}
+            	case MESSAGETYPE_UPDATEDIALOG:
+            	{
+            		// Retrieve the date info parameter
+            		Bundle bundle = msg.getData();             				
+            		//String tPassinDate = bundle.getString("date");
+            		String tStatus = bundle.getString("status");
+            		
+            		tProgressDialog.setMessage(tStatus);
+            		
+            	}
                 case MESSAGETYPE_UPDATE:
                 case MESSAGETYPE_STAYSTILL:
+                {
                 	Log.i(LOGCLASS,"MESSAGETYPE_UPDATE or MESSAGETYPE_STAYSTILL!");
+        		    tProgressDialog.dismiss();
                     break;
+                }
                 default:
                 	break;
             }
@@ -370,6 +398,7 @@ public class SeedsDateListActivity extends Activity {
 	    
     	// Notify progress dialog to show the status
     	//tProgressDialog.setMessage("Retrieving Seeds Info Status...");
+	    updateDialogStatus("Retrieving Seeds Info Status...");
     	
     	// Communicate with server to retrieve the seeds info
 		/*respInString = stubReadExternalFile("SeedsUpdateStatusByDatesResponse.txt");
@@ -390,27 +419,26 @@ public class SeedsDateListActivity extends Activity {
 		Log.i("DateList", "seedsUpdateStatusReq msg communication finished, msg: "+respInString);
 		if (null == respInString)
 		{
-			//tProgressDialog.setMessage("Retrieving Seeds Info Failed!");
-			
+			updateDialogStatus("Retrieving Seeds Info Failed!");			
 			return false;
 		}
 		else
 		{
-			//tProgressDialog.setMessage("Analyzing Seeds Info Status...");
+			updateDialogStatus("Analyzing Seeds Info Status...");
 			respInMap = SeedsJSONMessage.parseUpdateStatusRespMsg(mDateArray,respInString);			
 		}
 		
 		if (SeedsStatusByDate.isSeedsByDateReady(respInMap.get(tDate)))
 		{
-			//tProgressDialog.setMessage("Downloading Seeds Info...");
+			updateDialogStatus("Downloading Seeds Info...");
 			respInString2 = SeedsNetworkProcess.sendSeedsByDateReqMsg(mDateArray);
-			Log.i("DateList", "Now trying to parse the SeedsByDateResp");
 			/*respInString2 = stubReadExternalFile("SeedsByDatesResponse.txt");
 
 			status2 =  true;*/
 			if (null == respInString2)
 			{
-				//tProgressDialog.setMessage("Downloading Seeds Info Failed!");
+				// TODO: add warding info here, notify user the problem
+				updateDialogStatus("Downloading Seeds Info Failed!");
 				return false;
 			}
 			else
