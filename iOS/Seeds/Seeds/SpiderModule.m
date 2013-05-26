@@ -42,5 +42,24 @@ SINGLETON(SpiderModule)
     [NSThread sleepForTimeInterval:0.5];
 }
 
+-(void)applicationWillResignActive:(UIApplication *)application
+{
+    
+}
+
+-(void)applicationDidEnterBackground:(UIApplication *)application
+{
+    
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    
+}
+
+-(void)applicationWillEnterForeground:(UIApplication *)application
+{
+    
+}
 
 @end

@@ -9,7 +9,7 @@
 #import "CBModuleAbstractImpl.h"
 #import "CBSharedInstance.h"
 
-@interface UserDefaultsModule : CBModuleAbstractImpl <CBSharedInstance>
+@interface UserDefaultsModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate>
 
 @property (atomic, strong) NSUserDefaults* userDefaults;
 

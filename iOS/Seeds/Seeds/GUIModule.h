@@ -9,9 +9,11 @@
 #import "CBModuleAbstractImpl.h"
 #import "CBSharedInstance.h"
 
+#import "PAPasscodeViewController.h"
 #import "HomeViewController.h"
 
-@interface GUIModule : CBModuleAbstractImpl <CBSharedInstance>
+
+@interface GUIModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate, PAPasscodeViewControllerDelegate>
 
 @property (weak, nonatomic) HomeViewController* homeViewController;
 

@@ -9,7 +9,7 @@
 #import "CBModuleAbstractImpl.h"
 #import "CBNetworkUtils.h"
 
-@interface TransmissionModule : CBModuleAbstractImpl <CBSharedInstance>
+@interface TransmissionModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate>
 
 -(BOOL) startHTTPServer;
 -(void) stopHTTPServer;

@@ -10,7 +10,7 @@
 #import "SeedsSpider.h"
 #import "ServerAgent.h"
 
-@interface CommunicationModule : CBModuleAbstractImpl <CBSharedInstance>
+@interface CommunicationModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate>
 {
 
 }

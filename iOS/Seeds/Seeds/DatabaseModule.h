@@ -18,7 +18,7 @@
 
 enum ServiceDay {TheDayBefore = 0, Yesterday = 1, Today = 2};
 
-@interface DatabaseModule : CBModuleAbstractImpl <CBSharedInstance>
+@interface DatabaseModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate>
 
 @property (atomic, strong) FMDatabaseQueue *databaseQueue;
 

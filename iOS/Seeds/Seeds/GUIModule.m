@@ -64,4 +64,54 @@ SINGLETON(GUIModule)
     }
 }
 
+#pragma mark - PAPasscodeViewControllerDelegate
+
+- (void)PAPasscodeViewControllerDidCancel:(PAPasscodeViewController *)controller
+{
+//    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)PAPasscodeViewControllerDidEnterPasscode:(PAPasscodeViewController *)controller
+{
+//    [self dismissViewControllerAnimated:YES completion:^() {
+//        [[[UIAlertView alloc] initWithTitle:nil message:@"Passcode entered correctly" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//    }];
+}
+
+- (void)PAPasscodeViewControllerDidSetPasscode:(PAPasscodeViewController *)controller
+{
+//    [self dismissViewControllerAnimated:YES completion:^() {
+//        _passcodeLabel.text = controller.passcode;
+//    }];
+}
+
+- (void)PAPasscodeViewControllerDidChangePasscode:(PAPasscodeViewController *)controller
+{
+//    [self dismissViewControllerAnimated:YES completion:^() {
+//        _passcodeLabel.text = controller.passcode;
+//    }];
+}
+
+#pragma mark - UIApplicationDelegate
+
+-(void)applicationWillResignActive:(UIApplication *)application
+{
+    
+}
+
+-(void)applicationDidEnterBackground:(UIApplication *)application
+{
+    
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    
+}
+
+-(void)applicationWillEnterForeground:(UIApplication *)application
+{
+    
+}
+
 @end

@@ -9,7 +9,7 @@
 #import "CBModuleAbstractImpl.h"
 #import "CBSharedInstance.h"
 
-@interface SpiderModule : CBModuleAbstractImpl <CBSharedInstance>
+@interface SpiderModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate>
 
 @property (nonatomic, strong) SeedsSpider* spider;
 
