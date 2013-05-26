@@ -61,25 +61,28 @@ SINGLETON(CommunicationModule)
     NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
     NetworkStatus status = [curReach currentReachabilityStatus];
     [curReach connectionRequired];
+
+    GUIModule* guiModule = [GUIModule sharedInstance];
     
     switch (status)
     {
         case NotReachable:
-        {            
+        {
+            [guiModule showHUD:NSLocalizedString(@"Internet Disconnected", nil)];
+            
             DLog(@"App's reachability changed to 'NotReachable'.");
             break;
         }
         case ReachableViaWiFi:
         {
-            GUIModule* guiModule = [GUIModule sharedInstance];
-            [guiModule showHUD:@"WiFi Connected"];
+            [guiModule showHUD:NSLocalizedString(@"WiFi Connected", nil)];
             
             DLog(@"App's reachability changed to 'ReachableViaWiFi'.");
             break;
         }
         case ReachableViaWWAN:
         {
-
+            [guiModule showHUD:NSLocalizedString(@"3G/GPRS Connected", nil)];
             
             DLog(@"App's reachability changed to 'ReachableViaWWAN'.");
             break;
@@ -111,13 +114,7 @@ SINGLETON(CommunicationModule)
 
 -(void) processService
 {
-//    [NSThread sleepForTimeInterval:0.5];
-    
-    [_serverAgent alohaTest];
-    [NSThread sleepForTimeInterval:1];
-    [_serverAgent updateStatusByDatesTest];
-    [NSThread sleepForTimeInterval:1];
-    [_serverAgent seedsByDatesTest];
+    [NSThread sleepForTimeInterval:0.5];
 }
 
 -(void)applicationWillResignActive:(UIApplication *)application

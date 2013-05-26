@@ -54,3 +54,7 @@
 "HTTP server started..." = "HTTP server started...";
 "HTTP server failed to start." = "HTTP server failed to start.";
 "HTTP server address:" = "HTTP server address:";
+
+"WiFi Connected" = "WiFi Connected";
+"3G/GPRS Connected" = "3G/GPRS Connected";
+"Internet Disconnected" = "Internet Disconnected";

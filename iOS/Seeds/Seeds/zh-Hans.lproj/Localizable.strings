@@ -54,3 +54,7 @@
 "HTTP server started..." = "HTTP服务器已经启动...";
 "HTTP server failed to start." = "HTTP服务器启动失败。";
 "HTTP server address:" = "HTTP服务器地址：";
+
+"WiFi Connected" = "WiFi连接网络";
+"3G/GPRS Connected" = "3G/GPRS连接网络";
+"Internet Disconnected" = "网络断开连接";
