@@ -27,7 +27,7 @@
 #define JSONMESSAGE_COMMAND_SEEDSBYDATESREQUEST @"SeedsByDatesRequest"
 #define JSONMESSAGE_COMMAND_SEEDSBYDATESRESPONSE @"SeedsByDatesResponse"
 
-#define BASEURL_SEEDSSERVER @"http://106.187.36.105"
+#define BASEURL_SEEDSSERVER @"http://106.187.38.52"
 #define PATH_MESSAGELISTENER @"/seeds/messageListener"
 
 #define BASEURL_TORRENT @"http://www.maxp2p.com/"

@@ -111,7 +111,13 @@ SINGLETON(CommunicationModule)
 
 -(void) processService
 {
-    [NSThread sleepForTimeInterval:0.5];
+//    [NSThread sleepForTimeInterval:0.5];
+    
+    [_serverAgent alohaTest];
+    [NSThread sleepForTimeInterval:1];
+    [_serverAgent updateStatusByDatesTest];
+    [NSThread sleepForTimeInterval:1];
+    [_serverAgent seedsByDatesTest];
 }
 
 @end

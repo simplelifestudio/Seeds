@@ -28,4 +28,6 @@ JSONMessageType;
 +(JSONMessage*) constructWithType:(JSONMessageType) type paramList:(NSDictionary*) paramList;
 +(JSONMessage*) constructWithContent:(NSDictionary*) content;
 
+-(NSDictionary*) content;
+
 @end

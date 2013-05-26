@@ -25,7 +25,6 @@
         {
             [dic setObject:paramList forKey:JSONMESSAGE_KEY_PARAMLIST];
         }
-        
         message = [[JSONMessage alloc] init];
         [message setCommand:command];
         [message setBody:dic];
@@ -97,6 +96,13 @@
     }
     
     return message;
+}
+
+-(NSDictionary*) content
+{
+    NSDictionary* content = [_body objectForKey:JSONMESSAGE_KEY_PARAMLIST];
+    
+    return content;
 }
 
 @end

@@ -35,11 +35,33 @@
 
 -(void) alohaTest
 {
-    NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@"Seeds for iPhone", @"Patrick Deng", @"SimpleLife Studio"] forKeys:@[@"client", @"author", @"organization"]];
-    JSONMessage* alohaMessage = [JSONMessage constructWithType:AlohaRequest paramList:messageBody];
-    
+    NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@"Hello XX Chris Server!"] forKeys:@[@"content"]];
+    JSONMessage* message = [JSONMessage constructWithType:AlohaRequest paramList:messageBody];
+    DLog(@"Request message:%@",message.body);
     [self requestAsync:
-            alohaMessage
+     message
+               success:^(NSURLRequest* request, NSHTTPURLResponse* response, id JSON)
+     {
+         NSDictionary* messageContent = (NSDictionary*)JSON;
+         JSONMessage* responseMessage = [JSONMessage constructWithContent:messageContent];
+         // Deal with response json message
+         DLog(@"Success to receive json message:%@ with response: %@", responseMessage.command, responseMessage.body);
+     }
+               failure:^(NSURLRequest* request, NSHTTPURLResponse* response, NSError* error, id JSON)
+     {
+         DLog(@"Failed to receive json message with error code: %d", error.code);
+     }
+     ];
+}
+
+-(void) updateStatusByDatesTest
+{
+    NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@[@"2013-05-23", @"2013-05-24", @"2013-05-25"]] forKeys:@[@"datelist"]];
+    JSONMessage* message = [JSONMessage constructWithType:SeedsUpdateStatusByDatesRequest paramList:messageBody];
+
+    DLog(@"Request message:%@", message.body);
+    [self requestAsync:
+            message
             success:^(NSURLRequest* request, NSHTTPURLResponse* response, id JSON)
             {
                 NSDictionary* messageContent = (NSDictionary*)JSON;
@@ -49,8 +71,30 @@
             }
             failure:^(NSURLRequest* request, NSHTTPURLResponse* response, NSError* error, id JSON)
             {
-                DLog(@"Failed to receive json message with error code: %d", error.code);
-            }];
+                DLog(@"Failed to receive json message with error code: %@", error.localizedDescription);
+            }
+    ];
+}
+
+-(void) seedsByDatesTest
+{
+    NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@[@"2013-05-23", @"2013-05-24", @"2013-05-25"]] forKeys:@[@"datelist"]];
+    JSONMessage* message = [JSONMessage constructWithType:SeedsByDatesRequest paramList:messageBody];
+    
+    [self requestAsync:
+     message
+               success:^(NSURLRequest* request, NSHTTPURLResponse* response, id JSON)
+     {
+         NSDictionary* messageContent = (NSDictionary*)JSON;
+         JSONMessage* responseMessage = [JSONMessage constructWithContent:messageContent];
+         // Deal with response json message
+         DLog(@"Success to receive json message:%@ with response: %@", responseMessage.command, responseMessage.body);
+     }
+               failure:^(NSURLRequest* request, NSHTTPURLResponse* response, NSError* error, id JSON)
+     {
+         DLog(@"Failed to receive json message with error code: %d", error.code);
+     }
+     ];
 }
 
 -(void) requestAsync:
