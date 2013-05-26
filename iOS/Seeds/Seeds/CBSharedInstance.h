@@ -14,7 +14,7 @@
 
 #define SINGLETON(className) \
 \
-+ (className*) sharedInstance \
++ (id) sharedInstance \
 { \
     static className* sharedInstance = nil; \
     static dispatch_once_t onceToken; \

@@ -28,7 +28,7 @@
     userDefaultModule.moduleWeightFactor = 0.1;
     [_moduleManager registerModule:userDefaultModule];
     
-    id<CBModule> communicationModule = [[CommunicationModule alloc] initWithIsIndividualThreadNecessary:NO];
+    id<CBModule> communicationModule = [CommunicationModule sharedInstance];
     communicationModule.moduleWeightFactor = 0.2;
     [_moduleManager registerModule:communicationModule];
     
