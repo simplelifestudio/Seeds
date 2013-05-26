@@ -45,7 +45,7 @@ public class SeedsDetailsActivity extends Activity{
 	private int tPageIndex = 0; 
 	
 	// The info about the Seed
-	private int tSeedId;
+	private int mSeedId;
 	
 	// For log purpose
 	private static final String LOGCLASS = "SeedsDetails"; 
@@ -65,21 +65,11 @@ public class SeedsDetailsActivity extends Activity{
 	// Progress dialog for setting as favorite operation
 	private ProgressDialog tProgressDialog = null;
 	
+	// SeedsEntity for internal use
+	private SeedsEntity mSeedsEntity;
+	
 	// Favorite tag
 	private boolean tFavTag = false;
-
-	private int[] slideImages = {
-			R.drawable.image01,
-			R.drawable.image02,
-			R.drawable.image03,
-			R.drawable.image04,
-			R.drawable.image05,
-			R.drawable.image01,
-			R.drawable.image02,
-			R.drawable.image03,
-			R.drawable.image04,
-			R.drawable.image05,
-			R.drawable.image05};
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,10 +77,10 @@ public class SeedsDetailsActivity extends Activity{
 		// Log the entry
 		Log.i(LOGCLASS, "Working on starting the SeedsDetailsActivity!");
 		//setTheme(android.R.style.Theme_Translucent_NoTitleBar);
-		
-		// Retrieve the date info parameter
-		Bundle bundle = getIntent().getExtras();
-		tSeedId = bundle.getInt("seedid");
+				
+		// Load the seeds info
+		mSeedsEntity = (SeedsEntity) getIntent().getSerializableExtra("seedObj");
+		mSeedId = mSeedsEntity.getSeedId(); 
 		
 		// Retrieve the adapter instance
 		mDBAdapter = SeedsDBAdapter.getAdapter();
@@ -102,7 +92,7 @@ public class SeedsDetailsActivity extends Activity{
 		myFavoriteBtn = (Button) findViewById(R.id.favorite_btn);
 		
 		// Check if this seed has already been saved to favorite
-		if(mDBAdapter.isSeedSaveToFavorite(tSeedId))
+		if(mDBAdapter.isSeedSaveToFavorite(mSeedId))
 		{
 			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
 		}
@@ -129,62 +119,33 @@ public class SeedsDetailsActivity extends Activity{
 		
 		// Create a image loader
 		tImageLoader = new SeedsImageLoader(this.getApplicationContext());
-		
-		// Get the images: Retrieve the DB process handler to get data 
-		SeedsDBManager mDBHandler = SeedsDBManager.getManager();
-		
-		// Put a warning info here in case the DBHandler is null
-		SQLiteDatabase tDB = mDBHandler.getDatabase("Seeds_App_Database.db"); 
-		
-		// Query the database
-		// NOTE: Modify here if the format of publishDate field in db is not string
-		Cursor tImgResult = tDB.rawQuery(
-				"select pictureLink from SeedPicture where seedId=?",
-				new String[]{Integer.toString(tSeedId)});
-		
+				
 		// Get the count the result
-		int length = tImgResult.getCount();
-		Log.i(LOGCLASS,"Image links query done, image count= "+length);
+		int length = mSeedsEntity.getPicLinks().size();
 		
 		tImgCircleViews = new ImageView[length];
 		tImgCircleView  = (ViewGroup) tImgViewGroup.findViewById(R.id.layout_circle_images);		
 		tSlideLayout    = new SeedsSlideImageLayout(SeedsDetailsActivity.this);
 		tSlideLayout.setCircleImageLayout(length);
 
-		tImgResult.moveToFirst(); 
-		int i = 0;
-		while (!tImgResult.isAfterLast()) 
-	    {
+		for(int index=0; index<length; index++)
+		{
 			/*tImageLoader.DisplayImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL),
 			thumb_image);*/
 	
-	        // tImgResult.getString(tImgResult.getColumnIndex("pictureLink"));
 	        //Log.i(LOGCLASS,"Working on filling the images inside,the url is  "+tImgResult.getString(tImgResult.getColumnIndex("pictureLink")));
-	        tImagePageViews.add(tSlideLayout.getSlideImageLayout(tImgResult.getString(tImgResult.getColumnIndex("pictureLink"))));
+	        tImagePageViews.add(tSlideLayout.getSlideImageLayout(mSeedsEntity.getPicLinks().get(index)));
 	        
 			//tImagePageViews.add(tSlideLayout.getSlideImageLayout(slideImages[i]));
-			tImgCircleViews[i] = tSlideLayout.getCircleImageLayout(i);
-	        tImgCircleView.addView(tSlideLayout.getLinearLayout(tImgCircleViews[i], 10, 10));
-			// Move to the next result
-			tImgResult.moveToNext();
-			i++;
-	    }
+			tImgCircleViews[index] = tSlideLayout.getCircleImageLayout(index);
+	        tImgCircleView.addView(tSlideLayout.getLinearLayout(tImgCircleViews[index], 10, 10));
+		}
 		
-		// Now show the seed info
-		// Query out the seed info
-		Cursor tSeedInfo = tDB.rawQuery(
-				"select name,size,format,torrentLink from Seed where seedId=?",
-				new String[]{Integer.toString(tSeedId)});
-		tSeedInfo.moveToFirst(); 
-		while (!tSeedInfo.isAfterLast()) 
-	    {
-			seedName   = tSeedInfo.getString(tSeedInfo.getColumnIndex("name"));
-			seedSize   = tSeedInfo.getString(tSeedInfo.getColumnIndex("size"));
-			seedFormat = tSeedInfo.getString(tSeedInfo.getColumnIndex("format"));
-			seedLink   = tSeedInfo.getString(tSeedInfo.getColumnIndex("torrentLink"));
-			
-			tSeedInfo.moveToNext();			
-	    }
+		// Prepare the seeds text info
+		seedName   = mSeedsEntity.getSeedName(); 
+		seedSize   = mSeedsEntity.getSeedSize(); 
+		seedFormat = mSeedsEntity.getSeedFormat(); 
+		seedLink   = mSeedsEntity.getSeedTorrentLink(); 
 		
 		setContentView(tImgViewGroup);		
 		
@@ -297,7 +258,7 @@ public class SeedsDetailsActivity extends Activity{
 		@Override
 		public void onClick(View v) {
 			
-			if(mDBAdapter.isSeedSaveToFavorite(tSeedId))
+			if(mDBAdapter.isSeedSaveToFavorite(mSeedId))
 			{
 				tFavTag = true;
 				tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Please wait...", true, false);
@@ -319,13 +280,13 @@ public class SeedsDetailsActivity extends Activity{
 						// Set the favorite key 
 						if (tFavTag)
 						{
-							mDBAdapter.updateSeedEntryFav(tSeedId,false);
+							mDBAdapter.updateSeedEntryFav(mSeedId,false);
 							tFavTag = false;
 							tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Cancelling Favorites...", "Done!", true, false);
 						}
 						else
 						{
-							mDBAdapter.updateSeedEntryFav(tSeedId,true);
+							mDBAdapter.updateSeedEntryFav(mSeedId,true);
 							tFavTag = true;
 							tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Done!", true, false);							
 						}
@@ -351,6 +312,7 @@ public class SeedsDetailsActivity extends Activity{
 		public void onClick(View v) {
 		    // Redirect to the new page
 		    Intent intent = new Intent(SeedsDetailsActivity.this, ImageGridActivity.class);
+		    intent.putExtra("seedObj", mSeedsEntity);
 		    startActivity(intent);
 		}
 	};
@@ -365,7 +327,7 @@ public class SeedsDetailsActivity extends Activity{
             	
             	case 1:
             		// Check if this seed has already been saved to favorite
-            		if(mDBAdapter.isSeedSaveToFavorite(tSeedId))
+            		if(mDBAdapter.isSeedSaveToFavorite(mSeedId))
             		{
             			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
             		}

@@ -81,7 +81,8 @@ public class ImageDetailActivity extends FragmentActivity implements OnClickList
         mImageFetcher.setImageFadeIn(false);
 
         // Set up ViewPager and backing adapter
-        mAdapter = new ImagePagerAdapter(getSupportFragmentManager(), Images.imageUrls.length);
+        //mAdapter = new ImagePagerAdapter(getSupportFragmentManager(), Images.imageUrls.length);
+        mAdapter = new ImagePagerAdapter(getSupportFragmentManager(), Images.getSeedsEntity().getPicLinks().size());
         mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
         mPager.setPageMargin((int) getResources().getDimension(R.dimen.image_detail_pager_margin));
@@ -192,7 +193,8 @@ public class ImageDetailActivity extends FragmentActivity implements OnClickList
 
         @Override
         public Fragment getItem(int position) {
-            return ImageDetailFragment.newInstance(Images.imageUrls[position]);
+            //return ImageDetailFragment.newInstance(Images.imageUrls[position]);
+        	return ImageDetailFragment.newInstance(Images.getSeedsEntity().getPicLinks().get(position));
         }
     }
 
