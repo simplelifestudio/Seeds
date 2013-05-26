@@ -20,8 +20,6 @@
 
 #import "Reachability.h"
 
-static Reachability* hostReach;
-
 @implementation CBNetworkUtils
 
 + (NSString*)hostNameInWiFi
