@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
-import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBManager;
 import com.simplelife.seeds.android.Utils.GridView.GridViewUI.ImageGridActivity;
 import com.simplelife.seeds.android.Utils.ImageProcess.SeedsImageLoader;
 import com.simplelife.seeds.android.Utils.ImageProcess.SeedsSlideImageLayout;

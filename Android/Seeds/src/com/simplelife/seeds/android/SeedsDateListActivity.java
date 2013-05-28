@@ -97,9 +97,9 @@ public class SeedsDateListActivity extends Activity {
 		mDateBefYesterday = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());
 		
 		// STUB CODE!!!
-		mDateToday = "2013-05-20";
+		/*mDateToday = "2013-05-20";
 		mDateYesterday = "2013-05-18";
-		mDateBefYesterday = "2013-05-16";
+		mDateBefYesterday = "2013-05-16";*/
 		
 		// Initialize the date array list
 		mDateArray = new ArrayList<String> ();
