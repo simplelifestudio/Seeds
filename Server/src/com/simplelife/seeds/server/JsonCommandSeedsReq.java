@@ -57,6 +57,15 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 		strBuilder.append("}\n}");
 		
 		out.write(strBuilder.toString());
+		
+		if (strBuilder.length() > 200)
+		{
+			_logger.log(Level.INFO, strBuilder.toString());
+		}
+		else
+		{
+			_logger.log(Level.INFO, strBuilder.substring(0, 200));
+		}
 	}
 	private void responseInvalidRequest(PrintWriter out)
 	{
@@ -82,8 +91,6 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 	
 	private void responseSeeds(String strDate, StringBuilder strBuilder, boolean lastOne)
 	{
-		responseJsonHeader(strBuilder);
-		
 		strBuilder.append("\"");
 		strBuilder.append(strDate);
 		strBuilder.append("\":[\n");
@@ -93,7 +100,9 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 	
 	private void responseSeedDetails(String strDate, StringBuilder strBuilder)
 	{
-		String sql = "Select seedId,type,source,publishDate,name,size,format, torrentLink, hash,mosaic, memo from seed";
+		String sql = "Select seedId,type,source,publishDate,name,size,format, torrentLink, hash,mosaic, memo " +
+				" from Seed" +
+				" where publishDate = '" + strDate + "'";
 		List<Seed> seeds = DaoWrapper.getInstance().query(sql, Seed.class);
 		Iterator<Seed> it = seeds.iterator();
 		Seed seed;
@@ -105,7 +114,7 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 			responsePictureLinks(seed.getSeedId(), strBuilder);
 			strBuilder.append("},\n");
 		}
-		
+		strBuilder.deleteCharAt(strBuilder.length()-2);
 	}
 	
 	private void responsePictureLinks(Long seedId, StringBuilder strBuilder)
@@ -125,8 +134,8 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 			strBuilder.append(prePic.getPictureLink());
 			strBuilder.append("\",\n");
 		}
-		strBuilder.deleteCharAt(strBuilder.length() - 1);
-		strBuilder.append("\n]\n");
+		strBuilder.deleteCharAt(strBuilder.length() - 2);   // Remove last ","
+		strBuilder.append("]\n");
 	}
 	
 	private void responseOneSeedFields(Seed seed, StringBuilder strBuilder)

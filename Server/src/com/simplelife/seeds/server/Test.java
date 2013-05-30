@@ -1,5 +1,6 @@
 package com.simplelife.seeds.server;
 
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,10 +16,42 @@ public class Test {
 		//testSave();
 		//testQuery();
 		//testHtmlParse();
-		//testJsonObj();
-		testStrBuilder();
+		//testSeedReq();
+		//testStrBuilder();
+		//testSeedStatusReq();
+		//testDateFunctions();
+		testRangeHtmlParse();
 	}
 
+	
+	private static void testRangeHtmlParse()
+	{
+		HtmlParser parser = new HtmlParser();
+		List<String> keyList = parser.getkeyWordList();
+		keyList.clear();
+		keyList.add("最新BT合集");
+		
+		parser.setstartDate("2013-04-20");
+		parser.setendDate("2013-05-21");
+		parser.setbaseLink("http://174.123.15.31/forumdisplay.php?fid=55&page={page}");
+		parser.setPageEnd(1);
+		parser.setPageEnd(10);
+		
+		parser.Parse();
+		
+	}
+	private static void testDateFunctions()
+	{
+		System.out.println(DateUtil.getNextTaskTrigger(20).toString());
+		System.out.println(DateUtil.getDaysFromToday("2013-06-01"));
+		System.out.println(DateUtil.getDaysFromToday("2013-05-01"));
+		System.out.println(DateUtil.getDaysFromToday("2013-5-1"));
+		System.out.println(DateUtil.getDaysFromToday("2013-*05-01"));
+		System.out.println(DateUtil.getDaysFromToday("2012-05-01"));
+		System.out.println(DateUtil.getNow());
+		System.out.println(DateUtil.getDateStringByDayBack(5));
+		System.out.println(DateUtil.getDateStringByDayBack(20));
+	}
 	private static void testStrBuilder()
 	{
 		StringBuilder strBuilder = new StringBuilder();
@@ -29,15 +62,41 @@ public class Test {
 		System.out.println(strBuilder.toString());
 		
 	}
-	private static void testJsonObj()
+	
+	private static void testSeedStatusReq()
 	{
 		SeedsServlet servlet = new SeedsServlet();
-		String command = "{\n    \"command\": \"SeedsByDatesRequest\",\n    \"paramList\": {\n        \"datelist\": [\n            \"2013-05-14\",\n            \"2013-04-15\",\n            \"2013-05-13\"\n        ]\n    }\n}";
+		String command = "{\n    \"command\": \"SeedsUpdateStatusByDatesRequest\",\n    \"paramList\": {\n        \"datelist\": [\n            \"2013-05-14\",\n            \"2013-05-17\",\n            \"2013-05-18\"\n        ]\n    }\n}";
+		JSONObject jsonObj = servlet.createJsonObject(command);
+		
+		JsonCommandSeedsStatusReq req = new JsonCommandSeedsStatusReq();
+		PrintWriter out;
+		try {
+			out = new PrintWriter("d:/SeedsUpdateStatusByDatesResponse.txt");
+			req.Execute(jsonObj, out);
+			out.flush();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private static void testSeedReq()
+	{
+		SeedsServlet servlet = new SeedsServlet();
+		String command = "{\n    \"command\": \"SeedsByDatesRequest\",\n    \"paramList\": {\n        \"datelist\": [\n            \"2013-05-14\",\n            \"2013-05-15\",\n            \"2013-05-17\"\n        ]\n    }\n}";
 		JSONObject jsonObj = servlet.createJsonObject(command);
 		
 		JsonCommandSeedsReq req = new JsonCommandSeedsReq();
-		PrintWriter out = new PrintWriter(System.out);
-		req.Execute(jsonObj, out);
+		PrintWriter out;
+		try {
+			out = new PrintWriter("d:/SeedsByDatesResponse.txt");
+			req.Execute(jsonObj, out);
+			out.flush();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private static void testHtmlParse()

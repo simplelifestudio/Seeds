@@ -6,6 +6,9 @@ import net.sf.json.JSONObject;
 public class JsonCommandAlohaReq extends JsonCommandBase {
 	@Override
 	public void Execute(JSONObject jsonObj, PrintWriter out) {
-		out.println("{\"command\": \"AlohaResponse\", \"paramList\": {\"content\":\"Hello Seeds App!\"}}");
+		String res ="{\"command\": \"AlohaResponse\", \"paramList\": {\"content\":\"Hello Seeds App![";
+		res += DateUtil.getNowDate().toString();
+		res +="]\"}}";
+		out.println(res);
 	}
 }
