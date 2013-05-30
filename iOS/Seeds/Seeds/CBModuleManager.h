@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "CBModule.h"
+#import "CBSharedInstance.h"
+
 @interface CBModuleManager : NSObject <CBSharedInstance, UIApplicationDelegate>
 
 -(void) registerModule:(id<CBModule>) module;

@@ -24,20 +24,7 @@
 @synthesize databaseFilePath = _databaseFilePath;
 @synthesize databaseQueue = _databaseQueue;
 
-+(id)sharedInstance
-{
-    static DatabaseModule* sharedInstance;
-    static dispatch_once_t done;
-    dispatch_once
-    (
-     &done,
-     ^
-     {
-         sharedInstance = [[DatabaseModule alloc] initWithIsIndividualThreadNecessary:NO];
-     }
-     );
-    return sharedInstance;
-}
+SINGLETON(DatabaseModule)
 
 -(void) initModule
 {
@@ -110,6 +97,26 @@
     }
     
     return _databaseFilePath;
+}
+
+-(void)applicationWillResignActive:(UIApplication *)application
+{
+    
+}
+
+-(void)applicationDidEnterBackground:(UIApplication *)application
+{
+    
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    
+}
+
+-(void)applicationWillEnterForeground:(UIApplication *)application
+{
+    
 }
 
 @end

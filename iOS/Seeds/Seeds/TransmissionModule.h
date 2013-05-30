@@ -9,15 +9,14 @@
 #import "CBModuleAbstractImpl.h"
 #import "CBNetworkUtils.h"
 
-#define HTTP_SERVER_NAME @"Seeds Http Server"
-#define HTTP_SERVER_PORT 8964
+@interface TransmissionModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate>
 
-@interface TransmissionModule : CBModuleAbstractImpl <CBSharedInstance>
-
--(void) startHTTPServer;
+-(BOOL) startHTTPServer;
 -(void) stopHTTPServer;
 
 -(NSInteger) httpServerPort;
 -(NSString*) httpServerName;
+
+-(BOOL) generateHtmlPage:(NSArray*) last3Days;
 
 @end

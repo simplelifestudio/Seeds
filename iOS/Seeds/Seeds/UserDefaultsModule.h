@@ -9,11 +9,7 @@
 #import "CBModuleAbstractImpl.h"
 #import "CBSharedInstance.h"
 
-#define USERDEFAULTS_KEY_SYNCSTATUSBYDAY @"syncStatusByDay:"
-
-#define PERSISTENTDOMAIN_SYNCSTATUSBYDAY @"syncStatusByDay"
-
-@interface UserDefaultsModule : CBModuleAbstractImpl <CBSharedInstance>
+@interface UserDefaultsModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate>
 
 @property (atomic, strong) NSUserDefaults* userDefaults;
 

@@ -20,5 +20,6 @@
 
 +(BOOL) isSubstringIncluded:(NSString*) parentString subString:(NSString*)subString;
 +(NSString*) trimString:(NSString*) string;
++(NSString*) replaceSubString:(NSString*) newSubString oldSubString:(NSString*)oldSubString string:(NSString*) string;
 
 @end

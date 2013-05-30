@@ -50,7 +50,7 @@
             code = [link substringFromIndex:range.length];
             NSMutableString* mutableStr = [NSMutableString string];
             [mutableStr appendString:code];
-            [mutableStr appendString:@".torrent"];
+            [mutableStr appendString:FILE_EXTENDNAME_DOT_TORRENT];
             fileName = mutableStr;
         }
     }

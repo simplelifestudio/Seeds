@@ -17,41 +17,94 @@
 
 @implementation ServerAgent
 
++(NSMutableURLRequest*) constructURLRequest:(JSONMessage*) message
+{
+    NSAssert(nil != message, @"Nil JSON Message");
+    
+    NSMutableURLRequest* request = nil;
+    
+    AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:BASEURL_SEEDSSERVER]];
+    [httpClient setParameterEncoding:AFJSONParameterEncoding];
+    request = [httpClient
+               requestWithMethod:@"POST"
+               path:PATH_MESSAGELISTENER
+               parameters:message.body];
+    
+    return request;
+}
+
 -(void) alohaTest
 {
-    NSURL *url = [NSURL URLWithString:@"http://server_ip/messagelistener"];
-
-    NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@"Seeds for iPhone", @"Patrick Deng", @"SimpleLife Studio"] forKeys:@[@"client", @"author", @"organization"]];
-    JSONMessage* alohaMessage = [JSONMessage constructWithType:AlohaRequest paramList:messageBody];
-    
+    NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@"Hello XX Chris Server!"] forKeys:@[@"content"]];
+    JSONMessage* message = [JSONMessage constructWithType:AlohaRequest paramList:messageBody];
+    DLog(@"Request message:%@",message.body);
     [self requestAsync:
-            url requestMessage:alohaMessage
+     message
+               success:^(NSURLRequest* request, NSHTTPURLResponse* response, id JSON)
+     {
+         NSDictionary* messageContent = (NSDictionary*)JSON;
+         JSONMessage* responseMessage = [JSONMessage constructWithContent:messageContent];
+         // Deal with response json message
+         DLog(@"Success to receive json message:%@ with response: %@", responseMessage.command, responseMessage.body);
+     }
+               failure:^(NSURLRequest* request, NSHTTPURLResponse* response, NSError* error, id JSON)
+     {
+         DLog(@"Failed to receive json message with error code: %d", error.code);
+     }
+     ];
+}
+
+-(void) updateStatusByDatesTest
+{
+    NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@[@"2013-05-23", @"2013-05-24", @"2013-05-25"]] forKeys:@[@"datelist"]];
+    JSONMessage* message = [JSONMessage constructWithType:SeedsUpdateStatusByDatesRequest paramList:messageBody];
+
+    DLog(@"Request message:%@", message.body);
+    [self requestAsync:
+            message
             success:^(NSURLRequest* request, NSHTTPURLResponse* response, id JSON)
             {
-//                NSDictionary* message = (NSDictionary*)JSON;
-                
-                NSError* error = nil;
-                NSDictionary* messageContent = [NSJSONSerialization JSONObjectWithData:JSON options:NSJSONReadingMutableLeaves error:&error];
-                
+                NSDictionary* messageContent = (NSDictionary*)JSON;
                 JSONMessage* responseMessage = [JSONMessage constructWithContent:messageContent];
                 // Deal with response json message
                 DLog(@"Success to receive json message:%@ with response: %@", responseMessage.command, responseMessage.body);
             }
             failure:^(NSURLRequest* request, NSHTTPURLResponse* response, NSError* error, id JSON)
             {
-                DLog(@"Failed to receive json message with error code: %d", error.code);
-            }];
+                DLog(@"Failed to receive json message with error code: %@", error.localizedDescription);
+            }
+    ];
+}
+
+-(void) seedsByDatesTest
+{
+    NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@[@"2013-05-23", @"2013-05-24", @"2013-05-25"]] forKeys:@[@"datelist"]];
+    JSONMessage* message = [JSONMessage constructWithType:SeedsByDatesRequest paramList:messageBody];
+    
+    [self requestAsync:
+     message
+               success:^(NSURLRequest* request, NSHTTPURLResponse* response, id JSON)
+     {
+         NSDictionary* messageContent = (NSDictionary*)JSON;
+         JSONMessage* responseMessage = [JSONMessage constructWithContent:messageContent];
+         // Deal with response json message
+         DLog(@"Success to receive json message:%@ with response: %@", responseMessage.command, responseMessage.body);
+     }
+               failure:^(NSURLRequest* request, NSHTTPURLResponse* response, NSError* error, id JSON)
+     {
+         DLog(@"Failed to receive json message with error code: %d", error.code);
+     }
+     ];
 }
 
 -(void) requestAsync:
-        (NSURL*) url
-        requestMessage:(JSONMessage*) requestMessage
+        (JSONMessage*) requestMessage
         success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON))success
         failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON))failure
 {
-    NSURLRequest* request = [NSURLRequest requestWithURL:url];
+    NSMutableURLRequest* request = [ServerAgent constructURLRequest:requestMessage];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:success failure:failure];
-    [operation start];
+    [operation start];    
 }
 
 @end

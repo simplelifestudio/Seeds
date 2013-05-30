@@ -16,13 +16,9 @@
 #import "FMDatabaseQueue.h"
 #import "FMResultSet.h"
 
-#define DATABASE_FILE_NAME @"Seeds_App_Database"
-#define DATABASE_FILE_TYPE @"db"
-#define DATABASE_FILE_FULL_NAME @"Seeds_App_Database.db"
-
 enum ServiceDay {TheDayBefore = 0, Yesterday = 1, Today = 2};
 
-@interface DatabaseModule : CBModuleAbstractImpl <CBSharedInstance>
+@interface DatabaseModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate>
 
 @property (atomic, strong) FMDatabaseQueue *databaseQueue;
 

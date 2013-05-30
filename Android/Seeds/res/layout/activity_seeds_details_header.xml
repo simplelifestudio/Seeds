@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/top_navigate" 
+    android:layout_width="fill_parent" 
+	android:layout_height="33dp"
+    android:orientation="vertical" 
+    android:background="#dbdbdc">
+
+    <LinearLayout 
+	    android:gravity="center"
+		android:layout_gravity="center_vertical" 
+		android:orientation="vertical"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true" 
+		android:layout_centerVertical="true"
+		android:layout_marginLeft="5dip">
+		
+		<TextView android:textSize="13.5sp" 
+			android:gravity="center" 
+			android:paddingLeft="100dp" 
+			android:clickable="true" 
+			android:text="@string/seeds_details_top" 
+			android:layout_width="71dp"
+			android:textColor="@android:color/black"
+			android:layout_height="33dp" />
+		
+	</LinearLayout>
+	
+	<TextView 
+	    android:textSize="18.0sp" 
+	    android:textColor="#ffffffff"
+		android:id="@+id/NavigateTitle" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" 
+		android:text=""
+		android:layout_centerInParent="true" 
+		android:layout_centerVertical="true" />
+	
+	<LinearLayout 
+	    android:gravity="center"
+		android:layout_gravity="center_vertical" 
+		android:orientation="vertical"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_alignParentRight="true" 
+		android:layout_centerVertical="true"
+		android:layout_marginRight="5dip">
+		
+		<TextView
+		    android:id="@+id/NavigateHome"
+		    android:layout_width="50dp"
+		    android:layout_height="33dp"
+		    android:clickable="true"
+		    android:gravity="center"
+		    android:text="列表"
+		    android:textColor="@android:color/black"
+		    android:textSize="13.5sp" />
+		
+	</LinearLayout>
+	
+</RelativeLayout>

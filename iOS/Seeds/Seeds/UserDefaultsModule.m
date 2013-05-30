@@ -10,20 +10,7 @@
 
 @implementation UserDefaultsModule
 
-+(id)sharedInstance
-{
-    static UserDefaultsModule* sharedInstance;
-    static dispatch_once_t done;
-    dispatch_once
-    (
-        &done,
-        ^
-        {
-            sharedInstance = [[UserDefaultsModule alloc] initWithIsIndividualThreadNecessary:NO];
-        }
-    );
-    return sharedInstance;
-}
+SINGLETON(UserDefaultsModule)
 
 @synthesize userDefaults = _userDefaults;
 
@@ -148,6 +135,26 @@
     }
     
     return nil;
+}
+
+-(void)applicationWillResignActive:(UIApplication *)application
+{
+    
+}
+
+-(void)applicationDidEnterBackground:(UIApplication *)application
+{
+    
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    
+}
+
+-(void)applicationWillEnterForeground:(UIApplication *)application
+{
+    
 }
 
 @end

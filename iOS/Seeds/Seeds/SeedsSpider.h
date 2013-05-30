@@ -16,8 +16,6 @@
 #import "SeedsVisitor.h"
 #import "TorrentListDownloadAgent.h"
 
-#define SEEDLIST_LINK_DATE_FORMAT @"M-dd"
-
 @protocol SeedsSpiderDelegate <NSObject>
 
 -(void) spiderStarted:(NSString*) majorStatus;

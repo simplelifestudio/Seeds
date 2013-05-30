@@ -10,10 +10,8 @@
 
 @protocol JSONMessageDelegate
 
-//-(void) requestAsync:(NSURL*) url requestMessage:(JSONMessage*) requestMessage responseSelector:(SEL) selector;
 -(void) requestAsync:
-            (NSURL*) url
-            requestMessage:(JSONMessage*) requestMessage
+            (JSONMessage*) requestMessage
             success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON))success
             failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON))failure;
 

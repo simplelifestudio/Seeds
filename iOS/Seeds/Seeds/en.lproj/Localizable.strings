@@ -16,6 +16,8 @@
 "UserDefaults Module Thread" = "UserDefaults Module Thread";
 "Transmission Module" = "Transmission Module";
 "Transmission Module Thread" = "Transmission Module Thread";
+"GUI Module" = "GUI Module";
+"GUI Module Thread" = "GUI Module Thread";
 
 "Loading: " = "Loading: ";
 "Mosaic" = "Mosaic";
@@ -37,7 +39,18 @@
 "Pulled Yet" = "Pulled Yet";
 "Sync Yet" = "Sync Yet";
 "Completed" = "Completed";
+"Folder Exception" = "Folder Exception";
 
 "Torrents Downloading" = "Torrents Downloading";
 
 "Stop" = "Stop";
+
+"Transmission module is initializing..." = "Transmission module is initializing...";
+"Torrent files are preparing..." = "Torrent files are preparing...";
+"Torrent files are packaging..." = "Torrent files are packaging...";
+"Web page is generating..." = "Web page is generating...";
+"Web page generation is fail." = "Web page generation is fail.";
+"HTTP server is initializing..." = "HTTP server is initializing...";
+"HTTP server started..." = "HTTP server started...";
+"HTTP server failed to start." = "HTTP server failed to start.";
+"HTTP server address:" = "HTTP server address:";

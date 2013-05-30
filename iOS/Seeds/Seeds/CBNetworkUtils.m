@@ -18,9 +18,13 @@
 #include <arpa/inet.h>
 #include <ifaddrs.h>
 
+#import "Reachability.h"
+
+static Reachability* hostReach;
+
 @implementation CBNetworkUtils
 
-+ (NSString*)hostName
++ (NSString*)hostNameInWiFi
 {
 	struct ifaddrs *addrs;
 	const struct ifaddrs *cursor;
@@ -30,7 +34,7 @@
 	
 	if (error)
 	{
-		NSLog(@"%@", gai_strerror(error));
+		DLog(@"Failed to obtain IP address with error: %d", error);
 	}
 	for (cursor = addrs; cursor; cursor = cursor->ifa_next)
 	{
@@ -41,13 +45,46 @@
                [@"en1" isEqualToString:ifa_name])
 			{
 				hostname = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)cursor->ifa_addr)->sin_addr)];
-				NSLog(@"hostname:%@",hostname);
+				DLog(@"hostname:%@",hostname);
 				break;
 			}
 		}
 	}
 	freeifaddrs(addrs);
 	return hostname;
+}
+
++(BOOL) isInternetConnectable:(NSString*) hostName
+{
+    NSAssert(nil != hostName && 0 < hostName.length, @"Illegal hostName");
+    
+    BOOL flag = NO;
+    
+    Reachability *r = [Reachability reachabilityWithHostname:hostName];
+    switch ([r currentReachabilityStatus])
+    {
+        case NotReachable: // No Connection
+            flag = NO;
+            break;
+        case ReachableViaWWAN: // 3G
+            flag = YES;
+            break;
+        case ReachableViaWiFi: // WiFi
+            flag = YES;
+            break;
+    }
+    
+    return flag;
+}
+
++ (BOOL) isWiFiEnabled
+{
+    return ([[Reachability reachabilityForLocalWiFi] currentReachabilityStatus] != NotReachable);
+}
+
++ (BOOL) is3GEnabled
+{
+    return ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != NotReachable);
 }
 
 @end

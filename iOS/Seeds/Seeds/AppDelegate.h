@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "CBModuleManager.h"
+
+#import "GUIModule.h"
 #import "UserDefaultsModule.h"
 #import "CommunicationModule.h"
 #import "DatabaseModule.h"
 #import "SpiderModule.h"
 #import "TransmissionModule.h"
-
-#import "CBModuleManager.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

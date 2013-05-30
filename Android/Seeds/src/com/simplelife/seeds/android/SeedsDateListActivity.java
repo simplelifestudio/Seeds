@@ -1,6 +1,5 @@
 package com.simplelife.seeds.android;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,7 +7,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.util.EncodingUtils;
 import org.json.JSONException;
 
 import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
@@ -22,7 +20,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -56,6 +53,7 @@ public class SeedsDateListActivity extends Activity {
 	final int MESSAGETYPE_TODAY   = 102;
 	final int MESSAGETYPE_UPDATE  = 103;
 	final int MESSAGETYPE_STAYSTILL = 104;
+	final int MESSAGETYPE_UPDATEDIALOG = 105;
 	
 	// For log purpose
 	private static final String LOGCLASS = "SeedsDateList"; 
@@ -99,9 +97,9 @@ public class SeedsDateListActivity extends Activity {
 		mDateBefYesterday = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());
 		
 		// STUB CODE!!!
-		mDateToday = "2013-05-18";
-		mDateYesterday = "2013-05-17";
-		mDateBefYesterday = "2013-05-14";
+		/*mDateToday = "2013-05-20";
+		mDateYesterday = "2013-05-18";
+		mDateBefYesterday = "2013-05-16";*/
 		
 		// Initialize the date array list
 		mDateArray = new ArrayList<String> ();
@@ -124,8 +122,12 @@ public class SeedsDateListActivity extends Activity {
 				public void run() {
 					try {
 						// Only when the seeds info have not been updated
+						updateDialogStatus("Connecting to Server...");
+						Thread.sleep(20000);
+						
 						if (!isSeedsInfoUpdated(mDateBefYesterday))
 							opeStatus = updateSeedsInfo(mDateBefYesterday);
+						
 					} catch (Exception e) {
 						// Show the error message here
 					}
@@ -258,17 +260,17 @@ public class SeedsDateListActivity extends Activity {
 				public void run() {
 					try {
 						// Only when the seeds info have not been updated
-						mDateArray.clear();
+						ArrayList<String> tDateArray = new ArrayList<String>();
 						if (!isSeedsInfoUpdated(mDateBefYesterday))
-							mDateArray.add(mDateBefYesterday);
+							tDateArray.add(mDateBefYesterday);
 						if (!isSeedsInfoUpdated(mDateYesterday))
-							mDateArray.add(mDateYesterday);
+							tDateArray.add(mDateYesterday);
 						if (!isSeedsInfoUpdated(mDateToday))
-							mDateArray.add(mDateToday);
+							tDateArray.add(mDateToday);
 						
-						if (0 < mDateArray.size())
+						if (0 < tDateArray.size())
 						{
-							opeStatus = updateSeedsInfo(mDateArray);
+							opeStatus = updateSeedsInfo(tDateArray);
 						}							
 					} catch (Exception e) {
 						// Show the error message here
@@ -286,13 +288,24 @@ public class SeedsDateListActivity extends Activity {
 		}
 	};
 	
+	private void updateDialogStatus(String inContents){
+		
+		Message t_MsgListData = new Message();
+		t_MsgListData.what = MESSAGETYPE_UPDATEDIALOG;
+		
+	    Bundle bundle = new Bundle();
+	    bundle.putString("status", inContents);	    
+		t_MsgListData.setData(bundle);
+		handler.sendMessage(t_MsgListData);					
+		
+	}
+	
     // Define a handler to process the progress update
 	private Handler handler = new Handler(){  
   
         @Override  
         public void handleMessage(Message msg) {  
               
-		    tProgressDialog.dismiss();
         	switch (msg.what) {
             	
             	case MESSAGETYPE_BEFYEST:
@@ -317,6 +330,7 @@ public class SeedsDateListActivity extends Activity {
         		    bundle.putString("date", mDateYesterday);
         		    intent.putExtras(bundle);
         			startActivity(intent);
+        		    tProgressDialog.dismiss();
         			break;
             	}
             	case MESSAGETYPE_TODAY:
@@ -328,12 +342,26 @@ public class SeedsDateListActivity extends Activity {
         		    bundle.putString("date", mDateToday);
         		    intent.putExtras(bundle);
         			startActivity(intent);
+        		    tProgressDialog.dismiss();
         			break;
-            	}            
+            	}
+            	case MESSAGETYPE_UPDATEDIALOG:
+            	{
+            		// Retrieve the date info parameter
+            		Bundle bundle = msg.getData();             				
+            		//String tPassinDate = bundle.getString("date");
+            		String tStatus = bundle.getString("status");
+            		
+            		tProgressDialog.setMessage(tStatus);
+            		
+            	}
                 case MESSAGETYPE_UPDATE:
                 case MESSAGETYPE_STAYSTILL:
-                	Log.i(LOGCLASS,"MESSAGETYPE_UPDATE or MESSAGETYPE_STAYSTILL: Working on directing to the details !");
+                {
+                	Log.i(LOGCLASS,"MESSAGETYPE_UPDATE or MESSAGETYPE_STAYSTILL!");
+        		    tProgressDialog.dismiss();
                     break;
+                }
                 default:
                 	break;
             }
@@ -362,6 +390,7 @@ public class SeedsDateListActivity extends Activity {
     	boolean status  = false;
     	boolean status2 = false;
     	HashMap<String, String> respInMap;
+    	ArrayList<SeedsEntity> tSeedsList = null;
     	
 	    // Construct a single entry array so that we can reuse the interface
     	mDateArray.clear();
@@ -369,12 +398,13 @@ public class SeedsDateListActivity extends Activity {
 	    
     	// Notify progress dialog to show the status
     	//tProgressDialog.setMessage("Retrieving Seeds Info Status...");
+	    updateDialogStatus("Retrieving Seeds Info Status...");
     	
     	// Communicate with server to retrieve the seeds info
-		respInString = stubReadExternalFile("SeedsUpdateStatusByDatesResponse.txt");
-		status = true;
-		/*try {
-			status = SeedsNetworkProcess.sendUpdateStatusReqMsg(mDateArray,respInString);
+		/*respInString = stubReadExternalFile("SeedsUpdateStatusByDatesResponse.txt");
+		status = true;*/
+		try {
+			respInString = SeedsNetworkProcess.sendUpdateStatusReqMsg(mDateArray);
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -384,42 +414,49 @@ public class SeedsDateListActivity extends Activity {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		
-		if (false == status)
+		Log.i("DateList", "seedsUpdateStatusReq msg communication finished, msg: "+respInString);
+		if (null == respInString)
 		{
-			//tProgressDialog.setMessage("Retrieving Seeds Info Failed!");
+			updateDialogStatus("Retrieving Seeds Info Failed!");			
 			return false;
 		}
 		else
 		{
-			tProgressDialog.setMessage("Analyzing Seeds Info Status...");
+			updateDialogStatus("Analyzing Seeds Info Status...");
 			respInMap = SeedsJSONMessage.parseUpdateStatusRespMsg(mDateArray,respInString);			
 		}
 		
 		if (SeedsStatusByDate.isSeedsByDateReady(respInMap.get(tDate)))
 		{
-			tProgressDialog.setMessage("Downloading Seeds Info...");
-			//status2 = SeedsNetworkProcess.sendSeedsByDateReqMsg(mDateArray,respInString2);
-			Log.i("DateList", "Now trying to parse the SeedsByDateResp!");
-			respInString2 = stubReadExternalFile("SeedsByDatesResponse.txt");
+			updateDialogStatus("Downloading Seeds Info...");
+			respInString2 = SeedsNetworkProcess.sendSeedsByDateReqMsg(mDateArray);
+			/*respInString2 = stubReadExternalFile("SeedsByDatesResponse.txt");
 
-			status2 =  true;
-			if (false == status2)
+			status2 =  true;*/
+			if (null == respInString2)
 			{
-				tProgressDialog.setMessage("Downloading Seeds Info Failed!");
+				// TODO: add warding info here, notify user the problem
+				updateDialogStatus("Downloading Seeds Info Failed!");
 				return false;
 			}
 			else
 			{
-				tProgressDialog.setMessage("Parsing Seeds Info...");
-				ArrayList<SeedsEntity> tSeedsList = SeedsJSONMessage.parseSeedsByDatesRespMsg(mDateArray,respInString2);
+				//tProgressDialog.setMessage("Parsing Seeds Info...");
+				Log.i("DateList", "Parsing SeedsByDateResp now!");
+				try{
+					tSeedsList = SeedsJSONMessage.parseSeedsByDatesRespMsg(mDateArray,respInString2);
+				}catch(JSONException e){
+					e.printStackTrace();
+				}
 				
+				Log.i("DateList", "Parsing SeedsByDateResp DONE, seeds count = "+tSeedsList.size());
 				// Retrieve the DB process handler to get data 
 			    SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
 			    
-			    // Store the seeds info into database
-			    tProgressDialog.setMessage("Store Seeds Info...");
+			    // Store the seeds info into database 
+			    //tProgressDialog.setMessage("Store Seeds Info...");
 			    int numOfSeeds = tSeedsList.size();
 			    Log.i("DateList", "The size of the SeedsList is: "+numOfSeeds);
 			    for (int index = 0; index < numOfSeeds; index++)
@@ -432,12 +469,12 @@ public class SeedsDateListActivity extends Activity {
 		}
 		else if(SeedsStatusByDate.isSeedsByDateNotReady(respInMap.get(tDate)))
 		{
-			tProgressDialog.setMessage("Seeds Info Not Ready!");
+			//tProgressDialog.setMessage("Seeds Info Not Ready!");
 			return false;			
 		}
 		else if(SeedsStatusByDate.isSeedsByDateNoUpdate(respInMap.get(tDate)))
 		{
-			tProgressDialog.setMessage("Seeds Info No Update!");
+			//tProgressDialog.setMessage("Seeds Info No Update!");
 			return false;						
 		}
 		
@@ -453,14 +490,14 @@ public class SeedsDateListActivity extends Activity {
     	boolean status2 = false;
     	HashMap<String, String> respInMap = null;
     	// Notify progress dialog to show the status
-    	tProgressDialog.setMessage("Retrieving Seeds Info Status...");
+    	//tProgressDialog.setMessage("Retrieving Seeds Info Status...");
     	
     	// Communicate with server to retrieve the seeds info
-		respInString = stubReadExternalFile("SeedsUpdateStatusByDatesResponse.txt");
-		status = true;
+		/*respInString = stubReadExternalFile("SeedsUpdateStatusByDatesResponse.txt");
+		status = true;*/
 
-		/*try {
-			status = SeedsNetworkProcess.sendUpdateStatusReqMsg(tDateArray,respInString);
+		try {
+			respInString = SeedsNetworkProcess.sendUpdateStatusReqMsg(tDateArray);
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -470,68 +507,76 @@ public class SeedsDateListActivity extends Activity {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		
-		if (false == status)
+		if (null == respInString)
 		{
-			tProgressDialog.setMessage("Retrieving Seeds Info Failed!");
+			//tProgressDialog.setMessage("Retrieving Seeds Info Failed!");
 		}
 		else
 		{
-			tProgressDialog.setMessage("Analyzing Seeds Info Status...");
-			respInMap = SeedsJSONMessage.parseUpdateStatusRespMsg(tDateArray,respInString);			
+			//tProgressDialog.setMessage("Analyzing Seeds Info Status...");
+			try{
+				respInMap = SeedsJSONMessage.parseUpdateStatusRespMsg(tDateArray,respInString);			
+			}catch (JSONException e){
+				e.printStackTrace();
+			}
 		}
-		
+		Log.i("DateList", "The size of respInMap is "+ respInMap.size());
+		Log.i("DateList", "The size of tDateArray is "+ tDateArray.size());
 		int numOfDate = tDateArray.size();
-    	mDateArray.clear();
+		Log.i("DateList", "The size of mDateArray is "+ mDateArray.size());
+		mDateArray.clear();
+		Log.i("DateList", "The size of mDateArray is "+ mDateArray.size());
 		for (int index2 = 0; index2 < numOfDate; index2++)
 		{
 			String tDate = tDateArray.get(index2);
+			Log.i("DateList", "tDate: "+ tDate +"Status: " + respInMap.get(tDate));
 			if (SeedsStatusByDate.isSeedsByDateReady(respInMap.get(tDate)))
 			{
-				tProgressDialog.setMessage("Seeds Info Is Ready! "+tDate);
+				//tProgressDialog.setMessage("Seeds Info Is Ready! "+tDate);
 				mDateArray.add(tDate);
 			}
 			else if(SeedsStatusByDate.isSeedsByDateNotReady(respInMap.get(tDate)))
 			{
-				tProgressDialog.setMessage("Seeds Info Not Ready! "+tDate);							
+				//tProgressDialog.setMessage("Seeds Info Not Ready! "+tDate);							
 			}
 			else if(SeedsStatusByDate.isSeedsByDateNoUpdate(respInMap.get(tDate)))
 			{
-				tProgressDialog.setMessage("Seeds Info No Update! "+tDate);										
+				//tProgressDialog.setMessage("Seeds Info No Update! "+tDate);										
 			}			
 		}
-		
+		Log.i("DateList", "The size of mDateArray is "+ mDateArray.size());
 		if (mDateArray.size() <= 0)
 		{
-			tProgressDialog.setMessage("Seeds Info No Update!");
+			//tProgressDialog.setMessage("Seeds Info No Update!");
 			return false;
 		}
 		
-		tProgressDialog.setMessage("Downloading Seeds Info... ");
-		//status2 = SeedsNetworkProcess.sendSeedsByDateReqMsg(mDateArray,respInString2);
-		respInString2 = stubReadExternalFile("SeedsByDatesResponse.txt");
-		status2 =  true;
+		//tProgressDialog.setMessage("Downloading Seeds Info... ");
+		respInString2 = SeedsNetworkProcess.sendSeedsByDateReqMsg(mDateArray);
+		/*respInString2 = stubReadExternalFile("SeedsByDatesResponse.txt");
+		status2 =  true;*/
 		
-		if (false == status2)
+		if (null == respInString2)
 		{
-			tProgressDialog.setMessage("Downloading Seeds Info Failed!");
+			//tProgressDialog.setMessage("Downloading Seeds Info Failed!");
 			return false;
 		}
 		else
 		{
-			tProgressDialog.setMessage("Parsing Seeds Info... ");
+			//tProgressDialog.setMessage("Parsing Seeds Info... ");
 			ArrayList<SeedsEntity> tSeedsList = SeedsJSONMessage.parseSeedsByDatesRespMsg(mDateArray,respInString2);
 			
 			// Retrieve the DB process handler to get data 
 		    SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
 		    
 		    // Store the seeds info into database
-		    tProgressDialog.setMessage("Store Seeds Info... ");
+		    //tProgressDialog.setMessage("Store Seeds Info... ");
 		    int numOfSeeds = tSeedsList.size();
 		    for (int index = 0; index < numOfSeeds; index++)
 		    {
-		    	tProgressDialog.setMessage("Store Seeds Info "+index+"/"+numOfSeeds);
+		    	//tProgressDialog.setMessage("Store Seeds Info "+index+"/"+numOfSeeds);
 		    	try{
 		    		tDBAdapter.insertEntryToSeed(tSeedsList.get(index));			    	
 		    	}catch(Exception e){

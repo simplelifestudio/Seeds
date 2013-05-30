@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 
-// 测试中文注释
 @implementation AppDelegate
 
 @synthesize moduleManager = _moduleManager;
@@ -20,6 +19,10 @@
     
     // Modules initialization
     _moduleManager = [CBModuleManager sharedInstance];
+    
+    id<CBModule> guiModule = [GUIModule sharedInstance];
+    guiModule.moduleWeightFactor = 0.1;
+    [_moduleManager registerModule:guiModule];
     
     id<CBModule> userDefaultModule = [UserDefaultsModule sharedInstance];
     userDefaultModule.moduleWeightFactor = 0.1;
@@ -34,15 +37,12 @@
     [_moduleManager registerModule:spiderModule];
     
     id<CBModule> databaseModule = [DatabaseModule sharedInstance];
-    databaseModule.moduleWeightFactor = 0.4;
+    databaseModule.moduleWeightFactor = 0.3;
     [_moduleManager registerModule:databaseModule];
     
     id<CBModule> transmissionModule = [TransmissionModule sharedInstance];
     transmissionModule.moduleWeightFactor = 0.1;
     [_moduleManager registerModule:transmissionModule];
-    
-    // Forbid auto sleep
-    [UIApplication sharedApplication].idleTimerDisabled = YES;
     
     return YES;
 }

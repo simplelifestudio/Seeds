@@ -11,12 +11,6 @@
 #import "DAO.h"
 #import "SeedPicture.h"
 
-#define TABLE_SEEDPICTURE @"seedpicture"
-#define TABLE_SEEDPICTURE_COLUMN_PICTUREID @"pictureId"
-#define TABLE_SEEDPICTURE_COLUMN_SEEDID @"seedId"
-#define TABLE_SEEDPICTURE_COLUMN_PICTURELINK @"pictureLink"
-#define TABLE_SEEDPICTURE_COLUMN_MEMO @"memo"
-
 @protocol SeedPictureDAO <NSObject, DAO>
 
 -(NSInteger) countAllSeedPictures;

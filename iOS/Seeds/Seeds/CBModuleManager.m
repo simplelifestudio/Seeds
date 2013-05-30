@@ -17,20 +17,7 @@
 
 @implementation CBModuleManager
 
-+(id)sharedInstance
-{
-    static CBModuleManager* sharedInstance;
-    static dispatch_once_t done;
-    dispatch_once
-    (
-     &done,
-     ^
-     {
-         sharedInstance = [[CBModuleManager alloc] init];
-     }
-     );
-    return sharedInstance;
-}
+SINGLETON(CBModuleManager)
 
 -(id) init
 {
@@ -140,22 +127,50 @@
 
 -(void)applicationWillResignActive:(UIApplication *)application
 {
-    
+    for (id<CBModule> module in moduleList)
+    {
+        if ([module respondsToSelector:@selector(applicationWillResignActive:)])
+        {
+            id<UIApplicationDelegate> delegate = (id<UIApplicationDelegate>)module;
+            [delegate applicationWillResignActive:application];
+        }
+    }
 }
 
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {
-    
+    for (id<CBModule> module in moduleList)
+    {
+        if ([module respondsToSelector:@selector(applicationDidEnterBackground:)])
+        {
+            id<UIApplicationDelegate> delegate = (id<UIApplicationDelegate>)module;
+            [delegate applicationDidEnterBackground:application];
+        }
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-
+    for (id<CBModule> module in moduleList)
+    {
+        if ([module respondsToSelector:@selector(applicationDidBecomeActive:)])
+        {
+            id<UIApplicationDelegate> delegate = (id<UIApplicationDelegate>)module;
+            [delegate applicationDidBecomeActive:application];
+        }
+    }
 }
 
 -(void)applicationWillEnterForeground:(UIApplication *)application
 {
-    
+    for (id<CBModule> module in moduleList)
+    {
+        if ([module respondsToSelector:@selector(applicationWillEnterForeground:)])
+        {
+            id<UIApplicationDelegate> delegate = (id<UIApplicationDelegate>)module;
+            [delegate applicationWillEnterForeground:application];
+        }
+    }
 }
 
 -(void)applicationWillTerminate:(UIApplication *)application

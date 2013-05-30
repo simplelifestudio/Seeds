@@ -17,7 +17,7 @@
     if (nil != files && 0 < files.count)
     {        
         ZipFile *zip = [[ZipFile alloc] initWithFileName:zipFilePath mode:ZipFileModeCreate];
-
+        
         for (NSString* file in files)
         {
             NSString* fileName = [file lastPathComponent];
@@ -65,6 +65,18 @@
     }
     
     return data;
+}
+
++(BOOL) dataToFile:(NSData*) data filePath:(NSString*) filePath;
+{
+    BOOL flag = NO;
+    
+    if (nil != data && nil != filePath)
+    {
+        flag = [data writeToFile:filePath atomically:YES];
+    }
+    
+    return flag;
 }
 
 +(NSArray*) filesInDirectory:(NSString*) directoryPath fileExtendName:(NSString*) extendName

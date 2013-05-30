@@ -8,8 +8,30 @@
 
 #import <Foundation/Foundation.h>
 
+//#define DEFINE_SINGLETON_FOR_HEADER(className) \
+//\
+//+ (className*) sharedInstance;
+
+#define SINGLETON(className) \
+\
++ (className*) sharedInstance \
+{ \
+    static className* sharedInstance = nil; \
+    static dispatch_once_t onceToken; \
+    dispatch_once \
+    ( \
+        &onceToken, \
+        ^ \
+        { \
+            sharedInstance = [[self alloc] init]; \
+        } \
+    ); \
+    \
+    return sharedInstance; \
+}
+
 @protocol CBSharedInstance <NSObject>
 
-+(id)sharedInstance;
++(id) sharedInstance;
 
 @end

@@ -8,8 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+//#import "Reachability.h"
+
 @interface CBNetworkUtils : NSObject
 
-+(NSString*) hostName;
++(NSString*) hostNameInWiFi;
+
++(BOOL) isWiFiEnabled;
++(BOOL) is3GEnabled;
+
++(BOOL) isInternetConnectable:(NSString*) hostName;
 
 @end

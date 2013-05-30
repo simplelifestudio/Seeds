@@ -16,6 +16,7 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    <style name="AppTheme.FullScreen" parent="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
     
     <style name="Transparent">
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -34,6 +35,11 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
         <item name="android:backgroundDimEnabled">true</item>
+    </style>
+    
+    <style name="PhotoGridLayout">
+        <item name="android:drawSelectorOnTop">true</item>
+        <item name="android:listSelector">@drawable/seedsgrid_photogrid_list_selector</item>
     </style>
 
 </resources>

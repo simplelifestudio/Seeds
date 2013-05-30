@@ -10,21 +10,9 @@
 
 #import "TorrentListDownloadAgent.h"
 
-#define SEEDS_SERVER_IP @"174.123.15.31"
-#define LINK_SEEDLIST_CHANNEL_PAGE @"&page="
-#define LINK_SEEDLIST_CHANNEL @"http://"SEEDS_SERVER_IP"/forumdisplay.php?fid=55"
-#define LINK_SEEDLIST @"http://"SEEDS_SERVER_IP"/viewthread.php?tid=931724&extra=page%3D1"
-
-#define SEEDLIST_LINK_PAGENUM_START 1
-#define SEEDLIST_LINK_PAGENUM_END 10
-
-#define DATE_HOLDER @"$DATE$"
-#define SEEDLIST_LINK_TITLE @"["DATE_HOLDER"]BT合集"
-
 @interface SeedsSpider()
 {
     SeedsVisitor* visitor;
-    TorrentListDownloadAgent* torrentListDownloadAgent;
     BOOL isPullOperationDone;
 }
 
@@ -275,48 +263,85 @@
     DLog(@"Clean old and unfavorited seed records.");
     [seedDAO deleteAllSeedsExceptFavoritedOrLastThreeDayRecords:last3Days];
     
-    // Step XX:
-    TorrentListDownloadAgent* downloadAgent = [[TorrentListDownloadAgent alloc] init];
-    [torrentLinksByDateDic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-        // Create date folder if necessary
-        NSString* dateStr = (NSString*)key;
-        NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
-//        documentsPath = [documentsPath stringByAppendingString:@"/"];
-//        NSString* dateFolderPath = [documentsPath stringByAppendingString:dateStr];
-        NSString* dateFolderPath = [documentsPath stringByAppendingPathComponent:dateStr];
-
-        NSFileManager* fm = [NSFileManager defaultManager];
-        BOOL flag = NO;
-        NSError* error = nil;
-        if ([fm fileExistsAtPath:dateFolderPath])
-        {
-            flag = [fm removeItemAtPath:dateFolderPath error:&error];
-            if (!flag)
+    NSInteger keyCount = torrentLinksByDateDic.allKeys.count;
+    if (0 < keyCount)
+    {
+        // Step XX:
+        __block BOOL directoryIsReady = NO;
+        
+        TorrentListDownloadAgent* downloadAgent = [[TorrentListDownloadAgent alloc] init];
+        [torrentLinksByDateDic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
+            // Create date folder if necessary
+            NSString* dateStr = (NSString*)key;
+            NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
+            NSString* torrentsPath = [documentsPath stringByAppendingPathComponent:FOLDER_TORRENTS];
+            
+            NSFileManager* fm = [NSFileManager defaultManager];
+            NSError* error = nil;
+            if ([fm fileExistsAtPath:torrentsPath])
             {
-                DLog(@"Failed to remove folder: %@ with error: %@", dateFolderPath, [error description]);
+                directoryIsReady = YES;
             }
-        }
-
-        flag = [fm createDirectoryAtPath:dateFolderPath withIntermediateDirectories:NO attributes:nil error:&error];
-        if (flag)
+            else
+            {
+                directoryIsReady = [fm createDirectoryAtPath:torrentsPath withIntermediateDirectories:NO attributes:nil error:&error];
+            }
+            
+            if (directoryIsReady)
+            {
+                NSString* dateFolderPath = [torrentsPath stringByAppendingPathComponent:dateStr];
+                if ([fm fileExistsAtPath:dateFolderPath])
+                {
+                    directoryIsReady = [fm removeItemAtPath:dateFolderPath error:&error];
+                    if (!directoryIsReady)
+                    {
+                        DLog(@"Failed to remove folder: %@ with error: %@", dateFolderPath, [error description]);
+                    }
+                }
+                
+                directoryIsReady = [fm createDirectoryAtPath:dateFolderPath withIntermediateDirectories:NO attributes:nil error:&error];
+                if (directoryIsReady)
+                {
+                    // Download torrents with date
+                    NSArray* seeds = (NSArray*)obj;
+                    [downloadAgent addSeeds:seeds downloadPath:dateFolderPath];
+                }
+                else
+                {
+                    DLog(@"Failed to create folder: %@ with error: %@", dateFolderPath, error.localizedDescription);
+                }
+            }
+            else
+            {
+                DLog(@"Failed to create folder: %@ with error: %@", torrentsPath, error.localizedDescription);
+            }
+        }];
+        
+        if (directoryIsReady)
         {
-            // Download torrents with date
-            NSArray* seeds = (NSArray*)obj;
-            [downloadAgent addSeeds:seeds downloadPath:dateFolderPath];
+            [downloadAgent downloadWithDelegate:_torrentListDownloadAgentDelegate];
+            
+            while (!isPullOperationDone)
+            {
+                usleep(100);
+            }
         }
         else
         {
-            DLog(@"Failed to create folder: %@ with error: %@", dateFolderPath, [error description]);    
+            if ([_torrentListDownloadAgentDelegate respondsToSelector:@selector(torrentListDownloadFinished:)])
+            {
+                [_torrentListDownloadAgentDelegate torrentListDownloadFinished:NSLocalizedString(@"Folder Exception", nil)];
+            }
         }
-        
-    }];
-    
-    [downloadAgent downloadWithDelegate:_torrentListDownloadAgentDelegate];
-    
-    while (!isPullOperationDone)
-    {
-        usleep(100);
     }
+    else
+    {
+        if ([_torrentListDownloadAgentDelegate respondsToSelector:@selector(torrentListDownloadFinished:)])
+        {
+            [_torrentListDownloadAgentDelegate torrentListDownloadFinished:NSLocalizedString(@"Sync Yet", nil)];
+        }
+    }
+
     
     sleep(2);
 }

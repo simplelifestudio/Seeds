@@ -9,30 +9,19 @@
 #import "TransmissionModule.h"
 
 #import "HTTPServer.h"
+#import "CBFileUtils.h"
 
 @interface TransmissionModule()
 {
     HTTPServer* httpServer;
+    NSString* htmlCode;
 }
 
 @end
 
 @implementation TransmissionModule
 
-+(id)sharedInstance
-{
-    static TransmissionModule* sharedInstance;
-    static dispatch_once_t done;
-    dispatch_once
-    (
-     &done,
-     ^
-     {
-         sharedInstance = [[TransmissionModule alloc] initWithIsIndividualThreadNecessary:NO];
-     }
-     );
-    return sharedInstance;
-}
+SINGLETON(TransmissionModule)
 
 -(void) initModule
 {
@@ -67,9 +56,9 @@
 	// [httpServer setPort:12345];
 	
 	// Serve files from our embedded Web folder
-//	NSString *webPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"../Documents"];
     NSString* webPath = [CBPathUtils documentsDirectoryPath];
-	DLog(@"Setting document root: %@", webPath);
+    webPath = [webPath stringByAppendingPathComponent:FOLDER_TORRENTS];
+	DLog(@"HTTP server document root: %@", webPath);
 	[httpServer setDocumentRoot:webPath];
     
     [super startService];
@@ -80,17 +69,22 @@
     [NSThread sleepForTimeInterval:0.5];
 }
 
-- (void)startHTTPServer
+- (BOOL)startHTTPServer
 {
+    BOOL flag = NO;
+    
 	NSError *error;
 	if([httpServer start:&error])
 	{
+        flag = YES;
 		DLog(@"Started HTTP Server on port %hu", [httpServer listeningPort]);
 	}
 	else
 	{
 		DLog(@"Error starting HTTP Server: %@", error);
 	}
+    
+    return flag;
 }
 
 -(void)stopHTTPServer
@@ -119,10 +113,75 @@
     
     if (nil != httpServer)
     {
-        name = [CBNetworkUtils hostName];
+        name = [CBNetworkUtils hostNameInWiFi];
     }
     
     return name;
+}
+
+-(BOOL)generateHtmlPage:(NSArray*) last3Days;
+{
+    NSAssert(nil != last3Days, @"Date array is nil.");
+    
+    BOOL flag = NO;
+    
+    int encodingMode = NSUTF8StringEncoding;
+    
+    if (nil == htmlCode)
+    {
+        NSString* htmlFilePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
+        NSData* data = [CBFileUtils dataFromFile:htmlFilePath];
+        htmlCode = [[NSString alloc] initWithData:data encoding:encodingMode];
+    }
+    
+    NSMutableString* htmlCodeCopy = [NSMutableString stringWithString:htmlCode];
+    for (NSDate* day in last3Days)
+    {
+        NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
+
+        NSMutableString* zipFileName = [NSMutableString stringWithString:dateStr];
+        [zipFileName appendString:FILE_EXTENDNAME_DOT_ZIP];
+        
+        NSString* strAfterLinkReplaced = [CBStringUtils replaceSubString:zipFileName oldSubString:@"$LINK$" string:htmlCodeCopy];
+        htmlCodeCopy = [NSMutableString stringWithString:strAfterLinkReplaced];
+        
+        NSString* strAfterDateReplaced = [CBStringUtils replaceSubString:dateStr oldSubString:@"$NAME$" string:htmlCodeCopy];
+        htmlCodeCopy = [NSMutableString stringWithString:strAfterDateReplaced];
+    }
+    
+    NSData* data = [htmlCodeCopy dataUsingEncoding: encodingMode];
+
+    NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
+    NSString* torrentsPath = [documentsPath stringByAppendingPathComponent:FOLDER_TORRENTS];
+    NSString* indexHtmlFilePath = [torrentsPath stringByAppendingPathComponent:@"index.html"];
+    
+    flag = [CBFileUtils dataToFile:data filePath:indexHtmlFilePath];
+    if (!flag)
+    {
+        DLog(@"Failed to generate index.html file.");
+    }
+    
+    return flag;
+}
+
+-(void)applicationWillResignActive:(UIApplication *)application
+{
+    
+}
+
+-(void)applicationDidEnterBackground:(UIApplication *)application
+{
+    
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    
+}
+
+-(void)applicationWillEnterForeground:(UIApplication *)application
+{
+    
 }
 
 @end

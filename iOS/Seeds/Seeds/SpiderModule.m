@@ -12,20 +12,7 @@
 
 @synthesize spider = _spider;
 
-+(id)sharedInstance
-{
-    static SpiderModule* sharedInstance;
-    static dispatch_once_t done;
-    dispatch_once
-    (
-     &done,
-     ^
-     {
-         sharedInstance = [[SpiderModule alloc] initWithIsIndividualThreadNecessary:NO];
-     }
-     );
-    return sharedInstance;
-}
+SINGLETON(SpiderModule)
 
 -(void) initModule
 {
@@ -55,5 +42,24 @@
     [NSThread sleepForTimeInterval:0.5];
 }
 
+-(void)applicationWillResignActive:(UIApplication *)application
+{
+    
+}
+
+-(void)applicationDidEnterBackground:(UIApplication *)application
+{
+    
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    
+}
+
+-(void)applicationWillEnterForeground:(UIApplication *)application
+{
+    
+}
 
 @end

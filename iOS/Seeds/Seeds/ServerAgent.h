@@ -14,6 +14,10 @@
 
 @interface ServerAgent : NSObject <JSONMessageDelegate>
 
++(NSMutableURLRequest*) constructURLRequest:(JSONMessage*) message;
+
 -(void) alohaTest;
+-(void) updateStatusByDatesTest;
+-(void) seedsByDatesTest;
 
 @end

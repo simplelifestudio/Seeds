@@ -23,6 +23,7 @@
 
 +(NSString*) newZipFileWithFiles:(NSString*) zipFilePath zipFiles:(NSArray*) files;
 +(NSData*) dataFromFile:(NSString*) filePath;
++(BOOL) dataToFile:(NSData*) data filePath:(NSString*) filePath;
 +(NSArray*) filesInDirectory:(NSString*) directoryPath fileExtendName:(NSString*) extendName;
 
 @end

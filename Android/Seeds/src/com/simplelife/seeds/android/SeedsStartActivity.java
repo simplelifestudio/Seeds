@@ -28,6 +28,12 @@ public class SeedsStartActivity extends Activity {
 		// Start the DB process
 		SeedsDBAdapter.initAdapter(getApplication());
 		
+		// Start the date manager
+		SeedsDateManager.initDateManager(getApplication());
+		
+		// Start the Seeds Imgae URL preload thread
+		SeedsImageUrlPreloader.initPreloader(getApplication());
+		
 		// Stay for a moments and redirect
 		fadeShow.setAnimationListener(new AnimationListener()
 		{
@@ -44,7 +50,7 @@ public class SeedsStartActivity extends Activity {
 	}
 	
 	private void redirectTo(){       
-		Intent intent = new Intent(this, SeedsDateListActivity.class);
+		Intent intent = new Intent(this, SeedsPasswordActivity.class);
 		startActivity(intent);
 		finish();
 	}
