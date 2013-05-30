@@ -49,7 +49,7 @@
     	<Button
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-        	android:onClick="sendMessage"
+        	android:onClick="onVerifyAddress"
         	android:text="@string/seeds_severaddrverify" />
     </LinearLayout>	
 	        
@@ -78,6 +78,8 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_marginTop="160dp"
+	    android:layout_marginLeft="16dp"
+	    android:onClick="onChannelOneClick"
 	    android:text="@string/seeds_config_channel1" />
 	
 	<RadioButton
@@ -85,6 +87,8 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_marginTop="190dp"
+	    android:layout_marginLeft="16dp"
+	    android:onClick="onChannelTwoClick"
 	    android:text="@string/seeds_config_channel2" />
 		
 	<RadioButton
@@ -92,6 +96,8 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_marginTop="220dp"
+	    android:layout_marginLeft="16dp"
+	    android:onClick="onChannelThreeClick"
 	    android:text="@string/seeds_config_channel3" />
 	
 	<LinearLayout
@@ -99,7 +105,7 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:background="@drawable/divider_horizontal_line"
-	    android:layout_marginTop="250dp"
+	    android:layout_marginTop="260dp"
 	    android:orientation="vertical" >
 	</LinearLayout>
 			

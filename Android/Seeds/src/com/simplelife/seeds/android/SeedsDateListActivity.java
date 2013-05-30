@@ -35,6 +35,7 @@ public class SeedsDateListActivity extends Activity {
 	private Button myTodayBtn;
 	private Button myUpdateBtn;
 	private Button myFavListBtn;
+	private Button myConfigBtn;
 	private ProgressDialog tProgressDialog = null; 	
 	
 	// Date in string format
@@ -75,13 +76,15 @@ public class SeedsDateListActivity extends Activity {
 		myYesterdayBtn    = (Button) findViewById(R.id.yesterday_btn);
 		myTodayBtn   = (Button) findViewById(R.id.today_btn);
 		myUpdateBtn  = (Button) findViewById(R.id.update_btn);
-		myFavListBtn =  (Button) findViewById(R.id.favlist_btn);
+		myFavListBtn = (Button) findViewById(R.id.favlist_btn);
+		myConfigBtn  = (Button) findViewById(R.id.config_btn);
 		
 		// Setup the click listener
 		myBefYesterdayBtn.setOnClickListener(myBefYesterdayBtnListener);
 		myYesterdayBtn.setOnClickListener(myYesterdayBtnListener);
 		myTodayBtn.setOnClickListener(myTodayBtnListener);
 		myFavListBtn.setOnClickListener(myFavListBtnListener);
+		myConfigBtn.setOnClickListener(myConfigBtnListener);
 		
 		Log.i(LOGCLASS, "Working on setting the ProgressDialog style"); 
 		// Set the progress style as spinner
@@ -123,10 +126,12 @@ public class SeedsDateListActivity extends Activity {
 					try {
 						// Only when the seeds info have not been updated
 						updateDialogStatus("Connecting to Server...");
+						
+						SeedsNetworkProcess.sendAlohaReqMsg();
 						Thread.sleep(20000);
 						
-						if (!isSeedsInfoUpdated(mDateBefYesterday))
-							opeStatus = updateSeedsInfo(mDateBefYesterday);
+						//if (!isSeedsInfoUpdated(mDateBefYesterday))
+						//	opeStatus = updateSeedsInfo(mDateBefYesterday);
 						
 					} catch (Exception e) {
 						// Show the error message here
@@ -285,6 +290,14 @@ public class SeedsDateListActivity extends Activity {
 				}
 			}.start();			
 			
+		}
+	};
+	
+	private View.OnClickListener myConfigBtnListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(SeedsDateListActivity.this, SeedsConfigActivity.class);
+			startActivity(intent);
 		}
 	};
 	

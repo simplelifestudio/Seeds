@@ -1,6 +1,5 @@
 package com.simplelife.seeds.android.Utils.NetworkProcess;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -9,11 +8,9 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EncodingUtils;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,11 +28,11 @@ public class SeedsNetworkProcess {
 		
 	}
 	
-	public static void sendAlohaReqMsg() throws JSONException, ClientProtocolException, IOException {
+	public static String sendAlohaReqMsg() throws JSONException, ClientProtocolException, IOException {
 		
         // Prepare network parameters
 	    DefaultHttpClient httpClient = new DefaultHttpClient();
-	    ResponseHandler <String> resonseHandler = new BasicResponseHandler();
+	    new BasicResponseHandler();
 	    HttpPost postMethod = new HttpPost(mServerUrl);
 	    
 		Log.i("NetworkProcess","Sending Aloha Message!");
@@ -52,18 +49,63 @@ public class SeedsNetworkProcess {
 		HttpResponse response = httpClient.execute(postMethod);
 		
 	    // Parse the response
-		String retSrc = EntityUtils.toString(response.getEntity());
-		Log.i("return :", retSrc);
-		JSONObject result = new JSONObject( retSrc);  
-		String token = (String) result.get("command");  
-	    Log.i("response :", token);	
+		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+			String retSrc = EntityUtils.toString(response.getEntity());
+			Log.i("return :", retSrc);
+			JSONObject result = new JSONObject( retSrc);  
+			String token = (String) result.get("command");  
+		    Log.i("response :", token);	
+		    
+		    return token;
+		}
+		else
+		{
+			return null;
+		}
 	}
+
+	public static String sendAlohaReqMsg(String _tgtUrl) throws JSONException, ClientProtocolException, IOException {
+		
+        // Prepare network parameters
+	    DefaultHttpClient httpClient = new DefaultHttpClient();
+	    new BasicResponseHandler();
+	    HttpPost postMethod = new HttpPost(_tgtUrl);
+	    
+		Log.i("NetworkProcess","Sending Aloha Message to "+_tgtUrl);
+	    // Create Aloha Message
+		JSONObject paramList = new JSONObject();
+		paramList.put("content","Hello Seeds Server!");
+		
+		JSONObject alohaReq = SeedsJSONMessage.SeedsConstructMsg(SeedsJSONMessage.AlohaRequest, paramList);
+		
+	    // Send the request
+		postMethod.setEntity(new StringEntity(alohaReq.toString()));
+		Log.i("NetworkProcess","Aloha Message "+alohaReq.toString());
+		// Retrieve the response
+		HttpResponse response = httpClient.execute(postMethod);
+		
+	    // Parse the response
+		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+			String retSrc = EntityUtils.toString(response.getEntity());
+			Log.i("return :", retSrc);
+			JSONObject result = new JSONObject( retSrc);  
+			String token = (String) result.get("command");  
+		    Log.i("response :", token);	
+		    
+		    return token;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
 	
 	public static String sendUpdateStatusReqMsg(ArrayList<String> inDateArray) throws JSONException, ClientProtocolException, IOException {
 		
 		// Prepare network parameters
 	    DefaultHttpClient httpClient = new DefaultHttpClient();
-	    ResponseHandler <String> resonseHandler = new BasicResponseHandler();
+	    new BasicResponseHandler();
 	    HttpPost postMethod = new HttpPost(mServerUrl);
 	    String respInString;
 	    
@@ -98,7 +140,7 @@ public class SeedsNetworkProcess {
             return respInString;
             // String strsResult = strResult.replace("\r", "");            
         } else {
-        	Log.i("NetworkProcess","UpdateStatusReq Message sending failed!");
+        	Log.i("NetworkProcess","UpdateStatusReq Message sending failed! Status Code: "+response.getStatusLine().getStatusCode());
         	return null;           
         }
 		
