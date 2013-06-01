@@ -125,7 +125,15 @@ public class MyNodeVisitor extends NodeVisitor {
 			return null;
 		}
 		
-		int index = field.indexOf("]");
+		int index = field.indexOf("Link");
+		if (index >= 0) {
+			// Link URL: [url]http://www.maxp2p.com/link.php?ref=ft48srXUSU
+			index = field.indexOf("http://");
+			field = field.substring(index).trim();
+			return field;
+		}
+		
+		index = field.indexOf("]");
 		if (index > 0) {
 			field = field.substring(index + 1).trim();
 		}
@@ -149,6 +157,7 @@ public class MyNodeVisitor extends NodeVisitor {
 		
 		return field;
     }
+    
     private void formatSeedForSave(Seed seed)
     {
 		if (seed.getFormat() != null) {
@@ -177,6 +186,10 @@ public class MyNodeVisitor extends NodeVisitor {
 
 		if (seed.getType() != null) {
 			seed.setType(removePreTitle(seed.getType()));
+		}
+		
+		if (seed.getTorrentLink() != null) {
+			seed.setType(removePreTitle(seed.getTorrentLink()));
 		}
     }
     
