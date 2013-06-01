@@ -10,6 +10,7 @@
     <string name="seeds_yesterday">昨天</string>
     <string name="seeds_today">今天</string>
     <string name="seeds_update">更新</string>
+    <string name="seeds_config">设置</string>
     <string name="seedTitle">The title of the seed</string>
     <string name="seedSize">The size of the seed</string>
     <string name="seedFormat">The format of the seed</string>
@@ -27,10 +28,13 @@
     <string name="title_activity_display_message">Wrong Password</string>
     <string name="seeds_severaddrmsg">Enter IP Address and Port</string>
     <string name="seeds_severaddrverify">验证</string>
-    <string name="seeds_config_channel">选择频道</string>
+    <string name="seeds_config_channel">选择频道：</string>
     <string name="seeds_config_channel1">动作片</string>
     <string name="seeds_config_channel2">剧情片</string>
     <string name="seeds_config_channel3">文艺片</string>
+    
+    <string name="seeds_toast_configsucc">设置成功</string>
+    <string name="seeds_toast_configfail">无效的地址</string>
     
     <!-- Below parameters come from the gridview open source tool Bitmapfun -->
     <string name="clear_cache_menu">Clear Caches</string>
