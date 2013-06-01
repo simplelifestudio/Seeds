@@ -1,5 +1,8 @@
 package com.simplelife.seeds.server;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class OperationLog {
 	/**
 	 * @return the id
@@ -62,11 +65,34 @@ public class OperationLog {
 		this.memo = memo;
 	}
 	
+	public OperationLog()
+	{
+		
+	}
 	
+	public OperationLog(long logId, String logInfo)
+	{
+		this.setLogId(logId);
+		this.setLogInfo(logInfo);
+		this.Save();
+	}
+	
+	public void Save()
+	{
+		if (logId == 0)
+		{
+			logger.log(Level.SEVERE, "logId can't be 0.");
+			return;
+		}
+		
+		this.setLogDate(DateUtil.getNow());
+		DaoWrapper.getInstance().save(this);
+	}
 	
 	private long id;
 	private String logDate;
 	private long logId;
 	private String logInfo;
 	private String memo;
+	private Logger logger = Logger.getLogger("OperationLog");
 }

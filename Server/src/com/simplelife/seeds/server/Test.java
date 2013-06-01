@@ -20,9 +20,15 @@ public class Test {
 		//testStrBuilder();
 		//testSeedStatusReq();
 		//testDateFunctions();
-		testRangeHtmlParse();
+		//testRangeHtmlParse();
+		testOperationLog();
 	}
 
+	private static void testOperationLog()
+	{
+		OperationLog log = new OperationLog(1, "this is sample of link");
+		log.Save();
+	}
 	
 	private static void testRangeHtmlParse()
 	{
@@ -48,7 +54,7 @@ public class Test {
 		System.out.println(DateUtil.getDaysFromToday("2013-5-1"));
 		System.out.println(DateUtil.getDaysFromToday("2013-*05-01"));
 		System.out.println(DateUtil.getDaysFromToday("2012-05-01"));
-		System.out.println(DateUtil.getNow());
+		System.out.println(DateUtil.getToday());
 		System.out.println(DateUtil.getDateStringByDayBack(5));
 		System.out.println(DateUtil.getDateStringByDayBack(20));
 	}
