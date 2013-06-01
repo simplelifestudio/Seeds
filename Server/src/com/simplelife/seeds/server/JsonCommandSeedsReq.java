@@ -19,6 +19,7 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 	
 	@Override
 	public void Execute(JSONObject jsonObj, PrintWriter out) {
+		_logger.log(Level.INFO, "Start to Execute SeedsUpdateStatusByDatesRequest");
 		String strDateList = jsonObj.getString(_jsonParaListKeyword); 
 		JSONObject dateObj = JSONObject.fromObject(strDateList);
 		
@@ -47,17 +48,25 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 		responseJsonHeader(strBuilder);
 		
 		String strDate;
+		String strDateList = "[";
 		int size = dateList.size();
 		for (int i = 0; i < size; i++)
 		{
 			strDate = dateList.getString(i);
+			strDateList += strDate + " ";
 			responseSeeds(strDate, strBuilder, (i < size-1));
 		}
+		
+		strDateList = strDateList.trim();
+		strDateList += "]";
+		
 		strBuilder.deleteCharAt(strBuilder.length() - 2);      // remove , for last date
 		strBuilder.append("}\n}");
 		
 		out.write(strBuilder.toString());
+		_logger.log(Level.INFO, "Response SeedsUpdateStatusByDatesRequest successfully: " + strDateList);
 		
+		/*
 		if (strBuilder.length() > 200)
 		{
 			_logger.log(Level.INFO, strBuilder.toString());
@@ -66,7 +75,9 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 		{
 			_logger.log(Level.INFO, strBuilder.substring(0, 200));
 		}
+		*/
 	}
+	
 	private void responseInvalidRequest(PrintWriter out)
 	{
 		StringBuilder strBuilder = new StringBuilder();
@@ -140,75 +151,27 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 	
 	private void responseOneSeedFields(Seed seed, StringBuilder strBuilder)
 	{
-		if ((seed.getType() != null) && (seed.getType().length() > 0))
+		responseField(seed.getType(), "type", strBuilder);
+		responseField(seed.getSource(), "source", strBuilder);
+		responseField(seed.getPublishDate(), "publishDate", strBuilder);
+		responseField(seed.getName(), "name", strBuilder);
+		responseField(seed.getSize(), "size", strBuilder);
+		responseField(seed.getFormat(), "format", strBuilder);
+		responseField(seed.getTorrentLink(), "torrentLink", strBuilder);
+		responseField(seed.getHash(), "hash", strBuilder);
+		responseField(seed.getMosaic(), "mosaic", strBuilder);
+		responseField(seed.getMemo(), "memo", strBuilder);
+	}
+	
+	private void responseField(String field, String title, StringBuilder strBuilder)
+	{
+		if ((field != null) && (field.length() > 0))
 		{
-			strBuilder.append("\"type\":\"");
-			strBuilder.append(seed.getType());
+			strBuilder.append("\"");
+			strBuilder.append(title);
+			strBuilder.append("\":\"");
+			strBuilder.append(field);
 			strBuilder.append("\",\n");
 		}
-		
-		if ((seed.getSource() != null) && (seed.getSource().length() > 0))
-		{
-			strBuilder.append("\"source\":\"");
-			strBuilder.append(seed.getSource());
-			strBuilder.append("\",\n");
-		}
-		
-		if ((seed.getPublishDate() != null) && (seed.getPublishDate().length() > 0))
-		{
-			strBuilder.append("\"publishDate\":\"");
-			strBuilder.append(seed.getPublishDate());
-			strBuilder.append("\",\n");
-		}
-		
-		if ((seed.getName() != null) && (seed.getName().length() > 0))
-		{
-			strBuilder.append("\"name\":\"");
-			strBuilder.append(seed.getName());
-			strBuilder.append("\",\n");
-		}
-		
-		if ((seed.getSize() != null) && (seed.getSize().length() > 0))
-		{
-			strBuilder.append("\"size\":\"");
-			strBuilder.append(seed.getSize());
-			strBuilder.append("\",\n");
-		}
-		
-		if ((seed.getFormat() != null) && (seed.getFormat().length() > 0))
-		{
-			strBuilder.append("\"format\":\"");
-			strBuilder.append(seed.getFormat());
-			strBuilder.append("\",\n");
-		}
-		
-		if ((seed.getTorrentLink() != null) && (seed.getTorrentLink().length() > 0))
-		{
-			strBuilder.append("\"torrentLink\":\"");
-			strBuilder.append(seed.getTorrentLink());
-			strBuilder.append("\",\n");
-		}
-		
-		if ((seed.getHash() != null) && (seed.getHash().length() > 0))
-		{
-			strBuilder.append("\"hash\":\"");
-			strBuilder.append(seed.getHash());
-			strBuilder.append("\",\n");
-		}
-		
-		if ((seed.getMosaic() != null) && (seed.getMosaic().length() > 0))
-		{
-			strBuilder.append("\"mosaic\":\"");
-			strBuilder.append(seed.getMosaic());
-			strBuilder.append("\",\n");
-		}
-		
-		if ((seed.getMemo() != null) && (seed.getMemo().length() > 0))
-		{
-			strBuilder.append("\"memo\":\"");
-			strBuilder.append(seed.getMemo());
-			strBuilder.append("\",\n");
-		}
-		
 	}
 }
