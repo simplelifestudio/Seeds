@@ -186,11 +186,23 @@ public class DateUtil {
 		return getCalendar().getTime();
 	}
 	
+	
+	/**
+	 * Get date string as format of "yyyy-MM-dd HH:mm:ss"
+	 * @return
+	 */
+	public static String getNow()
+	{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(getDefaultTimeZone());
+		return sdf.format(getCalendar().getTime());
+	}
+	
 	/**
 	 * Get date string as format of "yyyy-MM-dd"
 	 * @return
 	 */
-	public static String getNow()
+	public static String getToday()
 	{
 		return getDefaultDateFormatter().format(getCalendar().getTime());
 	}
