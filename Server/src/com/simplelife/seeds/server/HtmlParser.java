@@ -119,6 +119,11 @@ public class HtmlParser implements ISourceParser {
 		parsePageByDateRange();
 	}
 
+	/**
+	 * return 2013-06-01 by "[6-01]最新BT合集"
+	 * @param title: title in web page
+	 * @return Formatted date string
+	 */
 	private String getDateByTitle(String title)
 	{
 		String outDate = null;
@@ -154,6 +159,10 @@ public class HtmlParser implements ISourceParser {
 		return DateUtil.getFormatedDate(outDate);
 	}
 	
+	
+	/**
+	 * Parse pages by condition of [startDate, endDate] in pages from pageStart to pageEnd
+	 */
 	public void parsePageByDateRange()
 	{
 		if (endDate.compareTo(startDate) < 0)
@@ -177,6 +186,11 @@ public class HtmlParser implements ISourceParser {
 		}
 	}
 	
+	
+	/**
+	 * Parse topic list page, to get seed list pages filtered by given keyword 
+	 * @param htmlLink: link of topic list page
+	 */
 	private void parseFirstLevelPage(String htmlLink)
 	{
 		try
@@ -224,18 +238,29 @@ public class HtmlParser implements ISourceParser {
 		}
 	}
 	
+	
+	/**
+	 * Parse seeds list page
+	 * @param htmlLink: link of seeds list page
+	 * @param title: title like "[6-01]最新BT合集"
+	 */
 	private void parseSeedPage(String htmlLink, String title)
 	{
 		String date = getDateByTitle(title);
 		if ((date.compareTo(startDate) < 0) || (date.compareTo(endDate) > 0))
 		{
-			logger.log(Level.INFO, title + " is out of range[" + startDate + ", " + endDate + "]");
+			logger.log(Level.INFO, "Skip date<" + title + "> since it is out of date range [" + startDate + ", " + endDate + "]");
 			return;
 		}
 		
 		parseSeedDetails(htmlLink, date);
 	}
 	
+	/**
+	 * Parse details of seeds
+	 * @param htmlLink: link of seeds list page
+	 * @param date: publish date of seeds
+	 */
 	public void parseSeedDetails(String htmlLink, String date)
 	{
 		String sql = "select * from SeedCaptureLog where publishDate ='" + date + "' and status >= 2 ";
@@ -253,6 +278,9 @@ public class HtmlParser implements ISourceParser {
 			capLog.setPublishDate(date);
 			capLog.setStatus(1);
 			
+			OperationLog log = new OperationLog(1, htmlLink);
+			log.Save();
+			
 			deleteCaptureLog(date);
 			DaoWrapper.getInstance().save(capLog);
 			
@@ -268,9 +296,14 @@ public class HtmlParser implements ISourceParser {
             capLog.setStatus(2);
             //deleteCaptureLog(date);
 			DaoWrapper.getInstance().save(capLog);
+			log = new OperationLog(2, htmlLink);
+			log.Save();
+			logger.log(Level.INFO, "Parse seed page succeed: " + htmlLink + ", " + date);
 		}
 		catch (Exception e) 
 		{
+			OperationLog log = new OperationLog(3, htmlLink);
+			log.Save();
 			logger.log(Level.INFO, "Error occurred when trying to parse html page: " + htmlLink + ", error: " + e.getMessage());
 		}
 	}
