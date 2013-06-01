@@ -84,7 +84,7 @@
 -(void) updateProgress:(NSString*) text andPercents:(float) percents
 {
     [[NSRunLoop currentRunLoop]runUntilDate:[NSDate distantPast]];
-//    [self performSelectorOnMainThread:@selector(updateProgressText:) withObject:text waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(updateProgressText:) withObject:text waitUntilDone:NO];
     NSNumber *percentsVal = [NSNumber numberWithFloat:percents];
     [self performSelectorOnMainThread:@selector(updateProgressPercents:) withObject:percentsVal waitUntilDone:NO];
 }
