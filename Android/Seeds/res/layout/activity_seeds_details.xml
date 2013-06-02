@@ -42,6 +42,16 @@
         	android:text="@string/seeds_Favorite" />
     	
 	    <ImageView
+			android:id="@+id/seeds_download"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+        	android:layout_marginRight="35dip"
+        	android:layout_centerVertical="true"
+        	android:gravity="right"			
+			android:src="@drawable/download" />
+    		
+	    <ImageView
 			android:id="@+id/gotoGrid"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"

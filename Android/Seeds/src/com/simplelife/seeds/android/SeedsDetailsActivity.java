@@ -13,12 +13,14 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
 import com.simplelife.seeds.android.Utils.GridView.GridViewUI.ImageGridActivity;
@@ -55,6 +57,9 @@ public class SeedsDetailsActivity extends Activity{
 	
 	// Image view to change to gridview
 	private ImageView mGotoGridView;
+	
+	// Image view to download the seeds
+	private ImageView mDownloadView;
 	
 	// Database adapter
 	private SeedsDBAdapter mDBAdapter;
@@ -101,6 +106,9 @@ public class SeedsDetailsActivity extends Activity{
 		mGotoGridView = (ImageView) findViewById(R.id.gotoGrid);
 		mGotoGridView.setOnClickListener(myGotoGridViewListener);
 		
+		// Retrieve the download seeds option
+		mDownloadView = (ImageView) findViewById(R.id.seeds_download);
+		mDownloadView.setOnClickListener(myDownloadViewListener);		
 	}	
 	
 	private void initViews(){
@@ -314,6 +322,18 @@ public class SeedsDetailsActivity extends Activity{
 		}
 	};
 	
+	private View.OnClickListener myDownloadViewListener = new View.OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			
+    		Toast toast = Toast.makeText(getApplicationContext(),
+    				"¼ÓÈëÏÂÔØ¶ÓÁÐ", Toast.LENGTH_SHORT);
+    	    toast.setGravity(Gravity.CENTER, 0, 0);
+    	    toast.show();
+		}
+	};
+	
     // Define a handler to process the progress update
 	private Handler handler = new Handler(){  
   
@@ -327,13 +347,24 @@ public class SeedsDetailsActivity extends Activity{
             		if(mDBAdapter.isSeedSaveToFavorite(mSeedId))
             		{
             			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
+            			
+                		Toast toast = Toast.makeText(getApplicationContext(),
+                				"ÊÕ²Ø³É¹¦", Toast.LENGTH_SHORT);
+                	    toast.setGravity(Gravity.CENTER, 0, 0);
+                	    toast.show();
             		}
             		else
             		{
             			myFavoriteBtn.setText(R.string.seeds_Favorite);
+            			
+                		Toast toast = Toast.makeText(getApplicationContext(),
+                				"È¡Ïû³É¹¦", Toast.LENGTH_SHORT);
+                	    toast.setGravity(Gravity.CENTER, 0, 0);
+                	    toast.show();
             		}
             		//close the ProgressDialog
                     tProgressDialog.dismiss(); 
+
                     break;
                 // Or try something here
             }
