@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.GridView.GridViewUI;
+package com.simplelife.seeds.android.utils.gridview.gridviewui;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
@@ -35,10 +35,10 @@ import android.widget.Toast;
 
 import com.simplelife.seeds.android.BuildConfig;
 import com.simplelife.seeds.android.R;
-import com.simplelife.seeds.android.Utils.GridView.GridViewProvider.Images;
-import com.simplelife.seeds.android.Utils.GridView.GridViewUtil.ImageCache;
-import com.simplelife.seeds.android.Utils.GridView.GridViewUtil.ImageFetcher;
-import com.simplelife.seeds.android.Utils.GridView.GridViewUtil.Utils;
+import com.simplelife.seeds.android.utils.gridview.gridviewprovider.Images;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.Utils;
 
 public class ImageDetailActivity extends FragmentActivity implements OnClickListener {
     private static final String IMAGE_CACHE_DIR = "images";

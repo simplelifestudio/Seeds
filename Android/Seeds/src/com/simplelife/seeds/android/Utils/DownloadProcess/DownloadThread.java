@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.DownloadProcess;
+package com.simplelife.seeds.android.utils.downloadprocess;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -39,7 +39,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 
-import com.simplelife.seeds.android.Utils.DownloadProcess.FileUtils;
+import com.simplelife.seeds.android.utils.downloadprocess.FileUtils;
 
 /**
  * Runs an actual download

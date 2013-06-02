@@ -1,4 +1,4 @@
-package com.simplelife.seeds.android.Utils.DownloadProcess;
+package com.simplelife.seeds.android.utils.downloadprocess;
 
 import android.app.Notification;
 import android.app.NotificationManager;

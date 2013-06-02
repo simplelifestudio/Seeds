@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.DownloadProcess;
+package com.simplelife.seeds.android.utils.downloadprocess;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -35,9 +36,10 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.BaseColumns;
+import android.util.Log;
 import android.util.Pair;
 
-import com.simplelife.seeds.android.Utils.DownloadProcess.Downloads;
+import com.simplelife.seeds.android.utils.downloadprocess.Downloads;
 
 /**
  * The download manager is a system service that handles long-running HTTP
@@ -276,7 +278,7 @@ public class DownloadManager {
      * Intent extra included with {@link #ACTION_DOWNLOAD_COMPLETE} intents,
      * indicating the ID (as a long) of the download that just completed.
      */
-    public static final String EXTRA_DOWNLOAD_ID = "extra_download_id";
+    public static final String EXTRA_DOWNLOAD_ID = "extra_download_id";    
 
     // this array must contain all public columns
     private static final String[] COLUMNS = new String[] { COLUMN_ID,
@@ -298,7 +300,30 @@ public class DownloadManager {
 	    Arrays.asList(COLUMN_ID, COLUMN_TOTAL_SIZE_BYTES, COLUMN_STATUS,
 		    COLUMN_REASON, COLUMN_BYTES_DOWNLOADED_SO_FAR,
 		    COLUMN_LAST_MODIFIED_TIMESTAMP));
-
+    
+    // Singleton Pattern  
+    private static DownloadManager mDownloadMgr = null; 
+    
+    public static void initDownloadMgr(ContentResolver resolver, String packageName){  
+    	Log.i("DownloadManager", "Initialize the download manager!");
+    	if(mDownloadMgr == null){  
+    		mDownloadMgr = new DownloadManager(resolver,packageName);  
+        }    	
+    }
+    
+    public static DownloadManager getDownloadMgr(){  
+        return mDownloadMgr;  
+    }
+    
+    public void startDownload(String inUrl){
+    	Uri srcUri = Uri.parse(inUrl);
+    	DownloadManager.Request request = new Request(srcUri);
+    	request.setDestinationInExternalPublicDir(
+    		Environment.DIRECTORY_DOWNLOADS, "/");
+    	request.setDescription("Seeds Downloading");
+    	enqueue(request);
+    }
+    
     /**
      * This class contains all the information necessary to request a new
      * download. The URI is the only required parameter.
@@ -331,7 +356,7 @@ public class DownloadManager {
 	private boolean mRoamingAllowed = true;
 	private int mAllowedNetworkTypes = ~0; // default to all network types
 					       // allowed
-	private boolean mIsVisibleInDownloadsUi = true;
+	private boolean mIsVisibleInDownloadsUi = true;	
 
 	/**
 	 * @param uri

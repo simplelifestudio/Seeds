@@ -1,4 +1,4 @@
-package com.simplelife.seeds.android.Utils.JSONProcess;
+package com.simplelife.seeds.android.utils.jsonprocess;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.simplelife.seeds.android.SeedsEntity;
-import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 
 import android.util.Log;
 

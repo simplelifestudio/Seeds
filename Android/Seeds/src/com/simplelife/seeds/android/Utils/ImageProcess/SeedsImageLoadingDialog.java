@@ -1,4 +1,4 @@
-package com.simplelife.seeds.android.Utils.ImageProcess;
+package com.simplelife.seeds.android.utils.imageprocess;
 
 import com.simplelife.seeds.android.R;
 

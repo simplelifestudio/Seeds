@@ -14,7 +14,7 @@ import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
-import com.simplelife.seeds.android.Utils.NetworkProcess.SeedsNetworkProcess;
+import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

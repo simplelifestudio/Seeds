@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.GridView.GridViewUtil;
+package com.simplelife.seeds.android.utils.gridview.gridviewutil;
 
 import android.annotation.TargetApi;
 import android.content.Context;

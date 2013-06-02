@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.GridView.GridViewUI;
+package com.simplelife.seeds.android.utils.gridview.gridviewui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,9 +25,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.simplelife.seeds.android.R;
-import com.simplelife.seeds.android.Utils.GridView.GridViewUtil.ImageFetcher;
-import com.simplelife.seeds.android.Utils.GridView.GridViewUtil.ImageWorker;
-import com.simplelife.seeds.android.Utils.GridView.GridViewUtil.Utils;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageWorker;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.Utils;
 
 /**
  * This fragment will populate the children of the ViewPager from {@link ImageDetailActivity}.

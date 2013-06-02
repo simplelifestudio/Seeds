@@ -1,4 +1,4 @@
-package com.simplelife.seeds.android.Utils.Control;
+package com.simplelife.seeds.android.utils.control;
 
 import android.content.Context;
 import android.util.AttributeSet;

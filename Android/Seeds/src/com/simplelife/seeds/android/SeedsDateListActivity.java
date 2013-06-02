@@ -7,10 +7,10 @@ import java.util.HashMap;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
-import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
-import com.simplelife.seeds.android.Utils.JSONProcess.SeedsJSONMessage;
-import com.simplelife.seeds.android.Utils.JSONProcess.SeedsJSONMessage.SeedsStatusByDate;
-import com.simplelife.seeds.android.Utils.NetworkProcess.SeedsNetworkProcess;
+import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
+import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage.SeedsStatusByDate;
+import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

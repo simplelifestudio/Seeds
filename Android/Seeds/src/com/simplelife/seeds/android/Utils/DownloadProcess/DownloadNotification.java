@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.DownloadProcess;
+package com.simplelife.seeds.android.utils.downloadprocess;
 
 import java.util.Collection;
 import java.util.HashMap;

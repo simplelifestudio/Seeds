@@ -15,10 +15,10 @@
  */
 
 
-package com.simplelife.seeds.android.Utils.DownloadProcess.ui;
+package com.simplelife.seeds.android.utils.downloadprocess.ui;
 
-import com.simplelife.seeds.android.Utils.DownloadProcess.DownloadManager;
-import com.simplelife.seeds.android.Utils.DownloadProcess.ui.DownloadItem.DownloadSelectListener;
+import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
+import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadItem.DownloadSelectListener;
 
 import android.content.Context;
 import android.database.Cursor;

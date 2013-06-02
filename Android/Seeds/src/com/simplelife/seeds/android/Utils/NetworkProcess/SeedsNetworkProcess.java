@@ -1,4 +1,4 @@
-package com.simplelife.seeds.android.Utils.NetworkProcess;
+package com.simplelife.seeds.android.utils.networkprocess;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -18,7 +17,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-import com.simplelife.seeds.android.Utils.JSONProcess.SeedsJSONMessage;
+import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
 
 public class SeedsNetworkProcess {
 	

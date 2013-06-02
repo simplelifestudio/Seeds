@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.DownloadProcess.ui;
+package com.simplelife.seeds.android.utils.downloadprocess.ui;
 
 import java.util.Vector;
 
@@ -32,7 +32,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.simplelife.seeds.android.R;
-import com.simplelife.seeds.android.Utils.DownloadProcess.DownloadManager;
+import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
 
 /**
  * ExpandableListAdapter which separates data into categories based on date.  Copied from

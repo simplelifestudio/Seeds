@@ -147,7 +147,7 @@
 			    	
 	    	</LinearLayout>
 	        	
-	    	<com.simplelife.seeds.android.Utils.Control.SeedsScrollViewExtend
+	    	<com.simplelife.seeds.android.utils.control.SeedsScrollViewExtend
             	android:layout_width="match_parent"
             	android:layout_height="fill_parent">
 	        	<LinearLayout
@@ -191,7 +191,7 @@
         				                
 	        	</LinearLayout>
 
-	    	</com.simplelife.seeds.android.Utils.Control.SeedsScrollViewExtend>	        	
+	    	</com.simplelife.seeds.android.utils.control.SeedsScrollViewExtend>	        	
 	        
 		</LinearLayout>
     </LinearLayout>

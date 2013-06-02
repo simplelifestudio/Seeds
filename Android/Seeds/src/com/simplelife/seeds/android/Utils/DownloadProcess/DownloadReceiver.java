@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.DownloadProcess;
+package com.simplelife.seeds.android.utils.downloadprocess;
 
 import java.io.File;
 
-import com.simplelife.seeds.android.Utils.DownloadProcess.DownloadManager;
+import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
 
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;

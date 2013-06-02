@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (C) 2013 SimpleLife Studio All rights reserved
+   
+   seeds_download_management.xml
+   Seeds
+ 
+   Created by Chris Li on 13-5-20. 
+-->
+ 
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item
+        android:id="@+id/download_seed"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:showAsAction="never"
+        android:title="@string/seeds_download_seed"/>
+    
+    <item
+        android:id="@+id/download_mgt"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:showAsAction="never"
+        android:title="@string/seeds_download_mgt"/>
+
+</menu>

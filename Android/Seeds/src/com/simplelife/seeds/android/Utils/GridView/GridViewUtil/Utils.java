@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.GridView.GridViewUtil;
+package com.simplelife.seeds.android.utils.gridview.gridviewutil;
 
-import com.simplelife.seeds.android.Utils.GridView.GridViewUI.ImageDetailActivity;
-import com.simplelife.seeds.android.Utils.GridView.GridViewUI.ImageGridActivity;
+import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageDetailActivity;
+import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
 
 import android.annotation.TargetApi;
 import android.os.Build;

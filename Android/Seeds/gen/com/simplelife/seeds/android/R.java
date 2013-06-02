@@ -80,9 +80,11 @@ public final class R {
         public static final int details_header=0x7f0a0010;
         public static final int download_checkbox=0x7f0a0036;
         public static final int download_icon=0x7f0a0037;
-        public static final int download_menu_sort_by_date=0x7f0a0047;
-        public static final int download_menu_sort_by_size=0x7f0a0046;
+        public static final int download_menu_sort_by_date=0x7f0a0049;
+        public static final int download_menu_sort_by_size=0x7f0a0048;
+        public static final int download_mgt=0x7f0a0047;
         public static final int download_progress=0x7f0a0039;
+        public static final int download_seed=0x7f0a0046;
         public static final int download_title=0x7f0a0038;
         public static final int edit_message=0x7f0a002f;
         public static final int edit_serveraddr=0x7f0a0003;
@@ -160,7 +162,8 @@ public final class R {
         public static final int activity_seeds_start=0x7f090001;
         public static final int activity_seeds_start_display_message=0x7f090002;
         public static final int activity_seeds_start_verify_menu=0x7f090003;
-        public static final int seeds_download_ui_menu=0x7f090004;
+        public static final int seeds_download_management=0x7f090004;
+        public static final int seeds_download_ui_menu=0x7f090005;
     }
     public static final class string {
         public static final int app_name=0x7f070036;
@@ -180,10 +183,10 @@ public final class R {
         /**  Text for button to cancel a download that is currently in progress [CHAR LIMIT=25] 
          */
         public static final int cancel_running_download=0x7f070033;
-        public static final int clear_cache_complete_toast=0x7f070058;
+        public static final int clear_cache_complete_toast=0x7f07005a;
         /**  Below parameters come from the gridview open source tool Bitmapfun 
          */
-        public static final int clear_cache_menu=0x7f070057;
+        public static final int clear_cache_menu=0x7f070059;
         /** 
          Text for button to delete a download that has completed, or to delete multiple download
          entries [CHAR LIMIT=25]
@@ -320,7 +323,7 @@ public final class R {
          */
         public static final int download_unknown_title=0x7f07000a;
         public static final int hello_world=0x7f070037;
-        public static final int imageview_description=0x7f070059;
+        public static final int imageview_description=0x7f07005b;
         /**  Text for button to keep a download that has not yet begun [CHAR LIMIT=25] 
          */
         public static final int keep_queued_download=0x7f070032;
@@ -337,7 +340,7 @@ public final class R {
     
          */
         public static final int no_downloads=0x7f070018;
-        public static final int no_network_connection_toast=0x7f07005a;
+        public static final int no_network_connection_toast=0x7f07005c;
         /**  When a download completes, a notification is displayed, and this
         string is used to indicate that the download successfully completed.
         Note that such a download could have been initiated by a variety of
@@ -470,6 +473,8 @@ public final class R {
         public static final int seeds_config_page=0x7f070044;
         public static final int seeds_config_serveraddr=0x7f070045;
         public static final int seeds_details_top=0x7f070043;
+        public static final int seeds_download_mgt=0x7f070058;
+        public static final int seeds_download_seed=0x7f070057;
         public static final int seeds_favoritelist=0x7f070048;
         public static final int seeds_logo=0x7f070039;
         public static final int seeds_preffilename=0x7f070049;

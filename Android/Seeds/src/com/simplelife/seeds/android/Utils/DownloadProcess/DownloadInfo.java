@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.DownloadProcess;
+package com.simplelife.seeds.android.utils.downloadprocess;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +33,7 @@ import android.net.Uri;
 import android.util.Log;
 import android.util.Pair;
 
-import com.simplelife.seeds.android.Utils.DownloadProcess.DownloadManager;
+import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
 
 /**
  * Stores information about an individual download.

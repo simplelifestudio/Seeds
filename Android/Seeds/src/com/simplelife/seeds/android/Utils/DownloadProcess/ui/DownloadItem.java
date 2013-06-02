@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.DownloadProcess.ui;
+package com.simplelife.seeds.android.utils.downloadprocess.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;

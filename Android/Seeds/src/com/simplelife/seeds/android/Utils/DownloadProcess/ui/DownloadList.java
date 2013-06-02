@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.DownloadProcess.ui;
+package com.simplelife.seeds.android.utils.downloadprocess.ui;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -52,8 +52,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.simplelife.seeds.android.R;
-import com.simplelife.seeds.android.Utils.DownloadProcess.DownloadManager;
-import com.simplelife.seeds.android.Utils.DownloadProcess.ui.DownloadItem.DownloadSelectListener;
+import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
+import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadItem.DownloadSelectListener;
 
 /**
  * View showing a list of all downloads the Download Manager knows about.
