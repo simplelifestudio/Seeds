@@ -21,6 +21,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *yesterdaySyncStatusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *theDayBeforeSyncStatusLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *todayButton;
+@property (weak, nonatomic) IBOutlet UIButton *yesterdayButton;
+@property (weak, nonatomic) IBOutlet UIButton *theDayBeforeButton;
+
+
 @property (weak, nonatomic) IBOutlet UIButton *syncButton;
 @property (weak, nonatomic) IBOutlet UIButton *transButton;
 

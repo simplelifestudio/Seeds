@@ -9,15 +9,22 @@
 #import "SeedListViewController.h"
 
 @interface SeedListViewController ()
-
+{
+    NSArray* seedList;
+    NSArray* firstSeedPictureList;
+    Seed* selectedSeed;
+}
 @end
 
 @implementation SeedListViewController
 
+@synthesize seedsDate = _seedsDate;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
-    if (self) {
+    if (self)
+    {
         // Custom initialization
     }
     return self;
@@ -32,6 +39,44 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    if (nil == _seedsDate)
+    {
+        _seedsDate = [NSDate date];
+    }
+    
+    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+    seedList = [seedDAO getSeedsByDate:_seedsDate];
+    
+    NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:seedList.count];
+    for (Seed* seed in seedList)
+    {
+        SeedPicture* picture = nil;
+        if (nil != seed.seedPictures && 0 < seed.seedPictures.count)
+        {
+            picture = seed.seedPictures[0];
+        }
+        
+        if (nil == picture)
+        {
+            picture = [SeedPicture placeHolder];
+        }
+        [pictureArray addObject:picture];
+    }
+    firstSeedPictureList = pictureArray;    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO];
+    [self.tableView reloadData];
+    
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,26 +89,90 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return seedList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *CellIdentifier = CELL_ID_SEEDLISTTABLECELL;
     
-    // Configure the cell...
+#if UI_RENDER_SEEDLISTTABLECELL
+    //    static BOOL nibsRegistered = NO;
+    //    if (!nibsRegistered)
+    //    {
+    //        UINib *nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
+    //        [tableView registerNib:nib forCellReuseIdentifier:CellIdentifier];
+    //        nibsRegistered = YES;
+    //    }
+    //    [self.tableView registerClass:[SeedListTableCell class] forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
+    //    SeedListTableCell *cell = (SeedListTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    SeedListTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil)
+    {
+        cell = [[SeedListTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+#else
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    if (cell == nil)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+#endif
+    
+    Seed* seed = [seedList objectAtIndex:indexPath.row];
+    SeedPicture* picture = [firstSeedPictureList objectAtIndex:indexPath.row];
+    if (nil != picture && !picture.isPlaceHolder)
+    {
+        NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
+        SDWebImageManager *manager = [SDWebImageManager sharedManager];
+        [manager
+         downloadWithURL:imageURL
+         options:0
+         progress:^(NSUInteger receivedSize, long long expectedSize)
+         {
+             // progression tracking code
+             DLog(@"Seed(%d)'s thumbnail downloaded %d of %lld", seed.seedId, receivedSize, expectedSize);
+             
+             float progressVal = (float)receivedSize / (float)expectedSize;
+             [cell.circularProgressView updateProgressCircle:progressVal];
+         }
+         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+         {
+             if (image)
+             {
+                 //#warning Why below line can't be moved?
+                 [cell.circularProgressView removeFromSuperview];
+                 // do something with image
+                 [cell.thumbnailImageView setImage:image];
+             }
+         }];
+    }
+    else
+    {
+        
+    }
+    
+#if UI_RENDER_SEEDLISTTABLECELL
+    [cell fillSeed:seed];
+    [cell fillSeedPicture:picture];
+#else
+    [cell.textLabel setText:seed.name];
+#endif
     
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return CELL_HEIGHT_SEEDLISTTABLECELL;
 }
 
 /*
@@ -116,6 +225,22 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+    
+    selectedSeed = [seedList objectAtIndex:indexPath.row];
+    
+    [self performSegueWithIdentifier:SEGUE_ID_SEEDLIST2SEEDDETAIL sender:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:SEGUE_ID_SEEDLIST2SEEDDETAIL])
+    {
+        if ([segue.destinationViewController isKindOfClass:[SeedDetailViewController class]])
+        {
+            SeedDetailViewController* seedDetailViewController = segue.destinationViewController;
+            [seedDetailViewController setSeed:selectedSeed];
+        }
+    }
 }
 
 @end

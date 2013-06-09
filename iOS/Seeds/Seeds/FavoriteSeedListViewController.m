@@ -51,6 +51,10 @@
             picture = seed.seedPictures[0];
         }
 
+        if (nil == picture)
+        {
+            picture = [SeedPicture placeHolder];
+        }
         [pictureArray addObject:picture];
     }
     firstSeedPictureList = pictureArray;
@@ -66,7 +70,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-//    [self.navigationController setNavigationBarHidden:NO];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -119,7 +123,7 @@
     
     Seed* seed = [favoriteSeedList objectAtIndex:indexPath.row];
     SeedPicture* picture = [firstSeedPictureList objectAtIndex:indexPath.row];
-    if (nil != picture)
+    if (nil != picture && !picture.isPlaceHolder)
     {        
         NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
         SDWebImageManager *manager = [SDWebImageManager sharedManager];

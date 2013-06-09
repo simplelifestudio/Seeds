@@ -17,6 +17,8 @@
 -(NSInteger) countSeedsByDate:(NSDate*) date;
 
 -(NSArray*) getAllSeeds;
+-(NSArray*) getSeedsByDate:(NSDate*) date;
+
 -(BOOL) updateSeed:(NSInteger) seedId withParameterDictionary:(NSMutableDictionary*) paramDic; // paramDic should only be used for key(NSString*)=value(NSString*)
 -(BOOL) deleteSeedsByDate:(NSDate*) date;
 -(BOOL) deleteAllSeeds;

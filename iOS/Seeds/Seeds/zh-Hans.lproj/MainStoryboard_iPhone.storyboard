@@ -237,6 +237,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="aHM-2e-RbE" kind="push" identifier="home2seedlist" id="FkQ-fa-Z7V"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="YMz-o8-fDU" userLabel="yesterdayButton">
                                 <rect key="frame" x="10" y="139" width="300" height="121"/>
@@ -249,6 +252,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="aHM-2e-RbE" kind="push" identifier="home2seedlist" id="YCM-cH-JbB"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RXt-An-5Ip" userLabel="theDayBeforeButton">
                                 <rect key="frame" x="10" y="269" width="300" height="121"/>
@@ -261,6 +267,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="aHM-2e-RbE" kind="push" identifier="home2seedlist" id="qcX-4J-Zi7"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Rki-Eg-Lzt" userLabel="syncButton">
                                 <rect key="frame" x="110" y="433" width="100" height="81"/>
@@ -383,14 +392,16 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="syncButton" destination="Rki-Eg-Lzt" id="Jff-w3-o9B"/>
+                        <outlet property="theDayBeforeButton" destination="RXt-An-5Ip" id="ew6-Iz-niE"/>
                         <outlet property="theDayBeforeLabel" destination="7dc-8I-qfH" id="wRv-RM-zor"/>
                         <outlet property="theDayBeforeSyncStatusLabel" destination="eEH-qs-vhq" id="fLK-ku-lcm"/>
+                        <outlet property="todayButton" destination="FIJ-dx-bzp" id="Fe2-qO-ZDa"/>
                         <outlet property="todayLabel" destination="yNr-IT-5qb" id="XQx-NV-HLc"/>
                         <outlet property="todaySyncStatusLabel" destination="Unj-zm-ceT" id="ZeY-2N-Cke"/>
                         <outlet property="transButton" destination="gK2-d0-zF5" id="MwW-M4-m5a"/>
+                        <outlet property="yesterdayButton" destination="YMz-o8-fDU" id="QjU-0R-SOj"/>
                         <outlet property="yesterdayLabel" destination="6Fm-xL-gjM" id="jFv-pS-Mwc"/>
                         <outlet property="yesterdaySyncStatusLabel" destination="0yK-ug-QvN" id="3gI-RZ-c3Y"/>
-                        <segue destination="aHM-2e-RbE" kind="push" identifier="home2seedlist" id="DK6-AA-EaF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7OQ-dr-YgO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -405,6 +416,58 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="SeedListTableCell" rowHeight="100" id="C1q-RV-Cqb" userLabel="seedListTableCell" customClass="SeedListTableCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="ae5-Au-qAs" userLabel="thumbnailView">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                                        </imageView>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="片名" id="USw-aC-VpS" userLabel="nameLabel">
+                                            <rect key="frame" x="106" y="5" width="210" height="60"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="大小" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pLF-Yd-kdC" userLabel="sizeLabel">
+                                            <rect key="frame" x="115.5" y="73" width="65" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="格式" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tKf-KD-LPi" userLabel="formatLabel">
+                                            <rect key="frame" x="183.5" y="73" width="65" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="马赛克" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iiY-bf-pUR" userLabel="mosaicLabel">
+                                            <rect key="frame" x="253.5" y="73" width="65" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <connections>
+                                    <outlet property="formatLabel" destination="tKf-KD-LPi" id="Vii-qk-EwF"/>
+                                    <outlet property="mosaicLabel" destination="iiY-bf-pUR" id="OUq-ON-8sT"/>
+                                    <outlet property="nameLabel" destination="USw-aC-VpS" id="O7Z-ip-4zu"/>
+                                    <outlet property="sizeLabel" destination="pLF-Yd-kdC" id="q4T-je-jc0"/>
+                                    <outlet property="thumbnailImageView" destination="ae5-Au-qAs" id="AhZ-HV-fke"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="aHM-2e-RbE" id="1kR-Rd-dcm"/>
                             <outlet property="delegate" destination="aHM-2e-RbE" id="gEf-dq-qc1"/>
@@ -513,9 +576,11 @@
                 <relationship kind="outlet" name="syncButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="theDayBeforeLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="theDayBeforeSyncStatusLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="todayButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="todayLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="todaySyncStatusLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="transButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="yesterdayButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="yesterdayLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="yesterdaySyncStatusLabel" candidateClass="UILabel"/>
             </relationships>
@@ -577,6 +642,9 @@
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
         </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
+        </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -584,6 +652,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="sl2-Vu-zE7"/>
+        <segue reference="qcX-4J-Zi7"/>
+        <segue reference="mY4-Ry-AVb"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -65,7 +65,7 @@
 
 -(void) fillSeedPicture:(SeedPicture*) picture
 {
-    if (nil == picture)
+    if (nil == picture || picture.isPlaceHolder)
     {
         [self.circularProgressView removeFromSuperview];
         NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:@"noImage_tableCell" ofType:@"png"];

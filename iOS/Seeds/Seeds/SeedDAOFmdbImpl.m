@@ -172,6 +172,34 @@
     return array;
 }
 
+-(NSArray*) getSeedsByDate:(NSDate*) date
+{
+    __block NSArray* array = [NSMutableArray arrayWithCapacity:0];
+    
+    [databaseQueue inDatabase:^(FMDatabase* db)
+     {
+         [db open];
+         
+         NSMutableString* sql = [NSMutableString stringWithString:@"select * from "];
+         [sql appendString:TABLE_SEED];
+         [sql appendString:@" where "];
+         [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
+         [sql appendString:@" = "];
+         [sql appendString:@"'"];
+         NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:STANDARD_DATE_FORMAT andDate:date];
+         [sql appendString:dateStr];
+         [sql appendString:@"'"];         
+         
+         FMResultSet* resultSet = [db executeQuery:sql];
+         array = [self resultSet2SeedList:resultSet databaseHandler:db];
+         
+         [resultSet close];
+         [db close];
+     }];
+    
+    return array;
+}
+
 -(BOOL) updateSeed:(NSInteger) seedId withParameterDictionary:(NSMutableDictionary*) paramDic
 {
     __block BOOL flag = NO;

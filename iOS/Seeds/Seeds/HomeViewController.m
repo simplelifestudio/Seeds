@@ -11,6 +11,8 @@
 #import "SpiderModule.h"
 #import "GUIModule.h"
 
+#import "SeedListViewController.h"
+
 @interface HomeViewController ()
 {
     MBProgressHUD* HUD;
@@ -27,6 +29,10 @@
 @synthesize todaySyncStatusLabel = _todaySyncStatusLabel;
 @synthesize yesterdaySyncStatusLabel = _yesterdaySyncStatusLabel;
 @synthesize theDayBeforeSyncStatusLabel = _theDayBeforeSyncStatusLabel;
+
+@synthesize todayButton = _todayButton;
+@synthesize yesterdayButton = _yesterdayButton;
+@synthesize theDayBeforeButton = _theDayBeforeButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -88,6 +94,9 @@
     [self setTodaySyncStatusLabel:nil];
     [self setYesterdaySyncStatusLabel:nil];
     [self setTheDayBeforeSyncStatusLabel:nil];
+    [self setTodayButton:nil];
+    [self setYesterdayButton:nil];
+    [self setTheDayBeforeButton:nil];
     [super viewDidUnload];
 }
 
@@ -174,30 +183,30 @@
     NSAssert(nil != status && 0 < status, @"Illegal status");
     
     dispatch_async(dispatch_get_main_queue(), ^()
-                   {
-                       switch (dayIndex)
-                       {
-                           case Today:
-                           {
-                               [_todaySyncStatusLabel setText:status];
-                               break;
-                           }
-                           case Yesterday:
-                           {
-                               [_yesterdaySyncStatusLabel setText:status];
-                               break;
-                           }
-                           case TheDayBefore:
-                           {
-                               [_theDayBeforeSyncStatusLabel setText:status];
-                               break;
-                           }
-                           default:
-                           {
-                               break;
-                           }
-                       }
-                   });
+    {
+        switch (dayIndex)
+        {
+            case Today:
+            {
+                [_todaySyncStatusLabel setText:status];
+                break;
+            }
+            case Yesterday:
+            {
+                [_yesterdaySyncStatusLabel setText:status];
+                break;
+            }
+            case TheDayBefore:
+            {
+                [_theDayBeforeSyncStatusLabel setText:status];
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+    });
 }
 
 - (void)hudWasHidden:(MBProgressHUD *)hud
@@ -208,6 +217,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    // NavigationBar
     if ([segue.identifier isEqualToString:SEGUE_ID_HOME2TRANSMIT])
     {
         backBarItem = self.navigationItem.backBarButtonItem;
@@ -216,6 +226,25 @@
     else
     {
         self.navigationItem.backBarButtonItem = backBarItem;
+    }
+    
+    // Date for SeedListView
+    if ([segue.identifier isEqualToString:SEGUE_ID_HOME2SEEDLIST])
+    {
+        SeedListViewController* seedListViewController = (SeedListViewController*)segue.destinationViewController;
+
+        if (sender == _todayButton)
+        {
+            seedListViewController.seedsDate = last3Days[Today];
+        }
+        else if (sender == _yesterdayButton)
+        {
+            seedListViewController.seedsDate = last3Days[Yesterday];
+        }
+        else if (sender == _theDayBeforeButton)
+        {
+            seedListViewController.seedsDate = last3Days[TheDayBefore];
+        }
     }
 }
 

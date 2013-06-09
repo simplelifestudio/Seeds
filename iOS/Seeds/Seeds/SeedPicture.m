@@ -10,9 +10,18 @@
 
 @implementation SeedPicture
 
+@synthesize isPlaceHolder = _isPlaceHolder;
+
 @synthesize pictureId = _pictureId;
 @synthesize seedId = _seedId;
 @synthesize pictureLink = _pictureLink;
 @synthesize memo = _memo;
+
++(SeedPicture*) placeHolder
+{
+    SeedPicture* picture = [[SeedPicture alloc] init];
+    picture.isPlaceHolder = YES;
+    return picture;
+}
 
 @end

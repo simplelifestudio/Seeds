@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+#import "SeedListTableCell.h"
+
+#import "UIImageView+WebCache.h"
+#import "SDWebImageDownloader.h"
+#import "SDWebImageManager.h"
+
+#import "SeedDetailViewController.h"
+
 @interface SeedListViewController : UITableViewController
+
+@property (strong, nonatomic) NSDate* seedsDate;
 
 @end
