@@ -146,7 +146,6 @@
 		C5AB116F1734BAA4007EEE25 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB11661734BAA4007EEE25 /* UIImageView+AFNetworking.m */; };
 		C5AB11711734BB21007EEE25 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5AB11701734BB20007EEE25 /* MobileCoreServices.framework */; };
 		C5AB63451730A7CD00A3F1E6 /* SeedPictureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */; };
-		C5AB63501730B95A00A3F1E6 /* todo_list.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */; };
 		C5AB63581730C1ED00A3F1E6 /* CBUIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */; };
 		C5ADC852173930E1007F59D7 /* CBStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC851173930E1007F59D7 /* CBStringUtils.m */; };
 		C5ADC856173A2DE7007F59D7 /* UserDefaultsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */; };
@@ -419,7 +418,6 @@
 		C5AB11701734BB20007EEE25 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		C5AB63431730A7CD00A3F1E6 /* SeedPictureScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedPictureScrollView.h; sourceTree = "<group>"; };
 		C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedPictureScrollView.m; sourceTree = "<group>"; };
-		C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = todo_list.rtf; sourceTree = "<group>"; };
 		C5AB63561730C1ED00A3F1E6 /* CBUIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBUIUtils.h; sourceTree = "<group>"; };
 		C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBUIUtils.m; sourceTree = "<group>"; };
 		C5ADC850173930E1007F59D7 /* CBStringUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBStringUtils.h; sourceTree = "<group>"; };
@@ -813,7 +811,6 @@
 				C5964C191722290400CC1C0A /* Default.png */,
 				C5964C1B1722290400CC1C0A /* Default@2x.png */,
 				C5964C1D1722290400CC1C0A /* Default-568h@2x.png */,
-				C5AB634F1730B95A00A3F1E6 /* todo_list.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1099,7 +1096,6 @@
 				C5964C241722290400CC1C0A /* MainStoryboard_iPad.storyboard in Resources */,
 				C53183491723D6A900264530 /* Localizable.strings in Resources */,
 				C57CF2811724DBE10002B054 /* Seeds_App_Database.db in Resources */,
-				C5AB63501730B95A00A3F1E6 /* todo_list.rtf in Resources */,
 				C5203CDE1742829B00D917F7 /* noImage_tableCell.png in Resources */,
 				C5203CDF1742829B00D917F7 /* noImage_tableCell@2x.png in Resources */,
 				C5203CE21742848200D917F7 /* noImage_collectionCell.png in Resources */,
