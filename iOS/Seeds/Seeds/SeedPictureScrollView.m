@@ -157,18 +157,18 @@
     [_imageView setImage:image];
     [_imageView sizeToFit];
     
-    CGFloat imageW = image.size.width;
-    CGFloat imageH = image.size.height;
+//    CGFloat imageW = image.size.width;
+//    CGFloat imageH = image.size.height;
     
     CGFloat scrollViewW = self.frame.size.width;
-    CGFloat scrollViewH = self.frame.size.height;
-    CGFloat scrollViewX = self.frame.origin.x;
-    CGFloat scrollViewY = self.frame.origin.y;
+//    CGFloat scrollViewH = self.frame.size.height;
+//    CGFloat scrollViewX = self.frame.origin.x;
+//    CGFloat scrollViewY = self.frame.origin.y;
     
     CGFloat selfViewW = self.superview.frame.size.width;
     CGFloat selfViewH = self.superview.frame.size.height;
-    CGFloat selfViewX = self.superview.frame.origin.x;
-    CGFloat selfViewY = self.superview.frame.origin.y;
+//    CGFloat selfViewX = self.superview.frame.origin.x;
+//    CGFloat selfViewY = self.superview.frame.origin.y;
     
     CGFloat imageViewW = _imageView.frame.size.width;
     CGFloat imageViewH = _imageView.frame.size.height;
@@ -206,13 +206,13 @@
     
 //    self.contentSize = _imageView.frame.size;
     
-    DLog(@"ViewController's Frame: %f, %f, %f, %f", selfViewX, selfViewY
-         , selfViewW, selfViewH);
-    DLog(@"ScrollView's Frame: %f, %f, %f, %f", scrollViewX, scrollViewY
-         , scrollViewW, scrollViewH);
-    DLog(@"ImageView Frame: %f, %f, %f, %f", imageViewX, imageViewY
-         , imageViewW, imageViewH);
-    DLog(@"Image Size: %f, %f", imageW, imageH);
+//    DLog(@"ViewController's Frame: %f, %f, %f, %f", selfViewX, selfViewY
+//         , selfViewW, selfViewH);
+//    DLog(@"ScrollView's Frame: %f, %f, %f, %f", scrollViewX, scrollViewY
+//         , scrollViewW, scrollViewH);
+//    DLog(@"ImageView Frame: %f, %f, %f, %f", imageViewX, imageViewY
+//         , imageViewW, imageViewH);
+//    DLog(@"Image Size: %f, %f", imageW, imageH);
 }
 
 - (void)displayImage:(UIImage *)image
