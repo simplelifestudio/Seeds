@@ -16,8 +16,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.simplelife.seeds.android.Utils.Adapter.SeedsAdapter;
-import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.adapter.SeedsAdapter;
+import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 
 public class SeedsListPerDayActivity extends Activity {
 

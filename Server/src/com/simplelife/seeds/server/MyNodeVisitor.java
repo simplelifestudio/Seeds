@@ -1,6 +1,5 @@
 package com.simplelife.seeds.server;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -50,20 +49,18 @@ public class MyNodeVisitor extends NodeVisitor {
     	
     	if (_analyzeStatus == AnalyzeStatus.Link)
     	{
-    		String link = nodeText;
-    		_seed.setTorrentLink(link);
+    		_seed.setTorrentLink(nodeText);
     		//_logger.log(Level.INFO,"Torrent link： " + link);
     		
     		if (!checkSeedForSave(_seed))
     		{
     			_logger.log(Level.WARNING, "Invalid seed info for save: " + _seed.toString());
+    			return;
     		}
-    		else
-    		{
-    			DaoWrapper.getInstance().save(_seed);
-    			_logger.log(Level.INFO, "Saved seed to DB: \n" + _seed.toString());
-    		}
-    		return;
+    		formatSeedForSave(_seed);
+			DaoWrapper.getInstance().save(_seed);
+			_logger.log(Level.INFO, "Saved seed to DB: \n" + _seed.toString());
+			return;
     	}
     		
     	if (isFilmName(nodeText))
@@ -87,17 +84,14 @@ public class MyNodeVisitor extends NodeVisitor {
     	else if(isFilmFormat(nodeText))
     	{
     		_seed.setFormat(nodeText);
-    		//_logger.log(Level.INFO,"影片格式：" + string.getText());
     	}
     	else if(isFilmSize(nodeText))
     	{
     		_seed.setSize(nodeText);
-    		//_logger.log(Level.INFO,"影片大小：" + string.getText());
     	}
     	else if(isFilmMosaic(nodeText))
     	{
     		_seed.setMosaic(nodeText);
-    		//_logger.log(Level.INFO,"有码无码：" + string.getText());
     	}
     	else if(isTorrentLink(nodeText))
     	{
@@ -109,11 +103,7 @@ public class MyNodeVisitor extends NodeVisitor {
     	else if(isHash(nodeText))
     	{
     		_seed.setHash(nodeText);
-    		//_logger.log(Level.INFO,"哈希校验：" + string.getText());
     	}
-
-    	
-    	//_logger.log(Level.INFO,"This is Text:"+string);
     }
     public void visitRemarkNode (Remark remark) {
     	//_logger.log(Level.INFO,"This is Remark:"+remark.getText());
@@ -129,6 +119,80 @@ public class MyNodeVisitor extends NodeVisitor {
     	//_logger.log(Level.INFO,"finishedParsing");
     }
     
+    public String removePreTitle(String field)
+    {
+		if (field == null) {
+			return null;
+		}
+		
+		int index = field.indexOf("Link");
+		if (index >= 0) {
+			// Link URL: [url]http://www.maxp2p.com/link.php?ref=ft48srXUSU
+			index = field.indexOf("http://");
+			field = field.substring(index).trim();
+			return field;
+		}
+		
+		index = field.indexOf("]");
+		if (index > 0) {
+			field = field.substring(index + 1).trim();
+		}
+		else
+		{
+			index = field.indexOf("】");
+			if (index > 0) {
+				field = field.substring(index + 1).trim();
+			}
+		}
+		
+		index = field.indexOf(":");
+		if (index == 0) {
+			field = field.substring(1).trim();
+		}
+		
+		index = field.indexOf("：");
+		if (index == 0) {
+			field = field.substring(1).trim();
+		}
+		
+		return field;
+    }
+    
+    private void formatSeedForSave(Seed seed)
+    {
+		if (seed.getFormat() != null) {
+			seed.setFormat(removePreTitle(seed.getFormat()));
+		}
+
+		if (seed.getHash() != null) {
+			seed.setHash(removePreTitle(seed.getHash()));
+		}
+
+		if (seed.getMemo() != null) {
+			seed.setMemo(removePreTitle(seed.getMemo()));
+		}
+
+		if (seed.getMosaic() != null) {
+			seed.setMosaic(removePreTitle(seed.getMosaic()));
+		}
+
+		if (seed.getName() != null) {
+			seed.setName(removePreTitle(seed.getName()));
+		}
+
+		if (seed.getSize() != null) {
+			seed.setSize(removePreTitle(seed.getSize()));
+		}
+
+		if (seed.getType() != null) {
+			seed.setType(removePreTitle(seed.getType()));
+		}
+		
+		if (seed.getTorrentLink() != null) {
+			seed.setType(removePreTitle(seed.getTorrentLink()));
+		}
+    }
+    
     private boolean checkSeedForSave(Seed seed)
     {
     	if (seed.getName() == null || seed.getName().length() == 0)
@@ -138,7 +202,7 @@ public class MyNodeVisitor extends NodeVisitor {
     	if (seed.getTorrentLink() == null || seed.getTorrentLink().length() == 0)
     	{
     		return false;
-    	} 
+    	}
     	return true;
     }
     

@@ -25,19 +25,61 @@ public class DaoWrapper {
 		}
 	}
 	
+	public void executeSql(String sql)
+	{
+		if (_session == null)
+		{
+		    _logger.log(Level.SEVERE, "_session == null, check DB configuration!");
+			return;
+		}
+		
+		try
+		{
+			_session.createSQLQuery(sql).executeUpdate();
+		}
+		catch(Exception e)
+		{
+			_logger.log(Level.SEVERE, "Error occurred when execute sql, error: " + e.getMessage() + ", sql: " + sql);
+		}
+	}
+	
 	public boolean exists(String sql)
 	{
 		if (_session == null)
 		{
+		    _logger.log(Level.SEVERE, "_session == null, check DB configuration!");
 			return false;
 		}
-		
-		return _session.createSQLQuery(sql).list().size() > 0;
+
+		try
+		{
+			return _session.createSQLQuery(sql).list().size() > 0;
+		}
+		catch(Exception e)
+		{
+			_logger.log(Level.SEVERE, "Error occurred when execute sql, error: " + e.getMessage() + ", sql: " + sql);
+			return false;
+		}
+
 	}
 	
 	public List query(String sql, Class objClass)
 	{
-		return _session.createSQLQuery(sql).addEntity(objClass).list();
+	    if (_session == null)
+		{
+		    _logger.log(Level.SEVERE, "_session == null, check DB configuration!");
+			return null;
+		}
+		
+	    try
+	    {
+	    	return _session.createSQLQuery(sql).addEntity(objClass).list();
+		}
+		catch(Exception e)
+		{
+			_logger.log(Level.SEVERE, "Error occurred when execute sql, error: " + e.getMessage() + ", sql: " + sql);
+			return null;
+		}
 	}
 	
 	public void delete(Object obj)
@@ -47,15 +89,24 @@ public class DaoWrapper {
 			return;
 		}
 		
-		_session.beginTransaction();
-		_session.delete(obj);
-		_session.getTransaction().commit();
+		try
+		{
+			_session.beginTransaction();
+			_session.delete(obj);
+			_session.getTransaction().commit();
+		}
+		catch(Exception e)
+		{
+			_logger.log(Level.SEVERE, "Error occurred when delete object from DB, error: " + e.getMessage() + ", obj: " + obj.toString());
+		}
+
 	}
 	
 	public void save(Object obj)
 	{
 		if (_session == null)
 		{
+			_logger.log(Level.SEVERE, "_session == null, check DB configuration!");
 			return;
 		}
 		

@@ -10,10 +10,13 @@
     <string name="seeds_yesterday">昨天</string>
     <string name="seeds_today">今天</string>
     <string name="seeds_update">更新</string>
+    <string name="seeds_config">设置</string>
     <string name="seedTitle">The title of the seed</string>
     <string name="seedSize">The size of the seed</string>
     <string name="seedFormat">The format of the seed</string>
     <string name="seeds_details_top">种子详情</string>
+    <string name="seeds_config_page">应用设置</string>
+    <string name="seeds_config_serveraddr">服务器地址：</string>
     <string name="seeds_Favorite">收藏</string>
     <string name="seeds_UnFavorite">取消收藏</string>
     <string name="seeds_favoritelist">收藏列表</string>
@@ -23,6 +26,18 @@
     <string name="seeds_pwdsend">Send</string>
     <string name="seeds_verify_menu_settings">Settings</string>
     <string name="title_activity_display_message">Wrong Password</string>
+    <string name="seeds_severaddrmsg">Enter IP Address and Port</string>
+    <string name="seeds_severaddrverify">验证</string>
+    <string name="seeds_config_channel">选择频道：</string>
+    <string name="seeds_config_channel1">动作片</string>
+    <string name="seeds_config_channel2">剧情片</string>
+    <string name="seeds_config_channel3">文艺片</string>
+    
+    <string name="seeds_toast_configsucc">设置成功</string>
+    <string name="seeds_toast_configfail">无效的地址</string>
+    <string name="seeds_download_seed">下载种子</string>
+    <string name="seeds_download_mgt">下载管理</string>
+    
     
     <!-- Below parameters come from the gridview open source tool Bitmapfun -->
     <string name="clear_cache_menu">Clear Caches</string>

@@ -1,4 +1,4 @@
-package com.simplelife.seeds.android.Utils.DBProcess;
+package com.simplelife.seeds.android.utils.dbprocess;
 
 import java.util.ArrayList;
 import java.util.HashMap;

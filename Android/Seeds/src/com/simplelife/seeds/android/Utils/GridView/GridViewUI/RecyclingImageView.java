@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.GridView.GridViewUI;
+package com.simplelife.seeds.android.utils.gridview.gridviewui;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -22,7 +22,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-import com.simplelife.seeds.android.Utils.GridView.GridViewUtil.RecyclingBitmapDrawable;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.RecyclingBitmapDrawable;
 
 /**
  * Sub-class of ImageView which automatically notifies the drawable when it is

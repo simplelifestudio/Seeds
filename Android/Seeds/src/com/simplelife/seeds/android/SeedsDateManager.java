@@ -53,6 +53,18 @@ public class SeedsDateManager {
         }     	
     }
     
+    public String getRealDateBefYesterday(){
+    	return mDateBefYesterday;
+    }
+    
+    public String getRealDateYesterday(){
+    	return mDateYesterday;
+    }
+    
+    public String getRealDateToday(){
+    	return mDateToday;
+    }
+    
     public String logicDateToRealDate(String _inRealDate){
     	
     	if(_inRealDate.equals(mDateBefYesterday))

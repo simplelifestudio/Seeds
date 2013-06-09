@@ -1,7 +1,6 @@
 package com.simplelife.seeds.server;
 
 import java.io.PrintWriter;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,6 +9,10 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class JsonCommandSeedsStatusReq extends JsonCommandBase {
+	private final String _noUpdate = "NO_UPDATE";
+	private final String _notReady = "NOT_READY";
+	private final String _ready = "READY";
+	
 	private final static String _jsonCommandKeyword = "command";
 	private final static String _jsonParaListKeyword = "paramList";
 	private final static String _jsonDateListKeyword = "datelist";
@@ -55,6 +58,7 @@ public class JsonCommandSeedsStatusReq extends JsonCommandBase {
 		}
 		strBuilder.append("}\n}");
 		
+		_logger.log(Level.INFO, strBuilder.toString());
 		out.write(strBuilder.toString());
 	}
 	private void responseInvalidRequest(PrintWriter out)
@@ -63,6 +67,7 @@ public class JsonCommandSeedsStatusReq extends JsonCommandBase {
 		responseJsonHeader(strBuilder);
 		strBuilder.append("}");
 		
+		_logger.log(Level.INFO, strBuilder.toString());
 		out.write(strBuilder.toString());
 	}
 	
@@ -78,7 +83,7 @@ public class JsonCommandSeedsStatusReq extends JsonCommandBase {
 		
 		strBuilder.append("\"");
 		strBuilder.append(_jsonParaListKeyword);
-		strBuilder.append("\":{");
+		strBuilder.append("\":{\n");
 	}
 	
 	private void responseStatus(String strDate, StringBuilder strBuilder, boolean lastOne)
@@ -98,6 +103,37 @@ public class JsonCommandSeedsStatusReq extends JsonCommandBase {
 	
 	private String getSeedsStatusByDate(String date)
 	{
-		return "NO_UPDATE";
+	    String sql = "select * from SeedCaptureLog where publishDate ='" + date + "' order by id desc";
+        List record = DaoWrapper.getInstance().query(sql, SeedCaptureLog.class);
+        
+        if (record.size() == 0)
+        {
+        	return _noUpdate;
+        }
+        
+        // It's order by id in descend, we only get the latest one
+        try
+        {
+        	SeedCaptureLog log = (SeedCaptureLog) record.get(0);
+        	if (log.getStatus() == 1)
+        	{
+        		return _notReady;
+        	}
+        	else if (log.getStatus() == 2)
+        	{
+        		return _ready;
+        	}
+        	else
+        	{
+        		return "ERROR_STATUS";
+        	}
+        		
+        }
+        catch(Exception e)
+        {
+        	_logger.log(Level.SEVERE, "Error occurred when converting seed capture log: " + e.getMessage());
+        }
+        
+        return "ERROR_STATUS";
 	}
 }

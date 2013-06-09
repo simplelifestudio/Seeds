@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.GridView.GridViewUI;
+package com.simplelife.seeds.android.utils.gridview.gridviewui;
 
 import android.annotation.TargetApi;
 import android.app.ActivityOptions;
@@ -39,13 +39,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.simplelife.seeds.android.Utils.GridView.GridViewProvider.Images;
-import com.simplelife.seeds.android.Utils.GridView.GridViewUI.ImageDetailActivity;
+import com.simplelife.seeds.android.utils.gridview.gridviewprovider.Images;
+import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageDetailActivity;
 import com.simplelife.seeds.android.BuildConfig;
 import com.simplelife.seeds.android.R;
-import com.simplelife.seeds.android.Utils.GridView.GridViewUtil.ImageCache.ImageCacheParams;
-import com.simplelife.seeds.android.Utils.GridView.GridViewUtil.ImageFetcher;
-import com.simplelife.seeds.android.Utils.GridView.GridViewUtil.Utils;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache.ImageCacheParams;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.Utils;
 
 /**
  * The main fragment that powers the ImageGridActivity screen. Fairly straight forward GridView

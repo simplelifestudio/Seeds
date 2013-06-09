@@ -1,17 +1,24 @@
 package com.simplelife.seeds.android;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 
-import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
-import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBManager;
+import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
+import com.simplelife.seeds.android.utils.downloadprocess.DownloadService;
+import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadList;
 
 public class SeedsStartActivity extends Activity {
+	
+	private static BroadcastReceiver mReceiver = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,12 @@ public class SeedsStartActivity extends Activity {
 		// Start the Seeds Imgae URL preload thread
 		SeedsImageUrlPreloader.initPreloader(getApplication());
 		
+		// Initialize the download manager
+		DownloadManager.initDownloadMgr(getContentResolver(),getPackageName());
+		
+		// Start the download service
+		startDownloadService();
+		
 		// Stay for a moments and redirect
 		fadeShow.setAnimationListener(new AnimationListener()
 		{
@@ -54,5 +67,33 @@ public class SeedsStartActivity extends Activity {
 		startActivity(intent);
 		finish();
 	}
+	
+	private void startDownloadService(){
+		// Start the download service
+		Intent intent = new Intent();
+		intent.setClass(this, DownloadService.class);
+		startService(intent);
+		
+	    mReceiver = new BroadcastReceiver() {
+
+	          @Override
+	          public void onReceive(Context context, Intent intent) {
+		            //showDownloadList();
+	        		Intent intent2 = new Intent();
+	        		intent2.setClass(context, DownloadList.class);
+	        		context.startActivity(intent2);
+	          }
+	      };
+
+	      registerReceiver(mReceiver, new IntentFilter(DownloadManager.ACTION_NOTIFICATION_CLICKED));		
+	}
+	
+    @Override
+    protected void onDestroy() {
+	      unregisterReceiver(mReceiver);
+	      super.onDestroy();
+    }
+
+
 
 }

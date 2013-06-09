@@ -1,18 +1,16 @@
 package com.simplelife.seeds.android;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
-import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
-import com.simplelife.seeds.android.Utils.JSONProcess.SeedsJSONMessage;
-import com.simplelife.seeds.android.Utils.JSONProcess.SeedsJSONMessage.SeedsStatusByDate;
-import com.simplelife.seeds.android.Utils.NetworkProcess.SeedsNetworkProcess;
+import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
+import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage.SeedsStatusByDate;
+import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -35,6 +33,7 @@ public class SeedsDateListActivity extends Activity {
 	private Button myTodayBtn;
 	private Button myUpdateBtn;
 	private Button myFavListBtn;
+	private Button myConfigBtn;
 	private ProgressDialog tProgressDialog = null; 	
 	
 	// Date in string format
@@ -75,31 +74,26 @@ public class SeedsDateListActivity extends Activity {
 		myYesterdayBtn    = (Button) findViewById(R.id.yesterday_btn);
 		myTodayBtn   = (Button) findViewById(R.id.today_btn);
 		myUpdateBtn  = (Button) findViewById(R.id.update_btn);
-		myFavListBtn =  (Button) findViewById(R.id.favlist_btn);
+		myFavListBtn = (Button) findViewById(R.id.favlist_btn);
+		myConfigBtn  = (Button) findViewById(R.id.config_btn);
 		
 		// Setup the click listener
 		myBefYesterdayBtn.setOnClickListener(myBefYesterdayBtnListener);
 		myYesterdayBtn.setOnClickListener(myYesterdayBtnListener);
 		myTodayBtn.setOnClickListener(myTodayBtnListener);
 		myFavListBtn.setOnClickListener(myFavListBtnListener);
+		myConfigBtn.setOnClickListener(myConfigBtnListener);
 		
 		Log.i(LOGCLASS, "Working on setting the ProgressDialog style"); 
 		// Set the progress style as spinner
 		//tProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); 
 		myUpdateBtn.setOnClickListener(myUpdateBtnListener);
 		
-		// Calculate the date
-		Calendar tCal = Calendar.getInstance();
-		mDateToday = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());
-		tCal.add(Calendar.DATE, -1);
-		mDateYesterday = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());
-		tCal.add(Calendar.DATE, -1);
-		mDateBefYesterday = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());
-		
-		// STUB CODE!!!
-		mDateToday = "2013-05-20";
-		mDateYesterday = "2013-05-18";
-		mDateBefYesterday = "2013-05-16";
+		// Retrieve the date info 
+		SeedsDateManager tDataMgr = SeedsDateManager.getDateManager();
+		mDateToday = tDataMgr.getRealDateToday();
+		mDateYesterday = tDataMgr.getRealDateYesterday();
+		mDateBefYesterday = tDataMgr.getRealDateBefYesterday();
 		
 		// Initialize the date array list
 		mDateArray = new ArrayList<String> ();
@@ -122,14 +116,15 @@ public class SeedsDateListActivity extends Activity {
 				public void run() {
 					try {
 						// Only when the seeds info have not been updated
-						updateDialogStatus("Connecting to Server...");
-						Thread.sleep(20000);
+						updateDialogStatus("Connecting to Server...");	
+						Thread.sleep(2000);
 						
 						if (!isSeedsInfoUpdated(mDateBefYesterday))
 							opeStatus = updateSeedsInfo(mDateBefYesterday);
 						
 					} catch (Exception e) {
 						// Show the error message here
+						e.printStackTrace();
 					}
 					Message t_MsgListData = new Message();
 					if (opeStatus)
@@ -288,6 +283,14 @@ public class SeedsDateListActivity extends Activity {
 		}
 	};
 	
+	private View.OnClickListener myConfigBtnListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(SeedsDateListActivity.this, SeedsConfigActivity.class);
+			startActivity(intent);
+		}
+	};
+	
 	private void updateDialogStatus(String inContents){
 		
 		Message t_MsgListData = new Message();
@@ -387,8 +390,6 @@ public class SeedsDateListActivity extends Activity {
     	
     	String respInString  = null;
     	String respInString2 = null;
-    	boolean status  = false;
-    	boolean status2 = false;
     	HashMap<String, String> respInMap;
     	ArrayList<SeedsEntity> tSeedsList = null;
     	
@@ -432,9 +433,7 @@ public class SeedsDateListActivity extends Activity {
 		{
 			updateDialogStatus("Downloading Seeds Info...");
 			respInString2 = SeedsNetworkProcess.sendSeedsByDateReqMsg(mDateArray);
-			/*respInString2 = stubReadExternalFile("SeedsByDatesResponse.txt");
 
-			status2 =  true;*/
 			if (null == respInString2)
 			{
 				// TODO: add warding info here, notify user the problem
@@ -486,8 +485,6 @@ public class SeedsDateListActivity extends Activity {
     	
     	String respInString  = null;
     	String respInString2 = null;
-    	boolean status  = false;
-    	boolean status2 = false;
     	HashMap<String, String> respInMap = null;
     	// Notify progress dialog to show the status
     	//tProgressDialog.setMessage("Retrieving Seeds Info Status...");

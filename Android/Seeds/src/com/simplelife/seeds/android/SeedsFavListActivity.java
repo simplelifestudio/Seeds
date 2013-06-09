@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.simplelife.seeds.android.Utils.Adapter.SeedsAdapter;
-import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.adapter.SeedsAdapter;
+import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 
 import android.app.Activity;
 import android.content.Intent;

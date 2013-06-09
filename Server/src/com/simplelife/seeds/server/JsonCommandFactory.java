@@ -9,10 +9,7 @@ public class JsonCommandFactory {
 	private static Logger _logger = Logger.getLogger("JsonCommandFactory");
 	
 	private final static String _jsonCommandKeyword = "command";
-	private final static String _jsonParaListKeyword = "paramList";
-
 	private final static String _jsonCommandAlohaReq = "AlohaRequest";
-	//private final static String _jsonCommandAlohaRes = "AlohaResponse";
 	private final static String _jsonCommandSeedsStatusReq = "SeedsUpdateStatusByDatesRequest";
 	private final static String _jsonCommandSeedsByDatesReq = "SeedsByDatesRequest";
 	
@@ -29,6 +26,10 @@ public class JsonCommandFactory {
 		else if (command.equals(_jsonCommandSeedsStatusReq))
 		{
 			jsonCmd = new JsonCommandSeedsStatusReq();
+		}
+		else if (command.equals(_jsonCommandSeedsByDatesReq))
+		{
+			jsonCmd = new JsonCommandSeedsReq();
 		}
 		else
 		{

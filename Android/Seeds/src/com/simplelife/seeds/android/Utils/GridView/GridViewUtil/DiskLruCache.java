@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.GridView.GridViewUtil;
+package com.simplelife.seeds.android.utils.gridview.gridviewutil;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedWriter;

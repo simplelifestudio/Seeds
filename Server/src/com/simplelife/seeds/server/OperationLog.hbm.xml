@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.simplelife.seeds.server">
+    <class name="OperationLog" table="OperationLog">
+        <id name="id" type="long" > 
+            <column name="id" sql-type="int" not-null="true"/>
+            <generator class="native"/>
+        </id>
+        <property name="logDate" column="logDate"/>
+        <property name="logId" column="logId"/>
+        <property name="logInfo" column="logInfo"/>
+        <property name="memo" column="memo"/>
+    </class>
+</hibernate-mapping>

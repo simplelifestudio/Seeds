@@ -5,28 +5,32 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBAdapter;
-import com.simplelife.seeds.android.Utils.DBProcess.SeedsDBManager;
-import com.simplelife.seeds.android.Utils.GridView.GridViewUI.ImageGridActivity;
-import com.simplelife.seeds.android.Utils.ImageProcess.SeedsImageLoader;
-import com.simplelife.seeds.android.Utils.ImageProcess.SeedsSlideImageLayout;
+import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
+import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadList;
+import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
+import com.simplelife.seeds.android.utils.imageprocess.SeedsImageLoader;
+import com.simplelife.seeds.android.utils.imageprocess.SeedsSlideImageLayout;
 
 public class SeedsDetailsActivity extends Activity{
 	
@@ -58,6 +62,9 @@ public class SeedsDetailsActivity extends Activity{
 	
 	// Image view to change to gridview
 	private ImageView mGotoGridView;
+	
+	// Image view to download the seeds
+	private ImageView mDownloadView;
 	
 	// Database adapter
 	private SeedsDBAdapter mDBAdapter;
@@ -104,6 +111,9 @@ public class SeedsDetailsActivity extends Activity{
 		mGotoGridView = (ImageView) findViewById(R.id.gotoGrid);
 		mGotoGridView.setOnClickListener(myGotoGridViewListener);
 		
+		// Retrieve the download seeds option
+		mDownloadView = (ImageView) findViewById(R.id.seeds_download);
+		mDownloadView.setOnClickListener(myDownloadViewListener);		
 	}	
 	
 	private void initViews(){
@@ -317,6 +327,15 @@ public class SeedsDetailsActivity extends Activity{
 		}
 	};
 	
+	private View.OnClickListener myDownloadViewListener = new View.OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			
+
+		}
+	};
+	
     // Define a handler to process the progress update
 	private Handler handler = new Handler(){  
   
@@ -330,19 +349,69 @@ public class SeedsDetailsActivity extends Activity{
             		if(mDBAdapter.isSeedSaveToFavorite(mSeedId))
             		{
             			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
+            			
+                		Toast toast = Toast.makeText(getApplicationContext(),
+                				"ÊÕ²Ø³É¹¦", Toast.LENGTH_SHORT);
+                	    toast.setGravity(Gravity.CENTER, 0, 0);
+                	    toast.show();
             		}
             		else
             		{
             			myFavoriteBtn.setText(R.string.seeds_Favorite);
+            			
+                		Toast toast = Toast.makeText(getApplicationContext(),
+                				"È¡Ïû³É¹¦", Toast.LENGTH_SHORT);
+                	    toast.setGravity(Gravity.CENTER, 0, 0);
+                	    toast.show();
             		}
             		//close the ProgressDialog
                     tProgressDialog.dismiss(); 
+
                     break;
                 // Or try something here
             }
              
         }
-    };  
+    }; 
+    
+    
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.seeds_download_management, menu);
+		return true;
+	}
+	
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+            {
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            }
+            case R.id.download_seed:
+            {
+            	// Fetch the download manager to start the download
+            	DownloadManager tDownloadMgr = DownloadManager.getDownloadMgr();
+            	tDownloadMgr.startDownload(mSeedsEntity.getSeedTorrentLink());            	
+            	
+        		Toast toast = Toast.makeText(getApplicationContext(),
+        				"ÒÑ¼ÓÈëÏÂÔØ¶ÓÁÐ", Toast.LENGTH_SHORT);
+        	    toast.setGravity(Gravity.CENTER, 0, 0);
+        	    toast.show();
+                return true;
+            }
+            case R.id.download_mgt:
+            {
+            	Intent intent = new Intent();
+            	intent.setClass(this, DownloadList.class);
+            	startActivity(intent);
+            	return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 		
 }

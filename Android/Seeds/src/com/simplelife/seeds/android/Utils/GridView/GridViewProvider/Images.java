@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.simplelife.seeds.android.Utils.GridView.GridViewProvider;
+package com.simplelife.seeds.android.utils.gridview.gridviewprovider;
 
 import com.simplelife.seeds.android.SeedsEntity;
 
