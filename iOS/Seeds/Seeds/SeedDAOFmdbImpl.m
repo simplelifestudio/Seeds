@@ -118,6 +118,39 @@
     return count;
 }
 
+-(NSInteger) countSeedsByDate:(NSDate*) date
+{
+    __block NSInteger count = 0;
+    
+    [databaseQueue inDatabase:^(FMDatabase* db)
+     {
+         [db open];
+         
+         NSMutableString* sql = [NSMutableString stringWithString:@"select count("];
+         [sql appendString:TABLE_SEED_COLUMN_SEEDID];
+         [sql appendString:@") from "];
+         [sql appendString:TABLE_SEED];
+         [sql appendString:@" where "];
+         [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
+         [sql appendString:@" = "];
+         [sql appendString:@"'"];
+         NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:STANDARD_DATE_FORMAT andDate:date];
+         [sql appendString:dateStr];
+         [sql appendString:@"'"];
+         
+         count = [db intForQuery:sql];
+         BOOL hadError = [db hadError];
+         if (hadError)
+         {
+             DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+         }
+         
+         [db close];
+     }];
+    
+    return count;
+}
+
 -(NSArray*) getAllSeeds
 {
     __block NSArray* array = [NSMutableArray arrayWithCapacity:0];
@@ -242,7 +275,7 @@
             [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
             [sql appendString:@" = "];
             [sql appendString:@"'"];
-            NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:STARDARD_DATE_FORMAT andDate:date];
+            NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:STANDARD_DATE_FORMAT andDate:date];
             [sql appendString:dateStr];
             [sql appendString:@"'"];
             
@@ -250,7 +283,7 @@
             BOOL hadError = [db hadError];
             if (hadError)
             {
-                NSLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+                DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
             }
             if (!flag)
             {
@@ -286,7 +319,7 @@
              [sql appendString:@"'"];
              for (NSDate* day in last3Days)
              {
-                 NSString* dayStr = [CBDateUtils dateStringInLocalTimeZone:STARDARD_DATE_FORMAT andDate:day];
+                 NSString* dayStr = [CBDateUtils dateStringInLocalTimeZone:STANDARD_DATE_FORMAT andDate:day];
                  
                  [sql appendString:@" and "];
                  [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
@@ -300,7 +333,7 @@
              BOOL hadError = [db hadError];
              if (hadError)
              {
-                 NSLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+                 DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
              }
              if (!flag)
              {
@@ -337,7 +370,7 @@
          BOOL hadError = [db hadError];
          if (hadError)
          {
-             NSLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+             DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
          }
          if (!flag)
          {
@@ -413,7 +446,7 @@
             hadError = [db hadError];
             if (hadError)
             {
-                NSLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+                DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
             }
 
             [db close];

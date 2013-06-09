@@ -14,10 +14,14 @@
 
 @interface ServerAgent : NSObject <JSONMessageDelegate>
 
+@property (nonatomic, strong) id<CBLongTaskStatusHUDDelegate> delegate;
+
 +(NSMutableURLRequest*) constructURLRequest:(JSONMessage*) message;
 
--(void) alohaTest;
--(void) updateStatusByDatesTest;
--(void) seedsByDatesTest;
+-(void) aloha;
+-(void) seedsUpdateStatusByDates:(NSArray*) dates;
+-(void) seedsByDates:(NSArray*) dates;
+
+-(void) syncSeedsInfo;
 
 @end

@@ -68,21 +68,21 @@ SINGLETON(CommunicationModule)
     {
         case NotReachable:
         {
-            [guiModule showHUD:NSLocalizedString(@"Internet Disconnected", nil)];
+            [guiModule showHUD:NSLocalizedString(@"Internet Disconnected", nil) delay:2];
             
             DLog(@"App's reachability changed to 'NotReachable'.");
             break;
         }
         case ReachableViaWiFi:
         {
-            [guiModule showHUD:NSLocalizedString(@"WiFi Connected", nil)];
+            [guiModule showHUD:NSLocalizedString(@"WiFi Connected", nil) delay:2];
             
             DLog(@"App's reachability changed to 'ReachableViaWiFi'.");
             break;
         }
         case ReachableViaWWAN:
         {
-            [guiModule showHUD:NSLocalizedString(@"3G/GPRS Connected", nil)];
+            [guiModule showHUD:NSLocalizedString(@"3G/GPRS Connected", nil) delay:2];
             
             DLog(@"App's reachability changed to 'ReachableViaWWAN'.");
             break;

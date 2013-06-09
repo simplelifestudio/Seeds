@@ -19,6 +19,11 @@
 
 #define JSONMESSAGE_KEY_COMMAND @"command"
 #define JSONMESSAGE_KEY_PARAMLIST @"paramList"
+#define JSONMESSAGE_KEY_DATELIST @"datelist"
+
+#define JSONMESSAGE_VAL_NOUPDATE @"NO_UPDATE";
+#define JSONMESSAGE_VAL_NOTREADY @"NOT_UPDATE";
+#define JSONMESSAGE_VAL_READY @"READY";
 
 #define JSONMESSAGE_COMMAND_ALOHAREQUEST @"AlohaRequest"
 #define JSONMESSAGE_COMMAND_ALOHARESPONSE @"AlohaResponse"
@@ -41,10 +46,10 @@
 // Module: Spider
 #define SEEDLIST_LINK_DATE_FORMAT @"M-dd"
 
-#define SEEDS_SERVER_IP @"174.123.15.31"
+#define SEEDS_RESOURCE_IP @"174.123.15.31"
 #define LINK_SEEDLIST_CHANNEL_PAGE @"&page="
-#define LINK_SEEDLIST_CHANNEL @"http://"SEEDS_SERVER_IP"/forumdisplay.php?fid=55"
-#define LINK_SEEDLIST @"http://"SEEDS_SERVER_IP"/viewthread.php?tid=931724&extra=page%3D1"
+#define LINK_SEEDLIST_CHANNEL @"http://"SEEDS_RESOURCE_IP"/forumdisplay.php?fid=55"
+#define LINK_SEEDLIST @"http://"SEEDS_RESOURCE_IP"/viewthread.php?tid=931724&extra=page%3D1"
 
 #define SEEDLIST_LINK_PAGENUM_START 1
 #define SEEDLIST_LINK_PAGENUM_END 10
@@ -54,6 +59,8 @@
 
 
 // Module: Database
+enum ServiceDay {TheDayBefore = 0, Yesterday = 1, Today = 2};
+
 #define DATABASE_FILE_NAME @"Seeds_App_Database"
 #define DATABASE_FILE_TYPE @"db"
 #define DATABASE_FILE_FULL_NAME @"Seeds_App_Database.db"
@@ -80,6 +87,8 @@
 
 #define SQL_FOREIGN_KEY_ENABLE @"PRAGMA foreign_keys=1"
 
+#define SEED_TYPE_AV @"AV"
+#define SEED_SOURCE_MM @"咪咪爱"
 
 // Module: Transmission
 #define HTTP_SERVER_NAME @"Seeds Http Server"
@@ -105,7 +114,8 @@
 
 #define CELL_ID_SEEDPICTURECOLLECTIONCELL @"SeedPictureCollectionCell"
 
-#define HUD_DISPLAY(x) usleep(0);
+#define HUD_SIZE CGSizeMake(135.f, 135.f)
+#define HUD_DISPLAY(x) sleep(x);
 
 #define kZoomStep 2
 

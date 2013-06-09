@@ -9,10 +9,17 @@
 #import <UIKit/UIKit.h>
 
 #import "MBProgressHUD.h"
-#import "SeedsSpider.h"
-#import "TorrentListDownloadAgent.h"
+#import "CBUIUtils.h"
 
-@interface HomeViewController : UIViewController <MBProgressHUDDelegate, SeedsSpiderDelegate>
+@interface HomeViewController : UIViewController <MBProgressHUDDelegate, CBLongTaskStatusHUDDelegate>
+
+@property (weak, nonatomic) IBOutlet UILabel *todayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *yesterdayLabel;
+@property (weak, nonatomic) IBOutlet UILabel *theDayBeforeLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *todaySyncStatusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *yesterdaySyncStatusLabel;
+@property (weak, nonatomic) IBOutlet UILabel *theDayBeforeSyncStatusLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *syncButton;
 @property (weak, nonatomic) IBOutlet UIButton *transButton;

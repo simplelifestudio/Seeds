@@ -56,13 +56,29 @@
                          initWithTimeIntervalSinceNow:-secondsPerDay];
 
     NSDate *theDayBefore = [[NSDate alloc]
-                            initWithTimeIntervalSinceNow:-secondsPerDay*2];
+                            initWithTimeIntervalSinceNow:-secondsPerDay * 2];
 
     [array addObject:theDayBefore];
     [array addObject:yesterday];
     [array addObject:today];
     
     return array;
+}
+
++(NSArray*) lastThreeDayStrings:(NSArray*) lastThreeDays formatString:(NSString*) formatString
+{
+    NSAssert(nil != formatString && 0 < formatString.length, @"Illegal date format string");
+    NSAssert(nil != lastThreeDays && 3 == lastThreeDays.count, @"Illegal last three days array");
+    
+    NSMutableArray* dayStrs = [NSMutableArray array];
+    
+    for (NSDate* day in lastThreeDays)
+    {
+        NSString* dayStr = [CBDateUtils dateStringInLocalTimeZone:formatString andDate:day];
+        [dayStrs addObject:dayStr];
+    }
+    
+    return dayStrs;
 }
 
 - (id)init

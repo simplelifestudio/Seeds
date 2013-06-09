@@ -14,24 +14,15 @@
 #import "CBDateUtils.h"
 
 #import "SeedsVisitor.h"
-#import "TorrentListDownloadAgent.h"
+#import "ServerAgent.h"
 
-@protocol SeedsSpiderDelegate <NSObject>
+@interface SeedsSpider : NSObject
 
--(void) spiderStarted:(NSString*) majorStatus;
--(void) spiderIsProcessing:(NSString*) majorStatus minorStatus:(NSString*) minorStatus;
--(void) spiderFinished:(NSString*) majorStatus;
-
-@end
-
-@interface SeedsSpider : NSObject <TorrentListDownloadAgentDelegate>
-
-@property (nonatomic, strong) id<SeedsSpiderDelegate> seedsSpiderDelegate;
-@property (nonatomic, strong) id<TorrentListDownloadAgentDelegate> torrentListDownloadAgentDelegate;
+@property (nonatomic, strong) id<CBLongTaskStatusHUDDelegate> seedsSpiderDelegate;
 
 -(NSString*) pullSeedListLinkByDate:(NSDate*) date;
 -(NSArray*) pullSeedsFromLink:(NSString*) link;
 
--(void) pullSeedsInfo;
+-(void) pullSeedsInfo:(NSArray*) days;
 
 @end

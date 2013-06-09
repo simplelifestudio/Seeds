@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #define STANDARD_DATE_TIME_FORMAT @"yyyy-MM-dd HH:mm:ss"
-#define STARDARD_DATE_FORMAT @"yyyy-MM-dd"
+#define STANDARD_DATE_FORMAT @"yyyy-MM-dd"
 
 @interface CBDateUtils : NSObject
 
@@ -22,5 +22,7 @@
 +(NSDate *) dateFromStringWithFormat:(NSString *)dateString andFormat:(NSString *) formatString;
 
 +(NSArray*) lastThreeDays;
+
++(NSArray*) lastThreeDayStrings:(NSArray*) lastThreeDays formatString:(NSString*) formatString;
 
 @end

@@ -73,7 +73,7 @@
         flag = [transmitModule startHTTPServer];
         if (flag)
         {
-            [self updateConsole:NSLocalizedString(@"HTTP server started...", nil)];
+            [self updateConsole:NSLocalizedString(@"HTTP server is starting...", nil)];
         }
         else
         {

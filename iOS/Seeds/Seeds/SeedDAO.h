@@ -14,6 +14,8 @@
 @protocol SeedDAO <NSObject, DAO>
 
 -(NSInteger) countAllSeeds;
+-(NSInteger) countSeedsByDate:(NSDate*) date;
+
 -(NSArray*) getAllSeeds;
 -(BOOL) updateSeed:(NSInteger) seedId withParameterDictionary:(NSMutableDictionary*) paramDic; // paramDic should only be used for key(NSString*)=value(NSString*)
 -(BOOL) deleteSeedsByDate:(NSDate*) date;

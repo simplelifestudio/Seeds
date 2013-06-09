@@ -17,17 +17,23 @@
     
     UIBarButtonItem* backBarItem;
     UIBarButtonItem* stopBarItem;
+    
+    NSArray* last3Days;
 }
 @end
 
 @implementation HomeViewController
+
+@synthesize todaySyncStatusLabel = _todaySyncStatusLabel;
+@synthesize yesterdaySyncStatusLabel = _yesterdaySyncStatusLabel;
+@synthesize theDayBeforeSyncStatusLabel = _theDayBeforeSyncStatusLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        // Custom initialization
+
     }
     return self;
 }
@@ -42,6 +48,10 @@
     
     SpiderModule* spiderModule = [SpiderModule sharedInstance];
     [spiderModule.spider setSeedsSpiderDelegate:self];
+
+    CommunicationModule* communicationModule = [CommunicationModule sharedInstance];
+    ServerAgent* serverAgent = communicationModule.serverAgent;
+    serverAgent.delegate = self;
     
     GUIModule* guiModule = [GUIModule sharedInstance];
     guiModule.homeViewController = self;
@@ -50,6 +60,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES];
+
+    [self updateDayLabels];
     
     [super viewWillAppear:animated];    
 }
@@ -69,22 +81,123 @@
 {
     [self setSyncButton:nil];
     [self setTransButton:nil];
+
+    [self setTodayLabel:nil];
+    [self setYesterdayLabel:nil];
+    [self setTheDayBeforeLabel:nil];
+    [self setTodaySyncStatusLabel:nil];
+    [self setYesterdaySyncStatusLabel:nil];
+    [self setTheDayBeforeSyncStatusLabel:nil];
     [super viewDidUnload];
 }
 
 - (IBAction)onClickSyncButton:(id)sender
-{
+{    
 	HUD = [[MBProgressHUD alloc] initWithView:self.view];
 	[self.view addSubview:HUD];
 	HUD.delegate = self;
-
+    
 	[HUD showWhileExecuting:@selector(syncSeedsInfoTask) onTarget:self withObject:nil animated:YES];
+}
+
+-(void) updateHUDTextStatus:(NSString*) majorStatus minorStatus:(NSString*)minorStatus
+{
+    if (nil != majorStatus && 0 < majorStatus.length)
+    {
+        HUD.labelText = majorStatus;
+    }
+    
+    HUD.detailsLabelText = minorStatus;
 }
 
 - (void)syncSeedsInfoTask
 {
     SpiderModule* spiderModule = [SpiderModule sharedInstance];
-    [spiderModule.spider pullSeedsInfo];
+    [spiderModule.spider pullSeedsInfo:last3Days];
+
+//    CommunicationModule* communicationModule = [CommunicationModule sharedInstance];
+//    ServerAgent* serverAgent = communicationModule.serverAgent;
+//    [serverAgent syncSeedsInfo];
+}
+
+- (void) updateDayLabels
+{
+    last3Days = [CBDateUtils lastThreeDays];
+    NSInteger dayIndex = TheDayBefore;
+    for (NSDate* day in last3Days)
+    {        
+        NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
+
+        switch (dayIndex)
+        {
+            case Today:
+            {
+                [_todayLabel setText:dateStr];
+                break;
+            }
+            case Yesterday:
+            {
+                [_yesterdayLabel setText:dateStr];
+                break;
+            }
+            case TheDayBefore:
+            {
+                [_theDayBeforeLabel setText:dateStr];
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+        
+        BOOL isThidDaySync = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
+        if (!isThidDaySync)
+        {
+            [self updateDaySyncStatusLabels:dayIndex syncStatus:NSLocalizedString(@"Unsync", nil)];
+        }
+        else
+        {
+            id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+            NSInteger seedCountByDate = [seedDAO countSeedsByDate:day];
+            
+            [self updateDaySyncStatusLabels:dayIndex syncStatus:[NSString stringWithFormat:@"%d", seedCountByDate]];
+        }
+        
+        dayIndex = dayIndex + 1;
+    }
+}
+
+- (void) updateDaySyncStatusLabels:(NSInteger) dayIndex syncStatus:(NSString*) status
+{
+    NSAssert(Today >= dayIndex || TheDayBefore <= dayIndex, @"Illegal day index");
+    NSAssert(nil != status && 0 < status, @"Illegal status");
+    
+    dispatch_async(dispatch_get_main_queue(), ^()
+                   {
+                       switch (dayIndex)
+                       {
+                           case Today:
+                           {
+                               [_todaySyncStatusLabel setText:status];
+                               break;
+                           }
+                           case Yesterday:
+                           {
+                               [_yesterdaySyncStatusLabel setText:status];
+                               break;
+                           }
+                           case TheDayBefore:
+                           {
+                               [_theDayBeforeSyncStatusLabel setText:status];
+                               break;
+                           }
+                           default:
+                           {
+                               break;
+                           }
+                       }
+                   });
 }
 
 - (void)hudWasHidden:(MBProgressHUD *)hud
@@ -106,11 +219,13 @@
     }
 }
 
--(void) spiderStarted:(NSString*) majorStatus
+#pragma - CBLongTaskStatusHUDDelegate
+
+-(void) taskStarted:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
 {
     HUD.mode = MBProgressHUDModeText;
-    HUD.minSize = CGSizeMake(135.f, 135.f);
-        
+    HUD.minSize = HUD_SIZE;
+    
     [self updateHUDTextStatus:majorStatus minorStatus:nil];
     
     HUD_DISPLAY(1)
@@ -118,13 +233,13 @@
     HUD.mode = MBProgressHUDModeIndeterminate;
 }
 
--(void) spiderIsProcessing:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
+-(void) taskIsProcessing:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
 {
     [self updateHUDTextStatus:majorStatus minorStatus:minorStatus];
     HUD_DISPLAY(1)
 }
 
--(void) spiderFinished:(NSString*) majorStatus
+-(void) taskCanceld:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
 {
     HUD.mode = MBProgressHUDModeText;
     [self updateHUDTextStatus:majorStatus minorStatus:nil];
@@ -132,14 +247,32 @@
     HUD_DISPLAY(2)
 }
 
--(void) updateHUDTextStatus:(NSString*) majorStatus minorStatus:(NSString*)minorStatus
+-(void) taskFailed:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
 {
-    if (nil != majorStatus && 0 < majorStatus.length)
-    {
-        HUD.labelText = majorStatus;
-    }
+    HUD.mode = MBProgressHUDModeText;
+    [self updateHUDTextStatus:majorStatus minorStatus:nil];
     
-    HUD.detailsLabelText = minorStatus;
+    HUD_DISPLAY(2)
+}
+
+-(void) taskFinished:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
+{
+    HUD.mode = MBProgressHUDModeText;
+    [self updateHUDTextStatus:majorStatus minorStatus:nil];
+    
+    HUD_DISPLAY(2)
+}
+
+-(void) taskDataUpdated:(id) dataLabel data:(id) data
+{
+    NSAssert(nil != dataLabel, @"Nil data label");
+    NSAssert(nil != data, @"Nil data");
+    
+    NSString* sLabel = (NSString*)dataLabel;
+    NSInteger dayIndex = [sLabel integerValue];
+    NSString* sData = (NSString*)data;
+    
+    [self updateDaySyncStatusLabels:dayIndex syncStatus:sData];
 }
 
 @end

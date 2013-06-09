@@ -17,6 +17,6 @@
 
 @property (weak, nonatomic) HomeViewController* homeViewController;
 
--(void) showHUD:(NSString*) status;
+-(void) showHUD:(NSString*) status delay:(NSInteger) seconds;
 
 @end

@@ -41,7 +41,7 @@ SINGLETON(GUIModule)
     [UIApplication sharedApplication].idleTimerDisabled = YES;
 }
 
--(void) showHUD:(NSString*) status
+-(void) showHUD:(NSString*) status delay:(NSInteger)seconds
 {
     if (nil != _homeViewController)
     {
@@ -51,12 +51,12 @@ SINGLETON(GUIModule)
         [view addSubview:HUD];
         
         HUD.mode = MBProgressHUDModeText;
-        HUD.minSize = CGSizeMake(135.f, 135.f);
+        HUD.minSize = HUD_SIZE;
         
         HUD.labelText = status;
         
         [HUD show:YES];
-        [HUD hide:YES afterDelay:2];
+        [HUD hide:YES afterDelay:seconds];
     }
     else
     {

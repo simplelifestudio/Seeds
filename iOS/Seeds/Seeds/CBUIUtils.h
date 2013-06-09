@@ -10,6 +10,20 @@
 #import <UIKit/UIKit.h>
 
 
+@protocol CBLongTaskStatusHUDDelegate <NSObject>
+
+@required
+-(void) taskStarted:(NSString*) majorStatus minorStatus:(NSString*) minorStatus;
+-(void) taskIsProcessing:(NSString*) majorStatus minorStatus:(NSString*) minorStatus;
+-(void) taskCanceld:(NSString*) majorStatus minorStatus:(NSString*) minorStatus;
+-(void) taskFailed:(NSString*) majorStatus minorStatus:(NSString*) minorStatus;
+-(void) taskFinished:(NSString*) majorStatus minorStatus:(NSString*) minorStatus;
+
+@optional
+-(void) taskDataUpdated:(id) dataLabel data:(id) data;
+
+@end
+
 @interface CBUIUtils : NSObject
 
 +(id<UIApplicationDelegate>) getAppDelegate;

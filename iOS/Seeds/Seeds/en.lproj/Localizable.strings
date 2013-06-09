@@ -30,7 +30,7 @@
 "Link Analyzing" = "Link Analyzing";
 "Seeds Parsing" = "Seeds Parsing";
 "Saving" = "Saving";
-"Seeds Clearing" = "Seeds Clearing";
+"Seeds Organizing" = "Seeds Organizing";
 "Seeds Saving" = "Seeds Saving";
 "Fail Saving" = "Fail Saving";
 "Fail Clearing" = "Fail Clearing";
@@ -51,10 +51,20 @@
 "Web page is generating..." = "Web page is generating...";
 "Web page generation is fail." = "Web page generation is fail.";
 "HTTP server is initializing..." = "HTTP server is initializing...";
-"HTTP server started..." = "HTTP server started...";
+"HTTP server is starting..." = "HTTP server is starting...";
 "HTTP server failed to start." = "HTTP server failed to start.";
 "HTTP server address:" = "HTTP server address:";
 
 "WiFi Connected" = "WiFi Connected";
 "3G/GPRS Connected" = "3G/GPRS Connected";
 "Internet Disconnected" = "Internet Disconnected";
+
+"Server Status Check" = "Server Status Check";
+"Server Reachable" = "Server Reachable";
+"Server Unreachable" = "Server Unreachable";
+"Seeds Status Received" = "Seeds Status\nReceived";
+"Seeds Status Unreachable" = "Seeds Status\nUnreachable";
+"Seeds Received" = "Seeds Received";
+"Seeds Unreachable" = "Seeds Unreachable";
+
+"Unsync" = "Unsync";
