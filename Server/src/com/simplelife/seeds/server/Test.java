@@ -1,10 +1,30 @@
+/**
+ * Test.java 
+ * 
+ * History:
+ *     2013-06-09: Tomas Chen, initial version
+ * 
+ * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
+ */
+
+
 package com.simplelife.seeds.server;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+
+import com.simplelife.seeds.server.db.DaoWrapper;
+import com.simplelife.seeds.server.db.LogId;
+import com.simplelife.seeds.server.db.OperationLog;
+import com.simplelife.seeds.server.db.PreviewPic;
+import com.simplelife.seeds.server.db.Seed;
+import com.simplelife.seeds.server.json.JsonCommandSeedsReq;
+import com.simplelife.seeds.server.json.JsonCommandSeedsStatusReq;
+import com.simplelife.seeds.server.parser.HtmlParser;
+import com.simplelife.seeds.server.util.DateUtil;
+import com.simplelife.seeds.server.util.OperationLogUtil;
 
 import net.sf.json.JSONObject;
 
@@ -13,21 +33,21 @@ import javassist.bytecode.Descriptor.Iterator;
 public class Test {
 	public static void main(String[] args)
 	{
-		//testSave();
-		//testQuery();
-		//testHtmlParse();
-		//testSeedReq();
-		//testStrBuilder();
-		//testSeedStatusReq();
-		//testDateFunctions();
-		//testRangeHtmlParse();
+		testSave();
+		testQuery();
+		testHtmlParse();
+		testSeedReq();
+		testStrBuilder();
+		testSeedStatusReq();
+		testDateFunctions();
+		testRangeHtmlParse();
 		testOperationLog();
 	}
 
 	private static void testOperationLog()
 	{
-		OperationLog log = new OperationLog(1, "this is sample of link");
-		log.Save();
+		OperationLogUtil.captureTaskStarted("this is sample of link");
+		OperationLogUtil.save(LogId.ALOHA_REQUEST, "Aloha Request Received");
 	}
 	
 	private static void testRangeHtmlParse()
@@ -48,9 +68,10 @@ public class Test {
 	}
 	private static void testDateFunctions()
 	{
-		System.out.println(DateUtil.getNextTaskTrigger(20).toString());
-		System.out.println(DateUtil.getDaysFromToday("2013-06-01"));
-		System.out.println(DateUtil.getDaysFromToday("2013-05-01"));
+		//System.out.println(DateUtil.getDaysBetween("2013-5-3", "2013-5-8"));
+		//System.out.println(DateUtil.getNextTaskTrigger(20).toString());
+		//System.out.println(DateUtil.getDaysFromToday("2013-06-01"));
+		System.out.println(DateUtil.getDaysFromToday("2014-05-01"));
 		System.out.println(DateUtil.getDaysFromToday("2013-5-1"));
 		System.out.println(DateUtil.getDaysFromToday("2013-*05-01"));
 		System.out.println(DateUtil.getDaysFromToday("2012-05-01"));
@@ -82,7 +103,6 @@ public class Test {
 			req.Execute(jsonObj, out);
 			out.flush();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -100,7 +120,6 @@ public class Test {
 			req.Execute(jsonObj, out);
 			out.flush();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -113,12 +132,12 @@ public class Test {
 	
 	private static void testQuery()
 	{
-		if (DaoWrapper.getInstance().exists("select * from seed"))
+		if (DaoWrapper.exists("select * from seed"))
 		{
 			System.err.print("no data found");
 		}
 		
-		List list = DaoWrapper.getInstance().query("select * from seed", Seed.class);
+		List list = DaoWrapper.query("select * from seed", Seed.class);
 		java.util.Iterator iter = list.iterator();
 		while (iter.hasNext())
 		{
@@ -126,7 +145,7 @@ public class Test {
 			System.out.println(((Seed)iter.next()).getSeedId());
 		}
 		
-		list = DaoWrapper.getInstance().query("select * from PreviewPic where seedId = 12", PreviewPic.class);
+		list = DaoWrapper.query("select * from PreviewPic where seedId = 12", PreviewPic.class);
 		iter = list.iterator();
 		while (iter.hasNext())
 		{
@@ -161,7 +180,7 @@ public class Test {
 		pic.setPictureLink("pictureLink2");
 		seed.addPicture(pic);
 		
-		DaoWrapper.getInstance().save(seed);
+		DaoWrapper.save(seed);
 		
 		//DaoWrapper.getInstance().Delete(seed);
 	}

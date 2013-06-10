@@ -1,7 +1,17 @@
-package com.simplelife.seeds.server;
+/**
+ * OperationLog.java 
+ * 
+ * History:
+ *     2013-06-09: Tomas Chen, initial version
+ * 
+ * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
+ */
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+package com.simplelife.seeds.server.db;
+
+import com.simplelife.seeds.server.util.DateUtil;
+import com.simplelife.seeds.server.util.LogUtil;
 
 public class OperationLog {
 	/**
@@ -74,25 +84,12 @@ public class OperationLog {
 	{
 		this.setLogId(logId);
 		this.setLogInfo(logInfo);
-		this.Save();
 	}
 	
-	public void Save()
-	{
-		if (logId == 0)
-		{
-			logger.log(Level.SEVERE, "logId can't be 0.");
-			return;
-		}
-		
-		this.setLogDate(DateUtil.getNow());
-		DaoWrapper.getInstance().save(this);
-	}
 	
 	private long id;
 	private String logDate;
 	private long logId;
 	private String logInfo;
 	private String memo;
-	private Logger logger = Logger.getLogger("OperationLog");
 }

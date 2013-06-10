@@ -1,17 +1,28 @@
-package com.simplelife.seeds.server;
+/**
+ * HtmlNodeVisitor.java 
+ * 
+ * History:
+ *     2013-06-09: Tomas Chen, initial version
+ * 
+ * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
+ */
+
+
+package com.simplelife.seeds.server.parser;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.htmlparser.Remark;
 import org.htmlparser.Tag;
 import org.htmlparser.Text;
 import org.htmlparser.visitors.NodeVisitor;
 
-public class MyNodeVisitor extends NodeVisitor {
-	private Logger _logger = Logger.getLogger("MyNodeVistor");
+import com.simplelife.seeds.server.db.DaoWrapper;
+import com.simplelife.seeds.server.db.Seed;
+import com.simplelife.seeds.server.util.LogUtil;
+
+public class HtmlNodeVisitor extends NodeVisitor {
 	private AnalyzeStatus _analyzeStatus = AnalyzeStatus.Init;
 	private Seed _seed;
 	private String _publishDate;
@@ -21,7 +32,7 @@ public class MyNodeVisitor extends NodeVisitor {
 		Init, FilmInfo, Link;
 	}
 	
-	public MyNodeVisitor(boolean recurseChildren, boolean recurseSelf)
+	public HtmlNodeVisitor(boolean recurseChildren, boolean recurseSelf)
 	{
 		super(recurseChildren, recurseSelf);
 		//_logger.setLevel(Level.WARNING);
@@ -37,7 +48,7 @@ public class MyNodeVisitor extends NodeVisitor {
 		if(isImageLink(tag))
     	{
 			String picLink = getImageLink(tag.getText());
-			//_logger.log(Level.INFO, picLink);
+			//LogUtil.info(picLink);
 			_seed.addPicture(picLink);
     	}
     }
@@ -54,12 +65,12 @@ public class MyNodeVisitor extends NodeVisitor {
     		
     		if (!checkSeedForSave(_seed))
     		{
-    			_logger.log(Level.WARNING, "Invalid seed info for save: " + _seed.toString());
+    			LogUtil.warning("Invalid seed info for save: " + _seed.toString());
     			return;
     		}
     		formatSeedForSave(_seed);
-			DaoWrapper.getInstance().save(_seed);
-			_logger.log(Level.INFO, "Saved seed to DB: \n" + _seed.toString());
+			DaoWrapper.save(_seed);
+			LogUtil.info("Saved seed to DB: \n" + _seed.toString());
 			return;
     	}
     		

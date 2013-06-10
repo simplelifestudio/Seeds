@@ -1,9 +1,16 @@
+/**
+ * SeedCaptureServlet.java 
+ * 
+ * History:
+ *     2013-06-09: Tomas Chen, initial version
+ * 
+ * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
+ */
+
+
 package com.simplelife.seeds.server;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,16 +18,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
+import com.simplelife.seeds.server.parser.HtmlParser;
+import com.simplelife.seeds.server.util.LogUtil;
 
 @WebServlet("/SeedCaptureRequest")
 public class SeedCaptureServlet extends HttpServlet {
 		private static final long serialVersionUID = 1L;
-		private Logger _logger = Logger.getLogger("SeedCaptureServlet");
 
 		public SeedCaptureServlet() {
 			super();
-			_logger.setLevel(Level.INFO);
 		}
 
 		protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,6 +49,8 @@ public class SeedCaptureServlet extends HttpServlet {
 			String endPage = request.getParameter("endPage");
 			
 			HtmlParser parser = new HtmlParser();
+			parser.getkeyWordList().clear();
+			parser.getkeyWordList().add(keyWord);
 			parser.setbaseLink(baseLink);
 			parser.setstartDate(startDate);
 			parser.setendDate(endDate);
@@ -54,7 +62,7 @@ public class SeedCaptureServlet extends HttpServlet {
 			response.getOutputStream().print("Seed capture request is submitted successfully!");
 			
 		} catch (Exception e) {
-			_logger.log(Level.SEVERE, "error occurred");
+			LogUtil.printStackTrace(e);
 			response.getOutputStream().print(e.getStackTrace().toString());
 		}
 

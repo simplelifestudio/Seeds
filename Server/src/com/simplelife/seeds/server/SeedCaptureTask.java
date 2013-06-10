@@ -1,14 +1,25 @@
+/**
+ * SeedCaptureTask.java 
+ * 
+ * History:
+ *     2013-06-09: Tomas Chen, initial version
+ * 
+ * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
+ */
+
+
 package com.simplelife.seeds.server;
 
 import java.util.TimerTask;
-import java.util.logging.Logger;
+
+import com.simplelife.seeds.server.parser.HtmlParser;
+import com.simplelife.seeds.server.util.LogUtil;
 
 public class SeedCaptureTask extends TimerTask {
-	private Logger logger = Logger.getLogger("SeedCaptureTask");
 	
 	@Override
 	public void run() {
-		logger.info("Seed capture task launched!");
+		LogUtil.info("Seed capture task launched!");
 		
 		SeedCaptureListener.scheduleNextCapture();
 		HtmlParser parser = new HtmlParser();

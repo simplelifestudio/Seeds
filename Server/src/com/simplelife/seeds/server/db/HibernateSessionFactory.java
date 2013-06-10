@@ -1,7 +1,14 @@
-package com.simplelife.seeds.server;
+/**
+ * HibernateSessionFactory.java 
+ * 
+ * History:
+ *     2013-06-09: Tomas Chen, initial version
+ * 
+ * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
+ */
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+package com.simplelife.seeds.server.db;
 
 import org.hibernate.HibernateException;  
 import org.hibernate.Session;  
@@ -9,6 +16,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;  
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
+
+import com.simplelife.seeds.server.util.LogUtil;
   
 /** 
  * Configures and provides access to Hibernate sessions, tied to the 
@@ -28,12 +37,11 @@ public class HibernateSessionFactory {
      * You can change location with setConfigFile method 
      * session will be rebuilded after change of config file 
      */  
-    private static String CONFIG_FILE_LOCATION = "/com/simplelife/seeds/server/hibernate.cfg.xml";
+    private static String CONFIG_FILE_LOCATION = "/com/simplelife/seeds/server/db/hibernate.cfg.xml";
     private static final ThreadLocal threadLocal = new ThreadLocal();  
     private static Configuration configuration = new Configuration();  
     private static SessionFactory sessionFactory;  
     private static String configFile = CONFIG_FILE_LOCATION;  
-    private static Logger _logger = Logger.getLogger("HtmlParser");
     
     private HibernateSessionFactory() {  
     }  
@@ -58,7 +66,7 @@ public class HibernateSessionFactory {
                 threadLocal.set(session);  
             }  
         } catch (Exception e) {  
-            _logger.log(Level.SEVERE, "Failed to get hibernate session: " + e.getMessage());
+            LogUtil.printStackTrace(e);
         }  
         return session;  
     }  
@@ -73,8 +81,7 @@ public class HibernateSessionFactory {
         	ServiceRegistry  sr = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry(); 
         	sessionFactory = configuration.buildSessionFactory(sr);  
         } catch (Exception e) {  
-        	_logger.log(Level.SEVERE, "Failed to rebuild hibernate session factory: " + e.getMessage());
-        	e.printStackTrace();
+        	LogUtil.printStackTrace(e);
         }  
     }  
   

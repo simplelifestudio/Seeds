@@ -1,4 +1,14 @@
-package com.simplelife.seeds.server;
+/**
+ * Seed.java 
+ * 
+ * History:
+ *     2013-06-09: Tomas Chen, initial version
+ * 
+ * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
+ */
+
+
+package com.simplelife.seeds.server.db;
 
 import java.util.HashSet;
 import java.util.Set;

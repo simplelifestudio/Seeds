@@ -1,10 +1,23 @@
-package com.simplelife.seeds.server;
+/**
+ * JsonCommandSeedsReq.java 
+ * 
+ * History:
+ *     2013-06-09: Tomas Chen, initial version
+ * 
+ * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
+ */
+
+
+package com.simplelife.seeds.server.json;
 
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import com.simplelife.seeds.server.db.DaoWrapper;
+import com.simplelife.seeds.server.db.PreviewPic;
+import com.simplelife.seeds.server.db.Seed;
+import com.simplelife.seeds.server.util.LogUtil;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -15,17 +28,15 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 	private final static String _jsonDateListKeyword = "datelist";
 	private final static String _jsonCommandSeedsByDatesRes = "SeedsByDatesResponse";
 	
-	private Logger _logger = Logger.getLogger("JsonCommandSeedsReq");
-	
 	@Override
 	public void Execute(JSONObject jsonObj, PrintWriter out) {
-		_logger.log(Level.INFO, "Start to Execute SeedsUpdateStatusByDatesRequest");
+		LogUtil.info("Start to Execute SeedsUpdateStatusByDatesRequest");
 		String strDateList = jsonObj.getString(_jsonParaListKeyword); 
 		JSONObject dateObj = JSONObject.fromObject(strDateList);
 		
 		if (dateObj == null)
 		{
-			_logger.log(Level.SEVERE, "Invalid SeedsUpdateStatusByDatesRequest command received: " + jsonObj.toString());
+			LogUtil.severe("Invalid SeedsUpdateStatusByDatesRequest command received: " + jsonObj.toString());
 			responseInvalidRequest(out);
 			return;
 		}
@@ -33,7 +44,7 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 		JSONArray dateList = dateObj.getJSONArray(_jsonDateListKeyword);
 		if (dateList == null || dateList.size() == 0)
 		{
-			_logger.log(Level.SEVERE, "Invalid SeedsUpdateStatusByDatesRequest command received: " + jsonObj.toString());
+			LogUtil.severe("Invalid SeedsUpdateStatusByDatesRequest command received: " + jsonObj.toString());
 			responseInvalidRequest(out);
 			return;	
 		}
@@ -64,16 +75,16 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 		strBuilder.append("}\n}");
 		
 		out.write(strBuilder.toString());
-		_logger.log(Level.INFO, "Response SeedsUpdateStatusByDatesRequest successfully: " + strDateList);
+		LogUtil.info("Response SeedsUpdateStatusByDatesRequest successfully: " + strDateList);
 		
 		/*
 		if (strBuilder.length() > 200)
 		{
-			_logger.log(Level.INFO, strBuilder.toString());
+			LogUtil.info(strBuilder.toString());
 		}
 		else
 		{
-			_logger.log(Level.INFO, strBuilder.substring(0, 200));
+			LogUtil.info(strBuilder.substring(0, 200));
 		}
 		*/
 	}
@@ -114,7 +125,7 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 		String sql = "Select seedId,type,source,publishDate,name,size,format, torrentLink, hash,mosaic, memo " +
 				" from Seed" +
 				" where publishDate = '" + strDate + "'";
-		List<Seed> seeds = DaoWrapper.getInstance().query(sql, Seed.class);
+		List<Seed> seeds = DaoWrapper.query(sql, Seed.class);
 		Iterator<Seed> it = seeds.iterator();
 		Seed seed;
 		while (it.hasNext())
@@ -135,7 +146,7 @@ public class JsonCommandSeedsReq extends JsonCommandBase {
 				"from PreviewPic where seedId = " + seedId.toString()+
 				" order by pictureId";
 		
-		List<PreviewPic> pics= DaoWrapper.getInstance().query(sql, PreviewPic.class);
+		List<PreviewPic> pics= DaoWrapper.query(sql, PreviewPic.class);
 		Iterator<PreviewPic> it = pics.iterator();
 		PreviewPic prePic;
 		while (it.hasNext())
