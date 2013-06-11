@@ -87,7 +87,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = CELL_ID_FAVORITE_SEEDLISTTABLECELL;
+    static NSString *CellIdentifier = CELL_ID_SEEDLISTTABLECELL;
     
 #if UI_RENDER_SEEDLISTTABLECELL
     SeedListTableCell *cell = (SeedListTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];

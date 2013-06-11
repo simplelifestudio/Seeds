@@ -18,7 +18,6 @@
 
 @implementation SeedListTableCell
 
-@synthesize thumbnailImageView = _thumbnailImageView;
 @synthesize nameLabel = _nameLabel;
 @synthesize formatLabel = _formatLabel;
 @synthesize mosaicLabel = _mosaicLabel;

@@ -12,7 +12,6 @@
 
 @interface SeedListTableCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UITextView *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *formatLabel;
