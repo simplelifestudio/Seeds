@@ -10,10 +10,6 @@
 
 #import "SeedListTableCell.h"
 
-#import "UIImageView+WebCache.h"
-#import "SDWebImageDownloader.h"
-#import "SDWebImageManager.h"
-
 #import "SeedDetailViewController.h"
 
 @interface SeedListViewController : UITableViewController

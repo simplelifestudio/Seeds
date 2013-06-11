@@ -95,6 +95,8 @@
 		C55D1AC91751BE35000B3E34 /* papasscode_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = C55D1ABE1751BE35000B3E34 /* papasscode_marker.png */; };
 		C55D1ACA1751BE35000B3E34 /* papasscode_marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C55D1ABF1751BE35000B3E34 /* papasscode_marker@2x.png */; };
 		C55D1ACB1751BE35000B3E34 /* PAPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55D1AC21751BE35000B3E34 /* PAPasscodeViewController.m */; };
+		C571E0A01766145300E9AD50 /* SeedListTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C571E09F1766145200E9AD50 /* SeedListTableCell.xib */; };
+		C571E0A3176627CE00E9AD50 /* CBAsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C571E0A2176627CE00E9AD50 /* CBAsyncImageView.m */; };
 		C57CF27F1724DB660002B054 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */; };
 		C57CF2811724DBE10002B054 /* Seeds_App_Database.db in Resources */ = {isa = PBXBuildFile; fileRef = C57CF2801724DBE10002B054 /* Seeds_App_Database.db */; };
 		C5964C081722290400CC1C0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C071722290400CC1C0A /* UIKit.framework */; };
@@ -325,6 +327,9 @@
 		C55D1ABF1751BE35000B3E34 /* papasscode_marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "papasscode_marker@2x.png"; sourceTree = "<group>"; };
 		C55D1AC11751BE35000B3E34 /* PAPasscodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAPasscodeViewController.h; sourceTree = "<group>"; };
 		C55D1AC21751BE35000B3E34 /* PAPasscodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAPasscodeViewController.m; sourceTree = "<group>"; };
+		C571E09F1766145200E9AD50 /* SeedListTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeedListTableCell.xib; sourceTree = "<group>"; };
+		C571E0A1176627CE00E9AD50 /* CBAsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAsyncImageView.h; sourceTree = "<group>"; };
+		C571E0A2176627CE00E9AD50 /* CBAsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBAsyncImageView.m; sourceTree = "<group>"; };
 		C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		C57CF2801724DBE10002B054 /* Seeds_App_Database.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = Seeds_App_Database.db; sourceTree = "<group>"; };
 		C5964C041722290400CC1C0A /* Seeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Seeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -664,6 +669,8 @@
 				C5ADC857173A3148007F59D7 /* CBSharedInstance.h */,
 				C5203D73174714D000D917F7 /* CBModuleManager.h */,
 				C5203D74174714D000D917F7 /* CBModuleManager.m */,
+				C571E0A1176627CE00E9AD50 /* CBAsyncImageView.h */,
+				C571E0A2176627CE00E9AD50 /* CBAsyncImageView.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -846,6 +853,7 @@
 				C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */,
 				C5964C521722D87200CC1C0A /* SeedListTableCell.h */,
 				C5964C531722D87200CC1C0A /* SeedListTableCell.m */,
+				C571E09F1766145200E9AD50 /* SeedListTableCell.xib */,
 				C5A9440D172AA15A00D6FB85 /* SeedPictureCollectionCell.h */,
 				C5A9440E172AA15A00D6FB85 /* SeedPictureCollectionCell.m */,
 				C5964C1F1722290400CC1C0A /* MainStoryboard_iPhone.storyboard */,
@@ -1109,6 +1117,7 @@
 				C55D1AC81751BE35000B3E34 /* papasscode_failed_bg@2x.png in Resources */,
 				C55D1AC91751BE35000B3E34 /* papasscode_marker.png in Resources */,
 				C55D1ACA1751BE35000B3E34 /* papasscode_marker@2x.png in Resources */,
+				C571E0A01766145300E9AD50 /* SeedListTableCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1247,6 +1256,7 @@
 				C5F8AC5F174BC3B9001E30D1 /* Reachability.m in Sources */,
 				C522BA31174CF1FA001FC7BD /* GUIModule.m in Sources */,
 				C55D1ACB1751BE35000B3E34 /* PAPasscodeViewController.m in Sources */,
+				C571E0A3176627CE00E9AD50 /* CBAsyncImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

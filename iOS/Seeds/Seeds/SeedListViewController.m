@@ -25,7 +25,7 @@
     self = [super initWithStyle:style];
     if (self)
     {
-        // Custom initialization
+
     }
     return self;
 }
@@ -34,12 +34,6 @@
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
     if (nil == _seedsDate)
     {
         _seedsDate = [NSDate date];
@@ -89,13 +83,11 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return seedList.count;
 }
 
@@ -103,21 +95,14 @@
 {
     static NSString *CellIdentifier = CELL_ID_SEEDLISTTABLECELL;
     
-#if UI_RENDER_SEEDLISTTABLECELL
-    //    static BOOL nibsRegistered = NO;
-    //    if (!nibsRegistered)
-    //    {
-    //        UINib *nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
-    //        [tableView registerNib:nib forCellReuseIdentifier:CellIdentifier];
-    //        nibsRegistered = YES;
-    //    }
-    //    [self.tableView registerClass:[SeedListTableCell class] forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
-    //    SeedListTableCell *cell = (SeedListTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    SeedListTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+#if UI_RENDER_SEEDLISTTABLECELL    
+    SeedListTableCell *cell = (SeedListTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
     {
-        cell = [[SeedListTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        NSArray* nib = [[NSBundle mainBundle] loadNibNamed:CELL_ID_SEEDLISTTABLECELL owner:self options:nil];
+        cell = [nib objectAtIndex:0];
     }
+    
 #else
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -129,36 +114,6 @@
     
     Seed* seed = [seedList objectAtIndex:indexPath.row];
     SeedPicture* picture = [firstSeedPictureList objectAtIndex:indexPath.row];
-    if (nil != picture && !picture.isPlaceHolder)
-    {
-        NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
-        SDWebImageManager *manager = [SDWebImageManager sharedManager];
-        [manager
-         downloadWithURL:imageURL
-         options:0
-         progress:^(NSUInteger receivedSize, long long expectedSize)
-         {
-             // progression tracking code
-             DLog(@"Seed(%d)'s thumbnail downloaded %d of %lld", seed.seedId, receivedSize, expectedSize);
-             
-             float progressVal = (float)receivedSize / (float)expectedSize;
-             [cell.circularProgressView updateProgressCircle:progressVal];
-         }
-         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
-         {
-             if (image)
-             {
-                 //#warning Why below line can't be moved?
-                 [cell.circularProgressView removeFromSuperview];
-                 // do something with image
-                 [cell.thumbnailImageView setImage:image];
-             }
-         }];
-    }
-    else
-    {
-        
-    }
     
 #if UI_RENDER_SEEDLISTTABLECELL
     [cell fillSeed:seed];

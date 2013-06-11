@@ -8,6 +8,8 @@
 
 #import "SeedListTableCell.h"
 
+#import "SDWebImageManager.h"
+
 @interface SeedListTableCell()
 {
 
@@ -20,36 +22,25 @@
 @synthesize nameLabel = _nameLabel;
 @synthesize formatLabel = _formatLabel;
 @synthesize mosaicLabel = _mosaicLabel;
-
-@synthesize circularProgressView = _circularProgressView;
+@synthesize asyncImageView = _asyncImageView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
-        // Initialization code
     }
     return self;
 }
 
 - (void)awakeFromNib
 {
-    NSInteger radius = 40;
-    CGFloat x = 50 - radius / 2;
-    CGFloat y = 50 - radius / 2;
-    NSInteger lineWidth = 6;
-    _circularProgressView = [[CircularProgressView alloc] initWithFrame:CGRectMake(x, y, radius, radius) backColor:COLOR_CIRCULAR_PROGRESS_BACKGROUND progressColor:COLOR_CIRCULAR_PROGRESS lineWidth:lineWidth];
-    [self registerCircularProgressDelegate];
-    
     [super awakeFromNib];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 -(void) fillSeed:(Seed*) seed
@@ -67,37 +58,26 @@
 {
     if (nil == picture || picture.isPlaceHolder)
     {
-        [self.circularProgressView removeFromSuperview];
         NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:@"noImage_tableCell" ofType:@"png"];
         UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
-        [_thumbnailImageView setImage:placeHolderImage];
+        
+        [_asyncImageView loadImageFromLocal:placeHolderImage];        
+    }
+    else
+    {
+        NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
+        [_asyncImageView loadImageFromURL:imageURL];        
     }
 }
 
-- (CircularProgressView*) circularProgerssView
+-(void)prepareForReuse
 {
-    return _circularProgressView;
-}
-
-- (void)registerCircularProgressDelegate
-{
-    self.circularProgressView.delegate = self;
-    [self addSubview:_circularProgressView];
-}
-
-- (void)didUpdateProgressView
-{
-    
-}
-
-- (void)didFisnishProgressView
-{
-    [_circularProgressView removeFromSuperview];
-}
-
-- (void) dealloc
-{
-    [self setCircularProgressView:nil];
+    [super prepareForReuse];
+    [_asyncImageView removeFromSuperview];
+        
+    CBAsyncImageView* newImageView = [[CBAsyncImageView alloc] initWithFrame:CGRectMake(0, 0, VIEW_WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL, VIEW_HEIGHT_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL)];
+    _asyncImageView = newImageView;
+    [self addSubview:_asyncImageView];
 }
 
 @end

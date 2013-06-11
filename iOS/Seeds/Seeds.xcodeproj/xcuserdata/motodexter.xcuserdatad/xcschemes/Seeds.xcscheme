@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C5964C031722290400CC1C0A"
-               BuildableName = "1024.app"
+               BuildableName = "Seeds.app"
                BlueprintName = "Seeds"
                ReferencedContainer = "container:Seeds.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C5964C031722290400CC1C0A"
-            BuildableName = "1024.app"
+            BuildableName = "Seeds.app"
             BlueprintName = "Seeds"
             ReferencedContainer = "container:Seeds.xcodeproj">
          </BuildableReference>
@@ -52,7 +52,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C5964C031722290400CC1C0A"
-            BuildableName = "1024.app"
+            BuildableName = "Seeds.app"
             BlueprintName = "Seeds"
             ReferencedContainer = "container:Seeds.xcodeproj">
          </BuildableReference>
@@ -70,7 +70,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C5964C031722290400CC1C0A"
-            BuildableName = "1024.app"
+            BuildableName = "Seeds.app"
             BlueprintName = "Seeds"
             ReferencedContainer = "container:Seeds.xcodeproj">
          </BuildableReference>

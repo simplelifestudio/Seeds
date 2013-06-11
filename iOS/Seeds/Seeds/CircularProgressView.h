@@ -13,6 +13,11 @@
 
 @interface CircularProgressView : UIView
 
+@property (nonatomic) CGRect viewLocation;
+@property (strong, nonatomic) UIColor *backColor;
+@property (strong, nonatomic) UIColor *progressColor;
+@property (assign, nonatomic) CGFloat lineWidth;
+
 @property (assign, nonatomic) id <CircularProgressDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame
@@ -28,6 +33,7 @@
 
 @required
 - (void)registerCircularProgressDelegate;
+- (void)didStartProgressView;
 - (void)didUpdateProgressView;
 - (void)didFisnishProgressView;
 

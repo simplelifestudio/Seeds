@@ -10,15 +10,17 @@
 
 @interface CircularProgressView ()
 
-@property (strong, nonatomic) UIColor *backColor;
-@property (strong, nonatomic) UIColor *progressColor;
-@property (assign, nonatomic) CGFloat lineWidth;
 @property (assign, nonatomic) float progress;
 @property (strong, nonatomic) NSTimer *timer;
 
 @end
 
 @implementation CircularProgressView
+
+@synthesize viewLocation = _viewLocation;
+@synthesize backColor = _backColor;
+@synthesize progressColor = _progressColor;
+@synthesize lineWidth = _lineWidth;
 
 - (id)initWithFrame:(CGRect)frame
           backColor:(UIColor *)backColor
