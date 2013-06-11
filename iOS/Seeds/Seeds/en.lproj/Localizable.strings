@@ -46,6 +46,7 @@
 "Stop" = "Stop";
 
 "Transmission module is initializing..." = "Transmission module is initializing...";
+"Torrents directory failed to create." = "Torrents directory failed to create.";
 "Torrent files are preparing..." = "Torrent files are preparing...";
 "Torrent files are packaging..." = "Torrent files are packaging...";
 "Web page is generating..." = "Web page is generating...";

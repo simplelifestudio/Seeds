@@ -125,6 +125,18 @@
          
             NSFileManager * fm = [NSFileManager defaultManager];
             BOOL flag = [fm removeItemAtPath:fileFullPath error:nil];
+            if (!flag)
+            {
+                DLog(@"Failed to delete file at path: %@", fileFullPath);
+                
+                if ([_delegate respondsToSelector:@selector(torrentSaveFailed:filePath:)])
+                {
+                    [_delegate torrentSaveFailed:code filePath:fileFullPath];
+                }
+                
+                return;
+            }
+            
             flag = [fm createFileAtPath:fileFullPath contents:responseObject attributes:nil];
             if(flag)
             {

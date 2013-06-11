@@ -48,7 +48,7 @@
     [titleStr appendString:@"]"];
     [titleStr appendString:@"最新BT合集"];
 
-#warning http://stackoverflow.com/questions/9584663/datawithcontentsofurl-and-http-302-redirects
+    #warning http://stackoverflow.com/questions/9584663/datawithcontentsofurl-and-http-302-redirects
     NSError* error = nil;
     for (NSInteger pageNum = SEEDLIST_LINK_PAGENUM_START; pageNum <= SEEDLIST_LINK_PAGENUM_END; pageNum++)
     {

@@ -469,9 +469,8 @@
             [sql appendString:@"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"];
             [sql appendString:@")"];
             
-            BOOL hadError = [db hadError];
             flag = [db executeUpdate:sql, seed.type, seed.source, seed.publishDate, seed.name, seed.size, seed.format, seed.torrentLink, (seed.favorite) ? @"1" : @"0", (seed.mosaic) ? @"1" : @"0", seed.hash, seed.memo];
-            hadError = [db hadError];
+            BOOL hadError = [db hadError];
             if (hadError)
             {
                 DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
@@ -515,7 +514,6 @@
                                 [sql appendString:@"?, ?, ?"];
                                 [sql appendString:@")"];
                                 
-                                hadError = [db hadError];
                                 flag = [db executeUpdate:sql, oSeedId, picture.pictureLink, picture.memo];
                                 hadError = [db hadError];
                                 if (hadError)

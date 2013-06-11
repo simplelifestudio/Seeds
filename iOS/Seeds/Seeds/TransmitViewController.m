@@ -44,6 +44,12 @@
     if (![fm fileExistsAtPath:torrentsPath])
     {
         flag = [fm createDirectoryAtPath:torrentsPath withIntermediateDirectories:YES attributes:nil error:&error];
+        if (!flag)
+        {
+            DLog(@"Failed to create directory at path:%@", torrentsPath);
+            [self updateConsole:NSLocalizedString(@"Torrents directory failed to create.", nil)];
+            return;
+        }
     }
     
     for (NSDate* day in last3Days)

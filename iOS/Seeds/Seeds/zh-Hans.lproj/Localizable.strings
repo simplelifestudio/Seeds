@@ -46,6 +46,7 @@
 "Stop" = "停止";
 
 "Transmission module is initializing..." = "传输模块初始化...";
+"Torrents directory failed to create." = "种子目录创建失败.";
 "Torrent files are preparing..." = "种子文件准备中...";
 "Torrent files are packaging..." = "种子文件打包中...";
 "Web page is generating..." = "网页生成中...";
