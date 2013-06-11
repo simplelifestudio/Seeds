@@ -1,10 +1,18 @@
+/**
+ * SeedsServlet.java 
+ * 
+ * History:
+ *     2013-06-09: Tomas Chen, initial version
+ * 
+ * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
+ */
+
+
 package com.simplelife.seeds.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,10 +20,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-import net.sf.json.JSONArray;
+import com.simplelife.seeds.server.json.IJsonCommand;
+import com.simplelife.seeds.server.json.JsonCommandFactory;
+import com.simplelife.seeds.server.util.LogUtil;
 
-import java.util.logging.*;
+import net.sf.json.JSONObject;
 
 /**
  * Servlet implementation class SeedsServlet
@@ -26,14 +35,12 @@ public class SeedsServlet extends HttpServlet {
 	// private final String _jsonRequestKeyword = "command";
 
 	private static final long serialVersionUID = 1L;
-	private Logger _logger = Logger.getLogger("SeedsServlet");
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public SeedsServlet() {
 		super();
-		_logger.setLevel(Level.INFO);
 	}
 
 	/**
@@ -66,30 +73,27 @@ public class SeedsServlet extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		_logger.log(Level.INFO, "Beginning of doPost, proceed request from client");
+		LogUtil.info("Beginning of doPost, proceed request from client");
 		response.setContentType(_seedsMIME);
 
 		if (request.getContentType() != _seedsMIME) {
-			_logger.log(Level.WARNING, "Invalid MIME found from client: " + request.getContentType());
+			LogUtil.warning("Invalid MIME found from client: " + request.getContentType());
 		}
 
 		String command = readCommand(request);
 
-		if (_logger.isLoggable(Level.INFO))
-		{
-			_logger.log(Level.INFO, "JSON command received: " + command);
-		}
+		LogUtil.info("JSON command received: " + command);
 		
 		JSONObject jsonObj = createJsonObject(command);
 		if (jsonObj == null) {
-			_logger.log(Level.SEVERE, "Invalid command received: \n" + command);
+			LogUtil.severe( "Invalid command received: \n" + command);
 			return;
 		}
 
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType(_seedsMIME);
 		PrintWriter out = response.getWriter();
-		executeCommand(jsonObj, out);
+		executeCommand(jsonObj, out, request);
 	}
 
 	/**
@@ -113,6 +117,7 @@ public class SeedsServlet extends HttpServlet {
 			}
 		} catch (Exception e) {
 			System.out.println(e.toString());
+			LogUtil.printStackTrace(e);
 		}
 		return strBuf.toString();
 		
@@ -140,7 +145,8 @@ public class SeedsServlet extends HttpServlet {
 		try {
 			jsonObj = JSONObject.fromObject(command);
 		} catch (Exception e) {
-			_logger.log(Level.SEVERE, "Error occurred when try to decode JSON command from client: " + e.getMessage());
+			//LogUtil.severe( "Error occurred when try to decode JSON command from client: " + e.getMessage());
+			LogUtil.printStackTrace(e);
 			return null;
 		}
 
@@ -155,8 +161,8 @@ public class SeedsServlet extends HttpServlet {
 	 * @param out
 	 *            : output stream of http response
 	 */
-	private void executeCommand(JSONObject jsonObj, PrintWriter out) {
-		IJsonCommand jsonCmd = JsonCommandFactory.CreateJsonCommand(jsonObj);
+	private void executeCommand(JSONObject jsonObj, PrintWriter out, HttpServletRequest request) {
+		IJsonCommand jsonCmd = JsonCommandFactory.CreateJsonCommand(jsonObj, request);
 		
 		if (jsonCmd == null)
 		{

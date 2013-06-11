@@ -10,7 +10,7 @@
         <!--property name="connection.driver_class">com.p6spy.engine.spy.P6SpyDriver</property-->
         <property name="connection.url">jdbc:mysql://127.0.0.1:3306/seeds?useUnicode=true&amp;characterEncoding=UTF-8</property>
         <property name="connection.username">root</property>
-        <property name="connection.password">Simplelife123</property>
+        <property name="connection.password"></property>
 
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">1</property>
@@ -37,10 +37,10 @@
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
 
-        <mapping resource="com/simplelife/seeds/server/Seed.hbm.xml"/>
-        <mapping resource="com/simplelife/seeds/server/PreviewPic.hbm.xml"/>
-        <mapping resource="com/simplelife/seeds/server/SeedCaptureLog.hbm.xml"/>
-
+        <mapping resource="com/simplelife/seeds/server/db/Seed.hbm.xml"/>
+        <mapping resource="com/simplelife/seeds/server/db/PreviewPic.hbm.xml"/>
+        <mapping resource="com/simplelife/seeds/server/db/SeedCaptureLog.hbm.xml"/>
+        <mapping resource="com/simplelife/seeds/server/db/OperationLog.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
 

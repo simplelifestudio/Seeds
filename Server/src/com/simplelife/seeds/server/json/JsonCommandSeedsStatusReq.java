@@ -1,9 +1,23 @@
-package com.simplelife.seeds.server;
+/**
+ * JsonCommandSeedsStatusReq.java 
+ * 
+ * History:
+ *     2013-06-09: Tomas Chen, initial version
+ * 
+ * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
+ */
+
+
+package com.simplelife.seeds.server.json;
 
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.simplelife.seeds.server.db.DaoWrapper;
+import com.simplelife.seeds.server.db.SeedCaptureLog;
+import com.simplelife.seeds.server.util.LogUtil;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -18,7 +32,6 @@ public class JsonCommandSeedsStatusReq extends JsonCommandBase {
 	private final static String _jsonDateListKeyword = "datelist";
 	private final static String _jsonCommandSeedsStatusRes = "SeedsUpdateStatusByDatesResponse";
 	
-	private Logger _logger = Logger.getLogger("JsonCommandSeedsStatusReq");
 	
 	@Override
 	public void Execute(JSONObject jsonObj, PrintWriter out) {
@@ -27,7 +40,7 @@ public class JsonCommandSeedsStatusReq extends JsonCommandBase {
 		
 		if (dateObj == null)
 		{
-			_logger.log(Level.SEVERE, "Invalid SeedsUpdateStatusByDatesRequest command received: " + jsonObj.toString());
+			LogUtil.severe("Invalid SeedsUpdateStatusByDatesRequest command received: " + jsonObj.toString());
 			responseInvalidRequest(out);
 			return;
 		}
@@ -35,13 +48,12 @@ public class JsonCommandSeedsStatusReq extends JsonCommandBase {
 		JSONArray dateList = dateObj.getJSONArray(_jsonDateListKeyword);
 		if (dateList == null || dateList.size() == 0)
 		{
-			_logger.log(Level.SEVERE, "Invalid SeedsUpdateStatusByDatesRequest command received: " + jsonObj.toString());
+			LogUtil.severe("Invalid SeedsUpdateStatusByDatesRequest command received: " + jsonObj.toString());
 			responseInvalidRequest(out);
-			return;	
+			return;
 		}
 		
 		responseNormalRequest(dateList, out);
-		
 	}
 	
 	private void responseNormalRequest(JSONArray dateList, PrintWriter out)
@@ -58,7 +70,7 @@ public class JsonCommandSeedsStatusReq extends JsonCommandBase {
 		}
 		strBuilder.append("}\n}");
 		
-		_logger.log(Level.INFO, strBuilder.toString());
+		LogUtil.info(strBuilder.toString());
 		out.write(strBuilder.toString());
 	}
 	private void responseInvalidRequest(PrintWriter out)
@@ -67,7 +79,7 @@ public class JsonCommandSeedsStatusReq extends JsonCommandBase {
 		responseJsonHeader(strBuilder);
 		strBuilder.append("}");
 		
-		_logger.log(Level.INFO, strBuilder.toString());
+		LogUtil.info(strBuilder.toString());
 		out.write(strBuilder.toString());
 	}
 	
@@ -104,7 +116,7 @@ public class JsonCommandSeedsStatusReq extends JsonCommandBase {
 	private String getSeedsStatusByDate(String date)
 	{
 	    String sql = "select * from SeedCaptureLog where publishDate ='" + date + "' order by id desc";
-        List record = DaoWrapper.getInstance().query(sql, SeedCaptureLog.class);
+        List record = DaoWrapper.query(sql, SeedCaptureLog.class);
         
         if (record.size() == 0)
         {
@@ -131,7 +143,8 @@ public class JsonCommandSeedsStatusReq extends JsonCommandBase {
         }
         catch(Exception e)
         {
-        	_logger.log(Level.SEVERE, "Error occurred when converting seed capture log: " + e.getMessage());
+        	//LogUtil.severe("Error occurred when converting seed capture log: " + e.getMessage());
+        	LogUtil.printStackTrace(e);
         }
         
         return "ERROR_STATUS";

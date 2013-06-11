@@ -1,14 +1,21 @@
-package com.simplelife.seeds.server;
+/**
+ * DateUtil.java 
+ * 
+ * History:
+ *     2013-06-09: Tomas Chen, initial version
+ * 
+ * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
+ */
+
+
+package com.simplelife.seeds.server.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DateUtil {
-	private static Logger _logger = Logger.getLogger("Util");
 	private final static int INVALID_VALUE = 0xffff;
 	private static SimpleDateFormat defaultDateFormatter;
 	
@@ -56,7 +63,7 @@ public class DateUtil {
 	 * @param d2:date2
 	 * @return day difference between d1 and d2, and difference will be negative if d1 > d2 
 	 */
-	public static int getDaysBetween(String d1, String d2)
+	public static long getDaysBetween(String d1, String d2)
 	{
 		Calendar cal_start;
 		Calendar cal_end;
@@ -72,7 +79,8 @@ public class DateUtil {
 		}
 		catch(Exception e)
 		{
-			_logger.log(Level.SEVERE, "Invalid date found: " + d1 + ", " + d2 + ", " + e.getMessage());
+			LogUtil.severe("Invalid date found: " + d1 + ", " + d2 + ", " + e.getMessage());
+			LogUtil.printStackTrace(e);
 			return INVALID_VALUE;
 		}
 		return getDaysBetween(cal_start, cal_end);
@@ -84,8 +92,21 @@ public class DateUtil {
 	 * @param d2:date2
 	 * @return day difference between d1 and d2, and difference will be negative if d1 > d2
 	 */
-	public static int getDaysBetween(Calendar d1, Calendar d2)
+	public static long getDaysBetween(Calendar d1, Calendar d2)
 	{
+		try
+		{
+			long sec1 = d1.getTimeInMillis() - d2.getTimeInMillis();
+			long days = sec1/1000/3600/24;
+			return days;
+		}
+		catch(Exception e)
+		{
+			LogUtil.severe("Invalid date found: " + d1 + ", " + d2 + ", " + e.getMessage());
+			LogUtil.printStackTrace(e);
+			return INVALID_VALUE;
+		}
+		/*
 		boolean d1befored2 = true;
 		int days = 0;
 		try
@@ -109,7 +130,8 @@ public class DateUtil {
 		}
 		catch(Exception e)
 		{
-			_logger.log(Level.SEVERE, "Invalid date found: " + d1 + ", " + d2 + ", " + e.getMessage());
+			LogUtil.severe("Invalid date found: " + d1 + ", " + d2 + ", " + e.getMessage());
+			LogUtil.printStackTrace(e);
 			return INVALID_VALUE;
 		}
 		
@@ -121,6 +143,7 @@ public class DateUtil {
 		{
 			return -days;
 		}
+		*/
 	}
 	
 	/**
@@ -149,7 +172,8 @@ public class DateUtil {
 		}
 		catch(Exception e)
 		{
-			_logger.log(Level.SEVERE, "Invalid date found: " + date + ", " + e.getMessage());
+			LogUtil.severe("Invalid date found: " + date + ", " + e.getMessage());
+			LogUtil.printStackTrace(e);
 			return null;
 		}
 	}
@@ -159,7 +183,7 @@ public class DateUtil {
 	 * @param date: given date
 	 * @return day difference
 	 */
-	public static int getDaysFromToday(String date)
+	public static long getDaysFromToday(String date)
 	{
 		Calendar cal_start;
 		try
@@ -172,7 +196,8 @@ public class DateUtil {
 		}
 		catch(Exception e)
 		{
-			_logger.log(Level.SEVERE, "Invalid date found: " + date + ", " + e.getMessage());
+			LogUtil.severe("Invalid date found: " + date + ", " + e.getMessage());
+			LogUtil.printStackTrace(e);
 			return INVALID_VALUE;
 		}
 	}

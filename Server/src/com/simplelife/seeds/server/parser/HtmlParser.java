@@ -1,16 +1,23 @@
-package com.simplelife.seeds.server;
+/**
+ * HtmlParser.java 
+ * 
+ * History:
+ *     2013-06-09: Tomas Chen, initial version
+ * 
+ * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
+ */
+
+
+package com.simplelife.seeds.server.parser;
 
 
 import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.*;
 
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
@@ -19,10 +26,17 @@ import org.htmlparser.filters.*;
 import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.*;
 
+import com.simplelife.seeds.server.db.DaoWrapper;
+import com.simplelife.seeds.server.db.LogId;
+import com.simplelife.seeds.server.db.OperationLog;
+import com.simplelife.seeds.server.db.SeedCaptureLog;
+import com.simplelife.seeds.server.util.DateUtil;
+import com.simplelife.seeds.server.util.LogUtil;
+import com.simplelife.seeds.server.util.OperationLogUtil;
+
 
 public class HtmlParser implements ISourceParser {
 	private String baseLink;
-	private Logger logger = Logger.getLogger("HtmlParser");
 	private final int parseDays = 3;
 	//private final String _encode = "GBK";
 	private List<String> keyWordList = new ArrayList<String>();
@@ -149,7 +163,7 @@ public class HtmlParser implements ISourceParser {
 		
 		if (!flag)
 		{
-			logger.log(Level.WARNING, "Invalid date format found: " + title);
+			LogUtil.warning("Invalid date format found: " + title);
 			return null;
 		}
 		outDate = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
@@ -167,13 +181,13 @@ public class HtmlParser implements ISourceParser {
 	{
 		if (endDate.compareTo(startDate) < 0)
 		{
-			logger.log(Level.WARNING, "endDate [" + endDate +"] is earlier than startDate[" + startDate +"], parse cancelled.");
+			LogUtil.warning("endDate [" + endDate +"] is earlier than startDate[" + startDate +"], parse cancelled.");
 			return;
 		}
 		
 		if (pageEnd < pageStart)
 		{
-			logger.log(Level.WARNING, "pageEnd [" + pageEnd +"] is less than pageStart[" + pageStart +"], parse cancelled.");
+			LogUtil.warning("pageEnd [" + pageEnd +"] is less than pageStart[" + pageStart +"], parse cancelled.");
 			return;
 		}
 		
@@ -197,7 +211,7 @@ public class HtmlParser implements ISourceParser {
 		{
 			if (htmlLink == null || htmlLink.length() == 0)
 			{
-				logger.log(Level.SEVERE, "Empty HTML Link for parse.");
+				LogUtil.severe("Empty HTML Link for parse.");
 				return;
 			}
 			
@@ -222,11 +236,11 @@ public class HtmlParser implements ISourceParser {
 						LinkTag parentNode = (LinkTag) textNode.getParent();
 						if (parentNode == null)
 						{
-							logger.log(Level.SEVERE, textNode.getText() + " with parent node as " + textNode.getParent().getClass());
+							LogUtil.severe(textNode.getText() + " with parent node as " + textNode.getParent().getClass());
 							continue;
 						}
 						
-						logger.log(Level.INFO, textNode.getText() + "," + parentNode.getLink());
+						LogUtil.info(textNode.getText() + "," + parentNode.getLink());
 						parseSeedPage(parentNode.getLink(), textNode.getText());
 					}
 				}
@@ -234,7 +248,8 @@ public class HtmlParser implements ISourceParser {
 		}
 		catch(Exception e)
 		{
-			logger.log(Level.SEVERE, "Error occurred when trying to parse html page: " + e.getMessage());
+			//LogUtil.severe("Error occurred when trying to parse html page: " + e.getMessage());
+			LogUtil.printStackTrace(e);
 		}
 	}
 	
@@ -249,7 +264,7 @@ public class HtmlParser implements ISourceParser {
 		String date = getDateByTitle(title);
 		if ((date.compareTo(startDate) < 0) || (date.compareTo(endDate) > 0))
 		{
-			logger.log(Level.INFO, "Skip date<" + title + "> since it is out of date range [" + startDate + ", " + endDate + "]");
+			LogUtil.info("Skip date<" + title + "> since it is out of date range [" + startDate + ", " + endDate + "]");
 			return;
 		}
 		
@@ -264,53 +279,50 @@ public class HtmlParser implements ISourceParser {
 	public void parseSeedDetails(String htmlLink, String date)
 	{
 		String sql = "select * from SeedCaptureLog where publishDate ='" + date + "' and status >= 2 ";
-		if (DaoWrapper.getInstance().exists(sql))
+		if (DaoWrapper.exists(sql))
 		{
-			logger.log(Level.INFO, "Seeds of " + date + " have been captured.");
+			LogUtil.info("Seeds of " + date + " have been captured.");
 			return;
 		}
 		
-		logger.log(Level.INFO, "Start to parse seed page: " + htmlLink + ", " + date);
+		LogUtil.info("Start to parse seed page: " + htmlLink + ", " + date);
 		URL url;
 		try 
 		{
 			SeedCaptureLog capLog = new SeedCaptureLog();
 			capLog.setPublishDate(date);
 			capLog.setStatus(1);
-			
-			OperationLog log = new OperationLog(1, htmlLink);
-			log.Save();
+			OperationLogUtil.captureTaskStarted(htmlLink);
 			
 			deleteCaptureLog(date);
-			DaoWrapper.getInstance().save(capLog);
+			DaoWrapper.save(capLog);
 			
 			url = new URL(htmlLink);
 			HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
 			Parser parser = new Parser(urlConn);
 			
-			MyNodeVisitor visitor = new MyNodeVisitor( true, false );
+			HtmlNodeVisitor visitor = new HtmlNodeVisitor( true, false );
 			visitor.setpublishDate(date);
 
             parser.visitAllNodesWith(visitor);
             
             capLog.setStatus(2);
             //deleteCaptureLog(date);
-			DaoWrapper.getInstance().save(capLog);
-			log = new OperationLog(2, htmlLink);
-			log.Save();
-			logger.log(Level.INFO, "Parse seed page succeed: " + htmlLink + ", " + date);
+			DaoWrapper.save(capLog);
+			OperationLogUtil.captureTaskSucceed(htmlLink);
+			LogUtil.info("Parse seed page succeed: " + htmlLink + ", " + date);
 		}
 		catch (Exception e) 
 		{
-			OperationLog log = new OperationLog(3, htmlLink);
-			log.Save();
-			logger.log(Level.INFO, "Error occurred when trying to parse html page: " + htmlLink + ", error: " + e.getMessage());
+			OperationLogUtil.captureTaskFailed(htmlLink);
+			LogUtil.severe("Error occurred when trying to parse html page: " + htmlLink + ", error: " + e.getMessage());
+			LogUtil.printStackTrace(e);
 		}
 	}
 	
 	private void deleteCaptureLog(String date)
 	{
 		String sql = "delete from SeedCaptureLog where publishDate ='" + date + "'";
-		DaoWrapper.getInstance().executeSql(sql);
+		DaoWrapper.executeSql(sql);
 	}
 }

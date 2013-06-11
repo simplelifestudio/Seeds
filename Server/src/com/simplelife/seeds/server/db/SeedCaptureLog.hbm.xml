@@ -3,7 +3,7 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="com.simplelife.seeds.server">
+<hibernate-mapping package="com.simplelife.seeds.server.db">
     <class name="SeedCaptureLog" table="SeedCaptureLog">
         <id name="id" type="long" > 
             <column name="id" sql-type="int" not-null="true"/>
