@@ -28,7 +28,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        // Custom initialization
+        
     }
     return self;
 }
@@ -36,7 +36,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+
     _scrollView.photoViewDelegate = self;
     
     NSInteger radius = 150;
@@ -125,7 +125,6 @@
      options:0
      progress:^(NSUInteger receivedSize, long long expectedSize)
      {
-         // progression tracking code
          DLog(@"SeedPicture(%d)'s thumbnail(%@) downloaded %d of %lld", _seedPicture.pictureId, _seedPicture.pictureLink, receivedSize, expectedSize);
          
          float progressVal = (float)receivedSize / (float)expectedSize;
@@ -135,7 +134,6 @@
      {
          if (image)
          {
-#warning Why below line can't be moved?
              [circularProgressView removeFromSuperview];
              [_scrollView displayImage:image];
          }
@@ -155,6 +153,11 @@
 
 }
 
+- (void)didStartProgressView
+{
+    
+}
+
 - (void)didFisnishProgressView
 {
     [circularProgressView removeFromSuperview];
@@ -168,7 +171,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewDidUnload

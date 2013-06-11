@@ -73,8 +73,10 @@
 {
     [super prepareForReuse];
     [_asyncImageView removeFromSuperview];
-        
-    CBAsyncImageView* newImageView = [[CBAsyncImageView alloc] initWithFrame:CGRectMake(0, 0, VIEW_WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL, VIEW_HEIGHT_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL)];
+    
+    CGRect cellRect = self.frame;
+    
+    CBAsyncImageView* newImageView = [[CBAsyncImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL, cellRect.size.height)];
     _asyncImageView = newImageView;
     [self addSubview:_asyncImageView];
 }

@@ -47,7 +47,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+
     backBarItem = self.navigationItem.backBarButtonItem;
     stopBarItem = [[UIBarButtonItem alloc] init];
     stopBarItem.title = NSLocalizedString(@"Stop", nil);
@@ -80,7 +80,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewDidUnload
