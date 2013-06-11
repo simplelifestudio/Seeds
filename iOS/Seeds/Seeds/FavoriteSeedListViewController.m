@@ -45,7 +45,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO];
+ 
     id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
     favoriteSeedList = [seedDAO getFavoriteSeeds];
     
@@ -57,19 +62,15 @@
         {
             picture = seed.seedPictures[0];
         }
-
+        
         if (nil == picture)
         {
             picture = [SeedPicture placeHolder];
         }
         [pictureArray addObject:picture];
     }
-    firstSeedPictureList = pictureArray;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self.navigationController setNavigationBarHidden:NO];
+    firstSeedPictureList = pictureArray;    
+    
     [self.tableView reloadData];
     
     [super viewWillAppear:animated];

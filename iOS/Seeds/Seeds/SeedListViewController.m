@@ -46,7 +46,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO];
+    
     if (nil == _seedsDate)
     {
         _seedsDate = [NSDate date];
@@ -70,12 +75,8 @@
         }
         [pictureArray addObject:picture];
     }
-    firstSeedPictureList = pictureArray;    
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self.navigationController setNavigationBarHidden:NO];
+    firstSeedPictureList = pictureArray;
+    
     [self.tableView reloadData];
     
     [super viewWillAppear:animated];
