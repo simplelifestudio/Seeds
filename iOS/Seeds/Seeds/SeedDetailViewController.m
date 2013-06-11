@@ -24,15 +24,28 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        // Custom initialization
+        [self setupView];
     }
     return self;
+}
+
+- (void)awakeFromNib
+{
+    [self setupView];
+    
+    [super awakeFromNib];
+}
+
+- (void) setupView
+{
+//    [self.collectionView registerClass:[SeedPictureCollectionCell class] forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
+    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDPICTURECOLLECTIONCELL bundle:nil];
+    [self.collectionView registerNib:nib forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -45,7 +58,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
@@ -62,39 +74,20 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    __block SeedPictureCollectionCell *cell = [cv dequeueReusableCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL forIndexPath:indexPath];
-    
     SeedPicture* picture = [_seed.seedPictures objectAtIndex:indexPath.row];
+
+    SeedPictureCollectionCell* cell = (SeedPictureCollectionCell*)[cv dequeueReusableCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL forIndexPath:indexPath];
+    if (cell == nil)
+    {
+        NSArray* nib = [[NSBundle mainBundle] loadNibNamed:CELL_ID_SEEDPICTURECOLLECTIONCELL owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+    }
     
-    NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
-    SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    [manager
-     downloadWithURL:imageURL
-     options:0
-     progress:^(NSUInteger receivedSize, long long expectedSize)
-     {
-         // progression tracking code
-         DLog(@"SeedPicture(%d)'s thumbnail(%@) downloaded %d of %lld", picture.pictureId, picture.pictureLink, receivedSize, expectedSize);
-         
-         float progressVal = (float)receivedSize / (float)expectedSize;
-         [cell.circularProgressView updateProgressCircle:progressVal];
-     }
-     completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
-     {
-         if (image)
-         {
-             //#warning Why below line can't be moved?
-             [cell.circularProgressView removeFromSuperview];
-             cell.image.image = image;
-         }
-     }];
-    cell.label.text = [NSString stringWithFormat:@"%d", picture.pictureId];
+    [cell fillSeedPicture:picture];
     
     return cell;
 }
 
-// the user tapped a collection item, load and set the image on the detail view controller
-//
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:SEGUE_ID_SEEDDETAIL2SEEDPICTURE])

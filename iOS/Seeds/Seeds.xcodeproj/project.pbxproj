@@ -97,6 +97,7 @@
 		C55D1ACB1751BE35000B3E34 /* PAPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55D1AC21751BE35000B3E34 /* PAPasscodeViewController.m */; };
 		C571E0A01766145300E9AD50 /* SeedListTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C571E09F1766145200E9AD50 /* SeedListTableCell.xib */; };
 		C571E0A3176627CE00E9AD50 /* CBAsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C571E0A2176627CE00E9AD50 /* CBAsyncImageView.m */; };
+		C571E0A7176750BF00E9AD50 /* SeedPictureCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C571E0A6176750BD00E9AD50 /* SeedPictureCollectionCell.xib */; };
 		C57CF27F1724DB660002B054 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */; };
 		C57CF2811724DBE10002B054 /* Seeds_App_Database.db in Resources */ = {isa = PBXBuildFile; fileRef = C57CF2801724DBE10002B054 /* Seeds_App_Database.db */; };
 		C5964C081722290400CC1C0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C071722290400CC1C0A /* UIKit.framework */; };
@@ -330,6 +331,7 @@
 		C571E09F1766145200E9AD50 /* SeedListTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeedListTableCell.xib; sourceTree = "<group>"; };
 		C571E0A1176627CE00E9AD50 /* CBAsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAsyncImageView.h; sourceTree = "<group>"; };
 		C571E0A2176627CE00E9AD50 /* CBAsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBAsyncImageView.m; sourceTree = "<group>"; };
+		C571E0A6176750BD00E9AD50 /* SeedPictureCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeedPictureCollectionCell.xib; sourceTree = "<group>"; };
 		C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		C57CF2801724DBE10002B054 /* Seeds_App_Database.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = Seeds_App_Database.db; sourceTree = "<group>"; };
 		C5964C041722290400CC1C0A /* Seeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Seeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -856,6 +858,7 @@
 				C571E09F1766145200E9AD50 /* SeedListTableCell.xib */,
 				C5A9440D172AA15A00D6FB85 /* SeedPictureCollectionCell.h */,
 				C5A9440E172AA15A00D6FB85 /* SeedPictureCollectionCell.m */,
+				C571E0A6176750BD00E9AD50 /* SeedPictureCollectionCell.xib */,
 				C5964C1F1722290400CC1C0A /* MainStoryboard_iPhone.storyboard */,
 				C5964C221722290400CC1C0A /* MainStoryboard_iPad.storyboard */,
 				C531834B1723D6A900264530 /* Localizable.strings */,
@@ -1118,6 +1121,7 @@
 				C55D1AC91751BE35000B3E34 /* papasscode_marker.png in Resources */,
 				C55D1ACA1751BE35000B3E34 /* papasscode_marker@2x.png in Resources */,
 				C571E0A01766145300E9AD50 /* SeedListTableCell.xib in Resources */,
+				C571E0A7176750BF00E9AD50 /* SeedPictureCollectionCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,64 +17,51 @@
 
 @implementation SeedPictureCollectionCell
 
-@synthesize circularProgressView = _circularProgressView;
+@synthesize asyncImageView = _asyncImageView;
+@synthesize label = _label;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self)
     {
-        // Initialization code
     }
     return self;
 }
 
 - (void)awakeFromNib
 {
-    NSInteger radius = 60;
-    CGFloat x = self.center.x - radius / 2;
-    CGFloat y = self.center.y - radius / 2;
-    NSInteger lineWidth = 10;
-    _circularProgressView = [[CircularProgressView alloc] initWithFrame:CGRectMake(x, y, radius, radius) backColor:COLOR_CIRCULAR_PROGRESS_BACKGROUND progressColor:COLOR_CIRCULAR_PROGRESS lineWidth:lineWidth];
-    [self registerCircularProgressDelegate];
-    
     [super awakeFromNib];
 }
 
-- (CircularProgressView*) circularProgerssView
+- (void) fillSeedPicture:(SeedPicture *)picture
 {
-    return _circularProgressView;
+    if (nil == picture || picture.isPlaceHolder)
+    {
+        NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:@"noImage_collectionCell" ofType:@"png"];
+        UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
+        [_asyncImageView loadImageFromLocal:placeHolderImage];
+        _label.text = nil;
+    }
+    else
+    {
+        NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
+        [_asyncImageView loadImageFromURL:imageURL];
+        
+        _label.text = [NSString stringWithFormat:@"%d", picture.pictureId];
+    }
 }
 
-- (void)registerCircularProgressDelegate
+-(void)prepareForReuse
 {
-    self.circularProgressView.delegate = self;
-    [self addSubview:_circularProgressView];
-}
-
-- (void)didUpdateProgressView
-{
+    [super prepareForReuse];
+    [_asyncImageView removeFromSuperview];
     
+    CGRect rect = self.frame;
+    CGRect rectImageView = CGRectMake(0, 0, rect.size.width, rect.size.height - _label.frame.size.height);
+    CBAsyncImageView* newImageView = [[CBAsyncImageView alloc] initWithFrame:rectImageView];
+    _asyncImageView = newImageView;
+    [self addSubview:_asyncImageView];
 }
-
-- (void)didFisnishProgressView
-{
-    [_circularProgressView removeFromSuperview];
-}
-
-- (void) dealloc
-{
-    [self setCircularProgressView:nil];
-}
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
-
 
 @end

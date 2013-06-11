@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "CircularProgressView.h"
+#import "CBAsyncImageView.h"
 
-@interface SeedPictureCollectionCell : UICollectionViewCell <CircularProgressDelegate>
+@interface SeedPictureCollectionCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UILabel *label;
+@property (weak, nonatomic) IBOutlet CBAsyncImageView *asyncImageView;
 
-@property (strong, nonatomic) CircularProgressView* circularProgressView;
+-(void) fillSeedPicture:(SeedPicture*) picture;
 
 @end
