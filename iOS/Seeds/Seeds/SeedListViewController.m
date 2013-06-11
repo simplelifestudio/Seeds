@@ -25,9 +25,22 @@
     self = [super initWithStyle:style];
     if (self)
     {
-
+        [self setupTableView];
     }
     return self;
+}
+
+- (void) awakeFromNib
+{
+    [self setupTableView];
+    
+    [super awakeFromNib];
+}
+
+- (void) setupTableView
+{
+    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
 }
 
 - (void)viewDidLoad
@@ -94,8 +107,8 @@
 {
     static NSString *CellIdentifier = CELL_ID_SEEDLISTTABLECELL;
     
-#if UI_RENDER_SEEDLISTTABLECELL    
-    SeedListTableCell *cell = (SeedListTableCell*)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+#if UI_RENDER_SEEDLISTTABLECELL
+    SeedListTableCell* cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     if (cell == nil)
     {
         NSArray* nib = [[NSBundle mainBundle] loadNibNamed:CELL_ID_SEEDLISTTABLECELL owner:self options:nil];
