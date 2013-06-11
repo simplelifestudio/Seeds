@@ -80,7 +80,15 @@
 {
     NSString* content = self.content;
     
-    NSRange range = [content rangeOfString:STR_COLON_FULLWIDTH];
+    NSRange range = [content rangeOfString:STR_COLON_FULLWIDTH_1];
+    if (0 < range.length)
+    {
+        content = [content substringFromIndex:range.location + 1];
+        content = [CBStringUtils trimString:content];
+        return content;
+    }
+    
+    range = [content rangeOfString:STR_COLON_FULLWIDTH_2];
     if (0 < range.length)
     {
         content = [content substringFromIndex:range.location + 1];
