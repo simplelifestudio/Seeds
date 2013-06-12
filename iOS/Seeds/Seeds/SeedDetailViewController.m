@@ -39,8 +39,9 @@
 - (void) setupView
 {
 //    [self.collectionView registerClass:[SeedPictureCollectionCell class] forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
-    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDPICTURECOLLECTIONCELL bundle:nil];
-    [self.collectionView registerNib:nib forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
+    
+//    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDPICTURECOLLECTIONCELL bundle:nil];
+//    [self.collectionView registerNib:nib forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
 }
 
 - (void)viewDidLoad
@@ -77,11 +78,11 @@
     SeedPicture* picture = [_seed.seedPictures objectAtIndex:indexPath.row];
 
     SeedPictureCollectionCell* cell = (SeedPictureCollectionCell*)[cv dequeueReusableCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL forIndexPath:indexPath];
-    if (cell == nil)
-    {
-        NSArray* nib = [[NSBundle mainBundle] loadNibNamed:CELL_ID_SEEDPICTURECOLLECTIONCELL owner:self options:nil];
-        cell = [nib objectAtIndex:0];
-    }
+//    if (cell == nil)
+//    {
+//        NSArray* nib = [[NSBundle mainBundle] loadNibNamed:CELL_ID_SEEDPICTURECOLLECTIONCELL owner:self options:nil];
+//        cell = [nib objectAtIndex:0];
+//    }
     
     [cell fillSeedPicture:picture];
     

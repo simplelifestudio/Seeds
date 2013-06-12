@@ -405,27 +405,43 @@
         <scene sceneID="1MI-Pi-yiw">
             <objects>
                 <viewController storyboardIdentifier="sbid_seeddetailviewcontroller" id="E0h-Q8-0sI" userLabel="SeedDetailViewControler" customClass="SeedDetailViewController" sceneMemberID="viewController">
-                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="7qj-O6-OBK" userLabel="pictureCollectionView">
+                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="Ap1-Gc-eql" userLabel="seedPictureCollectionView">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gou-7h-ENk" userLabel="pictureCollectionViewFlowLayout">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4QC-Rz-AFQ">
                             <size key="itemSize" width="150" height="180"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="5"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="6RN-lT-tpX" userLabel="seedPictureCollectionCell" customClass="SeedPictureCollectionCell">
-                                <rect key="frame" x="5" y="5" width="150" height="180"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SeedPictureCollectionCell" id="JwB-Hl-32d" userLabel="seedPictureCollectionCell" customClass="SeedPictureCollectionCell">
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="180"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="150" height="180"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="编号" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5wG-IC-eQx" userLabel="imageLabel">
+                                            <rect key="frame" x="0.0" y="159" width="150" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" id="g0e-ET-Man" userLabel="asyncImageView" customClass="CBAsyncImageView">
+                                            <rect key="frame" x="0.5" y="1" width="150" height="160"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        </view>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="dYQ-oU-LRn" kind="push" identifier="seeddetail2seedpicture" id="gNw-FM-xNK"/>
+                                    <outlet property="asyncImageView" destination="g0e-ET-Man" id="XmR-Ig-Gv1"/>
+                                    <outlet property="label" destination="5wG-IC-eQx" id="unN-F5-ZoM"/>
+                                    <segue destination="dYQ-oU-LRn" kind="modal" identifier="seeddetail2seedpicture" id="cyz-yy-kQc"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
