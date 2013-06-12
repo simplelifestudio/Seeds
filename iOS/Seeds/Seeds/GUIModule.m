@@ -45,9 +45,11 @@ SINGLETON(GUIModule)
 {
     if (nil != _homeViewController)
     {
-        UIView* view = _homeViewController.navigationController.visibleViewController.view;
+//        UIView* view = _homeViewController.navigationController.visibleViewController.view;
+        UIView* view = _homeViewController.navigationController.view;
         
         MBProgressHUD* HUD = [[MBProgressHUD alloc] initWithView:view];
+
         [view addSubview:HUD];
         
         HUD.mode = MBProgressHUDModeText;
