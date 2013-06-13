@@ -121,23 +121,24 @@
     NSURL* imageURL = [NSURL URLWithString:_seedPicture.pictureLink];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     [manager
-     downloadWithURL:imageURL
-     options:0
-     progress:^(NSUInteger receivedSize, long long expectedSize)
-     {
-         DLog(@"SeedPicture(%d)'s thumbnail(%@) downloaded %d of %lld", _seedPicture.pictureId, _seedPicture.pictureLink, receivedSize, expectedSize);
+        downloadWithURL:imageURL
+        options:(SDWebImageRetryFailed | SDWebImageLowPriority)
+        progress:^(NSUInteger receivedSize, long long expectedSize)
+        {
+            DLog(@"SeedPicture(%d)'s thumbnail(%@) downloaded %d of %lld", _seedPicture.pictureId, _seedPicture.pictureLink, receivedSize, expectedSize);
          
-         float progressVal = (float)receivedSize / (float)expectedSize;
-         [circularProgressView updateProgressCircle:progressVal];
-     }
-     completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
-     {
-         if (image)
-         {
-             [circularProgressView removeFromSuperview];
-             [_scrollView displayImage:image];
-         }
-     }];
+            float progressVal = (float)receivedSize / (float)expectedSize;
+            [circularProgressView updateProgressCircle:progressVal];
+        }
+        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+        {
+            if (image)
+            {
+                [circularProgressView removeFromSuperview];
+                [_scrollView displayImage:image];
+            }
+        }
+    ];
     
     [super viewWillAppear:animated];
 }
