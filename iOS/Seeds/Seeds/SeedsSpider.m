@@ -431,6 +431,7 @@
     }
     
     SDWebImagePrefetcher* imagePrefetcher = [SDWebImagePrefetcher sharedImagePrefetcher];
+    imagePrefetcher.maxConcurrentDownloads = 20;
     [imagePrefetcher prefetchURLs:urls completed:^(NSUInteger finishedCount, NSUInteger skippedCount)
     {
         NSString* majorStatus = @"Images Prefetched";
