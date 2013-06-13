@@ -57,27 +57,32 @@
         _seedsDate = [NSDate date];
     }
     
-    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-    seedList = [seedDAO getSeedsByDate:_seedsDate];
-    
-    NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:seedList.count];
-    for (Seed* seed in seedList)
-    {
-        SeedPicture* picture = nil;
-        if (nil != seed.seedPictures && 0 < seed.seedPictures.count)
-        {
-            picture = seed.seedPictures[0];
-        }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+        seedList = [seedDAO getSeedsByDate:_seedsDate];
         
-        if (nil == picture)
+        NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:seedList.count];
+        for (Seed* seed in seedList)
         {
-            picture = [SeedPicture placeHolder];
+            SeedPicture* picture = nil;
+            if (nil != seed.seedPictures && 0 < seed.seedPictures.count)
+            {
+                picture = seed.seedPictures[0];
+            }
+            
+            if (nil == picture)
+            {
+                picture = [SeedPicture placeHolder];
+            }
+            [pictureArray addObject:picture];
         }
-        [pictureArray addObject:picture];
-    }
-    firstSeedPictureList = pictureArray;
-    
-    [self.tableView reloadData];
+        firstSeedPictureList = pictureArray;
+        
+
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [self.tableView reloadData];        
+        });
+    });
     
     [super viewWillAppear:animated];
 }
