@@ -25,6 +25,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *yesterdayButton;
 @property (weak, nonatomic) IBOutlet UIButton *theDayBeforeButton;
 
+- (IBAction)onClickTodayButton:(id)sender;
+- (IBAction)onClickYesterdayButton:(id)sender;
+- (IBAction)onClickTheDayBeforeButton:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *syncButton;
 @property (weak, nonatomic) IBOutlet UIButton *transButton;

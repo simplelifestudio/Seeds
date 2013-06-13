@@ -96,6 +96,7 @@
     [self setTodayButton:nil];
     [self setYesterdayButton:nil];
     [self setTheDayBeforeButton:nil];
+
     [super viewDidUnload];
 }
 
@@ -303,4 +304,18 @@
     [self updateDaySyncStatusLabels:dayIndex syncStatus:sData];
 }
 
+- (IBAction)onClickTodayButton:(id)sender
+{
+    [self performSegueWithIdentifier:SEGUE_ID_HOME2SEEDLIST sender:_todayButton];
+}
+
+- (IBAction)onClickYesterdayButton:(id)sender
+{
+    [self performSegueWithIdentifier:SEGUE_ID_HOME2SEEDLIST sender:_yesterdayButton];
+}
+
+- (IBAction)onClickTheDayBeforeButton:(id)sender
+{
+    [self performSegueWithIdentifier:SEGUE_ID_HOME2SEEDLIST sender:_theDayBeforeButton];
+}
 @end

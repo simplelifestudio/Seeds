@@ -197,7 +197,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="R4P-D2-bmu" kind="push" identifier="home2seedlist" id="aNl-cQ-Uut"/>
+                                    <action selector="onClickTodayButton:" destination="Zgz-l6-5CC" eventType="touchUpInside" id="eUW-bf-YkK"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vx8-Kz-7QK" userLabel="yesterdayButton">
@@ -212,7 +212,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="R4P-D2-bmu" kind="push" identifier="home2seedlist" id="Cat-Qf-OX2"/>
+                                    <action selector="onClickYesterdayButton:" destination="Zgz-l6-5CC" eventType="touchUpInside" id="cUq-MI-Dh9"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="XCs-Ez-vjP" userLabel="theDayBeforeButton">
@@ -227,7 +227,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="R4P-D2-bmu" kind="push" identifier="home2seedlist" id="Pbc-AP-pbV"/>
+                                    <action selector="onClickTheDayBeforeButton:" destination="Zgz-l6-5CC" eventType="touchUpInside" id="rBL-sd-vAj"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="b1w-gg-9xD" userLabel="syncButton">
@@ -361,6 +361,7 @@
                         <outlet property="yesterdayButton" destination="vx8-Kz-7QK" id="6GN-bE-TfQ"/>
                         <outlet property="yesterdayLabel" destination="t1G-4V-UlA" id="sjV-Ub-OYF"/>
                         <outlet property="yesterdaySyncStatusLabel" destination="WNG-mC-McY" id="PMn-7C-h23"/>
+                        <segue destination="R4P-D2-bmu" kind="push" identifier="home2seedlist" id="vSq-dz-3rA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CEg-EP-fBG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -441,7 +442,7 @@
                                 <connections>
                                     <outlet property="asyncImageView" destination="g0e-ET-Man" id="XmR-Ig-Gv1"/>
                                     <outlet property="label" destination="5wG-IC-eQx" id="unN-F5-ZoM"/>
-                                    <segue destination="dYQ-oU-LRn" kind="modal" identifier="seeddetail2seedpicture" id="cyz-yy-kQc"/>
+                                    <segue destination="dYQ-oU-LRn" kind="modal" identifier="seeddetail2seedpicture" modalTransitionStyle="crossDissolve" id="cyz-yy-kQc"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -495,6 +496,9 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
             <relationships>
                 <relationship kind="action" name="onClickSyncButton:"/>
+                <relationship kind="action" name="onClickTheDayBeforeButton:"/>
+                <relationship kind="action" name="onClickTodayButton:"/>
+                <relationship kind="action" name="onClickYesterdayButton:"/>
                 <relationship kind="outlet" name="syncButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="theDayBeforeButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="theDayBeforeLabel" candidateClass="UILabel"/>
@@ -572,7 +576,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="aNl-cQ-Uut"/>
         <segue reference="jKm-Mf-P9D"/>
     </inferredMetricsTieBreakers>
 </document>
