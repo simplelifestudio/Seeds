@@ -9,6 +9,9 @@
 #import "GUIModule.h"
 
 @implementation GUIModule
+{
+    MBProgressHUD* HUD;
+}
 
 @synthesize homeViewController = _homeViewController;
 
@@ -41,21 +44,45 @@ SINGLETON(GUIModule)
     [UIApplication sharedApplication].idleTimerDisabled = YES;
 }
 
--(void) showHUD:(NSString*) status delay:(NSInteger)seconds
+-(void) constructHUD
+{
+    if (nil == HUD)
+    {
+        UIWindow* window = [UIApplication sharedApplication].keyWindow;
+        //        MBProgressHUD* HUD = [[MBProgressHUD alloc] initWithView:view];
+        HUD = [[MBProgressHUD alloc] initWithWindow:window];
+    }
+}
+
+-(void) showHUD:(NSString *)status delay:(NSInteger)seconds
+{
+    [self showHUD:status minorStatus:nil delay:seconds];
+}
+
+-(void) showHUD:(NSString*) majorStauts minorStatus:(NSString*) minorStatus delay:(NSInteger)seconds
 {
     if (nil != _homeViewController)
     {
 //        UIView* view = _homeViewController.navigationController.visibleViewController.view;
         UIView* view = _homeViewController.navigationController.view;
-        
-        MBProgressHUD* HUD = [[MBProgressHUD alloc] initWithView:view];
 
+        [self constructHUD];
+        [HUD hide:YES];
+        
         [view addSubview:HUD];
         
         HUD.mode = MBProgressHUDModeText;
         HUD.minSize = HUD_SIZE;
         
-        HUD.labelText = status;
+        HUD.labelText = majorStauts;
+        if (minorStatus)
+        {
+            HUD.detailsLabelText = minorStatus;
+        }
+        else
+        {
+            HUD.detailsLabelText = nil;
+        }
         
         [HUD show:YES];
         [HUD hide:YES afterDelay:seconds];

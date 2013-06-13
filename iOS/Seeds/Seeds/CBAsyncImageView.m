@@ -55,10 +55,12 @@
         [_circularProgressDelegate didStartProgressView];
     }
     
+//    DLog(@"CBAsyncImageView load picture from url:%@", url);
+    
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     [manager
         downloadWithURL:url
-        options:0
+        options:(SDWebImageRetryFailed | SDWebImageLowPriority)
         progress:^(NSUInteger receivedSize, long long expectedSize)
         {
             [self imageIsLoading:receivedSize expectedSize:expectedSize];
@@ -90,10 +92,15 @@
 
 -(void) imageIsLoading:(NSInteger) receivedSize expectedSize:(long long) expectedSize
 {
-    DLog(@"Seed's thumbnail downloaded %d of %lld", receivedSize, expectedSize);
+    DLog(@"Seed's picture downloaded %d of %lld", receivedSize, expectedSize);
     
     float progressVal = (float)receivedSize / (float)expectedSize;
     [_circularProgressView updateProgressCircle:progressVal];
+    
+    if (nil != _circularProgressDelegate)
+    {
+        [_circularProgressDelegate didUpdateProgressView];
+    }
 }
 
 - (void)imageLoaded:(UIImage*) image error:(NSError*) error cacheType:(SDImageCacheType) cacheType finished:(BOOL) finished

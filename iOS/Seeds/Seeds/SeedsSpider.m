@@ -10,6 +10,8 @@
 
 #import "TorrentListDownloadAgent.h"
 
+#import "SDWebImagePrefetcher.h"
+
 @interface SeedsSpider()
 {
     SeedsVisitor* visitor;
@@ -149,6 +151,8 @@
     
     // Step 10:
     
+    NSMutableArray* pulledSeedList = [NSMutableArray array];
+    
     BOOL hasAllSyncBefore = NO;
     id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
     NSInteger dayIndex = TheDayBefore;
@@ -186,6 +190,9 @@
                 
                 NSArray* seedList = [self pullSeedsFromLink:channelLink];
                 [self fillCommonInfoToSeeds:seedList date:day];
+                
+                [pulledSeedList addObjectsFromArray:seedList];
+                
                 if (nil != _seedsSpiderDelegate)
                 {
                     [_seedsSpiderDelegate taskDataUpdated:[NSString stringWithFormat:@"%d", dayIndex] data:[NSString stringWithFormat:@"%d", seedList.count]];
@@ -287,6 +294,8 @@
             [_seedsSpiderDelegate taskFinished:NSLocalizedString(@"Completed", nil) minorStatus:nil];
         }
     }
+    
+//    [self prefetchSeedImages:pulledSeedList];
     
 //    // Step XX: 下载种子文件到Documents，并按时间标创建新文件夹
     
@@ -403,6 +412,38 @@
             [seed setFavorite:NO];
         }
     }
+}
+
+-(void) prefetchSeedImages:(NSArray*) seedList
+{
+    NSAssert(nil != seedList, @"Illegal seed list");
+    
+    NSMutableArray* urls = [NSMutableArray arrayWithCapacity:seedList.count];
+    for (Seed* seed in seedList)
+    {
+        NSArray* pictures = seed.seedPictures;
+        for (SeedPicture* picture in pictures)
+        {
+            NSString* picLink = picture.pictureLink;
+            NSURL* url = [NSURL URLWithString:picLink];
+            [urls addObject:url];
+        }
+    }
+    
+    SDWebImagePrefetcher* imagePrefetcher = [SDWebImagePrefetcher sharedImagePrefetcher];
+    [imagePrefetcher prefetchURLs:urls completed:^(NSUInteger finishedCount, NSUInteger skippedCount)
+    {
+        NSString* majorStatus = @"Images Prefetched";
+        NSMutableString* minorStatus = [NSMutableString string];
+        [minorStatus appendString:@"Finished:"];
+        [minorStatus appendString:[NSString stringWithFormat:@"%d", finishedCount]];
+        [minorStatus appendString:@" "];
+        [minorStatus appendString:@"Skipped:"];
+        [minorStatus appendString:[NSString stringWithFormat:@"%d", skippedCount]];
+        
+        GUIModule* guiModule = [GUIModule sharedInstance];
+        [guiModule showHUD:majorStatus minorStatus:minorStatus delay:2];
+    }];
 }
 
 @end
