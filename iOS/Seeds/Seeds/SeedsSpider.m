@@ -295,7 +295,9 @@
         }
     }
     
-//    [self prefetchSeedImages:pulledSeedList];
+    CommunicationModule* commModule = [CommunicationModule sharedInstance];
+    SeedPictureAgent* agent = commModule.seedPictureAgent;
+    [agent prefetchSeedImages:pulledSeedList];
     
 //    // Step XX: 下载种子文件到Documents，并按时间标创建新文件夹
     
@@ -412,39 +414,6 @@
             [seed setFavorite:NO];
         }
     }
-}
-
--(void) prefetchSeedImages:(NSArray*) seedList
-{
-    NSAssert(nil != seedList, @"Illegal seed list");
-    
-    NSMutableArray* urls = [NSMutableArray arrayWithCapacity:seedList.count];
-    for (Seed* seed in seedList)
-    {
-        NSArray* pictures = seed.seedPictures;
-        for (SeedPicture* picture in pictures)
-        {
-            NSString* picLink = picture.pictureLink;
-            NSURL* url = [NSURL URLWithString:picLink];
-            [urls addObject:url];
-        }
-    }
-    
-    SDWebImagePrefetcher* imagePrefetcher = [SDWebImagePrefetcher sharedImagePrefetcher];
-    imagePrefetcher.maxConcurrentDownloads = 50;
-    [imagePrefetcher prefetchURLs:urls completed:^(NSUInteger finishedCount, NSUInteger skippedCount)
-    {
-        NSString* majorStatus = @"Images Prefetched";
-        NSMutableString* minorStatus = [NSMutableString string];
-        [minorStatus appendString:@"Finished:"];
-        [minorStatus appendString:[NSString stringWithFormat:@"%d", finishedCount]];
-        [minorStatus appendString:@" "];
-        [minorStatus appendString:@"Skipped:"];
-        [minorStatus appendString:[NSString stringWithFormat:@"%d", skippedCount]];
-        
-        GUIModule* guiModule = [GUIModule sharedInstance];
-        [guiModule showHUD:majorStatus minorStatus:minorStatus delay:2];
-    }];
 }
 
 @end

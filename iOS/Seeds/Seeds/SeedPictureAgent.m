@@ -8,6 +8,8 @@
 
 #import "SeedPictureAgent.h"
 
+#import "SDWebImagePrefetcher.h"
+
 @interface SeedPictureAgent()
 {
     SDWebImageManager* _imageManager;
@@ -313,13 +315,31 @@ SINGLETON(SeedPictureAgent)
     NSMutableString* keyInSeedPictureView = [NSMutableString stringWithString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW];
     [keyInSeedPictureView appendString:keyInOriginPicture];
     
-    UIImage* thumbnailInSeedListTableCell = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDLISTTABLECELL];
-    UIImage* thumbnailInSeedPictureCollectionCell = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL];
-//    UIImage* thumbnailInSeedPictureView = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTUREVIEW];
-    
-    [_imageCache storeImage:thumbnailInSeedListTableCell forKey:keyInSeedListTableCell];
-    [_imageCache storeImage:thumbnailInSeedPictureCollectionCell forKey:keyInSeedPictureCollectionCell];
-//    [_imageCache storeImage:thumbnailInSeedPictureView forKey:keyInSeedPictureView];
+    @autoreleasepool
+    {
+        UIImage* tempCachedImage = [_imageCache imageFromDiskCacheForKey:keyInSeedListTableCell];
+        if (!tempCachedImage)
+        {
+            UIImage* thumbnailInSeedListTableCell = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDLISTTABLECELL];
+            [_imageCache storeImage:thumbnailInSeedListTableCell forKey:keyInSeedListTableCell];
+        }
+        
+        tempCachedImage = [_imageCache imageFromDiskCacheForKey:keyInSeedPictureCollectionCell];
+        if (!tempCachedImage)
+        {
+            UIImage* thumbnailInSeedPictureCollectionCell = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL];
+            [_imageCache storeImage:thumbnailInSeedPictureCollectionCell forKey:keyInSeedPictureCollectionCell];
+        }
+        
+#if 0
+        tempCachedImage = [_imageCache imageFromDiskCacheForKey:keyInSeedPictureView];
+        if (!tempCachedImage)
+        {
+            UIImage* thumbnailInSeedPictureView = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTUREVIEW];
+            [_imageCache storeImage:thumbnailInSeedPictureView forKey:keyInSeedPictureView];
+        }
+#endif
+    }
 }
 
 -(UIImage*) thumbnailFromCache:(NSURL*) url thumbnailType:(ThumbnailType) thumbnailType
@@ -366,5 +386,39 @@ SINGLETON(SeedPictureAgent)
     
     return thumbnail;
 }
+
+-(void) prefetchSeedImages:(NSArray*) seedList
+{
+    NSAssert(nil != seedList, @"Illegal seed list");
+    
+    NSMutableArray* urls = [NSMutableArray arrayWithCapacity:seedList.count];
+    for (Seed* seed in seedList)
+    {
+        NSArray* pictures = seed.seedPictures;
+        for (SeedPicture* picture in pictures)
+        {
+            NSString* picLink = picture.pictureLink;
+            NSURL* url = [NSURL URLWithString:picLink];
+            [urls addObject:url];
+        }
+    }
+    
+    SDWebImagePrefetcher* imagePrefetcher = [SDWebImagePrefetcher sharedImagePrefetcher];
+    imagePrefetcher.maxConcurrentDownloads = 100;
+    [imagePrefetcher prefetchURLs:urls completed:^(NSUInteger finishedCount, NSUInteger skippedCount)
+     {
+         NSString* majorStatus = @"Images Prefetched";
+         NSMutableString* minorStatus = [NSMutableString string];
+         [minorStatus appendString:@"Finished:"];
+         [minorStatus appendString:[NSString stringWithFormat:@"%d", finishedCount]];
+         [minorStatus appendString:@" "];
+         [minorStatus appendString:@"Skipped:"];
+         [minorStatus appendString:[NSString stringWithFormat:@"%d", skippedCount]];
+         
+         GUIModule* guiModule = [GUIModule sharedInstance];
+         [guiModule showHUD:majorStatus minorStatus:minorStatus delay:2];
+     }];
+}
+
 
 @end
