@@ -76,7 +76,7 @@
     
     CGRect cellRect = self.frame;
     
-    CBAsyncImageView* newImageView = [[CBAsyncImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL, cellRect.size.height)];
+    AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL, cellRect.size.height)];
     _asyncImageView = newImageView;
     [self addSubview:_asyncImageView];
 }

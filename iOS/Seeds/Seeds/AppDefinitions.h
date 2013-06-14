@@ -9,6 +9,10 @@
 #ifndef Seeds_AppDefinitions_h
 #define Seeds_AppDefinitions_h
 
+// App Global
+#define NAMESPACE_APP @"com.simplelife.seeds.ios"
+
+
 // Module: UserDefaults
 #define USERDEFAULTS_KEY_SYNCSTATUSBYDAY @"syncStatusByDay:"
 #define PERSISTENTDOMAIN_SYNCSTATUSBYDAY @"syncStatusByDay"
@@ -42,6 +46,7 @@
 #define FOLDER_TORRENTS @"torrents"
 #define FILE_EXTENDNAME_DOT_TORRENT @".torrent"
 
+#define SEEDPICTURE_MAX_CONCURRENT_DOWNLOADS 10
 
 // Module: Spider
 #define SEEDLIST_LINK_DATE_FORMAT @"M-dd"

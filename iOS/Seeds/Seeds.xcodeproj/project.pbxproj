@@ -96,7 +96,7 @@
 		C55D1ACA1751BE35000B3E34 /* papasscode_marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C55D1ABF1751BE35000B3E34 /* papasscode_marker@2x.png */; };
 		C55D1ACB1751BE35000B3E34 /* PAPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55D1AC21751BE35000B3E34 /* PAPasscodeViewController.m */; };
 		C571E0A01766145300E9AD50 /* SeedListTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C571E09F1766145200E9AD50 /* SeedListTableCell.xib */; };
-		C571E0A3176627CE00E9AD50 /* CBAsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C571E0A2176627CE00E9AD50 /* CBAsyncImageView.m */; };
+		C571E0A3176627CE00E9AD50 /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C571E0A2176627CE00E9AD50 /* AsyncImageView.m */; };
 		C571E0A7176750BF00E9AD50 /* SeedPictureCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C571E0A6176750BD00E9AD50 /* SeedPictureCollectionCell.xib */; };
 		C57CF27F1724DB660002B054 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */; };
 		C57CF2811724DBE10002B054 /* Seeds_App_Database.db in Resources */ = {isa = PBXBuildFile; fileRef = C57CF2801724DBE10002B054 /* Seeds_App_Database.db */; };
@@ -152,6 +152,7 @@
 		C5AB63581730C1ED00A3F1E6 /* CBUIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */; };
 		C5ADC852173930E1007F59D7 /* CBStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC851173930E1007F59D7 /* CBStringUtils.m */; };
 		C5ADC856173A2DE7007F59D7 /* UserDefaultsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */; };
+		C5E0C1F4176AF6E30037811F /* SeedPictureAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */; };
 		C5F8AC4E174A3B72001E30D1 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = C5F8AC4D174A3B72001E30D1 /* index.html */; };
 		C5F8AC50174B9807001E30D1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */; };
 		C5F8AC5F174BC3B9001E30D1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F8AC5E174BC3B9001E30D1 /* Reachability.m */; };
@@ -329,8 +330,8 @@
 		C55D1AC11751BE35000B3E34 /* PAPasscodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAPasscodeViewController.h; sourceTree = "<group>"; };
 		C55D1AC21751BE35000B3E34 /* PAPasscodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAPasscodeViewController.m; sourceTree = "<group>"; };
 		C571E09F1766145200E9AD50 /* SeedListTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeedListTableCell.xib; sourceTree = "<group>"; };
-		C571E0A1176627CE00E9AD50 /* CBAsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAsyncImageView.h; sourceTree = "<group>"; };
-		C571E0A2176627CE00E9AD50 /* CBAsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBAsyncImageView.m; sourceTree = "<group>"; };
+		C571E0A1176627CE00E9AD50 /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
+		C571E0A2176627CE00E9AD50 /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
 		C571E0A6176750BD00E9AD50 /* SeedPictureCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeedPictureCollectionCell.xib; sourceTree = "<group>"; };
 		C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		C57CF2801724DBE10002B054 /* Seeds_App_Database.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = Seeds_App_Database.db; sourceTree = "<group>"; };
@@ -432,6 +433,8 @@
 		C5ADC854173A2DE7007F59D7 /* UserDefaultsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultsModule.h; sourceTree = "<group>"; };
 		C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultsModule.m; sourceTree = "<group>"; };
 		C5ADC857173A3148007F59D7 /* CBSharedInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBSharedInstance.h; sourceTree = "<group>"; };
+		C5E0C1F2176AF6E10037811F /* SeedPictureAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SeedPictureAgent.h; path = Seeds/SeedPictureAgent.h; sourceTree = "<group>"; };
+		C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeedPictureAgent.m; path = Seeds/SeedPictureAgent.m; sourceTree = "<group>"; };
 		C5F8AC4D174A3B72001E30D1 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C5F8AC5D174BC3B9001E30D1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -671,8 +674,6 @@
 				C5ADC857173A3148007F59D7 /* CBSharedInstance.h */,
 				C5203D73174714D000D917F7 /* CBModuleManager.h */,
 				C5203D74174714D000D917F7 /* CBModuleManager.m */,
-				C571E0A1176627CE00E9AD50 /* CBAsyncImageView.h */,
-				C571E0A2176627CE00E9AD50 /* CBAsyncImageView.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -831,6 +832,8 @@
 				C522BA30174CF1FA001FC7BD /* GUIModule.m */,
 				C5AB11361732793B007EEE25 /* GUIStyle.h */,
 				C5AB11371732793B007EEE25 /* GUIStyle.m */,
+				C571E0A1176627CE00E9AD50 /* AsyncImageView.h */,
+				C571E0A2176627CE00E9AD50 /* AsyncImageView.m */,
 				C5AB1133173260D9007EEE25 /* CircularProgressView.h */,
 				C5AB1134173260D9007EEE25 /* CircularProgressView.m */,
 				C5964C2D17222BF500CC1C0A /* SplashViewController.h */,
@@ -903,6 +906,8 @@
 				C5203D6E17451F7500D917F7 /* TorrentDownloadAgent.m */,
 				C5203DFA17485A8500D917F7 /* TorrentListDownloadAgent.h */,
 				C5203DFB17485A8500D917F7 /* TorrentListDownloadAgent.m */,
+				C5E0C1F2176AF6E10037811F /* SeedPictureAgent.h */,
+				C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */,
 			);
 			name = Communication;
 			path = ..;
@@ -1260,7 +1265,8 @@
 				C5F8AC5F174BC3B9001E30D1 /* Reachability.m in Sources */,
 				C522BA31174CF1FA001FC7BD /* GUIModule.m in Sources */,
 				C55D1ACB1751BE35000B3E34 /* PAPasscodeViewController.m in Sources */,
-				C571E0A3176627CE00E9AD50 /* CBAsyncImageView.m in Sources */,
+				C571E0A3176627CE00E9AD50 /* AsyncImageView.m in Sources */,
+				C5E0C1F4176AF6E30037811F /* SeedPictureAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

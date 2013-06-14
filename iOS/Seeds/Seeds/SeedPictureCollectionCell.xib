@@ -33,7 +33,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUICollectionViewCell" id="825047625">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">1298</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIView" id="178979657">
@@ -46,7 +46,6 @@
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
 								<string key="NSFrame">{{0, 159}, {150, 20}}</string>
 								<reference key="NSSuperview" ref="178979657"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1052858364"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -78,8 +77,6 @@
 								<int key="NSvFlags">1298</int>
 								<string key="NSFrame">{{0.5, 1}, {150, 160}}</string>
 								<reference key="NSSuperview" ref="178979657"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
@@ -94,7 +91,6 @@
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
 						<string key="NSFrameSize">{150, 180}</string>
 						<reference key="NSSuperview" ref="825047625"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="783567866"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -109,8 +105,6 @@
 				</array>
 				<object class="NSPSMatrix" key="NSFrameMatrix"/>
 				<string key="NSFrameSize">{150, 180}</string>
-				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="178979657"/>
 				<bool key="IBUIOpaque">NO</bool>
 				<bool key="IBUIClipsSubviews">YES</bool>
@@ -191,7 +185,7 @@
 				<string key="15.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<reference key="15.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="15.showNotes"/>
-				<string key="16.CustomClassName">CBAsyncImageView</string>
+				<string key="16.CustomClassName">AsyncImageView</string>
 				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="17.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<reference key="17.IBUserGuides" ref="0"/>

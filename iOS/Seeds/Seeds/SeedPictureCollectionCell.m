@@ -59,7 +59,7 @@
     
     CGRect rect = self.frame;
     CGRect rectImageView = CGRectMake(0, 0, rect.size.width, rect.size.height - _label.frame.size.height);
-    CBAsyncImageView* newImageView = [[CBAsyncImageView alloc] initWithFrame:rectImageView];
+    AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:rectImageView];
     _asyncImageView = newImageView;
     [self addSubview:_asyncImageView];
 }

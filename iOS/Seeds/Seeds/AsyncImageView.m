@@ -1,16 +1,25 @@
 //
-//  CBAsyncImageView.m
+//  AsyncImageView.m
 //  Seeds
 //
 //  Created by Patrick Deng on 13-6-10.
 //  Copyright (c) 2013年 SimpleLife Studio. All rights reserved.
 //
 
-#import "CBAsyncImageView.h"
+#import "AsyncImageView.h"
 
-#import "SDWebImageManager.h"
+#import "SeedPictureAgent.h"
+#import "CBFileUtils.h"
 
-@implementation CBAsyncImageView
+@interface AsyncImageView()
+{
+    ImageDownloadInProgressBlock _inProgressBlock;
+    ImageDownloadFinishBlock _completeBlock;
+}
+
+@end
+
+@implementation AsyncImageView
 
 @synthesize circularProgressView = _circularProgressView;
 @synthesize circularProgressDelegate = _circularProgressDelegate;
@@ -46,6 +55,15 @@
     _circularProgressView = [[CircularProgressView alloc] initWithFrame:CGRectMake(x, y, radius, radius) backColor:COLOR_CIRCULAR_PROGRESS_BACKGROUND progressColor:COLOR_CIRCULAR_PROGRESS lineWidth:lineWidth];
     
     _circularProgressDelegate = self;
+    
+    __block AsyncImageView* blockSelf = self;
+    _inProgressBlock = ^(NSUInteger receivedSize, long long expectedSize){
+        [blockSelf imageIsLoading:receivedSize expectedSize:expectedSize];
+    };
+    _completeBlock = ^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+    {
+        [blockSelf imageLoaded:image error:error cacheType:cacheType finished:finished];
+    };
 }
 
 - (void)loadImageFromURL:(NSURL*)url
@@ -55,21 +73,9 @@
         [_circularProgressDelegate didStartProgressView];
     }
     
-//    DLog(@"CBAsyncImageView load picture from url:%@", url);
-    
-    SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    [manager
-        downloadWithURL:url
-        options:(SDWebImageLowPriority)
-        progress:^(NSUInteger receivedSize, long long expectedSize)
-        {
-            [self imageIsLoading:receivedSize expectedSize:expectedSize];
-        }
-        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
-        {
-            [self imageLoaded:image error:error cacheType:cacheType finished:finished];
-        }
-    ];
+    CommunicationModule* commModule = [CommunicationModule sharedInstance];
+    SeedPictureAgent* agent = commModule.seedPictureAgent;
+    [agent queueURLRequest:url inProgressBlock:_inProgressBlock completeBlock:_completeBlock];
 }
 
 - (void)loadImageFromLocal:(UIImage*) image
@@ -92,7 +98,7 @@
 
 -(void) imageIsLoading:(NSInteger) receivedSize expectedSize:(long long) expectedSize
 {
-    DLog(@"Seed's picture downloaded %d of %lld", receivedSize, expectedSize);
+//    DLog(@"Seed's picture downloaded %d of %lld", receivedSize, expectedSize);
     
     float progressVal = (float)receivedSize / (float)expectedSize;
     [_circularProgressView updateProgressCircle:progressVal];

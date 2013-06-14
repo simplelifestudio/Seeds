@@ -12,7 +12,7 @@
 
 @interface SeedPictureViewController () <SeedPictureScrollViewDelegate, CircularProgressDelegate>
 {
-    CircularProgressView* circularProgressView;
+    CircularProgressView* _circularProgressView;
 }
 
 @end
@@ -28,9 +28,14 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        
+        [self setupView];
     }
     return self;
+}
+
+- (void) setupView
+{
+
 }
 
 - (void)viewDidLoad
@@ -43,7 +48,7 @@
     CGFloat x = self.view.center.x - radius / 2;
     CGFloat y = self.view.center.y - radius / 2;
     NSInteger lineWidth = 20;
-    circularProgressView = [[CircularProgressView alloc] initWithFrame:CGRectMake(x, y, radius, radius) backColor:COLOR_CIRCULAR_PROGRESS_BACKGROUND progressColor:COLOR_CIRCULAR_PROGRESS lineWidth:lineWidth];
+    _circularProgressView = [[CircularProgressView alloc] initWithFrame:CGRectMake(x, y, radius, radius) backColor:COLOR_CIRCULAR_PROGRESS_BACKGROUND progressColor:COLOR_CIRCULAR_PROGRESS lineWidth:lineWidth];
     [self registerCircularProgressDelegate];
 }
 
@@ -119,23 +124,32 @@
     [self.navigationController setNavigationBarHidden:YES];
     
     NSURL* imageURL = [NSURL URLWithString:_seedPicture.pictureLink];
-    SDWebImageManager *manager = [SDWebImageManager sharedManager];
-    [manager
-        downloadWithURL:imageURL
-        options:(SDWebImageRetryFailed | SDWebImageLowPriority)
-        progress:^(NSUInteger receivedSize, long long expectedSize)
+    
+    CommunicationModule* commModule = [CommunicationModule sharedInstance];
+    SeedPictureAgent* agent = commModule.seedPictureAgent;
+    [agent
+        queueURLRequest:imageURL
+        inProgressBlock:^(NSUInteger receivedSize, long long expectedSize)
         {
-            DLog(@"SeedPicture(%d)'s thumbnail(%@) downloaded %d of %lld", _seedPicture.pictureId, _seedPicture.pictureLink, receivedSize, expectedSize);
-         
             float progressVal = (float)receivedSize / (float)expectedSize;
-            [circularProgressView updateProgressCircle:progressVal];
+            [_circularProgressView updateProgressCircle:progressVal];
         }
-        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+        completeBlock:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
         {
-            if (image)
+            if (image && finished)
             {
-                [circularProgressView removeFromSuperview];
+                [_circularProgressView removeFromSuperview];
                 [_scrollView displayImage:image];
+            }
+            else
+            {
+                DLog(@"Failed to load image with error: %@", error.description);
+             
+                NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:@"noImage_tableCell" ofType:@"png"];
+                UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
+             
+                [_circularProgressView removeFromSuperview];
+                [_scrollView displayImage:placeHolderImage];
             }
         }
     ];
@@ -145,13 +159,13 @@
 
 - (void)registerCircularProgressDelegate
 {
-    circularProgressView.delegate = self;
-    [self.view addSubview:circularProgressView];
+    _circularProgressView.delegate = self;
+    [self.view addSubview:_circularProgressView];
 }
 
 - (void)didUpdateProgressView
 {
-
+    
 }
 
 - (void)didStartProgressView
@@ -161,7 +175,7 @@
 
 - (void)didFisnishProgressView
 {
-    [circularProgressView removeFromSuperview];
+    [_circularProgressView removeFromSuperview];
 }
 
 - (void)scrollviewSingleTapped:(UITapGestureRecognizer *)recognizer

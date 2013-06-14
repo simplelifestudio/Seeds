@@ -1,5 +1,5 @@
 //
-//  CBAsyncImageView.h
+//  AsyncImageView.h
 //  Seeds
 //
 //  Created by Patrick Deng on 13-6-10.
@@ -10,7 +10,7 @@
 
 #import "CircularProgressView.h"
 
-@interface CBAsyncImageView : UIView <CircularProgressDelegate>
+@interface AsyncImageView : UIView <CircularProgressDelegate>
 {	
 }
 

@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-#import "CBAsyncImageView.h"
+#import "AsyncImageView.h"
 
 @interface SeedPictureCollectionCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *label;
-@property (weak, nonatomic) IBOutlet CBAsyncImageView *asyncImageView;
+@property (weak, nonatomic) IBOutlet AsyncImageView *asyncImageView;
 
 -(void) fillSeedPicture:(SeedPicture*) picture;
 

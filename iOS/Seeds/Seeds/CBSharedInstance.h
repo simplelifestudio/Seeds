@@ -24,6 +24,10 @@
         ^ \
         { \
             sharedInstance = [[self alloc] init]; \
+            if([sharedInstance respondsToSelector:@selector(instanceInit)]) \
+            { \
+                [sharedInstance instanceInit]; \
+            } \
         } \
     ); \
     \
@@ -33,5 +37,8 @@
 @protocol CBSharedInstance <NSObject>
 
 +(id) sharedInstance;
+
+@optional
+-(void) instanceInit;
 
 @end

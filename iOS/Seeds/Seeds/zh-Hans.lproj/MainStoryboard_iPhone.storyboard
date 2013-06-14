@@ -431,7 +431,7 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" id="g0e-ET-Man" userLabel="asyncImageView" customClass="CBAsyncImageView">
+                                        <view contentMode="scaleToFill" id="g0e-ET-Man" userLabel="asyncImageView" customClass="AsyncImageView">
                                             <rect key="frame" x="0.5" y="1" width="150" height="160"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

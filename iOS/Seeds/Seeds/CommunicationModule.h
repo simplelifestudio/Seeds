@@ -9,6 +9,7 @@
 #import "CBModuleAbstractImpl.h"
 #import "SeedsSpider.h"
 #import "ServerAgent.h"
+#import "SeedPictureAgent.h"
 
 @interface CommunicationModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate>
 {
@@ -17,5 +18,6 @@
 
 @property (nonatomic, strong) SeedsSpider* spider;
 @property (nonatomic, strong) ServerAgent* serverAgent;
+@property (nonatomic, strong) SeedPictureAgent* seedPictureAgent;
 
 @end

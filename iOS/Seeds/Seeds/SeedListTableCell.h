@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "CBAsyncImageView.h"
+#import "AsyncImageView.h"
 
 @interface SeedListTableCell : UITableViewCell
 
@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *formatLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mosaicLabel;
-@property (weak, nonatomic) IBOutlet CBAsyncImageView *asyncImageView;
+@property (weak, nonatomic) IBOutlet AsyncImageView *asyncImageView;
 
 -(void) fillSeed:(Seed*) seed;
 -(void) fillSeedPicture:(SeedPicture*) picture;
