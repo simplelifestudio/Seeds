@@ -404,7 +404,7 @@ SINGLETON(SeedPictureAgent)
     }
     
     SDWebImagePrefetcher* imagePrefetcher = [SDWebImagePrefetcher sharedImagePrefetcher];
-    imagePrefetcher.maxConcurrentDownloads = 100;
+    imagePrefetcher.maxConcurrentDownloads = 50;
     [imagePrefetcher prefetchURLs:urls completed:^(NSUInteger finishedCount, NSUInteger skippedCount)
      {
          NSString* majorStatus = @"Images Prefetched";

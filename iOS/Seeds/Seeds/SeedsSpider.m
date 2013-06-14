@@ -295,9 +295,9 @@
         }
     }
     
-    CommunicationModule* commModule = [CommunicationModule sharedInstance];
-    SeedPictureAgent* agent = commModule.seedPictureAgent;
-    [agent prefetchSeedImages:pulledSeedList];
+//    CommunicationModule* commModule = [CommunicationModule sharedInstance];
+//    SeedPictureAgent* agent = commModule.seedPictureAgent;
+//    [agent prefetchSeedImages:pulledSeedList];
     
 //    // Step XX: 下载种子文件到Documents，并按时间标创建新文件夹
     
