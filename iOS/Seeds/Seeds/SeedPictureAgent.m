@@ -17,9 +17,125 @@
 
 @end
 
+static UIImage *emptyImageInSeedListTableCell, *emptyImageInSeedPictureCollectionCell;
+static UIImage *errorImageInSeedListTableCell, *errorImageInSeedPictureCollectionCell, *errorImageInSeedPictureView;
+
 @implementation SeedPictureAgent
 
 SINGLETON(SeedPictureAgent)
+
++ (void)initialize
+{
+    if (nil == emptyImageInSeedListTableCell)
+    {
+        NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:RES_NOIMAGE_TABLECELL ofType:RES_PNG_FILE];
+        emptyImageInSeedListTableCell = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
+    }
+    
+    if (nil == emptyImageInSeedPictureCollectionCell)
+    {
+        NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:RES_NOIMAGE_COLLECTIONCELL ofType:RES_PNG_FILE];
+        emptyImageInSeedPictureCollectionCell = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
+    }
+    
+    if (nil == errorImageInSeedListTableCell)
+    {
+        NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:RES_XIMAGE_TABLECELL ofType:RES_PNG_FILE];
+        errorImageInSeedListTableCell = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
+    }
+
+    if (nil == errorImageInSeedPictureCollectionCell)
+    {
+        NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:RES_XIMAGE_COLLECTIONCELL ofType:RES_PNG_FILE];
+        errorImageInSeedPictureCollectionCell = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
+    }
+
+    if (nil == errorImageInSeedPictureView)
+    {
+        NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:RES_XIMAGE_PICTUREVIEW ofType:RES_PNG_FILE];
+        errorImageInSeedPictureView = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
+    }
+}
+
++(UIImage*)exceptionImageWithThumbnailType:(ThumbnailType) thumbnailType imageExceptionType:(ImageExceptionType) imageExceptionType;
+{
+    UIImage* image = nil;
+    
+    switch (thumbnailType)
+    {
+        case SeedListTableCellThumbnail:
+        {
+            switch (imageExceptionType)
+            {
+                case EmptyImage:
+                {
+                    image = emptyImageInSeedListTableCell;
+                    break;
+                }
+                case ErrorImage:
+                {
+                    image = errorImageInSeedListTableCell;
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+            
+            break;
+        }
+        case SeedPictureCollectionCellThumbnail:
+        {
+            switch (imageExceptionType)
+            {
+                case EmptyImage:
+                {
+                    image = emptyImageInSeedPictureCollectionCell;
+                    break;
+                }
+                case ErrorImage:
+                {
+                    image = errorImageInSeedPictureCollectionCell;
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+            
+            break;
+        }
+        case SeedPictureViewThumbnail:
+        {
+            switch (imageExceptionType)
+            {
+                case EmptyImage:
+                {
+                    break;
+                }
+                case ErrorImage:
+                {
+                    image = errorImageInSeedPictureView;
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+            
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+    
+    return image;
+}
 
 + (UIImage*)thumbnailOfImage:(UIImage*)image withSize:(CGSize)aSize
 {

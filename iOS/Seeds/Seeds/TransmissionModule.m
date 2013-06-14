@@ -66,7 +66,7 @@ SINGLETON(TransmissionModule)
 
 -(void) processService
 {
-    [NSThread sleepForTimeInterval:0.5];
+    MODULE_DELAY    
 }
 
 - (BOOL)startHTTPServer

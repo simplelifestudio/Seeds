@@ -50,8 +50,9 @@ SINGLETON(DatabaseModule)
 
 -(void) processService
 {
-    [NSThread sleepForTimeInterval:0.5];
     DLog(@"SQLite3 Database File Path: %@", self.databaseFilePath);
+    
+    MODULE_DELAY   
 }
 
 -(NSString*) databaseFilePath

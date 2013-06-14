@@ -9,6 +9,7 @@
 #import "SeedPictureViewController.h"
 
 #import "CBUIUtils.h"
+#import "SeedPictureAgent.h"
 
 @interface SeedPictureViewController () <SeedPictureScrollViewDelegate, CircularProgressDelegate>
 {
@@ -143,13 +144,11 @@
             }
             else
             {
-                DLog(@"Failed to load image with error: %@", error.description);
+//                DLog(@"Failed to load image with error: %@", error.description);
              
-                NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:@"noImage_tableCell" ofType:@"png"];
-                UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
-             
+                UIImage* image = [SeedPictureAgent exceptionImageWithThumbnailType:SeedPictureViewThumbnail imageExceptionType:ErrorImage];
                 [_circularProgressView removeFromSuperview];
-                [_scrollView displayImage:placeHolderImage];
+                [_scrollView displayImage:image];
             }
         }
     ];

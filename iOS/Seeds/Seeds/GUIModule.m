@@ -38,10 +38,10 @@ SINGLETON(GUIModule)
 
 -(void) processService
 {
-    [NSThread sleepForTimeInterval:0.5];
-
     // Forbid auto sleep
     [UIApplication sharedApplication].idleTimerDisabled = YES;
+    
+    MODULE_DELAY    
 }
 
 -(void) constructHUD

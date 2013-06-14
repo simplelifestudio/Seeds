@@ -11,7 +11,7 @@
 
 // App Global
 #define NAMESPACE_APP @"com.simplelife.seeds.ios"
-
+#define MODULE_DELAY usleep(300000);
 
 // Module: UserDefaults
 #define USERDEFAULTS_KEY_SYNCSTATUSBYDAY @"syncStatusByDay:"
@@ -128,5 +128,11 @@ enum ServiceDay {TheDayBefore = 0, Yesterday = 1, Today = 2};
 
 #define kZoomStep 2
 
+#define RES_PNG_FILE @"png"
+#define RES_NOIMAGE_TABLECELL @"noImage_tableCell"
+#define RES_NOIMAGE_COLLECTIONCELL @"noImage_collectionCell"
+#define RES_XIMAGE_TABLECELL @"xImage_tableCell"
+#define RES_XIMAGE_COLLECTIONCELL @"xImage_collectionCell"
+#define RES_XIMAGE_PICTUREVIEW @"xImage_pictureView"
 
 #endif

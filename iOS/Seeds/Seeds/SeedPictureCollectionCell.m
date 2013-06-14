@@ -7,6 +7,7 @@
 //
 
 #import "SeedPictureCollectionCell.h"
+#import "SeedPictureAgent.h"
 
 @interface SeedPictureCollectionCell()
 {
@@ -25,22 +26,30 @@
     self = [super initWithFrame:frame];
     if (self)
     {
+        [self setupCell];
     }
     return self;
 }
 
 - (void)awakeFromNib
 {
+    [self setupCell];
+    
     [super awakeFromNib];
+}
+
+- (void) setupCell
+{
+    _asyncImageView.thumbnailType = SeedPictureCollectionCellThumbnail;
 }
 
 - (void) fillSeedPicture:(SeedPicture *)picture
 {
     if (nil == picture || picture.isPlaceHolder)
     {
-        NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:@"noImage_collectionCell" ofType:@"png"];
-        UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
-        [_asyncImageView loadImageFromLocal:placeHolderImage];
+        UIImage* image = [SeedPictureAgent exceptionImageWithThumbnailType:SeedPictureCollectionCellThumbnail imageExceptionType:EmptyImage];
+        [_asyncImageView loadImageFromLocal:image];
+        
         _label.text = nil;
     }
     else
@@ -60,6 +69,7 @@
     CGRect rect = self.frame;
     CGRect rectImageView = CGRectMake(0, 0, rect.size.width, rect.size.height - _label.frame.size.height);
     AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:rectImageView];
+    newImageView.thumbnailType = _asyncImageView.thumbnailType;
     _asyncImageView = newImageView;
     [self addSubview:_asyncImageView];
 }

@@ -8,7 +8,7 @@
 
 #import "SeedListTableCell.h"
 
-#import "SDWebImageManager.h"
+#import "SeedPictureAgent.h"
 
 @interface SeedListTableCell()
 {
@@ -28,12 +28,20 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
+        [self setupCell];
     }
     return self;
 }
 
+- (void) setupCell
+{
+    _asyncImageView.thumbnailType = SeedListTableCellThumbnail;
+}
+
 - (void)awakeFromNib
 {
+    [self setupCell];
+    
     [super awakeFromNib];
 }
 
@@ -57,10 +65,8 @@
 {
     if (nil == picture || picture.isPlaceHolder)
     {
-        NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:@"noImage_tableCell" ofType:@"png"];
-        UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
-        
-        [_asyncImageView loadImageFromLocal:placeHolderImage];        
+        UIImage* image = [SeedPictureAgent exceptionImageWithThumbnailType:SeedListTableCellThumbnail imageExceptionType:EmptyImage];
+        [_asyncImageView loadImageFromLocal:image];
     }
     else
     {
@@ -77,6 +83,7 @@
     CGRect cellRect = self.frame;
     
     AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL, cellRect.size.height)];
+    newImageView.thumbnailType = _asyncImageView.thumbnailType;
     _asyncImageView = newImageView;
     [self addSubview:_asyncImageView];
 }

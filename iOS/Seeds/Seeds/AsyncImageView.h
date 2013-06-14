@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) CircularProgressView* circularProgressView;
 @property (nonatomic, strong) id<CircularProgressDelegate> circularProgressDelegate;
+@property (nonatomic) ThumbnailType thumbnailType;
 
 - (void)loadImageFromURL:(NSURL*) url;
 - (void)loadImageFromLocal:(UIImage*) image;

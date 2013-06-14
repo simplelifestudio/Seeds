@@ -37,7 +37,7 @@ SINGLETON(UserDefaultsModule)
 
 -(void) processService
 {
-    [NSThread sleepForTimeInterval:0.5];
+    MODULE_DELAY
 }
 
 -(void) resetDefaults

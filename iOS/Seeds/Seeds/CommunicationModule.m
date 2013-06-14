@@ -118,7 +118,7 @@ SINGLETON(CommunicationModule)
 
 -(void) processService
 {
-    [NSThread sleepForTimeInterval:0.5];
+    MODULE_DELAY
 }
 
 -(void)applicationWillResignActive:(UIApplication *)application

@@ -10,10 +10,16 @@
 
 #import "SDWebImageManager.h"
 
+typedef enum {EmptyImage = 0, ErrorImage} ImageExceptionType;
+
+typedef enum {SeedListTableCellThumbnail = 0, SeedPictureCollectionCellThumbnail, SeedPictureViewThumbnail} ThumbnailType;
+
 typedef void(^ImageDownloadInProgressBlock)(NSUInteger receivedSize, long long expectedSize);
 typedef void(^ImageDownloadFinishBlock)(UIImage* image, NSError* error, SDImageCacheType cacheType, BOOL finished);
 
 @interface SeedPictureAgent : NSObject <CBSharedInstance>
+
++(UIImage*)exceptionImageWithThumbnailType:(ThumbnailType) thumbnailType imageExceptionType:(ImageExceptionType) imageExceptionType;
 
 +(UIImage*)thumbnailOfImage:(UIImage*)image withSize:(CGSize)aSize;
 

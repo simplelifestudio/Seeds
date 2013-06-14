@@ -23,6 +23,7 @@
 
 @synthesize circularProgressView = _circularProgressView;
 @synthesize circularProgressDelegate = _circularProgressDelegate;
+@synthesize thumbnailType = _thumbnailType;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -87,7 +88,6 @@
     }
     
     UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
-    
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     imageView.autoresizingMask = ( UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight );
     [self addSubview:imageView];
@@ -122,12 +122,10 @@
     }
     else
     {
-        DLog(@"Failed to load image with error: %@", error.description);
+//        DLog(@"Failed to load image with error: %@", error.description);
         
-        NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:@"noImage_tableCell" ofType:@"png"];
-        UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
-        
-        [self loadImageFromLocal:placeHolderImage];
+        UIImage* image = [SeedPictureAgent exceptionImageWithThumbnailType:_thumbnailType imageExceptionType:ErrorImage];
+        [self loadImageFromLocal:image];
     }
 }
 
