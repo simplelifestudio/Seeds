@@ -13,6 +13,8 @@
 
 @interface AsyncImageView()
 {
+    NSURL* _url;
+    
     ImageDownloadInProgressBlock _inProgressBlock;
     ImageDownloadFinishBlock _completeBlock;
 }
@@ -69,6 +71,8 @@
 
 - (void)loadImageFromURL:(NSURL*)url
 {
+    _url = url;
+    
     if (nil != _circularProgressDelegate)
     {
         [_circularProgressDelegate didStartProgressView];
@@ -118,11 +122,22 @@
             [_circularProgressDelegate didFisnishProgressView];
         }
         
-        [self loadImageFromLocal:image];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+            CommunicationModule* commModule = [CommunicationModule sharedInstance];
+            SeedPictureAgent* agent = commModule.seedPictureAgent;
+            
+            [agent cacheThumbnails:image url:_url];
+            
+            UIImage* thumbnail = [agent thumbnailFromCache:_url thumbnailType:_thumbnailType];
+            
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                [self loadImageFromLocal:thumbnail];
+            });
+        });
     }
     else
     {
-//        DLog(@"Failed to load image with error: %@", error.description);
+//        DLog(@"Failed to load image with error: %@", error.localizedFailureReason);
         
         UIImage* image = [SeedPictureAgent exceptionImageWithThumbnailType:_thumbnailType imageExceptionType:ErrorImage];
         [self loadImageFromLocal:image];

@@ -151,11 +151,8 @@ SINGLETON(SeedPictureAgent)
     float _height = CGImageGetHeight(imageRef);
     
     // hardcode width and height for now, shouldn't stay like that
-    float _resizeToWidth;
-    float _resizeToHeight;
-    
-    _resizeToWidth = aSize.width;
-    _resizeToHeight = aSize.height;
+    float _resizeToWidth = aSize.width;
+    float _resizeToHeight = aSize.height;
     
     float _moveX = 0.0f;
     float _moveY = 0.0f;
@@ -235,6 +232,11 @@ SINGLETON(SeedPictureAgent)
     _downloadOptions = options;
 }
 
+-(void) setMaxCahceAge:(NSUInteger) age
+{
+    _imageCache.maxCacheAge = age;
+}
+
 -(void) queueRequest:(NSString*) urlPath inProgressBlock:(ImageDownloadInProgressBlock) inProgressBlock completeBlock:(ImageDownloadFinishBlock) completeBlock
 {
     if(nil == urlPath)
@@ -242,6 +244,9 @@ SINGLETON(SeedPictureAgent)
         DLog(@"Null url path");
         return;
     }
+    
+    static NSUInteger count = 0;
+    DLog(@"Request counted: %d", count++);
     
     NSURL* url = [NSURL URLWithString:urlPath];
     [_imageManager downloadWithURL:url options:_downloadOptions progress:inProgressBlock completed:completeBlock];    
@@ -267,6 +272,99 @@ SINGLETON(SeedPictureAgent)
 -(void) queueURLRequest:(NSURL*) url completeBlock:(ImageDownloadFinishBlock)completeBlock
 {
     [self queueURLRequest:url inProgressBlock:nil completeBlock:completeBlock];
+}
+
+- (NSString *)cacheKeyForURL:(NSURL *)url
+{
+    if (_imageManager.cacheKeyFilter)
+    {
+        return _imageManager.cacheKeyFilter(url);
+    }
+    else
+    {
+        return [url absoluteString];
+    }
+}
+
+-(void) clearCache
+{
+    [_imageCache cleanDisk];
+    
+    [_imageCache clearDisk];    
+    [_imageCache clearMemory];
+}
+
+-(void) cacheThumbnails:(UIImage*) image url:(NSURL*) url
+{
+    if (nil == image || nil == url)
+    {
+        DLog(@"Nil image or url");
+        return;
+    }
+    
+    NSString* keyInOriginPicture = [self cacheKeyForURL:url];
+    
+    NSMutableString* keyInSeedListTableCell = [NSMutableString stringWithString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL];
+    [keyInSeedListTableCell appendString:keyInOriginPicture];
+    
+    NSMutableString* keyInSeedPictureCollectionCell = [NSMutableString stringWithString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL];
+    [keyInSeedPictureCollectionCell appendString:keyInOriginPicture];
+    
+    NSMutableString* keyInSeedPictureView = [NSMutableString stringWithString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW];
+    [keyInSeedPictureView appendString:keyInOriginPicture];
+    
+    UIImage* thumbnailInSeedListTableCell = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDLISTTABLECELL];
+    UIImage* thumbnailInSeedPictureCollectionCell = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL];
+//    UIImage* thumbnailInSeedPictureView = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTUREVIEW];
+    
+    [_imageCache storeImage:thumbnailInSeedListTableCell forKey:keyInSeedListTableCell];
+    [_imageCache storeImage:thumbnailInSeedPictureCollectionCell forKey:keyInSeedPictureCollectionCell];
+//    [_imageCache storeImage:thumbnailInSeedPictureView forKey:keyInSeedPictureView];
+}
+
+-(UIImage*) thumbnailFromCache:(NSURL*) url thumbnailType:(ThumbnailType) thumbnailType
+{
+    UIImage* thumbnail = nil;
+    NSMutableString* cachedKey = [NSMutableString string];
+    
+    if (nil != url)
+    {
+        NSString* originPicCachedKey = [self cacheKeyForURL:url];
+        
+        switch (thumbnailType)
+        {
+            case SeedListTableCellThumbnail:
+            {
+                [cachedKey appendString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL];
+                [cachedKey appendString:originPicCachedKey];
+                break;
+            }
+            case SeedPictureCollectionCellThumbnail:
+            {
+                [cachedKey appendString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL];
+                [cachedKey appendString:originPicCachedKey];
+                break;
+            }
+            case SeedPictureViewThumbnail:
+            {
+                [cachedKey appendString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW];
+                [cachedKey appendString:originPicCachedKey];
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+        
+        if (0 < cachedKey.length)
+        {
+            thumbnail = [_imageCache imageFromMemoryCacheForKey:cachedKey];
+            thumbnail = (nil != thumbnail) ? thumbnail : [_imageCache imageFromDiskCacheForKey:cachedKey];
+        }
+    }
+    
+    return thumbnail;
 }
 
 @end

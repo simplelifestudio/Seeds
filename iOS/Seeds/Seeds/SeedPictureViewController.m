@@ -139,6 +139,13 @@
         {
             if (image && finished)
             {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+                    CommunicationModule* commModule = [CommunicationModule sharedInstance];
+                    SeedPictureAgent* agent = commModule.seedPictureAgent;
+                    
+                    [agent cacheThumbnails:image url:imageURL];
+                });
+                
                 [_circularProgressView removeFromSuperview];
                 [_scrollView displayImage:image];
             }

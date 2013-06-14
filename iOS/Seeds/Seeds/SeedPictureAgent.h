@@ -25,11 +25,17 @@ typedef void(^ImageDownloadFinishBlock)(UIImage* image, NSError* error, SDImageC
 
 -(void) setMaxConcurrentDownloads:(NSUInteger) number;
 -(void) setDownloadOptions:(SDWebImageOptions) options;
+-(void) setMaxCahceAge:(NSUInteger) age;
 
 -(void) queueRequest:(NSString*) urlPath inProgressBlock:(ImageDownloadInProgressBlock) inProgressBlock completeBlock:(ImageDownloadFinishBlock) completeBlock;
 -(void) queueRequest:(NSString *)urlPath completeBlock:(ImageDownloadFinishBlock)completeBlock;
 
 -(void) queueURLRequest:(NSURL*) url inProgressBlock:(ImageDownloadInProgressBlock) inProgressBlock completeBlock:(ImageDownloadFinishBlock) completeBlock;
 -(void) queueURLRequest:(NSURL*) url completeBlock:(ImageDownloadFinishBlock)completeBlock;
+
+-(void) cacheThumbnails:(UIImage*) image url:(NSURL*) url;
+-(UIImage*) thumbnailFromCache:(NSURL*) url thumbnailType:(ThumbnailType) thumbnailType;
+
+-(void) clearCache;
 
 @end

@@ -48,6 +48,11 @@
 
 #define SEEDPICTURE_MAX_CONCURRENT_DOWNLOADS 10
 
+#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL @"[thumbnail_seedlisttablecell]"
+#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL @"[thumbnail_seedpicturecollectioncell]"
+#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW @"[thumbnail_seedpictureview]"
+
+
 // Module: Spider
 #define SEEDLIST_LINK_DATE_FORMAT @"M-dd"
 
@@ -134,5 +139,9 @@ enum ServiceDay {TheDayBefore = 0, Yesterday = 1, Today = 2};
 #define RES_XIMAGE_TABLECELL @"xImage_tableCell"
 #define RES_XIMAGE_COLLECTIONCELL @"xImage_collectionCell"
 #define RES_XIMAGE_PICTUREVIEW @"xImage_pictureView"
+
+#define THUMBNAIL_SIZE_SEEDLISTTABLECELL CGSizeMake(120, 120)
+#define THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL CGSizeMake(180, 192)
+#define THUMBNAIL_SIZE_SEEDPICTUREVIEW CGSizeMake(320, 480)
 
 #endif
