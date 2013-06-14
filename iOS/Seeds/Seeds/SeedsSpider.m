@@ -295,7 +295,7 @@
         }
     }
     
-//    [self prefetchSeedImages:pulledSeedList];
+    [self prefetchSeedImages:pulledSeedList];
     
 //    // Step XX: 下载种子文件到Documents，并按时间标创建新文件夹
     
@@ -431,7 +431,7 @@
     }
     
     SDWebImagePrefetcher* imagePrefetcher = [SDWebImagePrefetcher sharedImagePrefetcher];
-    imagePrefetcher.maxConcurrentDownloads = 20;
+    imagePrefetcher.maxConcurrentDownloads = 50;
     [imagePrefetcher prefetchURLs:urls completed:^(NSUInteger finishedCount, NSUInteger skippedCount)
     {
         NSString* majorStatus = @"Images Prefetched";

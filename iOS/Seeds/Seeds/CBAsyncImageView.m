@@ -60,7 +60,7 @@
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     [manager
         downloadWithURL:url
-        options:(SDWebImageRetryFailed | SDWebImageLowPriority)
+        options:(SDWebImageLowPriority)
         progress:^(NSUInteger receivedSize, long long expectedSize)
         {
             [self imageIsLoading:receivedSize expectedSize:expectedSize];
@@ -105,7 +105,7 @@
 
 - (void)imageLoaded:(UIImage*) image error:(NSError*) error cacheType:(SDImageCacheType) cacheType finished:(BOOL) finished
 {
-    if (image)
+    if (image && finished)
     {
         if (nil != _circularProgressDelegate)
         {
@@ -113,6 +113,15 @@
         }
         
         [self loadImageFromLocal:image];
+    }
+    else
+    {
+        DLog(@"Failed to load image with error: %@", error.description);
+        
+        NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:@"noImage_tableCell" ofType:@"png"];
+        UIImage *placeHolderImage = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
+        
+        [self loadImageFromLocal:placeHolderImage];
     }
 }
 
