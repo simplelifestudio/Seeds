@@ -30,9 +30,9 @@
 
 "Preparing" = "Preparing";
 "Stamps Computing" = "Stamps Computing";
-"Pulling" = "Pulling";
+"Pulling" = "Synchronizing";
 "Status Checking" = "Status Checking";
-"Link Analyzing" = "Link Analyzing";
+"Link Analyzing" = "Data Analyzing";
 "Seeds Parsing" = "Seeds Parsing";
 "Saving" = "Saving";
 "Seeds Organizing" = "Seeds Organizing";
@@ -41,7 +41,7 @@
 "Fail Clearing" = "Fail Clearing";
 "Status Saving" = "Status Saving";
 "Fail Analyzing" = "Fail Analyzing";
-"Pulled Yet" = "Pulled Yet";
+"Pulled Yet" = "Sync Yet";
 "Sync Yet" = "Sync Yet";
 "Completed" = "Completed";
 "Folder Exception" = "Folder Exception";
