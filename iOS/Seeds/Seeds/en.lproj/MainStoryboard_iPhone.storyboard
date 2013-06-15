@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="5r3-15-8ND">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12E55" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="S7w-fv-8yC">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
         <!--SplashViewController-->
-        <scene sceneID="JMB-UA-tzM">
+        <scene sceneID="LGy-1b-ypi">
             <objects>
-                <viewController storyboardIdentifier="sbid_splashviewcontroller" id="5r3-15-8ND" userLabel="SplashViewController" customClass="SplashViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="h5f-Ea-TQg" userLabel="splashView">
+                <viewController storyboardIdentifier="sbid_splashviewcontroller" id="S7w-fv-8yC" userLabel="SplashViewController" customClass="SplashViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="rVf-P9-Mra" userLabel="splashView">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" id="zc9-h8-edP" userLabel="progressView">
+                            <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" id="Fqr-Mg-lDe" userLabel="progressView">
                                 <rect key="frame" x="50" y="500" width="225" height="9"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </progressView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Module Name" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="a5g-Co-ipa" userLabel="progressLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" text="Module Name" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="JCD-6W-4KJ" userLabel="progressLabel">
                                 <rect key="frame" x="20" y="517" width="280" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Seeds" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Obk-5Y-PNv" userLabel="appTitle">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Seeds" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GNu-aF-LDt" userLabel="appTitle">
                                 <rect key="frame" x="81" y="226" width="160" height="60"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="48"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="简单生活工作室" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Sld-wC-u8t" userLabel="organizationLabel">
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="简单生活工作室" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CNj-OV-iH2" userLabel="organizationLabel">
                                 <rect key="frame" x="140" y="294" width="160" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0.1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Sdk-hd-2sj">
+                                <rect key="frame" x="148" y="284" width="24" height="21"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -42,24 +49,24 @@
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="progressLabel" destination="a5g-Co-ipa" id="Mzk-hg-K0o"/>
-                        <outlet property="progressView" destination="zc9-h8-edP" id="YiP-aM-EF6"/>
-                        <segue destination="KI8-Ax-xiF" kind="modal" identifier="splash2navigation" modalTransitionStyle="crossDissolve" animates="NO" id="bta-I5-zB1"/>
+                        <outlet property="progressLabel" destination="JCD-6W-4KJ" id="A4W-pg-w54"/>
+                        <outlet property="progressView" destination="Fqr-Mg-lDe" id="kkJ-Nq-KQ5"/>
+                        <segue destination="zS3-3g-WGc" kind="modal" identifier="splash2navigation" modalTransitionStyle="crossDissolve" animates="NO" id="Smj-2n-tkg"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JoP-kw-L0c" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KZF-gh-xez" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1153" y="761"/>
         </scene>
-        <!--Config View Controller - 配置-->
-        <scene sceneID="5ol-kJ-WsK">
+        <!--Config View Controller - Config-->
+        <scene sceneID="z2g-4w-zbE">
             <objects>
-                <viewController id="PCm-cC-33B" customClass="ConfigViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="1VT-oA-nVf">
+                <viewController id="jpP-IH-83k" customClass="ConfigViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lcY-iX-Cnt">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="zJt-lr-L8j" userLabel="tableView">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5Ep-1s-oZQ" userLabel="tableView">
                                 <rect key="frame" x="0.0" y="-5" width="320" height="509"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -67,22 +74,22 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="配置" id="jhJ-Nf-iu0"/>
+                    <navigationItem key="navigationItem" title="Config" id="51e-rt-4xl"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Bln-m4-CjL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7eM-e1-E7j" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-168" y="-3"/>
         </scene>
         <!--HelpViewController-->
-        <scene sceneID="wwC-eZ-bbJ">
+        <scene sceneID="nyK-pG-EDy">
             <objects>
-                <viewController storyboardIdentifier="sbid_helpviewcontroller" id="n4A-kn-NLo" userLabel="HelpViewController" customClass="HelpViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Sy3-rW-Gpo" userLabel="helpView">
+                <viewController storyboardIdentifier="sbid_helpviewcontroller" id="3LP-Zd-Vir" userLabel="HelpViewController" customClass="HelpViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NLw-93-t6Y" userLabel="helpView">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="TNL-Ct-FvW" userLabel="textView">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="DKK-ad-J5C" userLabel="textView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -92,22 +99,22 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="关于" id="KW8-vz-RmP" userLabel="aboutNavigationItem"/>
+                    <navigationItem key="navigationItem" title="About" id="yld-Ew-uie" userLabel="aboutNavigationItem"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Mtt-MK-3Vo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jia-6O-QJQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="317" y="-3"/>
         </scene>
-        <!--Transmit View Controller - 无线传输-->
-        <scene sceneID="4cE-Fo-RWe">
+        <!--Transmit View Controller - WiFi Sharing-->
+        <scene sceneID="OzX-FC-lmd">
             <objects>
-                <viewController id="kMm-kp-IOn" customClass="TransmitViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="iRu-Cc-TIk">
+                <viewController id="Ivn-lE-xkB" customClass="TransmitViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PGs-87-8sy">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="ht0-dY-kTH" userLabel="consoleView">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" id="pGx-pZ-V53" userLabel="consoleView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -117,26 +124,26 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="无线传输" id="cWV-kr-iCt"/>
+                    <navigationItem key="navigationItem" title="WiFi Sharing" id="b2d-zX-jMv"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="consoleView" destination="ht0-dY-kTH" id="yJK-Di-08m"/>
+                        <outlet property="consoleView" destination="pGx-pZ-V53" id="yhq-mO-qY5"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ILt-qy-em7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Rk-cM-7Dq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-168" y="1524"/>
         </scene>
         <!--FavoriteSeedListViewController-->
-        <scene sceneID="DBh-d8-wJT">
+        <scene sceneID="wIN-LI-K4e">
             <objects>
-                <tableViewController storyboardIdentifier="sbid_favoriteseedlistviewcontroller" id="kN7-kN-Qnn" userLabel="FavoriteSeedListViewController" customClass="FavoriteSeedListViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="36I-bX-RNN" userLabel="favoriteSeedTableView">
+                <tableViewController storyboardIdentifier="sbid_favoriteseedlistviewcontroller" id="Sut-bp-bWQ" userLabel="FavoriteSeedListViewController" customClass="FavoriteSeedListViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="JAK-EQ-zbC" userLabel="favoriteSeedTableView">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="SeedListTableCell" id="jab-1I-bqu" userLabel="seedListTableCell" customClass="SeedListTableCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="SeedListTableCell" id="5bc-6l-4TE" userLabel="seedListTableCell" customClass="SeedListTableCell">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -147,49 +154,49 @@
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="kN7-kN-Qnn" id="vHY-6w-DWY"/>
-                            <outlet property="delegate" destination="kN7-kN-Qnn" id="WF7-ZG-Vca"/>
+                            <outlet property="dataSource" destination="Sut-bp-bWQ" id="iD9-Br-Hyg"/>
+                            <outlet property="delegate" destination="Sut-bp-bWQ" id="NhE-rZ-FDh"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="收藏列表" id="YTn-r1-t8j" userLabel="favoriteListNavigationItem"/>
+                    <navigationItem key="navigationItem" title="Favorites" id="lIn-I6-v7Z" userLabel="favoriteListNavigationItem"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <segue destination="F87-vv-8VN" kind="push" identifier="favoriteseedlist2seeddetail" id="ZSu-6v-Zha"/>
+                        <segue destination="AKu-ox-Y3E" kind="push" identifier="favoriteseedlist2seeddetail" id="Kt0-Xo-KUY"/>
                     </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="C9Q-wJ-t5N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6m9-ED-eIW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="317" y="1524"/>
         </scene>
         <!--NavigationController-->
-        <scene sceneID="nwq-Id-I47">
+        <scene sceneID="RTj-Gh-PfW">
             <objects>
-                <navigationController storyboardIdentifier="sbid_navigationcontroller" definesPresentationContext="YES" navigationBarHidden="YES" id="KI8-Ax-xiF" userLabel="NavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="sbid_navigationcontroller" definesPresentationContext="YES" navigationBarHidden="YES" id="zS3-3g-WGc" userLabel="NavigationController" sceneMemberID="viewController">
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="lH9-j0-XWy" userLabel="navigationBar">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ORg-FU-L2U" userLabel="navigationBar">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="8IR-bW-tja" kind="relationship" relationship="rootViewController" id="Kvy-fB-FI0"/>
+                        <segue destination="eJ5-FS-MQ3" kind="relationship" relationship="rootViewController" id="taK-lC-lse"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dYR-VO-zR3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6kn-fK-aES" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-662" y="761"/>
         </scene>
         <!--HomeViewController-->
-        <scene sceneID="OcV-NU-qE4">
+        <scene sceneID="7cL-PV-U9x">
             <objects>
-                <viewController storyboardIdentifier="sbid_homeviewcontroller" id="8IR-bW-tja" userLabel="HomeViewController" customClass="HomeViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="gxq-5v-WLh" userLabel="homeView">
+                <viewController storyboardIdentifier="sbid_homeviewcontroller" id="eJ5-FS-MQ3" userLabel="HomeViewController" customClass="HomeViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JAc-Qb-aDL" userLabel="homeView">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0c9-it-g4L" userLabel="todayButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gnz-EF-cLP" userLabel="todayButton">
                                 <rect key="frame" x="10" y="10" width="300" height="121"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
-                                <state key="normal" title="今天">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="26"/>
+                                <state key="normal" title="Today">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -197,14 +204,14 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="onClickTodayButton:" destination="8IR-bW-tja" eventType="touchUpInside" id="wr1-rh-lOY"/>
+                                    <action selector="onClickTodayButton:" destination="eJ5-FS-MQ3" eventType="touchUpInside" id="xUK-JC-tes"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7cQ-gi-9KK" userLabel="yesterdayButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="25L-GO-7Xj" userLabel="yesterdayButton">
                                 <rect key="frame" x="10" y="139" width="300" height="121"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
-                                <state key="normal" title="昨天">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                <state key="normal" title="Yesterday">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -212,14 +219,14 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="onClickYesterdayButton:" destination="8IR-bW-tja" eventType="touchUpInside" id="jsm-lx-Wjb"/>
+                                    <action selector="onClickYesterdayButton:" destination="eJ5-FS-MQ3" eventType="touchUpInside" id="LHh-VP-80V"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="erN-ym-Y1U" userLabel="theDayBeforeButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="d4R-Pz-Pxt" userLabel="theDayBeforeButton">
                                 <rect key="frame" x="10" y="269" width="300" height="121"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
-                                <state key="normal" title="前天">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <state key="normal" title="Day Before">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -227,14 +234,14 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="onClickTheDayBeforeButton:" destination="8IR-bW-tja" eventType="touchUpInside" id="QXm-vv-P2w"/>
+                                    <action selector="onClickTheDayBeforeButton:" destination="eJ5-FS-MQ3" eventType="touchUpInside" id="fwJ-aj-imY"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="R34-rT-6Vn" userLabel="syncButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="G8Y-bE-6Ah" userLabel="syncButton">
                                 <rect key="frame" x="110" y="433" width="100" height="81"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                <state key="normal" title="同步">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <state key="normal" title="Sync">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -242,14 +249,14 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="onClickSyncButton:" destination="8IR-bW-tja" eventType="touchUpInside" id="BUm-rc-Pda"/>
+                                    <action selector="onClickSyncButton:" destination="eJ5-FS-MQ3" eventType="touchUpInside" id="oLp-gU-uLq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QjI-TK-Gd3" userLabel="favoriteListButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8MZ-yQ-xOn" userLabel="favoriteListButton">
                                 <rect key="frame" x="10" y="412" width="70" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <state key="normal" title="收藏">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <state key="normal" title="Favor">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -257,41 +264,26 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="kN7-kN-Qnn" kind="push" identifier="home2favoriteseedlist" id="gbe-yo-gwd"/>
+                                    <segue destination="Sut-bp-bWQ" kind="push" identifier="home2favoriteseedlist" id="Tn0-Rd-9z8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="slS-e0-4pK" userLabel="downloadAllButton">
-                                <rect key="frame" x="240" y="412" width="70" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <state key="normal" title="下载">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Zki-vI-3it" userLabel="transmitButton">
-                                <rect key="frame" x="10" y="487" width="70" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <state key="normal" title="传输">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="kMm-kp-IOn" kind="push" identifier="home2transmit" id="EOB-rQ-wnO"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zPS-9F-3f5" userLabel="configButton">
+                            <button opaque="NO" alpha="0.30000001192092896" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5g4-rp-Pw2" userLabel="helpButton">
                                 <rect key="frame" x="240" y="487" width="70" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
-                                <state key="normal" title="配置">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <state key="normal" title="About">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vZi-he-Fdw" userLabel="transmitButton">
+                                <rect key="frame" x="10" y="487" width="70" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <state key="normal" title="Trans">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -299,45 +291,60 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="PCm-cC-33B" kind="push" identifier="home2config" id="O1p-xe-DZ0"/>
+                                    <segue destination="Ivn-lE-xkB" kind="push" identifier="home2transmit" id="G4c-hj-s6L"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="06-01" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kxP-IV-qWE" userLabel="todayLabel">
+                            <button opaque="NO" alpha="0.30000001192092896" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Pi7-HL-Ik6" userLabel="configButton">
+                                <rect key="frame" x="240" y="412" width="70" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                <state key="normal" title="Config">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="jpP-IH-83k" kind="push" identifier="home2config" id="Hc0-5E-1n8"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="06-01" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wQB-HT-ABs" userLabel="todayLabel">
                                 <rect key="frame" x="20" y="20" width="60" height="21"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="未同步" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2ds-P8-khK" userLabel="todaySyncStatusLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Unsync" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lLd-5N-9Ub" userLabel="todaySyncStatusLabel">
                                 <rect key="frame" x="241" y="105" width="60" height="21"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="未同步" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jBF-Y3-lCk" userLabel="yesterdaySyncStatusLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Unsync" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gax-S5-EMq" userLabel="yesterdaySyncStatusLabel">
                                 <rect key="frame" x="241" y="233" width="60" height="21"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="未同步" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jT2-Ge-0Xf" userLabel="theDayBeforeSyncStatusLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Unsync" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aFL-oI-FpN" userLabel="theDayBeforeSyncStatusLabel">
                                 <rect key="frame" x="241" y="363" width="60" height="21"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="05-31" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cn6-W0-w0P" userLabel="yesterdayLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="05-31" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="0q3-YX-YKH" userLabel="yesterdayLabel">
                                 <rect key="frame" x="20" y="148" width="60" height="21"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="05-30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ak3-C7-Z9g" userLabel="theDayBeforeLabel">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="05-30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qTA-uR-0W2" userLabel="theDayBeforeLabel">
                                 <rect key="frame" x="20" y="278" width="60" height="21"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -347,37 +354,37 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Wj7-mQ-Wpq" userLabel="homeNavigationItem"/>
+                    <navigationItem key="navigationItem" id="jTJ-DI-t1V" userLabel="homeNavigationItem"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="syncButton" destination="R34-rT-6Vn" id="jX2-DA-6yo"/>
-                        <outlet property="theDayBeforeButton" destination="erN-ym-Y1U" id="60q-7F-ULY"/>
-                        <outlet property="theDayBeforeLabel" destination="ak3-C7-Z9g" id="Wgf-XO-DUg"/>
-                        <outlet property="theDayBeforeSyncStatusLabel" destination="jT2-Ge-0Xf" id="k7o-Zl-4Iy"/>
-                        <outlet property="todayButton" destination="0c9-it-g4L" id="4qS-33-2Ev"/>
-                        <outlet property="todayLabel" destination="kxP-IV-qWE" id="5O4-c7-AOZ"/>
-                        <outlet property="todaySyncStatusLabel" destination="2ds-P8-khK" id="VGB-8G-PZD"/>
-                        <outlet property="transButton" destination="Zki-vI-3it" id="bxh-jW-ISg"/>
-                        <outlet property="yesterdayButton" destination="7cQ-gi-9KK" id="XjJ-8O-SCO"/>
-                        <outlet property="yesterdayLabel" destination="cn6-W0-w0P" id="PBF-nB-Dkr"/>
-                        <outlet property="yesterdaySyncStatusLabel" destination="jBF-Y3-lCk" id="RoN-0o-VUj"/>
-                        <segue destination="uDj-zM-LfK" kind="push" identifier="home2seedlist" id="on2-RO-QWz"/>
+                        <outlet property="syncButton" destination="G8Y-bE-6Ah" id="atS-lc-udA"/>
+                        <outlet property="theDayBeforeButton" destination="d4R-Pz-Pxt" id="hbT-tg-dKh"/>
+                        <outlet property="theDayBeforeLabel" destination="qTA-uR-0W2" id="xMk-2Z-mav"/>
+                        <outlet property="theDayBeforeSyncStatusLabel" destination="aFL-oI-FpN" id="ddS-6M-mNH"/>
+                        <outlet property="todayButton" destination="gnz-EF-cLP" id="Lbn-S4-1ue"/>
+                        <outlet property="todayLabel" destination="wQB-HT-ABs" id="wFA-QN-AYY"/>
+                        <outlet property="todaySyncStatusLabel" destination="lLd-5N-9Ub" id="CE2-Ns-8eV"/>
+                        <outlet property="transButton" destination="vZi-he-Fdw" id="NZT-wz-RL0"/>
+                        <outlet property="yesterdayButton" destination="25L-GO-7Xj" id="Wjy-ob-XF4"/>
+                        <outlet property="yesterdayLabel" destination="0q3-YX-YKH" id="3xe-iR-XsB"/>
+                        <outlet property="yesterdaySyncStatusLabel" destination="Gax-S5-EMq" id="Xbm-EG-3Dr"/>
+                        <segue destination="H1l-oC-ofw" kind="push" identifier="home2seedlist" id="NRo-iF-Kbl"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SY6-4k-hn9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zsX-uv-2J1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-168" y="761"/>
         </scene>
         <!--SeedListViewController-->
-        <scene sceneID="I18-xp-4UU">
+        <scene sceneID="YbF-27-BDz">
             <objects>
-                <tableViewController storyboardIdentifier="sbid_seedlistviewcontroller" id="uDj-zM-LfK" userLabel="SeedListViewController" customClass="SeedListViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="2oN-AV-5Xv" userLabel="seedTableView">
+                <tableViewController storyboardIdentifier="sbid_seedlistviewcontroller" id="H1l-oC-ofw" userLabel="SeedListViewController" customClass="SeedListViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="riP-Pi-0OO" userLabel="seedTableView">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="SeedListTableCell" id="erJ-L4-8Xc" userLabel="seedListTableCell" customClass="SeedListTableCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="SeedListTableCell" id="CGa-GD-Y5a" userLabel="seedListTableCell" customClass="SeedListTableCell">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -388,51 +395,51 @@
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="uDj-zM-LfK" id="Uwl-jk-NhR"/>
-                            <outlet property="delegate" destination="uDj-zM-LfK" id="q3q-tI-Ais"/>
+                            <outlet property="dataSource" destination="H1l-oC-ofw" id="nc0-Me-ggb"/>
+                            <outlet property="delegate" destination="H1l-oC-ofw" id="v1y-7X-cN7"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="种子列表" id="bcI-GD-pYM" userLabel="seedListNavigationItem"/>
+                    <navigationItem key="navigationItem" title="Seed List" id="Bgv-DE-NPA" userLabel="seedListNavigationItem"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <segue destination="F87-vv-8VN" kind="push" identifier="seedlist2seeddetail" id="ZaI-b7-7gP"/>
+                        <segue destination="AKu-ox-Y3E" kind="push" identifier="seedlist2seeddetail" id="KkU-Ca-sdd"/>
                     </connections>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="JDi-pM-pVm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kn7-Ty-oSJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="317" y="758"/>
         </scene>
         <!--SeedDetailViewControler-->
-        <scene sceneID="Nxw-YX-ZAu">
+        <scene sceneID="JxI-Vq-ueI">
             <objects>
-                <viewController storyboardIdentifier="sbid_seeddetailviewcontroller" id="F87-vv-8VN" userLabel="SeedDetailViewControler" customClass="SeedDetailViewController" sceneMemberID="viewController">
-                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="hMl-kM-vaS" userLabel="seedPictureCollectionView">
+                <viewController storyboardIdentifier="sbid_seeddetailviewcontroller" id="AKu-ox-Y3E" userLabel="SeedDetailViewControler" customClass="SeedDetailViewController" sceneMemberID="viewController">
+                    <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="yP6-wx-ead" userLabel="seedPictureCollectionView">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="orf-m3-fqq">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gCM-eo-cT1">
                             <size key="itemSize" width="150" height="180"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SeedPictureCollectionCell" id="O5d-ED-wvf" userLabel="seedPictureCollectionCell" customClass="SeedPictureCollectionCell">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SeedPictureCollectionCell" id="cQh-OY-uth" userLabel="seedPictureCollectionCell" customClass="SeedPictureCollectionCell">
                                 <rect key="frame" x="0.0" y="0.0" width="150" height="180"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="150" height="180"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="编号" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Myl-JS-9sy" userLabel="imageLabel">
-                                            <rect key="frame" x="0.0" y="159" width="150" height="20"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="编号" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dOL-4r-1IT" userLabel="imageLabel">
+                                            <rect key="frame" x="0.0" y="159" width="150" height="88"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" id="DOU-Mb-uEC" userLabel="asyncImageView" customClass="AsyncImageView">
-                                            <rect key="frame" x="0.5" y="1" width="150" height="160"/>
+                                        <view contentMode="scaleToFill" id="7Xo-h9-Kaa" userLabel="asyncImageView" customClass="AsyncImageView">
+                                            <rect key="frame" x="0.0" y="1" width="150" height="160"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         </view>
@@ -440,48 +447,48 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <outlet property="asyncImageView" destination="DOU-Mb-uEC" id="dkg-eU-oWo"/>
-                                    <outlet property="label" destination="Myl-JS-9sy" id="rNA-f0-2D0"/>
-                                    <segue destination="lPP-1N-HSH" kind="modal" identifier="seeddetail2seedpicture" modalTransitionStyle="crossDissolve" id="v8u-bx-0XR"/>
+                                    <outlet property="asyncImageView" destination="7Xo-h9-Kaa" id="GeY-0A-lTk"/>
+                                    <outlet property="label" destination="dOL-4r-1IT" id="E4S-sL-gdE"/>
+                                    <segue destination="EJb-No-eK4" kind="modal" identifier="seeddetail2seedpicture" modalTransitionStyle="crossDissolve" id="fxM-z9-yfq"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="种子详情" id="CiP-LX-KT5" userLabel="seedDetailNavigationItem"/>
+                    <navigationItem key="navigationItem" title="Seed Detail" id="71t-LQ-MnY" userLabel="seedDetailNavigationItem"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MqW-Mg-Iyj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jct-TF-u54" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="798" y="758"/>
         </scene>
         <!--Seed Picture View Controller - 种子配图-->
-        <scene sceneID="k7P-9Z-axh">
+        <scene sceneID="M1U-Yd-beh">
             <objects>
-                <viewController storyboardIdentifier="sbid_seedpictureviewcontroller" id="lPP-1N-HSH" customClass="SeedPictureViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Qzf-wH-s1p" userLabel="seedPictureView">
+                <viewController storyboardIdentifier="sbid_seedpictureviewcontroller" id="EJb-No-eK4" customClass="SeedPictureViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hrs-18-GeM" userLabel="seedPictureView">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Av4-lh-v5X" userLabel="scrollView" customClass="SeedPictureScrollView">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="Op7-xo-8n0" userLabel="scrollView" customClass="SeedPictureScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="种子配图" id="pPs-jh-IDG" userLabel="seedPictureNavigationItem"/>
+                    <navigationItem key="navigationItem" title="种子配图" id="1Dk-Wg-pmS" userLabel="seedPictureNavigationItem"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="scrollView" destination="Av4-lh-v5X" id="eW3-vP-ekn"/>
+                        <outlet property="scrollView" destination="Op7-xo-8n0" id="DLX-Ss-Jah"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ni1-2T-g5N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y5G-lr-jnD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1276" y="754"/>
         </scene>
     </scenes>
     <classes>
-        <class className="CBAsyncImageView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CBAsyncImageView.h"/>
+        <class className="AsyncImageView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AsyncImageView.h"/>
         </class>
         <class className="ConfigViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ConfigViewController.h"/>
@@ -518,7 +525,7 @@
         <class className="SeedListTableCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SeedListTableCell.h"/>
             <relationships>
-                <relationship kind="outlet" name="asyncImageView" candidateClass="CBAsyncImageView"/>
+                <relationship kind="outlet" name="asyncImageView" candidateClass="AsyncImageView"/>
                 <relationship kind="outlet" name="formatLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="mosaicLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nameLabel" candidateClass="UITextView"/>
@@ -531,7 +538,7 @@
         <class className="SeedPictureCollectionCell" superclassName="UICollectionViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SeedPictureCollectionCell.h"/>
             <relationships>
-                <relationship kind="outlet" name="asyncImageView" candidateClass="CBAsyncImageView"/>
+                <relationship kind="outlet" name="asyncImageView" candidateClass="AsyncImageView"/>
                 <relationship kind="outlet" name="label" candidateClass="UILabel"/>
             </relationships>
         </class>
@@ -576,6 +583,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="ZaI-b7-7gP"/>
+        <segue reference="Kt0-Xo-KUY"/>
     </inferredMetricsTieBreakers>
 </document>
