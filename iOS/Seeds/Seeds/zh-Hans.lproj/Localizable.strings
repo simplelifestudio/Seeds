@@ -59,20 +59,20 @@
 "HTTP server failed to start." = "HTTP服务器启动失败。";
 "HTTP server address:" = "HTTP服务器地址：";
 
-"WiFi Connected" = "WiFi连接网络";
-"3G/GPRS Connected" = "3G/GPRS连接网络";
+"WiFi Connected" = "WiF\n连接网络";
+"3G/GPRS Connected" = "3G/GPRS\n连接网络";
 "Internet Disconnected" = "网络断开连接";
 
-"Server Status Check" = "服务器状态检测";
-"Server Reachable" = "服务器可达";
-"Server Unreachable" = "服务器不可达";
+"Server Status Check" = "服务器\n状态检测";
+"Server Reachable" = "服务器\n可达";
+"Server Unreachable" = "服务器\n不可达";
 "Seeds Status Unreachable" = "种子状态\n查询失败";
 "Seeds Status Received" = "种子状态\n查询成功";
 "Seeds Received" = "种子信息\n获取成功";
 "Seeds Unreachable" = "种子信息\n获取失败";
 
 "Directory Unready" = "目录未就绪";
-"Torrent Downloading" = "种子下载中";
+"Torrent Downloading" = "种子下载";
 "Torrent Downloaded" = "种子已下载";
 "Download Failed" = "下载失败";
 "Torrent Saved" = "下载成功";
