@@ -130,7 +130,7 @@
     // Step 50: 删除数据库中原有相同时间标的所有记录
     // Step 60: 再将新数据保存入数据库（事务操作）
     // Step 70: 更新本地KV缓存中时间标的对应数据同步状态
-    // Step 80: 删除数据库中原有的，处于这三天之前的，非收藏状态的所有记录
+    // Step 80: 删除数据库中原有的，处于这三天之前的所有记录
     // Step 90: 删除下载目录中原有的，处于这三天之前的的所有记录
     
     BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
@@ -286,7 +286,7 @@
     {
         // Step 80:
         DLog(@"Clean old and unfavorited seed records.");
-        [seedDAO deleteAllSeedsExceptFavoritedOrLastThreeDayRecords:days];
+        [seedDAO deleteAllExceptLastThreeDaySeeds:days];
         if (nil != _seedsSpiderDelegate)
         {
             [_seedsSpiderDelegate taskIsProcessing:NSLocalizedString(@"Seeds Organizing", nil) minorStatus:nil];

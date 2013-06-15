@@ -325,7 +325,7 @@
     return flag;
 }
 
--(BOOL) deleteAllSeedsExceptFavoritedOrLastThreeDayRecords:(NSArray*) last3Days
+-(BOOL) deleteAllExceptLastThreeDaySeeds:(NSArray*) last3Days
 {
     __block BOOL flag = NO;
     
@@ -340,21 +340,27 @@
              NSMutableString* sql = [NSMutableString stringWithString:@"delete from "];
              [sql appendString:TABLE_SEED];
              [sql appendString:@" where "];
-             [sql appendString:TABLE_SEED_COLUMN_FAVORITE];
-             [sql appendString:@" = "];
-             [sql appendString:@"'"];
-             [sql appendString:[NSString stringWithFormat:@"%d", 0]];
-             [sql appendString:@"'"];
+//             [sql appendString:TABLE_SEED_COLUMN_FAVORITE];
+//             [sql appendString:@" = "];
+//             [sql appendString:@"'"];
+//             [sql appendString:[NSString stringWithFormat:@"%d", 0]];
+//             [sql appendString:@"'"];
+             NSUInteger index = 0;
              for (NSDate* day in last3Days)
              {
                  NSString* dayStr = [CBDateUtils dateStringInLocalTimeZone:STANDARD_DATE_FORMAT andDate:day];
                  
-                 [sql appendString:@" and "];
+                 if (0 < index)
+                 {
+                     [sql appendString:@" and "];                        
+                 }
                  [sql appendString:TABLE_SEED_COLUMN_PUBLISHDATE];
                  [sql appendString:@" <> "];
                  [sql appendString:@"'"];
                  [sql appendString:dayStr];
                  [sql appendString:@"'"];
+                 
+                 index++;
              }
              
              flag = [db executeUpdate:sql];
