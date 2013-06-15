@@ -196,7 +196,7 @@
 
 -(void) _resetSeedFavorite:(BOOL) favorite
 {
-    dispatch_async(dispatch_get_global_queue(nil, 0), ^(){
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
         id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
         BOOL flag = [seedDAO favoriteSeed:_seed andFlag:favorite];
         if (flag)
