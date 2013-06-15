@@ -122,7 +122,9 @@
 //        cell = [nib objectAtIndex:0];
 //    }
     
-    [cell fillSeedPicture:picture];
+    NSUInteger pictureIdInSeed = indexPath.row;
+    pictureIdInSeed++;
+    [cell fillSeedPicture:picture pictureIdInSeed:pictureIdInSeed];
     
     return cell;
 }

@@ -15,6 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet AsyncImageView *asyncImageView;
 
--(void) fillSeedPicture:(SeedPicture*) picture;
+-(void) fillSeedPicture:(SeedPicture*) picture pictureIdInSeed:(NSUInteger) pictureIdInSeed;
 
 @end

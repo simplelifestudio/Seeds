@@ -43,21 +43,21 @@
     _asyncImageView.thumbnailType = SeedPictureCollectionCellThumbnail;
 }
 
-- (void) fillSeedPicture:(SeedPicture *)picture
+-(void) fillSeedPicture:(SeedPicture*) picture pictureIdInSeed:(NSUInteger) pictureIdInSeed
 {
     if (nil == picture || picture.isPlaceHolder)
     {
         UIImage* image = [SeedPictureAgent exceptionImageWithThumbnailType:SeedPictureCollectionCellThumbnail imageExceptionType:EmptyImage];
         [_asyncImageView loadImageFromLocal:image];
         
-        _label.text = nil;
+        _label.text = [NSString stringWithFormat:@"%d", 1];
     }
     else
     {
         NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
         [_asyncImageView loadImageFromURL:imageURL];
         
-        _label.text = [NSString stringWithFormat:@"%d", picture.pictureId];
+        _label.text = [NSString stringWithFormat:@"%d", pictureIdInSeed];
     }
 }
 
