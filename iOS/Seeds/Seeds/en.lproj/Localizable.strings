@@ -27,7 +27,10 @@
 "Stop" = "Stop";
 "Unsync" = "Unsync";
 "Download" = "Download";
+"SelectAll" = "SelectAll";
+"Edit" = "Edit";
 "Delete" = "Delete";
+"Cancel" = "Cancel";
 
 "Preparing" = "Preparing";
 "Stamps Computing" = "Stamps Computing";
@@ -81,3 +84,4 @@
 "Save Failed" = "Save Failed";
 "Torrent Deleted" = "Torrent Deleted";
 "Delete Failed" = "Delete Failed";
+"Delete Done" = "Delete Done";

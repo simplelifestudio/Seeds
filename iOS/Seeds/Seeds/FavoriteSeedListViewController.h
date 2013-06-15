@@ -12,6 +12,6 @@
 
 #import "SeedDetailViewController.h"
 
-@interface FavoriteSeedListViewController : UITableViewController
+@interface FavoriteSeedListViewController : UITableViewController <UITableViewDelegate>
 
 @end

@@ -27,7 +27,10 @@
 "Stop" = "停止";
 "Unsync" = "未同步";
 "Download" = "下载";
+"SelectAll" = "全选";
+"Edit" = "编辑";
 "Delete" = "删除";
+"Cancel" = "取消";
 
 "Preparing" = "准备";
 "Stamps Computing" = "日期计算";
@@ -81,3 +84,4 @@
 "Save Failed" = "保存失败";
 "Torrent Deleted" = "种子已删除";
 "Delete Failed" = "删除失败";
+"Delete Done" = "删除成功";

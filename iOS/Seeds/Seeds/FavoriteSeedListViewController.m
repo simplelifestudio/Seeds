@@ -8,49 +8,99 @@
 
 #import "FavoriteSeedListViewController.h"
 
+#import "CBFileUtils.h"
+
+#define _HUD_DELAY 1.5
+
 @interface FavoriteSeedListViewController ()
 {
     NSArray* favoriteSeedList;
     NSArray* firstSeedPictureList;
     Seed* selectedSeed;
+    BOOL _isSelectedAll;
+    
+    MBProgressHUD* _HUD;    
 }
+
+@property UIBarButtonItem* editBarButton;
+@property UIBarButtonItem* selectAllBarButton;
+@property UIBarButtonItem* deleteBarButton;
+@property UIBarButtonItem* cancelBarButton;
+@property NSIndexPath* selectedIndexPathInTableReadingMode;
 
 @end
 
 @implementation FavoriteSeedListViewController
+
+@synthesize editBarButton = _editBarButton;
+@synthesize selectAllBarButton = _selectAllBarButton;
+@synthesize deleteBarButton = _deleteBarButton;
+@synthesize cancelBarButton = _cancelBarButton;
+@synthesize selectedIndexPathInTableReadingMode = _selectedIndexPathInTableReadingMode;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self)
     {
-        [self setupTableView];
+        [self setupView];
     }
     return self;
 }
 
 - (void) awakeFromNib
 {
-    [self setupTableView];
+    [self setupView];
     
     [super awakeFromNib];
 }
 
-- (void) setupTableView
+- (void) setupView
 {
     UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
+    
+    _HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    _HUD.minSize = HUD_SIZE;
+    [self.view addSubview:_HUD];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self _initUIBarButtons];
+    [self _initTableView];
+}
+
+- (void) _initUIBarButtons
+{
+    [self.navigationController setNavigationBarHidden:FALSE];
+    _selectAllBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"SelectAll", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onSelectAllBarButtonClicked)];
+    _editBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Edit", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onEditBarButtonClicked)];
+    _deleteBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Delete", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onDeleteBarButtonClicked)];
+    _cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onCancelBarButtonClicked)];
+    self.navigationItem.rightBarButtonItems = @[_editBarButton];
+}
+
+- (void) _initTableView
+{
+    self.tableView.allowsMultipleSelectionDuringEditing = TRUE;
+    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0,0,0,5)];
+    _isSelectedAll = FALSE;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO];
  
+    [self _refetchFavoriteSeedsFromDatabase];
+    
+    [super viewWillAppear:animated];
+}
+
+- (void) _refetchFavoriteSeedsFromDatabase
+{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
         id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
         favoriteSeedList = [seedDAO getFavoriteSeeds];
@@ -77,9 +127,6 @@
             [self.tableView reloadData];
         });
     });
-
-    
-    [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -143,60 +190,63 @@
     return CELL_HEIGHT_SEEDLISTTABLECELL;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-    
-    selectedSeed = [favoriteSeedList objectAtIndex:indexPath.row];
+{    
+	if (self.tableView.isEditing)
+    {
+        NSArray* selectedRows = [self.tableView indexPathsForSelectedRows];
+        
+        if (0 < selectedRows.count)
+        {
+            self.navigationItem.rightBarButtonItems = @[_deleteBarButton, _selectAllBarButton];
+        }
+        else
+        {
+            self.navigationItem.rightBarButtonItems = @[_cancelBarButton, _selectAllBarButton];
+        }
+        
+        _isSelectedAll = (favoriteSeedList.count == selectedRows.count) ? YES : NO;
+    }
+    else
+    {
+        if (nil != _selectedIndexPathInTableReadingMode && _selectedIndexPathInTableReadingMode.row == indexPath.row)
+        {
+            [self.tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+            _selectedIndexPathInTableReadingMode = nil;
+        }
+        else
+        {
+            _selectedIndexPathInTableReadingMode = indexPath;
+        }
+        
+        selectedSeed = [favoriteSeedList objectAtIndex:indexPath.row];
+        
+        [self performSegueWithIdentifier:SEGUE_ID_FAVORITESEEDLIST2SEEDDETAIL sender:self];
+    }
+}
 
-    [self performSegueWithIdentifier:SEGUE_ID_FAVORITESEEDLIST2SEEDDETAIL sender:self];
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.tableView.isEditing)
+    {
+        _isSelectedAll = NO;
+        
+        NSArray* selectedRows = [self.tableView indexPathsForSelectedRows];
+        if (0 < selectedRows.count)
+        {
+            self.navigationItem.rightBarButtonItems = @[_deleteBarButton, _selectAllBarButton];
+        }
+        else
+        {
+            self.navigationItem.rightBarButtonItems = @[_cancelBarButton, _selectAllBarButton];
+        }
+    }
+    else
+    {
+        [self.tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -209,6 +259,111 @@
             [seedDetailViewController setSeed:selectedSeed];
         }
     }
+}
+
+-(void) onSelectAllBarButtonClicked
+{
+    if (_isSelectedAll)
+    {
+        NSUInteger rowCount = favoriteSeedList.count;
+        for (NSInteger integer = 0; integer < rowCount; integer++)
+        {
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:integer inSection:0];
+            [self.tableView deselectRowAtIndexPath:indexPath animated:TRUE];
+        }
+        
+        self.navigationItem.rightBarButtonItems = @[_cancelBarButton, _selectAllBarButton];
+        _isSelectedAll = NO;
+    }
+    else
+    {
+        NSUInteger rowCount = favoriteSeedList.count;
+        for (NSInteger integer = 0; integer < rowCount; integer++)
+        {
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:integer inSection:0];
+            [self.tableView selectRowAtIndexPath:indexPath animated:TRUE scrollPosition:UITableViewScrollPositionNone];
+        }
+        
+        self.navigationItem.rightBarButtonItems = @[_deleteBarButton, _selectAllBarButton];
+        _isSelectedAll = YES;
+    }
+}
+
+-(void) onEditBarButtonClicked
+{
+    if (!self.tableView.editing && (0 < favoriteSeedList.count))
+    {
+        self.navigationItem.rightBarButtonItems = @[_cancelBarButton, _selectAllBarButton];
+        [self.tableView setEditing:TRUE animated:TRUE];
+    }
+}
+
+-(void) onDeleteBarButtonClicked
+{
+    if (self.tableView.editing)
+    {
+        NSArray* selectedRows = [self.tableView indexPathsForSelectedRows];
+        for (NSInteger index = 0; index < selectedRows.count ; index++)
+        {
+            NSIndexPath* indexPath = [selectedRows objectAtIndex:index];
+            NSUInteger recordIndex = indexPath.row;
+            Seed* seed = [favoriteSeedList objectAtIndex:recordIndex];
+            [self _favoriteSeed:seed favorite:NO];
+            [self _deleteTorrentFile:seed];
+        }
+        
+//        [self.tableView deleteRowsAtIndexPaths:selectedRows withRowAnimation:UITableViewRowAnimationFade];
+        
+        [self.tableView setEditing:FALSE animated:TRUE];
+        self.navigationItem.rightBarButtonItems = @[_editBarButton];
+        _isSelectedAll = NO;
+        
+        [self _refetchFavoriteSeedsFromDatabase];
+        
+        [self _showHUD:NSLocalizedString(@"Delete Done", nil)];
+    }
+}
+
+-(void) _deleteTorrentFile:(Seed*) seed
+{
+    if (nil == seed)
+    {
+        return;
+    }
+    
+    NSString* torrentFileFullPath = [TorrentDownloadAgent torrentFileFullPath:seed];
+    [CBFileUtils deleteFile:torrentFileFullPath];
+}
+
+-(void) _showHUD:(NSString*) majorStatus
+{
+    [_HUD show:YES];    
+    _HUD.mode = MBProgressHUDModeText;
+    _HUD.labelText = majorStatus;
+    [_HUD hide:YES afterDelay:_HUD_DELAY];
+}
+
+-(void) onCancelBarButtonClicked
+{
+    if (self.tableView.editing)
+    {
+        _isSelectedAll = NO;
+        [self.tableView setEditing:FALSE animated:TRUE];
+        self.navigationItem.rightBarButtonItems = @[_editBarButton];
+    }
+}
+
+-(void) _favoriteSeed:(Seed*) seed favorite:(BOOL) favorite
+{
+    if (nil == seed)
+    {
+        return;
+    }
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+        [seedDAO favoriteSeed:seed andFlag:favorite];
+    });
 }
 
 @end

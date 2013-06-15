@@ -182,18 +182,14 @@
     
     NSString* torrentFileFullPath = [TorrentDownloadAgent torrentFileFullPath:_seed];
     
-    BOOL isFileExist = [CBFileUtils isFileExists:torrentFileFullPath];
-    if (isFileExist)
+    BOOL deleteSuccess = [CBFileUtils deleteFile:torrentFileFullPath];
+    if (deleteSuccess)
     {
-        BOOL deleteSuccess = [CBFileUtils deleteFile:torrentFileFullPath];
-        if (deleteSuccess)
-        {
-            [self _hideHUD:NSLocalizedString(@"Torrent Deleted", nil)];
-        }
-        else
-        {
-            [self _hideHUD:NSLocalizedString(@"Delete Failed", nil)];
-        }
+        [self _hideHUD:NSLocalizedString(@"Torrent Deleted", nil)];
+    }
+    else
+    {
+        [self _hideHUD:NSLocalizedString(@"Delete Failed", nil)];
     }
     
     [self _arrangeBarButtons];
@@ -205,15 +201,7 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
         id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-        BOOL flag = [seedDAO favoriteSeed:_seed andFlag:favorite];
-        if (flag)
-        {
-            DLog(@"Favorited seed(%d) in database.", _seed.seedId);
-        }
-        else
-        {
-            DLog(@"Failed to favorite seed(%d) in database.", _seed.seedId);
-        }
+        [seedDAO favoriteSeed:_seed andFlag:favorite];
     });
 }
 
