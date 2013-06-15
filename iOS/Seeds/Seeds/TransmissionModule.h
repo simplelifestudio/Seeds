@@ -19,7 +19,9 @@
 -(NSInteger) httpServerPort;
 -(NSString*) httpServerName;
 
--(BOOL) generateHtmlPage:(NSArray*) last3Days;
+-(BOOL)generateHtmlPageWithZipFileName:(NSString*) zipFileName;
+-(BOOL) generateHtmlPageWithLast3Days:(NSArray*) last3Days;
+
 -(NSString*) generateDownloadRootDirectory;
 -(NSString*) generateDownloadSubDirectory:(NSString*) subDirName;
 

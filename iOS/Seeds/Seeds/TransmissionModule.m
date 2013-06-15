@@ -133,7 +133,40 @@ SINGLETON(TransmissionModule)
     return name;
 }
 
--(BOOL)generateHtmlPage:(NSArray*) last3Days;
+-(BOOL)generateHtmlPageWithZipFileName:(NSString*) zipFileName
+{
+    BOOL flag = NO;
+    
+    if (nil != zipFileName && 0 < zipFileName)
+    {
+        int encodingMode = NSUTF8StringEncoding;
+        
+        if (nil == htmlCode)
+        {
+            NSString* htmlFilePath = [[NSBundle mainBundle] pathForResource:FILE_NAME_INDEX ofType:FILE_EXTENDNAME_HTML];
+            NSData* data = [CBFileUtils dataFromFile:htmlFilePath];
+            htmlCode = [[NSString alloc] initWithData:data encoding:encodingMode];
+        }
+        
+        NSMutableString* htmlCodeCopy = [NSMutableString stringWithString:htmlCode];
+        NSString* strAfterLinkReplaced = [CBStringUtils replaceSubString:zipFileName oldSubString:@"$LINK$" string:htmlCodeCopy];
+        
+        NSData* data = [strAfterLinkReplaced dataUsingEncoding: encodingMode];
+        
+        NSString* torrentsPath = [TransmissionModule downloadTorrentsFolderPath];
+        NSString* indexHtmlFilePath = [torrentsPath stringByAppendingPathComponent:URL_INDEXPAGE];
+        
+        flag = [CBFileUtils dataToFile:data filePath:indexHtmlFilePath];
+        if (!flag)
+        {
+            DLog(@"Failed to generate index.html file.");
+        }
+    }
+    
+    return flag;
+}
+
+-(BOOL)generateHtmlPageWithLast3Days:(NSArray*) last3Days;
 {
     NSAssert(nil != last3Days, @"Date array is nil.");
     
@@ -143,7 +176,7 @@ SINGLETON(TransmissionModule)
     
     if (nil == htmlCode)
     {
-        NSString* htmlFilePath = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html"];
+        NSString* htmlFilePath = [[NSBundle mainBundle] pathForResource:FILE_NAME_INDEX ofType:FILE_EXTENDNAME_HTML];
         NSData* data = [CBFileUtils dataFromFile:htmlFilePath];
         htmlCode = [[NSString alloc] initWithData:data encoding:encodingMode];
     }

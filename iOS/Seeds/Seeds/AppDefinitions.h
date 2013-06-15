@@ -49,6 +49,7 @@
 
 #define FOLDER_TORRENTS @"torrents"
 #define FILE_EXTENDNAME_DOT_TORRENT @".torrent"
+#define FILE_EXTENDNAME_TORRENT @"torrent"
 
 #define SEEDPICTURE_MAX_CONCURRENT_DOWNLOADS 20
 
@@ -109,7 +110,9 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define HTTP_SERVER_PORT 8964
 
 #define FILE_EXTENDNAME_DOT_ZIP @".zip"
-
+#define FILE_EXTENDNAME_HTML @"html"
+#define FILE_EXTENDNAME_DOT_HTML @".html"
+#define FILE_NAME_INDEX @"index"
 
 // Module: GUI
 #define SEGUE_ID_SPLASH2NAVIGATION @"splash2navigation"

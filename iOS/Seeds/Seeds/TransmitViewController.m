@@ -21,7 +21,71 @@
 
 @synthesize consoleView = _consoleView;
 
-- (void) transmitTask
+- (void) _transmitTaskForUserMannuallyDownloads
+{
+    // Step 10: 对torrents目录进行扫描和打zip包
+    // Step 20: 动态生成index.html页面，包含torrents目录下所有torrent文件的zip包下载链接
+    // Step 30: 启动HTTP服务器
+    // Step 40: 更新HTTP服务器的地址和端口信息至UI
+    
+    TransmissionModule* transmitModule = [TransmissionModule sharedInstance];
+    
+    // Step 10:
+    [self updateConsole:NSLocalizedString(@"Torrent files are preparing...", nil)];
+    NSString* torrentsFolderPath = [TransmissionModule downloadTorrentsFolderPath];
+    NSArray* files = [CBFileUtils filesInDirectory:torrentsFolderPath fileExtendName:FILE_EXTENDNAME_TORRENT];
+    [self updateConsole:NSLocalizedString(@"Torrent files are packaging...", nil)];
+    NSMutableString* zipName = [NSMutableString stringWithString:FOLDER_TORRENTS];
+    [zipName appendString:FILE_EXTENDNAME_DOT_ZIP];
+    NSString* zipFilePath = [torrentsFolderPath stringByAppendingPathComponent:zipName];
+    zipFilePath = [CBFileUtils newZipFileWithFiles:zipFilePath zipFiles:files];
+    DLog(@"New zip file created:%@", zipFilePath);
+    
+    // Step 20:
+    [self updateConsole:NSLocalizedString(@"Web page is generating...", nil)];
+    BOOL flag = [transmitModule generateHtmlPageWithZipFileName:zipName];
+    if (flag)
+    {
+        // Step 30:
+        [self updateConsole:NSLocalizedString(@"HTTP server is initializing...", nil)];
+        flag = [transmitModule startHTTPServer];
+        if (flag)
+        {
+            [self updateConsole:NSLocalizedString(@"HTTP server is starting...", nil)];
+            // Step 40:
+            NSString* name = [transmitModule httpServerName];
+            NSInteger port = [transmitModule httpServerPort];
+            
+            if (nil != name && 0 < name.length)
+            {
+                NSMutableString* addrStr = [NSMutableString string];
+                
+                [addrStr appendString:@"http://"];
+                [addrStr appendString:name];
+                [addrStr appendString:@":"];
+                [addrStr appendString:[NSString stringWithFormat:@"%d", port]];
+                
+                [addrStr insertString:NSLocalizedString(@"HTTP server address:", nil) atIndex:0];
+                
+                [self updateConsole: addrStr];
+            }
+            else
+            {
+                [self updateConsole:NSLocalizedString(@"HTTP server failed to start.", nil)];
+            }
+        }
+        else
+        {
+            [self updateConsole:NSLocalizedString(@"HTTP server failed to start.", nil)];
+        }
+    }
+    else
+    {
+        [self updateConsole:NSLocalizedString(@"Web page generation is fail.", nil)];
+    }
+}
+
+- (void) _transmitTaskForAppAutoAllDownloads
 {
     // Step 10: 根据当日时间（例如5月8日）获取今天、昨天、前天三个时间标（例如[5-08]，[5-07]，[5-06]）
     // Step 20: 在本地KV缓存中，检查时间标对应的torrent文件打包状态：（a. 已打包；b. 未打包），如果是未打包状态，则继续下一步，反之停止操作
@@ -70,7 +134,7 @@
     
     // Step 40:
     [self updateConsole:NSLocalizedString(@"Web page is generating...", nil)];
-    flag = [transmitModule generateHtmlPage:last3Days];
+    flag = [transmitModule generateHtmlPageWithLast3Days:last3Days];
     if (flag)
     {
         // Step 50:
@@ -110,8 +174,7 @@
     else
     {
         [self updateConsole:NSLocalizedString(@"Web page generation is fail.", nil)];
-    }
-    
+    }    
 }
 
 - (void) updateConsole:(NSString*) info
@@ -171,7 +234,7 @@
     
     [_consoleView setText:NSLocalizedString(@"Transmission module is initializing...", nil)];
     
-    [self performSelectorInBackground:@selector(transmitTask) withObject:nil];
+    [self performSelectorInBackground:@selector(_transmitTaskForUserMannuallyDownloads) withObject:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
