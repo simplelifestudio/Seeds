@@ -247,6 +247,13 @@ SINGLETON(SeedPictureAgent)
 
 -(void) queueRequest:(NSString*) urlPath inProgressBlock:(ImageDownloadInProgressBlock) inProgressBlock completeBlock:(ImageDownloadFinishBlock) completeBlock
 {
+    // Temp switch for wifi only
+    BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
+    if (!isWiFiEnabled)
+    {
+        return;
+    }
+    
     if(nil == urlPath)
     {
         DLog(@"Null url path");
