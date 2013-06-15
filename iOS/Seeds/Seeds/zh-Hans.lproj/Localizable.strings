@@ -62,7 +62,7 @@
 
 "WiFi Connected" = "WiFi连接网络";
 "3G/GPRS Connected" = "3G/GPRS连接网络";
-"Internet Disconnected" = "网络断开连接";
+"Internet Disconnected" = "无网络连接";
 
 "Server Status Check" = "服务器状态检测";
 "Server Reachable" = "服务器可达";

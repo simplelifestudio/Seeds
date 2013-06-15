@@ -151,6 +151,12 @@
 
 - (void) _onClickDownloadBarButton
 {
+    if (![CBNetworkUtils isWiFiEnabled] && ![CBNetworkUtils is3GEnabled])
+    {
+        [self _showHUD:NSLocalizedString(@"Internet Disconnected", nil)];
+        return;
+    }
+    
     [self _showHUD:NSLocalizedString(@"Preparing", nil)];
     
     TransmissionModule* transModule = [TransmissionModule sharedInstance];
@@ -165,8 +171,6 @@
     
     _downloadAgent = [[TorrentDownloadAgent alloc] initWithSeed:_seed downloadPath:downloadDirFullPath];    
     [_downloadAgent downloadWithDelegate:self];
-    
-    [self _resetSeedFavorite:YES];
 }
 
 -(void) _onClickDeleteBarButton
@@ -191,10 +195,10 @@
     
     [self _arrangeBarButtons];
  
-    [self _resetSeedFavorite:NO];
+    [self _favoriteSeed:NO];
 }
 
--(void) _resetSeedFavorite:(BOOL) favorite
+-(void) _favoriteSeed:(BOOL) favorite
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
         id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
@@ -235,7 +239,9 @@
 {
     [self _hideHUD:NSLocalizedString(@"Torrent Saved", nil)];
     
-    [self _arrangeBarButtons];    
+    [self _arrangeBarButtons];
+    
+    [self _favoriteSeed:YES];    
 }
 
 -(void) torrentSaveFailed:(NSString*) torrentCode filePath:(NSString*) filePath

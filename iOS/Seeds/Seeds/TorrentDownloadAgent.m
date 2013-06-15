@@ -138,7 +138,7 @@
 }
 
 -(void) downloadWithDelegate:(id<TorrentDownloadAgentDelegate>)delegate
-{
+{    
     _delegate = delegate;
 
     NSURL *baseURL = [NSURL URLWithString:BASEURL_TORRENT];
