@@ -48,6 +48,8 @@
 
 #define SEEDPICTURE_MAX_CONCURRENT_DOWNLOADS 10
 
+#define CACHE_EXPIRE_PERIOD 60*60*24*3
+
 #define CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL @"[thumbnail_seedlisttablecell]"
 #define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL @"[thumbnail_seedpicturecollectioncell]"
 #define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW @"[thumbnail_seedpictureview]"
