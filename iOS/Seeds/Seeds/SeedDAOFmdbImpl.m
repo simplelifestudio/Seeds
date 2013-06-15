@@ -236,7 +236,6 @@
              [sql appendString:[NSString stringWithFormat: @"%d", seedId]];
              [sql appendString:@"'"];
              
-             DLog(@"sql = %@", sql);
              flag = [db executeUpdate:sql withParameterDictionary:paramDic];
              
              [db close];
