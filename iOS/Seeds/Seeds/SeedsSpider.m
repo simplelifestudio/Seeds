@@ -42,7 +42,7 @@
     NSMutableString* link = [NSMutableString stringWithCapacity:0];
     
     date = (nil != date) ? date : [NSDate date];
-    NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:date];
+    NSString* dateStr = [CBDateUtils shortDateString:date];
 
     NSMutableString* titleStr = [NSMutableString stringWithCapacity:0];
     [titleStr appendString:@"["];
@@ -159,7 +159,7 @@
     for (NSDate* day in days)
     {
         // Step 20:
-        NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
+        NSString* dateStr = [CBDateUtils shortDateString:day];
         NSMutableString* hudStr1 = [NSMutableString stringWithCapacity:0];
         [hudStr1 appendString:dateStr];
         [hudStr1 appendString:STR_SPACE];
@@ -247,7 +247,7 @@
             }
             else
             {
-                NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
+                NSString* dateStr = [CBDateUtils shortDateString:day];
                 DLog(@"Seeds channel link can't be found with date: %@", dateStr);
                 if (nil != _seedsSpiderDelegate)
                 {

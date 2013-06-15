@@ -54,8 +54,6 @@
 
 
 // Module: Spider
-#define SEEDLIST_LINK_DATE_FORMAT @"M-dd"
-
 #define SEEDS_RESOURCE_IP @"174.123.15.31"
 #define LINK_SEEDLIST_CHANNEL_PAGE @"&page="
 #define LINK_SEEDLIST_CHANNEL @"http://"SEEDS_RESOURCE_IP"/forumdisplay.php?fid=55"
@@ -69,7 +67,7 @@
 
 
 // Module: Database
-enum ServiceDay {TheDayBefore = 0, Yesterday = 1, Today = 2};
+typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 #define DATABASE_FILE_NAME @"Seeds_App_Database"
 #define DATABASE_FILE_TYPE @"db"

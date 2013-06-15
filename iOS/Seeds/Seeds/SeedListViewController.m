@@ -43,6 +43,14 @@
     [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
 }
 
+- (void) setSeedsDate:(NSDate *)seedsDate
+{
+    _seedsDate = seedsDate;
+    
+    NSString* shortDayStr = [CBDateUtils shortDateString:seedsDate];
+    self.title = shortDayStr;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

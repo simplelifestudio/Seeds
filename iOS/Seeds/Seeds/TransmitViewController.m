@@ -54,7 +54,7 @@
     
     for (NSDate* day in last3Days)
     {
-        NSString* dayStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
+        NSString* dayStr = [CBDateUtils shortDateString:day];
         NSString* dayFolderPath = [torrentsPath stringByAppendingPathComponent:dayStr];
         NSArray* files = [CBFileUtils filesInDirectory:dayFolderPath fileExtendName:@"torrent"];
         

@@ -67,7 +67,7 @@
 {
     [self.navigationController setNavigationBarHidden:YES];
 
-    [self updateDayLabels];
+    [self updateDayAndSyncStatusLabels];
     
     [super viewWillAppear:animated];    
 }
@@ -129,55 +129,59 @@
 //    [serverAgent syncSeedsInfo];
 }
 
-- (void) updateDayLabels
+- (void) updateDayLabel:(NSDate*) day dayIndex:(DayIndex) dayIndex;
+{
+    NSString* dateStr = [CBDateUtils shortDateString:day];
+    switch (dayIndex)
+    {
+        case Today:
+        {
+            [_todayLabel setText:dateStr];
+            break;
+        }
+        case Yesterday:
+        {
+            [_yesterdayLabel setText:dateStr];
+            break;
+        }
+        case TheDayBefore:
+        {
+            [_theDayBeforeLabel setText:dateStr];
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+}
+
+- (void) updateDayAndSyncStatusLabels
 {
     last3Days = [CBDateUtils lastThreeDays];
     NSInteger dayIndex = TheDayBefore;
     for (NSDate* day in last3Days)
     {        
-        NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
-
-        switch (dayIndex)
-        {
-            case Today:
-            {
-                [_todayLabel setText:dateStr];
-                break;
-            }
-            case Yesterday:
-            {
-                [_yesterdayLabel setText:dateStr];
-                break;
-            }
-            case TheDayBefore:
-            {
-                [_theDayBeforeLabel setText:dateStr];
-                break;
-            }
-            default:
-            {
-                break;
-            }
-        }
+        [self updateDayLabel:day dayIndex:dayIndex];
         
         BOOL isThidDaySync = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
         if (!isThidDaySync)
         {
-            [self updateDaySyncStatusLabels:dayIndex syncStatus:NSLocalizedString(@"Unsync", nil)];
+            [self updateSyncStatusLabels:dayIndex syncStatus:NSLocalizedString(@"Unsync", nil)];
         }
         else
         {
             id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
             NSInteger seedCountByDate = [seedDAO countSeedsByDate:day];
             
-            [self updateDaySyncStatusLabels:dayIndex syncStatus:[NSString stringWithFormat:@"%d", seedCountByDate]];
+            [self updateSyncStatusLabels:dayIndex syncStatus:[NSString stringWithFormat:@"%d", seedCountByDate]];
         }
         
         dayIndex = dayIndex + 1;
     }
 }
 
-- (void) updateDaySyncStatusLabels:(NSInteger) dayIndex syncStatus:(NSString*) status
+- (void) updateSyncStatusLabels:(NSInteger) dayIndex syncStatus:(NSString*) status
 {
     NSAssert(Today >= dayIndex || TheDayBefore <= dayIndex, @"Illegal day index");
     NSAssert(nil != status && 0 < status, @"Illegal status");
@@ -301,7 +305,7 @@
     NSInteger dayIndex = [sLabel integerValue];
     NSString* sData = (NSString*)data;
     
-    [self updateDaySyncStatusLabels:dayIndex syncStatus:sData];
+    [self updateSyncStatusLabels:dayIndex syncStatus:sData];
 }
 
 - (IBAction)onClickTodayButton:(id)sender

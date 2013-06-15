@@ -146,6 +146,12 @@ SINGLETON(SeedPictureAgent)
         return nil;
     }
     
+    if (image.size.width <= aSize.width && image.size.height <= aSize.height)
+    {
+        DLog(@"Image is smaller than thumbnail which is being converted.");
+        return image;
+    }
+    
     CGImageRef imageRef = [image CGImage];
     UIImage *thumb = nil;
     

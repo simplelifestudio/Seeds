@@ -128,7 +128,7 @@ SINGLETON(UserDefaultsModule)
     {
         NSMutableString* key = [NSMutableString string];
         [key appendString:USERDEFAULTS_KEY_SYNCSTATUSBYDAY];
-        NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
+        NSString* dateStr = [CBDateUtils shortDateString:day];
         [key appendString:dateStr];
         
         return key;

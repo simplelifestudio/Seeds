@@ -81,6 +81,12 @@
     return dayStrs;
 }
 
++(NSString*) shortDateString:(NSDate*) date
+{
+    NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SHORT_DATE_FORMAT andDate:date];
+    return dateStr;
+}
+
 - (id)init
 {
     return nil;

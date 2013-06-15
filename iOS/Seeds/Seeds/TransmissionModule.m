@@ -137,7 +137,7 @@ SINGLETON(TransmissionModule)
     NSMutableString* htmlCodeCopy = [NSMutableString stringWithString:htmlCode];
     for (NSDate* day in last3Days)
     {
-        NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:SEEDLIST_LINK_DATE_FORMAT andDate:day];
+        NSString* dateStr = [CBDateUtils shortDateString:day];
 
         NSMutableString* zipFileName = [NSMutableString stringWithString:dateStr];
         [zipFileName appendString:FILE_EXTENDNAME_DOT_ZIP];
