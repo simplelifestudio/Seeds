@@ -247,24 +247,31 @@ SINGLETON(SeedPictureAgent)
 
 -(void) queueRequest:(NSString*) urlPath inProgressBlock:(ImageDownloadInProgressBlock) inProgressBlock completeBlock:(ImageDownloadFinishBlock) completeBlock
 {
-    // Temp switch for wifi only
-    BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
-    if (!isWiFiEnabled)
-    {
-        return;
-    }
-    
     if(nil == urlPath)
     {
         DLog(@"Null url path");
         return;
     }
     
-    static NSUInteger count = 0;
-    DLog(@"Request counted: %d", count++);
-    
-    NSURL* url = [NSURL URLWithString:urlPath];
-    [_imageManager downloadWithURL:url options:_downloadOptions progress:inProgressBlock completed:completeBlock];    
+    BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
+    if (isWiFiEnabled)
+    {
+        NSURL* url = [NSURL URLWithString:urlPath];
+        [_imageManager downloadWithURL:url options:_downloadOptions progress:inProgressBlock completed:completeBlock];
+    }
+    else
+    {
+        NSURL* url = [NSURL URLWithString:urlPath];
+        NSString* key = [self cacheKeyForURL:url];
+        [_imageCache
+            queryDiskCacheForKey:key
+            done:^(UIImage *image, SDImageCacheType cacheType)
+            {
+                BOOL finished = (nil != image) ? YES : NO;
+                completeBlock(image, nil, cacheType, finished);
+            }
+        ];
+    }
 }
 
 -(void) queueRequest:(NSString *)urlPath completeBlock:(ImageDownloadFinishBlock)completeBlock
