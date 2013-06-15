@@ -45,9 +45,23 @@
     [super awakeFromNib];
 }
 
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+    
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
-    [super setSelected:selected animated:animated];
+    [super setSelected:selected animated:animated];    
+    
+    CGRect rect = self.contentView.bounds;
+    UIView* view = [[UIView alloc] initWithFrame:rect];
+    if (selected)
+    {
+        [view setBackgroundColor:[UIColor clearColor]];
+        
+        [self setSelectedBackgroundView:view];
+    }
 }
 
 -(void) fillSeed:(Seed*) seed
