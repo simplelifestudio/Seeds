@@ -82,7 +82,9 @@
     
     CGRect cellRect = self.frame;
     
-    AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(0, 0, WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL, cellRect.size.height)];
+    // x = 10 is same with layout in xib file
+    CGFloat x = 10;
+    AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(x, 0, WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL, cellRect.size.height)];
     newImageView.thumbnailType = _asyncImageView.thumbnailType;
     _asyncImageView = newImageView;
     [self addSubview:_asyncImageView];
