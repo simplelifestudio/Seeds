@@ -261,16 +261,18 @@ SINGLETON(SeedPictureAgent)
     }
     else
     {
-        NSURL* url = [NSURL URLWithString:urlPath];
-        NSString* key = [self cacheKeyForURL:url];
-        [_imageCache
-            queryDiskCacheForKey:key
-            done:^(UIImage *image, SDImageCacheType cacheType)
-            {
-                BOOL finished = (nil != image) ? YES : NO;
-                completeBlock(image, nil, cacheType, finished);
-            }
-        ];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+            NSURL* url = [NSURL URLWithString:urlPath];
+            NSString* key = [self cacheKeyForURL:url];
+            [_imageCache
+             queryDiskCacheForKey:key
+             done:^(UIImage *image, SDImageCacheType cacheType)
+             {
+                 BOOL finished = (nil != image) ? YES : NO;
+                 completeBlock(image, nil, cacheType, finished);
+             }
+             ];
+        });
     }
 }
 
