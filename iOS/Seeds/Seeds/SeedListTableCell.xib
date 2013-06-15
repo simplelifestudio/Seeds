@@ -44,15 +44,11 @@
 							<object class="IBUITextView" id="1061927158">
 								<reference key="NSNextResponder" ref="223885616"/>
 								<int key="NSvFlags">1302</int>
-								<string key="NSFrame">{{115, 5}, {200, 60}}</string>
+								<string key="NSFrame">{{118, 2}, {200, 76}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="730042693"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MSAxIDEAA</bytes>
-								</object>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<bool key="IBUIMultipleTouchEnabled">YES</bool>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -80,7 +76,7 @@
 								<reference key="NSNextResponder" ref="223885616"/>
 								<int key="NSvFlags">1302</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{118.5, 73}, {60, 21}}</string>
+								<string key="NSFrame">{{118.5, 77}, {60, 20}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="944328825"/>
@@ -109,7 +105,7 @@
 								<reference key="NSNextResponder" ref="223885616"/>
 								<int key="NSvFlags">1302</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{186.5, 73}, {60, 21}}</string>
+								<string key="NSFrame">{{178.5, 77}, {60, 20}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="395190708"/>
@@ -131,15 +127,37 @@
 								<reference key="NSNextResponder" ref="223885616"/>
 								<int key="NSvFlags">1302</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{256.5, 73}, {60, 21}}</string>
+								<string key="NSFrame">{{238.5, 77}, {40, 20}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="810061728"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">马赛克</string>
+								<string key="IBUIText">打码</string>
+								<reference key="IBUITextColor" ref="245906179"/>
+								<reference key="IBUIHighlightedColor" ref="1065567373"/>
+								<int key="IBUIBaselineAdjustment">0</int>
+								<int key="IBUITextAlignment">1</int>
+								<reference key="IBUIFontDescription" ref="140084886"/>
+								<reference key="IBUIFont" ref="771395212"/>
+								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
+							</object>
+							<object class="IBUILabel" id="810061728">
+								<reference key="NSNextResponder" ref="223885616"/>
+								<int key="NSvFlags">1302</int>
+								<string key="NSFrame">{{278, 77}, {40, 20}}</string>
+								<reference key="NSSuperview" ref="223885616"/>
+								<reference key="NSWindow"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<int key="IBUIContentMode">7</int>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<string key="IBUIText">图数</string>
 								<reference key="IBUITextColor" ref="245906179"/>
 								<reference key="IBUIHighlightedColor" ref="1065567373"/>
 								<int key="IBUIBaselineAdjustment">0</int>
@@ -252,6 +270,14 @@
 					</object>
 					<int key="connectionID">43</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">pictureCountLabel</string>
+						<reference key="source" ref="764541583"/>
+						<reference key="destination" ref="810061728"/>
+					</object>
+					<int key="connectionID">45</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -281,6 +307,7 @@
 							<reference ref="395190708"/>
 							<reference ref="1061927158"/>
 							<reference ref="513938367"/>
+							<reference ref="810061728"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">seedListTableCell</string>
@@ -319,6 +346,12 @@
 						<reference key="parent" ref="764541583"/>
 						<string key="objectName">asyncImageView</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">44</int>
+						<reference key="object" ref="810061728"/>
+						<reference key="parent" ref="764541583"/>
+						<string key="objectName">pictureCountLabel</string>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -334,6 +367,7 @@
 				<boolean value="NO" key="4.showNotes"/>
 				<string key="42.CustomClassName">AsyncImageView</string>
 				<string key="42.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="44.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<reference key="5.IBUserGuides" ref="0"/>
 				<boolean value="NO" key="5.showNotes"/>
@@ -346,7 +380,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">43</int>
+			<int key="maxID">45</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -366,6 +400,7 @@
 						<string key="formatLabel">UILabel</string>
 						<string key="mosaicLabel">UILabel</string>
 						<string key="nameLabel">UITextView</string>
+						<string key="pictureCountLabel">UILabel</string>
 						<string key="sizeLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -384,6 +419,10 @@
 						<object class="IBToOneOutletInfo" key="nameLabel">
 							<string key="name">nameLabel</string>
 							<string key="candidateClassName">UITextView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="pictureCountLabel">
+							<string key="name">pictureCountLabel</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="sizeLabel">
 							<string key="name">sizeLabel</string>

@@ -58,6 +58,9 @@
         [_sizeLabel setText:seed.size];
         [_formatLabel setText:seed.format];
         [_mosaicLabel setText:(seed.mosaic) ? NSLocalizedString(@"Mosaic", nil) : NSLocalizedString(@"No-Mosaic", nil)];
+        NSMutableString* picCountStr = [NSMutableString stringWithFormat:@"%d", seed.seedPictures.count];
+        [picCountStr appendString:NSLocalizedString(@"Picture", nil)];
+        [_pictureCountLabel setText:picCountStr];
     }
 }
 

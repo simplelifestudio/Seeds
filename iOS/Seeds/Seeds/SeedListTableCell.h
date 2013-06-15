@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *formatLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mosaicLabel;
+@property (weak, nonatomic) IBOutlet UILabel *pictureCountLabel;
 @property (weak, nonatomic) IBOutlet AsyncImageView *asyncImageView;
 
 -(void) fillSeed:(Seed*) seed;
