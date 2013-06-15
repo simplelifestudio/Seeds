@@ -50,7 +50,7 @@
         UIImage* image = [SeedPictureAgent exceptionImageWithThumbnailType:SeedPictureCollectionCellThumbnail imageExceptionType:EmptyImage];
         [_asyncImageView loadImageFromLocal:image];
         
-        _label.text = [NSString stringWithFormat:@"%d", 1];
+        _label.text = [NSString stringWithFormat:@"%d", pictureIdInSeed];
     }
     else
     {
