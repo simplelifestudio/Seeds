@@ -28,4 +28,6 @@
 
 +(NSString*) shortDateString:(NSDate*) date;
 
++(NSInteger) dayDiffBetweenTwoDays:(NSDate*) dateA dateB:(NSDate*) dateB;
+
 @end

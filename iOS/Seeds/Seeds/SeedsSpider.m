@@ -12,6 +12,8 @@
 
 #import "SDWebImagePrefetcher.h"
 
+#import "CBFileUtils.h"
+
 @interface SeedsSpider()
 {
     SeedsVisitor* visitor;
@@ -129,6 +131,7 @@
     // Step 60: 再将新数据保存入数据库（事务操作）
     // Step 70: 更新本地KV缓存中时间标的对应数据同步状态
     // Step 80: 删除数据库中原有的，处于这三天之前的，非收藏状态的所有记录
+    // Step 90: 删除下载目录中原有的，处于这三天之前的的所有记录
     
     BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
     BOOL is3GEnabled = [CBNetworkUtils is3GEnabled];
@@ -289,6 +292,26 @@
             [_seedsSpiderDelegate taskIsProcessing:NSLocalizedString(@"Seeds Organizing", nil) minorStatus:nil];
         }
         
+        // Step 90:
+        DLog(@"Clean old torrents.");
+        
+        NSDate* theDayBefore = days[TheDayBefore];
+        
+        NSString* downloadPath = [TransmissionModule downloadTorrentsFolderPath];
+        NSArray* torrentFiles = [CBFileUtils filesInDirectory:downloadPath fileExtendName:FILE_EXTENDNAME_TORRENT];
+        if (nil != torrentFiles && 0 < torrentFiles.count)
+        {
+            for (NSString* fileFullPath in torrentFiles)
+            {
+                NSDate* fileLastUpdateDay = [CBFileUtils fileLastUpdateTime:fileFullPath];
+                NSInteger dayIntDiff = [CBDateUtils dayDiffBetweenTwoDays:fileLastUpdateDay dateB:theDayBefore];
+                if (0 > dayIntDiff)
+                {
+                    [CBFileUtils deleteFile:fileFullPath];
+                }
+            }
+        }
+
         if (nil != _seedsSpiderDelegate)
         {
             [_seedsSpiderDelegate taskFinished:NSLocalizedString(@"Completed", nil) minorStatus:nil];

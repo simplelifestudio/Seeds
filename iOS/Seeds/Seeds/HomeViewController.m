@@ -47,10 +47,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    backBarItem = self.navigationItem.backBarButtonItem;
-    stopBarItem = [[UIBarButtonItem alloc] init];
-    stopBarItem.title = NSLocalizedString(@"Stop", nil);
     
     SpiderModule* spiderModule = [SpiderModule sharedInstance];
     [spiderModule.spider setSeedsSpiderDelegate:self];

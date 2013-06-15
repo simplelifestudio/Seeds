@@ -13,6 +13,8 @@
 @interface TransmitViewController ()
 {
     NSMutableString* consoleInfo;
+    
+    UIBarButtonItem* _stopBarButton;
 }
 
 @end
@@ -119,7 +121,7 @@
     {
         NSString* dayStr = [CBDateUtils shortDateString:day];
         NSString* dayFolderPath = [torrentsPath stringByAppendingPathComponent:dayStr];
-        NSArray* files = [CBFileUtils filesInDirectory:dayFolderPath fileExtendName:@"torrent"];
+        NSArray* files = [CBFileUtils filesInDirectory:dayFolderPath fileExtendName:FILE_EXTENDNAME_TORRENT];
         
         // Step 20:
         
@@ -213,13 +215,31 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
+        [self setupView];
     }
     return self;
 }
 
 - (void)viewDidLoad
 {
+    [self setupView];    
+    
     [super viewDidLoad];
+}
+
+-(void) _onClickStopBarButton
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void) setupView
+{
+    if (nil == _stopBarButton)
+    {
+        _stopBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stop", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickStopBarButton)];
+    }
+    
+    self.navigationItem.leftBarButtonItems = @[_stopBarButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -10,6 +10,20 @@
 
 @implementation CBFileUtils
 
++(NSDate*) fileLastUpdateTime:(NSString*) fileFullPath
+{
+    NSDate* time = nil;
+    
+    if (nil != fileFullPath && 0 < fileFullPath)
+    {
+        NSFileManager* fm = [NSFileManager defaultManager];
+        NSDictionary* fileAttributes = [fm attributesOfItemAtPath:fileFullPath error:nil];
+        time = [fileAttributes objectForKey:NSFileModificationDate];
+    }
+    
+    return time;
+}
+
 +(NSString*) newZipFileWithFiles:(NSString*) zipFilePath zipFiles:(NSArray*) files;
 {
     NSAssert(nil != zipFilePath && 0 < zipFilePath.length, @"Invalid zip file path.");

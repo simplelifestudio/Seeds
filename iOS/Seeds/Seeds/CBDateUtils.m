@@ -87,6 +87,31 @@
     return dateStr;
 }
 
++(NSInteger) dayDiffBetweenTwoDays:(NSDate*) dateA dateB:(NSDate*) dateB
+{
+    NSAssert(nil != dateA && nil != dateB, @"Nil date parameter");
+    
+    NSInteger dayIntDiff = 0;
+    NSTimeInterval dayDiff = 0;
+    NSTimeInterval timeDiff = [dateA timeIntervalSinceDate:dateB];
+    if (0 == timeDiff)
+    {
+        dayDiff = 0;
+    }
+    else
+    {
+        NSTimeInterval secondsPerDay = 24 * 60 * 60;
+        timeDiff = (timeDiff / secondsPerDay);
+        dayIntDiff = (NSInteger)timeDiff;
+        if (0 < timeDiff - dayIntDiff)
+        {
+            dayIntDiff += 1;
+        }
+    }
+
+    return dayIntDiff;
+}
+
 - (id)init
 {
     return nil;

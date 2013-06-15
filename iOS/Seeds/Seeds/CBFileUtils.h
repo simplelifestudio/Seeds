@@ -26,6 +26,7 @@
 +(BOOL) dataToFile:(NSData*) data filePath:(NSString*) filePath;
 +(NSArray*) filesInDirectory:(NSString*) directoryPath fileExtendName:(NSString*) extendName;
 
++(NSDate*) fileLastUpdateTime:(NSString*) fileFullPath;
 +(BOOL) deleteFile:(NSString*) fileFullPath;
 +(BOOL) createFile:(NSString*) fileFullPath content:(id) content;
 +(BOOL) isFileExists:(NSString*) fileFullPath;
