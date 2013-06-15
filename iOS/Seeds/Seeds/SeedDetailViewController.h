@@ -10,9 +10,8 @@
 
 #import "SeedPictureCollectionCell.h"
 #import "SeedPictureViewController.h"
+#import "SeedDetailHeaderView.h"
 
-#import "SDWebImageManager.h"
-#import "CircularProgressView.h"
 #import "TorrentDownloadAgent.h"
 
 @interface SeedDetailViewController : UICollectionViewController <TorrentDownloadAgentDelegate>

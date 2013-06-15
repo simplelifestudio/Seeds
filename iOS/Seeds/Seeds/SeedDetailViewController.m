@@ -53,6 +53,9 @@
 //    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDPICTURECOLLECTIONCELL bundle:nil];
 //    [self.collectionView registerNib:nib forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
     
+    UINib* headerViewNib = [UINib nibWithNibName:VIEW_ID_SEEDDETAILHEADERVIEW bundle:nil];
+    [self.collectionView registerNib:headerViewNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:VIEW_ID_SEEDDETAILHEADERVIEW];
+    
     _deleteBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Delete", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickDeleteBarButton)];
     _downloadBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Download", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickDownloadBarButton)];
     
@@ -263,6 +266,19 @@
     _HUD.mode = MBProgressHUDModeText;
     _HUD.labelText = majorStatus;
     [_HUD hide:YES afterDelay:_HUD_DELAY];
+}
+
+-(UICollectionReusableView *) collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    SeedDetailHeaderView* headerView = nil;
+    
+    if([kind isEqual:UICollectionElementKindSectionHeader])
+    {
+        headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:VIEW_ID_SEEDDETAILHEADERVIEW forIndexPath:indexPath];
+        [headerView fillSeed:_seed];
+    }
+    
+    return headerView;
 }
 
 @end

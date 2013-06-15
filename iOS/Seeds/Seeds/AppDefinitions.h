@@ -137,6 +137,8 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 #define CELL_ID_SEEDPICTURECOLLECTIONCELL @"SeedPictureCollectionCell"
 
+#define VIEW_ID_SEEDDETAILHEADERVIEW @"SeedDetailHeaderView"
+
 #define HUD_SIZE CGSizeMake(135.f, 135.f)
 #define HUD_DISPLAY(x) sleep(x);
 

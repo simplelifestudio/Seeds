@@ -159,6 +159,8 @@
 		C5AB63581730C1ED00A3F1E6 /* CBUIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */; };
 		C5ADC852173930E1007F59D7 /* CBStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC851173930E1007F59D7 /* CBStringUtils.m */; };
 		C5ADC856173A2DE7007F59D7 /* UserDefaultsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */; };
+		C5C0CE94176D0F5900FA52C4 /* SeedDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C0CE93176D0F5900FA52C4 /* SeedDetailHeaderView.m */; };
+		C5C0CE96176D103300FA52C4 /* SeedDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */; };
 		C5E0C1F4176AF6E30037811F /* SeedPictureAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */; };
 		C5F8AC4E174A3B72001E30D1 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = C5F8AC4D174A3B72001E30D1 /* index.html */; };
 		C5F8AC50174B9807001E30D1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */; };
@@ -447,6 +449,9 @@
 		C5ADC854173A2DE7007F59D7 /* UserDefaultsModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultsModule.h; sourceTree = "<group>"; };
 		C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultsModule.m; sourceTree = "<group>"; };
 		C5ADC857173A3148007F59D7 /* CBSharedInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBSharedInstance.h; sourceTree = "<group>"; };
+		C5C0CE92176D0F5900FA52C4 /* SeedDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedDetailHeaderView.h; sourceTree = "<group>"; };
+		C5C0CE93176D0F5900FA52C4 /* SeedDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedDetailHeaderView.m; sourceTree = "<group>"; };
+		C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeedDetailHeaderView.xib; sourceTree = "<group>"; };
 		C5E0C1F2176AF6E10037811F /* SeedPictureAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SeedPictureAgent.h; path = Seeds/SeedPictureAgent.h; sourceTree = "<group>"; };
 		C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeedPictureAgent.m; path = Seeds/SeedPictureAgent.m; sourceTree = "<group>"; };
 		C5F8AC4D174A3B72001E30D1 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
@@ -864,6 +869,9 @@
 				C5964C3F17223A6800CC1C0A /* FavoriteSeedListViewController.m */,
 				C5203D7617477E8300D917F7 /* TransmitViewController.h */,
 				C5203D7717477E8400D917F7 /* TransmitViewController.m */,
+				C5C0CE92176D0F5900FA52C4 /* SeedDetailHeaderView.h */,
+				C5C0CE93176D0F5900FA52C4 /* SeedDetailHeaderView.m */,
+				C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */,
 				C5964C4117223A9200CC1C0A /* SeedDetailViewController.h */,
 				C5964C4217223A9200CC1C0A /* SeedDetailViewController.m */,
 				C5964C47172248AB00CC1C0A /* SeedPictureViewController.h */,
@@ -1155,6 +1163,7 @@
 				C5A4E64F176B1361008A391C /* xImage_pictureView@2x.png in Resources */,
 				C5A4E650176B1361008A391C /* xImage_tableCell.png in Resources */,
 				C5A4E651176B1361008A391C /* xImage_tableCell@2x.png in Resources */,
+				C5C0CE96176D103300FA52C4 /* SeedDetailHeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1295,6 +1304,7 @@
 				C55D1ACB1751BE35000B3E34 /* PAPasscodeViewController.m in Sources */,
 				C571E0A3176627CE00E9AD50 /* AsyncImageView.m in Sources */,
 				C5E0C1F4176AF6E30037811F /* SeedPictureAgent.m in Sources */,
+				C5C0CE94176D0F5900FA52C4 /* SeedDetailHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
