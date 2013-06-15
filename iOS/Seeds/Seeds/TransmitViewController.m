@@ -10,11 +10,20 @@
 
 #import "CBFileUtils.h"
 
+#define _TRANS_CANCEL_FLAG_CHECK \
+if (_cancelTransmission)\
+{\
+    [self updateConsole:NSLocalizedString(@"Transmission is cancel.", nil)];\
+    return;\
+}
+
 @interface TransmitViewController ()
 {
     NSMutableString* consoleInfo;
     
     UIBarButtonItem* _stopBarButton;
+    
+    BOOL _cancelTransmission;
 }
 
 @end
@@ -45,7 +54,7 @@
     
     // Step 20:
     [self updateConsole:NSLocalizedString(@"Web page is generating...", nil)];
-    BOOL flag = [transmitModule generateHtmlPageWithZipFileName:zipName];
+    BOOL flag = [transmitModule generateHtmlPageWithZipFileName:zipName];   
     if (flag)
     {
         // Step 30:
@@ -54,6 +63,7 @@
         if (flag)
         {
             [self updateConsole:NSLocalizedString(@"HTTP server is starting...", nil)];
+                      
             // Step 40:
             NSString* name = [transmitModule httpServerName];
             NSInteger port = [transmitModule httpServerPort];
@@ -85,6 +95,17 @@
     {
         [self updateConsole:NSLocalizedString(@"Web page generation is fail.", nil)];
     }
+    
+    [self _showStopBarButton];
+}
+
+- (void) _showStopBarButton
+{
+    CONSOLE_LINEINFO_DISPLAY_DELAY
+    
+    [self.navigationItem setHidesBackButton:NO];
+    self.navigationItem.backBarButtonItem.title = NSLocalizedString(@"Stop", nil);
+    self.navigationItem.leftBarButtonItems = @[_stopBarButton];
 }
 
 - (void) _transmitTaskForAppAutoAllDownloads
@@ -200,7 +221,7 @@
 
         dispatch_sync(dispatch_get_main_queue(), ^(){
             [_consoleView setText:consoleInfo];
-            sleep(1);
+            CONSOLE_LINEINFO_DISPLAY_DELAY
         });
     }
 }
@@ -234,12 +255,14 @@
 
 -(void) setupView
 {
+    _cancelTransmission = NO;
+    
     if (nil == _stopBarButton)
     {
         _stopBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stop", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickStopBarButton)];
     }
-    
-    self.navigationItem.leftBarButtonItems = @[_stopBarButton];
+
+    [self.navigationItem setHidesBackButton:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -275,4 +298,5 @@
     [self setConsoleView:nil];
     [super viewDidUnload];
 }
+
 @end

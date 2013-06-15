@@ -49,6 +49,7 @@
 "Torrents Downloading" = "Torrents Downloading";
 
 "Transmission module is initializing..." = "Transmission module is initializing...";
+"Transmission is cancel." = "Transmission is cancel.";
 "Torrents directory failed to create." = "Torrents directory failed to create.";
 "Torrent files are preparing..." = "Torrent files are preparing...";
 "Torrent files are packaging..." = "Torrent files are packaging...";

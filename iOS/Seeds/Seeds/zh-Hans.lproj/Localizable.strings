@@ -49,6 +49,7 @@
 "Torrents Downloading" = "种子下载";
 
 "Transmission module is initializing..." = "传输模块初始化...";
+"Transmission is cancel." = "传输取消.";
 "Torrents directory failed to create." = "种子目录创建失败.";
 "Torrent files are preparing..." = "种子文件准备中...";
 "Torrent files are packaging..." = "种子文件打包中...";
