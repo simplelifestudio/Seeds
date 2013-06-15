@@ -23,6 +23,11 @@
 "Mosaic" = "有码";
 "No-Mosaic" = "无码";
 
+"Stop" = "停止";
+"Unsync" = "未同步";
+"Download" = "下载";
+"Delete" = "删除";
+
 "Preparing" = "准备";
 "Stamps Computing" = "日期计算";
 "Pulling" = "抓取";
@@ -42,8 +47,6 @@
 "Folder Exception" = "目录异常";
 
 "Torrents Downloading" = "种子下载";
-
-"Stop" = "停止";
 
 "Transmission module is initializing..." = "传输模块初始化...";
 "Torrents directory failed to create." = "种子目录创建失败.";
@@ -68,4 +71,11 @@
 "Seeds Received" = "种子信息\n获取成功";
 "Seeds Unreachable" = "种子信息\n获取失败";
 
-"Unsync" = "未同步";
+"Directory Unready" = "目录未就绪";
+"Torrent Downloading" = "种子下载中";
+"Torrent Downloaded" = "种子已下载";
+"Download Failed" = "下载失败";
+"Torrent Saved" = "下载成功";
+"Save Failed" = "保存失败";
+"Torrent Deleted" = "种子已删除";
+"Delete Failed" = "删除失败";

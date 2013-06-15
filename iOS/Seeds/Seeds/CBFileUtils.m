@@ -161,4 +161,50 @@
 //    return zipPath;
 //}
 
++(BOOL) isFileExists:(NSString*) fileFullPath
+{
+    BOOL flag = NO;
+    
+    NSFileManager * fm = [NSFileManager defaultManager];
+    flag = [fm fileExistsAtPath:fileFullPath];
+    
+    return flag;
+}
+
++(BOOL) deleteFile:(NSString*) fileFullPath
+{
+    BOOL flag = NO;
+    
+    if (nil != fileFullPath && 0 < fileFullPath.length)
+    {
+        NSFileManager * fm = [NSFileManager defaultManager];
+        NSError* error = nil;
+        
+        flag = [CBFileUtils isFileExists:fileFullPath];
+        if (flag)
+        {
+            flag = [fm removeItemAtPath:fileFullPath error:&error];
+            if (!flag)
+            {
+                DLog(@"Failed to delete file at path: %@ with error: %@", fileFullPath, error.localizedDescription);
+            }
+        }
+    }
+    
+    return flag;
+}
+
++(BOOL) createFile:(NSString*) fileFullPath content:(id)content
+{
+    BOOL flag = NO;
+    
+    if (nil != fileFullPath && 0 < fileFullPath.length)
+    {
+        NSFileManager *fm = [NSFileManager defaultManager];
+        flag = [fm createFileAtPath:fileFullPath contents:content attributes:nil];
+    }
+    
+    return flag;
+}
+
 @end

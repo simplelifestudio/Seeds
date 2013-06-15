@@ -8,6 +8,8 @@
 
 #import "TorrentDownloadAgent.h"
 
+#import "CBFileUtils.h"
+
 @interface TorrentDownloadAgent()
 {
     NSString* code;
@@ -16,7 +18,7 @@
     NSString* fileFullPath;
 }
 
--(void) computeCodeFromLink:(NSString*) link;
+-(void) computeCode:(Seed*) seed;
 -(void) computeDownloadFullPath:(NSString*) path;
 
 @end
@@ -25,35 +27,73 @@
 
 @synthesize delegate = _delegate;
 
++(NSString*) torrentCode:(Seed *)seed
+{
+    NSString* code = nil;
+    
+    if (nil != seed && nil != seed.torrentLink)
+    {
+        // link sample: http://www.maxp2p.com/link.php?ref=LCOqeYLdky        
+        NSRange range = [seed.torrentLink rangeOfString:BASEURL_TORRENTCODE];
+        if (0 < range.length)
+        {
+            code = [seed.torrentLink substringFromIndex:range.length];
+        }
+    }
+    
+    return code;
+}
+
++(NSString*) torrentFileName:(Seed*) seed
+{
+    NSString* fileName = nil;
+    
+    NSString* code = [TorrentDownloadAgent torrentCode:seed];
+    if (nil != code && 0 < code.length)
+    {
+        NSMutableString* mutableStr = [NSMutableString string];
+        [mutableStr appendString:code];
+        [mutableStr appendString:FILE_EXTENDNAME_DOT_TORRENT];
+        fileName = mutableStr;
+    }
+    
+    return fileName;
+}
+
++(NSString*) torrentFileFullPath:(Seed *)seed
+{
+    NSString* fullPath = nil;
+    
+    if (nil != seed)
+    {
+        NSString* downloadPath = [TransmissionModule downloadTorrentsFolderPath];
+        
+        NSString* fileName = [TorrentDownloadAgent torrentFileName:seed];
+        if (nil != fileName && 0 < fileName.length)
+        {
+            fullPath = [downloadPath stringByAppendingPathComponent:fileName];
+        }
+    }
+    
+    return fullPath;
+}
+
 -(id) initWithSeed:(Seed*) seed downloadPath:(NSString *)path
 {
     self = [super init];
     if (self)
     {
-        [self computeCodeFromLink:seed.torrentLink];
+        [self computeCode:seed];
         [self computeDownloadFullPath:path];
     }
     
     return self;
 }
 
--(void) computeCodeFromLink:(NSString*) link
+-(void) computeCode:(Seed*) seed
 {
-    code = nil;
-    
-    // link sample: http://www.maxp2p.com/link.php?ref=LCOqeYLdky
-    if (nil != link && 0 < link.length)
-    {
-        NSRange range = [link rangeOfString:BASEURL_TORRENTCODE];
-        if (0 < range.length)
-        {
-            code = [link substringFromIndex:range.length];
-            NSMutableString* mutableStr = [NSMutableString string];
-            [mutableStr appendString:code];
-            [mutableStr appendString:FILE_EXTENDNAME_DOT_TORRENT];
-            fileName = mutableStr;
-        }
-    }
+    code = [TorrentDownloadAgent torrentCode:seed];
+    fileName = [TorrentDownloadAgent torrentFileName:seed];
 }
 
 -(void) computeDownloadFullPath:(NSString*) path
@@ -82,10 +122,10 @@
         
         AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
         [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
-        [client setDefaultHeader:@"Accept" value:@"multipart/form-data"];
+        [client setDefaultHeader:HTTP_HEADER_ACCEPT value:HTTP_HEADER_FORMDATA];
         
         [client
-            postPath:@"load.php"
+            postPath:URL_LOADPAGE
             parameters:parameters
             success:successBlock
             failure:failBlock
@@ -106,7 +146,7 @@
     
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    [client setDefaultHeader:@"Accept" value:@"multipart/form-data"];
+    [client setDefaultHeader:HTTP_HEADER_ACCEPT value:HTTP_HEADER_FORMDATA];
     
     if ([_delegate respondsToSelector:@selector(torrentDownloadStarted:)])
     {
@@ -114,7 +154,7 @@
     }
     
     [client
-        postPath:@"load.php"
+        postPath:URL_LOADPAGE
         parameters:parameters
         success:^(AFHTTPRequestOperation *operation, id responseObject)
         {
@@ -123,21 +163,9 @@
                 [_delegate torrentDownloadFinished:code];
             }
          
-            NSFileManager * fm = [NSFileManager defaultManager];
-            BOOL flag = [fm removeItemAtPath:fileFullPath error:nil];
-            if (!flag)
-            {
-                DLog(@"Failed to delete file at path: %@", fileFullPath);
-                
-                if ([_delegate respondsToSelector:@selector(torrentSaveFailed:filePath:)])
-                {
-                    [_delegate torrentSaveFailed:code filePath:fileFullPath];
-                }
-                
-                return;
-            }
+            BOOL flag = [CBFileUtils deleteFile:fileFullPath];
             
-            flag = [fm createFileAtPath:fileFullPath contents:responseObject attributes:nil];
+            flag = [CBFileUtils createFile:fileFullPath content:responseObject];
             if(flag)
             {
                 if ([_delegate respondsToSelector:@selector(torrentSaveFinished:filePath:)])

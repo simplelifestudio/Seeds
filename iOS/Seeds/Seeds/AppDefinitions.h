@@ -42,11 +42,15 @@
 #define BASEURL_TORRENT @"http://www.maxp2p.com/"
 #define BASEURL_TORRENTCODE @"http://www.maxp2p.com/link.php?ref="
 #define FORM_ATTRKEY_REF @"ref"
+#define URL_LOADPAGE @"load.php"
+#define URL_INDEXPAGE @"index.html"
+#define HTTP_HEADER_ACCEPT @"Accept"
+#define HTTP_HEADER_FORMDATA @"multipart/form-data"
 
 #define FOLDER_TORRENTS @"torrents"
 #define FILE_EXTENDNAME_DOT_TORRENT @".torrent"
 
-#define SEEDPICTURE_MAX_CONCURRENT_DOWNLOADS 10
+#define SEEDPICTURE_MAX_CONCURRENT_DOWNLOADS 20
 
 #define CACHE_EXPIRE_PERIOD 60*60*24*3
 

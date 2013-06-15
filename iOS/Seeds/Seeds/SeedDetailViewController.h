@@ -13,8 +13,9 @@
 
 #import "SDWebImageManager.h"
 #import "CircularProgressView.h"
+#import "TorrentDownloadAgent.h"
 
-@interface SeedDetailViewController : UICollectionViewController
+@interface SeedDetailViewController : UICollectionViewController <TorrentDownloadAgentDelegate>
 
 @property (nonatomic, strong) Seed* seed;
 

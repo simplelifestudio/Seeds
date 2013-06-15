@@ -36,8 +36,7 @@
     [self updateConsole:NSLocalizedString(@"Torrent files are preparing...", nil)];
     
     NSArray* last3Days = [CBDateUtils lastThreeDays];
-    NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
-    NSString* torrentsPath = [documentsPath stringByAppendingPathComponent:FOLDER_TORRENTS];
+    NSString* torrentsPath = [TransmissionModule downloadTorrentsFolderPath];
     NSFileManager* fm = [NSFileManager defaultManager];
     BOOL flag = NO;
     NSError* error = nil;

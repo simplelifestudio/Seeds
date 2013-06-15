@@ -8,9 +8,19 @@
 
 #import "SeedDetailViewController.h"
 
+#import "TorrentDownloadAgent.h"
+#import "CBFileUtils.h"
+
+#define _HUD_DELAY 1.5
+
 @interface SeedDetailViewController ()
 {
-
+    TorrentDownloadAgent* _downloadAgent;
+    
+    MBProgressHUD* _HUD;
+    
+    UIBarButtonItem* _deleteBarButton;
+    UIBarButtonItem* _downloadBarButton;
 }
 
 @end
@@ -42,6 +52,13 @@
     
 //    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDPICTURECOLLECTIONCELL bundle:nil];
 //    [self.collectionView registerNib:nib forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
+    
+    _deleteBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Delete", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickDeleteBarButton)];
+    _downloadBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Download", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickDownloadBarButton)];
+    
+    _HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    _HUD.minSize = HUD_SIZE;
+    [self.view addSubview:_HUD];
 }
 
 - (void)viewDidLoad
@@ -53,12 +70,33 @@
 {
     [self.navigationController setNavigationBarHidden:NO];
     
+    [self _arrangeBarButtons];
+    
     [super viewWillAppear:animated];    
+}
+
+- (void) _arrangeBarButtons
+{
+    NSString* torrentFileFullPath = [TorrentDownloadAgent torrentFileFullPath:_seed];
+    BOOL isFileExists = [CBFileUtils isFileExists:torrentFileFullPath];
+    if (isFileExists)
+    {
+        self.navigationItem.rightBarButtonItems = @[_deleteBarButton];
+    }
+    else
+    {
+        self.navigationItem.rightBarButtonItems = @[_downloadBarButton];
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+- (void) setSeed:(Seed *)seed
+{
+    _seed = seed;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
@@ -102,6 +140,101 @@
             [seedPictureViewController setSeedPicture:selctedPicture];
         }
     }
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+}
+
+- (void) _onClickDownloadBarButton
+{
+    [self _showHUD:NSLocalizedString(@"Preparing", nil)];
+    
+    TransmissionModule* transModule = [TransmissionModule sharedInstance];
+    NSString* downloadDirFullPath = [transModule generateDownloadRootDirectory];
+    if (nil == downloadDirFullPath)
+    {
+        DLog(@"Download root directory is not ready.");
+        [self _hideHUD:NSLocalizedString(@"Directory Unready", nil)];
+        
+        return;
+    }
+    
+    _downloadAgent = [[TorrentDownloadAgent alloc] initWithSeed:_seed downloadPath:downloadDirFullPath];    
+    [_downloadAgent downloadWithDelegate:self];
+}
+
+-(void) _onClickDeleteBarButton
+{
+   [self _showHUD:NSLocalizedString(@"Preparing", nil)];
+    
+    NSString* torrentFileFullPath = [TorrentDownloadAgent torrentFileFullPath:_seed];
+    
+    BOOL isFileExist = [CBFileUtils isFileExists:torrentFileFullPath];
+    if (isFileExist)
+    {
+        BOOL deleteSuccess = [CBFileUtils deleteFile:torrentFileFullPath];
+        if (deleteSuccess)
+        {
+            [self _hideHUD:NSLocalizedString(@"Torrent Deleted", nil)];
+        }
+        else
+        {
+            [self _hideHUD:NSLocalizedString(@"Delete Failed", nil)];
+        }
+    }
+    
+    [self _arrangeBarButtons];
+}
+
+#pragma TorrentDownloadAgentDelegate
+-(void) torrentDownloadStarted:(NSString*) torrentCode
+{
+    _HUD.mode = MBProgressHUDModeIndeterminate;
+    _HUD.labelText = NSLocalizedString(@"Torrent Downloading", nil);
+}
+
+-(void) torrentDownloadFinished:(NSString*) torrentCode
+{
+    [self _hideHUD:NSLocalizedString(@"Torrent Downloaded", nil)];
+
+    [self _arrangeBarButtons];
+}
+
+-(void) torrentDownloadFailed:(NSString*) torrentCode error:(NSError*) error
+{
+    [self _hideHUD:NSLocalizedString(@"Download Failed", nil)];
+    
+    [self _arrangeBarButtons];    
+}
+
+-(void) torrentSaveFinished:(NSString*) torrentCode filePath:(NSString*) filePath
+{
+    [self _hideHUD:NSLocalizedString(@"Torrent Saved", nil)];
+    
+    [self _arrangeBarButtons];    
+}
+
+-(void) torrentSaveFailed:(NSString*) torrentCode filePath:(NSString*) filePath
+{
+    [self _hideHUD:NSLocalizedString(@"Save Failed", nil)];
+    
+    [self _arrangeBarButtons];    
+}
+
+-(void) _showHUD:(NSString*) majorStatus
+{
+    _HUD.mode = MBProgressHUDModeText;
+    _HUD.labelText = majorStatus;
+    [_HUD show:YES];
+}
+
+-(void) _hideHUD:(NSString*) majorStatus
+{
+    _HUD.mode = MBProgressHUDModeText;
+    _HUD.labelText = majorStatus;
+    [_HUD hide:YES afterDelay:_HUD_DELAY];
 }
 
 @end

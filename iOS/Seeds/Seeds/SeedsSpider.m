@@ -331,7 +331,7 @@
 //            // Create date folder if necessary
 //            NSString* dateStr = (NSString*)key;
 //            NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
-//            NSString* torrentsPath = [documentsPath stringByAppendingPathComponent:FOLDER_TORRENTS];
+//            NSString* torrentsPath = [TransmissionModule downloadTorrentsFolderPath];
 //            
 //            NSFileManager* fm = [NSFileManager defaultManager];
 //            NSError* error = nil;

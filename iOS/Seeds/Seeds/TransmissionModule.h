@@ -11,6 +11,8 @@
 
 @interface TransmissionModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate>
 
++(NSString*) downloadTorrentsFolderPath;
+
 -(BOOL) startHTTPServer;
 -(void) stopHTTPServer;
 
@@ -18,5 +20,7 @@
 -(NSString*) httpServerName;
 
 -(BOOL) generateHtmlPage:(NSArray*) last3Days;
+-(NSString*) generateDownloadRootDirectory;
+-(NSString*) generateDownloadSubDirectory:(NSString*) subDirName;
 
 @end

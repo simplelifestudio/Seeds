@@ -23,6 +23,19 @@
 
 SINGLETON(TransmissionModule)
 
++(NSString*) downloadTorrentsFolderPath
+{
+    static NSString* fullPath = nil;
+
+    if (nil == fullPath)
+    {
+        fullPath = [CBPathUtils documentsDirectoryPath];
+        fullPath = [fullPath stringByAppendingPathComponent:FOLDER_TORRENTS];
+    }
+
+    return fullPath;
+}
+
 -(void) initModule
 {
     [self setModuleIdentity:NSLocalizedString(@"Transmission Module", nil)];
@@ -56,8 +69,7 @@ SINGLETON(TransmissionModule)
 	// [httpServer setPort:12345];
 	
 	// Serve files from our embedded Web folder
-    NSString* webPath = [CBPathUtils documentsDirectoryPath];
-    webPath = [webPath stringByAppendingPathComponent:FOLDER_TORRENTS];
+    NSString* webPath = [TransmissionModule downloadTorrentsFolderPath];
 	DLog(@"HTTP server document root: %@", webPath);
 	[httpServer setDocumentRoot:webPath];
     
@@ -66,7 +78,9 @@ SINGLETON(TransmissionModule)
 
 -(void) processService
 {
-    MODULE_DELAY    
+    [self generateDownloadRootDirectory];
+    
+    MODULE_DELAY
 }
 
 - (BOOL)startHTTPServer
@@ -151,9 +165,8 @@ SINGLETON(TransmissionModule)
     
     NSData* data = [htmlCodeCopy dataUsingEncoding: encodingMode];
 
-    NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
-    NSString* torrentsPath = [documentsPath stringByAppendingPathComponent:FOLDER_TORRENTS];
-    NSString* indexHtmlFilePath = [torrentsPath stringByAppendingPathComponent:@"index.html"];
+    NSString* torrentsPath = [TransmissionModule downloadTorrentsFolderPath];
+    NSString* indexHtmlFilePath = [torrentsPath stringByAppendingPathComponent:URL_INDEXPAGE];
     
     flag = [CBFileUtils dataToFile:data filePath:indexHtmlFilePath];
     if (!flag)
@@ -162,6 +175,53 @@ SINGLETON(TransmissionModule)
     }
     
     return flag;
+}
+
+-(NSString*) generateDownloadRootDirectory
+{
+    NSString* fullPath = nil;
+    
+    BOOL flag = NO;
+    
+    NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
+    NSString* torrentsPath = [documentsPath stringByAppendingPathComponent:FOLDER_TORRENTS];
+    
+    flag = [CBPathUtils createDirectoryWithFullPath:torrentsPath];
+    
+    if (flag)
+    {
+        fullPath = torrentsPath;
+    }
+    
+    return fullPath;
+}
+
+-(NSString*) generateDownloadSubDirectory:(NSString*) subDirName
+{
+    NSString* fullPath = nil;
+    
+    BOOL flag = NO;
+    
+    if (nil != subDirName && 0 < subDirName.length)
+    {
+        fullPath = [self generateDownloadRootDirectory];
+        if (nil != fullPath)
+        {
+            NSString* subDirPath = [fullPath stringByAppendingPathComponent:subDirName];
+            flag = [CBPathUtils createDirectoryWithFullPath:subDirPath];
+            
+            if (flag)
+            {
+                fullPath = subDirPath;
+            }
+            else
+            {
+                fullPath = nil;
+            }
+        }
+    }
+    
+    return fullPath;
 }
 
 -(void)applicationWillResignActive:(UIApplication *)application

@@ -23,6 +23,11 @@
 "Mosaic" = "Mosaic";
 "No-Mosaic" = "No-Mosaic";
 
+"Stop" = "Stop";
+"Unsync" = "Unsync";
+"Download" = "Download";
+"Delete" = "Delete";
+
 "Preparing" = "Preparing";
 "Stamps Computing" = "Stamps Computing";
 "Pulling" = "Pulling";
@@ -42,8 +47,6 @@
 "Folder Exception" = "Folder Exception";
 
 "Torrents Downloading" = "Torrents Downloading";
-
-"Stop" = "Stop";
 
 "Transmission module is initializing..." = "Transmission module is initializing...";
 "Torrents directory failed to create." = "Torrents directory failed to create.";
@@ -68,4 +71,11 @@
 "Seeds Received" = "Seeds Received";
 "Seeds Unreachable" = "Seeds Unreachable";
 
-"Unsync" = "Unsync";
+"Directory Unready" = "Directory Unready";
+"Torrent Downloading" = "Torrent Downloading";
+"Torrent Downloaded" = "Torrent Downloaded";
+"Download Failed" = "Download Failed";
+"Torrent Saved" = "Torrent Saved";
+"Save Failed" = "Save Failed";
+"Torrent Deleted" = "Torrent Deleted";
+"Delete Failed" = "Delete Failed";

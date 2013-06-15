@@ -245,7 +245,7 @@
                                     <action selector="onClickSyncButton:" destination="Zgz-l6-5CC" eventType="touchUpInside" id="lRd-tH-eyq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="aYR-KQ-Lhr" userLabel="favoriteListButton">
+                            <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="aYR-KQ-Lhr" userLabel="favoriteListButton">
                                 <rect key="frame" x="10" y="412" width="70" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
@@ -260,7 +260,7 @@
                                     <segue destination="hhR-n2-zpg" kind="push" identifier="home2favoriteseedlist" id="nt0-MF-jqk"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6Nz-cU-b0U" userLabel="downloadAllButton">
+                            <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6Nz-cU-b0U" userLabel="downloadAllButton">
                                 <rect key="frame" x="240" y="412" width="70" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
@@ -287,7 +287,7 @@
                                     <segue destination="ypD-in-EEl" kind="push" identifier="home2transmit" id="DsB-e3-6ZR"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AVa-EW-U7W" userLabel="configButton">
+                            <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="AVa-EW-U7W" userLabel="configButton">
                                 <rect key="frame" x="240" y="487" width="70" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
@@ -480,8 +480,8 @@
         </scene>
     </scenes>
     <classes>
-        <class className="CBAsyncImageView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CBAsyncImageView.h"/>
+        <class className="AsyncImageView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AsyncImageView.h"/>
         </class>
         <class className="ConfigViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ConfigViewController.h"/>
@@ -514,11 +514,15 @@
         </class>
         <class className="SeedDetailViewController" superclassName="UICollectionViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SeedDetailViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="onClickDownloadBarButton:"/>
+                <relationship kind="outlet" name="downloadBarButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
         </class>
         <class className="SeedListTableCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SeedListTableCell.h"/>
             <relationships>
-                <relationship kind="outlet" name="asyncImageView" candidateClass="CBAsyncImageView"/>
+                <relationship kind="outlet" name="asyncImageView" candidateClass="AsyncImageView"/>
                 <relationship kind="outlet" name="formatLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="mosaicLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nameLabel" candidateClass="UITextView"/>
@@ -531,7 +535,7 @@
         <class className="SeedPictureCollectionCell" superclassName="UICollectionViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SeedPictureCollectionCell.h"/>
             <relationships>
-                <relationship kind="outlet" name="asyncImageView" candidateClass="CBAsyncImageView"/>
+                <relationship kind="outlet" name="asyncImageView" candidateClass="AsyncImageView"/>
                 <relationship kind="outlet" name="label" candidateClass="UILabel"/>
             </relationships>
         </class>
@@ -576,6 +580,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="jKm-Mf-P9D"/>
+        <segue reference="Wg4-Q0-2ZF"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -28,6 +28,10 @@ typedef void (^TorrentDownloadFailBlock)(AFHTTPRequestOperation *operation, NSEr
 
 @property (nonatomic, strong) id<TorrentDownloadAgentDelegate> delegate;
 
++(NSString*) torrentCode:(Seed*) seed;
++(NSString*) torrentFileName:(Seed*) seed;
++(NSString*) torrentFileFullPath:(Seed*) seed;
+
 -(id) initWithSeed:(Seed*) seed downloadPath:(NSString*) path;
 
 -(void) download:(TorrentDownloadSuccessBlock) successBlock failBlock:(TorrentDownloadFailBlock) failBlock;

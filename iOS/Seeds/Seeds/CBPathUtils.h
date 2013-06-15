@@ -12,4 +12,6 @@
 
 +(NSString*) documentsDirectoryPath;
 
++(BOOL) createDirectoryWithFullPath:(NSString*) fullPath;
+
 @end

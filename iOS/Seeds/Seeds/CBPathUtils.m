@@ -18,4 +18,22 @@
     return documentDirectory;
 }
 
++(BOOL) createDirectoryWithFullPath:(NSString*) fullPath
+{
+    BOOL flag = NO;
+    
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSError* error = nil;
+    if ([fm fileExistsAtPath:fullPath])
+    {
+        flag = YES;
+    }
+    else
+    {
+        flag = [fm createDirectoryAtPath:fullPath withIntermediateDirectories:NO attributes:nil error:&error];
+    }
+    
+    return flag;
+}
+
 @end
