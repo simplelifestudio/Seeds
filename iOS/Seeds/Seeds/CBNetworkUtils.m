@@ -77,12 +77,12 @@
 
 + (BOOL) isWiFiEnabled
 {
-    return ([[Reachability reachabilityForLocalWiFi] currentReachabilityStatus] != NotReachable);
+    return ([[Reachability reachabilityForLocalWiFi] currentReachabilityStatus] == ReachableViaWiFi);
 }
 
 + (BOOL) is3GEnabled
 {
-    return ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] != NotReachable);
+    return ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus] == ReachableViaWWAN);
 }
 
 @end
