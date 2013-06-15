@@ -10,7 +10,7 @@
 
 #import "CBFileUtils.h"
 
-#define _HUD_DELAY 1.5
+#define _HUD_DELAY 1
 
 @interface FavoriteSeedListViewController ()
 {
@@ -83,6 +83,18 @@
     self.navigationItem.rightBarButtonItems = @[_editBarButton];
 }
 
+- (void) _checkStatusOfEditBarButtonItem
+{
+    if (0 >= favoriteSeedList.count)
+    {
+        self.navigationItem.rightBarButtonItems = @[];
+    }
+    else
+    {
+        self.navigationItem.rightBarButtonItems = @[_editBarButton];
+    }
+}
+
 - (void) _initTableView
 {
     self.tableView.allowsMultipleSelectionDuringEditing = TRUE;
@@ -122,9 +134,9 @@
         }
         firstSeedPictureList = pictureArray;
         
-        
         dispatch_async(dispatch_get_main_queue(), ^(){
             [self.tableView reloadData];
+            [self _checkStatusOfEditBarButtonItem];
         });
     });
 }
