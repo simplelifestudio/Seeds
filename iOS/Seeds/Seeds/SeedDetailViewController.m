@@ -165,6 +165,8 @@
     
     _downloadAgent = [[TorrentDownloadAgent alloc] initWithSeed:_seed downloadPath:downloadDirFullPath];    
     [_downloadAgent downloadWithDelegate:self];
+    
+    [self _resetSeedFavorite:YES];
 }
 
 -(void) _onClickDeleteBarButton
@@ -188,6 +190,24 @@
     }
     
     [self _arrangeBarButtons];
+ 
+    [self _resetSeedFavorite:NO];
+}
+
+-(void) _resetSeedFavorite:(BOOL) favorite
+{
+    dispatch_async(dispatch_get_global_queue(nil, 0), ^(){
+        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+        BOOL flag = [seedDAO favoriteSeed:_seed andFlag:favorite];
+        if (flag)
+        {
+            DLog(@"Favorited seed(%d) in database.", _seed.seedId);
+        }
+        else
+        {
+            DLog(@"Failed to favorite seed(%d) in database.", _seed.seedId);
+        }
+    });
 }
 
 #pragma TorrentDownloadAgentDelegate
