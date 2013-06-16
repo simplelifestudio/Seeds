@@ -23,6 +23,7 @@ if (_cancelTransmission)\
     
     UIBarButtonItem* _stopBarButton;
     
+    BOOL _isTransmissionStarted;
     BOOL _cancelTransmission;
 }
 
@@ -202,28 +203,28 @@ if (_cancelTransmission)\
 
 - (void) updateConsole:(NSString*) info
 {
-    if (nil == consoleInfo)
-    {
-        consoleInfo = [NSMutableString string];
-        
-        NSString* originText = _consoleView.text;
-        if (nil != originText && 0 < originText.length)
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        if (nil == consoleInfo)
         {
-            [consoleInfo appendString:originText];
-            [consoleInfo appendString:@"\n"];
+            consoleInfo = [NSMutableString string];
+            
+            NSString* originText = _consoleView.text;
+            if (nil != originText && 0 < originText.length)
+            {
+                [consoleInfo appendString:originText];
+                [consoleInfo appendString:@"\n"];
+            }
         }
-    }
-
-    if (nil != info && 0 < info.length)
-    {
-        [consoleInfo appendString:info];
-        [consoleInfo appendString:@"\n"];
-
-        dispatch_sync(dispatch_get_main_queue(), ^(){
+        
+        if (nil != info && 0 < info.length)
+        {
+            [consoleInfo appendString:info];
+            [consoleInfo appendString:@"\n"];
+            
             [_consoleView setText:consoleInfo];
             CONSOLE_LINEINFO_DISPLAY_DELAY
-        });
-    }
+        }
+    });
 }
 
 - (void) clearConsole
@@ -250,6 +251,8 @@ if (_cancelTransmission)\
 
 -(void) _onClickStopBarButton
 {
+    _isTransmissionStarted = NO;
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -275,9 +278,14 @@ if (_cancelTransmission)\
 {
     [super viewDidAppear:animated];
     
-    [_consoleView setText:NSLocalizedString(@"Transmission module is initializing...", nil)];
-    
-    [self performSelectorInBackground:@selector(_transmitTaskForUserMannuallyDownloads) withObject:nil];
+    if (!_isTransmissionStarted)
+    {
+        _isTransmissionStarted = YES;
+        
+        [_consoleView setText:NSLocalizedString(@"Transmission module is initializing...", nil)];
+        
+        [self performSelectorInBackground:@selector(_transmitTaskForUserMannuallyDownloads) withObject:nil];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated

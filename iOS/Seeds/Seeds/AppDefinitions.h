@@ -114,7 +114,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define FILE_EXTENDNAME_DOT_HTML @".html"
 #define FILE_NAME_INDEX @"index"
 
-#define CONSOLE_LINEINFO_DISPLAY_DELAY usleep(500000);
+#define CONSOLE_LINEINFO_DISPLAY_DELAY usleep(100000);
 
 // Module: GUI
 #define STORYBOARD_ID_SPLASHVIEWCONTROLLER @"sbid_splashviewcontroller"

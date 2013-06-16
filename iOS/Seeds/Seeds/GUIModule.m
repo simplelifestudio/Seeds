@@ -210,22 +210,7 @@ SINGLETON(GUIModule)
 
 -(void)applicationWillEnterForeground:(UIApplication *)application
 {
-//    UIViewController* vc = _homeViewController.presentedViewController;
-//    if (nil != vc)
-//    {
-//        if (vc != _passcodeViewController)
-//        {
-//            [vc presentModalViewController:_passcodeViewController animated:NO];
-//        }
-//        else
-//        {
-//            // DO NOTHING
-//        }
-//    }
-//    else
-//    {
-//        [_homeViewController presentModalViewController:_passcodeViewController animated:NO];
-//    }
+
 }
 
 @end
