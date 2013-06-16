@@ -39,7 +39,7 @@
 					<object class="IBUITextView" id="411660918">
 						<reference key="NSNextResponder" ref="36386964"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{10, 5}, {300, 60}}</string>
+						<string key="NSFrame">{{0, 5}, {320, 60}}</string>
 						<reference key="NSSuperview" ref="36386964"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="943827512"/>
@@ -71,7 +71,7 @@
 						<reference key="NSNextResponder" ref="36386964"/>
 						<int key="NSvFlags">1282</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{20, 65}, {111, 20}}</string>
+						<string key="NSFrame">{{9, 65}, {110, 20}}</string>
 						<reference key="NSSuperview" ref="36386964"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="983545069"/>
@@ -99,7 +99,7 @@
 						<reference key="NSNextResponder" ref="36386964"/>
 						<int key="NSvFlags">1282</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{209, 65}, {91, 20}}</string>
+						<string key="NSFrame">{{129, 65}, {110, 20}}</string>
 						<reference key="NSSuperview" ref="36386964"/>
 						<reference key="NSWindow"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -111,7 +111,6 @@
 						<reference key="IBUITextColor" ref="555878992"/>
 						<reference key="IBUIHighlightedColor" ref="1067090340"/>
 						<int key="IBUIBaselineAdjustment">0</int>
-						<int key="IBUITextAlignment">2</int>
 						<reference key="IBUIFontDescription" ref="704294993"/>
 						<reference key="IBUIFont" ref="627656800"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
@@ -120,7 +119,7 @@
 						<reference key="NSNextResponder" ref="36386964"/>
 						<int key="NSvFlags">1282</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{130, 65}, {40, 20}}</string>
+						<string key="NSFrame">{{238, 65}, {40, 20}}</string>
 						<reference key="NSSuperview" ref="36386964"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="411903300"/>
@@ -141,7 +140,7 @@
 					<object class="IBUILabel" id="411903300">
 						<reference key="NSNextResponder" ref="36386964"/>
 						<int key="NSvFlags">258</int>
-						<string key="NSFrame">{{169, 65}, {40, 20}}</string>
+						<string key="NSFrame">{{277, 65}, {40, 20}}</string>
 						<reference key="NSSuperview" ref="36386964"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="849097065"/>
@@ -248,9 +247,9 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="411660918"/>
 							<reference ref="943827512"/>
-							<reference ref="849097065"/>
-							<reference ref="411903300"/>
 							<reference ref="983545069"/>
+							<reference ref="411903300"/>
+							<reference ref="849097065"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">seedDetailHeaderView</string>
