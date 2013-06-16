@@ -337,8 +337,8 @@ SINGLETON(SeedPictureAgent)
     NSMutableString* keyInSeedPictureView = [NSMutableString stringWithString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW];
     [keyInSeedPictureView appendString:keyInOriginPicture];
     
-    @autoreleasepool
-    {
+//    @autoreleasepool
+//    {
         UIImage* tempCachedImage = [_imageCache imageFromDiskCacheForKey:keyInSeedListTableCell];
         if (!tempCachedImage)
         {
@@ -361,7 +361,7 @@ SINGLETON(SeedPictureAgent)
             [_imageCache storeImage:thumbnailInSeedPictureView forKey:keyInSeedPictureView];
         }
 #endif
-    }
+//    }
 }
 
 -(UIImage*) thumbnailFromCache:(NSURL*) url thumbnailType:(ThumbnailType) thumbnailType
