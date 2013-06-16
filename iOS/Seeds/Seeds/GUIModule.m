@@ -14,6 +14,7 @@
     MBProgressHUD* _HUD;
     
     PAPasscodeViewController* _passcodeViewController;
+    BOOL _isLockViewVisible;
 }
 
 @synthesize homeViewController = _homeViewController;
@@ -47,6 +48,8 @@ SINGLETON(GUIModule)
     _passcodeViewController.delegate = self;
     _passcodeViewController.simple = YES;
     _passcodeViewController.passcode = @"1002";
+    
+    _isLockViewVisible = NO;
 }
 
 -(void) processService
@@ -110,16 +113,11 @@ SINGLETON(GUIModule)
 - (void)PAPasscodeViewControllerDidCancel:(PAPasscodeViewController *)controller
 {
     UIViewController* vc = _homeViewController.presentedViewController;
-    if (nil != vc)
+
+    if (vc == _passcodeViewController)
     {
-        if (vc != _passcodeViewController)
-        {
-            // DO NOTHING
-        }
-        else
-        {
-            [_homeViewController dismissModalViewControllerAnimated:NO];
-        }
+        [_homeViewController dismissModalViewControllerAnimated:NO];
+        _isLockViewVisible = NO;
     }
 }
 
@@ -136,6 +134,8 @@ SINGLETON(GUIModule)
         {
             [_homeViewController dismissModalViewControllerAnimated:NO];
         }
+        
+        _isLockViewVisible = NO;
     }
 }
 
@@ -186,21 +186,22 @@ SINGLETON(GUIModule)
 
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {
-    UIViewController* vc = _homeViewController.presentedViewController;
-    if (nil != vc)
+    if (!_isLockViewVisible)
     {
-        if (vc != _passcodeViewController)
+        UIViewController* vc = _homeViewController.presentedViewController;
+        if (nil != vc)
         {
-            [vc presentModalViewController:_passcodeViewController animated:NO];
+            if (vc != _passcodeViewController)
+            {
+                [vc presentModalViewController:_passcodeViewController animated:NO];
+                _isLockViewVisible = YES;
+            }
         }
         else
         {
-            // DO NOTHING
+            [_homeViewController presentModalViewController:_passcodeViewController animated:NO];
+            _isLockViewVisible = YES;
         }
-    }
-    else
-    {
-        [_homeViewController presentModalViewController:_passcodeViewController animated:NO];
     }
 }
 
