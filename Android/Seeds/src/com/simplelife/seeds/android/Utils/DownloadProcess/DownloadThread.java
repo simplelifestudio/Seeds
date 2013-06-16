@@ -24,11 +24,18 @@ import java.io.InputStream;
 import java.io.SyncFailedException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -39,6 +46,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 
+import com.simplelife.seeds.android.SeedsDefinitions;
 import com.simplelife.seeds.android.utils.downloadprocess.FileUtils;
 
 /**
@@ -84,11 +92,19 @@ public class DownloadThread extends Thread {
 	public String mNewUri;
 	public boolean mGotData = false;
 	public String mRequestUri;
+	public String mRequestRef;
 
 	public State(DownloadInfo info) {
 	    mMimeType = sanitizeMimeType(info.mMimeType);
 	    mRequestUri = info.mUri;
 	    mFilename = info.mFileName;
+	    
+	    String tStringRef = "ref=";
+	    
+	    if(mRequestUri.indexOf(tStringRef)!=-1)
+	    {
+	    	mRequestRef = mRequestUri.substring(mRequestUri.indexOf(tStringRef) + tStringRef.length());
+	    }
 	}
     }
 
@@ -167,7 +183,15 @@ public class DownloadThread extends Thread {
 	    while (!finished) {
 		Log.i(Constants.TAG, "Initiating request for download "
 			+ mInfo.mId);
-		HttpGet request = new HttpGet(state.mRequestUri);
+		//HttpGet request = new HttpGet(state.mRequestUri);
+		
+		Log.i(Constants.TAG, "mRequestUri: " + state.mRequestUri);
+		Log.i(Constants.TAG, "mRequestRef: " + state.mRequestRef);
+		HttpPost request = new HttpPost(SeedsDefinitions.SEEDS_SERVER_DOWNLOADPHP);
+		List <NameValuePair> params = new ArrayList <NameValuePair>();   
+		params.add(new BasicNameValuePair("ref", state.mRequestRef));
+		request.setEntity(new UrlEncodedFormEntity(params, "utf-8")); 
+		
 		try {
 		    executeDownload(state, client, request);
 		    finished = true;
@@ -211,7 +235,42 @@ public class DownloadThread extends Thread {
 	    mInfo.mHasActiveThread = false;
 	}
     }
+    
+    /**
+     * Fully execute a single download request - setup and send the request,
+     * handle the response, and transfer the data to the destination file.
+     */
+    private void executeDownload(State state, AndroidHttpClient client,
+    	    HttpPost request) throws StopRequest, RetryDownload {
+    	InnerState innerState = new InnerState();
+    	byte data[] = new byte[Constants.BUFFER_SIZE];
 
+    	Log.i("DownloadThread","Executing download post request: "+request);
+    	setupDestinationFile(state, innerState);
+    	addRequestHeaders(innerState, request);
+
+    	// check just before sending the request to avoid using an invalid
+    	// connection at all
+    	Log.i("DownloadThread","Checking connectivity...");
+    	checkConnectivity(state);
+
+    	HttpResponse response = sendRequest(state, client, request);
+    	Log.i("DownloadThread","Reponse received: "+response);
+    	handleExceptionalStatus(state, innerState, response);
+
+    	if (Constants.LOGV) {
+    	    Log.v(Constants.TAG, "received response for " + mInfo.mUri);
+    	}
+
+    	Log.i("DownloadThread","Process response headers...");
+    	processResponseHeaders(state, innerState, response);
+    	Log.i("DownloadThread","Open response entity...");
+    	InputStream entityStream = openResponseEntity(state, response);
+    	Log.i("DownloadThread","Transfer data...");
+    	transferData(state, innerState, data, entityStream);
+        }
+    
+    
     /**
      * Fully execute a single download request - setup and send the request,
      * handle the response, and transfer the data to the destination file.
@@ -298,7 +357,7 @@ public class DownloadThread extends Thread {
      */
     private void finalizeDestinationFile(State state) throws StopRequest {
 	// make sure the file is readable
-	FileUtils.setPermissions(state.mFilename, 0644, -1, -1);
+	//FileUtils.setPermissions(state.mFilename, 0644, -1, -1);
 	syncDestination(state);
     }
 
@@ -781,6 +840,23 @@ public class DownloadThread extends Thread {
      * Send the request to the server, handling any I/O exceptions.
      */
     private HttpResponse sendRequest(State state, AndroidHttpClient client,
+	    HttpPost request) throws StopRequest {
+	try {
+	    return client.execute(request);
+	} catch (IllegalArgumentException ex) {
+	    throw new StopRequest(Downloads.STATUS_HTTP_DATA_ERROR,
+		    "while trying to execute request: " + ex.toString(), ex);
+	} catch (IOException ex) {
+	    logNetworkState();
+	    throw new StopRequest(getFinalStatusForHttpError(state),
+		    "while trying to execute request: " + ex.toString(), ex);
+	}
+    }
+    
+    /**
+     * Send the request to the server, handling any I/O exceptions.
+     */
+    private HttpResponse sendRequest(State state, AndroidHttpClient client,
 	    HttpGet request) throws StopRequest {
 	try {
 	    return client.execute(request);
@@ -861,6 +937,22 @@ public class DownloadThread extends Thread {
 	}
     }
 
+    /**
+     * Add custom headers for this download to the HTTP request.
+     */
+    private void addRequestHeaders(InnerState innerState, HttpPost request) {
+	for (Pair<String, String> header : mInfo.getHeaders()) {
+	    request.addHeader(header.first, header.second);
+	}
+
+	if (innerState.mContinuingDownload) {
+	    if (innerState.mHeaderETag != null) {
+		request.addHeader("If-Match", innerState.mHeaderETag);
+	    }
+	    request.addHeader("Range", "bytes=" + innerState.mBytesSoFar + "-");
+	}
+    }
+    
     /**
      * Add custom headers for this download to the HTTP request.
      */
