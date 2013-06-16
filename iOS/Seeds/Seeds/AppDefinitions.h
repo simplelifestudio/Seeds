@@ -117,6 +117,17 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define CONSOLE_LINEINFO_DISPLAY_DELAY usleep(500000);
 
 // Module: GUI
+#define STORYBOARD_ID_SPLASHVIEWCONTROLLER @"sbid_splashviewcontroller"
+#define STORYBOARD_ID_NAVIGATIONCONTROLLER @"sbid_navigationcontroller"
+#define STORYBOARD_ID_HOMEVIEWCONTROLLER @"sbid_homeviewcontroller"
+#define STORYBOARD_ID_CONFIGVIEWCONTROLLER @"sbid_configviewcontroller"
+#define STORYBOARD_ID_HELPVIEWCONTROLLER @"sbid_helpviewcontroller"
+#define STORYBOARD_ID_SEEDLISTVIEWCONTROLLER @"sbid_seedlistviewcontroller"
+#define STORYBOARD_ID_SEEDDETAILVIEWCONTROLLER @"sbid_seeddetailviewcontroller"
+#define STORYBOARD_ID_SEEDPICTUREVIEWCONTROLLER @"sbid_seedpictureviewcontroller"
+#define STORYBOARD_ID_TRANSMISSIONVIEWCONTROLLER @"sbid_transmissionviewcontroller"
+#define STORYBOARD_ID_FAVORITESEEDLISTVIEWCONTROLLER @"sbid_favoriteseedlistviewcontroller"
+
 #define SEGUE_ID_SPLASH2NAVIGATION @"splash2navigation"
 #define SEGUE_ID_HOME2SEEDLIST @"home2seedlist"
 #define SEGUE_ID_HOME2HELP @"home2help"

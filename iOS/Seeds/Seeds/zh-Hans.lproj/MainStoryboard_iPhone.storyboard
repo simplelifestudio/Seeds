@@ -61,7 +61,7 @@
         <!--Config View Controller - 配置-->
         <scene sceneID="piX-Tb-65d">
             <objects>
-                <viewController id="ubv-3y-Moj" customClass="ConfigViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="sbid_configviewcontroller" id="ubv-3y-Moj" customClass="ConfigViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DOw-LZ-55J">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -109,7 +109,7 @@
         <!--Transmit View Controller - 无线分享-->
         <scene sceneID="JjB-Ju-mFS">
             <objects>
-                <viewController id="ypD-in-EEl" customClass="TransmitViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="sbid_transmissionviewcontroller" id="ypD-in-EEl" customClass="TransmitViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SwE-R3-0ja">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -591,9 +591,6 @@
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
         </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
-        </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -601,6 +598,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="jKm-Mf-P9D"/>
+        <segue reference="Wg4-Q0-2ZF"/>
     </inferredMetricsTieBreakers>
 </document>
