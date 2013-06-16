@@ -31,6 +31,7 @@
 "Edit" = "编辑";
 "Delete" = "删除";
 "Cancel" = "取消";
+"Next" = "继续";
 
 "Preparing" = "准备";
 "Stamps Computing" = "日期计算";
@@ -85,3 +86,16 @@
 "Torrent Deleted" = "种子已删除";
 "Delete Failed" = "删除失败";
 "Delete Done" = "删除成功";
+
+"Set Passcode" = "设置密码";
+"Enter a passcode" = "输入一个密码";
+"Re-enter your passcode" = "再输入一次密码";
+"Enter Passcode" = "输入密码";
+"Enter your passcode" = "输入你的密码";
+"Change Passcode" = "修改密码";
+"Enter your old passcode" = "输入旧密码";
+"Enter your new passcode" = "输入新密码";
+"Re-enter your new passcode" = "再输入一次新密码";
+"Passcodes did not match. Try again." = "密码不对，请重新输入";
+"1 Failed Passcode Attempt" = "1次密码输入错误";
+"%d Failed Passcode Attempts" = "%d次密码输入错误";

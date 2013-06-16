@@ -73,7 +73,7 @@
 
     UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, view.bounds.size.width, NAVBAR_HEIGHT)];
     navigationBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    navigationBar.items = @[self.navigationItem];
+//    navigationBar.items = @[self.navigationItem];
     [view addSubview:navigationBar];
     
     contentView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, view.bounds.size.width, view.bounds.size.height-NAVBAR_HEIGHT)];

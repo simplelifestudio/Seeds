@@ -7,10 +7,13 @@
 //
 
 #import "GUIModule.h"
+#import "SplashViewController.h"
 
 @implementation GUIModule
 {
-    MBProgressHUD* HUD;
+    MBProgressHUD* _HUD;
+    
+    PAPasscodeViewController* _passcodeViewController;
 }
 
 @synthesize homeViewController = _homeViewController;
@@ -22,6 +25,8 @@ SINGLETON(GUIModule)
     [self setModuleIdentity:NSLocalizedString(@"GUI Module", nil)];
     [self.serviceThread setName:NSLocalizedString(@"GUI Module Thread", nil)];
     [self setKeepAlive:FALSE];
+    
+    [self _initPAPasscodeViewController];    
 }
 
 -(void) releaseModule
@@ -32,13 +37,21 @@ SINGLETON(GUIModule)
 -(void) startService
 {
     DLog(@"Module:%@ is started.", self.moduleIdentity);
-    
+        
     [super startService];
+}
+
+-(void) _initPAPasscodeViewController
+{
+    _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionEnter];
+    _passcodeViewController.delegate = self;
+    _passcodeViewController.simple = YES;
+    _passcodeViewController.passcode = @"8964";
 }
 
 -(void) processService
 {
-    // Forbid auto sleep
+#warning Forbid auto sleep
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     
     MODULE_DELAY    
@@ -46,11 +59,11 @@ SINGLETON(GUIModule)
 
 -(void) constructHUD
 {
-    if (nil == HUD)
+    if (nil == _HUD)
     {
         UIWindow* window = [UIApplication sharedApplication].keyWindow;
         //        MBProgressHUD* HUD = [[MBProgressHUD alloc] initWithView:view];
-        HUD = [[MBProgressHUD alloc] initWithWindow:window];
+        _HUD = [[MBProgressHUD alloc] initWithWindow:window];
     }
 }
 
@@ -63,29 +76,28 @@ SINGLETON(GUIModule)
 {
     if (nil != _homeViewController)
     {
-//        UIView* view = _homeViewController.navigationController.visibleViewController.view;
         UIView* view = _homeViewController.navigationController.view;
 
         [self constructHUD];
-        [HUD hide:YES];
+        [_HUD hide:YES];
         
-        [view addSubview:HUD];
+        [view addSubview:_HUD];
         
-        HUD.mode = MBProgressHUDModeText;
-        HUD.minSize = HUD_SIZE;
+        _HUD.mode = MBProgressHUDModeText;
+        _HUD.minSize = HUD_SIZE;
         
-        HUD.labelText = majorStauts;
+        _HUD.labelText = majorStauts;
         if (minorStatus)
         {
-            HUD.detailsLabelText = minorStatus;
+            _HUD.detailsLabelText = minorStatus;
         }
         else
         {
-            HUD.detailsLabelText = nil;
+            _HUD.detailsLabelText = nil;
         }
         
-        [HUD show:YES];
-        [HUD hide:YES afterDelay:seconds];
+        [_HUD show:YES];
+        [_HUD hide:YES afterDelay:seconds];
     }
     else
     {
@@ -97,28 +109,88 @@ SINGLETON(GUIModule)
 
 - (void)PAPasscodeViewControllerDidCancel:(PAPasscodeViewController *)controller
 {
-//    [self dismissViewControllerAnimated:YES completion:nil];
+    UIViewController* vc = _homeViewController.presentedViewController;
+    if (nil != vc)
+    {
+        if (vc != _passcodeViewController)
+        {
+            // DO NOTHING
+        }
+        else
+        {
+            [_homeViewController dismissModalViewControllerAnimated:NO];
+        }
+    }
+    else
+    {
+        // DO NOTHING
+    }
 }
 
 - (void)PAPasscodeViewControllerDidEnterPasscode:(PAPasscodeViewController *)controller
 {
-//    [self dismissViewControllerAnimated:YES completion:^() {
-//        [[[UIAlertView alloc] initWithTitle:nil message:@"Passcode entered correctly" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-//    }];
+    UIViewController* vc = _homeViewController.presentedViewController;
+    if (nil != vc)
+    {
+        if (vc != _passcodeViewController)
+        {
+            [vc dismissModalViewControllerAnimated:NO];
+        }
+        else
+        {
+            [_homeViewController dismissModalViewControllerAnimated:NO];
+        }
+    }
+    else
+    {
+        [_homeViewController presentModalViewController:_passcodeViewController animated:NO];
+    }
 }
 
 - (void)PAPasscodeViewControllerDidSetPasscode:(PAPasscodeViewController *)controller
 {
-//    [self dismissViewControllerAnimated:YES completion:^() {
-//        _passcodeLabel.text = controller.passcode;
-//    }];
+    // TODO: Update passcode(controller.passcode) into user defaults module
+    _passcodeViewController.passcode = controller.passcode;    
+    
+    UIViewController* vc = _homeViewController.presentedViewController;
+    if (nil != vc)
+    {
+        if (vc != _passcodeViewController)
+        {
+            // DO NOTHING
+        }
+        else
+        {
+            [_homeViewController dismissModalViewControllerAnimated:NO];
+        }
+    }
+    else
+    {
+        // DO NOTHING
+    }
 }
 
 - (void)PAPasscodeViewControllerDidChangePasscode:(PAPasscodeViewController *)controller
 {
-//    [self dismissViewControllerAnimated:YES completion:^() {
-//        _passcodeLabel.text = controller.passcode;
-//    }];
+    // TODO: Update passcode(controller.passcode) into user defaults module    
+    _passcodeViewController.passcode = controller.passcode;
+    
+    UIViewController* vc = _homeViewController.presentedViewController;
+    if (nil != vc)
+    {
+        if (vc != _passcodeViewController)
+        {
+            // DO NOTHING
+        }
+        else
+        {
+            [_homeViewController dismissModalViewControllerAnimated:NO];
+        }
+    }
+    else
+    {
+        // DO NOTHING
+    }
 }
 
 #pragma mark - UIApplicationDelegate
@@ -130,17 +202,31 @@ SINGLETON(GUIModule)
 
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {
-    
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    
 }
 
 -(void)applicationWillEnterForeground:(UIApplication *)application
 {
-    
+    UIViewController* vc = _homeViewController.presentedViewController;
+    if (nil != vc)
+    {
+        if (vc != _passcodeViewController)
+        {
+            [vc presentModalViewController:_passcodeViewController animated:NO];
+        }
+        else
+        {
+            // DO NOTHING
+        }
+    }
+    else
+    {
+        [_homeViewController presentModalViewController:_passcodeViewController animated:NO];
+    }
 }
 
 @end

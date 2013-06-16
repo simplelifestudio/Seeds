@@ -31,6 +31,7 @@
 "Edit" = "Edit";
 "Delete" = "Delete";
 "Cancel" = "Cancel";
+"Next" = "Next";
 
 "Preparing" = "Preparing";
 "Stamps Computing" = "Stamps Computing";
@@ -85,3 +86,16 @@
 "Torrent Deleted" = "Torrent Deleted";
 "Delete Failed" = "Delete Failed";
 "Delete Done" = "Delete Done";
+
+"Set Passcode" = "Set Passcode";
+"Enter a passcode" = "Enter a passcode";
+"Re-enter your passcode" = "Re-enter your passcode";
+"Enter Passcode" = "Enter Passcode";
+"Enter your passcode" = "Enter your passcode";
+"Change Passcode" = "Change Passcode";
+"Enter your old passcode" = "Enter your old passcode";
+"Enter your new passcode" = "Enter your new passcode";
+"Re-enter your new passcode" = "Re-enter your new passcode";
+"Passcodes did not match. Try again." = "Passcodes did not match. Try again.";
+"1 Failed Passcode Attempt" = "1 Failed Passcode Attempt";
+"%d Failed Passcode Attempts" = "%d Failed Passcode Attempts";
