@@ -1,3 +1,12 @@
+/*
+ *  Copyright (C) 2013 SimpleLife Studio All rights reserved
+ *  
+ *  SeedsDetailsActivity.java
+ *  Seeds
+ *
+ *  Created by Chris Li on 13-5-20. 
+ */
+
 package com.simplelife.seeds.android;
 
 import java.util.ArrayList;
@@ -331,7 +340,18 @@ public class SeedsDetailsActivity extends Activity{
 		
 		@Override
 		public void onClick(View v) {
-			
+        	// Fetch the download manager to start the download
+        	DownloadManager tDownloadMgr = DownloadManager.getDownloadMgr();
+        	tDownloadMgr.startDownload(mSeedsEntity.getSeedTorrentLink());            	
+        	
+    		Toast toast = Toast.makeText(getApplicationContext(),
+    				"ÒÑ¼ÓÈëÏÂÔØ¶ÓÁÐ", Toast.LENGTH_SHORT);
+    	    toast.setGravity(Gravity.CENTER, 0, 0);
+    	    toast.show();
+            
+        	Intent intent = new Intent();
+        	intent.setClass(SeedsDetailsActivity.this, DownloadList.class);
+        	startActivity(intent);
 
 		}
 	};

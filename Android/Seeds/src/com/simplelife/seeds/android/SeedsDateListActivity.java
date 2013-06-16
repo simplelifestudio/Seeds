@@ -1,3 +1,12 @@
+/*
+ *  Copyright (C) 2013 SimpleLife Studio All rights reserved
+ *  
+ *  SeedsDateListActivity.java
+ *  Seeds
+ *
+ *  Created by Chris Li on 13-5-20. 
+ */
+
 package com.simplelife.seeds.android;
 
 import java.io.IOException;
@@ -117,7 +126,6 @@ public class SeedsDateListActivity extends Activity {
 					try {
 						// Only when the seeds info have not been updated
 						updateDialogStatus("Connecting to Server...");	
-						Thread.sleep(2000);
 						
 						if (!isSeedsInfoUpdated(mDateBefYesterday))
 							opeStatus = updateSeedsInfo(mDateBefYesterday);
@@ -356,6 +364,7 @@ public class SeedsDateListActivity extends Activity {
             		String tStatus = bundle.getString("status");
             		
             		tProgressDialog.setMessage(tStatus);
+            		break;
             		
             	}
                 case MESSAGETYPE_UPDATE:

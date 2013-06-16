@@ -15,6 +15,7 @@ public class SeedsDefinitions {
 	public static final String SEEDS_DATE_BEFYESTERDAY = "befyesterday";
 	public static final String SEEDS_DATE_YESTERDAY = "yesterday";
 	public static final String SEEDS_DATE_TODAY = "today";	
+	public static final String SEEDS_SERVER_DOWNLOADPHP = "http://www.maxp2p.com/load.php";
 	
 	public class SeedsGlobalErrorCode{
 		public static final String SEEDS_ERROR_WRONGREALDATE = "Wrong Calendar Date Detected!";
