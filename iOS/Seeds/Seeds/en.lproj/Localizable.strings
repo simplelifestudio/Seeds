@@ -32,6 +32,7 @@
 "Delete" = "Delete";
 "Cancel" = "Cancel";
 "Next" = "Next";
+"Close" = "Close";
 
 "Preparing" = "Preparing";
 "Stamps Computing" = "Stamps Computing";
@@ -54,16 +55,18 @@
 "Torrents Downloading" = "Torrents Downloading";
 
 "Transmission module is initializing..." = "Transmission module is initializing...";
-"Transmission is cancel." = "Transmission is cancel.";
+"Transmission is cancel." = "Transmission is cancel...";
 "Torrents directory failed to create." = "Torrents directory failed to create.";
 "Torrent files are preparing..." = "Torrent files are preparing...";
 "Torrent files are packaging..." = "Torrent files are packaging...";
 "Web page is generating..." = "Web page is generating...";
-"Web page generation is fail." = "Web page generation is fail.";
+"Web page generation is fail." = "Web page generation is fail...";
 "HTTP server is initializing..." = "HTTP server is initializing...";
 "HTTP server is starting..." = "HTTP server is starting...";
-"HTTP server failed to start." = "HTTP server failed to start.";
+"HTTP server failed to start." = "HTTP server failed to start...";
 "HTTP server address:" = "HTTP server address:";
+"HTTP server stopped." = "HTTP server stopped...";
+
 
 "WiFi Connected" = "WiFi Connected";
 "3G/GPRS Connected" = "3G/GPRS Connected";

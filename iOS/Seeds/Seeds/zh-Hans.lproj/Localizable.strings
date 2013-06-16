@@ -32,6 +32,7 @@
 "Delete" = "删除";
 "Cancel" = "取消";
 "Next" = "继续";
+"Close" = "关闭";
 
 "Preparing" = "准备";
 "Stamps Computing" = "日期计算";
@@ -54,16 +55,17 @@
 "Torrents Downloading" = "种子下载";
 
 "Transmission module is initializing..." = "传输模块初始化...";
-"Transmission is cancel." = "传输取消.";
-"Torrents directory failed to create." = "种子目录创建失败.";
+"Transmission is cancel." = "传输取消...";
+"Torrents directory failed to create." = "种子目录创建失败...";
 "Torrent files are preparing..." = "种子文件准备中...";
 "Torrent files are packaging..." = "种子文件打包中...";
 "Web page is generating..." = "网页生成中...";
 "Web page generation is fail." = "网页生成失败。";
 "HTTP server is initializing..." = "HTTP服务器初始化...";
-"HTTP server is starting..." = "HTTP服务器已经启动...";
-"HTTP server failed to start." = "HTTP服务器启动失败。";
+"HTTP server is starting..." = "HTTP服务器正在启动...";
+"HTTP server failed to start." = "HTTP服务器启动失败...";
 "HTTP server address:" = "HTTP服务器地址：";
+"HTTP server stopped." = "HTTP服务器停止运行...";
 
 "WiFi Connected" = "WiFi连接网络";
 "3G/GPRS Connected" = "3G/GPRS连接网络";

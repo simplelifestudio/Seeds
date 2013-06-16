@@ -24,7 +24,6 @@ if (_cancelTransmission)\
     UIBarButtonItem* _stopBarButton;
     
     BOOL _isTransmissionStarted;
-    BOOL _cancelTransmission;
 }
 
 @end
@@ -229,7 +228,8 @@ if (_cancelTransmission)\
 
 - (void) clearConsole
 {
-    [_consoleView setText:nil];
+    consoleInfo = [NSMutableString string];
+    [self updateConsole:NSLocalizedString(@"Transmission module is initializing...", nil)];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -251,14 +251,14 @@ if (_cancelTransmission)\
 
 -(void) _onClickStopBarButton
 {
-    _isTransmissionStarted = NO;
+    [self _stopTransmissionService];
     
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void) setupView
 {
-    _cancelTransmission = NO;
+    _isTransmissionStarted = NO;
     
     if (nil == _stopBarButton)
     {
@@ -266,6 +266,16 @@ if (_cancelTransmission)\
     }
 
     [self.navigationItem setHidesBackButton:YES];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_appDidEnterBackground)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+}
+
+- (void) _appDidEnterBackground
+{
+    [self _stopTransmissionService];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -278,22 +288,35 @@ if (_cancelTransmission)\
 {
     [super viewDidAppear:animated];
     
+    [self _startTransmissionService];
+}
+
+- (void) _startTransmissionService
+{
     if (!_isTransmissionStarted)
     {
         _isTransmissionStarted = YES;
-        
-        [_consoleView setText:NSLocalizedString(@"Transmission module is initializing...", nil)];
-        
+        [self clearConsole];
         [self performSelectorInBackground:@selector(_transmitTaskForUserMannuallyDownloads) withObject:nil];
+    }
+}
+
+- (void) _stopTransmissionService
+{
+    if (_isTransmissionStarted)
+    {
+        TransmissionModule* transmitModule = [TransmissionModule sharedInstance];
+        [transmitModule stopHTTPServer];
+        
+        [self updateConsole:NSLocalizedString(@"HTTP server stopped.", nil)];
+        
+        _isTransmissionStarted = NO;
     }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
-    TransmissionModule* transmitModule = [TransmissionModule sharedInstance];
-    [transmitModule stopHTTPServer];
 }
 
 - (void)didReceiveMemoryWarning
