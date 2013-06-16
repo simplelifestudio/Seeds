@@ -46,7 +46,7 @@ SINGLETON(GUIModule)
     _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionEnter];
     _passcodeViewController.delegate = self;
     _passcodeViewController.simple = YES;
-    _passcodeViewController.passcode = @"8964";
+    _passcodeViewController.passcode = @"1002";
 }
 
 -(void) processService
@@ -121,10 +121,6 @@ SINGLETON(GUIModule)
             [_homeViewController dismissModalViewControllerAnimated:NO];
         }
     }
-    else
-    {
-        // DO NOTHING
-    }
 }
 
 - (void)PAPasscodeViewControllerDidEnterPasscode:(PAPasscodeViewController *)controller
@@ -140,10 +136,6 @@ SINGLETON(GUIModule)
         {
             [_homeViewController dismissModalViewControllerAnimated:NO];
         }
-    }
-    else
-    {
-        [_homeViewController presentModalViewController:_passcodeViewController animated:NO];
     }
 }
 
@@ -164,10 +156,6 @@ SINGLETON(GUIModule)
             [_homeViewController dismissModalViewControllerAnimated:NO];
         }
     }
-    else
-    {
-        // DO NOTHING
-    }
 }
 
 - (void)PAPasscodeViewControllerDidChangePasscode:(PAPasscodeViewController *)controller
@@ -187,10 +175,6 @@ SINGLETON(GUIModule)
             [_homeViewController dismissModalViewControllerAnimated:NO];
         }
     }
-    else
-    {
-        // DO NOTHING
-    }
 }
 
 #pragma mark - UIApplicationDelegate
@@ -201,15 +185,6 @@ SINGLETON(GUIModule)
 }
 
 -(void)applicationDidEnterBackground:(UIApplication *)application
-{
-
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-}
-
--(void)applicationWillEnterForeground:(UIApplication *)application
 {
     UIViewController* vc = _homeViewController.presentedViewController;
     if (nil != vc)
@@ -227,6 +202,30 @@ SINGLETON(GUIModule)
     {
         [_homeViewController presentModalViewController:_passcodeViewController animated:NO];
     }
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+}
+
+-(void)applicationWillEnterForeground:(UIApplication *)application
+{
+//    UIViewController* vc = _homeViewController.presentedViewController;
+//    if (nil != vc)
+//    {
+//        if (vc != _passcodeViewController)
+//        {
+//            [vc presentModalViewController:_passcodeViewController animated:NO];
+//        }
+//        else
+//        {
+//            // DO NOTHING
+//        }
+//    }
+//    else
+//    {
+//        [_homeViewController presentModalViewController:_passcodeViewController animated:NO];
+//    }
 }
 
 @end
