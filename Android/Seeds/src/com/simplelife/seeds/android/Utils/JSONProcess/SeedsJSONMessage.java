@@ -125,7 +125,13 @@ public class SeedsJSONMessage {
 					tSeedsEntity.addPicLink(tPicList.getString(index3));
 					Log.i("SeedsJSONMessage","Pic link parse done! ");
 				}
-				retSeedsList.add(tSeedsEntity);				
+				retSeedsList.add(tSeedsEntity);	
+				
+				// Temp solution to prevent too many seeds received
+				if(retSeedsList.size() >= 100)
+				{
+					break;
+				}
 			}
 		}
 		
