@@ -118,6 +118,7 @@ public class SeedsDateListActivity extends Activity {
 		public void onClick(View v) {
 
 			tProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", "Please wait...", true, false);
+			tProgressDialog.setCanceledOnTouchOutside(true);
 			
 			// Set up a thread to communicate with server
 			new Thread() {				
@@ -129,6 +130,9 @@ public class SeedsDateListActivity extends Activity {
 						
 						if (!isSeedsInfoUpdated(mDateBefYesterday))
 							opeStatus = updateSeedsInfo(mDateBefYesterday);
+						else
+							// The seeds have already been updated
+							opeStatus = true;
 						
 					} catch (Exception e) {
 						// Show the error message here
@@ -205,6 +209,9 @@ public class SeedsDateListActivity extends Activity {
 						// Only when the seeds info have not been updated
 						if (!isSeedsInfoUpdated(mDateToday))
 							opeStatus = updateSeedsInfo(mDateToday);
+						else
+							// The seeds have already been updated
+							opeStatus = true;
 					} catch (Exception e) {
 						// Show the error message here
 					}
@@ -329,6 +336,7 @@ public class SeedsDateListActivity extends Activity {
         		    bundle.putString("date", mDateBefYesterday);
         		    intent.putExtras(bundle);
         			startActivity(intent);
+        			tProgressDialog.dismiss();
         			break;
             	}
             	case MESSAGETYPE_YESTERD:
