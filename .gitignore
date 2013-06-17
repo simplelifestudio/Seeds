@@ -32,3 +32,5 @@ Android/Seeds/bin/classes/com/simplelife/seeds/android/R$id.class
 Android/Seeds/bin/classes/com/simplelife/seeds/android/R$layout.class
 
 *.class
+
+Android/Seeds/bin/jarlist.cache
