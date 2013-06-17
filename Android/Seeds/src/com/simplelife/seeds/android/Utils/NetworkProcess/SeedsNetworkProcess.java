@@ -119,7 +119,7 @@ public class SeedsNetworkProcess {
 		    String tDate = inDateArray.get(i);
 		    dateList.put(tDate);		    
 		}
-		paramList.put("datelist",dateList);
+		paramList.put("dateList",dateList);
 		
 		JSONObject updateStatusReq = SeedsJSONMessage.SeedsConstructMsg(SeedsJSONMessage.UpdateStatusRequest, paramList);
 		
@@ -162,7 +162,7 @@ public class SeedsNetworkProcess {
 		    String tDate = inDateArray.get(i);
 		    dateList.put(tDate);		    
 		}
-		paramList.put("datelist",dateList);
+		paramList.put("dateList",dateList);
 		
 		JSONObject updateStatusReq = SeedsJSONMessage.SeedsConstructMsg(SeedsJSONMessage.SeedsByDatesRequest, paramList);
 		
