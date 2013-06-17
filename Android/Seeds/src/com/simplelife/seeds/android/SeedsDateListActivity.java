@@ -157,6 +157,7 @@ public class SeedsDateListActivity extends Activity {
 		public void onClick(View v) {
 
 			tProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", "Please wait...", true, false);
+			tProgressDialog.setCanceledOnTouchOutside(true);
 			
 			// Set up a thread to communicate with server
 			new Thread() {
@@ -200,6 +201,7 @@ public class SeedsDateListActivity extends Activity {
 		public void onClick(View v) {
 
 			tProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", "Please wait...", true, false);
+			tProgressDialog.setCanceledOnTouchOutside(true);
 			
 			// Set up a thread to communicate with server
 			new Thread() {				
@@ -232,6 +234,7 @@ public class SeedsDateListActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			tProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", "Please wait...", true, false);
+			tProgressDialog.setCanceledOnTouchOutside(true);
 			
 			// Set up a thread to communicate with server
 			new Thread() {
@@ -263,6 +266,7 @@ public class SeedsDateListActivity extends Activity {
 		public void onClick(View v) {
 			// Show the dialog
 			tProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", "Please wait...", true, false);
+			tProgressDialog.setCanceledOnTouchOutside(true);
 			
 			// Set up a thread to communicate with server
 			new Thread() {				

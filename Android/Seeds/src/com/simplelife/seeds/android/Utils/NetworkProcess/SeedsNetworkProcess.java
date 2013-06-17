@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+import com.simplelife.seeds.android.SeedsDefinitions;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
 
 public class SeedsNetworkProcess {
@@ -69,6 +70,7 @@ public class SeedsNetworkProcess {
 	    DefaultHttpClient httpClient = new DefaultHttpClient();
 	    new BasicResponseHandler();
 	    HttpPost postMethod = new HttpPost(_tgtUrl);
+	    postMethod.addHeader("Content-Type", "application/json");
 	    
 		Log.i("NetworkProcess","Sending Aloha Message to "+_tgtUrl);
 	    // Create Aloha Message
@@ -105,7 +107,9 @@ public class SeedsNetworkProcess {
 		// Prepare network parameters
 	    DefaultHttpClient httpClient = new DefaultHttpClient();
 	    new BasicResponseHandler();
-	    HttpPost postMethod = new HttpPost(mServerUrl);
+	    //HttpPost postMethod = new HttpPost(mServerUrl);
+	    HttpPost postMethod = new HttpPost(SeedsDefinitions.getServerUrl());
+	    postMethod.addHeader("Content-Type", "application/json");
 	    String respInString;
 	    
 		Log.i("NetworkProcess","Sending UpdateStatus Message!");
@@ -148,7 +152,9 @@ public class SeedsNetworkProcess {
 	public static String sendSeedsByDateReqMsg (ArrayList<String> inDateArray ) throws JSONException, ClientProtocolException, IOException {
         // Prepare network parameters
 		DefaultHttpClient httpClient = new DefaultHttpClient();
-	    HttpPost postMethod = new HttpPost(mServerUrl);
+	    //HttpPost postMethod = new HttpPost(mServerUrl);
+		HttpPost postMethod = new HttpPost(SeedsDefinitions.getServerUrl());
+		postMethod.addHeader("Content-Type", "application/json");
 	    String respInString;
 	    
 		Log.i("NetworkProcess","Sending SeedsByDate Message!");

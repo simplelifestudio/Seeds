@@ -56,6 +56,7 @@ public class SeedsConfigActivity extends Activity {
     	}
     	
     	mProgressDialog = ProgressDialog.show(SeedsConfigActivity.this, "Verifying...", "Please wait...", true, false);
+    	mProgressDialog.setCanceledOnTouchOutside(true);
     	
 		new Thread() {
 						
