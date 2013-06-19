@@ -247,6 +247,8 @@
                 
                 BOOL hasSyncYet = optSuccess;
                 [[UserDefaultsModule sharedInstance] setThisDaySync:day sync:hasSyncYet];
+                
+                hasAllSyncBefore = NO;
             }
             else
             {
@@ -254,11 +256,16 @@
                 DLog(@"Seeds channel link can't be found with date: %@", dateStr);
                 if (nil != _seedsSpiderDelegate)
                 {
-                    [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Fail Analyzing", nil)];
+                    [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"No Update", nil)];
+                    
+                    if ([_seedsSpiderDelegate respondsToSelector:@selector(taskDataUpdated:data:)])
+                    {
+                        [_seedsSpiderDelegate taskDataUpdated:[NSString stringWithFormat:@"%d", dayIndex] data:[NSString stringWithFormat:@"%d", 0]];
+                    }
                 }
+                
+                hasAllSyncBefore = YES;
             }
-            
-            hasAllSyncBefore = NO;
         }
         else
         {
