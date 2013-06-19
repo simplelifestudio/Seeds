@@ -156,7 +156,7 @@
     
     NSMutableArray* pulledSeedList = [NSMutableArray array];
     
-    BOOL hasAllSyncBefore = NO;
+    NSInteger hasAllSyncBefore = days.count;
     id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
     NSInteger dayIndex = TheDayBefore;
     for (NSDate* day in days)
@@ -173,6 +173,7 @@
         }
         
         BOOL isDaySyncBefore = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
+        BOOL isDaySyncAfter = NO;
         DLog(@"Seeds in %@ have been synchronized yet? %@", dateStr, (isDaySyncBefore) ? @"YES" : @"NO");
         if (!isDaySyncBefore)
         {
@@ -245,10 +246,7 @@
                     [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Status Saving", nil)];
                 }
                 
-                BOOL hasSyncYet = optSuccess;
-                [[UserDefaultsModule sharedInstance] setThisDaySync:day sync:hasSyncYet];
-                
-                hasAllSyncBefore = NO;
+                isDaySyncAfter = optSuccess;
             }
             else
             {
@@ -264,8 +262,12 @@
                     }
                 }
                 
-                hasAllSyncBefore = YES;
+                isDaySyncAfter = YES;
             }
+            
+            [[UserDefaultsModule sharedInstance] setThisDaySync:day sync:isDaySyncAfter];
+            
+            hasAllSyncBefore--;            
         }
         else
         {
@@ -275,14 +277,12 @@
             {
                 [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Pulled Yet", nil)];
             }
-            
-            hasAllSyncBefore = YES;
         }
-        
-        dayIndex = dayIndex + 1;
+
+        dayIndex++;
     }
         
-    if (hasAllSyncBefore)
+    if (hasAllSyncBefore == days.count)
     {
         if (nil != _seedsSpiderDelegate)
         {
