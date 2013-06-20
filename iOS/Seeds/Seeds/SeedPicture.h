@@ -11,6 +11,7 @@
 @property (nonatomic) BOOL isPlaceHolder;
 
 @property (nonatomic) NSInteger pictureId;
+@property (nonatomic) NSInteger seedLocalId;
 @property (nonatomic) NSInteger seedId;
 @property (nonatomic, strong) NSString* pictureLink;
 @property (nonatomic, strong) NSString* memo;

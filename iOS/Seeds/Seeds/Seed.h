@@ -10,6 +10,7 @@
 
 @interface Seed : NSObject
 
+@property (nonatomic) NSInteger localId;
 @property (nonatomic) NSInteger seedId;
 @property (nonatomic, strong) NSString* type;
 @property (nonatomic, strong) NSString* source;

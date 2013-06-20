@@ -67,7 +67,11 @@
     [_asyncImageView removeFromSuperview];
     
     CGRect rect = self.frame;
-    CGRect rectImageView = CGRectMake(0, 0, rect.size.width, rect.size.height - _label.frame.size.height);
+    
+    CGFloat x = _asyncImageView.frame.origin.x;
+    CGFloat y = _asyncImageView.frame.origin.y;
+    
+    CGRect rectImageView = CGRectMake(x, y, rect.size.width, rect.size.height - _label.frame.size.height);
     AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:rectImageView];
     newImageView.thumbnailType = _asyncImageView.thumbnailType;
     _asyncImageView = newImageView;

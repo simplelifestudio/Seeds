@@ -39,6 +39,7 @@
             SeedPicture* seedPicture = [[SeedPicture alloc] init];
             
             seedPicture.pictureId = [rs intForColumn:TABLE_SEEDPICTURE_COLUMN_PICTUREID];
+            seedPicture.seedLocalId = [rs intForColumn:TABLE_SEEDPICTURE_COLUMN_SEEDLOCALID];
             seedPicture.seedId = [rs intForColumn:TABLE_SEEDPICTURE_COLUMN_SEEDID];
             seedPicture.pictureLink = [rs stringForColumn:TABLE_SEEDPICTURE_COLUMN_PICTURELINK];
             seedPicture.memo = [rs stringForColumn:TABLE_SEEDPICTURE_COLUMN_MEMO];
@@ -245,18 +246,21 @@
              [sql appendString:@" ("];
              [sql appendString:TABLE_SEEDPICTURE_COLUMN_PICTUREID];
              [sql appendString:@", "];
+             [sql appendString:TABLE_SEEDPICTURE_COLUMN_SEEDLOCALID];
+             [sql appendString:@", "];
              [sql appendString:TABLE_SEEDPICTURE_COLUMN_SEEDID];
              [sql appendString:@", "];
              [sql appendString:TABLE_SEEDPICTURE_COLUMN_PICTURELINK];
              [sql appendString:@", "];
              [sql appendString:TABLE_SEEDPICTURE_COLUMN_MEMO];
              [sql appendString:@") values ("];
-             [sql appendString:@"?, ?, ?, ?"];
+             [sql appendString:@"?, ?, ?, ?, ?"];
              [sql appendString:@")"];
              
              // NOTE: Can't use NSInteger or int here as FMDB issue
+             NSNumber* oSeedLocalId = [NSNumber numberWithInteger:seedPicture.seedLocalId];
              NSNumber* oSeedId = [NSNumber numberWithInteger:seedPicture.seedId];
-             flag = [db executeUpdate:sql, seedPicture.pictureId, oSeedId, seedPicture.pictureLink, seedPicture.memo];
+             flag = [db executeUpdate:sql, seedPicture.pictureId, oSeedLocalId, oSeedId, seedPicture.pictureLink, seedPicture.memo];
          }
          
          [db close];

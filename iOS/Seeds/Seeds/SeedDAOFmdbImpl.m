@@ -38,6 +38,7 @@
         {
             Seed* seed = [[Seed alloc] init];
             
+            seed.localId = [rs intForColumn:TABLE_SEED_COLUMN_LOCALID];
             seed.seedId = [rs intForColumn:TABLE_SEED_COLUMN_SEEDID];
             seed.type = [rs stringForColumn:TABLE_SEED_COLUMN_TYPE];
             seed.source = [rs stringForColumn:TABLE_SEED_COLUMN_SOURCE];
@@ -54,9 +55,9 @@
             NSMutableString* sql = [NSMutableString stringWithString:@"select * from "];
             [sql appendString:TABLE_SEEDPICTURE];
             [sql appendString:@" WHERE "];
-            [sql appendString:TABLE_SEEDPICTURE_COLUMN_SEEDID];
+            [sql appendString:TABLE_SEEDPICTURE_COLUMN_SEEDLOCALID];
             [sql appendString:@" = "];
-            [sql appendString:[NSString stringWithFormat:@"%d", seed.seedId]];
+            [sql appendString:[NSString stringWithFormat:@"%d", seed.localId]];
             
             FMResultSet* seedPictureResultSet = [db executeQuery:sql];
             NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:0];
@@ -67,6 +68,7 @@
                     SeedPicture* seedPicture = [[SeedPicture alloc] init];
                     
                     seedPicture.pictureId = [seedPictureResultSet intForColumn:TABLE_SEEDPICTURE_COLUMN_PICTUREID];
+                    seedPicture.seedLocalId = [seedPictureResultSet intForColumn:TABLE_SEEDPICTURE_COLUMN_SEEDLOCALID];
                     seedPicture.seedId = [seedPictureResultSet intForColumn:TABLE_SEEDPICTURE_COLUMN_SEEDID];
                     seedPicture.pictureLink = [seedPictureResultSet stringForColumn:TABLE_SEEDPICTURE_COLUMN_PICTURELINK];
                     seedPicture.memo = [seedPictureResultSet stringForColumn:TABLE_SEEDPICTURE_COLUMN_MEMO];
@@ -106,7 +108,7 @@
         [db open];
         
         NSMutableString* sql = [NSMutableString stringWithString:@"select count("];
-        [sql appendString:TABLE_SEED_COLUMN_SEEDID];
+        [sql appendString:TABLE_SEED_COLUMN_LOCALID];
         [sql appendString:@") from "];
         [sql appendString:TABLE_SEED];
         
@@ -127,7 +129,7 @@
          [db open];
          
          NSMutableString* sql = [NSMutableString stringWithString:@"select count("];
-         [sql appendString:TABLE_SEED_COLUMN_SEEDID];
+         [sql appendString:TABLE_SEED_COLUMN_LOCALID];
          [sql appendString:@") from "];
          [sql appendString:TABLE_SEED];
          [sql appendString:@" where "];
@@ -449,6 +451,8 @@
             NSMutableString* sql = [NSMutableString stringWithString:@"insert into "];
             [sql appendString:TABLE_SEED];
             [sql appendString:@" ("];
+            [sql appendString:TABLE_SEED_COLUMN_SEEDID];
+            [sql appendString:@", "];
             [sql appendString:TABLE_SEED_COLUMN_TYPE];
             [sql appendString:@", "];
             [sql appendString:TABLE_SEED_COLUMN_SOURCE];
@@ -471,10 +475,11 @@
             [sql appendString:@", "];
             [sql appendString:TABLE_SEED_COLUMN_MEMO];
             [sql appendString:@") values ("];
-            [sql appendString:@"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"];
+            [sql appendString:@"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"];
             [sql appendString:@")"];
             
-            flag = [db executeUpdate:sql, seed.type, seed.source, seed.publishDate, seed.name, seed.size, seed.format, seed.torrentLink, (seed.favorite) ? @"1" : @"0", (seed.mosaic) ? @"1" : @"0", seed.hash, seed.memo];
+            NSNumber* oSeedId = [NSNumber numberWithInteger:seed.seedId];
+            flag = [db executeUpdate:sql, oSeedId, seed.type, seed.source, seed.publishDate, seed.name, seed.size, seed.format, seed.torrentLink, (seed.favorite) ? @"1" : @"0", (seed.mosaic) ? @"1" : @"0", seed.hash, seed.memo];
             BOOL hadError = [db hadError];
             if (hadError)
             {
@@ -488,7 +493,7 @@
             {
                 sql = [NSMutableString stringWithCapacity:0];
                 [sql appendString:@"select max("];
-                [sql appendString:TABLE_SEED_COLUMN_SEEDID];
+                [sql appendString:TABLE_SEED_COLUMN_LOCALID];
                 [sql appendString:@") from "];
                 [sql appendString:TABLE_SEED];
                 
@@ -505,21 +510,24 @@
                             if (nil != picture)
                             {
                                 // NOTE: Can't use NSInteger or int here as FMDB issue
-                                NSNumber* oSeedId = [NSNumber numberWithInteger:maxSeedId];
+                                NSNumber* oSeedLocalId = [NSNumber numberWithInteger:maxSeedId];
+                                NSNumber* oSeedId = [NSNumber numberWithInteger:picture.seedId];
                                 
                                 NSMutableString* sql = [NSMutableString stringWithString:@"insert into "];
                                 [sql appendString:TABLE_SEEDPICTURE];
                                 [sql appendString:@" ("];
+                                [sql appendString:TABLE_SEEDPICTURE_COLUMN_SEEDLOCALID];
+                                [sql appendString:@", "];                                
                                 [sql appendString:TABLE_SEEDPICTURE_COLUMN_SEEDID];
                                 [sql appendString:@", "];
                                 [sql appendString:TABLE_SEEDPICTURE_COLUMN_PICTURELINK];
                                 [sql appendString:@", "];
                                 [sql appendString:TABLE_SEEDPICTURE_COLUMN_MEMO];
                                 [sql appendString:@") values ("];
-                                [sql appendString:@"?, ?, ?"];
+                                [sql appendString:@"?, ?, ?, ?"];
                                 [sql appendString:@")"];
                                 
-                                flag = [db executeUpdate:sql, oSeedId, picture.pictureLink, picture.memo];
+                                flag = [db executeUpdate:sql, oSeedLocalId, oSeedId, picture.pictureLink, picture.memo];
                                 hadError = [db hadError];
                                 if (hadError)
                                 {

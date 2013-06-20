@@ -226,7 +226,7 @@ SINGLETON(SeedPictureAgent)
 -(void) instanceInit
 {
     _imageManager = [SDWebImageManager new];
-    _downloadOptions = SDWebImageLowPriority;
+    _downloadOptions = SDWebImageLowPriority | SDWebImageRetryFailed;
     _imageCache = _imageManager.imageCache;
 }
 

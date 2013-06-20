@@ -13,6 +13,7 @@
 @synthesize isPlaceHolder = _isPlaceHolder;
 
 @synthesize pictureId = _pictureId;
+@synthesize seedLocalId = _seedLocalId;
 @synthesize seedId = _seedId;
 @synthesize pictureLink = _pictureLink;
 @synthesize memo = _memo;

@@ -10,6 +10,7 @@
 
 @implementation Seed
 
+@synthesize localId = _localId;
 @synthesize seedId = _seedId;
 @synthesize type = _type;
 @synthesize source = _source;

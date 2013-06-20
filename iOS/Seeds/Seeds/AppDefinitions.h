@@ -81,6 +81,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define DATABASE_FILE_FULL_NAME @"Seeds_App_Database.db"
 
 #define TABLE_SEED @"seed"
+#define TABLE_SEED_COLUMN_LOCALID @"localId"
 #define TABLE_SEED_COLUMN_SEEDID @"seedId"
 #define TABLE_SEED_COLUMN_TYPE @"type"
 #define TABLE_SEED_COLUMN_SOURCE @"source"
@@ -96,6 +97,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 #define TABLE_SEEDPICTURE @"seedpicture"
 #define TABLE_SEEDPICTURE_COLUMN_PICTUREID @"pictureId"
+#define TABLE_SEEDPICTURE_COLUMN_SEEDLOCALID @"seedLocalId"
 #define TABLE_SEEDPICTURE_COLUMN_SEEDID @"seedId"
 #define TABLE_SEEDPICTURE_COLUMN_PICTURELINK @"pictureLink"
 #define TABLE_SEEDPICTURE_COLUMN_MEMO @"memo"
