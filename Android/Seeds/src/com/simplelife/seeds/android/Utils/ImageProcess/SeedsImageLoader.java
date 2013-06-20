@@ -61,9 +61,7 @@ public class SeedsImageLoader {
 	public int getCurrentImgHeight(){
 		return mImgHeight;
 	}
-	
-	
-	// Change a image, I do not like black one...
+		
 	//final int stub_id = R.drawable.no_image;
 	final int stub_id = R.drawable.empty_photo;
 	
