@@ -11,6 +11,7 @@
     <string name="seeds_today">今天</string>
     <string name="seeds_update">更新</string>
     <string name="seeds_config">设置</string>
+    <string name="seeds_httpserver">共享服务</string>
     <string name="seedTitle">The title of the seed</string>
     <string name="seedSize">The size of the seed</string>
     <string name="seedFormat">The format of the seed</string>

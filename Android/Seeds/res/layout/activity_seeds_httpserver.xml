@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <!-- Title Bar is horizontal with a single text view -->
+    <LinearLayout style="@style/HttpTitleBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/HttpTitleText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Android HTTP Server" />
+    
+    </LinearLayout>
+    
+    <!-- Main content is vertical linear, with a horizontal linear for control buttons followed by a horizontal
+text view -->
+    <LinearLayout style="@style/HttpMain">       
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent" android:layout_height="81dp">
+
+            <Button android:id="@+id/start"
+                android:clickable="true"
+                style="@style/HttpMainButton"
+                android:text="Start server"
+                android:drawableTop="@drawable/start"/>
+
+            <Button android:id="@+id/stop"
+                android:hapticFeedbackEnabled="true"
+                style="@style/HttpMainButton"
+                android:text="Stop server"
+                android:drawableTop="@drawable/stop"/>
+
+         </LinearLayout>
+        
+         <LinearLayout
+             android:orientation="horizontal"
+             android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+             <Spinner
+                 android:id="@+id/address"
+                 android:layout_width="fill_parent" android:layout_height="wrap_content">
+
+             </Spinner>
+
+         </LinearLayout>
+        
+         <EditText
+             style="@style/HttpMainText"
+             android:id="@+id/status"
+             android:layout_width="fill_parent"
+             android:gravity="top"
+             android:cursorVisible="false"
+             android:editable="false" 
+             android:layout_height="match_parent"/>
+        
+     </LinearLayout>
+
+</LinearLayout>

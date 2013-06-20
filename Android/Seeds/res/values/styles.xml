@@ -41,5 +41,49 @@
         <item name="android:drawSelectorOnTop">true</item>
         <item name="android:listSelector">@drawable/seedsgrid_photogrid_list_selector</item>
     </style>
+    
+    <!-- Below styles are for the http server package -->
+    <style name="Theme" parent="android:Theme"></style>
+
+    <style name="HttpTitleBar">
+        <item name="android:id">@+id/titleId</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/seeds_httpserver_titleHeight</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@color/titleBackground</item>
+    </style>
+    
+    <style name="HttpTitleText">
+        <item name="android:textColor">@color/titleForeground</item>
+        <item name="android:textSize">15dip</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">8dip</item>
+    </style>
+    
+    <style name="HttpMain">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@color/defaultBackground</item>
+    </style>
+    
+    <style name="HttpMainText">
+        <item name="android:textColor">@color/defaultForeground</item>
+        <item name="android:textSize">15dip</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">8dip</item>
+    </style>
+    
+      <style name="HttpMainButton">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/defaultForeground</item>
+        <item name="android:background">@color/defaultBackground</item>
+    </style>
 
 </resources>

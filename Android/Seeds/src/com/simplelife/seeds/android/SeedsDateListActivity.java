@@ -43,6 +43,7 @@ public class SeedsDateListActivity extends Activity {
 	private Button myUpdateBtn;
 	private Button myFavListBtn;
 	private Button myConfigBtn;
+	private Button myHttpServerBtn;
 	private ProgressDialog tProgressDialog = null; 	
 	
 	// Date in string format
@@ -83,6 +84,7 @@ public class SeedsDateListActivity extends Activity {
 		myYesterdayBtn    = (Button) findViewById(R.id.yesterday_btn);
 		myTodayBtn   = (Button) findViewById(R.id.today_btn);
 		myUpdateBtn  = (Button) findViewById(R.id.update_btn);
+		myHttpServerBtn = (Button) findViewById(R.id.httpserver_btn);
 		myFavListBtn = (Button) findViewById(R.id.favlist_btn);
 		myConfigBtn  = (Button) findViewById(R.id.config_btn);
 		
@@ -92,6 +94,7 @@ public class SeedsDateListActivity extends Activity {
 		myTodayBtn.setOnClickListener(myTodayBtnListener);
 		myFavListBtn.setOnClickListener(myFavListBtnListener);
 		myConfigBtn.setOnClickListener(myConfigBtnListener);
+		myHttpServerBtn.setOnClickListener(myHttpServerBtnListener);
 		
 		Log.i(LOGCLASS, "Working on setting the ProgressDialog style"); 
 		// Set the progress style as spinner
@@ -306,6 +309,14 @@ public class SeedsDateListActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			Intent intent = new Intent(SeedsDateListActivity.this, SeedsConfigActivity.class);
+			startActivity(intent);
+		}
+	};
+	
+	private View.OnClickListener myHttpServerBtnListener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Intent intent = new Intent(SeedsDateListActivity.this, SeedsHttpServiceActivity.class);
 			startActivity(intent);
 		}
 	};

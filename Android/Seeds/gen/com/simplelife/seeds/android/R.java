@@ -15,11 +15,17 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
+        public static final int defaultBackground=0x7f050004;
+        public static final int defaultForeground=0x7f050005;
         public static final int grid_state_focused=0x7f050001;
         public static final int grid_state_pressed=0x7f050000;
+        /**  Below colours are for http server package 
+         */
+        public static final int titleBackground=0x7f050002;
+        public static final int titleForeground=0x7f050003;
     }
     public static final class dimen {
-        public static final int checkmark_area=0x7f060008;
+        public static final int checkmark_area=0x7f060009;
         public static final int image_detail_pager_margin=0x7f060007;
         public static final int image_thumbnail_size=0x7f060005;
         public static final int image_thumbnail_spacing=0x7f060006;
@@ -27,6 +33,7 @@ public final class R {
         public static final int seeds_datalist_leftmargin=0x7f060003;
         public static final int seeds_datalist_rightmargin=0x7f060004;
         public static final int seeds_datalist_topmargin=0x7f060001;
+        public static final int seeds_httpserver_titleHeight=0x7f060008;
         public static final int seeds_team_name=0x7f060000;
     }
     public static final class drawable {
@@ -53,80 +60,87 @@ public final class R {
         public static final int seedsimage_bg=0x7f020014;
         public static final int seedslist_selector=0x7f020015;
         public static final int sign_down=0x7f020016;
+        public static final int start=0x7f020017;
+        public static final int stop=0x7f020018;
     }
     public static final class id {
-        public static final int NavigateHome=0x7f0a0022;
-        public static final int NavigateTitle=0x7f0a0021;
+        public static final int NavigateHome=0x7f0a0023;
+        public static final int NavigateTitle=0x7f0a0022;
         public static final int Seeds_Config=0x7f0a0001;
         public static final int Seeds_Config_Channel=0x7f0a0005;
         public static final int Seeds_Config_ServerAddr=0x7f0a0002;
-        public static final int Seeds_FavList_Title=0x7f0a0024;
-        public static final int Seeds_FullScreen_ProgressBar=0x7f0a001e;
-        public static final int Seeds_LinearLayout_ViewArea=0x7f0a001f;
-        public static final int Seeds_Title=0x7f0a0014;
-        public static final int appIcon=0x7f0a003d;
+        public static final int Seeds_FavList_Title=0x7f0a0025;
+        public static final int Seeds_FullScreen_ProgressBar=0x7f0a001f;
+        public static final int Seeds_LinearLayout_ViewArea=0x7f0a0020;
+        public static final int Seeds_Title=0x7f0a0015;
+        public static final int address=0x7f0a002c;
+        public static final int appIcon=0x7f0a0042;
         public static final int befyesterday_btn=0x7f0a000a;
-        public static final int clear_cache=0x7f0a0043;
-        public static final int config_btn=0x7f0a000f;
+        public static final int clear_cache=0x7f0a0048;
+        public static final int config_btn=0x7f0a0010;
         public static final int config_header=0x7f0a0000;
-        public static final int date_ordered_list=0x7f0a0030;
-        public static final int description=0x7f0a0040;
-        public static final int deselect_all=0x7f0a0035;
-        public static final int details_header=0x7f0a0010;
-        public static final int download_checkbox=0x7f0a0036;
-        public static final int download_icon=0x7f0a0037;
-        public static final int download_menu_sort_by_date=0x7f0a0049;
-        public static final int download_menu_sort_by_size=0x7f0a0048;
-        public static final int download_mgt=0x7f0a0047;
-        public static final int download_progress=0x7f0a0039;
-        public static final int download_seed=0x7f0a0046;
-        public static final int download_title=0x7f0a0038;
-        public static final int edit_message=0x7f0a002f;
+        public static final int date_ordered_list=0x7f0a0035;
+        public static final int description=0x7f0a0045;
+        public static final int deselect_all=0x7f0a003a;
+        public static final int details_header=0x7f0a0011;
+        public static final int download_checkbox=0x7f0a003b;
+        public static final int download_icon=0x7f0a003c;
+        public static final int download_menu_sort_by_date=0x7f0a004e;
+        public static final int download_menu_sort_by_size=0x7f0a004d;
+        public static final int download_mgt=0x7f0a004c;
+        public static final int download_progress=0x7f0a003e;
+        public static final int download_seed=0x7f0a004b;
+        public static final int download_title=0x7f0a003d;
+        public static final int edit_message=0x7f0a0034;
         public static final int edit_serveraddr=0x7f0a0003;
-        public static final int empty=0x7f0a0032;
-        public static final int favlist_btn=0x7f0a000e;
-        public static final int favlist_header=0x7f0a0023;
-        public static final int favorite_btn=0x7f0a0011;
-        public static final int gotoGrid=0x7f0a0013;
-        public static final int gridView=0x7f0a0028;
-        public static final int imageView=0x7f0a0026;
-        public static final int image_slide_page=0x7f0a0017;
-        public static final int last_modified_date=0x7f0a003a;
-        public static final int layout_circle_images=0x7f0a0018;
-        public static final int linearLayout_divider=0x7f0a0019;
+        public static final int empty=0x7f0a0037;
+        public static final int favlist_btn=0x7f0a000f;
+        public static final int favlist_header=0x7f0a0024;
+        public static final int favorite_btn=0x7f0a0012;
+        public static final int gotoGrid=0x7f0a0014;
+        public static final int gridView=0x7f0a0029;
+        public static final int httpserver_btn=0x7f0a000e;
+        public static final int imageView=0x7f0a0027;
+        public static final int image_slide_page=0x7f0a0018;
+        public static final int last_modified_date=0x7f0a003f;
+        public static final int layout_circle_images=0x7f0a0019;
+        public static final int linearLayout_divider=0x7f0a001a;
         public static final int linearLayout_divider1=0x7f0a0004;
         public static final int linearLayout_divider2=0x7f0a0009;
-        public static final int linearlayout_images_slide=0x7f0a0016;
-        public static final int linearlayout_news_main=0x7f0a0015;
-        public static final int list_image=0x7f0a002a;
-        public static final int menu_settings=0x7f0a0044;
-        public static final int pager=0x7f0a0027;
-        public static final int paused_text=0x7f0a0042;
-        public static final int progress_bar=0x7f0a0041;
-        public static final int progress_text=0x7f0a003e;
+        public static final int linearlayout_images_slide=0x7f0a0017;
+        public static final int linearlayout_news_main=0x7f0a0016;
+        public static final int list_image=0x7f0a002f;
+        public static final int menu_settings=0x7f0a0049;
+        public static final int pager=0x7f0a0028;
+        public static final int paused_text=0x7f0a0047;
+        public static final int progress_bar=0x7f0a0046;
+        public static final int progress_text=0x7f0a0043;
         public static final int radioButton1=0x7f0a0006;
         public static final int radioButton2=0x7f0a0007;
         public static final int radioButton3=0x7f0a0008;
-        public static final int seed_info_format=0x7f0a001b;
-        public static final int seed_info_link=0x7f0a001d;
-        public static final int seed_info_name=0x7f0a001a;
-        public static final int seed_info_size=0x7f0a001c;
-        public static final int seeds_download=0x7f0a0012;
-        public static final int seeds_format=0x7f0a002d;
-        public static final int seeds_list=0x7f0a0025;
-        public static final int seeds_size=0x7f0a002c;
-        public static final int seeds_title=0x7f0a002b;
-        public static final int seeds_verify_menu_settings=0x7f0a0045;
-        public static final int selection_delete=0x7f0a0034;
-        public static final int selection_menu=0x7f0a0033;
-        public static final int size_ordered_list=0x7f0a0031;
-        public static final int size_text=0x7f0a003c;
-        public static final int status_text=0x7f0a003b;
-        public static final int textView1=0x7f0a002e;
-        public static final int thumbnail=0x7f0a0029;
-        public static final int title=0x7f0a003f;
+        public static final int seed_info_format=0x7f0a001c;
+        public static final int seed_info_link=0x7f0a001e;
+        public static final int seed_info_name=0x7f0a001b;
+        public static final int seed_info_size=0x7f0a001d;
+        public static final int seeds_download=0x7f0a0013;
+        public static final int seeds_format=0x7f0a0032;
+        public static final int seeds_list=0x7f0a0026;
+        public static final int seeds_size=0x7f0a0031;
+        public static final int seeds_title=0x7f0a0030;
+        public static final int seeds_verify_menu_settings=0x7f0a004a;
+        public static final int selection_delete=0x7f0a0039;
+        public static final int selection_menu=0x7f0a0038;
+        public static final int size_ordered_list=0x7f0a0036;
+        public static final int size_text=0x7f0a0041;
+        public static final int start=0x7f0a002a;
+        public static final int status=0x7f0a002d;
+        public static final int status_text=0x7f0a0040;
+        public static final int stop=0x7f0a002b;
+        public static final int textView1=0x7f0a0033;
+        public static final int thumbnail=0x7f0a002e;
+        public static final int title=0x7f0a0044;
         public static final int today_btn=0x7f0a000c;
-        public static final int top_navigate=0x7f0a0020;
+        public static final int top_navigate=0x7f0a0021;
         public static final int update_btn=0x7f0a000d;
         public static final int yesterday_btn=0x7f0a000b;
     }
@@ -142,15 +156,16 @@ public final class R {
         public static final int activity_seeds_gridview_detailfragment=0x7f030008;
         public static final int activity_seeds_gridview_detailpager=0x7f030009;
         public static final int activity_seeds_gridview_gridfragment=0x7f03000a;
-        public static final int activity_seeds_listperday=0x7f03000b;
-        public static final int activity_seeds_listperday_row=0x7f03000c;
-        public static final int activity_seeds_start=0x7f03000d;
-        public static final int activity_seeds_start_display_message=0x7f03000e;
-        public static final int activity_seeds_start_verify=0x7f03000f;
-        public static final int seeds_download_list=0x7f030010;
-        public static final int seeds_download_list_group_header=0x7f030011;
-        public static final int seeds_download_list_item=0x7f030012;
-        public static final int seeds_download_status_bar_ongoing_event_progress_bar=0x7f030013;
+        public static final int activity_seeds_httpserver=0x7f03000b;
+        public static final int activity_seeds_listperday=0x7f03000c;
+        public static final int activity_seeds_listperday_row=0x7f03000d;
+        public static final int activity_seeds_start=0x7f03000e;
+        public static final int activity_seeds_start_display_message=0x7f03000f;
+        public static final int activity_seeds_start_verify=0x7f030010;
+        public static final int seeds_download_list=0x7f030011;
+        public static final int seeds_download_list_group_header=0x7f030012;
+        public static final int seeds_download_list_item=0x7f030013;
+        public static final int seeds_download_status_bar_ongoing_event_progress_bar=0x7f030014;
     }
     public static final class menu {
         public static final int activity_seeds_gridview_menu=0x7f090000;
@@ -178,10 +193,10 @@ public final class R {
         /**  Text for button to cancel a download that is currently in progress [CHAR LIMIT=25] 
          */
         public static final int cancel_running_download=0x7f070033;
-        public static final int clear_cache_complete_toast=0x7f07005a;
+        public static final int clear_cache_complete_toast=0x7f07005b;
         /**  Below parameters come from the gridview open source tool Bitmapfun 
          */
-        public static final int clear_cache_menu=0x7f070059;
+        public static final int clear_cache_menu=0x7f07005a;
         /** 
          Text for button to delete a download that has completed, or to delete multiple download
          entries [CHAR LIMIT=25]
@@ -318,7 +333,7 @@ public final class R {
          */
         public static final int download_unknown_title=0x7f07000a;
         public static final int hello_world=0x7f070037;
-        public static final int imageview_description=0x7f07005b;
+        public static final int imageview_description=0x7f07005c;
         /**  Text for button to keep a download that has not yet begun [CHAR LIMIT=25] 
          */
         public static final int keep_queued_download=0x7f070032;
@@ -335,7 +350,7 @@ public final class R {
     
          */
         public static final int no_downloads=0x7f070018;
-        public static final int no_network_connection_toast=0x7f07005c;
+        public static final int no_network_connection_toast=0x7f07005d;
         /**  When a download completes, a notification is displayed, and this
         string is used to indicate that the download successfully completed.
         Note that such a download could have been initiated by a variety of
@@ -454,38 +469,39 @@ public final class R {
     
          */
         public static final int retry_download=0x7f070034;
-        public static final int seedFormat=0x7f070042;
-        public static final int seedSize=0x7f070041;
-        public static final int seedTitle=0x7f070040;
-        public static final int seeds_Favorite=0x7f070046;
-        public static final int seeds_UnFavorite=0x7f070047;
+        public static final int seedFormat=0x7f070043;
+        public static final int seedSize=0x7f070042;
+        public static final int seedTitle=0x7f070041;
+        public static final int seeds_Favorite=0x7f070047;
+        public static final int seeds_UnFavorite=0x7f070048;
         public static final int seeds_befyesterday=0x7f07003b;
         public static final int seeds_config=0x7f07003f;
-        public static final int seeds_config_channel=0x7f070051;
-        public static final int seeds_config_channel1=0x7f070052;
-        public static final int seeds_config_channel2=0x7f070053;
-        public static final int seeds_config_channel3=0x7f070054;
-        public static final int seeds_config_page=0x7f070044;
-        public static final int seeds_config_serveraddr=0x7f070045;
-        public static final int seeds_details_top=0x7f070043;
-        public static final int seeds_download_mgt=0x7f070058;
-        public static final int seeds_download_seed=0x7f070057;
-        public static final int seeds_favoritelist=0x7f070048;
+        public static final int seeds_config_channel=0x7f070052;
+        public static final int seeds_config_channel1=0x7f070053;
+        public static final int seeds_config_channel2=0x7f070054;
+        public static final int seeds_config_channel3=0x7f070055;
+        public static final int seeds_config_page=0x7f070045;
+        public static final int seeds_config_serveraddr=0x7f070046;
+        public static final int seeds_details_top=0x7f070044;
+        public static final int seeds_download_mgt=0x7f070059;
+        public static final int seeds_download_seed=0x7f070058;
+        public static final int seeds_favoritelist=0x7f070049;
+        public static final int seeds_httpserver=0x7f070040;
         public static final int seeds_logo=0x7f070039;
-        public static final int seeds_preffilename=0x7f070049;
-        public static final int seeds_pwdmessage=0x7f07004b;
-        public static final int seeds_pwdsend=0x7f07004c;
-        public static final int seeds_severaddrmsg=0x7f07004f;
-        public static final int seeds_severaddrverify=0x7f070050;
-        public static final int seeds_startverify=0x7f07004a;
+        public static final int seeds_preffilename=0x7f07004a;
+        public static final int seeds_pwdmessage=0x7f07004c;
+        public static final int seeds_pwdsend=0x7f07004d;
+        public static final int seeds_severaddrmsg=0x7f070050;
+        public static final int seeds_severaddrverify=0x7f070051;
+        public static final int seeds_startverify=0x7f07004b;
         public static final int seeds_teamlogo=0x7f07003a;
-        public static final int seeds_toast_configfail=0x7f070056;
-        public static final int seeds_toast_configsucc=0x7f070055;
+        public static final int seeds_toast_configfail=0x7f070057;
+        public static final int seeds_toast_configsucc=0x7f070056;
         public static final int seeds_today=0x7f07003d;
         public static final int seeds_update=0x7f07003e;
-        public static final int seeds_verify_menu_settings=0x7f07004d;
+        public static final int seeds_verify_menu_settings=0x7f07004e;
         public static final int seeds_yesterday=0x7f07003c;
-        public static final int title_activity_display_message=0x7f07004e;
+        public static final int title_activity_display_message=0x7f07004f;
         /**  Text for dialog when a download exceeds the carrier-specified recommended maximum size of
         downloads over the mobile network, and the user may choose to start the download over mobile
         anyway or to queue for download to start next time a Wi-Fi connection is available [CHAR
@@ -539,10 +555,18 @@ public final class R {
          */
         public static final int AppTheme=0x7f080002;
         public static final int AppTheme_FullScreen=0x7f080003;
+        public static final int HttpMain=0x7f08000a;
+        public static final int HttpMainButton=0x7f08000c;
+        public static final int HttpMainText=0x7f08000b;
+        public static final int HttpTitleBar=0x7f080008;
+        public static final int HttpTitleText=0x7f080009;
         public static final int PhotoGridLayout=0x7f080006;
         /**  Below style is for the loading dialog 
          */
         public static final int SeedsImageloadingDialogStyle=0x7f080005;
+        /**  Below styles are for the http server package 
+         */
+        public static final int Theme=0x7f080007;
         public static final int Theme_Translucent=0x7f080000;
         public static final int Transparent=0x7f080004;
     }
