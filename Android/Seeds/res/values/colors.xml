@@ -19,5 +19,11 @@
 
     <color name="grid_state_pressed">#BB7dbcd3</color>
     <color name="grid_state_focused">#777dbcd3</color>
+    
+    <!-- Below colours are for http server package -->
+    <color name="titleBackground">#ff1B8EE0</color>
+    <color name="titleForeground">#ffffffff</color>
+    <color name="defaultBackground">#ffffffff</color>
+    <color name="defaultForeground">#ff000000</color>
 
 </resources>

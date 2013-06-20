@@ -97,7 +97,7 @@ public class SeedsConfigActivity extends Activity {
                 		SeedsDefinitions.setServerUrl(mServerUrl);
                 		
                 		Toast toast = Toast.makeText(getApplicationContext(),
-                				"ÉèÖÃ³É¹¦", Toast.LENGTH_LONG);
+                				R.string.seeds_toast_configsucc, Toast.LENGTH_LONG);
                 	    toast.setGravity(Gravity.CENTER, 0, 0);
                 	    mProgressDialog.dismiss();
                 		toast.show();
@@ -106,7 +106,7 @@ public class SeedsConfigActivity extends Activity {
                 	{
                 		// Toast here
                 		Toast toast = Toast.makeText(getApplicationContext(),
-                				"ÎÞÐ§µØÖ·", Toast.LENGTH_LONG);
+                				R.string.seeds_toast_configfail, Toast.LENGTH_LONG);
                 	    toast.setGravity(Gravity.CENTER, 0, 0);
                 	    mProgressDialog.dismiss();
                 		toast.show();
