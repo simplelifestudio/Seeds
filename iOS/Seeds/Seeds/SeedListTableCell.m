@@ -97,11 +97,9 @@
     [super prepareForReuse];
     [_asyncImageView removeFromSuperview];
     
-    CGRect cellRect = self.frame;
-    
-    // x = 10 is same with layout in xib file
-    CGFloat x = 10;
-    AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(x, 0, WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL, cellRect.size.height)];
+    CGFloat x = _asyncImageView.frame.origin.x;
+    CGFloat y = _asyncImageView.frame.origin.y;
+    AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(x, y, WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL, HEIGHT_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL)];
     newImageView.thumbnailType = _asyncImageView.thumbnailType;
     _asyncImageView = newImageView;
     [self addSubview:_asyncImageView];
