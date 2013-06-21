@@ -232,7 +232,7 @@
              }];
              
              [sql appendString:@" WHERE "];
-             [sql appendString:TABLE_SEED_COLUMN_SEEDID];
+             [sql appendString:TABLE_SEED_COLUMN_LOCALID];
              [sql appendString:@" = "];
              [sql appendString:@"'"];
              [sql appendString:[NSString stringWithFormat: @"%d", seedId]];
@@ -280,7 +280,7 @@
         NSMutableDictionary* paramDic = [NSMutableDictionary dictionaryWithCapacity:1];
         [paramDic setObject:favoriteStr forKey:TABLE_SEED_COLUMN_FAVORITE];
         
-        flag = [self updateSeed:seed.seedId withParameterDictionary:paramDic];
+        flag = [self updateSeed:seed.localId withParameterDictionary:paramDic];
     }
     
     return flag;
