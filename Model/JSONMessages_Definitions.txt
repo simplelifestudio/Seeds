@@ -100,8 +100,8 @@
 7. SeedsToCartRequest
 {
     "command": "SeedsToCartRequest",
-    "cartId": "",
     "paramList": {
+    	"cartId": "",
         "seedIdList": [
             "1",
             "7",
