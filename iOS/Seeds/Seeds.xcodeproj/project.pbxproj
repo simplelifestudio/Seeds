@@ -161,6 +161,7 @@
 		C5ADC856173A2DE7007F59D7 /* UserDefaultsModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5ADC855173A2DE7007F59D7 /* UserDefaultsModule.m */; };
 		C5C0CE94176D0F5900FA52C4 /* SeedDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C0CE93176D0F5900FA52C4 /* SeedDetailHeaderView.m */; };
 		C5C0CE96176D103300FA52C4 /* SeedDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */; };
+		C5D8336B1775266A00F4F769 /* NSDictionary+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D8336A1775266A00F4F769 /* NSDictionary+JSON.m */; };
 		C5E0C1F4176AF6E30037811F /* SeedPictureAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */; };
 		C5F8AC4E174A3B72001E30D1 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = C5F8AC4D174A3B72001E30D1 /* index.html */; };
 		C5F8AC50174B9807001E30D1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */; };
@@ -452,6 +453,8 @@
 		C5C0CE92176D0F5900FA52C4 /* SeedDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedDetailHeaderView.h; sourceTree = "<group>"; };
 		C5C0CE93176D0F5900FA52C4 /* SeedDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedDetailHeaderView.m; sourceTree = "<group>"; };
 		C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeedDetailHeaderView.xib; sourceTree = "<group>"; };
+		C5D833691775266900F4F769 /* NSDictionary+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+JSON.h"; sourceTree = "<group>"; };
+		C5D8336A1775266A00F4F769 /* NSDictionary+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+JSON.m"; sourceTree = "<group>"; };
 		C5E0C1F2176AF6E10037811F /* SeedPictureAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SeedPictureAgent.h; path = Seeds/SeedPictureAgent.h; sourceTree = "<group>"; };
 		C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeedPictureAgent.m; path = Seeds/SeedPictureAgent.m; sourceTree = "<group>"; };
 		C5F8AC4D174A3B72001E30D1 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
@@ -930,6 +933,8 @@
 				C5203DFB17485A8500D917F7 /* TorrentListDownloadAgent.m */,
 				C5E0C1F2176AF6E10037811F /* SeedPictureAgent.h */,
 				C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */,
+				C5D833691775266900F4F769 /* NSDictionary+JSON.h */,
+				C5D8336A1775266A00F4F769 /* NSDictionary+JSON.m */,
 			);
 			name = Communication;
 			path = ..;
@@ -1305,6 +1310,7 @@
 				C571E0A3176627CE00E9AD50 /* AsyncImageView.m in Sources */,
 				C5E0C1F4176AF6E30037811F /* SeedPictureAgent.m in Sources */,
 				C5C0CE94176D0F5900FA52C4 /* SeedDetailHeaderView.m in Sources */,
+				C5D8336B1775266A00F4F769 /* NSDictionary+JSON.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
