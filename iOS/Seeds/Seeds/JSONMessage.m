@@ -13,7 +13,7 @@
 @synthesize command = _command;
 @synthesize body = _body;
 
-+(JSONMessage*) construct:(NSString*) command paramList:(NSDictionary*) paramList
++(JSONMessage*) construct:(NSString*) command messageBody:(NSDictionary*) body
 {
     JSONMessage* message = nil;
     
@@ -21,9 +21,9 @@
     {
         NSMutableDictionary* dic = [NSMutableDictionary dictionary];
         [dic setObject:command forKey:JSONMESSAGE_KEY_COMMAND];
-        if (nil != paramList)
+        if (nil != body)
         {
-            [dic setObject:paramList forKey:JSONMESSAGE_KEY_PARAMLIST];
+            [dic setObject:body forKey:JSONMESSAGE_KEY_PARAMLIST];
         }
         message = [[JSONMessage alloc] init];
         [message setCommand:command];
@@ -33,7 +33,7 @@
     return message;
 }
 
-+(JSONMessage*) constructWithType:(JSONMessageType) type paramList:(NSDictionary*) paramList
++(JSONMessage*) constructWithType:(JSONMessageType) type messageBody:(NSDictionary*) body
 {
     JSONMessage* message = nil;
     NSString* command = nil;
@@ -69,6 +69,26 @@
             command = JSONMESSAGE_COMMAND_SEEDSBYDATESRESPONSE;
             break;
         }
+        case SeedsToCartRequest:
+        {
+            command = JSONMESSAGE_COMMAND_SEEDSTOCARTREQUEST;
+            break;
+        }
+        case SeedsToCartResponse:
+        {
+            command = JSONMESSAGE_COMMAND_SEEDSTOCARTRESPONSE;
+            break;
+        }
+        case ExternalSeedsToCartRequest:
+        {
+            command = JSONMESSAGE_COMMAND_EXTERNALSEEDSTOCARTREQUEST;
+            break;
+        }
+        case ExternalSeedsToCartResponse:
+        {
+            command = JSONMESSAGE_COMMAND_EXTERNALSEEDSTOCARTRESPONSE;
+            break;
+        }
         default:
         {
             break;
@@ -77,7 +97,7 @@
     
     if (nil != command)
     {
-        message = [JSONMessage construct:command paramList:paramList];
+        message = [JSONMessage construct:command messageBody:body];
     }
     
     return message;
@@ -92,7 +112,7 @@
         NSString* command = [content objectForKey:JSONMESSAGE_KEY_COMMAND];
         NSDictionary* body = [content objectForKey:JSONMESSAGE_KEY_PARAMLIST];
 
-        message = [JSONMessage construct:command paramList:body];
+        message = [JSONMessage construct:command messageBody:body];
     }
     
     return message;

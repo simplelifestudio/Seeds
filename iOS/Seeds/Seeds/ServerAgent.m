@@ -28,6 +28,7 @@
     
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:BASEURL_SEEDSSERVER]];
     [httpClient setParameterEncoding:AFJSONParameterEncoding];
+    
     request = [httpClient
                requestWithMethod:@"POST"
                path:PATH_MESSAGELISTENER
@@ -53,7 +54,7 @@
     _last3Days = [CBDateUtils lastThreeDays];
 
     NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@"Hello Seeds Server!"] forKeys:@[@"content"]];
-    JSONMessage* message = [JSONMessage constructWithType:AlohaRequest paramList:messageBody];
+    JSONMessage* message = [JSONMessage constructWithType:AlohaRequest messageBody:messageBody];
     DLog(@"Request message:%@",message.body);
     [self requestAsync:message
         success:^(NSURLRequest* request, NSHTTPURLResponse* response, id JSON)
@@ -88,7 +89,7 @@
     NSArray* last3DayStrs = [CBDateUtils lastThreeDayStrings:dates formatString:STANDARD_DATE_FORMAT];
     
     NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@[last3DayStrs[0], last3DayStrs[1], last3DayStrs[2]]] forKeys:@[JSONMESSAGE_KEY_DATELIST]];
-    JSONMessage* message = [JSONMessage constructWithType:SeedsUpdateStatusByDatesRequest paramList:messageBody];
+    JSONMessage* message = [JSONMessage constructWithType:SeedsUpdateStatusByDatesRequest messageBody:messageBody];
 
     DLog(@"Request message:%@", message.body);
     [self requestAsync:message
@@ -124,7 +125,7 @@
     NSArray* last3DayStrs = [CBDateUtils lastThreeDayStrings:dates formatString:STANDARD_DATE_FORMAT];
     
     NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@[last3DayStrs[0], last3DayStrs[1], last3DayStrs[2]]] forKeys:@[JSONMESSAGE_KEY_DATELIST]];
-    JSONMessage* message = [JSONMessage constructWithType:SeedsByDatesRequest paramList:messageBody];
+    JSONMessage* message = [JSONMessage constructWithType:SeedsByDatesRequest messageBody:messageBody];
     
     [self requestAsync:message
         success:^(NSURLRequest* request, NSHTTPURLResponse* response, id JSON)
@@ -152,6 +153,33 @@
                 [_delegate taskFailed:@"Seeds Unreachable" minorStatus:nil];
             }
         }];
+}
+
+-(void) seedsToCart:(NSArray*) seedIds
+{
+    if (nil != seedIds && 0 < seedIds.count)
+    {
+        NSMutableDictionary* messageBody = [NSMutableDictionary dictionaryWithObject:seedIds forKey:@"seedIdList"];
+        [messageBody setValue:@"" forKey:@"cartId"];
+        JSONMessage* message = [JSONMessage constructWithType:SeedsToCartRequest messageBody:messageBody];
+        
+        [self requestAsync:message
+            success:^(NSURLRequest* request, NSHTTPURLResponse* response, id JSON)
+            {
+                NSDictionary* messageContent = (NSDictionary*)JSON;
+                _responseMessage = [JSONMessage constructWithContent:messageContent];
+             
+                DLog(@"Success to receive json message:%@ with response: %@", _responseMessage.command, _responseMessage.body);
+            }
+            failure:^(NSURLRequest* request, NSHTTPURLResponse* response, NSError* error, id JSON)
+            {
+                DLog(@"Failed to receive json message with error code: %@", error.localizedDescription);
+             
+                NSDictionary* messageContent = (NSDictionary*)JSON;
+                _responseMessage = [JSONMessage constructWithContent:messageContent];
+            }
+        ];
+    }
 }
 
 -(void) requestAsync:

@@ -32,8 +32,7 @@
     NSData* data = nil;
     
     NSError *error = nil;
-    data =[NSJSONSerialization dataWithJSONObject:self
-                                               options:kNilOptions error:&error];    
+    data =[NSJSONSerialization dataWithJSONObject:self options:kNilOptions error:&error];    
     data = (nil == error) ? data : nil;
     
     return data;

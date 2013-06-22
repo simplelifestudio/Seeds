@@ -15,7 +15,11 @@ typedef enum
     SeedsUpdateStatusByDatesRequest,
     SeedsUpdateStatusByDatesResponse,
     SeedsByDatesRequest,
-    SeedsByDatesResponse
+    SeedsByDatesResponse,
+    SeedsToCartRequest,
+    SeedsToCartResponse,
+    ExternalSeedsToCartRequest,
+    ExternalSeedsToCartResponse
 }
 JSONMessageType;
 
@@ -24,8 +28,8 @@ JSONMessageType;
 @property (nonatomic, strong) NSString* command;
 @property (nonatomic, strong) NSDictionary* body;
 
-+(JSONMessage*) construct:(NSString*) command paramList:(NSDictionary*) paramList;
-+(JSONMessage*) constructWithType:(JSONMessageType) type paramList:(NSDictionary*) paramList;
++(JSONMessage*) construct:(NSString*) command messageBody:(NSDictionary*) body;
++(JSONMessage*) constructWithType:(JSONMessageType) type messageBody:(NSDictionary*) body;
 +(JSONMessage*) constructWithContent:(NSDictionary*) content;
 
 -(NSDictionary*) content;

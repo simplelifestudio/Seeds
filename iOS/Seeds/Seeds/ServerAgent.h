@@ -21,6 +21,7 @@
 -(void) aloha;
 -(void) seedsUpdateStatusByDates:(NSArray*) dates;
 -(void) seedsByDates:(NSArray*) dates;
+-(void) seedsToCart:(NSArray*) seedIds;
 
 -(void) syncSeedsInfo;
 
