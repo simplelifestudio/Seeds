@@ -124,3 +124,37 @@
         ]
     }
 }
+
+9. ExternalSeedsToCartRequest
+{
+    "command": "SeedsToExternalCartRequest",
+    "paramList": {
+        "cartId": "",
+        "seedList": [
+            {
+                "localId": "123",
+                "name": "CCCCC",
+                "size": "",
+                "piclinks": [
+                    "http://xxxx/pic1.jpg",
+                    "http://xxxx/pic2.jpg"
+                ]
+            }
+        ]
+    }
+}
+
+10. ExternalSeedsToCartResponse
+{
+    "command": "SeedsToExternalCartResponse",
+    "paramList": {
+        "cartId": "ABCDEFG123456",
+        "successSeedLocalIdList": [
+            "1",
+            "7"
+        ],
+        "failedSeedLocalIdList": [
+            "49"
+        ]
+    }
+}
