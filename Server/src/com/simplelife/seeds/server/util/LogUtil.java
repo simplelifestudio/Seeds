@@ -16,6 +16,11 @@ import java.util.logging.Logger;
 public class LogUtil {
 	private static Logger logger = Logger.getLogger("Seeds");
 	
+	public static void setLevel(Level level)
+	{
+	    logger.setLevel(level);
+	}
+	
 	public static void info(String logInfo)
 	{
 		log(Level.INFO, logInfo);
@@ -38,20 +43,26 @@ public class LogUtil {
 	
 	public static void printStackTrace(Exception e)
 	{
+	    logger.logp(Level.SEVERE, "", "", e.getMessage());
+	    
 		StackTraceElement[] messages = e.getStackTrace();
 		int length=messages.length;
 		for(int i=0;i<length;i++)
 		{
-			//logger.logp(Level.SEVERE, "", "", messages[i].getClassName());
-			//logger.logp(Level.SEVERE, "", "", messages[i].getFileName());
-			//logger.logp(Level.SEVERE, "", "", Integer.toString(messages[i].getLineNumber()));
-			//logger.logp(Level.SEVERE, "", "", messages[i].getMethodName());
 			logger.logp(Level.SEVERE, "", "", messages[i].toString());
 		}
 	}
 	
 	private static void log(Level level, String logInfo)
 	{
-		logger.log(level, logInfo);
+		if (!logger.isLoggable(level))
+		{
+			return;
+		}
+
+		StackTraceElement traceElement = Thread.currentThread().getStackTrace()[3]; 
+		String methodName = traceElement.getMethodName();
+		String fileName = traceElement.getFileName()+ ":" + Integer.toString(traceElement.getLineNumber());
+		logger.logp(level, fileName, methodName, logInfo);
 	}
 }

@@ -10,7 +10,6 @@
 
 package com.simplelife.seeds.server.util;
 
-import com.simplelife.seeds.server.db.DaoWrapper;
 import com.simplelife.seeds.server.db.LogId;
 import com.simplelife.seeds.server.db.OperationLog;
 

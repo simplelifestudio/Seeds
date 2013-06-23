@@ -13,24 +13,21 @@ package com.simplelife.seeds.server.parser;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
-import org.htmlparser.filters.*;
+import org.htmlparser.filters.StringFilter;
 import org.htmlparser.tags.LinkTag;
-import org.htmlparser.util.*;
+import org.htmlparser.util.NodeList;
 
-import com.simplelife.seeds.server.db.DaoWrapper;
-import com.simplelife.seeds.server.db.LogId;
-import com.simplelife.seeds.server.db.OperationLog;
 import com.simplelife.seeds.server.db.SeedCaptureLog;
+import com.simplelife.seeds.server.util.DaoWrapper;
 import com.simplelife.seeds.server.util.DateUtil;
+import com.simplelife.seeds.server.util.HttpUtil;
 import com.simplelife.seeds.server.util.LogUtil;
 import com.simplelife.seeds.server.util.OperationLogUtil;
 
@@ -132,46 +129,6 @@ public class HtmlParser implements ISourceParser {
 	public void Parse() {
 		parsePageByDateRange();
 	}
-
-	/**
-	 * return 2013-06-01 by "[6-01]最新BT合集"
-	 * @param title: title in web page
-	 * @return Formatted date string
-	 */
-	private String getDateByTitle(String title)
-	{
-		String outDate = null;
-		int start = title.indexOf('[');
-		boolean flag = true;
-		if (start < 0)
-		{
-			flag = false;
-		}
-		
-		int end = title.indexOf(']'); 
-		if (end < 0)
-		{
-			flag = false;
-		}
-		
-		String dateString = title.substring(start + 1, end);
-		int mid = dateString.indexOf('-'); 
-		if (mid < 0)
-		{
-			flag = false;
-		}
-		
-		if (!flag)
-		{
-			LogUtil.warning("Invalid date format found: " + title);
-			return null;
-		}
-		outDate = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
-		outDate += "-";
-		outDate += dateString;
-		
-		return DateUtil.getFormatedDate(outDate);
-	}
 	
 	
 	/**
@@ -215,10 +172,9 @@ public class HtmlParser implements ISourceParser {
 				return;
 			}
 			
-			URL url = new URL(htmlLink);
 			//Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("10.159.32.155", 8080));
 			//HttpURLConnection urlConn = (HttpURLConnection) url.openConnection(proxy);
-			HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+			HttpURLConnection urlConn = HttpUtil.getHttpUrlConnection(htmlLink);
 			Parser parser = new Parser(urlConn);
 			
 			Iterator<String> it = keyWordList.iterator();
@@ -261,7 +217,7 @@ public class HtmlParser implements ISourceParser {
 	 */
 	private void parseSeedPage(String htmlLink, String title)
 	{
-		String date = getDateByTitle(title);
+		String date = DateUtil.getDateByTitle(title);
 		if ((date.compareTo(startDate) < 0) || (date.compareTo(endDate) > 0))
 		{
 			LogUtil.info("Skip date<" + title + "> since it is out of date range [" + startDate + ", " + endDate + "]");
@@ -285,17 +241,28 @@ public class HtmlParser implements ISourceParser {
 			return;
 		}
 		
+		sql = "select * from SeedCaptureLog where publishDate ='" + date + "'";
+		if (!DaoWrapper.exists(sql))
+		{
+			// First try of this date
+			SeedCaptureLog capLog = new SeedCaptureLog();
+			capLog.setPublishDate(date);
+			capLog.setStatus(0);
+			DaoWrapper.save(capLog);
+		}
+		
 		LogUtil.info("Start to parse seed page: " + htmlLink + ", " + date);
 		URL url;
 		try 
 		{
-			SeedCaptureLog capLog = new SeedCaptureLog();
-			capLog.setPublishDate(date);
-			capLog.setStatus(1);
-			OperationLogUtil.captureTaskStarted(htmlLink);
+			//SeedCaptureLog capLog = new SeedCaptureLog();
+			//capLog.setPublishDate(date);
+			//capLog.setStatus(1);
 			
-			deleteCaptureLog(date);
-			DaoWrapper.save(capLog);
+			//deleteCaptureLog(date);
+			//DaoWrapper.save(capLog);
+			
+			OperationLogUtil.captureTaskStarted(htmlLink);
 			
 			url = new URL(htmlLink);
 			HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
@@ -306,9 +273,7 @@ public class HtmlParser implements ISourceParser {
 
             parser.visitAllNodesWith(visitor);
             
-            capLog.setStatus(2);
-            //deleteCaptureLog(date);
-			DaoWrapper.save(capLog);
+            updateCaptureLog(date);
 			OperationLogUtil.captureTaskSucceed(htmlLink);
 			LogUtil.info("Parse seed page succeed: " + htmlLink + ", " + date);
 		}
@@ -318,6 +283,12 @@ public class HtmlParser implements ISourceParser {
 			LogUtil.severe("Error occurred when trying to parse html page: " + htmlLink + ", error: " + e.getMessage());
 			LogUtil.printStackTrace(e);
 		}
+	}
+	
+	private void updateCaptureLog(String date)
+	{
+	    String sql = "update SeedCaptureLog set status = 2 where publishDate ='" + date + "'";
+        DaoWrapper.executeSql(sql);
 	}
 	
 	private void deleteCaptureLog(String date)
