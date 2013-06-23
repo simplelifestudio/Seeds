@@ -31,12 +31,12 @@ public class SeedsJSONMessage {
 		JSONObject SeedsMsg = new JSONObject();
 		try {    		    
 		    // Put in command and its value
-			SeedsMsg.put("command", MsgType);
+			SeedsMsg.put("id", MsgType);
 		    
 		    if (paramList != null)
 		    {
 		        // Put in the paramList
-		    	SeedsMsg.put("paramList",paramList);
+		    	SeedsMsg.put("body",paramList);
 		    }
 		    		  
 		} catch (JSONException ex) {    
@@ -52,11 +52,11 @@ public class SeedsJSONMessage {
 		
 		// Convert the String to JSON object
 		JSONObject tMsgInJSON = new JSONObject(inStringMsg);  
-		String msgType = (String) tMsgInJSON.get("command");
+		String msgType = (String) tMsgInJSON.get("id");
 		Log.i("SeedsJSONMessage","Parsing msg " + msgType);
 	    
 		// Parse the paramList part
-		JSONObject tParamList = tMsgInJSON.getJSONObject("paramList");
+		JSONObject tParamList = tMsgInJSON.getJSONObject("body");
 		int numOfDate = inDateList.size();
 		for (int index = 0; index < numOfDate; index++)
 		{
@@ -75,14 +75,14 @@ public class SeedsJSONMessage {
 		
 		// Convert the String to JSON object
 		JSONObject tMsgInJSON = new JSONObject(inStringMsg);  
-		String msgType = (String) tMsgInJSON.get("command");
+		String msgType = (String) tMsgInJSON.get("id");
 		Log.i("SeedsJSONMessage","Parsing msg " + msgType);
 		
 		// Prepare the return Seeds List
 		ArrayList<SeedsEntity> retSeedsList = new ArrayList<SeedsEntity>();
 				
 		// Parse the paramList part
-		JSONObject tParamList = tMsgInJSON.getJSONObject("paramList");
+		JSONObject tParamList = tMsgInJSON.getJSONObject("body");
 		int numOfDate = inDateList.size();
 		for (int index = 0; index < numOfDate; index++)
 		{
@@ -97,6 +97,8 @@ public class SeedsJSONMessage {
 				// Construct single seed info
 				JSONObject tSeedsInfo = tSeedsArray.optJSONObject(index2);
 				SeedsEntity tSeedsEntity = new SeedsEntity();
+				if (tSeedsInfo.has(SeedsDBAdapter.KEY_SEEDID))
+					tSeedsEntity.setSeedId(tSeedsInfo.getInt(SeedsDBAdapter.KEY_SEEDID));
 				if (tSeedsInfo.has(SeedsDBAdapter.KEY_TYPE))
 					tSeedsEntity.setSeedType(tSeedsInfo.getString(SeedsDBAdapter.KEY_TYPE));
 				if (tSeedsInfo.has(SeedsDBAdapter.KEY_SOURCE))

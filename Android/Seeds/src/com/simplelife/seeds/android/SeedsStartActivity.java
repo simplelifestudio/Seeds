@@ -39,13 +39,13 @@ public class SeedsStartActivity extends Activity {
 		// Fade in and fade out
 		AlphaAnimation fadeShow = new AlphaAnimation(0.3f,1.0f);
 		fadeShow.setDuration(1000);
-		startView.startAnimation(fadeShow);
-		
-		// Start the DB process
-		SeedsDBAdapter.initAdapter(getApplication());
+		startView.startAnimation(fadeShow);		
 		
 		// Start the date manager
 		SeedsDateManager.initDateManager(getApplication());
+
+		// Start the DB process
+		SeedsDBAdapter.initAdapter(getApplication());
 		
 		// Start the Seeds Imgae URL preload thread
 		SeedsImageUrlPreloader.initPreloader(getApplication());

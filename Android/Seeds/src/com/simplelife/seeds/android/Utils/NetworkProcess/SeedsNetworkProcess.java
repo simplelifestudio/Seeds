@@ -53,7 +53,7 @@ public class SeedsNetworkProcess {
 			String retSrc = EntityUtils.toString(response.getEntity());
 			Log.i("return :", retSrc);
 			JSONObject result = new JSONObject( retSrc);  
-			String token = (String) result.get("command");  
+			String token = (String) result.get("id");  
 		    Log.i("response :", token);	
 		    
 		    return token;
@@ -90,7 +90,7 @@ public class SeedsNetworkProcess {
 			String retSrc = EntityUtils.toString(response.getEntity());
 			Log.i("return :", retSrc);
 			JSONObject result = new JSONObject( retSrc);  
-			String token = (String) result.get("command");  
+			String token = (String) result.get("id");  
 		    Log.i("response :", token);	
 		    
 		    return token;

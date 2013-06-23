@@ -58,7 +58,7 @@ public class SeedsDetailsActivity extends Activity{
 	private int tPageIndex = 0; 
 	
 	// The info about the Seed
-	private int mSeedId;
+	private int mSeedLocalId;
 	
 	// For log purpose
 	private static final String LOGCLASS = "SeedsDetails"; 
@@ -96,7 +96,7 @@ public class SeedsDetailsActivity extends Activity{
 				
 		// Load the seeds info
 		mSeedsEntity = (SeedsEntity) getIntent().getSerializableExtra("seedObj");
-		mSeedId = mSeedsEntity.getSeedId(); 
+		mSeedLocalId = mSeedsEntity.getSeedLocalId(); 
 		
 		// Retrieve the adapter instance
 		mDBAdapter = SeedsDBAdapter.getAdapter();
@@ -108,7 +108,7 @@ public class SeedsDetailsActivity extends Activity{
 		myFavoriteBtn = (Button) findViewById(R.id.favorite_btn);
 		
 		// Check if this seed has already been saved to favorite
-		if(mDBAdapter.isSeedSaveToFavorite(mSeedId))
+		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
 		{
 			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
 		}
@@ -277,7 +277,7 @@ public class SeedsDetailsActivity extends Activity{
 		@Override
 		public void onClick(View v) {
 			
-			if(mDBAdapter.isSeedSaveToFavorite(mSeedId))
+			if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
 			{
 				tFavTag = true;
 				tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Please wait...", true, false);
@@ -299,13 +299,15 @@ public class SeedsDetailsActivity extends Activity{
 						// Set the favorite key 
 						if (tFavTag)
 						{
-							mDBAdapter.updateSeedEntryFav(mSeedId,false);
+							mDBAdapter.updateSeedEntryFav(mSeedLocalId,false);
 							tFavTag = false;
 							tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Cancelling Favorites...", "Done!", true, false);
+						    //TODO
+							// Remove the entry if this seed is out of date
 						}
 						else
 						{
-							mDBAdapter.updateSeedEntryFav(mSeedId,true);
+							mDBAdapter.updateSeedEntryFav(mSeedLocalId,true);
 							tFavTag = true;
 							tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Done!", true, false);							
 						}
@@ -366,7 +368,7 @@ public class SeedsDetailsActivity extends Activity{
             	
             	case 1:
             		// Check if this seed has already been saved to favorite
-            		if(mDBAdapter.isSeedSaveToFavorite(mSeedId))
+            		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
             		{
             			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
             			

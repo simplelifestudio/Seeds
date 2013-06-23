@@ -147,7 +147,7 @@ public class SeedsListPerDayActivity extends Activity {
 	
 	private void loadSeedsInfo(){
 		
-		int seedId;
+		int localId;
 		SeedsEntity tSeedsEntity;
 		
 		// Initialize the SeedsEntity List
@@ -163,10 +163,11 @@ public class SeedsListPerDayActivity extends Activity {
 		tResult.moveToFirst(); 
 		while (!tResult.isAfterLast()) 
 	    {
-			seedId = tResult.getInt(tResult.getColumnIndex(SeedsDBAdapter.KEY_ID_SEED));
+			localId = tResult.getInt(tResult.getColumnIndex(SeedsDBAdapter.KEY_ID_SEED));
 			// Construct seeds entity
 			tSeedsEntity = new SeedsEntity();
-			tSeedsEntity.setSeedId(seedId);
+			tSeedsEntity.setLocalId(localId);
+			tSeedsEntity.setSeedId(tResult.getInt(tResult.getColumnIndex(SeedsDBAdapter.KEY_SEEDID)));
 			tSeedsEntity.setSeedType(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_TYPE)));
 			tSeedsEntity.setSeedSource(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_SOURCE)));
 			tSeedsEntity.setSeedPublishDate(tDate);
@@ -182,7 +183,7 @@ public class SeedsListPerDayActivity extends Activity {
 				tSeedsEntity.setSeedFavorite(false);
 			
 			// Query the seedPic table
-			Cursor tImgResult = mDBAdapter.getSeedPicFirstEntryViaSeedId(seedId);
+			Cursor tImgResult = mDBAdapter.getSeedPicFirstEntryViaLocalId(localId);
 			
 			if(tImgResult.getCount()<=0)
 			{
