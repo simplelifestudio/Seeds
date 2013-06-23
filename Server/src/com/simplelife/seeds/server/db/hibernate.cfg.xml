@@ -10,10 +10,17 @@
         <!--property name="connection.driver_class">com.p6spy.engine.spy.P6SpyDriver</property-->
         <property name="connection.url">jdbc:mysql://127.0.0.1:3306/seeds?useUnicode=true&amp;characterEncoding=UTF-8</property>
         <property name="connection.username">root</property>
-        <property name="connection.password"></property>
+        <property name="connection.password">Simplelife123</property>
 
         <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">1</property>
+        <!--property name="connection.pool_size">1</property-->
+        
+        <property name="hibernate.connection.provider_class">org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider</property>
+        <property name="hibernate.c3p0.min_size">5</property>  
+        <property name="hibernate.c3p0.max_size">20</property>  
+        <property name="hibernate.c3p0.timeout">1800</property>  
+        <property name="hibernate.c3p0.max_statements">50</property>  
+        <property name="hibernate.c3p0.testConnectionOnCheckout">true</property>
 
         <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
