@@ -195,6 +195,7 @@ public final class R {
         public static final int cancel_running_download=0x7f070033;
         public static final int clear_cache_complete_toast=0x7f07005e;
         /**  Below parameters come from the gridview open source tool Bitmapfun 
+ Below parameters come from the gridview open source tool Bitmapfun 
          */
         public static final int clear_cache_menu=0x7f07005d;
         /** 

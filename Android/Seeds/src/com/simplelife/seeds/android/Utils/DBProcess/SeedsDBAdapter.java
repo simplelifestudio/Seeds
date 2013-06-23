@@ -235,7 +235,7 @@ public class SeedsDBAdapter {
 	    Cursor mCursor = mSQLiteDatabase.query(true, 
 	    		DATABASE_TABLE_SEEDPIC, 
 	    		new String[]{KEY_ID_SEEDPIC,KEY_PICTURELINK}, 
-	    		KEY_ID_SEED+ "=" + _localId,
+	    		KEY_LOCALID+ "=" + _localId,
 	    		null,null,null,null,null);
 	    
 	    if(mCursor!=null)
