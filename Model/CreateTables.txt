@@ -61,6 +61,13 @@ CREATE TABLE `OperationLog` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+CREATE  TABLE `seeds`.`SeedSubscribe` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `userName` VARCHAR(32) NULL ,
+  `seedId` INT NULL ,
+  PRIMARY KEY (`id`) );
+
+
 
 insert into GlobalLogDefinition(logId, description) values(1, "Seed抓取任务开始");
 insert into GlobalLogDefinition(logId, description) values(2, "Seed分析成功");
