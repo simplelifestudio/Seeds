@@ -10,8 +10,6 @@
 
 package com.simplelife.seeds.server.db;
 
-import com.simplelife.seeds.server.util.DateUtil;
-import com.simplelife.seeds.server.util.LogUtil;
 
 public class OperationLog {
 	/**
