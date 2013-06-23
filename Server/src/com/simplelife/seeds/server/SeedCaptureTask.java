@@ -20,10 +20,9 @@ public class SeedCaptureTask extends TimerTask {
 	@Override
 	public void run() {
 		LogUtil.info("Seed capture task launched!");
-		
-		SeedCaptureListener.scheduleNextCapture();
 		HtmlParser parser = new HtmlParser();
-		parser.Parse(); 
+		parser.Parse();
+		SeedCaptureListener.scheduleNextCapture();
 	}
 
 }
