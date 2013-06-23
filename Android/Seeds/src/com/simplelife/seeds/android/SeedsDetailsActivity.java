@@ -345,7 +345,7 @@ public class SeedsDetailsActivity extends Activity{
         	tDownloadMgr.startDownload(mSeedsEntity.getSeedTorrentLink());            	
         	
     		Toast toast = Toast.makeText(getApplicationContext(),
-    				"ÒÑ¼ÓÈëÏÂÔØ¶ÓÁÐ", Toast.LENGTH_SHORT);
+    				R.string.seeds_download_added, Toast.LENGTH_SHORT);
     	    toast.setGravity(Gravity.CENTER, 0, 0);
     	    toast.show();
             
@@ -371,7 +371,7 @@ public class SeedsDetailsActivity extends Activity{
             			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
             			
                 		Toast toast = Toast.makeText(getApplicationContext(),
-                				"ÊÕ²Ø³É¹¦", Toast.LENGTH_SHORT);
+                				R.string.seeds_fav_done, Toast.LENGTH_SHORT);
                 	    toast.setGravity(Gravity.CENTER, 0, 0);
                 	    toast.show();
             		}
@@ -380,7 +380,7 @@ public class SeedsDetailsActivity extends Activity{
             			myFavoriteBtn.setText(R.string.seeds_Favorite);
             			
                 		Toast toast = Toast.makeText(getApplicationContext(),
-                				"È¡Ïû³É¹¦", Toast.LENGTH_SHORT);
+                				R.string.seeds_unfav_done, Toast.LENGTH_SHORT);
                 	    toast.setGravity(Gravity.CENTER, 0, 0);
                 	    toast.show();
             		}
@@ -417,7 +417,7 @@ public class SeedsDetailsActivity extends Activity{
             	tDownloadMgr.startDownload(mSeedsEntity.getSeedTorrentLink());            	
             	
         		Toast toast = Toast.makeText(getApplicationContext(),
-        				"ÒÑ¼ÓÈëÏÂÔØ¶ÓÁÐ", Toast.LENGTH_SHORT);
+        				R.string.seeds_download_added, Toast.LENGTH_SHORT);
         	    toast.setGravity(Gravity.CENTER, 0, 0);
         	    toast.show();
                 return true;

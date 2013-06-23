@@ -193,10 +193,10 @@ public final class R {
         /**  Text for button to cancel a download that is currently in progress [CHAR LIMIT=25] 
          */
         public static final int cancel_running_download=0x7f070033;
-        public static final int clear_cache_complete_toast=0x7f07005b;
+        public static final int clear_cache_complete_toast=0x7f07005e;
         /**  Below parameters come from the gridview open source tool Bitmapfun 
          */
-        public static final int clear_cache_menu=0x7f07005a;
+        public static final int clear_cache_menu=0x7f07005d;
         /** 
          Text for button to delete a download that has completed, or to delete multiple download
          entries [CHAR LIMIT=25]
@@ -333,7 +333,7 @@ public final class R {
          */
         public static final int download_unknown_title=0x7f07000a;
         public static final int hello_world=0x7f070037;
-        public static final int imageview_description=0x7f07005c;
+        public static final int imageview_description=0x7f07005f;
         /**  Text for button to keep a download that has not yet begun [CHAR LIMIT=25] 
          */
         public static final int keep_queued_download=0x7f070032;
@@ -350,7 +350,7 @@ public final class R {
     
          */
         public static final int no_downloads=0x7f070018;
-        public static final int no_network_connection_toast=0x7f07005d;
+        public static final int no_network_connection_toast=0x7f070060;
         /**  When a download completes, a notification is displayed, and this
         string is used to indicate that the download successfully completed.
         Note that such a download could have been initiated by a variety of
@@ -483,8 +483,10 @@ public final class R {
         public static final int seeds_config_page=0x7f070045;
         public static final int seeds_config_serveraddr=0x7f070046;
         public static final int seeds_details_top=0x7f070044;
+        public static final int seeds_download_added=0x7f07005a;
         public static final int seeds_download_mgt=0x7f070059;
         public static final int seeds_download_seed=0x7f070058;
+        public static final int seeds_fav_done=0x7f07005c;
         public static final int seeds_favoritelist=0x7f070049;
         public static final int seeds_httpserver=0x7f070040;
         public static final int seeds_logo=0x7f070039;
@@ -498,6 +500,7 @@ public final class R {
         public static final int seeds_toast_configfail=0x7f070057;
         public static final int seeds_toast_configsucc=0x7f070056;
         public static final int seeds_today=0x7f07003d;
+        public static final int seeds_unfav_done=0x7f07005b;
         public static final int seeds_update=0x7f07003e;
         public static final int seeds_verify_menu_settings=0x7f07004e;
         public static final int seeds_yesterday=0x7f07003c;
