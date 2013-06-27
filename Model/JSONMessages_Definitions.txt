@@ -11,13 +11,13 @@ X. MessageFormat
 
 0. ErrorResponseMessage
 {
-		"id" : "ErrorResponse",
-		"body" :
-		{
-			"requestMessage" : "",
-			"errorCode": "-7",
-			"errorDescription" : "Empty Content"	
-		}
+    "id": "ErrorResponse",
+    "body":
+    {
+	"requestMessage": "",
+	"errorCode": "-7",
+        "errorDescription": "Empty Content"
+    }
 }
 
 1. AlohaRequest
