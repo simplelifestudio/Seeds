@@ -1,4 +1,4 @@
-0. MessageFormat
+X. MessageFormat
 {
     "id": "AlohaRequest",
     "body": 
@@ -6,8 +6,18 @@
         "param1": "value1",
         "param2": "value2",
         "paramn": "valuen"
-    },
-    "error":"" // only for XXXResponse messages
+    }
+}
+
+0. ErrorResponseMessage
+{
+		"id" : "ErrorResponse",
+		"body" :
+		{
+			"requestMessage" : "",
+			"errorCode": "-7",
+			"errorDescription" : "Empty Content"	
+		}
 }
 
 1. AlohaRequest
@@ -25,8 +35,7 @@
     "body":
     {
     	"content":"Hello Seeds App!"
-    },
-    "error":""
+    }
 }
 
 3. SeedsUpdateStatusByDatesRequest
@@ -48,8 +57,7 @@
         	"2013-04-14":"READY",
 					"2013-04-15":"NO_UPDATE",
 					"2013-04-16":"NOT_READY"  
-    },
-    "error":""
+    }
 }
 
 5. SeedsByDatesRequest
@@ -97,8 +105,7 @@
             }
         ],
         "2013-04-16": []
-    },
-    "error":""
+    }
 }
 
 7. SeedsToCartRequest
@@ -126,8 +133,7 @@
         "failedSeedIdList": [
             "49"
         ]
-    },
-    "error":""
+    }
 }
 
 9. ExternalSeedsToCartRequest
@@ -161,6 +167,5 @@
         "failedSeedLocalIdList": [
             "49"
         ]
-    },
-    "error":""
+    }
 }
