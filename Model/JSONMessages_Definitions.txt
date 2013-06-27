@@ -54,9 +54,9 @@ X. MessageFormat
 {
     "id": "SeedsUpdateStatusByDatesResponse",
     "body": {
-        	"2013-04-14":"READY",
-					"2013-04-15":"NO_UPDATE",
-					"2013-04-16":"NOT_READY"  
+        "2013-04-14":"READY",
+	"2013-04-15":"NO_UPDATE",
+	"2013-04-16":"NOT_READY"  
     }
 }
 
