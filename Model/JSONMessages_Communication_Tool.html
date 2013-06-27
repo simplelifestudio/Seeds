@@ -1,0 +1,126 @@
+<html>
+<header>
+<script lang="JavaScript">
+
+	// Business Codes
+	var DEFAULT_SERVER_ADDRESS = "http://106.187.38.52/seeds/seedService";
+	var DEFAULT_REQUEST_MESSAGE_ID = "AlohaRequest";
+	var DEFAULT_REQUEST_MESSAGE_BODY = "Hello Seeds Server!";
+
+	var ID_SERVER_ADDRESS = "serverAddress";
+	var ID_REQUEST_MESSAGE_ID = "requestMessageId";
+	var ID_REQUEST_MESSAGE_BODY = "requestMessageBody";
+	var ID_RESPONSE_MESSAGE_ID = "responseMessageId";
+	var ID_RESPONSE_MESSAGE_BODY = "responseMessageBody";
+
+	function Message()
+	{
+		var id;
+		var body;
+	}
+
+	function init()
+	{
+		var eServerAddress = document.getElementById(ID_SERVER_ADDRESS); 
+
+		var eRequestMessageId = document.getElementById(ID_REQUEST_MESSAGE_ID);
+		var eRequestMessageBody = document.getElementById(ID_REQUEST_MESSAGE_BODY);		
+		
+		eServerAddress.value = DEFAULT_SERVER_ADDRESS;
+		eRequestMessageId.value = DEFAULT_REQUEST_MESSAGE_ID;
+		eRequestMessageBody.value = DEFAULT_REQUEST_MESSAGE_BODY;
+	}
+	
+	function test()
+	{
+		clearResponseMessageFields();
+	
+		var eRequestMessageId = document.getElementById(ID_REQUEST_MESSAGE_ID);
+		var eRequestMessageBody = document.getElementById(ID_REQUEST_MESSAGE_BODY);
+		
+		var oRequestMessage = new Message();
+		oRequestMessage.id = eRequestMessageId.value;
+		oRequestMessage.body = eRequestMessageBody.value;
+		sendMessage(oRequestMessage);
+	}
+	
+	function clearResponseMessageFields()
+	{
+		var eResponseMessageId = document.getElementById(ID_RESPONSE_MESSAGE_ID);
+		var eResponseMessageBody = document.getElementById(ID_RESPONSE_MESSAGE_BODY);		
+		
+		eResponseMessageId.value = null;
+		eResponseMessageBody.value = null;		
+	}
+	
+	function callBack()
+	{
+		var oResponse = eval("(" + xmlhttp.responseText +")");
+		
+		var eResponseMessageId = document.getElementById(ID_RESPONSE_MESSAGE_ID);
+		var eResponseMessageBody = document.getElementById(ID_RESPONSE_MESSAGE_BODY);		
+		
+		eResponseMessageId.value = null;
+		eResponseMessageBody.value = oResponse;		
+	}
+	
+	// Common Codes
+	var xmlhttp;
+	function CreateXMLHttpRequest()
+   	{
+       if (window.ActiveXObject)
+       {
+  		    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+       }
+       else if (window.XMLHttpRequest)
+       {
+       		xmlhttp = new XMLHttpRequest();
+       }
+    }
+    
+    function sendMessage(oRequestMessage)
+    {
+       CreateXMLHttpRequest();
+ 
+       var eServerAddress = document.getElementById(ID_SERVER_ADDRESS); 
+ 
+       xmlhttp.onreadystatechange = onReceivedResponseMessage;
+       xmlhttp.open("POST" , eServerAddress, true);
+       xmlhttp.setRequestHeader("Content-Length", oRequestMessage.length);
+       xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded;");  //用POST的时候一定要有这句
+       xmlhttp.send(oRequestMessage);
+    }
+    
+    function onReceivedResponseMessage()
+    {
+        if (xmlhttp.readyState == 4)
+        {
+            if(xmlhttp.status == 200)
+            {
+	            callback();
+            }
+        }
+    }    
+    
+</script>
+</header>
+<body onload="init()">
+	<p align="center"><b>JSON Message Test Tool</b></p>
+	<p align="center">Simplelife Studio</p>
+	<p align="center">0.1</p>
+	<p align="center"><button id="testButton" style="width:160px;height:80px" onclick="test()">Click to Test</button></p>	
+	<hr>
+	Server Address:<input type="text" id="serverAddress" style="width:500px;"/>
+	<p>
+	<hr>
+	Request Message ID: <input type="text" id="requestMessageId"/>
+	<p>
+	Request Message Body: <br><textarea id="requestMessageBody" cols="150" rows="20"></textarea>
+	<hr>
+	<p>
+	Response Message ID: <input type="text" id="responseMessageId" readonly="yes"/>
+	<p>
+	Response Message Body: <br><textarea id="responseMessageBody" cols="150" rows="20" readonly="yes"></textarea>
+	<hr>
+</body>
+</html>
