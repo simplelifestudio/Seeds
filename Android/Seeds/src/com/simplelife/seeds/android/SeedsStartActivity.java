@@ -20,11 +20,11 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 
-import com.google.code.microlog4android.config.PropertyConfigurator;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
 import com.simplelife.seeds.android.utils.downloadprocess.DownloadService;
 import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadList;
+import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 public class SeedsStartActivity extends Activity {
 	
@@ -43,7 +43,7 @@ public class SeedsStartActivity extends Activity {
 		startView.startAnimation(fadeShow);		
 		
 		// Start the Logger instance
-		PropertyConfigurator.getConfigurator(this).configure();
+		SeedsLoggerUtil.initSeedsLogger(getApplication());
 		
 		// Start the date manager
 		SeedsDateManager.initDateManager(getApplication());

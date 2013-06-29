@@ -20,6 +20,7 @@ import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage.SeedsStatusByDate;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
+import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -65,6 +66,7 @@ public class SeedsDateListActivity extends Activity {
 	final int MESSAGETYPE_UPDATEDIALOG = 105;
 	
 	// For log purpose
+	private SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
 	private static final String LOGCLASS = "SeedsDateList"; 
 	
 	// To record the operation status which needs to be handed between threads
@@ -74,7 +76,8 @@ public class SeedsDateListActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		Log.i(LOGCLASS, "Working on starting the DateListActivity ");  
+		mLogger.info("Working on starting the DateListActivity!");
+		//Log.i(LOGCLASS, "Working on starting the DateListActivity ");  
 		
 		// Start the DateList View
 		setContentView(R.layout.activity_seeds_datelist);

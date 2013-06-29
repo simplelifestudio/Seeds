@@ -76,6 +76,26 @@ public class SeedsLoggerUtil {
  	public void turnOnSeedsLogger(){
  		mLogFlag = true;
  	}
+ 	
+ 	public void setLogLevelAboveVerbose(){
+ 		mLogLevel = Log.VERBOSE;
+ 	}
+ 	
+ 	public void setLogLevelAboveDebug(){
+ 		mLogLevel = Log.DEBUG;
+ 	}
+ 	
+ 	public void setLogLevelAboveInfo(){
+ 		mLogLevel = Log.INFO;
+ 	}
+ 	
+ 	public void setLogLevelAboveWARN(){
+ 		mLogLevel = Log.WARN;
+ 	}
+ 	
+ 	public void setLogLevelAboveError(){
+ 		mLogLevel = Log.ERROR;
+ 	}
 
     
     private String getFunctionName()  
@@ -169,11 +189,14 @@ public class SeedsLoggerUtil {
                     if(mLogToSD)
                     	mMicroLog.debug(mTag + name + " - " + str);
                     else
-                	Log.v(mTag, name + " - " + str);  
+                    	Log.v(mTag, name + " - " + str);  
                 }  
                 else  
                 {  
-                    Log.v(mTag, str.toString());  
+                    if(mLogToSD)
+                    	mMicroLog.debug(mTag + str.toString());
+                    else
+                    	Log.v(mTag, str.toString());  
                 }  
             }  
         }  
@@ -188,11 +211,17 @@ public class SeedsLoggerUtil {
                 String name = getFunctionName();  
                 if(name != null)  
                 {  
-                    Log.w(mTag, name + " - " + str);  
+                    if(mLogToSD)
+                    	mMicroLog.warn(mTag + name + " - " + str);
+                    else
+                    	Log.w(mTag, name + " - " + str);  
                 }  
                 else  
                 {  
-                    Log.w(mTag, str.toString());  
+                    if(mLogToSD)
+                    	mMicroLog.warn(mTag + str.toString());
+                    else
+                    	Log.w(mTag, str.toString());  
                 }  
             }  
         }  
@@ -207,11 +236,17 @@ public class SeedsLoggerUtil {
                 String name = getFunctionName();  
                 if(name != null)  
                 {  
-                    Log.e(mTag, name + " - " + str);  
+                    if(mLogToSD)
+                    	mMicroLog.error(mTag + name + " - " + str);
+                    else
+                    	Log.e(mTag, name + " - " + str);  
                 }  
                 else  
                 {  
-                    Log.e(mTag, str.toString());  
+                    if(mLogToSD)
+                    	mMicroLog.error(mTag + str.toString());
+                    else
+                    	Log.e(mTag, str.toString());  
                 }  
             }  
         }  
@@ -223,7 +258,10 @@ public class SeedsLoggerUtil {
         {  
             if(mLogLevel <= Log.ERROR)  
             {  
-                Log.e(mTag, "error", ex);  
+                if(mLogToSD)
+                	mMicroLog.error(mTag + "error", ex);
+                else
+                	Log.e(mTag, "error", ex);  
             }  
         }  
     }  
@@ -232,8 +270,12 @@ public class SeedsLoggerUtil {
     {  
         if(mLogFlag)  
         {  
-            String line = getFunctionName();  
-            Log.e(mTag, "{Thread:" + Thread.currentThread().getName() + "}"  
+            String line = getFunctionName(); 
+            if(mLogToSD)
+            	mMicroLog.error(mTag + "{Thread:" + Thread.currentThread().getName() + "}"  
+                        + "[" + line + ":] " + log + "\n", tr);
+            else
+            	Log.e(mTag, "{Thread:" + Thread.currentThread().getName() + "}"  
                     + "[" + line + ":] " + log + "\n", tr);  
         }  
     }  
