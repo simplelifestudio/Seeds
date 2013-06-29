@@ -4,6 +4,11 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
+    <com.simplelife.seeds.android.utils.actionbar.ActionBar
+        android:id="@+id/actionbar"
+        style="@style/ActionBar"
+        />
+    
     <Button
         android:id="@+id/befyesterday_btn"
         android:layout_width="fill_parent"

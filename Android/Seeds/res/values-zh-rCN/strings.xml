@@ -41,12 +41,13 @@
     <string name="seeds_download_added">已添加至下载队列</string>
     <string name="seeds_unfav_done">取消收藏成功</string>
     <string name="seeds_fav_done">收藏成功</string>
+    <string name="actionbar_activity_not_found">无法使用...</string>
     
     
     <!-- Below parameters come from the gridview open source tool Bitmapfun -->
-    <string name="clear_cache_menu">Clear Caches</string>
-    <string name="clear_cache_complete_toast">Caches have been cleared</string>
-    <string name="imageview_description">Image Thumbnail</string>
-    <string name="no_network_connection_toast">No network connection found</string>
+    <string name="clear_cache_menu">清除缓存</string>
+    <string name="clear_cache_complete_toast">缓存已经清理</string>
+    <string name="imageview_description">缩略图</string>
+    <string name="no_network_connection_toast">无网络连接</string>
 
 </resources>

@@ -16,6 +16,7 @@ import java.util.HashMap;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
+import com.simplelife.seeds.android.utils.actionbar.ActionBar;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage.SeedsStatusByDate;
@@ -67,7 +68,6 @@ public class SeedsDateListActivity extends Activity {
 	
 	// For log purpose
 	private SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
-	private static final String LOGCLASS = "SeedsDateList"; 
 	
 	// To record the operation status which needs to be handed between threads
 	private boolean opeStatus = false;
@@ -76,11 +76,13 @@ public class SeedsDateListActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		mLogger.info("Working on starting the DateListActivity!");
-		//Log.i(LOGCLASS, "Working on starting the DateListActivity ");  
+		mLogger.info("Working on starting the DateListActivity!"); 
 		
 		// Start the DateList View
+		setTheme(android.R.style.Theme_Light_NoTitleBar);
 		setContentView(R.layout.activity_seeds_datelist);
+		final ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
+		actionBar.setTitle("Home");
 		
 		// Locate those buttons
 		myBefYesterdayBtn = (Button) findViewById(R.id.befyesterday_btn);
@@ -99,7 +101,8 @@ public class SeedsDateListActivity extends Activity {
 		myConfigBtn.setOnClickListener(myConfigBtnListener);
 		myHttpServerBtn.setOnClickListener(myHttpServerBtnListener);
 		
-		Log.i(LOGCLASS, "Working on setting the ProgressDialog style"); 
+		mLogger.info("Working on setting the ProgressDialog style");
+		 
 		// Set the progress style as spinner
 		//tProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); 
 		myUpdateBtn.setOnClickListener(myUpdateBtnListener);
@@ -179,19 +182,19 @@ public class SeedsDateListActivity extends Activity {
 							opeStatus = true;
 					} catch (Exception e) {
 						// Show the error message here
-						Log.i(LOGCLASS,"Exception detected!");
+						mLogger.ethrow("Exception detected!", e);
 						e.printStackTrace();
 					}
-					Log.i(LOGCLASS,"Sending message to handler!");
+
 					Message t_MsgListData = new Message();
 					if (opeStatus)
 					{
-						Log.i(LOGCLASS,"Sending message to handler, message:MESSAGETYPE_YESTERD");
+						mLogger.info("Sending message to handler, message:MESSAGETYPE_YESTERD");
 						t_MsgListData.what = MESSAGETYPE_YESTERD;
 					}
 					else
 					{
-						Log.i(LOGCLASS,"Sending message to handler, message:MESSAGETYPE_STAYSTILL");
+						mLogger.info("Sending message to handler, message:MESSAGETYPE_STAYSTILL");
 						t_MsgListData.what = MESSAGETYPE_STAYSTILL;
 					}
 										
@@ -346,7 +349,7 @@ public class SeedsDateListActivity extends Activity {
             	
             	case MESSAGETYPE_BEFYEST:
             	{
-        			Log.i(LOGCLASS, "Working on directing to the details ");
+            		mLogger.debug("Working on directing to the details ");
         			// Redirect to the new page
         			Intent intent = new Intent(SeedsDateListActivity.this, SeedsListPerDayActivity.class);
         			// Pass the date info
@@ -360,7 +363,7 @@ public class SeedsDateListActivity extends Activity {
             	case MESSAGETYPE_YESTERD:
             	{
         			// Redirect to the new page
-            		Log.i(LOGCLASS,"MESSAGETYPE_YESTERD: Working on directing to the details !");
+            		mLogger.debug("MESSAGETYPE_YESTERD: Working on directing to the details !");
         			Intent intent = new Intent(SeedsDateListActivity.this, SeedsListPerDayActivity.class);
         			// Pass the date info
         		    Bundle bundle = new Bundle();
@@ -396,7 +399,7 @@ public class SeedsDateListActivity extends Activity {
                 case MESSAGETYPE_UPDATE:
                 case MESSAGETYPE_STAYSTILL:
                 {
-                	Log.i(LOGCLASS,"MESSAGETYPE_UPDATE or MESSAGETYPE_STAYSTILL!");
+                	mLogger.debug("MESSAGETYPE_UPDATE or MESSAGETYPE_STAYSTILL!");                	
         		    tProgressDialog.dismiss();
                     break;
                 }
