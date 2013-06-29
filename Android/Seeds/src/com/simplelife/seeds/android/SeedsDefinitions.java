@@ -22,7 +22,7 @@ public class SeedsDefinitions {
 		public static final String SEEDS_ERROR_WRONGLOGICDATE = "Wrong Logic Date Detected!";
 	}
 	
-	public static String serverUrl = "http://106.187.38.52:80/seeds/messageListener";
+	public static String serverUrl = "http://106.187.38.78:80/seeds/messageListener";
 	
 	public static void setServerUrl(String _inUrl){
 		serverUrl = _inUrl;
