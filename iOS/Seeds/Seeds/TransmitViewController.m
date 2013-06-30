@@ -43,6 +43,7 @@ if (_cancelTransmission)\
     if (!isWiFiEnabled)
     {
         [self updateConsole:NSLocalizedString(@"Transmission module needs WiFi environment...", nil)];
+        [self _showStopBarButton];        
         return;
     }
     
@@ -128,6 +129,7 @@ if (_cancelTransmission)\
     if (!isWiFiEnabled)
     {
         [self updateConsole:NSLocalizedString(@"Transmission module needs WiFi environment...", nil)];
+        [self _showStopBarButton];        
         return;
     }
     
