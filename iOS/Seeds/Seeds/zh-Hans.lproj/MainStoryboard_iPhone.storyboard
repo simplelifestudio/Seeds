@@ -139,7 +139,7 @@
         <scene sceneID="GtE-mh-Hvu">
             <objects>
                 <tableViewController storyboardIdentifier="sbid_favoriteseedlistviewcontroller" id="hhR-n2-zpg" userLabel="FavoriteSeedListViewController" customClass="FavoriteSeedListViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="92" sectionHeaderHeight="22" sectionFooterHeight="22" id="0SQ-0c-JmW" userLabel="favoriteSeedTableView">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="92" sectionHeaderHeight="22" sectionFooterHeight="22" id="0SQ-0c-JmW" userLabel="favoriteSeedTableView">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -380,7 +380,7 @@
         <scene sceneID="eWy-aV-ZNg">
             <objects>
                 <tableViewController storyboardIdentifier="sbid_seedlistviewcontroller" id="R4P-D2-bmu" userLabel="SeedListViewController" customClass="SeedListViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="92" sectionHeaderHeight="22" sectionFooterHeight="22" id="XfC-n2-XgK" userLabel="seedTableView">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="92" sectionHeaderHeight="22" sectionFooterHeight="22" id="XfC-n2-XgK" userLabel="seedTableView">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -592,9 +592,6 @@
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
         </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
-        </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
@@ -602,6 +599,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="jKm-Mf-P9D"/>
+        <segue reference="Wg4-Q0-2ZF"/>
     </inferredMetricsTieBreakers>
 </document>
