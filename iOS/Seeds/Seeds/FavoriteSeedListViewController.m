@@ -85,6 +85,8 @@
 {
     [_pagingToolbar removeFromSuperview];
     
+    [self onCancelBarButtonClicked];
+    
     [super viewWillDisappear:animated];
 }
 
