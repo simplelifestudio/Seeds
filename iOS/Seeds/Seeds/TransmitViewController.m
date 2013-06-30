@@ -117,6 +117,13 @@ if (_cancelTransmission)\
     // Step 50: 启动HTTP服务器
     // Step 60: 更新HTTP服务器的地址和端口信息至UI
 
+    BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
+    if (!isWiFiEnabled)
+    {
+        [self updateConsole:NSLocalizedString(@"Transmission module needs WiFi environment...", nil)];
+        return;
+    }
+    
     TransmissionModule* transmitModule = [TransmissionModule sharedInstance];    
     
     // Step 10:

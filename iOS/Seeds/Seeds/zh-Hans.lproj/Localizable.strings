@@ -55,6 +55,7 @@
 
 "Torrents Downloading" = "种子下载";
 
+"Transmission module needs WiFi environment..." = "传输模块需要WiFi环境...";
 "Transmission module is initializing..." = "传输模块初始化...";
 "Transmission is cancel." = "传输取消...";
 "Torrents directory failed to create." = "种子目录创建失败...";
