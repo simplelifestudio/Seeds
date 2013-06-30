@@ -143,6 +143,19 @@
     return alertView;
 }
 
++(id) componentFromNib:(NSString*) nibId owner:(id) owner options:(NSDictionary*) options
+{
+    id component = nil;
+    
+    if (nil != nibId && 0 < nibId.length)
+    {
+        NSArray* nib = [[NSBundle mainBundle] loadNibNamed:nibId owner:owner options:options];
+        component = [nib objectAtIndex:0];
+    }
+    
+    return component;
+}
+
 // Manual Codes End
 
 @end

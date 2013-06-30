@@ -97,11 +97,6 @@
     [super didReceiveMemoryWarning];
 }
 
-- (void) setSeed:(Seed *)seed
-{
-    _seed = seed;
-}
-
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
 {
     NSInteger num = 0;
@@ -119,10 +114,10 @@
     SeedPicture* picture = [_seed.seedPictures objectAtIndex:indexPath.row];
 
     SeedPictureCollectionCell* cell = (SeedPictureCollectionCell*)[cv dequeueReusableCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL forIndexPath:indexPath];
-//    if (cell == nil)
+#warning Why UICollectionViewCell object can not be initialized with NIB file?
+//    if (nil == cell)
 //    {
-//        NSArray* nib = [[NSBundle mainBundle] loadNibNamed:CELL_ID_SEEDPICTURECOLLECTIONCELL owner:self options:nil];
-//        cell = [nib objectAtIndex:0];
+//        cell = [CBUIUtils componentFromNib:CELL_ID_SEEDPICTURECOLLECTIONCELL owner:self options:nil];
 //    }
     
     NSUInteger pictureIdInSeed = indexPath.row;

@@ -14,12 +14,19 @@
 
 @interface FavoriteSeedListViewController ()
 {
-    NSArray* favoriteSeedList;
-    NSArray* firstSeedPictureList;
-    Seed* selectedSeed;
-    BOOL _isSelectedAll;
+    NSArray* _seedList;
+    NSArray* _firstSeedPictureList;
     
-    MBProgressHUD* _HUD;    
+    Seed* _selectedSeed;
+    
+    BOOL _isSelectedAll;
+    MBProgressHUD* _HUD;
+    
+    NSMutableArray* _pageSeedList;
+    NSMutableArray* _pageFirstSeedPictureList;
+    PagingToolbar* _pagingToolbar;
+    
+    NSUInteger _currentPage;    
 }
 
 @property UIBarButtonItem* editBarButton;
@@ -43,26 +50,16 @@
     self = [super initWithStyle:style];
     if (self)
     {
-        [self setupView];
+        [self _setupViewController];
     }
     return self;
 }
 
 - (void) awakeFromNib
 {
-    [self setupView];
+    [self _setupViewController];
     
     [super awakeFromNib];
-}
-
-- (void) setupView
-{
-    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
-    [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
-    
-    _HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    _HUD.minSize = HUD_SIZE;
-    [self.view addSubview:_HUD];
 }
 
 - (void)viewDidLoad
@@ -73,76 +70,22 @@
     [self _initTableView];
 }
 
-- (void) _initUIBarButtons
-{
-    [self.navigationController setNavigationBarHidden:FALSE];
-    _selectAllBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"SelectAll", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onSelectAllBarButtonClicked)];
-    _editBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Edit", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onEditBarButtonClicked)];
-    _deleteBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Delete", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onDeleteBarButtonClicked)];
-    _cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onCancelBarButtonClicked)];
-}
-
-- (void) _checkStatusOfEditBarButtonItem
-{
-    if (0 >= favoriteSeedList.count)
-    {
-        self.navigationItem.rightBarButtonItems = @[];
-    }
-    else
-    {
-        self.navigationItem.rightBarButtonItems = @[_editBarButton];
-    }
-}
-
-- (void) _initTableView
-{
-    self.tableView.allowsMultipleSelectionDuringEditing = TRUE;
-    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0,0,0,5)];
-    _isSelectedAll = FALSE;
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO];
- 
+    [self.navigationController setToolbarHidden:YES];
+    [self.navigationController.view addSubview:_pagingToolbar];
+    
     [self _refetchFavoriteSeedsFromDatabase];
     
     [super viewWillAppear:animated];
 }
 
-- (void) _refetchFavoriteSeedsFromDatabase
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
-        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-        favoriteSeedList = [seedDAO getFavoriteSeeds];
-        
-        NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:favoriteSeedList.count];
-        for (Seed* seed in favoriteSeedList)
-        {
-            SeedPicture* picture = nil;
-            if (nil != seed.seedPictures && 0 < seed.seedPictures.count)
-            {
-                picture = seed.seedPictures[0];
-            }
-            
-            if (nil == picture)
-            {
-                picture = [SeedPicture placeHolder];
-            }
-            [pictureArray addObject:picture];
-        }
-        firstSeedPictureList = pictureArray;
-        
-        dispatch_async(dispatch_get_main_queue(), ^(){
-            [self.tableView reloadData];
-            [self _checkStatusOfEditBarButtonItem];
-        });
-    });
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
-
+    [_pagingToolbar removeFromSuperview];
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -159,46 +102,24 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return favoriteSeedList.count;
+    return _pageSeedList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = CELL_ID_SEEDLISTTABLECELL;
-    
-#if UI_RENDER_SEEDLISTTABLECELL
-    SeedListTableCell* cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    if (cell == nil)
+    SeedListTableCell* cell = [tableView dequeueReusableCellWithIdentifier:CELL_ID_SEEDLISTTABLECELL forIndexPath:indexPath];
+    if (nil == cell)
     {
-        NSArray* nib = [[NSBundle mainBundle] loadNibNamed:CELL_ID_SEEDLISTTABLECELL owner:self options:nil];
-        cell = [nib objectAtIndex:0];
+        cell = [CBUIUtils componentFromNib:CELL_ID_SEEDLISTTABLECELL owner:self options:nil];
     }
     
-#else
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-#endif
+    Seed* seed = [_pageSeedList objectAtIndex:indexPath.row];
+    SeedPicture* picture = [_pageFirstSeedPictureList objectAtIndex:indexPath.row];
     
-    Seed* seed = [favoriteSeedList objectAtIndex:indexPath.row];
-    SeedPicture* picture = [firstSeedPictureList objectAtIndex:indexPath.row];
-    
-#if UI_RENDER_SEEDLISTTABLECELL
     [cell fillSeed:seed];
     [cell fillSeedPicture:picture];
-#else
-    [cell.textLabel setText:seed.name];
-#endif
     
     return cell;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return CELL_HEIGHT_SEEDLISTTABLECELL;
 }
 
 #pragma mark - Table view delegate
@@ -218,7 +139,7 @@
             self.navigationItem.rightBarButtonItems = @[_cancelBarButton, _selectAllBarButton];
         }
         
-        _isSelectedAll = (favoriteSeedList.count == selectedRows.count) ? YES : NO;
+        _isSelectedAll = (_pageSeedList.count == selectedRows.count) ? YES : NO;
     }
     else
     {
@@ -231,8 +152,8 @@
         {
             _selectedIndexPathInTableReadingMode = indexPath;
         }
-        
-        selectedSeed = [favoriteSeedList objectAtIndex:indexPath.row];
+    
+        _selectedSeed = [_pageSeedList objectAtIndex:indexPath.row];
         
         [self performSegueWithIdentifier:SEGUE_ID_FAVORITESEEDLIST2SEEDDETAIL sender:self];
     }
@@ -267,7 +188,7 @@
         if ([segue.destinationViewController isKindOfClass:[SeedDetailViewController class]])
         {
             SeedDetailViewController* seedDetailViewController = segue.destinationViewController;
-            [seedDetailViewController setSeed:selectedSeed];
+            [seedDetailViewController setSeed:_selectedSeed];
         }
     }
 }
@@ -276,7 +197,7 @@
 {
     if (_isSelectedAll)
     {
-        NSUInteger rowCount = favoriteSeedList.count;
+        NSUInteger rowCount = _pageSeedList.count;
         for (NSInteger integer = 0; integer < rowCount; integer++)
         {
             NSIndexPath* indexPath = [NSIndexPath indexPathForRow:integer inSection:0];
@@ -288,7 +209,7 @@
     }
     else
     {
-        NSUInteger rowCount = favoriteSeedList.count;
+        NSUInteger rowCount = _pageSeedList.count;
         for (NSInteger integer = 0; integer < rowCount; integer++)
         {
             NSIndexPath* indexPath = [NSIndexPath indexPathForRow:integer inSection:0];
@@ -302,7 +223,7 @@
 
 -(void) onEditBarButtonClicked
 {
-    if (!self.tableView.editing && (0 < favoriteSeedList.count))
+    if (!self.tableView.editing && (0 < _pageSeedList.count))
     {
         self.navigationItem.rightBarButtonItems = @[_cancelBarButton, _selectAllBarButton];
         [self.tableView setEditing:TRUE animated:TRUE];
@@ -318,7 +239,7 @@
         {
             NSIndexPath* indexPath = [selectedRows objectAtIndex:index];
             NSUInteger recordIndex = indexPath.row;
-            Seed* seed = [favoriteSeedList objectAtIndex:recordIndex];
+            Seed* seed = [_pageSeedList objectAtIndex:recordIndex];
             [self _favoriteSeed:seed favorite:NO];
             [self _deleteTorrentFile:seed];
         }
@@ -334,6 +255,30 @@
         [self _showHUD:NSLocalizedString(@"Delete Done", nil)];
     }
 }
+
+-(void) onCancelBarButtonClicked
+{
+    if (self.tableView.editing)
+    {
+        _isSelectedAll = NO;
+        [self.tableView setEditing:FALSE animated:TRUE];
+        self.navigationItem.rightBarButtonItems = @[_editBarButton];
+    }
+}
+
+#pragma mark - PagingDelegate
+
+-(void) gotoPage:(NSUInteger)pageNum
+{
+    [_pagingToolbar setCurrentPage:pageNum];
+    _currentPage = pageNum;
+    
+    [self _constructTableDataByPage];
+    
+    [self _scrollToTableViewTop];
+}
+
+#pragma mark - Private Methods
 
 -(void) _deleteTorrentFile:(Seed*) seed
 {
@@ -354,16 +299,6 @@
     [_HUD hide:YES afterDelay:_HUD_DELAY];
 }
 
--(void) onCancelBarButtonClicked
-{
-    if (self.tableView.editing)
-    {
-        _isSelectedAll = NO;
-        [self.tableView setEditing:FALSE animated:TRUE];
-        self.navigationItem.rightBarButtonItems = @[_editBarButton];
-    }
-}
-
 -(void) _favoriteSeed:(Seed*) seed favorite:(BOOL) favorite
 {
     if (nil == seed)
@@ -374,6 +309,143 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
         id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
         [seedDAO favoriteSeed:seed andFlag:favorite];
+    });
+}
+
+- (void) _setupViewController
+{
+    [self _setupTableView];
+    [self _setupPagingToolbar];
+}
+
+- (void) _setupPagingToolbar
+{
+    _pagingToolbar = [CBUIUtils componentFromNib:NIB_ID_PAGINGTOOLBAR owner:self options:nil];
+    _pagingToolbar.pagingDelegate = self;
+    _pagingToolbar.pageSize = PAGE_SIZE_SEEDLISTTABLE;
+    
+    CGRect toolbarFrame = _pagingToolbar.frame;
+    CGRect tableViewFrame = self.view.frame;
+    _pagingToolbar.frame = CGRectMake(0, tableViewFrame.size.height - toolbarFrame.size.height + tableViewFrame.origin.y, tableViewFrame.size.width, toolbarFrame.size.height);
+    
+    [_pagingToolbar setBarStyle:UIBarStyleDefault];
+    _pagingToolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    
+    _currentPage = 1;
+}
+
+- (void) _setupTableView
+{
+    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
+    
+    _HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    _HUD.minSize = HUD_SIZE;
+    [self.view addSubview:_HUD];
+    
+    _pageSeedList = [NSMutableArray array];
+    _pageFirstSeedPictureList = [NSMutableArray array];
+}
+
+- (void) _initUIBarButtons
+{
+    [self.navigationController setNavigationBarHidden:FALSE];
+    _selectAllBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"SelectAll", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onSelectAllBarButtonClicked)];
+    _editBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Edit", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onEditBarButtonClicked)];
+    _deleteBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Delete", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onDeleteBarButtonClicked)];
+    _cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onCancelBarButtonClicked)];
+}
+
+- (void) _checkStatusOfEditBarButtonItem
+{
+    if (0 >= _pageSeedList.count)
+    {
+        self.navigationItem.rightBarButtonItems = @[];
+    }
+    else
+    {
+        self.navigationItem.rightBarButtonItems = @[_editBarButton];
+    }
+}
+
+- (void) _initTableView
+{
+    self.tableView.allowsMultipleSelectionDuringEditing = TRUE;
+    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0,0,0,5)];
+    _isSelectedAll = FALSE;
+}
+
+-(void) _constructTableDataByPage
+{
+    NSUInteger _pageSize = _pagingToolbar.pageSize;
+    if (_pageSize >= _seedList.count)
+    {
+        [_pageSeedList removeAllObjects];
+        [_pageSeedList addObjectsFromArray:_seedList];
+        
+        [_pageFirstSeedPictureList removeAllObjects];
+        [_pageFirstSeedPictureList addObjectsFromArray:_firstSeedPictureList];
+    }
+    else
+    {
+        [_pageSeedList removeAllObjects];
+        [_pageFirstSeedPictureList removeAllObjects];
+        
+        if (_pagingToolbar.currentPage != _currentPage)
+        {
+            _pagingToolbar.currentPage = _currentPage;
+        }        
+        
+        NSUInteger pageStartIndex = [_pagingToolbar pageStartItemIndex];
+        NSUInteger pageEndIndex = [_pagingToolbar pageEndItemIndex];
+        
+        for (NSUInteger i = pageStartIndex; i < pageEndIndex; i++)
+        {
+            Seed* seed = [_seedList objectAtIndex:i];
+            [_pageSeedList addObject:seed];
+            
+            SeedPicture* picture = [_firstSeedPictureList objectAtIndex:i];
+            [_pageFirstSeedPictureList addObject:picture];
+        }
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [self.tableView reloadData];
+        [self _checkStatusOfEditBarButtonItem];
+    });
+}
+
+-(void) _scrollToTableViewTop
+{
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+}
+
+- (void) _refetchFavoriteSeedsFromDatabase
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+        _seedList = [seedDAO getFavoriteSeeds];
+        
+        NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:_seedList.count];
+        for (Seed* seed in _seedList)
+        {
+            SeedPicture* picture = nil;
+            if (nil != seed.seedPictures && 0 < seed.seedPictures.count)
+            {
+                picture = seed.seedPictures[0];
+            }
+            
+            if (nil == picture)
+            {
+                picture = [SeedPicture placeHolder];
+            }
+            [pictureArray addObject:picture];
+        }
+        _firstSeedPictureList = pictureArray;
+        
+        [_pagingToolbar setItemCount:_seedList.count];
+        
+        [self _constructTableDataByPage];
     });
 }
 

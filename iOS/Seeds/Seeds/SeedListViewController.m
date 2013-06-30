@@ -8,11 +8,20 @@
 
 #import "SeedListViewController.h"
 
+#import "PagingToolbar.h"
+
 @interface SeedListViewController ()
 {
-    NSArray* seedList;
-    NSArray* firstSeedPictureList;
-    Seed* selectedSeed;
+    NSArray* _seedList;
+    NSArray* _firstSeedPictureList;
+    
+    Seed* _selectedSeed;
+    
+    NSMutableArray* _pageSeedList;
+    NSMutableArray* _pageFirstSeedPictureList;    
+    PagingToolbar* _pagingToolbar;
+    
+    NSUInteger _currentPage;
 }
 @end
 
@@ -25,22 +34,16 @@
     self = [super initWithStyle:style];
     if (self)
     {
-        [self setupTableView];
+        [self _setupViewController];
     }
     return self;
 }
 
 - (void) awakeFromNib
 {
-    [self setupTableView];
+    [self _setupViewController];
     
     [super awakeFromNib];
-}
-
-- (void) setupTableView
-{
-    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
-    [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
 }
 
 - (void) setSeedsDate:(NSDate *)seedsDate
@@ -59,45 +62,19 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController setToolbarHidden:YES];
+    [self.navigationController.view addSubview:_pagingToolbar];
     
-    if (nil == _seedsDate)
-    {
-        _seedsDate = [NSDate date];
-    }
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
-        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-        seedList = [seedDAO getSeedsByDate:_seedsDate];
-        
-        NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:seedList.count];
-        for (Seed* seed in seedList)
-        {
-            SeedPicture* picture = nil;
-            if (nil != seed.seedPictures && 0 < seed.seedPictures.count)
-            {
-                picture = seed.seedPictures[0];
-            }
-            
-            if (nil == picture)
-            {
-                picture = [SeedPicture placeHolder];
-            }
-            [pictureArray addObject:picture];
-        }
-        firstSeedPictureList = pictureArray;
-        
-
-        dispatch_async(dispatch_get_main_queue(), ^(){
-            [self.tableView reloadData];        
-        });
-    });
+    [self _refetchSeedsByDateFromDatabase];
     
     [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [_pagingToolbar removeFromSuperview];
     
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -114,100 +91,31 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return seedList.count;
+    return _pageSeedList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = CELL_ID_SEEDLISTTABLECELL;
-    
-#if UI_RENDER_SEEDLISTTABLECELL
-    SeedListTableCell* cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    if (cell == nil)
+    SeedListTableCell* cell = [tableView dequeueReusableCellWithIdentifier:CELL_ID_SEEDLISTTABLECELL forIndexPath:indexPath];
+    if (nil == cell)
     {
-        NSArray* nib = [[NSBundle mainBundle] loadNibNamed:CELL_ID_SEEDLISTTABLECELL owner:self options:nil];
-        cell = [nib objectAtIndex:0];
+        cell = [CBUIUtils componentFromNib:CELL_ID_SEEDLISTTABLECELL owner:self options:nil];
     }
     
-#else
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    if (cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-#endif
+    Seed* seed = [_pageSeedList objectAtIndex:indexPath.row];
+    SeedPicture* picture = [_pageFirstSeedPictureList objectAtIndex:indexPath.row];
     
-    Seed* seed = [seedList objectAtIndex:indexPath.row];
-    SeedPicture* picture = [firstSeedPictureList objectAtIndex:indexPath.row];
-    
-#if UI_RENDER_SEEDLISTTABLECELL
     [cell fillSeed:seed];
     [cell fillSeedPicture:picture];
-#else
-    [cell.textLabel setText:seed.name];
-#endif
-    
+
     return cell;
 }
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return CELL_HEIGHT_SEEDLISTTABLECELL;
-}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
-    
-    selectedSeed = [seedList objectAtIndex:indexPath.row];
+{    
+    _selectedSeed = [_pageSeedList objectAtIndex:indexPath.row];
     
     [self performSegueWithIdentifier:SEGUE_ID_SEEDLIST2SEEDDETAIL sender:self];
 }
@@ -219,9 +127,132 @@
         if ([segue.destinationViewController isKindOfClass:[SeedDetailViewController class]])
         {
             SeedDetailViewController* seedDetailViewController = segue.destinationViewController;
-            [seedDetailViewController setSeed:selectedSeed];
+            [seedDetailViewController setSeed:_selectedSeed];
         }
     }
+}
+
+#pragma mark - PagingDelegate
+
+-(void) gotoPage:(NSUInteger)pageNum
+{
+    [_pagingToolbar setCurrentPage:pageNum];
+    _currentPage = pageNum;
+    
+    [self _constructTableDataByPage];
+    
+    [self _scrollToTableViewTop];
+}
+
+#pragma mark - Private Methods
+
+- (void) _setupViewController
+{
+    [self _setupTableView];
+    [self _setupPagingToolbar];
+}
+
+- (void) _setupPagingToolbar
+{
+    _pagingToolbar = [CBUIUtils componentFromNib:NIB_ID_PAGINGTOOLBAR owner:self options:nil];
+    _pagingToolbar.pagingDelegate = self;
+    _pagingToolbar.pageSize = PAGE_SIZE_SEEDLISTTABLE;
+    
+    CGRect toolbarFrame = _pagingToolbar.frame;
+    CGRect tableViewFrame = self.view.frame;
+    _pagingToolbar.frame = CGRectMake(0, tableViewFrame.size.height - toolbarFrame.size.height + tableViewFrame.origin.y, tableViewFrame.size.width, toolbarFrame.size.height);
+    
+    [_pagingToolbar setBarStyle:UIBarStyleDefault];
+    _pagingToolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    
+    _currentPage = 1;
+}
+
+- (void) _setupTableView
+{
+    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
+
+    _pageSeedList = [NSMutableArray array];
+    _pageFirstSeedPictureList = [NSMutableArray array];
+}
+
+-(void) _constructTableDataByPage
+{
+    NSUInteger _pageSize = _pagingToolbar.pageSize;
+    if (_pageSize >= _seedList.count)
+    {
+        [_pageSeedList removeAllObjects];
+        [_pageSeedList addObjectsFromArray:_seedList];
+        
+        [_pageFirstSeedPictureList removeAllObjects];
+        [_pageFirstSeedPictureList addObjectsFromArray:_firstSeedPictureList];
+    }
+    else
+    {
+        [_pageSeedList removeAllObjects];
+        [_pageFirstSeedPictureList removeAllObjects];
+        
+        if (_pagingToolbar.currentPage != _currentPage)
+        {
+            _pagingToolbar.currentPage = _currentPage;
+        }
+        
+        NSUInteger pageStartIndex = [_pagingToolbar pageStartItemIndex];
+        NSUInteger pageEndIndex = [_pagingToolbar pageEndItemIndex];
+        
+        for (NSUInteger i = pageStartIndex; i < pageEndIndex; i++)
+        {
+            Seed* seed = [_seedList objectAtIndex:i];
+            [_pageSeedList addObject:seed];
+            
+            SeedPicture* picture = [_firstSeedPictureList objectAtIndex:i];
+            [_pageFirstSeedPictureList addObject:picture];
+        }
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [self.tableView reloadData];
+    });
+}
+
+-(void) _scrollToTableViewTop
+{
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+}
+
+-(void) _refetchSeedsByDateFromDatabase
+{
+    if (nil == _seedsDate)
+    {
+        _seedsDate = [NSDate date];
+    }
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+        _seedList = [seedDAO getSeedsByDate:_seedsDate];
+        
+        NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:_seedList.count];
+        for (Seed* seed in _seedList)
+        {
+            SeedPicture* picture = nil;
+            if (nil != seed.seedPictures && 0 < seed.seedPictures.count)
+            {
+                picture = seed.seedPictures[0];
+            }
+            
+            if (nil == picture)
+            {
+                picture = [SeedPicture placeHolder];
+            }
+            [pictureArray addObject:picture];
+        }
+        _firstSeedPictureList = pictureArray;
+        
+        [_pagingToolbar setItemCount:_seedList.count];
+        
+        [self _constructTableDataByPage];
+    });
 }
 
 @end

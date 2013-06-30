@@ -9,10 +9,10 @@
 #import <UIKit/UIKit.h>
 
 #import "SeedListTableCell.h"
-
 #import "SeedDetailViewController.h"
+#import "PagingToolbar.h"
 
-@interface SeedListViewController : UITableViewController
+@interface SeedListViewController : UITableViewController <PagingDelegate>
 
 @property (strong, nonatomic) NSDate* seedsDate;
 

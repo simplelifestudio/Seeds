@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "SeedListTableCell.h"
-
 #import "SeedDetailViewController.h"
+#import "PagingToolbar.h"
 
-@interface FavoriteSeedListViewController : UITableViewController <UITableViewDelegate>
+@interface FavoriteSeedListViewController : UITableViewController <PagingDelegate>
 
 @end

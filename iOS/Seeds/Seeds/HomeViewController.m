@@ -62,9 +62,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES];
-
-    [self updateDayAndSyncStatusLabels];
+    [self.navigationController setToolbarHidden:YES];
     
+    [self updateDayAndSyncStatusLabels];
+
     [super viewWillAppear:animated];    
 }
 

@@ -97,6 +97,8 @@
     
     if (nil != command)
     {
+        body = (nil != body) ? body : [NSDictionary dictionary];
+        
         message = [JSONMessage construct:command messageBody:body];
     }
     

@@ -41,4 +41,6 @@
 
 +(UIAlertView*) createProgressAlertView:(NSString *) title andMessage:(NSString *) message andActivity:(BOOL) activity andDelegate:(id) delegate;
 
++(id) componentFromNib:(NSString*) nibId owner:(id) owner options:(NSDictionary*) options;
+
 @end
