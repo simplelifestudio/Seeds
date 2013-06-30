@@ -13,6 +13,8 @@
 @interface PagingToolbar()
 {
     NSUInteger _pageCount;
+    
+    UILabel* _pageNumLabel;
 }
 
 @end
@@ -59,6 +61,7 @@
         _currentPage = currentPage;
         
         [self _refreshBarButtonArrayStatus];
+        [self _refreshPageNumLabel];
     }
 }
 
@@ -134,6 +137,28 @@
 {
     _pageSize = PAGE_SIZE_DEFAULT;
     [self _computePageData];
+    
+    _pageNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 20)];
+    _pageNumLabel.font = [UIFont boldSystemFontOfSize:16];
+    _pageNumLabel.textColor = [UIColor whiteColor];
+    _pageNumLabel.backgroundColor = [UIColor clearColor];
+    _pageNumLabel.textAlignment = UITextAlignmentCenter;
+    [_pageNumBarButton setCustomView:_pageNumLabel];
+    
+    [self _refreshPageNumLabel];
+}
+
+- (void) _refreshPageNumLabel
+{
+    NSMutableString* _pageNumStr = [NSMutableString string];
+    
+    [_pageNumStr appendString:[NSString stringWithFormat:@"%d", _currentPage]];
+    [_pageNumStr appendString:@" / "];
+    [_pageNumStr appendString:[NSString stringWithFormat:@"%d", _pageCount]];
+    
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        _pageNumLabel.text = _pageNumStr;    
+    });
 }
 
 - (void) _computePageData
