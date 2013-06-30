@@ -55,7 +55,11 @@
 	
 	function callBack()
 	{
+		alert("callback");
+	
 		var oResponse = eval("(" + xmlhttp.responseText +")");
+		
+		alert(oResponse);
 		
 		var eResponseMessageId = document.getElementById(ID_RESPONSE_MESSAGE_ID);
 		var eResponseMessageBody = document.getElementById(ID_RESPONSE_MESSAGE_BODY);		
