@@ -41,7 +41,7 @@ public class SeedsFavListActivity extends Activity{
 	private SeedsAdapter tAdapter;
 	protected String tDate;
 	protected String tFirstImgUrl;
-	protected int tSeedId;
+	protected int tSeedLocalId;
 	protected List<Integer> tSeedIdList;
 	private ArrayList<SeedsEntity> mSeedsEntityList;
 	
@@ -142,7 +142,7 @@ public class SeedsFavListActivity extends Activity{
 	
 	private void loadSeedsInfo(){
 		
-		int seedId;
+		int localId;
 		SeedsEntity tSeedsEntity;
 		
 		// Initialize the SeedsEntity List
@@ -158,10 +158,11 @@ public class SeedsFavListActivity extends Activity{
 		tResult.moveToFirst(); 
 		while (!tResult.isAfterLast()) 
 	    {
-			seedId = tResult.getInt(tResult.getColumnIndex(SeedsDBAdapter.KEY_ID_SEED));
+			localId = tResult.getInt(tResult.getColumnIndex(SeedsDBAdapter.KEY_ID_SEED));
 			// Construct seeds entity
 			tSeedsEntity = new SeedsEntity();
-			tSeedsEntity.setSeedId(seedId);
+			tSeedsEntity.setLocalId(localId);
+			tSeedsEntity.setSeedId(tResult.getInt(tResult.getColumnIndex(SeedsDBAdapter.KEY_SEEDID)));
 			tSeedsEntity.setSeedType(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_TYPE)));
 			tSeedsEntity.setSeedSource(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_SOURCE)));
 			tSeedsEntity.setSeedPublishDate(tDate);
@@ -177,7 +178,7 @@ public class SeedsFavListActivity extends Activity{
 				tSeedsEntity.setSeedFavorite(false);
 			
 			// Query the seedPic table
-			Cursor tImgResult = mDBAdapter.getSeedPicFirstEntryViaSeedId(seedId);
+			Cursor tImgResult = mDBAdapter.getSeedPicFirstEntryViaLocalId(localId);
 			
 			if(tImgResult.getCount()<=0)
 			{

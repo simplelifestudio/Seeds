@@ -10,8 +10,14 @@
 
 package com.simplelife.seeds.server.db;
 
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+
+import com.simplelife.seeds.server.util.DaoWrapper;
 
 
 public class Seed {
@@ -41,7 +47,7 @@ public class Seed {
 		this.pictures = pictures;
 	}
 
-	private Set<PreviewPic> pictures = new HashSet<PreviewPic>();
+	private Set<PreviewPic> pictures = new LinkedHashSet<PreviewPic>();
 
 	/**
 	 * @return the seedId
@@ -219,65 +225,62 @@ public class Seed {
 	{
 		StringBuilder strBuilder = new StringBuilder();
 		
-		strBuilder.append("type:");
+		strBuilder.append("\n类    型: ");
 		strBuilder.append(getType());
 		strBuilder.append("\n");
 
-		strBuilder.append("source:");
+		strBuilder.append("来    源: ");
 		strBuilder.append(getSource());
 		strBuilder.append("\n");
 
-		strBuilder.append("publishDate:");
+		strBuilder.append("发布日期: ");
 		strBuilder.append(getPublishDate());
 		strBuilder.append("\n");
 
-		strBuilder.append("name:");
+		strBuilder.append("影片名称: ");
 		strBuilder.append(getName());
 		strBuilder.append("\n");
 
-		strBuilder.append("size:");
+		strBuilder.append("影片大小: ");
 		strBuilder.append(getSize());
 		strBuilder.append("\n");
 
-		strBuilder.append("format:");
+		strBuilder.append("影片格式: ");
 		strBuilder.append(getFormat());
 		strBuilder.append("\n");
 
-		strBuilder.append("torrentLink:");
+		strBuilder.append("种子链接: ");
 		strBuilder.append(getTorrentLink());
 		strBuilder.append("\n");
 
-		strBuilder.append("hash:");
+		strBuilder.append("特 征 码: ");
 		strBuilder.append(getHash());
 		strBuilder.append("\n");
 
-		strBuilder.append("mosaic:");
+		strBuilder.append("有码无码: ");
 		strBuilder.append(getMosaic());
 		strBuilder.append("\n");
 
-		strBuilder.append("memo:");
+		strBuilder.append("备注信息: ");
 		strBuilder.append(getMemo());
 		strBuilder.append("\n");
 
-		java.util.Iterator<PreviewPic> it = pictures.iterator();
+		String sql = "Select pictureId, seedId, pictureLink, memo "
+                + " from previewpic"
+                + " where seedId = " + this.seedId
+                + " order by pictureId";
+        List<PreviewPic> pics = DaoWrapper.query(sql, PreviewPic.class);
+        
+		java.util.Iterator<PreviewPic> it = pics.iterator();
 		PreviewPic pic;
 		while (it.hasNext())
 		{
 			pic = it.next();
-			strBuilder.append("PictureId: ");
-			strBuilder.append(pic.getPictureId());
-			strBuilder.append("\n");
+			strBuilder.append("   - ");
+			//strBuilder.append(pic.getPictureId());
 			
-			strBuilder.append("Picture Link: ");
+			//strBuilder.append(": ");
 			strBuilder.append(pic.getPictureLink());
-			strBuilder.append("\n");
-			
-			strBuilder.append("SeedId: ");
-			strBuilder.append(pic.getSeedId());
-			strBuilder.append("\n");
-			
-			strBuilder.append("Memo: ");
-			strBuilder.append(pic.getMemo());
 			strBuilder.append("\n");
 		}
 		return strBuilder.toString();

@@ -7,12 +7,12 @@
  * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
  */
 
-package com.simplelife.seeds.server.db;
+package com.simplelife.seeds.server.util;
 
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import com.simplelife.seeds.server.util.LogUtil;
 
 import java.util.List;
 
@@ -23,23 +23,28 @@ public class DaoWrapper {
 	}
 	
 	
-	public static void executeSql(String sql)
+	public static boolean executeSql(String sql)
 	{
 		if (sql == null || sql.length() == 0)
 		{
 			LogUtil.severe("Invalid SQL string: " + sql);
-			return;
+			return false;
 		}
 		
+		Session session = HibernateSessionFactory.getCurrentSession();
+		Transaction tx = session.beginTransaction();
 		try
 		{
-			Session _session = HibernateSessionFactory.getCurrentSession();
-			SQLQuery query = _session.createSQLQuery(sql); 
+			SQLQuery query = session.createSQLQuery(sql);
 			query.executeUpdate();
+			tx.commit();
+			return true;
 		}
 		catch(Exception e)
 		{
 			LogUtil.printStackTrace(e);
+			tx.rollback();
+			return false;
 			//_logger.log(Level.SEVERE, "Error occurred when execute sql, error: " + e.getMessage() + ", sql: " + sql);
 		}
 	}

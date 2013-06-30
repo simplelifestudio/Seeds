@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+
 public class DateUtil {
 	private final static int INVALID_VALUE = 0xffff;
 	private static SimpleDateFormat defaultDateFormatter;
@@ -213,12 +214,12 @@ public class DateUtil {
 	
 	
 	/**
-	 * Get date string as format of "yyyy-MM-dd HH:mm:ss"
+	 * Get date string as format of "yyyy-MM-dd HH:mm:ss.SSS"
 	 * @return
 	 */
 	public static String getNow()
 	{
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 		sdf.setTimeZone(getDefaultTimeZone());
 		return sdf.format(getCalendar().getTime());
 	}
@@ -251,9 +252,9 @@ public class DateUtil {
 	 * @param taskTriggerHour: hour of triggering task
 	 * @return Date of next trigger
 	 */
-	public static Date getNextTaskTrigger(int taskTriggerHour)
+	public static Date getTaskTrigger(int taskTriggerHour, boolean tomorrow)
 	{
-		return getNextTaskTrigger(taskTriggerHour, 0);
+		return getTaskTrigger(taskTriggerHour, 0, tomorrow);
 	}
 	
 	/**
@@ -293,20 +294,74 @@ public class DateUtil {
 	 * @param taskTriggerMinute: minutes of triggering task
 	 * @return Date of next trigger
 	 */
-	public static Date getNextTaskTrigger(int taskTriggerHour, int taskTriggerMinute)
+	public static Date getTaskTrigger(int taskTriggerHour, int taskTriggerMinute, boolean tomorrow)
 	{
 		Calendar cal = getCalendar();
-		int curHour = cal.get(Calendar.HOUR_OF_DAY);
-		int curMinute = cal.get(Calendar.MINUTE);
 		
-		if ((curHour > taskTriggerHour) || 
-				((curHour == taskTriggerHour) && (curMinute > taskTriggerMinute)))
+		if (tomorrow)
+	    {
+	        cal.add(Calendar.DAY_OF_YEAR, 1);
+			cal.set(Calendar.HOUR_OF_DAY, taskTriggerHour);
+			cal.set(Calendar.MINUTE, taskTriggerMinute);
+	    }
+		else
 		{
-			cal.add(Calendar.DAY_OF_YEAR, 1);
+			int curHour = cal.get(Calendar.HOUR_OF_DAY);
+			int curMinute = cal.get(Calendar.MINUTE);
+			if ((curHour > taskTriggerHour) || 
+				((curHour == taskTriggerHour) && (curMinute > taskTriggerMinute)))
+			{
+				cal.add(Calendar.MINUTE, 2);
+			}
+			
 		}
 		
-		cal.set(Calendar.HOUR_OF_DAY, taskTriggerHour);
-		cal.set(Calendar.MINUTE, taskTriggerMinute);
+		//if ((curHour > taskTriggerHour) || 
+		//		((curHour == taskTriggerHour) && (curMinute > taskTriggerMinute)))
+		//String sql = "select * from SeedCaptureLog where publishDate ='" + DateUtil.getToday() + "' and status >= 1 ";
+		//if (DaoWrapper.exists(sql))
+			// If seeds of today have been succeed or failed
 		return cal.getTime();
+	}
+	
+	
+	/**
+	 * return 2013-06-01 by "[6-01]最新BT合集"
+	 * @param title: title in web page
+	 * @return Formatted date string
+	 */
+	public static String getDateByTitle(String title)
+	{
+		String outDate = null;
+		int start = title.indexOf('[');
+		boolean flag = true;
+		if (start < 0)
+		{
+			flag = false;
+		}
+		
+		int end = title.indexOf(']'); 
+		if (end < 0)
+		{
+			flag = false;
+		}
+		
+		String dateString = title.substring(start + 1, end);
+		int mid = dateString.indexOf('-'); 
+		if (mid < 0)
+		{
+			flag = false;
+		}
+		
+		if (!flag)
+		{
+			LogUtil.warning("Invalid date format found: " + title);
+			return null;
+		}
+		outDate = Integer.toString(Calendar.getInstance().get(Calendar.YEAR));
+		outDate += "-";
+		outDate += dateString;
+		
+		return DateUtil.getFormatedDate(outDate);
 	}
 }

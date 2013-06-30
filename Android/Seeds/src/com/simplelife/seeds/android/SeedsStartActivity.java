@@ -24,6 +24,7 @@ import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
 import com.simplelife.seeds.android.utils.downloadprocess.DownloadService;
 import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadList;
+import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 public class SeedsStartActivity extends Activity {
 	
@@ -39,13 +40,16 @@ public class SeedsStartActivity extends Activity {
 		// Fade in and fade out
 		AlphaAnimation fadeShow = new AlphaAnimation(0.3f,1.0f);
 		fadeShow.setDuration(1000);
-		startView.startAnimation(fadeShow);
+		startView.startAnimation(fadeShow);		
 		
-		// Start the DB process
-		SeedsDBAdapter.initAdapter(getApplication());
+		// Start the Logger instance
+		SeedsLoggerUtil.initSeedsLogger(getApplication());
 		
 		// Start the date manager
 		SeedsDateManager.initDateManager(getApplication());
+
+		// Start the DB process
+		SeedsDBAdapter.initAdapter(getApplication());
 		
 		// Start the Seeds Imgae URL preload thread
 		SeedsImageUrlPreloader.initPreloader(getApplication());

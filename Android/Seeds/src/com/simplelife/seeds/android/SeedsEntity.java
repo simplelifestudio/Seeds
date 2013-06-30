@@ -20,6 +20,9 @@ public class SeedsEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// Seed ID primary key of table Seed
+	public int localId;
+	
+	// Remote ID maintained by server
 	public int seedId;
 	
 	// The type of the seed, movie av or else
@@ -67,6 +70,7 @@ public class SeedsEntity implements Serializable {
 	}
 	
 	private void initSeedsValues(){
+		seedId = 1;
 		type = "AV";
 		source = "N/A";
 		publishDate = "N/A";
@@ -83,6 +87,10 @@ public class SeedsEntity implements Serializable {
 	
 	public void addPicLink(String inPicLink){
 		picLinks.add(inPicLink);
+	}
+	
+	public void setLocalId(int inId){
+		this.localId = inId;
 	}
 	
 	public void setSeedId(int inId){
@@ -136,6 +144,10 @@ public class SeedsEntity implements Serializable {
 	
 	public void setSeedIsPicAvail(boolean inTag){
 		this.isPicAvail = inTag;
+	}
+	
+	public int getSeedLocalId(){
+		return this.localId;
 	}
 	
 	public int getSeedId(){

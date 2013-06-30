@@ -12,19 +12,17 @@ package com.simplelife.seeds.server.parser;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 import org.htmlparser.Remark;
 import org.htmlparser.Tag;
 import org.htmlparser.Text;
 import org.htmlparser.visitors.NodeVisitor;
-
-import com.simplelife.seeds.server.db.DaoWrapper;
 import com.simplelife.seeds.server.db.Seed;
+import com.simplelife.seeds.server.util.DaoWrapper;
 import com.simplelife.seeds.server.util.LogUtil;
 
 public class HtmlNodeVisitor extends NodeVisitor {
 	private AnalyzeStatus _analyzeStatus = AnalyzeStatus.Init;
-	private Seed _seed;
+	private Seed seed;
 	private String _publishDate;
 	
 	private enum AnalyzeStatus
@@ -35,7 +33,6 @@ public class HtmlNodeVisitor extends NodeVisitor {
 	public HtmlNodeVisitor(boolean recurseChildren, boolean recurseSelf)
 	{
 		super(recurseChildren, recurseSelf);
-		//_logger.setLevel(Level.WARNING);
 	}
 	
 	public void visitTag(Tag tag) 
@@ -48,10 +45,28 @@ public class HtmlNodeVisitor extends NodeVisitor {
 		if(isImageLink(tag))
     	{
 			String picLink = getImageLink(tag.getText());
-			//LogUtil.info(picLink);
-			_seed.addPicture(picLink);
+			seed.addPicture(picLink);
     	}
     }
+	
+	private String getRealSeedLink(String seedPageLink)
+	{
+		return seedPageLink;
+		// TODO: update link of torrent page to link of torrent
+		/*
+		int index = seedPageLink.lastIndexOf("=");
+		if (index > 0)
+		{
+			try {
+                URL url = new URL(seedPageLink);
+              //url.
+    			String charCode = seedPageLink.substring(index);
+            } catch (MalformedURLException e) {
+                LogUtil.severe("Invalid URL link found");
+            }
+		}
+		*/
+	}
 	
     public void visitStringNode (Text string)    {
     	String nodeText = string.getText();
@@ -60,27 +75,27 @@ public class HtmlNodeVisitor extends NodeVisitor {
     	
     	if (_analyzeStatus == AnalyzeStatus.Link)
     	{
-    		_seed.setTorrentLink(nodeText);
-    		//_logger.log(Level.INFO,"Torrent link£∫ " + link);
+    		String torrentLink = getRealSeedLink(nodeText);
+    		seed.setTorrentLink(torrentLink);
     		
-    		if (!checkSeedForSave(_seed))
+    		if (!checkSeedForSave(seed))
     		{
-    			LogUtil.warning("Invalid seed info for save: " + _seed.toString());
+    			LogUtil.warning("Invalid seed info for save: " + seed.toString());
     			return;
     		}
-    		formatSeedForSave(_seed);
-			DaoWrapper.save(_seed);
-			LogUtil.info("Saved seed to DB: \n" + _seed.toString());
+    		formatSeedForSave(seed);
+			DaoWrapper.save(seed);
+			LogUtil.info("Saved seed to DB: \n" + seed.toString());
 			return;
     	}
     		
     	if (isFilmName(nodeText))
     	{
     		_analyzeStatus = AnalyzeStatus.FilmInfo;
-    		_seed = new Seed();
-    		_seed.setName(nodeText);
-    		_seed.setType("AV");
-    		_seed.setSource("ﬂ‰ﬂ‰∞Æ");
+    		seed = new Seed();
+    		seed.setName(nodeText);
+    		seed.setType("AV");
+    		seed.setSource("ﬂ‰ﬂ‰∞Æ");
     		
     		if (_publishDate == null || _publishDate.length() == 0)
     		{
@@ -89,20 +104,19 @@ public class HtmlNodeVisitor extends NodeVisitor {
     			sdf.format(Calendar.getInstance().getTime());
     			_publishDate = sdf.format(Calendar.getInstance().getTime());
     		}
-    		_seed.setPublishDate(_publishDate);
-    		//_logger.log(Level.INFO,"\n\n”∞∆¨√˚≥∆£∫" + string.getText());
+    		seed.setPublishDate(_publishDate);
     	}
     	else if(isFilmFormat(nodeText))
     	{
-    		_seed.setFormat(nodeText);
+    		seed.setFormat(nodeText);
     	}
     	else if(isFilmSize(nodeText))
     	{
-    		_seed.setSize(nodeText);
+    		seed.setSize(nodeText);
     	}
     	else if(isFilmMosaic(nodeText))
     	{
-    		_seed.setMosaic(nodeText);
+    		seed.setMosaic(nodeText);
     	}
     	else if(isTorrentLink(nodeText))
     	{
@@ -113,7 +127,7 @@ public class HtmlNodeVisitor extends NodeVisitor {
     	}
     	else if(isHash(nodeText))
     	{
-    		_seed.setHash(nodeText);
+    		seed.setHash(nodeText);
     	}
     }
     public void visitRemarkNode (Remark remark) {
@@ -200,7 +214,7 @@ public class HtmlNodeVisitor extends NodeVisitor {
 		}
 		
 		if (seed.getTorrentLink() != null) {
-			seed.setType(removePreTitle(seed.getTorrentLink()));
+			seed.setTorrentLink(removePreTitle(seed.getTorrentLink()));
 		}
     }
     

@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.simplelife.seeds.server.json.IJsonCommand;
 import com.simplelife.seeds.server.json.JsonCommandFactory;
+import com.simplelife.seeds.server.json.JsonUtil;
 import com.simplelife.seeds.server.util.LogUtil;
 
 import net.sf.json.JSONObject;
@@ -76,7 +77,7 @@ public class SeedsServlet extends HttpServlet {
 		LogUtil.info("Beginning of doPost, proceed request from client");
 		response.setContentType(_seedsMIME);
 
-		if (request.getContentType() != _seedsMIME) {
+		if (!_seedsMIME.equals(request.getContentType())) {
 			LogUtil.warning("Invalid MIME found from client: " + request.getContentType());
 		}
 
@@ -84,7 +85,7 @@ public class SeedsServlet extends HttpServlet {
 
 		LogUtil.info("JSON command received: " + command);
 		
-		JSONObject jsonObj = createJsonObject(command);
+		JSONObject jsonObj = JsonUtil.createJsonObject(command);
 		if (jsonObj == null) {
 			LogUtil.severe( "Invalid command received: \n" + command);
 			return;
@@ -96,6 +97,7 @@ public class SeedsServlet extends HttpServlet {
 		executeCommand(jsonObj, out, request);
 	}
 
+
 	/**
 	 * Read JSON command from client
 	 * 
@@ -104,10 +106,6 @@ public class SeedsServlet extends HttpServlet {
 	 * @return: complete string of JSON command from client
 	 */
 	private String readCommand(HttpServletRequest request) {
-		
-		//return "{\n    \"command\": \"AlohaRequest\",\n    \"paramList\":\n    {\n    		\"content\":\"Hello Seeds Server!\"\n    }\n}\n";
-		
-		
 		StringBuffer strBuf = new StringBuffer();
 		String line = null;
 		try {
@@ -123,35 +121,7 @@ public class SeedsServlet extends HttpServlet {
 		
 	}
 
-	/**
-	 * Check if JSON command from client is valid, including if it matches
-	 * format of JSON
-	 * 
-	 * @param command
-	 *            : string of command
-	 * @return: null if it's invalid JSON command, else, return constructed JSON
-	 *          object
-	 */
-	public JSONObject createJsonObject(String command) {
-		if (command.length() == 0) {
-			return null;
-		}
-
-		if (command.indexOf("{") == -1) {
-			return null;
-		}
-
-		JSONObject jsonObj = null;
-		try {
-			jsonObj = JSONObject.fromObject(command);
-		} catch (Exception e) {
-			//LogUtil.severe( "Error occurred when try to decode JSON command from client: " + e.getMessage());
-			LogUtil.printStackTrace(e);
-			return null;
-		}
-
-		return jsonObj;
-	}
+	
 
 	/**
 	 * Execute command bases on JSON object
@@ -162,7 +132,7 @@ public class SeedsServlet extends HttpServlet {
 	 *            : output stream of http response
 	 */
 	private void executeCommand(JSONObject jsonObj, PrintWriter out, HttpServletRequest request) {
-		IJsonCommand jsonCmd = JsonCommandFactory.CreateJsonCommand(jsonObj, request);
+		IJsonCommand jsonCmd = JsonCommandFactory.CreateJsonCommand(jsonObj, request.getLocalAddr());
 		
 		if (jsonCmd == null)
 		{

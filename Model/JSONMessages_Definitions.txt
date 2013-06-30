@@ -1,7 +1,7 @@
-0. MessageFormat
+X. MessageFormat
 {
-    "command": "AlohaRequest",
-    "paramList": 
+    "id": "AlohaRequest",
+    "body": 
     {
         "param1": "value1",
         "param2": "value2",
@@ -9,28 +9,39 @@
     }
 }
 
+0. ErrorResponseMessage
+{
+    "id": "ErrorResponse",
+    "body":
+    {
+	"requestMessage": "",
+	"errorCode": "-7",
+        "errorDescription": "Empty Content"
+    }
+}
+
 1. AlohaRequest
 {
-    "command": "AlohaRequest",
-    "paramList":
+    "id": "AlohaRequest",
+    "body":
     {
-    		"content":"Hello Seeds Server!"
+    	"content":"Hello Seeds Server!"
     }
 }
 
 2. AlohaResponse
 {
-		"command": "AlohaResponse",
-		"paramList":
-		{
-				"content":"Hello Seeds App!"
-		}
+    "id": "AlohaResponse",
+    "body":
+    {
+    	"content":"Hello Seeds App!"
+    }
 }
 
 3. SeedsUpdateStatusByDatesRequest
 {
-    "command": "SeedsUpdateStatusByDatesRequest",
-    "paramList": {
+    "id": "SeedsUpdateStatusByDatesRequest",
+    "body": {
         "dateList": [
             "2013-04-14",
             "2013-04-15",
@@ -41,18 +52,18 @@
 
 4. SeedsUpdateStatusByDatesResponse
 {
-    "command": "SeedsUpdateStatusByDatesResponse",
-    "paramList": {
-        	"2013-04-14":"READY",
-					"2013-04-15":"NO_UPDATE",
-					"2013-04-16":"NOT_READY"  
+    "id": "SeedsUpdateStatusByDatesResponse",
+    "body": {
+        "2013-04-14":"READY",
+	"2013-04-15":"NO_UPDATE",
+	"2013-04-16":"NOT_READY"  
     }
 }
 
 5. SeedsByDatesRequest
 {
-    "command": "SeedsByDatesRequest",
-    "paramList": {
+    "id": "SeedsByDatesRequest",
+    "body": {
         "dateList": [
             "2013-04-14",
             "2013-04-15",
@@ -63,8 +74,8 @@
 
 6. SeedsByDatesResponse
 {
-    "command": "SeedsByDatesResponse",
-    "paramList": {
+    "id": "SeedsByDatesResponse",
+    "body": {
         "2013-04-14": [
             {
                 "name": "AAAAA",
@@ -99,9 +110,9 @@
 
 7. SeedsToCartRequest
 {
-    "command": "SeedsToCartRequest",
-    "cartId": "",
-    "paramList": {
+    "id": "SeedsToCartRequest",
+    "body": {
+    	"cartId": "",
         "seedIdList": [
             "1",
             "7",
@@ -112,8 +123,8 @@
 
 8. SeedsToCartResponse
 {
-    "command": "SeedsToCartResponse",
-    "paramList": {
+    "id": "SeedsToCartResponse",
+    "body": {
     	"cartId": "ABCDEFG123456",
         "successSeedIdList": [
             "1",
@@ -127,8 +138,8 @@
 
 9. ExternalSeedsToCartRequest
 {
-    "command": "SeedsToExternalCartRequest",
-    "paramList": {
+    "id": "SeedsToExternalCartRequest",
+    "body": {
         "cartId": "",
         "seedList": [
             {
@@ -146,8 +157,8 @@
 
 10. ExternalSeedsToCartResponse
 {
-    "command": "SeedsToExternalCartResponse",
-    "paramList": {
+    "id": "SeedsToExternalCartResponse",
+    "body": {
         "cartId": "ABCDEFG123456",
         "successSeedLocalIdList": [
             "1",

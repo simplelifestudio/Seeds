@@ -10,45 +10,49 @@
 
 package com.simplelife.seeds.server.json;
 
-import javax.servlet.http.HttpServletRequest;
-
+import net.sf.json.JSONObject;
 import com.simplelife.seeds.server.db.LogId;
 import com.simplelife.seeds.server.util.LogUtil;
 import com.simplelife.seeds.server.util.OperationLogUtil;
 
-import net.sf.json.JSONObject;
-
 public class JsonCommandFactory {
-	private final static String _jsonCommandKeyword = "command";
-	private final static String _jsonCommandAlohaReq = "AlohaRequest";
-	private final static String _jsonCommandSeedsStatusReq = "SeedsUpdateStatusByDatesRequest";
-	private final static String _jsonCommandSeedsByDatesReq = "SeedsByDatesRequest";
+	private final static String jsonCommandKeyword = "command";
+	private final static String jsonCommandAlohaReq = "AlohaRequest";
+	private final static String jsonCommandSeedsStatusReq = "SeedsUpdateStatusByDatesRequest";
+	private final static String jsonCommandSeedsByDatesReq = "SeedsByDatesRequest";
+	private final static String jsonCommandSeedsToCartRequest = "SeedsToCartRequest";
 	
-	public static IJsonCommand CreateJsonCommand(JSONObject jsonObj, HttpServletRequest request)
+	
+	public static IJsonCommand CreateJsonCommand(JSONObject jsonObj, String clientIp)
 	{
-		String command = jsonObj.getString(_jsonCommandKeyword);
+		String command = jsonObj.getString(jsonCommandKeyword);
 		IJsonCommand jsonCmd = null;
 		
 		LogUtil.info("Received command: " + command);
-		if (command.equals(_jsonCommandAlohaReq))
+		if (command.equals(jsonCommandAlohaReq))
 		{
 			jsonCmd = new JsonCommandAlohaReq();
-			OperationLogUtil.save(LogId.ALOHA_REQUEST, request.getLocalAddr());
+			OperationLogUtil.save(LogId.ALOHA_REQUEST, clientIp);
 		}
-		else if (command.equals(_jsonCommandSeedsStatusReq))
+		else if (command.equals(jsonCommandSeedsStatusReq))
 		{
 			jsonCmd = new JsonCommandSeedsStatusReq();
-			OperationLogUtil.save(LogId.USER_REQUEST_SEED_STATUS, request.getLocalAddr());
+			OperationLogUtil.save(LogId.USER_REQUEST_SEED_STATUS, clientIp);
 		}
-		else if (command.equals(_jsonCommandSeedsByDatesReq))
+		else if (command.equals(jsonCommandSeedsByDatesReq))
 		{
 			jsonCmd = new JsonCommandSeedsReq();
-			OperationLogUtil.save(LogId.USER_REQUEST_SEED_INFO, request.getLocalAddr());
+			OperationLogUtil.save(LogId.USER_REQUEST_SEED_INFO, clientIp);
+		}
+		else if (command.equals(jsonCommandSeedsToCartRequest))
+		{
+			jsonCmd = new JsonCommandSeedsToCartReq();
+			OperationLogUtil.save(LogId.USER_REQUEST_SEED_RSS, clientIp);
 		}
 		else
 		{
 			LogUtil.severe("Unkown command: " + command);
-			OperationLogUtil.save(LogId.USER_REQUEST_INVALID, request.getLocalAddr());
+			OperationLogUtil.save(LogId.USER_REQUEST_INVALID, clientIp);
 		}
 		
 		return jsonCmd;

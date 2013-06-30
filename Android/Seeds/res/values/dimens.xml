@@ -8,5 +8,8 @@
     <dimen name="image_thumbnail_size">100dp</dimen>
     <dimen name="image_thumbnail_spacing">1dp</dimen>
     <dimen name="image_detail_pager_margin">80dp</dimen>
-    <dimen name="seeds_httpserver_titleHeight">60dip</dimen>
+    <dimen name="seeds_httpserver_titleHeight">60dip</dimen>    
+    <dimen name="actionbar_height">45dip</dimen>
+    <dimen name="actionbar_item_height">45dip</dimen>
+    <dimen name="actionbar_item_width">45dip</dimen>
 </resources>
