@@ -44,7 +44,7 @@
 							<object class="IBUITextView" id="1061927158">
 								<reference key="NSNextResponder" ref="223885616"/>
 								<int key="NSvFlags">1302</int>
-								<string key="NSFrame">{{118, 2}, {200, 76}}</string>
+								<string key="NSFrame">{{118, 3}, {200, 60}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="730042693"/>
@@ -76,10 +76,10 @@
 								<reference key="NSNextResponder" ref="223885616"/>
 								<int key="NSvFlags">1302</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{126.5, 74}, {140, 10}}</string>
+								<string key="NSFrame">{{126, 66}, {140, 10}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="944328825"/>
+								<reference key="NSNextKeyView" ref="395190708"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -111,10 +111,10 @@
 								<reference key="NSNextResponder" ref="223885616"/>
 								<int key="NSvFlags">1302</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{126.5, 87}, {140, 10}}</string>
+								<string key="NSFrame">{{126, 79}, {140, 10}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="395190708"/>
+								<reference key="NSNextKeyView" ref="810061728"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -132,10 +132,10 @@
 								<reference key="NSNextResponder" ref="223885616"/>
 								<int key="NSvFlags">1302</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{235.5, 74}, {40, 10}}</string>
+								<string key="NSFrame">{{236, 66}, {40, 10}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="810061728"/>
+								<reference key="NSNextKeyView" ref="944328825"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -153,7 +153,7 @@
 							<object class="IBUILabel" id="810061728">
 								<reference key="NSNextResponder" ref="223885616"/>
 								<int key="NSvFlags">1302</int>
-								<string key="NSFrame">{{236, 87}, {40, 10}}</string>
+								<string key="NSFrame">{{236, 79}, {40, 10}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView"/>
@@ -175,7 +175,7 @@
 							<object class="IBUIView" id="513938367">
 								<reference key="NSNextResponder" ref="223885616"/>
 								<int key="NSvFlags">1302</int>
-								<string key="NSFrame">{{10, 3}, {100, 94}}</string>
+								<string key="NSFrame">{{10, 3}, {100, 86}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1061927158"/>
@@ -208,7 +208,7 @@
 							</object>
 						</array>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrameSize">{320, 99}</string>
+						<string key="NSFrameSize">{320, 91}</string>
 						<reference key="NSSuperview" ref="764541583"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="513938367"/>
@@ -224,14 +224,14 @@
 					</object>
 				</array>
 				<object class="NSPSMatrix" key="NSFrameMatrix"/>
-				<string key="NSFrameSize">{320, 100}</string>
+				<string key="NSFrameSize">{320, 92}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="223885616"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="223885616"/>
 				<string key="IBUIReuseIdentifier">SeedListTableCell</string>
-				<real value="100" key="IBUIRowHeight"/>
+				<integer value="92" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">

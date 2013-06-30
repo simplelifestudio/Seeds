@@ -139,16 +139,16 @@
         <scene sceneID="GtE-mh-Hvu">
             <objects>
                 <tableViewController storyboardIdentifier="sbid_favoriteseedlistviewcontroller" id="hhR-n2-zpg" userLabel="FavoriteSeedListViewController" customClass="FavoriteSeedListViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="0SQ-0c-JmW" userLabel="favoriteSeedTableView">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="92" sectionHeaderHeight="22" sectionFooterHeight="22" id="0SQ-0c-JmW" userLabel="favoriteSeedTableView">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="SeedListTableCell" id="Cog-Jm-5Xz" userLabel="seedListTableCell" customClass="SeedListTableCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="100"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="92"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="91"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
@@ -380,16 +380,16 @@
         <scene sceneID="eWy-aV-ZNg">
             <objects>
                 <tableViewController storyboardIdentifier="sbid_seedlistviewcontroller" id="R4P-D2-bmu" userLabel="SeedListViewController" customClass="SeedListViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="100" sectionHeaderHeight="22" sectionFooterHeight="22" id="XfC-n2-XgK" userLabel="seedTableView">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="92" sectionHeaderHeight="22" sectionFooterHeight="22" id="XfC-n2-XgK" userLabel="seedTableView">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="SeedListTableCell" id="49i-0n-M0M" userLabel="seedListTableCell" customClass="SeedListTableCell">
-                                <rect key="frame" x="0.0" y="22" width="320" height="100"/>
+                                <rect key="frame" x="0.0" y="22" width="320" height="92"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="91"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
@@ -602,6 +602,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Wg4-Q0-2ZF"/>
+        <segue reference="jKm-Mf-P9D"/>
     </inferredMetricsTieBreakers>
 </document>
