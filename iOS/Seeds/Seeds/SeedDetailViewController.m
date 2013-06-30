@@ -21,6 +21,11 @@
     
     UIBarButtonItem* _deleteBarButton;
     UIBarButtonItem* _downloadBarButton;
+    
+    NSMutableArray* _pagePictureList;
+    PagingToolbar* _pagingToolbar;
+    
+    NSUInteger _currentPage;
 }
 
 @end
@@ -34,34 +39,16 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        [self setupView];
+        [self _setupViewController];
     }
     return self;
 }
 
 - (void)awakeFromNib
 {
-    [self setupView];
+    [self _setupViewController];
     
     [super awakeFromNib];
-}
-
-- (void) setupView
-{
-//    [self.collectionView registerClass:[SeedPictureCollectionCell class] forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
-    
-//    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDPICTURECOLLECTIONCELL bundle:nil];
-//    [self.collectionView registerNib:nib forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
-    
-    UINib* headerViewNib = [UINib nibWithNibName:VIEW_ID_SEEDDETAILHEADERVIEW bundle:nil];
-    [self.collectionView registerNib:headerViewNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:VIEW_ID_SEEDDETAILHEADERVIEW];
-    
-    _deleteBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Delete", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickDeleteBarButton)];
-    _downloadBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Download", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickDownloadBarButton)];
-    
-    _HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    _HUD.minSize = HUD_SIZE;
-    [self.view addSubview:_HUD];
 }
 
 - (void)viewDidLoad
@@ -72,10 +59,21 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController setToolbarHidden:YES];
+    [self.navigationController.view addSubview:_pagingToolbar];
     
     [self _arrangeBarButtons];
     
+    [self _refetchPicturesFromSeed];
+    
     [super viewWillAppear:animated];    
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [_pagingToolbar removeFromSuperview];
+    
+    [super viewWillDisappear:animated];
 }
 
 - (void) _arrangeBarButtons
@@ -101,9 +99,9 @@
 {
     NSInteger num = 0;
     
-    if (nil != _seed && nil != _seed.seedPictures)
+    if (nil != _pagePictureList)
     {
-        num = _seed.seedPictures.count;
+        num = _pagePictureList.count;
     }
     
     return num;
@@ -111,7 +109,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    SeedPicture* picture = [_seed.seedPictures objectAtIndex:indexPath.row];
+    SeedPicture* picture = [_pagePictureList objectAtIndex:indexPath.row];
 
     SeedPictureCollectionCell* cell = (SeedPictureCollectionCell*)[cv dequeueReusableCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL forIndexPath:indexPath];
 #warning Why UICollectionViewCell object can not be initialized with NIB file?
@@ -122,6 +120,7 @@
     
     NSUInteger pictureIdInSeed = indexPath.row;
     pictureIdInSeed++;
+    pictureIdInSeed = (_pagingToolbar.currentPage - 1) * _pagingToolbar.pageSize + pictureIdInSeed;
     [cell fillSeedPicture:picture pictureIdInSeed:pictureIdInSeed];
     
     return cell;
@@ -134,7 +133,7 @@
         if ([[segue destinationViewController] isKindOfClass:[SeedPictureViewController class]])
         {
             NSIndexPath *selectedIndexPath = [[self.collectionView indexPathsForSelectedItems] objectAtIndex:0];
-            SeedPicture* selctedPicture = [_seed.seedPictures objectAtIndex:selectedIndexPath.row];
+            SeedPicture* selctedPicture = [_pagePictureList objectAtIndex:selectedIndexPath.row];
             
             SeedPictureViewController* seedPictureViewController = segue.destinationViewController;
             [seedPictureViewController setSeedPicture:selctedPicture];
@@ -147,60 +146,8 @@
     [super viewDidUnload];
 }
 
-- (void) _onClickDownloadBarButton
-{
-    if (![CBNetworkUtils isWiFiEnabled] && ![CBNetworkUtils is3GEnabled])
-    {
-        [self _showHUD:NSLocalizedString(@"Internet Disconnected", nil)];
-        return;
-    }
-    
-    [self _showHUD:NSLocalizedString(@"Preparing", nil)];
-    
-    TransmissionModule* transModule = [TransmissionModule sharedInstance];
-    NSString* downloadDirFullPath = [transModule generateDownloadRootDirectory];
-    if (nil == downloadDirFullPath)
-    {
-        DLog(@"Download root directory is not ready.");
-        [self _hideHUD:NSLocalizedString(@"Directory Unready", nil)];
-        
-        return;
-    }
-    
-    _downloadAgent = [[TorrentDownloadAgent alloc] initWithSeed:_seed downloadPath:downloadDirFullPath];    
-    [_downloadAgent downloadWithDelegate:self];
-}
+#pragma mark - TorrentDownloadAgentDelegate
 
--(void) _onClickDeleteBarButton
-{
-   [self _showHUD:NSLocalizedString(@"Preparing", nil)];
-    
-    NSString* torrentFileFullPath = [TorrentDownloadAgent torrentFileFullPath:_seed];
-    
-    BOOL deleteSuccess = [CBFileUtils deleteFile:torrentFileFullPath];
-    if (deleteSuccess)
-    {
-        [self _hideHUD:NSLocalizedString(@"Torrent Deleted", nil)];
-    }
-    else
-    {
-        [self _hideHUD:NSLocalizedString(@"Delete Failed", nil)];
-    }
-    
-    [self _arrangeBarButtons];
- 
-    [self _favoriteSeed:NO];
-}
-
--(void) _favoriteSeed:(BOOL) favorite
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
-        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-        [seedDAO favoriteSeed:_seed andFlag:favorite];
-    });
-}
-
-#pragma TorrentDownloadAgentDelegate
 -(void) torrentDownloadStarted:(NSString*) torrentCode
 {
     _HUD.mode = MBProgressHUDModeIndeterminate;
@@ -262,6 +209,162 @@
     }
     
     return headerView;
+}
+
+#pragma mark - PagingDelegate
+
+-(void) gotoPage:(NSUInteger)pageNum
+{
+    [_pagingToolbar setCurrentPage:pageNum];
+    _currentPage = pageNum;
+    
+    [self _constructTableDataByPage];
+    
+    [self _scrollToTableViewTop];
+}
+
+#pragma mark - Private Methods
+
+-(void) _constructTableDataByPage
+{
+    NSUInteger _pageSize = _pagingToolbar.pageSize;
+    if (_pageSize >= _seed.seedPictures.count)
+    {
+        [_pagePictureList removeAllObjects];
+        [_pagePictureList addObjectsFromArray:_seed.seedPictures];
+    }
+    else
+    {
+        [_pagePictureList removeAllObjects];
+        
+        if (_pagingToolbar.currentPage != _currentPage)
+        {
+            _pagingToolbar.currentPage = _currentPage;
+        }
+        
+        NSUInteger pageStartIndex = [_pagingToolbar pageStartItemIndex];
+        NSUInteger pageEndIndex = [_pagingToolbar pageEndItemIndex];
+        
+        for (NSUInteger i = pageStartIndex; i < pageEndIndex; i++)
+        {
+            SeedPicture* picture = [_seed.seedPictures objectAtIndex:i];
+            [_pagePictureList addObject:picture];
+        }
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [self.collectionView reloadData];
+    });
+}
+
+-(void) _scrollToTableViewTop
+{
+    [self.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+}
+
+- (void) _setupViewController
+{
+    [self _setupCollectionView];
+    [self _setupPagingToolbar];
+}
+
+- (void) _setupPagingToolbar
+{
+    _pagingToolbar = [CBUIUtils componentFromNib:NIB_ID_PAGINGTOOLBAR owner:self options:nil];
+    _pagingToolbar.pagingDelegate = self;
+    _pagingToolbar.pageSize = PAGE_SIZE_SEEDDETAILCOLLECTION;
+    
+    CGRect toolbarFrame = _pagingToolbar.frame;
+    CGRect tableViewFrame = self.view.frame;
+    _pagingToolbar.frame = CGRectMake(0, tableViewFrame.size.height - toolbarFrame.size.height + tableViewFrame.origin.y, tableViewFrame.size.width, toolbarFrame.size.height);
+    
+    [_pagingToolbar setBarStyle:UIBarStyleDefault];
+    _pagingToolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    
+    _currentPage = 1;
+}
+
+- (void) _setupCollectionView
+{
+    //    [self.collectionView registerClass:[SeedPictureCollectionCell class] forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
+    
+    //    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDPICTURECOLLECTIONCELL bundle:nil];
+    //    [self.collectionView registerNib:nib forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
+    
+    UINib* headerViewNib = [UINib nibWithNibName:VIEW_ID_SEEDDETAILHEADERVIEW bundle:nil];
+    [self.collectionView registerNib:headerViewNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:VIEW_ID_SEEDDETAILHEADERVIEW];
+    
+    _deleteBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Delete", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickDeleteBarButton)];
+    _downloadBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Download", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickDownloadBarButton)];
+    
+    _HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    _HUD.minSize = HUD_SIZE;
+    [self.view addSubview:_HUD];
+    
+    _pagePictureList = [NSMutableArray array];
+}
+
+-(void) _onClickDeleteBarButton
+{
+    [self _showHUD:NSLocalizedString(@"Preparing", nil)];
+    
+    NSString* torrentFileFullPath = [TorrentDownloadAgent torrentFileFullPath:_seed];
+    
+    BOOL deleteSuccess = [CBFileUtils deleteFile:torrentFileFullPath];
+    if (deleteSuccess)
+    {
+        [self _hideHUD:NSLocalizedString(@"Torrent Deleted", nil)];
+    }
+    else
+    {
+        [self _hideHUD:NSLocalizedString(@"Delete Failed", nil)];
+    }
+    
+    [self _arrangeBarButtons];
+    
+    [self _favoriteSeed:NO];
+}
+
+- (void) _onClickDownloadBarButton
+{
+    if (![CBNetworkUtils isWiFiEnabled] && ![CBNetworkUtils is3GEnabled])
+    {
+        [self _showHUD:NSLocalizedString(@"Internet Disconnected", nil)];
+        return;
+    }
+    
+    [self _showHUD:NSLocalizedString(@"Preparing", nil)];
+    
+    TransmissionModule* transModule = [TransmissionModule sharedInstance];
+    NSString* downloadDirFullPath = [transModule generateDownloadRootDirectory];
+    if (nil == downloadDirFullPath)
+    {
+        DLog(@"Download root directory is not ready.");
+        [self _hideHUD:NSLocalizedString(@"Directory Unready", nil)];
+        
+        return;
+    }
+    
+    _downloadAgent = [[TorrentDownloadAgent alloc] initWithSeed:_seed downloadPath:downloadDirFullPath];
+    [_downloadAgent downloadWithDelegate:self];
+}
+
+-(void) _favoriteSeed:(BOOL) favorite
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+        [seedDAO favoriteSeed:_seed andFlag:favorite];
+    });
+}
+
+-(void) _refetchPicturesFromSeed
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+        
+        [_pagingToolbar setItemCount:_seed.seedPictures.count];
+        
+        [self _constructTableDataByPage];
+    });
 }
 
 @end

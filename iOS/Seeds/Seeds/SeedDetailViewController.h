@@ -11,10 +11,11 @@
 #import "SeedPictureCollectionCell.h"
 #import "SeedPictureViewController.h"
 #import "SeedDetailHeaderView.h"
+#import "PagingToolbar.h"
 
 #import "TorrentDownloadAgent.h"
 
-@interface SeedDetailViewController : UICollectionViewController <TorrentDownloadAgentDelegate>
+@interface SeedDetailViewController : UICollectionViewController <TorrentDownloadAgentDelegate, PagingDelegate>
 
 @property (nonatomic, strong) Seed* seed;
 
