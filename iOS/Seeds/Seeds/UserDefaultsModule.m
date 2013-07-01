@@ -46,6 +46,8 @@ SINGLETON(UserDefaultsModule)
 {
     [self resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
     [self resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_PASSCODE];
+    [self resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_NETWORK];
+    [self resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_APP];
 }
 
 -(void) resetDefaultsInPersistentDomain:(NSString*) domain
@@ -187,6 +189,7 @@ SINGLETON(UserDefaultsModule)
 }
 
 #pragma mark - Network
+
 -(BOOL) isDownloadImagesThrough3GEnabled
 {
     BOOL flag = NO;
@@ -206,7 +209,28 @@ SINGLETON(UserDefaultsModule)
     [self setValueForKeyInPersistentDomain:sVal forKey:USERDEFAULTS_KEY_3GDOWNLOADIMAGES inPersistentDomain:PERSISTENTDOMAIN_NETWORK];
 }
 
-#pragma mark - ApplicationDelegate
+#pragma mark - App
+
+-(BOOL) isServerMode
+{
+    BOOL flag = NO;
+    
+    id value = [self getValueForKeyInPersistentDomain:USERDEFAULTS_KEY_SERVERMODE inPersistentDomain:PERSISTENTDOMAIN_APP];
+    if ([value isEqualToString:@"YES"])
+    {
+        flag = YES;
+    }
+    
+    return flag;
+}
+
+-(void) enableServerMode:(BOOL) enabled
+{
+    NSString* sVal = (enabled) ? @"YES" : @"NO";
+    [self setValueForKeyInPersistentDomain:sVal forKey:USERDEFAULTS_KEY_SERVERMODE inPersistentDomain:PERSISTENTDOMAIN_APP];
+}
+
+#pragma mark - UIApplicationDelegate
 
 -(void)applicationWillResignActive:(UIApplication *)application
 {

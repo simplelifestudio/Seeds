@@ -27,6 +27,10 @@
 -(BOOL) isDownloadImagesThrough3GEnabled;
 -(void) enableDownloadImagesThrough3G:(BOOL) enabled;
 
+#pragma mark - App
+-(BOOL) isServerMode;
+-(void) enableServerMode:(BOOL) enabled;
+
 #pragma mark - Common
 -(NSMutableDictionary*) persistentDomainForName:(NSString*) name;
 -(void) setValueForKeyInPersistentDomain:(id) value forKey:(NSString*) key inPersistentDomain:(NSString*) domain;
