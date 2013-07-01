@@ -12,6 +12,8 @@
 
 @required
 -(void) countdownFinished;
+-(void) agreeButtonClicked;
+-(void) declineButtonClicked;
 
 @end
 

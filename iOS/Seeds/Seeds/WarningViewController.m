@@ -10,7 +10,8 @@
 
 @interface WarningViewController ()
 {
-    
+    NSUInteger _countdownSeconds;
+    NSTimer* _timer;
 }
 
 @end
@@ -65,8 +66,7 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:NO];
-    
-    
+
     [super viewWillAppear:animated];
 }
 
@@ -78,13 +78,12 @@
 - (void) setCountdownSeconds:(NSUInteger) seconds
 {
     if (0 < seconds)
-    {        
+    {
+        _countdownSeconds = seconds;
+        [_countdownLabel setText:[NSString stringWithFormat:@"%d", _countdownSeconds]];        
         
-        
-        if (_warningDelegate)
-        {
-//            [_warningDelegate countdownFinished];
-        }
+        NSTimeInterval interval = 1.0;
+        _timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(_clockClick) userInfo:nil repeats:YES];
     }
 }
 
@@ -102,19 +101,39 @@
 
 - (IBAction)onClickAgreeButton:(id)sender
 {
-    
+    if (_warningDelegate)
+    {
+        [_warningDelegate agreeButtonClicked];
+    }
 }
 
 - (IBAction)onClickDeclineButton:(id)sender
 {
-    
+    if (_warningDelegate)
+    {
+        [_warningDelegate declineButtonClicked];
+    }
 }
 
 #pragma mark - Private Methods
 
 - (void) _setupViewController
 {
+    _countdownSeconds = 0;
+}
+
+- (void) _clockClick
+{
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        [_countdownLabel setText:[NSString stringWithFormat:@"%d", _countdownSeconds]];
+    });
     
+    _countdownSeconds--;
+    
+    if (0 == _countdownSeconds && _warningDelegate)
+    {
+        [_warningDelegate countdownFinished];
+    }
 }
 
 @end

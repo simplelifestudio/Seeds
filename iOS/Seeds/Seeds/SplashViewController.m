@@ -222,6 +222,16 @@
     [CBAppUtils exitApp];
 }
 
+-(void) agreeButtonClicked
+{
+    
+}
+
+-(void) declineButtonClicked
+{
+    
+}
+
 #pragma mark - Private Methods
 
 -(void) _setupViewController
