@@ -110,17 +110,6 @@ SINGLETON(GUIModule)
 
 #pragma mark - PAPasscodeViewControllerDelegate
 
-- (void)PAPasscodeViewControllerDidCancel:(PAPasscodeViewController *)controller
-{
-    UIViewController* vc = _homeViewController.presentedViewController;
-
-    if (vc == _passcodeViewController)
-    {
-        [_homeViewController dismissModalViewControllerAnimated:NO];
-        _isLockViewVisible = NO;
-    }
-}
-
 - (void)PAPasscodeViewControllerDidEnterPasscode:(PAPasscodeViewController *)controller
 {
     UIViewController* vc = _homeViewController.presentedViewController;
@@ -139,41 +128,11 @@ SINGLETON(GUIModule)
     }
 }
 
-- (void)PAPasscodeViewControllerDidSetPasscode:(PAPasscodeViewController *)controller
+- (void)PAPasscodeViewController:(PAPasscodeViewController *)controller didFailToEnterPasscode:(NSInteger)attempts
 {
-    // TODO: Update passcode(controller.passcode) into user defaults module
-    _passcodeViewController.passcode = controller.passcode;    
-    
-    UIViewController* vc = _homeViewController.presentedViewController;
-    if (nil != vc)
+    if (PASSCODE_ATTEMPT_TIMES <= attempts)
     {
-        if (vc != _passcodeViewController)
-        {
-            // DO NOTHING
-        }
-        else
-        {
-            [_homeViewController dismissModalViewControllerAnimated:NO];
-        }
-    }
-}
-
-- (void)PAPasscodeViewControllerDidChangePasscode:(PAPasscodeViewController *)controller
-{
-    // TODO: Update passcode(controller.passcode) into user defaults module    
-    _passcodeViewController.passcode = controller.passcode;
-    
-    UIViewController* vc = _homeViewController.presentedViewController;
-    if (nil != vc)
-    {
-        if (vc != _passcodeViewController)
-        {
-            // DO NOTHING
-        }
-        else
-        {
-            [_homeViewController dismissModalViewControllerAnimated:NO];
-        }
+        [CBAppUtils exitApp];
     }
 }
 

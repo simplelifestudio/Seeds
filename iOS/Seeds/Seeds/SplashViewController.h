@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SplashViewController : UIViewController
+@interface SplashViewController : UIViewController <PAPasscodeViewControllerDelegate>
 
 @property (nonatomic, weak) IBOutlet UILabel *progressLabel;
 @property (nonatomic, weak) IBOutlet UIProgressView *progressView;

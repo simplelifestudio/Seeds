@@ -17,6 +17,11 @@
 #define USERDEFAULTS_KEY_SYNCSTATUSBYDAY @"syncStatusByDay:"
 #define PERSISTENTDOMAIN_SYNCSTATUSBYDAY @"syncStatusByDay"
 
+#define USERDEFAULTS_KEY_PASSCODESET @"passcodeSet"
+#define USERDEFAULTS_KEY_PASSCODE @"passcode"
+#define PERSISTENTDOMAIN_PASSCODE @"passcode"
+
+#define PASSCODE_ATTEMPT_TIMES 3
 
 // Module: Communication
 #define RACHABILITY_HOST @"www.apple.com"

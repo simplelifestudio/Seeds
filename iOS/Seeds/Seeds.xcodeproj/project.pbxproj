@@ -103,6 +103,7 @@
 		C58B0440177EDD7200F8C185 /* PagingToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58B043F177EDD7200F8C185 /* PagingToolbar.xib */; };
 		C58B0443177EDF1800F8C185 /* PagingToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = C58B0442177EDF1700F8C185 /* PagingToolbar.m */; };
 		C58B0449178063DB00F8C185 /* NSDictionary+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = C58B0448178063DB00F8C185 /* NSDictionary+JSON.m */; };
+		C58B044C178106A800F8C185 /* CBAppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C58B044B178106A800F8C185 /* CBAppUtils.m */; };
 		C5964C081722290400CC1C0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C071722290400CC1C0A /* UIKit.framework */; };
 		C5964C0A1722290400CC1C0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C091722290400CC1C0A /* Foundation.framework */; };
 		C5964C0C1722290400CC1C0A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C0B1722290400CC1C0A /* CoreGraphics.framework */; };
@@ -352,6 +353,8 @@
 		C58B0442177EDF1700F8C185 /* PagingToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagingToolbar.m; sourceTree = "<group>"; };
 		C58B0447178063DB00F8C185 /* NSDictionary+JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+JSON.h"; path = "Seeds/NSDictionary+JSON.h"; sourceTree = "<group>"; };
 		C58B0448178063DB00F8C185 /* NSDictionary+JSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+JSON.m"; path = "Seeds/NSDictionary+JSON.m"; sourceTree = "<group>"; };
+		C58B044A178106A800F8C185 /* CBAppUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBAppUtils.h; sourceTree = "<group>"; };
+		C58B044B178106A800F8C185 /* CBAppUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBAppUtils.m; sourceTree = "<group>"; };
 		C5964C041722290400CC1C0A /* Seeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Seeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5964C071722290400CC1C0A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C5964C091722290400CC1C0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -682,6 +685,8 @@
 		C531834317239FF300264530 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C58B044A178106A800F8C185 /* CBAppUtils.h */,
+				C58B044B178106A800F8C185 /* CBAppUtils.m */,
 				C5AB115017333EA6007EEE25 /* CBDateUtils.h */,
 				C5AB115117333EA6007EEE25 /* CBDateUtils.m */,
 				C5203D971747A89B00D917F7 /* CBFileUtils.h */,
@@ -1321,6 +1326,7 @@
 				C5C0CE94176D0F5900FA52C4 /* SeedDetailHeaderView.m in Sources */,
 				C58B0443177EDF1800F8C185 /* PagingToolbar.m in Sources */,
 				C58B0449178063DB00F8C185 /* NSDictionary+JSON.m in Sources */,
+				C58B044C178106A800F8C185 /* CBAppUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,9 @@
 #import "SplashViewController.h"
 
 @interface SplashViewController ()
+{
+    PAPasscodeViewController* _passcodeViewController;
+}
 
 @property (nonatomic, strong) NSThread *loadStuffThread;
 
@@ -33,8 +36,7 @@
 {
     [super viewDidLoad];
 
-    _loadStuffThread = [[NSThread alloc] initWithTarget:self selector:@selector(loadAnyNecessaryStuff)  object:nil];
-    [_loadStuffThread start];
+    [self _setupViewController];
 }
 
 - (void)viewDidUnload
@@ -58,7 +60,24 @@
 
 - (void) finishFadingSplashScreen
 {
-    [self performSegueWithIdentifier:@"splash2navigation" sender:self];
+    UserDefaultsModule* userDefaultsModule = [UserDefaultsModule sharedInstance];
+    BOOL isPasscodeSet = [userDefaultsModule isPasscodeSet];
+    if (isPasscodeSet)
+    {
+        NSString* passcode = [userDefaultsModule passcode];
+        
+        _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionEnter];
+        _passcodeViewController.passcode = passcode;
+    }
+    else
+    {
+        _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];        
+    }
+
+    _passcodeViewController.delegate = self;
+    _passcodeViewController.simple = YES;
+    
+    [self presentModalViewController:_passcodeViewController animated:NO];
 }
 
 - (void) loadAnyNecessaryStuff
@@ -121,6 +140,62 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+#pragma mark - PAPasscodeViewControllerDelegate
+
+- (void)PAPasscodeViewControllerDidEnterPasscode:(PAPasscodeViewController *)controller
+{
+    UIViewController* vc = self.presentedViewController;
+    if (nil != vc)
+    {
+        if (vc != _passcodeViewController)
+        {
+            [vc dismissModalViewControllerAnimated:NO];
+        }
+        else
+        {
+            [self dismissModalViewControllerAnimated:NO];
+            [self performSegueWithIdentifier:@"splash2navigation" sender:self];             
+        }
+    }
+}
+
+- (void)PAPasscodeViewControllerDidSetPasscode:(PAPasscodeViewController *)controller
+{
+    _passcodeViewController.passcode = controller.passcode;
+    UserDefaultsModule* userDefaultsModule = [UserDefaultsModule sharedInstance];
+    [userDefaultsModule setPasscode:_passcodeViewController.passcode];
+    
+    UIViewController* vc = self.presentedViewController;
+    if (nil != vc)
+    {
+        if (vc != _passcodeViewController)
+        {
+            // DO NOTHING
+        }
+        else
+        {
+            [self dismissModalViewControllerAnimated:NO];
+            [self performSegueWithIdentifier:@"splash2navigation" sender:self];            
+        }
+    }
+}
+
+- (void)PAPasscodeViewController:(PAPasscodeViewController *)controller didFailToEnterPasscode:(NSInteger)attempts
+{
+    if (PASSCODE_ATTEMPT_TIMES <= attempts)
+    {
+        [CBAppUtils exitApp];
+    }
+}
+
+#pragma mark - Private Methods
+
+-(void) _setupViewController
+{
+    _loadStuffThread = [[NSThread alloc] initWithTarget:self selector:@selector(loadAnyNecessaryStuff)  object:nil];
+    [_loadStuffThread start];
 }
 
 @end

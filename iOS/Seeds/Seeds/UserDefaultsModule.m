@@ -43,6 +43,8 @@ SINGLETON(UserDefaultsModule)
 -(void) resetDefaults
 {
     [self resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
+    
+    [self resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_PASSCODE];
 }
 
 -(void) resetDefaultsInPersistentDomain:(NSString*) domain
@@ -97,6 +99,23 @@ SINGLETON(UserDefaultsModule)
     return value;
 }
 
+-(NSString*) combineKey_syncStatusByDay:(NSDate*) day
+{
+    if (nil != day)
+    {
+        NSMutableString* key = [NSMutableString string];
+        [key appendString:USERDEFAULTS_KEY_SYNCSTATUSBYDAY];
+        NSString* dateStr = [CBDateUtils shortDateString:day];
+        [key appendString:dateStr];
+        
+        return key;
+    }
+    
+    return nil;
+}
+
+#pragma mark - 
+
 -(BOOL) isThisDaySync:(NSDate*) day
 {
     BOOL flag = NO;
@@ -122,20 +141,51 @@ SINGLETON(UserDefaultsModule)
     }
 }
 
--(NSString*) combineKey_syncStatusByDay:(NSDate*) day
+#pragma mark -
+
+-(BOOL) isPasscodeSet
 {
-    if (nil != day)
+    BOOL flag = NO;
+    
+    id value = [self getValueForKeyInPersistentDomain:USERDEFAULTS_KEY_PASSCODESET inPersistentDomain:PERSISTENTDOMAIN_PASSCODE];
+    if ([value isEqualToString:@"YES"])
     {
-        NSMutableString* key = [NSMutableString string];
-        [key appendString:USERDEFAULTS_KEY_SYNCSTATUSBYDAY];
-        NSString* dateStr = [CBDateUtils shortDateString:day];
-        [key appendString:dateStr];
-        
-        return key;
+        flag = YES;
     }
     
-    return nil;
+    return flag;
 }
+
+-(void) setPasscodeSet:(BOOL) set
+{
+    NSString* sVal = (sync) ? @"YES" : @"NO";
+    [self setValueForKeyInPersistentDomain:sVal forKey:USERDEFAULTS_KEY_PASSCODESET inPersistentDomain:PERSISTENTDOMAIN_PASSCODE];
+}
+
+-(NSString*) passcode
+{
+    NSString* passcode = nil;
+    
+    BOOL isPasscodeSet = [self isPasscodeSet];
+    if (isPasscodeSet)
+    {
+        id value = [self getValueForKeyInPersistentDomain:USERDEFAULTS_KEY_PASSCODE inPersistentDomain:PERSISTENTDOMAIN_PASSCODE];
+        passcode = (NSString*) value;
+    }
+    
+    return passcode;
+}
+
+-(void) setPasscode:(NSString*) passcode
+{
+    if (nil != passcode && 0 < passcode.length)
+    {
+        [self setPasscodeSet:YES];
+        [self setValueForKeyInPersistentDomain:passcode forKey:USERDEFAULTS_KEY_PASSCODE inPersistentDomain:PERSISTENTDOMAIN_PASSCODE];
+    }
+}
+
+#pragma mark - ApplicationDelegate
 
 -(void)applicationWillResignActive:(UIApplication *)application
 {

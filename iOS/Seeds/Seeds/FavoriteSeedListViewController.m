@@ -246,15 +246,11 @@
             [self _deleteTorrentFile:seed];
         }
         
-//        [self.tableView deleteRowsAtIndexPaths:selectedRows withRowAnimation:UITableViewRowAnimationFade];
-        
-        [self.tableView setEditing:FALSE animated:TRUE];
-        self.navigationItem.rightBarButtonItems = @[_editBarButton];
-        _isSelectedAll = NO;
+        [self onCancelBarButtonClicked];
         
         [self _refetchFavoriteSeedsFromDatabase];
         
-        [self _showHUD:NSLocalizedString(@"Delete Done", nil)];
+//        [self _showHUD:NSLocalizedString(@"Delete Done", nil)];
     }
 }
 

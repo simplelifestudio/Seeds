@@ -15,9 +15,17 @@
 
 -(void) resetDefaults;
 
+#pragma mark -
 -(BOOL) isThisDaySync:(NSDate*) day;
 -(void) setThisDaySync:(NSDate*) day sync:(BOOL) sync;
 
+#pragma mark -
+-(BOOL) isPasscodeSet;
+-(void) setPasscodeSet:(BOOL) set;
+-(NSString*) passcode;
+-(void) setPasscode:(NSString*) passcode;
+
+#pragma mark - 
 -(NSMutableDictionary*) persistentDomainForName:(NSString*) name;
 -(void) setValueForKeyInPersistentDomain:(id) value forKey:(NSString*) key inPersistentDomain:(NSString*) domain;
 -(id) getValueForKeyInPersistentDomain:(NSString*) key inPersistentDomain:(NSString*) domain;
