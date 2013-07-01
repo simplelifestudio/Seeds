@@ -12,6 +12,8 @@
 {
     NSUInteger _countdownSeconds;
     NSTimer* _timer;
+    
+    UINavigationBar* _navigationBar;
 }
 
 @end
@@ -120,6 +122,12 @@
 - (void) _setupViewController
 {
     _countdownSeconds = 0;
+    
+    _navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, HEIGHT_NAVIGATION_BAR)];
+    _navigationBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [_navigationBar setItems:@[_warningNavigationItem]];
+    
+    [self.view addSubview:_navigationBar];
 }
 
 - (void) _clockClick
