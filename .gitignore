@@ -371,3 +371,5 @@ Android/Seeds/bin/res/drawable-xhdpi/ic_launcher.png
 Android/Seeds/bin/resources.ap_
 
 Android/Seeds/bin/res/drawable/actionbar_back_indicator.png
+
+*.xcuserstate
