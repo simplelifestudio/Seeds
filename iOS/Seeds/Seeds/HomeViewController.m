@@ -210,7 +210,7 @@
     });
 }
 
-- (void)hudWasHidden:(MBProgressHUD *)hud
+- (void) hudWasHidden:(MBProgressHUD *)hud
 {
 	[HUD removeFromSuperview];
 	HUD = nil;
@@ -249,7 +249,7 @@
     }
 }
 
-#pragma - CBLongTaskStatusHUDDelegate
+#pragma mark - CBLongTaskStatusHUDDelegate
 
 -(void) taskStarted:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
 {
@@ -304,6 +304,8 @@
     
     [self updateSyncStatusLabels:dayIndex syncStatus:sData];
 }
+
+#pragma mark - IBActions
 
 - (IBAction)onClickTodayButton:(id)sender
 {
