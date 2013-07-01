@@ -253,8 +253,14 @@ SINGLETON(SeedPictureAgent)
         return;
     }
     
+    UserDefaultsModule* defaults = [UserDefaultsModule sharedInstance];
+    BOOL is3GDownloadImagesEnabled = [defaults isDownloadImagesThrough3GEnabled];
+
     BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
-    if (isWiFiEnabled)
+    
+    BOOL downLoadImagesThroughInternet = (is3GDownloadImagesEnabled || isWiFiEnabled);
+    
+    if (downLoadImagesThroughInternet)
     {
         NSURL* url = [NSURL URLWithString:urlPath];
         [_imageManager downloadWithURL:url options:_downloadOptions progress:inProgressBlock completed:completeBlock];

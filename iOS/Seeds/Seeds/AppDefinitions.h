@@ -20,8 +20,10 @@
 #define USERDEFAULTS_KEY_PASSCODESET @"passcodeSet"
 #define USERDEFAULTS_KEY_PASSCODE @"passcode"
 #define PERSISTENTDOMAIN_PASSCODE @"passcode"
-
 #define PASSCODE_ATTEMPT_TIMES 3
+
+#define USERDEFAULTS_KEY_3GDOWNLOADIMAGES @"downloadImagesThrough3G"
+#define PERSISTENTDOMAIN_NETWORK @"network"
 
 // Module: Communication
 #define RACHABILITY_HOST @"www.apple.com"

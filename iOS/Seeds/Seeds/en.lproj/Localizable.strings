@@ -69,7 +69,6 @@
 "HTTP server address:" = "HTTP server address:";
 "HTTP server stopped." = "HTTP server stopped...";
 
-
 "WiFi Connected" = "WiFi Connected";
 "3G/GPRS Connected" = "3G/GPRS Connected";
 "Internet Disconnected" = "Internet Disconnected";
@@ -104,3 +103,11 @@
 "Passcodes did not match. Try again." = "Passcodes did not match. Try again.";
 "1 Failed Passcode Attempt" = "1 Failed Passcode Attempt";
 "%d Failed Passcode Attempts" = "%d Failed Passcode Attempts";
+
+"Mode" = "Mode";
+"Running Mode" = "Running Mode";
+"Server" = "Server";
+"Standalone" = "Standalone";
+
+"Images" = "Images";
+"Download Images Through 3G/GPRS" = "Download Images Through 3G/GPRS";

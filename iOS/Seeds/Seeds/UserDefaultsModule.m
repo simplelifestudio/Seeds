@@ -40,10 +40,11 @@ SINGLETON(UserDefaultsModule)
     MODULE_DELAY
 }
 
+#pragma mark - Common
+
 -(void) resetDefaults
 {
     [self resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
-    
     [self resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_PASSCODE];
 }
 
@@ -114,7 +115,7 @@ SINGLETON(UserDefaultsModule)
     return nil;
 }
 
-#pragma mark - 
+#pragma mark - Sync Status
 
 -(BOOL) isThisDaySync:(NSDate*) day
 {
@@ -141,7 +142,7 @@ SINGLETON(UserDefaultsModule)
     }
 }
 
-#pragma mark -
+#pragma mark - Passcode
 
 -(BOOL) isPasscodeSet
 {
@@ -156,9 +157,9 @@ SINGLETON(UserDefaultsModule)
     return flag;
 }
 
--(void) setPasscodeSet:(BOOL) set
+-(void) enablePasscodeSet:(BOOL) enabled
 {
-    NSString* sVal = (sync) ? @"YES" : @"NO";
+    NSString* sVal = (enabled) ? @"YES" : @"NO";
     [self setValueForKeyInPersistentDomain:sVal forKey:USERDEFAULTS_KEY_PASSCODESET inPersistentDomain:PERSISTENTDOMAIN_PASSCODE];
 }
 
@@ -180,9 +181,29 @@ SINGLETON(UserDefaultsModule)
 {
     if (nil != passcode && 0 < passcode.length)
     {
-        [self setPasscodeSet:YES];
+        [self enablePasscodeSet:YES];
         [self setValueForKeyInPersistentDomain:passcode forKey:USERDEFAULTS_KEY_PASSCODE inPersistentDomain:PERSISTENTDOMAIN_PASSCODE];
     }
+}
+
+#pragma mark - Network
+-(BOOL) isDownloadImagesThrough3GEnabled
+{
+    BOOL flag = NO;
+    
+    id value = [self getValueForKeyInPersistentDomain:USERDEFAULTS_KEY_3GDOWNLOADIMAGES inPersistentDomain:PERSISTENTDOMAIN_NETWORK];
+    if ([value isEqualToString:@"YES"])
+    {
+        flag = YES;
+    }
+    
+    return flag;
+}
+
+-(void) enableDownloadImagesThrough3G:(BOOL) enabled
+{
+    NSString* sVal = (enabled) ? @"YES" : @"NO";
+    [self setValueForKeyInPersistentDomain:sVal forKey:USERDEFAULTS_KEY_3GDOWNLOADIMAGES inPersistentDomain:PERSISTENTDOMAIN_NETWORK];
 }
 
 #pragma mark - ApplicationDelegate
