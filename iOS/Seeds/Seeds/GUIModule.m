@@ -147,7 +147,7 @@ SINGLETON(GUIModule)
         
         [warningVC setAgreeButtonVisible:NO];
         [warningVC setDeclineButtonVisible:NO];
-        [warningVC setCountdownSeconds:5];
+        [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS];
         [warningVC setWarningText:NSLocalizedString(@"Passcode failed attempts is too much, app will be terminated once countdown is end.", nil)];
     }
 }

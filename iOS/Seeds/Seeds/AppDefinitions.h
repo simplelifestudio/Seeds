@@ -183,6 +183,8 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 #define kZoomStep 2
 
+#define WARNING_DISPLAY_SECONDS 5
+
 #define RES_PNG_FILE @"png"
 #define RES_NOIMAGE_TABLECELL @"noImage_tableCell"
 #define RES_NOIMAGE_COLLECTIONCELL @"noImage_collectionCell"

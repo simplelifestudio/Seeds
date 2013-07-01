@@ -512,6 +512,7 @@
                                 <connections>
                                     <outlet property="asyncImageView" destination="sdf-eD-OV7" id="dnk-Th-Sld"/>
                                     <outlet property="label" destination="P8t-r2-zZ9" id="nVO-s9-iOO"/>
+                                    <segue destination="dYQ-oU-LRn" kind="modal" identifier="seeddetail2seedpicture" modalTransitionStyle="crossDissolve" id="Pbk-Sq-jUx"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -652,9 +653,6 @@
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
         <class className="WarningViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/WarningViewController.h"/>

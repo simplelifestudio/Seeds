@@ -29,14 +29,16 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        [self setupView];
+        [self _setupViewController];
     }
     return self;
 }
 
-- (void) setupView
+- (void) awakeFromNib
 {
-
+    [self _setupViewController];
+    
+    [super awakeFromNib];
 }
 
 - (void)viewDidLoad
@@ -51,73 +53,6 @@
     NSInteger lineWidth = 20;
     _circularProgressView = [[CircularProgressView alloc] initWithFrame:CGRectMake(x, y, radius, radius) backColor:COLOR_CIRCULAR_PROGRESS_BACKGROUND progressColor:COLOR_CIRCULAR_PROGRESS lineWidth:lineWidth];
     [self registerCircularProgressDelegate];
-}
-
-- (void)pictureViewDidSingleTap:(SeedPictureScrollView *)photoView
-{
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-- (void)pictureViewDidDoubleTap:(SeedPictureScrollView *)photoView
-{
-
-}
-
-- (void)pictureViewDidTwoFingerTap:(SeedPictureScrollView *)photoView
-{
-
-}
-
-- (void)pictureViewDidDoubleTwoFingerTap:(SeedPictureScrollView *)photoView
-{
-
-}
-
-- (void)logRect:(CGRect)rect withName:(NSString *)name
-{
-    DLog(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-}
-
-- (void)logLayout
-{
-    DLog(@"### SeedPictureViewController ###");
-    [self logRect:self.view.window.bounds withName:@"self.view.window.bounds"];
-    [self logRect:self.view.window.frame withName:@"self.view.window.frame"];
-    
-    CGRect applicationFrame = [UIScreen mainScreen].applicationFrame;
-    [self logRect:applicationFrame withName:@"application frame"];
-}
-
-- (void)toggleFullScreen
-{
-    if (self.navigationController.navigationBar.alpha == 0.0)
-    {
-        // fade in navigation
-        [UIView animateWithDuration:0.4
-                animations:^
-                {
-                    [[UIApplication sharedApplication] setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationNone];
-                    self.navigationController.navigationBar.alpha = 1.0;
-                    self.navigationController.toolbar.alpha = 1.0;
-                }
-                completion:^(BOOL finished)
-                {
-                }];
-    }
-    else
-    {
-        // fade out navigation
-        [UIView animateWithDuration:0.4
-                animations:^
-                {
-                    [[UIApplication sharedApplication] setStatusBarHidden:TRUE withAnimation:UIStatusBarAnimationFade];
-                    self.navigationController.navigationBar.alpha = 0.0;
-                    self.navigationController.toolbar.alpha = 0.0;
-                }
-                completion:^(BOOL finished)
-                {
-                }];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -163,6 +98,19 @@
     [super viewWillAppear:animated];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+- (void)viewDidUnload
+{
+    [self setScrollView:nil];
+    [super viewDidUnload];
+}
+
+#pragma mark - CircularProgressDelegate
+
 - (void)registerCircularProgressDelegate
 {
     _circularProgressView.delegate = self;
@@ -189,14 +137,85 @@
     [self dismissModalViewControllerAnimated:TRUE];
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - SeedPictureScrollViewDelegate
+
+- (void)pictureViewDidSingleTap:(SeedPictureScrollView *)photoView
 {
-    [super didReceiveMemoryWarning];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)viewDidUnload
+- (void)pictureViewDidDoubleTap:(SeedPictureScrollView *)photoView
 {
-    [self setScrollView:nil];
-    [super viewDidUnload];
+    
 }
+
+- (void)pictureViewDidTwoFingerTap:(SeedPictureScrollView *)photoView
+{
+    
+}
+
+- (void)pictureViewDidDoubleTwoFingerTap:(SeedPictureScrollView *)photoView
+{
+    
+}
+
+#pragma mark - Private Methods
+
+-(void) _setupViewController
+{
+    [self _setupView];
+}
+
+- (void) _setupView
+{
+    
+}
+
+- (void)_logRect:(CGRect)rect withName:(NSString *)name
+{
+    DLog(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+}
+
+- (void)_logLayout
+{
+    DLog(@"### SeedPictureViewController ###");
+    [self _logRect:self.view.window.bounds withName:@"self.view.window.bounds"];
+    [self _logRect:self.view.window.frame withName:@"self.view.window.frame"];
+    
+    CGRect applicationFrame = [UIScreen mainScreen].applicationFrame;
+    [self _logRect:applicationFrame withName:@"application frame"];
+}
+
+- (void)_toggleFullScreen
+{
+    if (self.navigationController.navigationBar.alpha == 0.0)
+    {
+        // fade in navigation
+        [UIView animateWithDuration:0.4
+                         animations:^
+         {
+             [[UIApplication sharedApplication] setStatusBarHidden:FALSE withAnimation:UIStatusBarAnimationNone];
+             self.navigationController.navigationBar.alpha = 1.0;
+             self.navigationController.toolbar.alpha = 1.0;
+         }
+                         completion:^(BOOL finished)
+         {
+         }];
+    }
+    else
+    {
+        // fade out navigation
+        [UIView animateWithDuration:0.4
+                         animations:^
+         {
+             [[UIApplication sharedApplication] setStatusBarHidden:TRUE withAnimation:UIStatusBarAnimationFade];
+             self.navigationController.navigationBar.alpha = 0.0;
+             self.navigationController.toolbar.alpha = 0.0;
+         }
+                         completion:^(BOOL finished)
+         {
+         }];
+    }
+}
+
 @end
