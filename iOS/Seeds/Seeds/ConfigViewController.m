@@ -45,7 +45,7 @@
 
 @interface ConfigViewController ()
 {
-    
+    UserDefaultsModule* _usersDefaults;
 }
 
 @end
@@ -59,6 +59,11 @@
     {
     }
     return self;
+}
+
+- (void) awakeFromNib
+{
+    [super awakeFromNib];
 }
 
 - (void)viewDidLoad
@@ -151,13 +156,21 @@
                         customCell.segmentLabel.text = NSLocalizedString(@"Running Mode", nil);
                         [customCell.segmentControl setTitle:NSLocalizedString(@"Standalone", nil) forSegmentAtIndex:SEGMENT_INDEX_MODE_STANDALONE];
                         [customCell.segmentControl setTitle:NSLocalizedString(@"Server", nil) forSegmentAtIndex:1];
-                        [customCell.segmentControl setSelectedSegmentIndex:SEGMENT_INDEX_MODE_STANDALONE];
                         [customCell.segmentControl addTarget:self action:@selector(_onRunningModeChanged:) forControlEvents:UIControlEventValueChanged];
                         CGRect oldFrame = customCell.segmentControl.frame;
                         CGFloat offsetY = (oldFrame.size.height - HEIGHT_CELL_COMPONENT) / 2;
                         CGRect newFrame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y + offsetY, oldFrame.size.width, HEIGHT_CELL_COMPONENT);
                         [customCell.segmentControl setFrame:newFrame];
                         
+                        BOOL flag = [_usersDefaults isServerMode];
+                        if (flag)
+                        {
+                            [customCell.segmentControl setSelectedSegmentIndex:SEGMENT_INDEX_MODE_SERVER];
+                        }
+                        else
+                        {
+                            [customCell.segmentControl setSelectedSegmentIndex:SEGMENT_INDEX_MODE_STANDALONE];
+                        }
                         [customCell.segmentControl setEnabled:NO];
                     }
                     cell = customCell;
@@ -187,8 +200,7 @@
                         customCell.switcherLabel.text = NSLocalizedString(@"Download Images Through 3G/GPRS", nil);
                         [customCell.switcher addTarget:self action:@selector(_on3GDownloadImagesSwitched:) forControlEvents:UIControlEventValueChanged];
                         
-                        UserDefaultsModule* defaults = [UserDefaultsModule sharedInstance];
-                        BOOL flag = [defaults isDownloadImagesThrough3GEnabled];
+                        BOOL flag = [_usersDefaults isDownloadImagesThrough3GEnabled];
                         [customCell.switcher setOn:flag];
                     }
                     cell = customCell;
@@ -253,7 +265,7 @@
 
 -(void) _setupTableView
 {
-    
+    _usersDefaults = [UserDefaultsModule sharedInstance];
 }
 
 - (void) _registerGestureRecognizers
