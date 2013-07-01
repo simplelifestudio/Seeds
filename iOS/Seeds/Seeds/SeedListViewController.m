@@ -175,6 +175,41 @@
 
     _pageSeedList = [NSMutableArray array];
     _pageFirstSeedPictureList = [NSMutableArray array];
+    
+    [self _registerGestureRecognizers];
+}
+
+- (void) _registerGestureRecognizers
+{
+    UISwipeGestureRecognizer* swipeLeftRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(_handleSwipeLeft:)];
+    [swipeLeftRecognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+    [self.tableView addGestureRecognizer:swipeLeftRecognizer];
+    
+    UISwipeGestureRecognizer* swipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(_handleSwipeRight:)];
+    [swipeRightRecognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
+    [self.tableView addGestureRecognizer:swipeRightRecognizer];
+}
+
+- (void) _handleSwipeLeft:(UISwipeGestureRecognizer *)gestureRecognizer
+{
+    NSUInteger x = _pagingToolbar.currentPage;
+    x++;
+    
+    if (x <= _pagingToolbar.pageCount)
+    {
+        [self gotoPage:x];        
+    }
+}
+
+- (void) _handleSwipeRight:(UISwipeGestureRecognizer*) gestureRecognizer
+{
+    NSUInteger x = _pagingToolbar.currentPage;
+    x--;
+    
+    if (1 <= x)
+    {
+        [self gotoPage:x];        
+    }
 }
 
 -(void) _constructTableDataByPage
