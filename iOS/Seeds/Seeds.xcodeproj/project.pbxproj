@@ -74,6 +74,7 @@
 		C53B64371781731B0028DC41 /* TableViewSegmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53B64351781731B0028DC41 /* TableViewSegmentCell.xib */; };
 		C53B6439178180580028DC41 /* TableViewLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53B6438178180580028DC41 /* TableViewLabelCell.xib */; };
 		C53B643C178180870028DC41 /* TableViewLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B643B178180870028DC41 /* TableViewLabelCell.m */; };
+		C53B643F1781B6A30028DC41 /* UIDevice+Resolutions.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B643E1781B6A30028DC41 /* UIDevice+Resolutions.m */; };
 		C546E6E7173883CC00AEADDA /* JSONMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E1173883CC00AEADDA /* JSONMessage.m */; };
 		C546E6E8173883CC00AEADDA /* SeedsSpider.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E4173883CC00AEADDA /* SeedsSpider.m */; };
 		C546E6E9173883CC00AEADDA /* ServerAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E6173883CC00AEADDA /* ServerAgent.m */; };
@@ -308,6 +309,8 @@
 		C53B6438178180580028DC41 /* TableViewLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewLabelCell.xib; sourceTree = "<group>"; };
 		C53B643A178180860028DC41 /* TableViewLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewLabelCell.h; sourceTree = "<group>"; };
 		C53B643B178180870028DC41 /* TableViewLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewLabelCell.m; sourceTree = "<group>"; };
+		C53B643D1781B6A30028DC41 /* UIDevice+Resolutions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Resolutions.h"; sourceTree = "<group>"; };
+		C53B643E1781B6A30028DC41 /* UIDevice+Resolutions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Resolutions.m"; sourceTree = "<group>"; };
 		C546E6E0173883CC00AEADDA /* JSONMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONMessage.h; path = Seeds/JSONMessage.h; sourceTree = "<group>"; };
 		C546E6E1173883CC00AEADDA /* JSONMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONMessage.m; path = Seeds/JSONMessage.m; sourceTree = "<group>"; };
 		C546E6E2173883CC00AEADDA /* JSONMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONMessageDelegate.h; path = Seeds/JSONMessageDelegate.h; sourceTree = "<group>"; };
@@ -721,6 +724,8 @@
 				C5ADC857173A3148007F59D7 /* CBSharedInstance.h */,
 				C5203D73174714D000D917F7 /* CBModuleManager.h */,
 				C5203D74174714D000D917F7 /* CBModuleManager.m */,
+				C53B643D1781B6A30028DC41 /* UIDevice+Resolutions.h */,
+				C53B643E1781B6A30028DC41 /* UIDevice+Resolutions.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -1357,6 +1362,7 @@
 				C53B6431178164340028DC41 /* TableViewSwitcherCell.m in Sources */,
 				C53B64361781731B0028DC41 /* TableViewSegmentCell.m in Sources */,
 				C53B643C178180870028DC41 /* TableViewLabelCell.m in Sources */,
+				C53B643F1781B6A30028DC41 /* UIDevice+Resolutions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
