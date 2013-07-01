@@ -362,11 +362,9 @@
 {
     NSUInteger x = _pagingToolbar.currentPage;
     x++;
+    x = (x <= _pagingToolbar.pageCount) ? x : 1;
     
-    if (x <= _pagingToolbar.pageCount)
-    {
-        [self gotoPage:x];
-    }
+    [self gotoPage:x];
 }
 
 - (void) _handleSwipeRight:(UISwipeGestureRecognizer*) gestureRecognizer
@@ -377,6 +375,10 @@
     if (1 <= x)
     {
         [self gotoPage:x];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:TRUE];
     }
 }
 
