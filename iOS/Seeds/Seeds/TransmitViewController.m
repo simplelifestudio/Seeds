@@ -32,6 +32,131 @@ if (_cancelTransmission)\
 
 @synthesize consoleView = _consoleView;
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self)
+    {
+    }
+    return self;
+}
+
+- (void)awakeFromNib
+{    
+    [super awakeFromNib];
+}
+
+- (void)viewDidLoad
+{
+    [self _setupViewController];    
+    
+    [super viewDidLoad];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self _startTransmissionService];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+- (void)viewDidUnload
+{
+    [self setConsoleView:nil];
+    [super viewDidUnload];
+}
+
+#pragma mark - Private Methods
+
+- (void) _startTransmissionService
+{
+    if (!_isTransmissionStarted)
+    {
+        _isTransmissionStarted = YES;
+        [self _clearConsole];
+        [self performSelectorInBackground:@selector(_transmitTaskForUserMannuallyDownloads) withObject:nil];
+    }
+}
+
+- (void) _stopTransmissionService
+{
+    if (_isTransmissionStarted)
+    {
+        TransmissionModule* transmitModule = [TransmissionModule sharedInstance];
+        [transmitModule stopHTTPServer];
+        
+        [self _updateConsole:NSLocalizedString(@"HTTP server stopped.", nil)];
+        
+        _isTransmissionStarted = NO;
+    }
+}
+
+- (void) _appDidEnterBackground
+{
+    [self _stopTransmissionService];
+}
+
+-(void) _onClickStopBarButton
+{
+    [self _stopTransmissionService];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void) _setupViewController
+{
+    [self _setupView];
+    
+    [self _registerGestureRecognizers];
+}
+
+-(void) _setupView
+{
+    _isTransmissionStarted = NO;
+    
+    if (nil == _stopBarButton)
+    {
+        _stopBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stop", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickStopBarButton)];
+    }
+    
+    [self.navigationItem setHidesBackButton:YES];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_appDidEnterBackground)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+}
+
+- (void) _registerGestureRecognizers
+{    
+    UISwipeGestureRecognizer* swipeRightRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(_handleSwipeRight:)];
+    [swipeRightRecognizer setDirection:(UISwipeGestureRecognizerDirectionRight)];
+    [_consoleView addGestureRecognizer:swipeRightRecognizer];
+}
+
+- (void) _handleSwipeRight:(UISwipeGestureRecognizer*) gestureRecognizer
+{
+    [self _stopTransmissionService];
+    
+    [self.navigationController popViewControllerAnimated:TRUE];
+}
+
 - (void) _transmitTaskForUserMannuallyDownloads
 {
     // Step 10: 对torrents目录进行扫描和打zip包
@@ -42,18 +167,18 @@ if (_cancelTransmission)\
     BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
     if (!isWiFiEnabled)
     {
-        [self updateConsole:NSLocalizedString(@"Transmission module needs WiFi environment...", nil)];
-        [self _showStopBarButton];        
+        [self _updateConsole:NSLocalizedString(@"Transmission module needs WiFi environment...", nil)];
+        [self _showStopBarButton];
         return;
     }
     
     TransmissionModule* transmitModule = [TransmissionModule sharedInstance];
     
     // Step 10:
-    [self updateConsole:NSLocalizedString(@"Torrent files are preparing...", nil)];
+    [self _updateConsole:NSLocalizedString(@"Torrent files are preparing...", nil)];
     NSString* torrentsFolderPath = [TransmissionModule downloadTorrentsFolderPath];
     NSArray* files = [CBFileUtils filesInDirectory:torrentsFolderPath fileExtendName:FILE_EXTENDNAME_TORRENT];
-    [self updateConsole:NSLocalizedString(@"Torrent files are packaging...", nil)];
+    [self _updateConsole:NSLocalizedString(@"Torrent files are packaging...", nil)];
     NSMutableString* zipName = [NSMutableString stringWithString:FOLDER_TORRENTS];
     [zipName appendString:FILE_EXTENDNAME_DOT_ZIP];
     NSString* zipFilePath = [torrentsFolderPath stringByAppendingPathComponent:zipName];
@@ -61,17 +186,17 @@ if (_cancelTransmission)\
     DLog(@"New zip file created:%@", zipFilePath);
     
     // Step 20:
-    [self updateConsole:NSLocalizedString(@"Web page is generating...", nil)];
-    BOOL flag = [transmitModule generateHtmlPageWithZipFileName:zipName];   
+    [self _updateConsole:NSLocalizedString(@"Web page is generating...", nil)];
+    BOOL flag = [transmitModule generateHtmlPageWithZipFileName:zipName];
     if (flag)
     {
         // Step 30:
-        [self updateConsole:NSLocalizedString(@"HTTP server is initializing...", nil)];
+        [self _updateConsole:NSLocalizedString(@"HTTP server is initializing...", nil)];
         flag = [transmitModule startHTTPServer];
         if (flag)
         {
-            [self updateConsole:NSLocalizedString(@"HTTP server is starting...", nil)];
-                      
+            [self _updateConsole:NSLocalizedString(@"HTTP server is starting...", nil)];
+            
             // Step 40:
             NSString* name = [transmitModule httpServerName];
             NSInteger port = [transmitModule httpServerPort];
@@ -87,21 +212,21 @@ if (_cancelTransmission)\
                 
                 [addrStr insertString:NSLocalizedString(@"HTTP server address:", nil) atIndex:0];
                 
-                [self updateConsole: addrStr];
+                [self _updateConsole: addrStr];
             }
             else
             {
-                [self updateConsole:NSLocalizedString(@"HTTP server failed to start.", nil)];
+                [self _updateConsole:NSLocalizedString(@"HTTP server failed to start.", nil)];
             }
         }
         else
         {
-            [self updateConsole:NSLocalizedString(@"HTTP server failed to start.", nil)];
+            [self _updateConsole:NSLocalizedString(@"HTTP server failed to start.", nil)];
         }
     }
     else
     {
-        [self updateConsole:NSLocalizedString(@"Web page generation is fail.", nil)];
+        [self _updateConsole:NSLocalizedString(@"Web page generation is fail.", nil)];
     }
     
     [self _showStopBarButton];
@@ -124,19 +249,19 @@ if (_cancelTransmission)\
     // Step 40: 动态生成index.html页面，包含前天、昨天、今天三个时间标对应的torrent文件zip包下载链接
     // Step 50: 启动HTTP服务器
     // Step 60: 更新HTTP服务器的地址和端口信息至UI
-
+    
     BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
     if (!isWiFiEnabled)
     {
-        [self updateConsole:NSLocalizedString(@"Transmission module needs WiFi environment...", nil)];
-        [self _showStopBarButton];        
+        [self _updateConsole:NSLocalizedString(@"Transmission module needs WiFi environment...", nil)];
+        [self _showStopBarButton];
         return;
     }
     
-    TransmissionModule* transmitModule = [TransmissionModule sharedInstance];    
+    TransmissionModule* transmitModule = [TransmissionModule sharedInstance];
     
     // Step 10:
-    [self updateConsole:NSLocalizedString(@"Torrent files are preparing...", nil)];
+    [self _updateConsole:NSLocalizedString(@"Torrent files are preparing...", nil)];
     
     NSArray* last3Days = [CBDateUtils lastThreeDays];
     NSString* torrentsPath = [TransmissionModule downloadTorrentsFolderPath];
@@ -149,7 +274,7 @@ if (_cancelTransmission)\
         if (!flag)
         {
             DLog(@"Failed to create directory at path:%@", torrentsPath);
-            [self updateConsole:NSLocalizedString(@"Torrents directory failed to create.", nil)];
+            [self _updateConsole:NSLocalizedString(@"Torrents directory failed to create.", nil)];
             return;
         }
     }
@@ -163,7 +288,7 @@ if (_cancelTransmission)\
         // Step 20:
         
         // Step 30:
-        [self updateConsole:NSLocalizedString(@"Torrent files are packaging...", nil)];
+        [self _updateConsole:NSLocalizedString(@"Torrent files are packaging...", nil)];
         NSMutableString* zipName = [NSMutableString stringWithString:dayStr];
         [zipName appendString:FILE_EXTENDNAME_DOT_ZIP];
         NSString* zipFilePath = [torrentsPath stringByAppendingPathComponent:zipName];
@@ -172,20 +297,20 @@ if (_cancelTransmission)\
     }
     
     // Step 40:
-    [self updateConsole:NSLocalizedString(@"Web page is generating...", nil)];
+    [self _updateConsole:NSLocalizedString(@"Web page is generating...", nil)];
     flag = [transmitModule generateHtmlPageWithLast3Days:last3Days];
     if (flag)
     {
         // Step 50:
-        [self updateConsole:NSLocalizedString(@"HTTP server is initializing...", nil)];
+        [self _updateConsole:NSLocalizedString(@"HTTP server is initializing...", nil)];
         flag = [transmitModule startHTTPServer];
         if (flag)
         {
-            [self updateConsole:NSLocalizedString(@"HTTP server is starting...", nil)];
+            [self _updateConsole:NSLocalizedString(@"HTTP server is starting...", nil)];
         }
         else
         {
-            [self updateConsole:NSLocalizedString(@"HTTP server failed to start.", nil)];
+            [self _updateConsole:NSLocalizedString(@"HTTP server failed to start.", nil)];
         }
         // Step 60:
         NSString* name = [transmitModule httpServerName];
@@ -199,24 +324,24 @@ if (_cancelTransmission)\
             [addrStr appendString:name];
             [addrStr appendString:@":"];
             [addrStr appendString:[NSString stringWithFormat:@"%d", port]];
-         
+            
             [addrStr insertString:NSLocalizedString(@"HTTP server address:", nil) atIndex:0];
             
-            [self updateConsole: addrStr];
+            [self _updateConsole: addrStr];
         }
         else
         {
-            [self updateConsole:NSLocalizedString(@"HTTP server failed to start.", nil)];
+            [self _updateConsole:NSLocalizedString(@"HTTP server failed to start.", nil)];
         }
         
     }
     else
     {
-        [self updateConsole:NSLocalizedString(@"Web page generation is fail.", nil)];
-    }    
+        [self _updateConsole:NSLocalizedString(@"Web page generation is fail.", nil)];
+    }
 }
 
-- (void) updateConsole:(NSString*) info
+- (void) _updateConsole:(NSString*) info
 {
     dispatch_async(dispatch_get_main_queue(), ^(){
         if (nil == consoleInfo)
@@ -242,108 +367,10 @@ if (_cancelTransmission)\
     });
 }
 
-- (void) clearConsole
+- (void) _clearConsole
 {
     consoleInfo = [NSMutableString string];
-    [self updateConsole:NSLocalizedString(@"Transmission module is initializing...", nil)];
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
-        [self setupView];
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [self setupView];    
-    
-    [super viewDidLoad];
-}
-
--(void) _onClickStopBarButton
-{
-    [self _stopTransmissionService];
-    
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void) setupView
-{
-    _isTransmissionStarted = NO;
-    
-    if (nil == _stopBarButton)
-    {
-        _stopBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stop", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickStopBarButton)];
-    }
-
-    [self.navigationItem setHidesBackButton:YES];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(_appDidEnterBackground)
-                                                 name:UIApplicationDidEnterBackgroundNotification
-                                               object:nil];
-}
-
-- (void) _appDidEnterBackground
-{
-    [self _stopTransmissionService];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [self _startTransmissionService];
-}
-
-- (void) _startTransmissionService
-{
-    if (!_isTransmissionStarted)
-    {
-        _isTransmissionStarted = YES;
-        [self clearConsole];
-        [self performSelectorInBackground:@selector(_transmitTaskForUserMannuallyDownloads) withObject:nil];
-    }
-}
-
-- (void) _stopTransmissionService
-{
-    if (_isTransmissionStarted)
-    {
-        TransmissionModule* transmitModule = [TransmissionModule sharedInstance];
-        [transmitModule stopHTTPServer];
-        
-        [self updateConsole:NSLocalizedString(@"HTTP server stopped.", nil)];
-        
-        _isTransmissionStarted = NO;
-    }
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-- (void)viewDidUnload
-{
-    [self setConsoleView:nil];
-    [super viewDidUnload];
+    [self _updateConsole:NSLocalizedString(@"Transmission module is initializing...", nil)];
 }
 
 @end
