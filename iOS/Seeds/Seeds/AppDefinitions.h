@@ -133,6 +133,9 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define CONSOLE_LINEINFO_DISPLAY_DELAY usleep(0);
 
 // Module: GUI
+#define STORYBOARD_IPHONE @"MainStoryboard_iPhone"
+#define STORYBOARD_IPAD @"MainStoryboard_iPad"
+
 #define STORYBOARD_ID_SPLASHVIEWCONTROLLER @"sbid_splashviewcontroller"
 #define STORYBOARD_ID_NAVIGATIONCONTROLLER @"sbid_navigationcontroller"
 #define STORYBOARD_ID_HOMEVIEWCONTROLLER @"sbid_homeviewcontroller"

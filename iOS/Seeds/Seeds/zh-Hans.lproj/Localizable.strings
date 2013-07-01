@@ -111,3 +111,5 @@
 
 "Images" = "图片";
 "Download Images Through 3G/GPRS" = "3G/GPRS网络下载图片";
+
+"Currently Seeds iOS app supports iPhone5 only, sorry for inconvenience. App will be terminated automatically once countdown is end." = "       非常抱歉，当前iOS版的Seeds只支持iPhone5，程序会在倒计时结束后自动退出。";

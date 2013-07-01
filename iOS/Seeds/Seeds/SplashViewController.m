@@ -8,7 +8,11 @@
 
 #import "SplashViewController.h"
 
-@interface SplashViewController ()
+#import "UIDevice+Resolutions.h"
+
+#import "WarningViewController.h"
+
+@interface SplashViewController () <WarningDelegate>
 {
     PAPasscodeViewController* _passcodeViewController;
 }
@@ -60,6 +64,22 @@
 
 - (void) finishFadingSplashScreen
 {
+    if (![UIDevice isRunningOniPhone5])
+    {
+        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:STORYBOARD_IPHONE bundle:nil];
+        id vc = [storyboard instantiateViewControllerWithIdentifier:STORYBOARD_ID_WARNINGVIEWCONTROLLER];
+        WarningViewController* warningVC = (WarningViewController*) vc;
+        warningVC.warningDelegate = self;
+        [self presentModalViewController:warningVC animated:NO];
+
+        [warningVC setAgreeButtonVisible:NO];
+        [warningVC setDeclineButtonVisible:NO];
+        [warningVC setCountdownSeconds:9];
+        [warningVC setWarningText:NSLocalizedString(@"Currently Seeds iOS app supports iPhone5 only, sorry for inconvenience. App will be terminated automatically once countdown is end.", nil)];
+        
+        return;
+    }
+    
     UserDefaultsModule* userDefaultsModule = [UserDefaultsModule sharedInstance];
     BOOL isPasscodeSet = [userDefaultsModule isPasscodeSet];
     if (isPasscodeSet)
@@ -188,6 +208,18 @@
     {
         [CBAppUtils exitApp];
     }
+}
+
+- (void)PAPasscodeViewControllerDidCancel:(PAPasscodeViewController *)controller
+{
+    
+}
+
+#pragma mark - WarningDelegate
+
+-(void) countdownFinished
+{
+    [CBAppUtils exitApp];
 }
 
 #pragma mark - Private Methods

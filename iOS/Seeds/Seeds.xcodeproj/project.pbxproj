@@ -75,6 +75,7 @@
 		C53B6439178180580028DC41 /* TableViewLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53B6438178180580028DC41 /* TableViewLabelCell.xib */; };
 		C53B643C178180870028DC41 /* TableViewLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B643B178180870028DC41 /* TableViewLabelCell.m */; };
 		C53B643F1781B6A30028DC41 /* UIDevice+Resolutions.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B643E1781B6A30028DC41 /* UIDevice+Resolutions.m */; };
+		C53B64421781C0FB0028DC41 /* WarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B64411781C0FA0028DC41 /* WarningViewController.m */; };
 		C546E6E7173883CC00AEADDA /* JSONMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E1173883CC00AEADDA /* JSONMessage.m */; };
 		C546E6E8173883CC00AEADDA /* SeedsSpider.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E4173883CC00AEADDA /* SeedsSpider.m */; };
 		C546E6E9173883CC00AEADDA /* ServerAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E6173883CC00AEADDA /* ServerAgent.m */; };
@@ -311,6 +312,8 @@
 		C53B643B178180870028DC41 /* TableViewLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewLabelCell.m; sourceTree = "<group>"; };
 		C53B643D1781B6A30028DC41 /* UIDevice+Resolutions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Resolutions.h"; sourceTree = "<group>"; };
 		C53B643E1781B6A30028DC41 /* UIDevice+Resolutions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Resolutions.m"; sourceTree = "<group>"; };
+		C53B64401781C0F80028DC41 /* WarningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WarningViewController.h; sourceTree = "<group>"; };
+		C53B64411781C0FA0028DC41 /* WarningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WarningViewController.m; sourceTree = "<group>"; };
 		C546E6E0173883CC00AEADDA /* JSONMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONMessage.h; path = Seeds/JSONMessage.h; sourceTree = "<group>"; };
 		C546E6E1173883CC00AEADDA /* JSONMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONMessage.m; path = Seeds/JSONMessage.m; sourceTree = "<group>"; };
 		C546E6E2173883CC00AEADDA /* JSONMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONMessageDelegate.h; path = Seeds/JSONMessageDelegate.h; sourceTree = "<group>"; };
@@ -902,6 +905,8 @@
 				C53B64351781731B0028DC41 /* TableViewSegmentCell.xib */,
 				C5964C2D17222BF500CC1C0A /* SplashViewController.h */,
 				C5964C2E17222BF500CC1C0A /* SplashViewController.m */,
+				C53B64401781C0F80028DC41 /* WarningViewController.h */,
+				C53B64411781C0FA0028DC41 /* WarningViewController.m */,
 				C5964C32172234C300CC1C0A /* HomeViewController.h */,
 				C5964C33172234C300CC1C0A /* HomeViewController.m */,
 				C5964C38172239D800CC1C0A /* SeedListViewController.h */,
@@ -1363,6 +1368,7 @@
 				C53B64361781731B0028DC41 /* TableViewSegmentCell.m in Sources */,
 				C53B643C178180870028DC41 /* TableViewLabelCell.m in Sources */,
 				C53B643F1781B6A30028DC41 /* UIDevice+Resolutions.m in Sources */,
+				C53B64421781C0FB0028DC41 /* WarningViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
