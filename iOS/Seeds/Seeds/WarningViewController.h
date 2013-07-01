@@ -11,9 +11,9 @@
 @protocol WarningDelegate <NSObject>
 
 @required
--(void) countdownFinished;
--(void) agreeButtonClicked;
--(void) declineButtonClicked;
+-(void) countdownFinished:(NSString*) warningId;
+-(void) agreeButtonClicked:(NSString*) warningId;
+-(void) declineButtonClicked:(NSString*) warningId;
 
 @end
 
@@ -26,6 +26,8 @@
 @property (weak, nonatomic) IBOutlet UINavigationItem *warningNavigationItem;
 
 @property (weak, nonatomic) id<WarningDelegate> warningDelegate;
+
+@property (strong, nonatomic) NSString* warningId;
 
 - (IBAction)onClickAgreeButton:(id)sender;
 - (IBAction)onClickDeclineButton:(id)sender;

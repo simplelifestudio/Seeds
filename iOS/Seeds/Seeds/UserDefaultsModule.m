@@ -211,6 +211,25 @@ SINGLETON(UserDefaultsModule)
 
 #pragma mark - App
 
+-(BOOL) isAppLaunchedBefore
+{
+    BOOL flag = NO;
+    
+    id value = [self getValueForKeyInPersistentDomain:USERDEFAULTS_KEY_APPLAUNCHEDBEFORE inPersistentDomain:PERSISTENTDOMAIN_APP];
+    if ([value isEqualToString:@"YES"])
+    {
+        flag = YES;
+    }
+    
+    return flag;
+}
+
+-(void) recordAppLaunchedBefore
+{
+    NSString* sVal = @"YES";
+    [self setValueForKeyInPersistentDomain:sVal forKey:USERDEFAULTS_KEY_APPLAUNCHEDBEFORE inPersistentDomain:PERSISTENTDOMAIN_APP];
+}
+
 -(BOOL) isServerMode
 {
     BOOL flag = NO;

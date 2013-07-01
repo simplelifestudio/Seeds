@@ -28,6 +28,8 @@
 -(void) enableDownloadImagesThrough3G:(BOOL) enabled;
 
 #pragma mark - App
+-(BOOL) isAppLaunchedBefore;
+-(void) recordAppLaunchedBefore;
 -(BOOL) isServerMode;
 -(void) enableServerMode:(BOOL) enabled;
 

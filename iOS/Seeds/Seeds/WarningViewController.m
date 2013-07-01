@@ -28,6 +28,8 @@
 
 @synthesize warningDelegate = _warningDelegate;
 
+@synthesize warningId = _warningId;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -72,6 +74,13 @@
     [super viewWillAppear:animated];
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self _clockStart];
+}
+
 - (void) setWarningText:(NSString*) text
 {
     [_warningTextView setText:text];
@@ -83,9 +92,6 @@
     {
         _countdownSeconds = seconds;
         [_countdownLabel setText:[NSString stringWithFormat:@"%d", _countdownSeconds]];        
-        
-        NSTimeInterval interval = 1.0;
-        _timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(_clockClick) userInfo:nil repeats:YES];
     }
 }
 
@@ -105,16 +111,20 @@
 {
     if (_warningDelegate)
     {
-        [_warningDelegate agreeButtonClicked];
+        [_warningDelegate agreeButtonClicked:_warningId];
     }
+    
+    [self _clockCancel];    
 }
 
 - (IBAction)onClickDeclineButton:(id)sender
 {
     if (_warningDelegate)
     {
-        [_warningDelegate declineButtonClicked];
+        [_warningDelegate declineButtonClicked:_warningId];
     }
+    
+    [self _clockCancel];    
 }
 
 #pragma mark - Private Methods
@@ -130,6 +140,12 @@
     [self.view addSubview:_navigationBar];
 }
 
+- (void) _clockStart
+{
+    NSTimeInterval interval = 1.0;
+    _timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(_clockClick) userInfo:nil repeats:YES];
+}
+
 - (void) _clockClick
 {
     dispatch_async(dispatch_get_main_queue(), ^(){
@@ -140,8 +156,13 @@
     
     if (0 == _countdownSeconds && _warningDelegate)
     {
-        [_warningDelegate countdownFinished];
+        [_warningDelegate countdownFinished:_warningId];
     }
+}
+
+- (void) _clockCancel
+{
+    [_timer invalidate];
 }
 
 @end

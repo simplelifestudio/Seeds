@@ -14,6 +14,9 @@
 
 @interface SplashViewController () <WarningDelegate>
 {
+    UserDefaultsModule* _userDefaults;
+    GUIModule* _guiModule;
+    
     PAPasscodeViewController* _passcodeViewController;
 }
 
@@ -66,10 +69,10 @@
 {
     if (![UIDevice isRunningOniPhone5])
     {
-        WarningViewController* warningVC = [self _getWarningViewController];
+        WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_UNSUPPORTDEVICES delegate:self];
         
         [self presentModalViewController:warningVC animated:NO];
-
+        
         [warningVC setAgreeButtonVisible:NO];
         [warningVC setDeclineButtonVisible:NO];
         [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS];
@@ -78,24 +81,20 @@
         return;
     }
     
-    UserDefaultsModule* userDefaultsModule = [UserDefaultsModule sharedInstance];
-    BOOL isPasscodeSet = [userDefaultsModule isPasscodeSet];
-    if (isPasscodeSet)
+    BOOL appLaunchedBefore = [_userDefaults isAppLaunchedBefore];
+    if (appLaunchedBefore)
     {
-        NSString* passcode = [userDefaultsModule passcode];
-        
-        _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionEnter];
-        _passcodeViewController.passcode = passcode;
+        [self _enterInApp];
     }
     else
     {
-        _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];        
+        WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_APPFIRSTLAUNCHED delegate:self];
+        
+        [self presentModalViewController:warningVC animated:NO];
+        
+        [warningVC setCountdownSeconds:10];
+        [warningVC setWarningText:NSLocalizedString(@"Warning of App First Launched", nil)];
     }
-
-    _passcodeViewController.delegate = self;
-    _passcodeViewController.simple = YES;
-    
-    [self presentModalViewController:_passcodeViewController animated:NO];
 }
 
 - (void) loadAnyNecessaryStuff
@@ -182,8 +181,8 @@
 - (void)PAPasscodeViewControllerDidSetPasscode:(PAPasscodeViewController *)controller
 {
     _passcodeViewController.passcode = controller.passcode;
-    UserDefaultsModule* userDefaultsModule = [UserDefaultsModule sharedInstance];
-    [userDefaultsModule setPasscode:_passcodeViewController.passcode];
+
+    [_userDefaults setPasscode:_passcodeViewController.passcode];
     
     UIViewController* vc = self.presentedViewController;
     if (nil != vc)
@@ -204,7 +203,7 @@
 {
     if (PASSCODE_ATTEMPT_TIMES <= attempts)
     {
-        WarningViewController* warningVC = [self _getWarningViewController];
+        WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_PASSCODEFAILEDATTEMPTS delegate:self];
         
         [_passcodeViewController presentModalViewController:warningVC animated:NO];
         
@@ -222,35 +221,59 @@
 
 #pragma mark - WarningDelegate
 
--(void) countdownFinished
+-(void) countdownFinished:(NSString*) warningId
 {
     [CBAppUtils exitApp];
 }
 
--(void) agreeButtonClicked
+-(void) agreeButtonClicked:(NSString*) warningId
 {
-    
+    [self _enterInApp];
 }
 
--(void) declineButtonClicked
+-(void) declineButtonClicked:(NSString*) warningId
 {
-    
+    [CBAppUtils exitApp];
 }
 
 #pragma mark - Private Methods
 
 -(void) _setupViewController
 {
+    _userDefaults = [UserDefaultsModule sharedInstance];
+    _guiModule = [GUIModule sharedInstance];
+    
     _loadStuffThread = [[NSThread alloc] initWithTarget:self selector:@selector(loadAnyNecessaryStuff)  object:nil];
     [_loadStuffThread start];
 }
 
--(WarningViewController*) _getWarningViewController
+- (void) _enterInApp
 {
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:STORYBOARD_IPHONE bundle:nil];
-    WarningViewController* warningVC = [storyboard instantiateViewControllerWithIdentifier:STORYBOARD_ID_WARNINGVIEWCONTROLLER];
-    warningVC.warningDelegate = self;
-    return warningVC;
+    BOOL appLaunchedBefore = [_userDefaults isAppLaunchedBefore];
+    if (!appLaunchedBefore)
+    {
+        [self dismissModalViewControllerAnimated:NO];
+        
+        [_userDefaults recordAppLaunchedBefore];
+    }
+
+    BOOL isPasscodeSet = [_userDefaults isPasscodeSet];
+    if (isPasscodeSet)
+    {
+        NSString* passcode = [_userDefaults passcode];
+            
+        _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionEnter];
+        _passcodeViewController.passcode = passcode;
+    }
+    else
+    {
+        _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];
+    }
+        
+    _passcodeViewController.delegate = self;
+    _passcodeViewController.simple = YES;
+        
+    [self presentModalViewController:_passcodeViewController animated:NO];
 }
 
 @end

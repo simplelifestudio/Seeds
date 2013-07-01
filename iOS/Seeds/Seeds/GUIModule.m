@@ -9,8 +9,6 @@
 #import "GUIModule.h"
 #import "SplashViewController.h"
 
-#import "WarningViewController.h"
-
 @interface GUIModule() <WarningDelegate>
 {
     
@@ -117,6 +115,15 @@ SINGLETON(GUIModule)
     }
 }
 
+-(WarningViewController*) getWarningViewController:(NSString*) warningId delegate:(id<WarningDelegate>) delegate;
+{
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:STORYBOARD_IPHONE bundle:nil];
+    WarningViewController* warningVC = [storyboard instantiateViewControllerWithIdentifier:STORYBOARD_ID_WARNINGVIEWCONTROLLER];
+    warningVC.warningDelegate = delegate;
+    warningVC.warningId = warningId;
+    return warningVC;
+}
+
 #pragma mark - PAPasscodeViewControllerDelegate
 
 - (void)PAPasscodeViewControllerDidEnterPasscode:(PAPasscodeViewController *)controller
@@ -141,7 +148,7 @@ SINGLETON(GUIModule)
 {
     if (PASSCODE_ATTEMPT_TIMES <= attempts)
     {
-        WarningViewController* warningVC = [self _getWarningViewController];
+        WarningViewController* warningVC = [self getWarningViewController:WARNING_ID_PASSCODEFAILEDATTEMPTS delegate:self];
         
         [_passcodeViewController presentModalViewController:warningVC animated:NO];
         
@@ -196,29 +203,21 @@ SINGLETON(GUIModule)
 
 #pragma mark - WarningDelegate
 
--(void) countdownFinished
+-(void) countdownFinished:(NSString*) warningId
 {
     [CBAppUtils exitApp];
 }
 
--(void) agreeButtonClicked
+-(void) agreeButtonClicked:(NSString*) warningId
 {
     
 }
 
--(void) declineButtonClicked
+-(void) declineButtonClicked:(NSString*) warningId
 {
     
 }
 
 #pragma mark - Private Methods
-
--(WarningViewController*) _getWarningViewController
-{
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:STORYBOARD_IPHONE bundle:nil];
-    WarningViewController* warningVC = [storyboard instantiateViewControllerWithIdentifier:STORYBOARD_ID_WARNINGVIEWCONTROLLER];
-    warningVC.warningDelegate = self;
-    return warningVC;
-}
 
 @end

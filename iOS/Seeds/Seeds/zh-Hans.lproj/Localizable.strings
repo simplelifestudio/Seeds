@@ -114,3 +114,4 @@
 
 "Currently Seeds iOS app supports iPhone5 only, sorry for inconvenience. App will be terminated automatically once countdown is end." = "       非常抱歉，当前iOS版的Seeds只支持iPhone5，程序会在倒计时结束后自动退出。";
 "Passcode failed attempts is too much, app will be terminated once countdown is end." = "       密码尝试失败次数过多，程序会在倒计时结束后自动退出。";
+"Warning of App First Launched" = "     本软件的主要意图为小范围内的iOS开发学习与讨论，严禁用于任何商业意图和对外传播。在进入程序之前，请确认你已年满18周岁。如不确认，程序将在倒计时结束后自动退出。";

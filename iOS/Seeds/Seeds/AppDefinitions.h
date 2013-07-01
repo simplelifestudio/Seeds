@@ -26,6 +26,7 @@
 #define PERSISTENTDOMAIN_NETWORK @"network"
 
 #define USERDEFAULTS_KEY_SERVERMODE @"serverMode"
+#define USERDEFAULTS_KEY_APPLAUNCHEDBEFORE @"appLaunchedBefore"
 #define PERSISTENTDOMAIN_APP @"application"
 
 // Module: Communication
@@ -184,6 +185,10 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define kZoomStep 2
 
 #define WARNING_DISPLAY_SECONDS 5
+
+#define WARNING_ID_APPFIRSTLAUNCHED @"appFirstLaunched"
+#define WARNING_ID_UNSUPPORTDEVICES @"unsupportDevices"
+#define WARNING_ID_PASSCODEFAILEDATTEMPTS @"passcodeFailedAttempts"
 
 #define RES_PNG_FILE @"png"
 #define RES_NOIMAGE_TABLECELL @"noImage_tableCell"

@@ -11,7 +11,7 @@
 
 #import "PAPasscodeViewController.h"
 #import "HomeViewController.h"
-
+#import "WarningViewController.h"
 
 @interface GUIModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate, PAPasscodeViewControllerDelegate>
 
@@ -19,5 +19,7 @@
 
 -(void) showHUD:(NSString*) majorStauts minorStatus:(NSString*) minorStatus delay:(NSInteger)seconds;
 -(void) showHUD:(NSString*) status delay:(NSInteger) seconds;
+
+-(WarningViewController*) getWarningViewController:(NSString*) warningId delegate:(id<WarningDelegate>) delegate;
 
 @end
