@@ -323,7 +323,10 @@
     x++;
     x = (x <= _pagingToolbar.pageCount) ? x : 1;
     
-    [self gotoPage:x];
+    if (x != _pagingToolbar.currentPage)
+    {
+        [self gotoPage:x];
+    }
 }
 
 - (void) _handleSwipeRight:(UISwipeGestureRecognizer*) gestureRecognizer
