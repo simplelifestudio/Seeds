@@ -25,6 +25,9 @@
 #define USERDEFAULTS_KEY_3GDOWNLOADIMAGES @"downloadImagesThrough3G"
 #define PERSISTENTDOMAIN_NETWORK @"network"
 
+#define USERDEFAULTS_KEY_SERVERMODE @"serverMode"
+#define PERSISTENTDOMAIN_APP @"application"
+
 // Module: Communication
 #define RACHABILITY_HOST @"www.apple.com"
 
@@ -140,6 +143,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define STORYBOARD_ID_SEEDPICTUREVIEWCONTROLLER @"sbid_seedpictureviewcontroller"
 #define STORYBOARD_ID_TRANSMISSIONVIEWCONTROLLER @"sbid_transmissionviewcontroller"
 #define STORYBOARD_ID_FAVORITESEEDLISTVIEWCONTROLLER @"sbid_favoriteseedlistviewcontroller"
+#define STORYBOARD_ID_WARNINGVIEWCONTROLLER @"sbid_warningviewcontroller"
 
 #define SEGUE_ID_SPLASH2NAVIGATION @"splash2navigation"
 #define SEGUE_ID_HOME2SEEDLIST @"home2seedlist"
