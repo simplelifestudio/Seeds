@@ -66,10 +66,8 @@
 {
     if (![UIDevice isRunningOniPhone5])
     {
-        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:STORYBOARD_IPHONE bundle:nil];
-        id vc = [storyboard instantiateViewControllerWithIdentifier:STORYBOARD_ID_WARNINGVIEWCONTROLLER];
-        WarningViewController* warningVC = (WarningViewController*) vc;
-        warningVC.warningDelegate = self;
+        WarningViewController* warningVC = [self _getWarningViewController];
+        
         [self presentModalViewController:warningVC animated:NO];
 
         [warningVC setAgreeButtonVisible:NO];
@@ -206,7 +204,14 @@
 {
     if (PASSCODE_ATTEMPT_TIMES <= attempts)
     {
-        [CBAppUtils exitApp];
+        WarningViewController* warningVC = [self _getWarningViewController];
+        
+        [_passcodeViewController presentModalViewController:warningVC animated:NO];
+        
+        [warningVC setAgreeButtonVisible:NO];
+        [warningVC setDeclineButtonVisible:NO];
+        [warningVC setCountdownSeconds:5];
+        [warningVC setWarningText:NSLocalizedString(@"Passcode failed attempts is too much, app will be terminated once countdown is end.", nil)];
     }
 }
 
@@ -238,6 +243,14 @@
 {
     _loadStuffThread = [[NSThread alloc] initWithTarget:self selector:@selector(loadAnyNecessaryStuff)  object:nil];
     [_loadStuffThread start];
+}
+
+-(WarningViewController*) _getWarningViewController
+{
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:STORYBOARD_IPHONE bundle:nil];
+    WarningViewController* warningVC = [storyboard instantiateViewControllerWithIdentifier:STORYBOARD_ID_WARNINGVIEWCONTROLLER];
+    warningVC.warningDelegate = self;
+    return warningVC;
 }
 
 @end

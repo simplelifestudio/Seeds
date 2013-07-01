@@ -9,6 +9,15 @@
 #import "GUIModule.h"
 #import "SplashViewController.h"
 
+#import "WarningViewController.h"
+
+@interface GUIModule() <WarningDelegate>
+{
+    
+}
+
+@end
+
 @implementation GUIModule
 {
     MBProgressHUD* _HUD;
@@ -132,8 +141,20 @@ SINGLETON(GUIModule)
 {
     if (PASSCODE_ATTEMPT_TIMES <= attempts)
     {
-        [CBAppUtils exitApp];
+        WarningViewController* warningVC = [self _getWarningViewController];
+        
+        [_passcodeViewController presentModalViewController:warningVC animated:NO];
+        
+        [warningVC setAgreeButtonVisible:NO];
+        [warningVC setDeclineButtonVisible:NO];
+        [warningVC setCountdownSeconds:5];
+        [warningVC setWarningText:NSLocalizedString(@"Passcode failed attempts is too much, app will be terminated once countdown is end.", nil)];
     }
+}
+
+- (void)PAPasscodeViewControllerDidCancel:(PAPasscodeViewController *)controller
+{
+    
 }
 
 #pragma mark - UIApplicationDelegate
@@ -171,6 +192,33 @@ SINGLETON(GUIModule)
 -(void)applicationWillEnterForeground:(UIApplication *)application
 {
 
+}
+
+#pragma mark - WarningDelegate
+
+-(void) countdownFinished
+{
+    [CBAppUtils exitApp];
+}
+
+-(void) agreeButtonClicked
+{
+    
+}
+
+-(void) declineButtonClicked
+{
+    
+}
+
+#pragma mark - Private Methods
+
+-(WarningViewController*) _getWarningViewController
+{
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:STORYBOARD_IPHONE bundle:nil];
+    WarningViewController* warningVC = [storyboard instantiateViewControllerWithIdentifier:STORYBOARD_ID_WARNINGVIEWCONTROLLER];
+    warningVC.warningDelegate = self;
+    return warningVC;
 }
 
 @end
