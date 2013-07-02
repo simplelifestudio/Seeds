@@ -202,6 +202,22 @@
     return array;
 }
 
+-(NSArray*) getSeedsByDates:(NSArray*) dateList
+{
+    NSMutableArray* seeds = [NSMutableArray array];
+    
+    if (nil != dateList && 0 < dateList.count)
+    {
+        for (NSDate* date in dateList)
+        {
+            NSArray* seedsByDate = [self getSeedsByDate:date];
+            [seeds addObjectsFromArray:seedsByDate];
+        }
+    }
+    
+    return seeds;
+}
+
 -(BOOL) updateSeed:(NSInteger) seedId withParameterDictionary:(NSMutableDictionary*) paramDic
 {
     __block BOOL flag = NO;
