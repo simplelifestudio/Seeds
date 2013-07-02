@@ -31,7 +31,7 @@
 #define CELL_ID_BUTTON @"TableViewButtonCell"
 #define NIB_TABLECELL_BUTTON @"TableViewButtonCell"
 
-#define SECTION_ITEMCOUNT_CONFIG 3
+#define SECTION_ITEMCOUNT_CONFIG 5
 
 #define SECTION_INDEX_MODE 0
 #define SECTION_ITEMCOUNT_MODE 1
@@ -52,19 +52,24 @@
 
 #define SECTION_INDEX_PASSCODE 3
 #define SECTION_ITEMCOUNT_PASSCODE 2
+#define SECTION_INDEX_PASSCODE_ITEM_INDEX_SWITCHER 0
+#define SECTION_INDEX_PASSCODE_ITEM_INDEX_MODIFY 1
 
-#define SECTION_INDEX_SNS 4
-#define SECTION_ITEMCOUNT_SNS 1
+#define SECTION_INDEX_ABOUT 4
+#define SECTION_ITEMCOUNT_ABOUT 2
+#define SECTION_INDEX_ABOUT_ITEM_INDEX_FEEDBACK 0
+#define SECTION_INDEX_ABOUT_ITEM_INDEX_ABOUT 1
 
-#define SECTION_INDEX_ABOUT 5
-#define SECTION_ITEMCOUNT_ABOUT 1
+typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
-@interface ConfigViewController ()
+@interface ConfigViewController () <PAPasscodeViewControllerDelegate, WarningDelegate>
 {
-    UserDefaultsModule* _usersDefaults;
+    UserDefaultsModule* _userDefaults;
     CommunicationModule* _commModule;
     SeedPictureAgent* _pictureAgent;
     GUIModule* _guiModule;
+    
+    PAPasscodeViewController* _passcodeViewController;
     
     TableViewSegmentCell* _runningModeCell;
     TableViewSwitcherCell* _3GDownloadImagesCell;
@@ -73,6 +78,14 @@
     
     TableViewButtonCell* _clearFavoritesCell;
     TableViewButtonCell* _clearDatabaseCell;
+    
+    TableViewSwitcherCell* _managePasscodeCell;
+    TableViewButtonCell* _changePasscodeCell;
+    
+    TableViewButtonCell* _feedbackCell;
+    TableViewButtonCell* _aboutCell;
+
+    PasscodeEnterPurpose _passcodeEnterPurpose;
 }
 
 @end
@@ -142,10 +155,6 @@
         case SECTION_INDEX_PASSCODE:
         {
             return SECTION_ITEMCOUNT_PASSCODE;
-        }
-        case SECTION_INDEX_SNS:
-        {
-            return SECTION_ITEMCOUNT_SNS;
         }
         case SECTION_INDEX_ABOUT:
         {
@@ -234,6 +243,50 @@
             
             break;
         }
+        case SECTION_INDEX_PASSCODE:
+        {
+            switch (rowInSection)
+            {
+                case SECTION_INDEX_PASSCODE_ITEM_INDEX_SWITCHER:
+                {
+                    cell = _managePasscodeCell;
+                    break;
+                }
+                case SECTION_INDEX_PASSCODE_ITEM_INDEX_MODIFY:
+                {
+                    cell = _changePasscodeCell;
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+            
+            break;
+        }
+        case SECTION_INDEX_ABOUT:
+        {
+            switch (rowInSection)
+            {
+                case SECTION_INDEX_ABOUT_ITEM_INDEX_FEEDBACK:
+                {
+                    cell = _feedbackCell;
+                    break;
+                }
+                case SECTION_INDEX_ABOUT_ITEM_INDEX_ABOUT:
+                {
+                    cell = _aboutCell;
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+            
+            break;
+        }
         default:
         {
             break;
@@ -263,6 +316,16 @@
             sectionName = NSLocalizedString(@"Data", nil);
             break;
         }
+        case SECTION_INDEX_PASSCODE:
+        {
+            sectionName = NSLocalizedString(@"Passcode", nil);
+            break;
+        }
+        case SECTION_INDEX_ABOUT:
+        {
+            sectionName = NSLocalizedString(@"About", nil);
+            break;
+        }
         default:
         {
             sectionName = @"";
@@ -289,7 +352,9 @@
 
 -(void) _setupTableView
 {
-    _usersDefaults = [UserDefaultsModule sharedInstance];
+    _passcodeEnterPurpose = DISABLE_PASSCODE;
+    
+    _userDefaults = [UserDefaultsModule sharedInstance];
     
     _commModule = [CommunicationModule sharedInstance];
     _pictureAgent = _commModule.seedPictureAgent;
@@ -384,7 +449,7 @@
     [defaults enableDownloadImagesThrough3G:flag];
 }
 
-- (void) _refreshWiFiImageCacheButtonStatus
+- (void) _refreshWiFiCacheImagesCell
 {
     NSUInteger cacheImageCount = [_pictureAgent diskCacheImagesCount];
     NSString* cachedImageCountStr = [NSString stringWithFormat:@"%d", cacheImageCount];
@@ -400,14 +465,14 @@
         bytesCacheSize = [_pictureAgent diskCacheImagesSize];
     }
     
-    [self _refreshClearImageCacheButtonStatus];
+    [self _refreshClearImagesCacheCell];
     
-    [self _refreshWiFiImageCacheButtonStatus];
+    [self _refreshWiFiCacheImagesCell];
     
     [_guiModule showHUD:NSLocalizedString(@"Images Cache Cleared", nil) delay:2];
 }
 
-- (void) _refreshClearImageCacheButtonStatus
+- (void) _refreshClearImagesCacheCell
 {
     unsigned long long bytesCacheSize = [_pictureAgent diskCacheImagesSize];
     NSString* cacheSizeStr = [CBMathUtils readableStringFromBytesSize:bytesCacheSize];
@@ -424,7 +489,7 @@
         NSString* torrentFileFullPath = [TorrentDownloadAgent torrentFileFullPath:seed];
         [CBFileUtils deleteFile:torrentFileFullPath];
     }
-    [self _refreshClearFavoritesButtonStatus];
+    [self _refreshClearFavoritesCell];
 }
 
 - (void) _clearFavorites
@@ -434,7 +499,7 @@
     [_guiModule showHUD:NSLocalizedString(@"Favorites Cleared", nil) delay:2];
 }
 
-- (void) _refreshClearFavoritesButtonStatus
+- (void) _refreshClearFavoritesCell
 {
     id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
     NSInteger favoritesCount = [seedDAO countFavoriteSeeds];
@@ -448,19 +513,116 @@
     
     id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
     [seedDAO deleteAllSeeds];
-    [self _refreshResetDatabaseButtonStatus];
+    [self _refershClearDatabaseCell];
     
-    [_usersDefaults resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];    
+    [_userDefaults resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];    
     
     [_guiModule showHUD:NSLocalizedString(@"Database Reseted", nil) delay:2];    
 }
 
-- (void) _refreshResetDatabaseButtonStatus
+- (void) _refershClearDatabaseCell
 {
     id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
     NSInteger count = [seedDAO countAllSeeds];
     NSString* countStr = [NSString stringWithFormat:@"%d", count];
     [_clearDatabaseCell.button setTitle:countStr forState:UIControlStateNormal];
+}
+
+- (void) _refreshManagePasscodeCellStatus
+{
+    BOOL isPasscodeSet = [_userDefaults isPasscodeSet];
+    [_managePasscodeCell.switcher setOn:isPasscodeSet];
+}
+
+- (void) _refreshChangePasscodeCell
+{
+    static UIColor* originColor = nil;
+    
+    BOOL isPasscodeSet = [_userDefaults isPasscodeSet];
+    if (isPasscodeSet)
+    {
+        [_changePasscodeCell.button setEnabled:YES];
+        
+        if (nil != originColor)
+        {
+            [_changePasscodeCell.button setTitleColor:originColor forState:UIControlStateNormal];
+        }
+    }
+    else
+    {
+        if (nil == originColor)
+        {
+            originColor =  _changePasscodeCell.button.titleLabel.textColor;
+        }
+        
+        [_changePasscodeCell.button setEnabled:NO];
+        [_changePasscodeCell.button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    }
+}
+
+- (void) _refreshFeedbackCell
+{
+    
+}
+
+- (void) _refreshAboutCell
+{
+    
+}
+
+- (void) _managePasscode
+{
+    BOOL flag = [_managePasscodeCell.switcher isOn];
+    
+    if (flag)
+    {
+        _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];
+    }
+    else
+    {
+        NSString* passcode = [_userDefaults passcode];
+        _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionEnter];
+        _passcodeViewController.passcode = passcode;
+        _passcodeEnterPurpose = DISABLE_PASSCODE;
+    }
+
+    _passcodeViewController.delegate = self;
+    _passcodeViewController.simple = YES;
+    
+    [self presentModalViewController:_passcodeViewController animated:NO];
+}
+
+- (void) _changePasscode
+{
+    BOOL isPasscodeSet = [_userDefaults isPasscodeSet];
+    if (isPasscodeSet)
+    {
+        NSString* passcode = [_userDefaults passcode];
+        
+        _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionEnter];
+        _passcodeViewController.passcode = passcode;
+        
+        _passcodeEnterPurpose = CHANGE_PASSCODE;
+    }
+    else
+    {
+        _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];
+    }
+
+    _passcodeViewController.delegate = self;
+    _passcodeViewController.simple = YES;
+    
+    [self presentModalViewController:_passcodeViewController animated:NO];
+}
+
+- (void) _composeFeedback
+{
+    
+}
+
+- (void) _checkAbout
+{
+    
 }
 
 - (void) _initTableCellList
@@ -473,6 +635,12 @@
     
     [self _initClearFavoritesCell];
     [self _initClearDatabaseCell];
+    
+    [self _initManagePasscodeCell];
+    [self _initChangePasscodeCell];
+    
+    [self _initFeedbackCell];
+    [self _initAboutCell];
 }
 
 - (void) _initRunningModeTableCell
@@ -491,7 +659,7 @@
         CGRect newFrame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y + offsetY, oldFrame.size.width, HEIGHT_CELL_COMPONENT);
         [_runningModeCell.segmentControl setFrame:newFrame];
         
-        BOOL flag = [_usersDefaults isServerMode];
+        BOOL flag = [_userDefaults isServerMode];
         if (flag)
         {
             [_runningModeCell.segmentControl setSelectedSegmentIndex:SEGMENT_INDEX_MODE_SERVER];
@@ -514,7 +682,7 @@
         _3GDownloadImagesCell.switcherLabel.text = NSLocalizedString(@"Download Images Through 3G/GPRS", nil);
         [_3GDownloadImagesCell.switcher addTarget:self action:@selector(_on3GDownloadImagesSwitched) forControlEvents:UIControlEventValueChanged];
         
-        BOOL flag = [_usersDefaults isDownloadImagesThrough3GEnabled];
+        BOOL flag = [_userDefaults isDownloadImagesThrough3GEnabled];
         [_3GDownloadImagesCell.switcher setOn:flag];
     }
 }
@@ -528,7 +696,7 @@
         [_wifiCacheImagesCell setSelectionStyle:UITableViewCellSelectionStyleNone];
         _wifiCacheImagesCell.label.text = NSLocalizedString(@"Cache Images Through WiFi", nil);
         
-        [self _refreshWiFiImageCacheButtonStatus];
+        [self _refreshWiFiCacheImagesCell];
         
         [_wifiCacheImagesCell.button addTarget:self action:@selector(_activateWiFiImageCacheTask) forControlEvents:UIControlEventTouchUpInside];
         [_wifiCacheImagesCell.button setEnabled:NO];
@@ -545,7 +713,7 @@
         [_clearImagesCacheCell setSelectionStyle:UITableViewCellSelectionStyleNone];
         _clearImagesCacheCell.label.text = NSLocalizedString(@"Clear Images Cache", nil);
         
-        [self _refreshClearImageCacheButtonStatus];
+        [self _refreshClearImagesCacheCell];
         
         [_clearImagesCacheCell.button addTarget:self action:@selector(_clearImageCache) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -560,7 +728,7 @@
         [_clearFavoritesCell setSelectionStyle:UITableViewCellSelectionStyleNone];
         _clearFavoritesCell.label.text = NSLocalizedString(@"Clear Favorites", nil);
         
-        [self _refreshClearFavoritesButtonStatus];
+        [self _refreshClearFavoritesCell];
         
         [_clearFavoritesCell.button addTarget:self action:@selector(_clearFavorites) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -575,10 +743,166 @@
         [_clearDatabaseCell setSelectionStyle:UITableViewCellSelectionStyleNone];
         _clearDatabaseCell.label.text = NSLocalizedString(@"Reset Database", nil);
         
-        [self _refreshResetDatabaseButtonStatus];
+        [self _refershClearDatabaseCell];
         
         [_clearDatabaseCell.button addTarget:self action:@selector(_resetDatabase) forControlEvents:UIControlEventTouchUpInside];
     }
+}
+
+- (void) _initManagePasscodeCell
+{
+    if (nil == _managePasscodeCell)
+    {
+        _managePasscodeCell = [CBUIUtils componentFromNib:NIB_TABLECELL_SWITCHER owner:self options:nil];
+        
+        [_managePasscodeCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        _managePasscodeCell.switcherLabel.text = NSLocalizedString(@"Open Passcode", nil);
+        
+        [self _refreshManagePasscodeCellStatus];
+        
+        [_managePasscodeCell.switcher addTarget:self action:@selector(_managePasscode) forControlEvents:UIControlEventValueChanged];
+    }
+}
+
+- (void) _initChangePasscodeCell
+{
+    if (nil == _changePasscodeCell)
+    {
+        _changePasscodeCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
+        
+        [_changePasscodeCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        _changePasscodeCell.label.text = NSLocalizedString(@"Change Passcode", nil);
+        [_changePasscodeCell.button setTitle:NSLocalizedString(@"Change", nil) forState:UIControlStateNormal];
+        
+        [self _refreshChangePasscodeCell];
+        
+        [_changePasscodeCell.button addTarget:self action:@selector(_changePasscode) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+- (void) _initFeedbackCell
+{
+    if (nil == _feedbackCell)
+    {
+        _feedbackCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
+        
+        [_feedbackCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        _feedbackCell.label.text = NSLocalizedString(@"Feedback", nil);
+        [_feedbackCell.button setTitle:NSLocalizedString(@"Compose", nil) forState:UIControlStateNormal];
+        
+        [self _refreshFeedbackCell];
+        
+        [_feedbackCell.button addTarget:self action:@selector(_composeFeedback) forControlEvents:UIControlEventTouchUpInside];
+        
+        [_feedbackCell.button setEnabled:NO];
+        [_feedbackCell.button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    }
+}
+
+- (void) _initAboutCell
+{
+    if (nil == _aboutCell)
+    {
+        _aboutCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
+        
+        [_aboutCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        _aboutCell.label.text = NSLocalizedString(@"About", nil);
+        [_aboutCell.button setTitle:@"0.1" forState:UIControlStateNormal];
+        
+        [self _refreshAboutCell];
+        
+        [_aboutCell.button addTarget:self action:@selector(_checkAbout) forControlEvents:UIControlEventTouchUpInside];
+        
+        [_aboutCell.button setEnabled:NO];
+        [_aboutCell.button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    }
+}
+
+#pragma mark - PAPasscodeViewControllerDelegate
+
+- (void)PAPasscodeViewControllerDidCancel:(PAPasscodeViewController *)controller
+{
+    
+}
+
+- (void)PAPasscodeViewControllerDidChangePasscode:(PAPasscodeViewController *)controller
+{
+    NSString* passcode = _passcodeViewController.passcode;
+    [_userDefaults setPasscode:passcode];
+    
+    [_passcodeViewController dismissModalViewControllerAnimated:NO];
+}
+
+- (void)PAPasscodeViewControllerDidEnterPasscode:(PAPasscodeViewController *)controller
+{
+    [_passcodeViewController dismissModalViewControllerAnimated:NO];
+    
+    switch (_passcodeEnterPurpose)
+    {
+        case DISABLE_PASSCODE:
+        {
+            [_userDefaults enablePasscodeSet:NO];
+            [self _refreshChangePasscodeCell];
+            
+            break;
+        }
+        case CHANGE_PASSCODE:
+        {
+            _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];
+            _passcodeViewController.delegate = self;
+            _passcodeViewController.simple = YES;
+            
+            [self presentModalViewController:_passcodeViewController animated:NO];
+            
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+}
+
+- (void)PAPasscodeViewControllerDidSetPasscode:(PAPasscodeViewController *)controller
+{
+    NSString* passcode = _passcodeViewController.passcode;
+    [_userDefaults setPasscode:passcode];
+    
+    [self _refreshChangePasscodeCell];
+    
+    [_passcodeViewController dismissModalViewControllerAnimated:NO];
+}
+
+- (void)PAPasscodeViewController:(PAPasscodeViewController *)controller didFailToEnterPasscode:(NSInteger)attempts
+{
+    if (PASSCODE_ATTEMPT_TIMES <= attempts)
+    {
+        WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_PASSCODEFAILEDATTEMPTS delegate:self];
+        
+        [_passcodeViewController presentModalViewController:warningVC animated:NO];
+        
+        [warningVC setAgreeButtonVisible:NO];
+        [warningVC setDeclineButtonVisible:NO];
+        [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS];
+        [warningVC setWarningText:NSLocalizedString(@"Passcode failed attempts is too much, app will be terminated once countdown is end.", nil)];
+    }
+}
+
+#pragma mark - WarningDelegate
+
+-(void) countdownFinished:(NSString*) warningId
+{
+    [CBAppUtils exitApp];    
+}
+
+-(void) agreeButtonClicked:(NSString*) warningId
+{
+    
+}
+
+-(void) declineButtonClicked:(NSString*) warningId
+{
+    
 }
 
 @end

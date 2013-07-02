@@ -173,21 +173,30 @@ SINGLETON(GUIModule)
 
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {
-    if (!_isLockViewVisible)
+    UserDefaultsModule* _userDefaults = [UserDefaultsModule sharedInstance];
+    BOOL isPasscodeSet = [_userDefaults isPasscodeSet];
+    
+    if (isPasscodeSet)
     {
-        UIViewController* vc = _homeViewController.presentedViewController;
-        if (nil != vc)
+        if (!_isLockViewVisible)
         {
-            if (vc != _passcodeViewController)
+            NSString* passcode = [_userDefaults passcode];
+            _passcodeViewController.passcode = passcode;
+            
+            UIViewController* vc = _homeViewController.presentedViewController;
+            if (nil != vc)
             {
-                [vc presentModalViewController:_passcodeViewController animated:NO];
+                if (vc != _passcodeViewController)
+                {
+                    [vc presentModalViewController:_passcodeViewController animated:NO];
+                    _isLockViewVisible = YES;
+                }
+            }
+            else
+            {
+                [_homeViewController presentModalViewController:_passcodeViewController animated:NO];
                 _isLockViewVisible = YES;
             }
-        }
-        else
-        {
-            [_homeViewController presentModalViewController:_passcodeViewController animated:NO];
-            _isLockViewVisible = YES;
         }
     }
 }

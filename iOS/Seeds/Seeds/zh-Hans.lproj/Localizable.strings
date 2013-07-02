@@ -92,8 +92,8 @@
 "Delete Done" = "删除成功";
 
 "Set Passcode" = "设置密码";
-"Enter a passcode" = "输入一个密码";
-"Re-enter your passcode" = "再输入一次密码";
+"Enter a passcode" = "输入新密码";
+"Re-enter your passcode" = "确认新密码";
 "Enter Passcode" = "输入密码";
 "Enter your passcode" = "输入你的密码";
 "Change Passcode" = "修改密码";
@@ -122,10 +122,19 @@
 "Reset Database" = "重置数据库";
 "Database Reseted" = "数据库已重置";
 
+"Passcode" = "密码";
+"Open Passcode" = "打开密码";
+"Change Passcode" = "更改密码";
+"Change" = "更改";
+
+"About" = "关于";
+"Feedback" = "反馈";
+"Compose" = "编写";
+
 "Images Prefetched" = "图片已缓存";
 "Finished:" = "完成:";
 "Skipped:" = "忽略:";
 
 "Currently Seeds iOS app supports iPhone5 only, sorry for inconvenience. App will be terminated automatically once countdown is end." = "       非常抱歉，当前iOS版的Seeds只支持iPhone5，程序会在倒计时结束后自动退出。";
 "Passcode failed attempts is too much, app will be terminated once countdown is end." = "       密码尝试失败次数过多，程序会在倒计时结束后自动退出。";
-"Warning of App First Launched" = "     本软件的主要意图为小范围内的iOS开发学习与讨论，严禁用于任何商业意图和对外传播。在进入程序之前，请确认你已年满18周岁。如不确认，程序将在倒计时结束后自动退出。";
+"Warning of App First Launched" = "     本软件的主要意图为开发技术学习与讨论，严禁用于任何商业意图和对外传播。在进入程序之前，请确认你已年满18周岁。如不确认，程序将在倒计时结束后自动退出。";

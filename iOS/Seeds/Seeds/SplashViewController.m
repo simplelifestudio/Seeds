@@ -92,7 +92,7 @@
         
         [self presentModalViewController:warningVC animated:NO];
         
-        [warningVC setCountdownSeconds:10];
+        [warningVC setCountdownSeconds:15];
         [warningVC setWarningText:NSLocalizedString(@"Warning of App First Launched", nil)];
     }
 }
@@ -194,7 +194,7 @@
         else
         {
             [self dismissModalViewControllerAnimated:NO];
-            [self performSegueWithIdentifier:@"splash2navigation" sender:self];            
+            [self performSegueWithIdentifier:@"splash2navigation" sender:self];
         }
     }
 }
@@ -255,25 +255,34 @@
         [self dismissModalViewControllerAnimated:NO];
         
         [_userDefaults recordAppLaunchedBefore];
-    }
-
-    BOOL isPasscodeSet = [_userDefaults isPasscodeSet];
-    if (isPasscodeSet)
-    {
-        NSString* passcode = [_userDefaults passcode];
-            
-        _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionEnter];
-        _passcodeViewController.passcode = passcode;
+        
+        _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];
+        
+        _passcodeViewController.delegate = self;
+        _passcodeViewController.simple = YES;
+        [self presentModalViewController:_passcodeViewController animated:NO];
     }
     else
     {
-        _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];
+        BOOL isPasscodeSet = [_userDefaults isPasscodeSet];
+        if (isPasscodeSet)
+        {
+            NSString* passcode = [_userDefaults passcode];
+            
+            _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionEnter];
+            _passcodeViewController.passcode = passcode;
+            
+            _passcodeViewController.delegate = self;
+            _passcodeViewController.simple = YES;
+            
+            [self presentModalViewController:_passcodeViewController animated:NO];
+        }
+        else
+        {
+            [self dismissModalViewControllerAnimated:NO];
+            [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
+        }
     }
-        
-    _passcodeViewController.delegate = self;
-    _passcodeViewController.simple = YES;
-        
-    [self presentModalViewController:_passcodeViewController animated:NO];
 }
 
 @end

@@ -92,8 +92,8 @@
 "Delete Done" = "Delete Done";
 
 "Set Passcode" = "Set Passcode";
-"Enter a passcode" = "Enter a passcode";
-"Re-enter your passcode" = "Re-enter your passcode";
+"Enter a passcode" = "Enter a new passcode";
+"Re-enter your passcode" = "Re-enter the new passcode";
 "Enter Passcode" = "Enter Passcode";
 "Enter your passcode" = "Enter your passcode";
 "Change Passcode" = "Change Passcode";
@@ -122,10 +122,19 @@
 "Reset Database" = "Reset Database";
 "Database Reseted" = "Database Reseted";
 
+"Passcode" = "Passcode";
+"Open Passcode" = "Open Passcode";
+"Change Passcode" = "Change Passcode";
+"Change" = "Change";
+
+"About" = "About";
+"Feedback" = "Feedback";
+"Compose" = "Compose";
+
 "Images Prefetched" = "Images Prefetched";
 "Finished:" = "Finished:";
 "Skipped:" = "Skipped:";
 
 "Currently Seeds iOS app supports iPhone5 only, sorry for inconvenience. App will be terminated automatically once countdown is end." = "   Currently Seeds iOS app supports iPhone5 only, sorry for inconvenience. App will be terminated automatically once countdown is end.";
 "Passcode failed attempts is too much, app will be terminated once countdown is end." = "   Passcode failed attempts is too much, app will be terminated once countdown is end.";
-"Warning of App First Launched" = "     The major purpose of Seeds is for iOS development learning and discussion, and it is forbidden to be published in any commercial domain. Finally, please make sure you are over 18 years old before entering. Without acknowledge, app will be terminated automatically once coutdown is end.";
+"Warning of App First Launched" = "     The major purpose of Seeds is for technical learning and discussion, and it is forbidden to be published in any commercial domain. Finally, please make sure you are over 18 years old before entering. Without acknowledge, app will be terminated automatically once coutdown is end.";
