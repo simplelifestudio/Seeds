@@ -272,6 +272,7 @@
 -(void) taskCanceld:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
 {
     HUD.mode = MBProgressHUDModeText;
+    HUD.minSize = HUD_SIZE;
     [self updateHUDTextStatus:majorStatus minorStatus:nil];
     
     HUD_DISPLAY(2)
