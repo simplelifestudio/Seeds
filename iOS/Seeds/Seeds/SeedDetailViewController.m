@@ -157,31 +157,23 @@
 -(void) torrentDownloadFinished:(NSString*) torrentCode
 {
     [self _hideHUD:NSLocalizedString(@"Torrent Downloaded", nil)];
-
-    [self _arrangeBarButtons];
 }
 
 -(void) torrentDownloadFailed:(NSString*) torrentCode error:(NSError*) error
 {
     [self _hideHUD:NSLocalizedString(@"Download Failed", nil)];
-    
-    [self _arrangeBarButtons];    
 }
 
 -(void) torrentSaveFinished:(NSString*) torrentCode filePath:(NSString*) filePath
 {
     [self _hideHUD:NSLocalizedString(@"Torrent Saved", nil)];
     
-    [self _arrangeBarButtons];
-    
-    [self _favoriteSeed:YES];    
+    [self _favoriteSeed:YES];
 }
 
 -(void) torrentSaveFailed:(NSString*) torrentCode filePath:(NSString*) filePath
 {
     [self _hideHUD:NSLocalizedString(@"Save Failed", nil)];
-    
-    [self _arrangeBarButtons];    
 }
 
 -(void) _showHUD:(NSString*) majorStatus
@@ -360,8 +352,6 @@
         [self _hideHUD:NSLocalizedString(@"Delete Failed", nil)];
     }
     
-    [self _arrangeBarButtons];
-    
     [self _favoriteSeed:NO];
 }
 
@@ -393,7 +383,15 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
         id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-        [seedDAO favoriteSeed:_seed andFlag:favorite];
+        BOOL flag = [seedDAO favoriteSeed:_seed andFlag:favorite];
+        if (flag)
+        {
+            _seed.favorite = favorite;
+            
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                [self _arrangeBarButtons];            
+            });
+        }
     });
 }
 
