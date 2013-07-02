@@ -15,6 +15,7 @@
     #import "CBLog.h"
     #import "CBPathUtils.h"
     #import "CBAppUtils.h"
+    #import "CBMathUtils.h"
 
     #import "AppDefinitions.h"
     #import "GUIStyle.h"

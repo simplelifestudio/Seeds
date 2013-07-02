@@ -111,6 +111,14 @@
 
 "Images" = "Images";
 "Download Images Through 3G/GPRS" = "Download Images Through 3G/GPRS";
+"Cache Images Through WiFi" = "Cache Images Through WiFi";
+"Caching" = "Caching";
+"Clear Images Cache" = "Clear Images Cache";
+"Images Cache Cleared" = "Images Cache Cleared";
+
+"Images Prefetched" = "Images Prefetched";
+"Finished:" = "Finished:";
+"Skipped:" = "Skipped:";
 
 "Currently Seeds iOS app supports iPhone5 only, sorry for inconvenience. App will be terminated automatically once countdown is end." = "   Currently Seeds iOS app supports iPhone5 only, sorry for inconvenience. App will be terminated automatically once countdown is end.";
 "Passcode failed attempts is too much, app will be terminated once countdown is end." = "   Passcode failed attempts is too much, app will be terminated once countdown is end.";

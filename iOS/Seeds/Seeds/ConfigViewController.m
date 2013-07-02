@@ -10,14 +10,22 @@
 
 #import "TableViewSwitcherCell.h"
 #import "TableViewSegmentCell.h"
+#import "TableViewLabelCell.h"
+#import "TableViewButtonCell.h"
 
 #define HEIGHT_CELL_COMPONENT 27
 
-#define CELL_ID_SWITCHER @"CellType_Switcher"
+#define CELL_ID_SWITCHER @"TableViewSwitcherCell"
 #define NIB_TABLECELL_SWITCHER @"TableViewSwitcherCell"
 
-#define CELL_ID_SEGMENTER @"CellType_Segmenter"
+#define CELL_ID_SEGMENTER @"TableViewSegmentCell"
 #define NIB_TABLECELL_SEGMENTER @"TableViewSegmentCell"
+
+#define CELL_ID_LABEL @"TableViewLabelCell"
+#define NIB_TABLECELL_LABEL @"TableViewLabelCell"
+
+#define CELL_ID_BUTTON @"TableViewButtonCell"
+#define NIB_TABLECELL_BUTTON @"TableViewButtonCell"
 
 #define SECTION_ITEMCOUNT_CONFIG 2
 
@@ -28,8 +36,10 @@
 #define SEGMENT_INDEX_MODE_SERVER 1
 
 #define SECTION_INDEX_IMAGE 1
-#define SECTION_ITEMCOUNT_IMAGE 1
+#define SECTION_ITEMCOUNT_IMAGE 3
 #define SECTION_INDEX_IMAGE_ITEM_INDEX_3GDOWNLOAD 0
+#define SECTION_INDEX_IMAGE_ITEM_INDEX_WIFICACHE 1
+#define SECTION_INDEX_IMAGE_ITEM_INDEX_CLEARCACHE 2
 
 #define SECTION_INDEX_DATA 2
 #define SECTION_ITEMCOUNT_DATA 2
@@ -46,6 +56,9 @@
 @interface ConfigViewController ()
 {
     UserDefaultsModule* _usersDefaults;
+    CommunicationModule* _commModule;
+    SeedPictureAgent* _pictureAgent;
+    GUIModule* _guiModule;
 }
 
 @end
@@ -207,6 +220,46 @@
                     
                     break;
                 }
+                case SECTION_INDEX_IMAGE_ITEM_INDEX_WIFICACHE:
+                {
+                    TableViewButtonCell* customCell = [tableView dequeueReusableCellWithIdentifier:CELL_ID_BUTTON];
+                    if (nil == customCell)
+                    {
+                        customCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
+                        
+                        [customCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                        customCell.label.text = NSLocalizedString(@"Cache Images Through WiFi", nil);
+                        
+                        NSUInteger cacheImageCount = [_pictureAgent diskCacheImagesCount];
+                        NSString* cachedImageCountStr = [NSString stringWithFormat:@"%d", cacheImageCount];
+                        [customCell.button setTitle:cachedImageCountStr forState:UIControlStateNormal];
+                        
+                        [customCell.button addTarget:self action:@selector(_activateWiFiImageCacheTask:) forControlEvents:UIControlEventTouchUpInside];
+                        [customCell.button setEnabled:NO];
+                        [customCell.button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                    }
+                    cell = customCell;
+                    
+                    break;
+                }
+                case SECTION_INDEX_IMAGE_ITEM_INDEX_CLEARCACHE:
+                {
+                    TableViewButtonCell* customCell = [tableView dequeueReusableCellWithIdentifier:CELL_ID_BUTTON];
+                    if (nil == customCell)
+                    {
+                        customCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
+                        
+                        [customCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+                        customCell.label.text = NSLocalizedString(@"Clear Images Cache", nil);
+                        
+                        [self _refreshClearImageCacheButtonStatus:customCell.button];
+                        
+                        [customCell.button addTarget:self action:@selector(_clearImageCache:) forControlEvents:UIControlEventTouchUpInside];
+                    }
+                    cell = customCell;
+                    
+                    break;
+                }
                 default:
                 {
                     break;
@@ -266,6 +319,11 @@
 -(void) _setupTableView
 {
     _usersDefaults = [UserDefaultsModule sharedInstance];
+    
+    _commModule = [CommunicationModule sharedInstance];
+    _pictureAgent = _commModule.seedPictureAgent;
+    
+    _guiModule = [GUIModule sharedInstance];
 }
 
 - (void) _registerGestureRecognizers
@@ -306,6 +364,45 @@
     
 }
 
+- (void) _activateWiFiImageCacheTask:(UIControl*) control
+{
+    BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
+    if (isWiFiEnabled)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+		                                         selector:@selector(_wifiImageCacheTaskFinished:skippedCount:)
+		                                             name:NOTIFICATION_ID_SEEDPICTUREPREFETCH_FINISHED
+		                                           object:nil];
+        
+        UIButton* _button = (UIButton*)control;
+        [_button setTitle:@"Syncing" forState:UIControlStateNormal];
+        
+        NSArray* last3Days = [CBDateUtils lastThreeDays];
+        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+        
+        NSArray* seeds = [seedDAO getSeedsByDates:last3Days];
+        
+        [_pictureAgent prefetchSeedImages:seeds];
+    }
+    else
+    {
+        [_guiModule showHUD:NSLocalizedString(@"Internet Disconnected", nil) delay:2];
+    }
+}
+
+- (void) _wifiImageCacheTaskFinished:(NSUInteger) finishedCount skippedCount:(NSUInteger) skippedCount
+{
+    NSString* majorStatus = NSLocalizedString(@"Images Prefetched", nil);
+    NSMutableString* minorStatus = [NSMutableString string];
+    [minorStatus appendString:NSLocalizedString(@"Finished:", nil)];
+    [minorStatus appendString:[NSString stringWithFormat:@"%d", finishedCount]];
+    [minorStatus appendString:@" "];
+    [minorStatus appendString:NSLocalizedString(@"Skipped:", nil)];
+    [minorStatus appendString:[NSString stringWithFormat:@"%d", skippedCount]];
+    
+    [_guiModule showHUD:majorStatus minorStatus:minorStatus delay:2];
+}
+
 - (void) _on3GDownloadImagesSwitched:(UIControl*) control
 {
     if (nil != control)
@@ -319,6 +416,22 @@
 {
     UserDefaultsModule* defaults = [UserDefaultsModule sharedInstance];
     [defaults enableDownloadImagesThrough3G:flag];
+}
+
+- (void) _clearImageCache:(UIControl*) control
+{
+    [_pictureAgent clearCache];
+    
+    [self _refreshClearImageCacheButtonStatus:(UIButton*)control];
+    
+    [_guiModule showHUD:NSLocalizedString(@"Images Cache Cleared", nil) delay:2];
+}
+
+- (void) _refreshClearImageCacheButtonStatus:(UIButton*) button
+{
+    unsigned long long bytesCacheSize = [_pictureAgent diskCacheImagesSize];
+    NSString* cacheSizeStr = [CBMathUtils readableStringFromBytesSize:bytesCacheSize];
+    [button setTitle:cacheSizeStr forState:UIControlStateNormal];
 }
 
 @end

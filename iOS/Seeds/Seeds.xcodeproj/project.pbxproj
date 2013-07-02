@@ -72,10 +72,13 @@
 		C53B6432178164340028DC41 /* TableViewSwitcherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53B6430178164340028DC41 /* TableViewSwitcherCell.xib */; };
 		C53B64361781731B0028DC41 /* TableViewSegmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B64341781731A0028DC41 /* TableViewSegmentCell.m */; };
 		C53B64371781731B0028DC41 /* TableViewSegmentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53B64351781731B0028DC41 /* TableViewSegmentCell.xib */; };
-		C53B6439178180580028DC41 /* TableViewLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53B6438178180580028DC41 /* TableViewLabelCell.xib */; };
-		C53B643C178180870028DC41 /* TableViewLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B643B178180870028DC41 /* TableViewLabelCell.m */; };
 		C53B643F1781B6A30028DC41 /* UIDevice+Resolutions.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B643E1781B6A30028DC41 /* UIDevice+Resolutions.m */; };
 		C53B64421781C0FB0028DC41 /* WarningViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B64411781C0FA0028DC41 /* WarningViewController.m */; };
+		C53B644517824CF00028DC41 /* TableViewLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B644417824CEF0028DC41 /* TableViewLabelCell.m */; };
+		C53B644717824D0E0028DC41 /* TableViewLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53B644617824D0C0028DC41 /* TableViewLabelCell.xib */; };
+		C53B6449178253420028DC41 /* TableViewButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53B6448178253410028DC41 /* TableViewButtonCell.xib */; };
+		C53B644C178253580028DC41 /* TableViewButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B644B178253570028DC41 /* TableViewButtonCell.m */; };
+		C541D0771782850F00E4F560 /* CBMathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C541D0761782850F00E4F560 /* CBMathUtils.m */; };
 		C546E6E7173883CC00AEADDA /* JSONMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E1173883CC00AEADDA /* JSONMessage.m */; };
 		C546E6E8173883CC00AEADDA /* SeedsSpider.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E4173883CC00AEADDA /* SeedsSpider.m */; };
 		C546E6E9173883CC00AEADDA /* ServerAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E6173883CC00AEADDA /* ServerAgent.m */; };
@@ -307,13 +310,18 @@
 		C53B64331781731A0028DC41 /* TableViewSegmentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewSegmentCell.h; sourceTree = "<group>"; };
 		C53B64341781731A0028DC41 /* TableViewSegmentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewSegmentCell.m; sourceTree = "<group>"; };
 		C53B64351781731B0028DC41 /* TableViewSegmentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewSegmentCell.xib; sourceTree = "<group>"; };
-		C53B6438178180580028DC41 /* TableViewLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewLabelCell.xib; sourceTree = "<group>"; };
-		C53B643A178180860028DC41 /* TableViewLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewLabelCell.h; sourceTree = "<group>"; };
-		C53B643B178180870028DC41 /* TableViewLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewLabelCell.m; sourceTree = "<group>"; };
 		C53B643D1781B6A30028DC41 /* UIDevice+Resolutions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Resolutions.h"; sourceTree = "<group>"; };
 		C53B643E1781B6A30028DC41 /* UIDevice+Resolutions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Resolutions.m"; sourceTree = "<group>"; };
 		C53B64401781C0F80028DC41 /* WarningViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WarningViewController.h; sourceTree = "<group>"; };
 		C53B64411781C0FA0028DC41 /* WarningViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WarningViewController.m; sourceTree = "<group>"; };
+		C53B644317824CEE0028DC41 /* TableViewLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewLabelCell.h; sourceTree = "<group>"; };
+		C53B644417824CEF0028DC41 /* TableViewLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewLabelCell.m; sourceTree = "<group>"; };
+		C53B644617824D0C0028DC41 /* TableViewLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewLabelCell.xib; sourceTree = "<group>"; };
+		C53B6448178253410028DC41 /* TableViewButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewButtonCell.xib; sourceTree = "<group>"; };
+		C53B644A178253550028DC41 /* TableViewButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewButtonCell.h; sourceTree = "<group>"; };
+		C53B644B178253570028DC41 /* TableViewButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewButtonCell.m; sourceTree = "<group>"; };
+		C541D0751782850F00E4F560 /* CBMathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBMathUtils.h; sourceTree = "<group>"; };
+		C541D0761782850F00E4F560 /* CBMathUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBMathUtils.m; sourceTree = "<group>"; };
 		C546E6E0173883CC00AEADDA /* JSONMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONMessage.h; path = Seeds/JSONMessage.h; sourceTree = "<group>"; };
 		C546E6E1173883CC00AEADDA /* JSONMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONMessage.m; path = Seeds/JSONMessage.m; sourceTree = "<group>"; };
 		C546E6E2173883CC00AEADDA /* JSONMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONMessageDelegate.h; path = Seeds/JSONMessageDelegate.h; sourceTree = "<group>"; };
@@ -720,6 +728,8 @@
 				C5ADC851173930E1007F59D7 /* CBStringUtils.m */,
 				C5AB63561730C1ED00A3F1E6 /* CBUIUtils.h */,
 				C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */,
+				C541D0751782850F00E4F560 /* CBMathUtils.h */,
+				C541D0761782850F00E4F560 /* CBMathUtils.m */,
 				C531833717237FF700264530 /* CBLog.h */,
 				C531833817237FF700264530 /* CBModule.h */,
 				C531833917237FF700264530 /* CBModuleAbstractImpl.h */,
@@ -894,15 +904,18 @@
 				C58B0441177EDF1700F8C185 /* PagingToolbar.h */,
 				C58B0442177EDF1700F8C185 /* PagingToolbar.m */,
 				C58B043F177EDD7200F8C185 /* PagingToolbar.xib */,
-				C53B643A178180860028DC41 /* TableViewLabelCell.h */,
-				C53B643B178180870028DC41 /* TableViewLabelCell.m */,
-				C53B6438178180580028DC41 /* TableViewLabelCell.xib */,
 				C53B642E178164340028DC41 /* TableViewSwitcherCell.h */,
 				C53B642F178164340028DC41 /* TableViewSwitcherCell.m */,
 				C53B6430178164340028DC41 /* TableViewSwitcherCell.xib */,
 				C53B64331781731A0028DC41 /* TableViewSegmentCell.h */,
 				C53B64341781731A0028DC41 /* TableViewSegmentCell.m */,
 				C53B64351781731B0028DC41 /* TableViewSegmentCell.xib */,
+				C53B644317824CEE0028DC41 /* TableViewLabelCell.h */,
+				C53B644417824CEF0028DC41 /* TableViewLabelCell.m */,
+				C53B644617824D0C0028DC41 /* TableViewLabelCell.xib */,
+				C53B644A178253550028DC41 /* TableViewButtonCell.h */,
+				C53B644B178253570028DC41 /* TableViewButtonCell.m */,
+				C53B6448178253410028DC41 /* TableViewButtonCell.xib */,
 				C5964C2D17222BF500CC1C0A /* SplashViewController.h */,
 				C5964C2E17222BF500CC1C0A /* SplashViewController.m */,
 				C53B64401781C0F80028DC41 /* WarningViewController.h */,
@@ -1219,7 +1232,8 @@
 				C58B0440177EDD7200F8C185 /* PagingToolbar.xib in Resources */,
 				C53B6432178164340028DC41 /* TableViewSwitcherCell.xib in Resources */,
 				C53B64371781731B0028DC41 /* TableViewSegmentCell.xib in Resources */,
-				C53B6439178180580028DC41 /* TableViewLabelCell.xib in Resources */,
+				C53B644717824D0E0028DC41 /* TableViewLabelCell.xib in Resources */,
+				C53B6449178253420028DC41 /* TableViewButtonCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1366,9 +1380,11 @@
 				C58B044C178106A800F8C185 /* CBAppUtils.m in Sources */,
 				C53B6431178164340028DC41 /* TableViewSwitcherCell.m in Sources */,
 				C53B64361781731B0028DC41 /* TableViewSegmentCell.m in Sources */,
-				C53B643C178180870028DC41 /* TableViewLabelCell.m in Sources */,
 				C53B643F1781B6A30028DC41 /* UIDevice+Resolutions.m in Sources */,
 				C53B64421781C0FB0028DC41 /* WarningViewController.m in Sources */,
+				C53B644517824CF00028DC41 /* TableViewLabelCell.m in Sources */,
+				C53B644C178253580028DC41 /* TableViewButtonCell.m in Sources */,
+				C541D0771782850F00E4F560 /* CBMathUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

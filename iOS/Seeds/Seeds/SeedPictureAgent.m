@@ -427,6 +427,7 @@ SINGLETON(SeedPictureAgent)
     NSAssert(nil != seedList, @"Illegal seed list");
     
     NSMutableArray* urls = [NSMutableArray arrayWithCapacity:seedList.count];
+    
     for (Seed* seed in seedList)
     {
         NSArray* pictures = seed.seedPictures;
@@ -438,22 +439,25 @@ SINGLETON(SeedPictureAgent)
         }
     }
     
+
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(_appDidEnterBackground)
+//                                                 name:UIApplicationDidEnterBackgroundNotification
+//                                               object:nil];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(connectionDidDie:)
+//                                                 name:HTTPConnectionDidDieNotification
+//                                               object:nil];
+
     SDWebImagePrefetcher* imagePrefetcher = [SDWebImagePrefetcher sharedImagePrefetcher];
-    imagePrefetcher.maxConcurrentDownloads = 50;
-    [imagePrefetcher prefetchURLs:urls completed:^(NSUInteger finishedCount, NSUInteger skippedCount)
-     {
-         NSString* majorStatus = @"Images Prefetched";
-         NSMutableString* minorStatus = [NSMutableString string];
-         [minorStatus appendString:@"Finished:"];
-         [minorStatus appendString:[NSString stringWithFormat:@"%d", finishedCount]];
-         [minorStatus appendString:@" "];
-         [minorStatus appendString:@"Skipped:"];
-         [minorStatus appendString:[NSString stringWithFormat:@"%d", skippedCount]];
-         
-         GUIModule* guiModule = [GUIModule sharedInstance];
-         [guiModule showHUD:majorStatus minorStatus:minorStatus delay:2];
+    imagePrefetcher.options = SDWebImageRetryFailed;
+    imagePrefetcher.maxConcurrentDownloads = SEEDPICTURE_PREFETCHER_MAX_CONCURRENT_DOWNLOADS;
+    [imagePrefetcher prefetchURLs:urls completed:^(NSUInteger finishedCount, NSUInteger skippedCount){
+
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ID_SEEDPICTUREPREFETCH_FINISHED object:self userInfo:nil];
      }];
 }
-
 
 @end
