@@ -5,6 +5,9 @@
 *.xcbkptlist
 
 *.class
-*.xcuserstate
 
-*.xcuserstate
+*.DS_Store
+
+Android/Seeds/bin/*
+
+iOS/Seeds/Seeds.xcodeproj/project.xcworkspace/xcuserdata
