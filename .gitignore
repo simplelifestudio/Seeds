@@ -9,4 +9,6 @@
 
 *.xcuserstate
 
-Android/Seeds/bin/＊
+Android/Seeds/bin/*
+
+*.DS_Store
