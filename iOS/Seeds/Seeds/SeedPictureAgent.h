@@ -38,6 +38,9 @@ typedef void(^ImageDownloadFinishBlock)(UIImage* image, NSError* error, SDImageC
 
 -(void) clearCache;
 
+- (unsigned long long) diskCacheImagesSize;
+- (NSUInteger) diskCacheImagesCount;
+
 -(void) prefetchSeedImages:(NSArray*) seedList;
 
 @end

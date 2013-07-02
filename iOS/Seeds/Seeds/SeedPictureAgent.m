@@ -324,6 +324,16 @@ SINGLETON(SeedPictureAgent)
     [_imageCache clearMemory];
 }
 
+- (unsigned long long) diskCacheImagesSize
+{
+    return [_imageCache getSize];
+}
+
+- (NSUInteger) diskCacheImagesCount
+{
+    return [_imageCache getDiskCount];
+}
+
 -(void) cacheThumbnails:(UIImage*) image url:(NSURL*) url
 {
     if (nil == image || nil == url)
@@ -343,31 +353,28 @@ SINGLETON(SeedPictureAgent)
     NSMutableString* keyInSeedPictureView = [NSMutableString stringWithString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW];
     [keyInSeedPictureView appendString:keyInOriginPicture];
     
-//    @autoreleasepool
-//    {
-        UIImage* tempCachedImage = [_imageCache imageFromDiskCacheForKey:keyInSeedListTableCell];
-        if (!tempCachedImage)
-        {
-            UIImage* thumbnailInSeedListTableCell = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDLISTTABLECELL];
-            [_imageCache storeImage:thumbnailInSeedListTableCell forKey:keyInSeedListTableCell];
-        }
+    UIImage* tempCachedImage = [_imageCache imageFromDiskCacheForKey:keyInSeedListTableCell];
+    if (!tempCachedImage)
+    {
+        UIImage* thumbnailInSeedListTableCell = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDLISTTABLECELL];
+        [_imageCache storeImage:thumbnailInSeedListTableCell forKey:keyInSeedListTableCell];
+    }
         
-        tempCachedImage = [_imageCache imageFromDiskCacheForKey:keyInSeedPictureCollectionCell];
-        if (!tempCachedImage)
-        {
-            UIImage* thumbnailInSeedPictureCollectionCell = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL];
-            [_imageCache storeImage:thumbnailInSeedPictureCollectionCell forKey:keyInSeedPictureCollectionCell];
-        }
+    tempCachedImage = [_imageCache imageFromDiskCacheForKey:keyInSeedPictureCollectionCell];
+    if (!tempCachedImage)
+    {
+        UIImage* thumbnailInSeedPictureCollectionCell = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL];
+        [_imageCache storeImage:thumbnailInSeedPictureCollectionCell forKey:keyInSeedPictureCollectionCell];
+    }
         
 #if 0
-        tempCachedImage = [_imageCache imageFromDiskCacheForKey:keyInSeedPictureView];
-        if (!tempCachedImage)
-        {
-            UIImage* thumbnailInSeedPictureView = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTUREVIEW];
-            [_imageCache storeImage:thumbnailInSeedPictureView forKey:keyInSeedPictureView];
-        }
+    tempCachedImage = [_imageCache imageFromDiskCacheForKey:keyInSeedPictureView];
+    if (!tempCachedImage)
+    {
+        UIImage* thumbnailInSeedPictureView = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTUREVIEW];
+        [_imageCache storeImage:thumbnailInSeedPictureView forKey:keyInSeedPictureView];
+    }
 #endif
-//    }
 }
 
 -(UIImage*) thumbnailFromCache:(NSURL*) url thumbnailType:(ThumbnailType) thumbnailType
