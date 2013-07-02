@@ -2,7 +2,7 @@
 //  TableViewLabelCell.m
 //  Seeds
 //
-//  Created by Patrick Deng on 13-7-1.
+//  Created by Patrick Deng on 13-7-2.
 //  Copyright (c) 2013年 SimpleLife Studio. All rights reserved.
 //
 
@@ -10,20 +10,30 @@
 
 @implementation TableViewLabelCell
 
+@synthesize majorLabel = _majorLabel;
+@synthesize minorLabel = _minorLabel;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        // Initialization code
+    if (self)
+    {
+        
     }
     return self;
+}
+
+- (void) awakeFromNib
+{
+    [super awakeFromNib];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
+
+#pragma mark - Private Methods
+
 
 @end

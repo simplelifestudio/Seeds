@@ -78,6 +78,7 @@
 								<string key="NSFrame">{{203, 4}, {94, 27}}</string>
 								<reference key="NSSuperview" ref="590155492"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:590</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -113,6 +114,7 @@
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="590155492"/>
+				<string key="IBUIReuseIdentifier">TableViewSwitcherCell</string>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
