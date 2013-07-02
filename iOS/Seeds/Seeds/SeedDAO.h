@@ -28,6 +28,7 @@
 -(BOOL) insertSeed:(Seed*) seed;
 -(BOOL) insertSeeds:(NSArray*) seeds;
 
+-(NSInteger) countFavoriteSeeds;
 -(NSArray*) getFavoriteSeeds;
 -(BOOL) favoriteSeed:(Seed*) seed andFlag:(BOOL) favorite;
 

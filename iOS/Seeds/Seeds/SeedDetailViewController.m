@@ -77,10 +77,10 @@
 }
 
 - (void) _arrangeBarButtons
-{
+{    
     NSString* torrentFileFullPath = [TorrentDownloadAgent torrentFileFullPath:_seed];
     BOOL isFileExists = [CBFileUtils isFileExists:torrentFileFullPath];
-    if (isFileExists)
+    if (isFileExists && _seed.favorite)
     {
         self.navigationItem.rightBarButtonItems = @[_deleteBarButton];
     }

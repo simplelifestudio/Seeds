@@ -13,6 +13,10 @@
 #import "TableViewLabelCell.h"
 #import "TableViewButtonCell.h"
 
+#import "TorrentDownloadAgent.h"
+
+#import "CBFileUtils.h"
+
 #define HEIGHT_CELL_COMPONENT 27
 
 #define CELL_ID_SWITCHER @"TableViewSwitcherCell"
@@ -27,7 +31,7 @@
 #define CELL_ID_BUTTON @"TableViewButtonCell"
 #define NIB_TABLECELL_BUTTON @"TableViewButtonCell"
 
-#define SECTION_ITEMCOUNT_CONFIG 2
+#define SECTION_ITEMCOUNT_CONFIG 3
 
 #define SECTION_INDEX_MODE 0
 #define SECTION_ITEMCOUNT_MODE 1
@@ -43,6 +47,8 @@
 
 #define SECTION_INDEX_DATA 2
 #define SECTION_ITEMCOUNT_DATA 2
+#define SECTION_INDEX_DATA_ITEM_INDEX_CLEARFAVORITES 0
+#define SECTION_INDEX_DATA_ITEM_INDEX_CLEARDATABASE 1
 
 #define SECTION_INDEX_PASSCODE 3
 #define SECTION_ITEMCOUNT_PASSCODE 2
@@ -59,6 +65,14 @@
     CommunicationModule* _commModule;
     SeedPictureAgent* _pictureAgent;
     GUIModule* _guiModule;
+    
+    TableViewSegmentCell* _runningModeCell;
+    TableViewSwitcherCell* _3GDownloadImagesCell;
+    TableViewButtonCell* _wifiCacheImagesCell;
+    TableViewButtonCell* _clearImagesCacheCell;
+    
+    TableViewButtonCell* _clearFavoritesCell;
+    TableViewButtonCell* _clearDatabaseCell;
 }
 
 @end
@@ -160,34 +174,7 @@
             {
                 case SECTION_INDEX_MODE_ITEM_INDEX_MODE:
                 {
-                    TableViewSegmentCell* customCell = [tableView dequeueReusableCellWithIdentifier:CELL_ID_SEGMENTER];
-                    if (nil == customCell)
-                    {
-                        customCell = [CBUIUtils componentFromNib:NIB_TABLECELL_SEGMENTER owner:self options:nil];
-
-                        [customCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-                        customCell.segmentLabel.text = NSLocalizedString(@"Running Mode", nil);
-                        [customCell.segmentControl setTitle:NSLocalizedString(@"Standalone", nil) forSegmentAtIndex:SEGMENT_INDEX_MODE_STANDALONE];
-                        [customCell.segmentControl setTitle:NSLocalizedString(@"Server", nil) forSegmentAtIndex:1];
-                        [customCell.segmentControl addTarget:self action:@selector(_onRunningModeChanged:) forControlEvents:UIControlEventValueChanged];
-                        CGRect oldFrame = customCell.segmentControl.frame;
-                        CGFloat offsetY = (oldFrame.size.height - HEIGHT_CELL_COMPONENT) / 2;
-                        CGRect newFrame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y + offsetY, oldFrame.size.width, HEIGHT_CELL_COMPONENT);
-                        [customCell.segmentControl setFrame:newFrame];
-                        
-                        BOOL flag = [_usersDefaults isServerMode];
-                        if (flag)
-                        {
-                            [customCell.segmentControl setSelectedSegmentIndex:SEGMENT_INDEX_MODE_SERVER];
-                        }
-                        else
-                        {
-                            [customCell.segmentControl setSelectedSegmentIndex:SEGMENT_INDEX_MODE_STANDALONE];
-                        }
-                        [customCell.segmentControl setEnabled:NO];
-                    }
-                    cell = customCell;
-                    
+                    cell = _runningModeCell;
                     break;
                 }
                 default:
@@ -204,60 +191,39 @@
             {
                 case SECTION_INDEX_IMAGE_ITEM_INDEX_3GDOWNLOAD:
                 {
-                    TableViewSwitcherCell* customCell = [tableView dequeueReusableCellWithIdentifier:CELL_ID_SWITCHER];
-                    if (nil == customCell)
-                    {
-                        customCell = [CBUIUtils componentFromNib:NIB_TABLECELL_SWITCHER owner:self options:nil];
-                        
-                        [customCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-                        customCell.switcherLabel.text = NSLocalizedString(@"Download Images Through 3G/GPRS", nil);
-                        [customCell.switcher addTarget:self action:@selector(_on3GDownloadImagesSwitched:) forControlEvents:UIControlEventValueChanged];
-                        
-                        BOOL flag = [_usersDefaults isDownloadImagesThrough3GEnabled];
-                        [customCell.switcher setOn:flag];
-                    }
-                    cell = customCell;
-                    
+                    cell = _3GDownloadImagesCell;
                     break;
                 }
                 case SECTION_INDEX_IMAGE_ITEM_INDEX_WIFICACHE:
                 {
-                    TableViewButtonCell* customCell = [tableView dequeueReusableCellWithIdentifier:CELL_ID_BUTTON];
-                    if (nil == customCell)
-                    {
-                        customCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
-                        
-                        [customCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-                        customCell.label.text = NSLocalizedString(@"Cache Images Through WiFi", nil);
-                        
-                        NSUInteger cacheImageCount = [_pictureAgent diskCacheImagesCount];
-                        NSString* cachedImageCountStr = [NSString stringWithFormat:@"%d", cacheImageCount];
-                        [customCell.button setTitle:cachedImageCountStr forState:UIControlStateNormal];
-                        
-                        [customCell.button addTarget:self action:@selector(_activateWiFiImageCacheTask:) forControlEvents:UIControlEventTouchUpInside];
-                        [customCell.button setEnabled:NO];
-                        [customCell.button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-                    }
-                    cell = customCell;
-                    
+                    cell = _wifiCacheImagesCell;
                     break;
                 }
                 case SECTION_INDEX_IMAGE_ITEM_INDEX_CLEARCACHE:
                 {
-                    TableViewButtonCell* customCell = [tableView dequeueReusableCellWithIdentifier:CELL_ID_BUTTON];
-                    if (nil == customCell)
-                    {
-                        customCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
-                        
-                        [customCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-                        customCell.label.text = NSLocalizedString(@"Clear Images Cache", nil);
-                        
-                        [self _refreshClearImageCacheButtonStatus:customCell.button];
-                        
-                        [customCell.button addTarget:self action:@selector(_clearImageCache:) forControlEvents:UIControlEventTouchUpInside];
-                    }
-                    cell = customCell;
-                    
+                    cell = _clearImagesCacheCell;
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+            
+            break;
+        }
+        case SECTION_INDEX_DATA:
+        {
+            switch (rowInSection)
+            {
+                case SECTION_INDEX_DATA_ITEM_INDEX_CLEARFAVORITES:
+                {
+                    cell = _clearFavoritesCell;
+                    break;
+                }
+                case SECTION_INDEX_DATA_ITEM_INDEX_CLEARDATABASE:
+                {
+                    cell = _clearDatabaseCell;
                     break;
                 }
                 default:
@@ -292,6 +258,11 @@
             sectionName = NSLocalizedString(@"Images", nil);
             break;
         }
+        case SECTION_INDEX_DATA:
+        {
+            sectionName = NSLocalizedString(@"Data", nil);
+            break;
+        }
         default:
         {
             sectionName = @"";
@@ -324,6 +295,8 @@
     _pictureAgent = _commModule.seedPictureAgent;
     
     _guiModule = [GUIModule sharedInstance];
+    
+    [self _initTableCellList];
 }
 
 - (void) _registerGestureRecognizers
@@ -338,19 +311,16 @@
     [self.navigationController popViewControllerAnimated:TRUE];
 }
 
-- (void) _onRunningModeChanged:(UIControl*) control
+- (void) _onRunningModeChanged
 {
-    if (nil != control)
+    UISegmentedControl* segment = _runningModeCell.segmentControl;
+    if (SEGMENT_INDEX_MODE_SERVER == segment.selectedSegmentIndex)
     {
-        UISegmentedControl* segment = (UISegmentedControl*) control;
-        if (SEGMENT_INDEX_MODE_SERVER == segment.selectedSegmentIndex)
-        {
-            [self _enableServerMode];
-        }
-        else if (SEGMENT_INDEX_MODE_STANDALONE == segment.selectedSegmentIndex)
-        {
-            [self _enableStandaloneMode];
-        }
+        [self _enableServerMode];
+    }
+    else if (SEGMENT_INDEX_MODE_STANDALONE == segment.selectedSegmentIndex)
+    {
+        [self _enableStandaloneMode];
     }
 }
 
@@ -364,7 +334,7 @@
     
 }
 
-- (void) _activateWiFiImageCacheTask:(UIControl*) control
+- (void) _activateWiFiImageCacheTask
 {
     BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
     if (isWiFiEnabled)
@@ -374,8 +344,7 @@
 		                                             name:NOTIFICATION_ID_SEEDPICTUREPREFETCH_FINISHED
 		                                           object:nil];
         
-        UIButton* _button = (UIButton*)control;
-        [_button setTitle:@"Syncing" forState:UIControlStateNormal];
+        [_wifiCacheImagesCell.button setTitle:@"Syncing" forState:UIControlStateNormal];
         
         NSArray* last3Days = [CBDateUtils lastThreeDays];
         id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
@@ -403,13 +372,10 @@
     [_guiModule showHUD:majorStatus minorStatus:minorStatus delay:2];
 }
 
-- (void) _on3GDownloadImagesSwitched:(UIControl*) control
+- (void) _on3GDownloadImagesSwitched
 {
-    if (nil != control)
-    {
-        UISwitch* switcher = (UISwitch*) control;
-        [self _set3GDownloadImages:switcher.isOn];
-    }
+    UISwitch* switcher = _3GDownloadImagesCell.switcher;
+    [self _set3GDownloadImages:switcher.isOn];
 }
 
 - (void) _set3GDownloadImages:(BOOL) flag
@@ -418,20 +384,201 @@
     [defaults enableDownloadImagesThrough3G:flag];
 }
 
-- (void) _clearImageCache:(UIControl*) control
+- (void) _refreshWiFiImageCacheButtonStatus
 {
-    [_pictureAgent clearCache];
+    NSUInteger cacheImageCount = [_pictureAgent diskCacheImagesCount];
+    NSString* cachedImageCountStr = [NSString stringWithFormat:@"%d", cacheImageCount];
+    [_wifiCacheImagesCell.button setTitle:cachedImageCountStr forState:UIControlStateNormal];
+}
+
+- (void) _clearImageCache
+{
+    unsigned long long bytesCacheSize = [_pictureAgent diskCacheImagesSize];
+    while (0 < bytesCacheSize)
+    {
+        [_pictureAgent clearCache];
+        bytesCacheSize = [_pictureAgent diskCacheImagesSize];
+    }
     
-    [self _refreshClearImageCacheButtonStatus:(UIButton*)control];
+    [self _refreshClearImageCacheButtonStatus];
+    
+    [self _refreshWiFiImageCacheButtonStatus];
     
     [_guiModule showHUD:NSLocalizedString(@"Images Cache Cleared", nil) delay:2];
 }
 
-- (void) _refreshClearImageCacheButtonStatus:(UIButton*) button
+- (void) _refreshClearImageCacheButtonStatus
 {
     unsigned long long bytesCacheSize = [_pictureAgent diskCacheImagesSize];
     NSString* cacheSizeStr = [CBMathUtils readableStringFromBytesSize:bytesCacheSize];
-    [button setTitle:cacheSizeStr forState:UIControlStateNormal];
+    [_clearImagesCacheCell.button setTitle:cacheSizeStr forState:UIControlStateNormal];
+}
+
+- (void) _clearFavoritesBothInDatabaseAndDownloadTorrentsFolder
+{
+    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];    
+    NSArray* favoriteSeeds = [seedDAO getFavoriteSeeds];
+    for (Seed* seed in favoriteSeeds)
+    {
+        [seedDAO favoriteSeed:seed andFlag:NO];
+        NSString* torrentFileFullPath = [TorrentDownloadAgent torrentFileFullPath:seed];
+        [CBFileUtils deleteFile:torrentFileFullPath];
+    }
+    [self _refreshClearFavoritesButtonStatus];
+}
+
+- (void) _clearFavorites
+{
+    [self _clearFavoritesBothInDatabaseAndDownloadTorrentsFolder];
+    
+    [_guiModule showHUD:NSLocalizedString(@"Favorites Cleared", nil) delay:2];
+}
+
+- (void) _refreshClearFavoritesButtonStatus
+{
+    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+    NSInteger favoritesCount = [seedDAO countFavoriteSeeds];
+    NSString* favoritesCountStr = [NSString stringWithFormat:@"%d", favoritesCount];
+    [_clearFavoritesCell.button setTitle:favoritesCountStr forState:UIControlStateNormal];
+}
+
+- (void) _resetDatabase
+{
+    [self _clearFavoritesBothInDatabaseAndDownloadTorrentsFolder];
+    
+    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+    [seedDAO deleteAllSeeds];
+    [self _refreshResetDatabaseButtonStatus];
+    
+    [_usersDefaults resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];    
+    
+    [_guiModule showHUD:NSLocalizedString(@"Database Reseted", nil) delay:2];    
+}
+
+- (void) _refreshResetDatabaseButtonStatus
+{
+    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+    NSInteger count = [seedDAO countAllSeeds];
+    NSString* countStr = [NSString stringWithFormat:@"%d", count];
+    [_clearDatabaseCell.button setTitle:countStr forState:UIControlStateNormal];
+}
+
+- (void) _initTableCellList
+{
+    [self _initRunningModeTableCell];
+    
+    [self _init3GDownloadImagesCell];
+    [self _initWiFiCacheImagesCell];
+    [self _initClearImagesCacheCell];
+    
+    [self _initClearFavoritesCell];
+    [self _initClearDatabaseCell];
+}
+
+- (void) _initRunningModeTableCell
+{
+    if (nil == _runningModeCell)
+    {
+        _runningModeCell = [CBUIUtils componentFromNib:NIB_TABLECELL_SEGMENTER owner:self options:nil];
+        
+        [_runningModeCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        _runningModeCell.segmentLabel.text = NSLocalizedString(@"Running Mode", nil);
+        [_runningModeCell.segmentControl setTitle:NSLocalizedString(@"Standalone", nil) forSegmentAtIndex:SEGMENT_INDEX_MODE_STANDALONE];
+        [_runningModeCell.segmentControl setTitle:NSLocalizedString(@"Server", nil) forSegmentAtIndex:1];
+        [_runningModeCell.segmentControl addTarget:self action:@selector(_onRunningModeChanged) forControlEvents:UIControlEventValueChanged];
+        CGRect oldFrame = _runningModeCell.segmentControl.frame;
+        CGFloat offsetY = (oldFrame.size.height - HEIGHT_CELL_COMPONENT) / 2;
+        CGRect newFrame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y + offsetY, oldFrame.size.width, HEIGHT_CELL_COMPONENT);
+        [_runningModeCell.segmentControl setFrame:newFrame];
+        
+        BOOL flag = [_usersDefaults isServerMode];
+        if (flag)
+        {
+            [_runningModeCell.segmentControl setSelectedSegmentIndex:SEGMENT_INDEX_MODE_SERVER];
+        }
+        else
+        {
+            [_runningModeCell.segmentControl setSelectedSegmentIndex:SEGMENT_INDEX_MODE_STANDALONE];
+        }
+        [_runningModeCell.segmentControl setEnabled:NO];
+    }
+}
+
+- (void) _init3GDownloadImagesCell
+{
+    if (nil == _3GDownloadImagesCell)
+    {
+        _3GDownloadImagesCell = [CBUIUtils componentFromNib:NIB_TABLECELL_SWITCHER owner:self options:nil];
+        
+        [_3GDownloadImagesCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        _3GDownloadImagesCell.switcherLabel.text = NSLocalizedString(@"Download Images Through 3G/GPRS", nil);
+        [_3GDownloadImagesCell.switcher addTarget:self action:@selector(_on3GDownloadImagesSwitched) forControlEvents:UIControlEventValueChanged];
+        
+        BOOL flag = [_usersDefaults isDownloadImagesThrough3GEnabled];
+        [_3GDownloadImagesCell.switcher setOn:flag];
+    }
+}
+
+- (void) _initWiFiCacheImagesCell
+{
+    if (nil == _wifiCacheImagesCell)
+    {
+        _wifiCacheImagesCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
+        
+        [_wifiCacheImagesCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        _wifiCacheImagesCell.label.text = NSLocalizedString(@"Cache Images Through WiFi", nil);
+        
+        [self _refreshWiFiImageCacheButtonStatus];
+        
+        [_wifiCacheImagesCell.button addTarget:self action:@selector(_activateWiFiImageCacheTask) forControlEvents:UIControlEventTouchUpInside];
+        [_wifiCacheImagesCell.button setEnabled:NO];
+        [_wifiCacheImagesCell.button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    }
+}
+
+- (void) _initClearImagesCacheCell
+{
+    if (nil == _clearImagesCacheCell)
+    {
+        _clearImagesCacheCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
+        
+        [_clearImagesCacheCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        _clearImagesCacheCell.label.text = NSLocalizedString(@"Clear Images Cache", nil);
+        
+        [self _refreshClearImageCacheButtonStatus];
+        
+        [_clearImagesCacheCell.button addTarget:self action:@selector(_clearImageCache) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+- (void) _initClearFavoritesCell
+{
+    if (nil == _clearFavoritesCell)
+    {
+        _clearFavoritesCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
+        
+        [_clearFavoritesCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        _clearFavoritesCell.label.text = NSLocalizedString(@"Clear Favorites", nil);
+        
+        [self _refreshClearFavoritesButtonStatus];
+        
+        [_clearFavoritesCell.button addTarget:self action:@selector(_clearFavorites) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+- (void) _initClearDatabaseCell
+{
+    if (nil == _clearDatabaseCell)
+    {
+        _clearDatabaseCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
+        
+        [_clearDatabaseCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        _clearDatabaseCell.label.text = NSLocalizedString(@"Reset Database", nil);
+        
+        [self _refreshResetDatabaseButtonStatus];
+        
+        [_clearDatabaseCell.button addTarget:self action:@selector(_resetDatabase) forControlEvents:UIControlEventTouchUpInside];
+    }
 }
 
 @end

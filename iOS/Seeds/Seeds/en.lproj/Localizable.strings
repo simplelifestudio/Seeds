@@ -116,6 +116,12 @@
 "Clear Images Cache" = "Clear Images Cache";
 "Images Cache Cleared" = "Images Cache Cleared";
 
+"Data" = "Data";
+"Clear Favorites" = "Clear Favorites";
+"Favorites Cleared" = "Favorites Cleared";
+"Reset Database" = "Reset Database";
+"Database Reseted" = "Database Reseted";
+
 "Images Prefetched" = "Images Prefetched";
 "Finished:" = "Finished:";
 "Skipped:" = "Skipped:";

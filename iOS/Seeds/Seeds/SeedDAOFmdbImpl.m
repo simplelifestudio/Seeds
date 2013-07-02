@@ -263,6 +263,33 @@
     return flag;
 }
 
+-(NSInteger) countFavoriteSeeds
+{
+    __block NSInteger count = 0;
+    
+    [databaseQueue inDatabase:^(FMDatabase* db)
+     {
+         [db open];
+         
+         NSMutableString* sql = [NSMutableString stringWithString:@"select count("];
+         [sql appendString:TABLE_SEED_COLUMN_LOCALID];
+         [sql appendString:@") from "];
+         [sql appendString:TABLE_SEED];
+         [sql appendString:@" where favorite = '1'"];
+         
+         count = [db intForQuery:sql];
+         BOOL hadError = [db hadError];
+         if (hadError)
+         {
+             DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+         }
+         
+         [db close];
+     }];
+    
+    return count;
+}
+
 -(NSArray*) getFavoriteSeeds
 {
     __block NSArray* array = [NSMutableArray arrayWithCapacity:0];

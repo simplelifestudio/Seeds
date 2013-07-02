@@ -116,6 +116,12 @@
 "Clear Images Cache" = "清理图片缓存";
 "Images Cache Cleared" = "图片缓存已清空";
 
+"Data" = "数据";
+"Clear Favorites" = "清空收藏夹";
+"Favorites Cleared" = "收藏夹已清空";
+"Reset Database" = "重置数据库";
+"Database Reseted" = "数据库已重置";
+
 "Images Prefetched" = "图片已缓存";
 "Finished:" = "完成:";
 "Skipped:" = "忽略:";

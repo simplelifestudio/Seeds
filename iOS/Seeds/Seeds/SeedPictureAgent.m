@@ -318,10 +318,8 @@ SINGLETON(SeedPictureAgent)
 
 -(void) clearCache
 {
-    [_imageCache cleanDisk];
-    
-    [_imageCache clearDisk];    
     [_imageCache clearMemory];
+    [_imageCache clearDisk];    
 }
 
 - (unsigned long long) diskCacheImagesSize
