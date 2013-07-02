@@ -104,10 +104,8 @@
 "1 Failed Passcode Attempt" = "1 Failed Passcode Attempt";
 "%d Failed Passcode Attempts" = "%d Failed Passcode Attempts";
 
-"Mode" = "Mode";
-"Running Mode" = "Running Mode";
-"Server" = "Server";
-"Standalone" = "Standalone";
+"Running" = "Running";
+"Server Mode" = "Server Mode";
 
 "Images" = "Images";
 "Download Images Through 3G/GPRS" = "Download Images Through 3G/GPRS";

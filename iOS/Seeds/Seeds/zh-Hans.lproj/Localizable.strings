@@ -104,10 +104,8 @@
 "1 Failed Passcode Attempt" = "1次密码输入错误";
 "%d Failed Passcode Attempts" = "%d次密码输入错误";
 
-"Mode" = "模式";
-"Running Mode" = "运行模式";
-"Server" = "服务器";
-"Standalone" = "单机";
+"Running" = "运行";
+"Server Mode" = "服务器模式";
 
 "Images" = "图片";
 "Download Images Through 3G/GPRS" = "3G/GPRS网络下载图片";

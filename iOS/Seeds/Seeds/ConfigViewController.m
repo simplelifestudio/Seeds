@@ -71,7 +71,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     
     PAPasscodeViewController* _passcodeViewController;
     
-    TableViewSegmentCell* _runningModeCell;
+    TableViewSwitcherCell* _runningModeCell;
     TableViewSwitcherCell* _3GDownloadImagesCell;
     TableViewButtonCell* _wifiCacheImagesCell;
     TableViewButtonCell* _clearImagesCacheCell;
@@ -303,7 +303,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     {
         case SECTION_INDEX_MODE:
         {
-            sectionName = NSLocalizedString(@"Mode", nil);
+            sectionName = NSLocalizedString(@"Running", nil);
             break;
         }
         case SECTION_INDEX_IMAGE:
@@ -378,12 +378,12 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _onRunningModeChanged
 {
-    UISegmentedControl* segment = _runningModeCell.segmentControl;
-    if (SEGMENT_INDEX_MODE_SERVER == segment.selectedSegmentIndex)
+    BOOL isServerMode = [_runningModeCell.switcher isOn];
+    if (isServerMode)
     {
         [self _enableServerMode];
     }
-    else if (SEGMENT_INDEX_MODE_STANDALONE == segment.selectedSegmentIndex)
+    else
     {
         [self _enableStandaloneMode];
     }
@@ -391,12 +391,12 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _enableStandaloneMode
 {
-    
+    [_userDefaults enableServerMode:NO];
 }
 
 - (void) _enableServerMode
 {
-    
+    [_userDefaults enableServerMode:YES];
 }
 
 - (void) _activateWiFiImageCacheTask
@@ -454,6 +454,12 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     NSUInteger cacheImageCount = [_pictureAgent diskCacheImagesCount];
     NSString* cachedImageCountStr = [NSString stringWithFormat:@"%d", cacheImageCount];
     [_wifiCacheImagesCell.button setTitle:cachedImageCountStr forState:UIControlStateNormal];
+}
+
+- (void) _refreshRunningModeCell
+{
+    BOOL isServerMode = [_userDefaults isServerMode];
+    [_runningModeCell.switcher setOn:isServerMode];
 }
 
 - (void) _clearImageCache
@@ -647,28 +653,15 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 {
     if (nil == _runningModeCell)
     {
-        _runningModeCell = [CBUIUtils componentFromNib:NIB_TABLECELL_SEGMENTER owner:self options:nil];
+        _runningModeCell = [CBUIUtils componentFromNib:NIB_TABLECELL_SWITCHER owner:self options:nil];
         
         [_runningModeCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        _runningModeCell.segmentLabel.text = NSLocalizedString(@"Running Mode", nil);
-        [_runningModeCell.segmentControl setTitle:NSLocalizedString(@"Standalone", nil) forSegmentAtIndex:SEGMENT_INDEX_MODE_STANDALONE];
-        [_runningModeCell.segmentControl setTitle:NSLocalizedString(@"Server", nil) forSegmentAtIndex:1];
-        [_runningModeCell.segmentControl addTarget:self action:@selector(_onRunningModeChanged) forControlEvents:UIControlEventValueChanged];
-        CGRect oldFrame = _runningModeCell.segmentControl.frame;
-        CGFloat offsetY = (oldFrame.size.height - HEIGHT_CELL_COMPONENT) / 2;
-        CGRect newFrame = CGRectMake(oldFrame.origin.x, oldFrame.origin.y + offsetY, oldFrame.size.width, HEIGHT_CELL_COMPONENT);
-        [_runningModeCell.segmentControl setFrame:newFrame];
+        _runningModeCell.switcherLabel.text = NSLocalizedString(@"Server Mode", nil);
+        [_runningModeCell.switcher addTarget:self action:@selector(_onRunningModeChanged) forControlEvents:UIControlEventValueChanged];
         
-        BOOL flag = [_userDefaults isServerMode];
-        if (flag)
-        {
-            [_runningModeCell.segmentControl setSelectedSegmentIndex:SEGMENT_INDEX_MODE_SERVER];
-        }
-        else
-        {
-            [_runningModeCell.segmentControl setSelectedSegmentIndex:SEGMENT_INDEX_MODE_STANDALONE];
-        }
-        [_runningModeCell.segmentControl setEnabled:NO];
+        [self _refreshRunningModeCell];
+        
+        [_runningModeCell.switcher setEnabled:NO];
     }
 }
 
