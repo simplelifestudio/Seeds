@@ -11,3 +11,11 @@
 Android/Seeds/bin/*
 
 iOS/Seeds/Seeds.xcodeproj/project.xcworkspace/xcuserdata
+
+*.xcscheme
+
+*.xcuserstate
+
+*.plist
+
+*.xcuserstate
