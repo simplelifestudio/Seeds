@@ -16,7 +16,6 @@ import java.util.HashMap;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
-import com.simplelife.seeds.android.utils.actionbar.ActionBar;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage.SeedsStatusByDate;
@@ -79,10 +78,7 @@ public class SeedsDateListActivity extends Activity {
 		mLogger.info("Working on starting the DateListActivity!"); 
 		
 		// Start the DateList View
-		setTheme(android.R.style.Theme_Light_NoTitleBar);
 		setContentView(R.layout.activity_seeds_datelist);
-		final ActionBar actionBar = (ActionBar) findViewById(R.id.actionbar);
-		actionBar.setTitle("Home");
 		
 		// Locate those buttons
 		myBefYesterdayBtn = (Button) findViewById(R.id.befyesterday_btn);

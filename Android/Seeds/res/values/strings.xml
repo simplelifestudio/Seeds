@@ -42,8 +42,9 @@
     <string name="seeds_unfav_done">取消收藏成功</string>
     <string name="seeds_fav_done">收藏成功</string>
     <string name="actionbar_activity_not_found">Failed to open intent...</string>
-    <string name="seeds_menu_save">保存</string>
-    
+
+    <string name="seeds_details_to_grid">Grid Mode</string> 
+    <string name="seeds_details_addto_fav">Add to Fav List</string>    
     
     <!-- Below parameters come from the gridview open source tool Bitmapfun -->
     <string name="clear_cache_menu">Clear Caches</string>

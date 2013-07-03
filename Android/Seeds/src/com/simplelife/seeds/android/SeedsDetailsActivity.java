@@ -309,6 +309,7 @@ public class SeedsDetailsActivity extends Activity{
 						{
 							mDBAdapter.updateSeedEntryFav(mSeedLocalId,true);
 							tFavTag = true;
+							
 							tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Done!", true, false);							
 						}
 	            		
@@ -396,6 +397,54 @@ public class SeedsDetailsActivity extends Activity{
         }
     }; 
     
+    private void addOrCancelFromFavList(){
+    	
+		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
+		{
+			tFavTag = true;
+			tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Please wait...", true, false);
+		}
+		else
+		{
+			tFavTag = false;
+			tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Cancelling Favorites...", "Please wait...", true, false);
+		}
+		
+		// Set up a thread to operate with the database
+		new Thread() {				
+			@Override
+			public void run() {
+				try {
+					// Get the DB adapter instance
+					SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();
+					
+					// Set the favorite key 
+					if (tFavTag)
+					{
+						mDBAdapter.updateSeedEntryFav(mSeedLocalId,false);
+						tFavTag = false;
+						tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Cancelling Favorites...", "Done!", true, false);
+					    //TODO
+						// Remove the entry if this seed is out of date
+					}
+					else
+					{
+						mDBAdapter.updateSeedEntryFav(mSeedLocalId,true);
+						tFavTag = true;
+						
+						tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Done!", true, false);							
+					}            		
+					
+				} catch (Exception e) {
+					// Show the error message here
+				}
+
+				Message t_MsgListData = new Message();
+				t_MsgListData.what = 1;
+				handler.sendMessage(t_MsgListData);					
+			}
+		}.start();
+	}
     
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -406,11 +455,23 @@ public class SeedsDetailsActivity extends Activity{
 	
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch (item.getItemId()) {        
             case android.R.id.home:
             {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
+            }
+            case R.id.menu_to_grid:
+            {
+    		    Intent intent = new Intent(SeedsDetailsActivity.this, ImageGridActivity.class);
+    		    intent.putExtra("seedObj", mSeedsEntity);
+    		    startActivity(intent);
+    		    return true;
+            }
+            case R.id.menu_addto_fav:
+            {
+            	addOrCancelFromFavList();
+    		    return true;
             }
             case R.id.download_seed:
             {

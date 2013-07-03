@@ -10,6 +10,16 @@
  
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     
+    <item android:id="@+id/menu_to_grid"
+          android:icon="@drawable/collections_view_as_grid"
+          android:showAsAction="ifRoom"
+          android:title="@string/seeds_details_to_grid"/>
+    
+    <item android:id="@+id/menu_addto_fav"
+          android:icon="@drawable/rating_important"
+          android:showAsAction="ifRoom"
+          android:title="@string/seeds_details_addto_fav"/>
+           
     <item
         android:id="@+id/download_seed"
         android:icon="@android:drawable/ic_menu_delete"

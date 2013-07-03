@@ -10,69 +10,48 @@
         android:layout_width="match_parent"
         android:layout_height="40dip"
         android:background="#dbdbdc" >
-        
-        <!-- LinearLayout 
-	        android:gravity="center"
-		    android:layout_gravity="center_vertical" 
-		    android:orientation="vertical"
-		    android:layout_width="wrap_content" 
-		    android:layout_height="wrap_content" 
-		    android:layout_centerVertical="true"
-		    android:layout_marginLeft="5dip">
-		
-		    	<TextView android:textSize="13.5sp" 
-					android:gravity="center" 
-					android:paddingLeft="100dp" 
-					android:clickable="true" 
-					android:text="@string/seeds_details_top" 
-					android:layout_width="71dp"
-					android:textColor="@android:color/black"
-					android:layout_height="33dp" />
-		
-		</LinearLayout-->
 
-    	<Button
-        	android:id="@+id/favorite_btn"
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:layout_alignParentLeft="true"
-        	android:layout_marginLeft="2dip"
-        	android:layout_centerVertical="true"
-        	android:gravity="left"
-        	android:text="@string/seeds_Favorite" />
-    	
-	    <ImageView
-			android:id="@+id/seeds_download"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentRight="true"
-        	android:layout_marginRight="35dip"
-        	android:layout_centerVertical="true"
-        	android:gravity="right"			
-			android:src="@drawable/download" />
-    		
-	    <ImageView
-			android:id="@+id/gotoGrid"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentRight="true"
-        	android:layout_marginRight="5dip"
-        	android:layout_centerVertical="true"
-        	android:gravity="right"			
-			android:src="@drawable/grid" />
+        <Button
+            android:id="@+id/favorite_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="2dip"
+            android:gravity="left"
+            android:text="@string/seeds_Favorite" />
 
-	    <TextView
-	        android:id="@+id/Seeds_Title"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_centerHorizontal="true"
-	        android:layout_centerVertical="true"
-	        android:gravity="center|fill"
-	        android:text="@string/seeds_details_top"
-	        android:textColor="@android:color/black"
-	        android:textSize="20sp" />
+        <ImageView
+            android:id="@+id/seeds_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="35dip"
+            android:gravity="right"
+            android:src="@drawable/download" />
 
-	</RelativeLayout>
+        <ImageView
+            android:id="@+id/gotoGrid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dip"
+            android:gravity="right"
+            android:src="@drawable/grid" />
+
+        <TextView
+            android:id="@+id/Seeds_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center|fill"
+            android:text="@string/seeds_details_top"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linearlayout_news_main"
@@ -82,117 +61,113 @@
         android:layout_marginTop="40dp"
         android:orientation="vertical" >
 
-		<LinearLayout 
-	    	android:id="@+id/linearlayout_images_slide"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-		    android:layout_gravity="center_horizontal"
-			android:orientation="vertical">
-	        
-	    	<!-- RelativeLayout
+        <LinearLayout
+            android:id="@+id/linearlayout_images_slide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <!--
+                 RelativeLayout
 			    android:id="@+id/relativelayout_image_slide"
 		    	android:layout_width="wrap_content"
 		    	android:layout_height="wrap_content"
 		    	android:orientation="vertical"
-		    	android:focusable="true" -->
-	       
-		    	<android.support.v4.view.ViewPager
-		    	    android:id="@+id/image_slide_page"
-		    	    android:layout_width="wrap_content"
-		    	    android:layout_height="320dip"
-		    	    android:layout_gravity="center_horizontal"
-		    	    android:focusable="true"
-		    	    android:gravity="center"
-		    	     />
+		    	android:focusable="true"
+            -->
 
-		    	<!--  android:layout_height="320dip"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/image_slide_page"
+                android:layout_width="wrap_content"
+                android:layout_height="320dip"
+                android:layout_gravity="center_horizontal"
+                android:focusable="true"
+                android:gravity="center" />
+
+            <!--
+                android:layout_height="320dip"
 		    	android:layout_gravity="center_horizontal"
-		    	    android:scaleType="centerInside"-->
-	    	
-	    	<!-- /RelativeLayout-->
-	    	
-		</LinearLayout>
-	    	
-		<LinearLayout 
-	    	android:layout_height="match_parent"
-	    	android:layout_width="fill_parent"
-	    	android:orientation="vertical">
-	            
-	    	<LinearLayout
-	        	android:layout_width="match_parent"
-	        	android:layout_height="35dp"
-				android:orientation="vertical"
-				android:background="@android:color/white">
-		       
-	        	<LinearLayout
-	        	    android:id="@+id/layout_circle_images"
-	        	    android:layout_width="match_parent"
-	        	    android:layout_height="15dp"
-	        	    android:layout_marginLeft="15dp"
-	        	    android:layout_marginRight="30dp"
-	        	    android:layout_marginTop="10dp"
-	        	    android:gravity="center" >
-	                    
-	        	</LinearLayout>
-	        	
-	        	<LinearLayout
-	        	    android:id="@+id/linearLayout_divider"
-	        	    android:layout_width="fill_parent"
-	        	    android:layout_height="wrap_content"
-	        	    android:background="@drawable/divider_horizontal_line"
-	        	    android:orientation="vertical" >
+		    	    android:scaleType="centerInside"
+            -->
 
-				</LinearLayout>
-			    	
-	    	</LinearLayout>
-	        	
-	    	<com.simplelife.seeds.android.utils.control.SeedsScrollViewExtend
-            	android:layout_width="match_parent"
-            	android:layout_height="fill_parent">
-	        	<LinearLayout
-		        	android:layout_width="match_parent"
-			    	android:layout_height="fill_parent"
-			    	android:orientation="vertical"
-			    	android:background="@android:color/white">
-	            	
-        	    	<TextView
-        	    	    android:id="@+id/seed_info_name"
-        	    	    android:layout_width="fill_parent"
-        	    	    android:layout_height="wrap_content"
-        	    	    android:layout_gravity="center_vertical|center_horizontal"
-        	    	    android:text="Put the seed info here!!"
-        	    	    android:textColor="@android:color/black"
-        	    	    android:textSize="15sp" />
-        	    	<TextView
-        	    	    android:id="@+id/seed_info_format"
-        	    	    android:layout_width="fill_parent"
-        	    	    android:layout_height="wrap_content"
-        	    	    android:layout_gravity="center_vertical|center_horizontal"
-        	    	    android:text="Put the seed info here!!"
-        	    	    android:textColor="@android:color/black"
-        	    	    android:textSize="15sp" />
-        	    	<TextView
-        	    	    android:id="@+id/seed_info_size"
-        	    	    android:layout_width="fill_parent"
-        	    	    android:layout_height="wrap_content"
-        	    	    android:layout_gravity="center_vertical|center_horizontal"
-        	    	    android:text="Put the seed info here!!"
-        	    	    android:textColor="@android:color/black"
-        	    	    android:textSize="15sp" />
-        	    	<TextView
-        	    	    android:id="@+id/seed_info_link"
-        	    	    android:layout_width="fill_parent"
-        	    	    android:layout_height="wrap_content"
-        	    	    android:layout_gravity="center_vertical|center_horizontal"
-        	    	    android:text="Put the seed info here!!"
-        	    	    android:textColor="@android:color/black"
-        	    	    android:textSize="15sp" />
-        				                
-	        	</LinearLayout>
 
-	    	</com.simplelife.seeds.android.utils.control.SeedsScrollViewExtend>	        	
-	        
-		</LinearLayout>
+            <!-- /RelativeLayout -->
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/layout_circle_images"
+                android:layout_width="fill_parent"
+                android:layout_height="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center" >
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout_divider"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/divider_horizontal_line"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+            <com.simplelife.seeds.android.utils.control.SeedsScrollViewExtend
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@android:color/white"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/seed_info_name"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:text="Put the seed info here!!"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/seed_info_format"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:text="Put the seed info here!!"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/seed_info_size"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:text="Put the seed info here!!"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/seed_info_link"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal"
+                        android:text="Put the seed info here!!"
+                        android:textColor="@android:color/black"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </com.simplelife.seeds.android.utils.control.SeedsScrollViewExtend>
+        </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>
