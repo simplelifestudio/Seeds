@@ -3,75 +3,85 @@
 <script lang="JavaScript">
 
 	// Business Codes
-	var DEFAULT_SERVER_ADDRESS = "http://106.187.38.52/seeds/seedService";
-	var DEFAULT_REQUEST_MESSAGE_ID = "AlohaRequest";
-	var DEFAULT_REQUEST_MESSAGE_BODY = "Hello Seeds Server!";
+	var DEFAULT_SERVER_ADDRESS = "http://106.187.38.78/seeds/seedService";
+	var DEFAULT_REQUEST_MESSAGE = "{\"id\":\"AlohaResponse\",\"body\":{\"content\":\"Hello Seeds Server!\"}}";
 
+	var DEFAULT_TOOL_STATUS = "Normal";
+	var DEFAULT_TEST_STATUS = "Normal";
+
+	var ID_TEST_STATUS = "testStatus";
+	var ID_TOOL_STATUS = "toolStatus";
+	
 	var ID_SERVER_ADDRESS = "serverAddress";
-	var ID_REQUEST_MESSAGE_ID = "requestMessageId";
-	var ID_REQUEST_MESSAGE_BODY = "requestMessageBody";
-	var ID_RESPONSE_MESSAGE_ID = "responseMessageId";
-	var ID_RESPONSE_MESSAGE_BODY = "responseMessageBody";
-
-	function Message()
-	{
-		var id;
-		var body;
-	}
+	var ID_REQUEST_MESSAGE = "requestMessage";
+	var ID_RESPONSE_MESSAGE = "responseMessage";
 
 	function init()
 	{
-		var eServerAddress = document.getElementById(ID_SERVER_ADDRESS); 
+/* 	    alert("init()"); */
 
-		var eRequestMessageId = document.getElementById(ID_REQUEST_MESSAGE_ID);
-		var eRequestMessageBody = document.getElementById(ID_REQUEST_MESSAGE_BODY);		
+		try
+		{
+			var eToolStatus = document.getElementById(ID_TOOL_STATUS);
+			eToolStatus.value = DEFAULT_TOOL_STATUS;
 		
-		eServerAddress.value = DEFAULT_SERVER_ADDRESS;
-		eRequestMessageId.value = DEFAULT_REQUEST_MESSAGE_ID;
-		eRequestMessageBody.value = DEFAULT_REQUEST_MESSAGE_BODY;
+			var eTestStatus = document.getElementById(ID_TEST_STATUS);
+			eTestStatus.value = DEFAULT_TEST_STATUS;
+		
+			var eServerAddress = document.getElementById(ID_SERVER_ADDRESS); 
+			eServerAddress.value = DEFAULT_SERVER_ADDRESS;
+		
+			var eRequestMessage = document.getElementById(ID_REQUEST_MESSAGE);
+			eRequestMessage.value = DEFAULT_REQUEST_MESSAGE;			
+		}
+		catch(exception)
+		{
+			eToolStatus.value = exception;
+		}
 	}
 	
 	function test()
 	{
-		clearResponseMessageFields();
-	
-		var eRequestMessageId = document.getElementById(ID_REQUEST_MESSAGE_ID);
-		var eRequestMessageBody = document.getElementById(ID_REQUEST_MESSAGE_BODY);
+/* 		alert("test()");	 */
+
+		try
+		{
+			var eTestStatus = document.getElementById(ID_TEST_STATUS);
+			eTestStatus.value = DEFAULT_TEST_STATUS;		
 		
-		var oRequestMessage = new Message();
-		oRequestMessage.id = eRequestMessageId.value;
-		oRequestMessage.body = eRequestMessageBody.value;
-		sendMessage(oRequestMessage);
+			clearResponseMessageFields();
+	
+			var eRequestMessage = document.getElementById(ID_REQUEST_MESSAGE);
+			sendMessage(eRequestMessage.value);			
+		}
+		catch(exception)
+		{
+			eTestStatus.value = exception;
+		}
 	}
 	
 	function clearResponseMessageFields()
 	{
-		var eResponseMessageId = document.getElementById(ID_RESPONSE_MESSAGE_ID);
-		var eResponseMessageBody = document.getElementById(ID_RESPONSE_MESSAGE_BODY);		
-		
-		eResponseMessageId.value = null;
-		eResponseMessageBody.value = null;		
+/*     	alert("clearResponseMessageFields()");	 */
+
+		var eResponseMessage = document.getElementById(ID_RESPONSE_MESSAGE);	
+		eResponseMessage.value = null;		
 	}
 	
-	function callBack()
+	function processResponseMessage()
 	{
-		alert("callback");
-	
-		var oResponse = eval("(" + xmlhttp.responseText +")");
-		
-		alert(oResponse);
-		
-		var eResponseMessageId = document.getElementById(ID_RESPONSE_MESSAGE_ID);
-		var eResponseMessageBody = document.getElementById(ID_RESPONSE_MESSAGE_BODY);		
-		
-		eResponseMessageId.value = null;
-		eResponseMessageBody.value = oResponse;		
-	}
+/* 		alert("processResponseMessage()"); */
+
+		var eResponseMessage = document.getElementById(ID_RESPONSE_MESSAGE);		
+		eResponseMessage.value = xmlhttp.responseText;				
+	} 
 	
 	// Common Codes
 	var xmlhttp;
 	function CreateXMLHttpRequest()
    	{
+/*    	   alert("CreateXMLHttpRequest()");   	 */
+
        if (window.ActiveXObject)
        {
   		    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
@@ -82,49 +92,59 @@
        }
     }
     
-    function sendMessage(oRequestMessage)
+    function sendMessage(message)
     {
+/*        alert("sendMessage()");     */
        CreateXMLHttpRequest();
  
-       var eServerAddress = document.getElementById(ID_SERVER_ADDRESS); 
- 
-       xmlhttp.onreadystatechange = onReceivedResponseMessage;
-       xmlhttp.open("POST" , eServerAddress, true);
-       xmlhttp.setRequestHeader("Content-Length", oRequestMessage.length);
-       xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded;");  //用POST的时候一定要有这句
-       xmlhttp.send(oRequestMessage);
+       try
+       {        	
+            var eServerAddress = document.getElementById(ID_SERVER_ADDRESS);    
+                     
+        	xmlhttp.open("POST", eServerAddress.value, true);
+        	xmlhttp.onreadystatechange = handleStateChange;
+        	xmlhttp.setRequestHeader("Content-Type",  "application/x-www-form-urlencoded");    
+        	xmlhttp.send(message);  
+       }
+       catch(exception)
+       {
+        	alert("XMLHttp Fail: " + exception);
+       }
     }
     
-    function onReceivedResponseMessage()
+    function handleStateChange()
     {
-        if (xmlhttp.readyState == 4)
-        {
-            if(xmlhttp.status == 200)
-            {
-	            callback();
-            }
+/*     	alert("handleStateChange()"); */
+    
+        if (xmlhttp.readyState == 4 && (xmlhttp.status == 200 || xmlhttp.status == 0))
+        {          
+        	processResponseMessage();        
         }
     }    
+    
     
 </script>
 </header>
 <body onload="init()">
 	<p align="center"><b>JSON Message Test Tool</b></p>
-	<p align="center">Simplelife Studio</p>
-	<p align="center">0.1</p>
+	<p align="center">Simplelife Studio 2013</p>
+	<p align="center">Patrick Deng</p>
+	<p align="center">Version 0.1</p>
 	<p align="center"><button id="testButton" style="width:160px;height:80px" onclick="test()">Click to Test</button></p>	
 	<hr>
+	<p>
+	Tool Status: <input id="toolStatus" type="text" style="width:400px;" readonly="yes"/>	Test Status: <input id="testStatus" type="text" style="width:400px;" readonly="yes"/>
+	<p>
+	<hr>
+	<p>	
 	Server Address:<input type="text" id="serverAddress" style="width:500px;"/>
 	<p>
 	<hr>
-	Request Message ID: <input type="text" id="requestMessageId"/>
 	<p>
-	Request Message Body: <br><textarea id="requestMessageBody" cols="150" rows="20"></textarea>
+	Request Message: <br><textarea id="requestMessage" cols="150" rows="5"></textarea>
 	<hr>
 	<p>
-	Response Message ID: <input type="text" id="responseMessageId" readonly="yes"/>
-	<p>
-	Response Message Body: <br><textarea id="responseMessageBody" cols="150" rows="20" readonly="yes"></textarea>
+	Response Message: <br><textarea id="responseMessage" cols="150" rows="20" readonly="yes"></textarea>
 	<hr>
 </body>
 </html>
