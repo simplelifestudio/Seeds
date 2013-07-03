@@ -122,7 +122,7 @@ SINGLETON(CommunicationModule)
     MODULE_DELAY
     
 //    [_serverAgent seedsToCart:@[@"20"]];
-//    [_serverAgent aloha];
+    [_serverAgent aloha];
 }
 
 -(void)applicationWillResignActive:(UIApplication *)application
