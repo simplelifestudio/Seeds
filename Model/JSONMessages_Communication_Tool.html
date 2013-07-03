@@ -1,14 +1,19 @@
+<!DOCTYPE html>
 <html>
 <header>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
 <script lang="JavaScript">
 
 	// Business Codes
 	var DEFAULT_SERVER_ADDRESS = "http://106.187.38.78/seeds/seedService";
 	var DEFAULT_REQUEST_MESSAGE = "{\"id\":\"AlohaRequest\",\"body\":{\"content\":\"Hello Seeds Server!\"}}";
 
-	var DEFAULT_TOOL_STATUS = "Normal";
-	var DEFAULT_TEST_STATUS = "Normal";
-
+	var DEFAULT_TOOL_STATUS = "OK For Test";
+	var DEFAULT_TEST_STATUS = "Ready For Sending Request Message";
+	var TEST_STATUS_REQUESTMESSAGE_SENT = "Request Message Sent, Waiting For Response Message...";
+	var TEST_STATUS_RESPONSEMESSAGE_RECEIVED = "Response Message Received";	
+	
 	var ID_TEST_STATUS = "testStatus";
 	var ID_TOOL_STATUS = "toolStatus";
 	
@@ -79,7 +84,7 @@
 /* 		alert("processResponseMessage()"); */
 
 		var eResponseMessage = document.getElementById(ID_RESPONSE_MESSAGE);		
-		eResponseMessage.value = xmlhttp.responseText;				
+		eResponseMessage.value = xmlhttp.responseText;			
 	} 
 	
 	// Common Codes
@@ -103,19 +108,16 @@
 /*        alert("sendMessage()");     */
        CreateXMLHttpRequest();
  
-       try
-       {        	
-            var eServerAddress = document.getElementById(ID_SERVER_ADDRESS);    
+       var eServerAddress = document.getElementById(ID_SERVER_ADDRESS);    
                      
-        	xmlhttp.open("POST", eServerAddress.value, true);
-        	xmlhttp.onreadystatechange = handleStateChange;
-        	xmlhttp.setRequestHeader("Content-Type",  "application/x-www-form-urlencoded");    
-        	xmlhttp.send(message);  
-       }
-       catch(exception)
-       {
-        	alert("XMLHttp Fail: " + exception);
-       }
+       xmlhttp.open("POST", eServerAddress.value, true);
+       xmlhttp.onreadystatechange = handleStateChange;
+       xmlhttp.setRequestHeader("Content-Type",  "application/json");    
+       xmlhttp.setRequestHeader("charset", "UTF-8");
+       xmlhttp.send(message);  
+        	
+       var eTestStatus = document.getElementById(ID_TEST_STATUS);
+       eTestStatus.value = TEST_STATUS_REQUESTMESSAGE_SENT;        	
     }
     
     function handleStateChange()
@@ -124,12 +126,15 @@
     
         if (xmlhttp.readyState == 4 && (xmlhttp.status == 200 || xmlhttp.status == 0))
         {          
+        	var eTestStatus = document.getElementById(ID_TEST_STATUS);
+        	eTestStatus.value = TEST_STATUS_RESPONSEMESSAGE_RECEIVED;           
         	processResponseMessage();        
         }
     }    
     
     
 </script>
+
 </header>
 <body onload="init()">
 	<p align="center"><b>JSON Message Test Tool</b></p>
@@ -147,10 +152,10 @@
 	<p>
 	<hr>
 	<p>
-	Request Message: <br><textarea id="requestMessage" cols="150" rows="5"></textarea>
+	Request Message: <br><textarea id="requestMessage" cols="150" rows="20"></textarea>
 	<hr>
 	<p>
-	Response Message: <br><textarea id="responseMessage" cols="150" rows="20" readonly="yes"></textarea>
+	Response Message: <br><textarea id="responseMessage" cols="150" rows="50" readonly="yes"></textarea>
 	<hr>
 </body>
 </html>
