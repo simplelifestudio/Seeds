@@ -49,7 +49,7 @@
 			var eTestStatus = document.getElementById(ID_TEST_STATUS);
 			eTestStatus.value = DEFAULT_TEST_STATUS;		
 		
-			clearResponseMessageFields();
+			resetToolFields();
 	
 			var eRequestMessage = document.getElementById(ID_REQUEST_MESSAGE);
 			sendMessage(eRequestMessage.value);			
@@ -60,9 +60,15 @@
 		}
 	}
 	
-	function clearResponseMessageFields()
+	function resetToolFields()
 	{
-/*     	alert("clearResponseMessageFields()");	 */
+/*     	alert("resetToolFields()");	 */
+
+		var eToolStatus = document.getElementById(ID_TOOL_STATUS);
+		eToolStatus.value = DEFAULT_TOOL_STATUS;
+		
+		var eTestStatus = document.getElementById(ID_TEST_STATUS);
+		eTestStatus.value = DEFAULT_TEST_STATUS;
 
 		var eResponseMessage = document.getElementById(ID_RESPONSE_MESSAGE);	
 		eResponseMessage.value = null;		
