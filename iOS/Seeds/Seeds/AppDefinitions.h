@@ -32,8 +32,8 @@
 // Module: Communication
 #define RACHABILITY_HOST @"www.apple.com"
 
-#define JSONMESSAGE_KEY_COMMAND @"command"
-#define JSONMESSAGE_KEY_PARAMLIST @"paramList"
+#define JSONMESSAGE_KEY_COMMAND @"id"
+#define JSONMESSAGE_KEY_PARAMLIST @"body"
 #define JSONMESSAGE_KEY_DATELIST @"datelist"
 
 #define JSONMESSAGE_VAL_NOUPDATE @"NO_UPDATE";
@@ -51,7 +51,7 @@
 #define JSONMESSAGE_COMMAND_EXTERNALSEEDSTOCARTREQUEST @"ExternalSeedsToCartRequest"
 #define JSONMESSAGE_COMMAND_EXTERNALSEEDSTOCARTRESPONSE @"ExternalSeedsToCartResponse"
 
-#define BASEURL_SEEDSSERVER @"http://106.187.38.52"
+#define BASEURL_SEEDSSERVER @"http://106.187.38.78"
 #define PATH_MESSAGELISTENER @"/seeds/seedService"
 
 #define BASEURL_TORRENT @"http://www.maxp2p.com/"
