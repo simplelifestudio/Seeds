@@ -11,16 +11,24 @@
         <property name="connection.url">jdbc:mysql://127.0.0.1:3306/seeds?useUnicode=true&amp;characterEncoding=UTF-8</property>
         <property name="connection.username">root</property>
         <property name="connection.password">Simplelife123</property>
-
-        <!-- JDBC connection pool (use the built-in) -->
-        <!--property name="connection.pool_size">1</property-->
         
+        
+        <!-- JDBC connection pool (use the built-in) -->
+        <!-- property name="connection.pool_size">1</property -->
+
+        <!-- c3p0 connection pool -->
         <property name="hibernate.connection.provider_class">org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider</property>
-        <property name="hibernate.c3p0.min_size">5</property>  
-        <property name="hibernate.c3p0.max_size">20</property>  
-        <property name="hibernate.c3p0.timeout">1800</property>  
-        <property name="hibernate.c3p0.max_statements">50</property>  
-        <property name="hibernate.c3p0.testConnectionOnCheckout">true</property>
+        <property name="hibernate.c3p0.min_size">5</property>
+        <property name="hibernate.c3p0.max_size">20</property>
+        <property name="hibernate.c3p0.max_statements">50</property>
+        <property name="hibernate.c3p0.timeout">1800</property>
+        <property name="hibernate.c3p0.idle_test_period">120</property>
+        <property name="hibernate.c3p0.acquire_increment">2</property>
+         
+        <!--property name="hibernate.c3p0.validate">false</property-->
+        <!--property name="hibernate.c3p0.idleConnectionTestPeriod ">18000</property-->
+        <!--property name="hibernate.c3p0.maxIdleTime">25000</property-->
+        <!--property name="hibernate.c3p0.testConnectionOnCheckout">true</property-->
 
         <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -35,17 +43,17 @@
         <property name="show_sql">false</property>
         <property name="format_sql">false</property>
         <property name="use_sql_comments">false</property>
-        
+
         <!--auto connect -->
         <property name="connection.autoReconnect">true</property>
-        <property name="connection.autoReconnectForPools">true</property> 
-        <property name="connection.is-connection-validation-required">true</property> 
+        <property name="connection.autoReconnectForPools">true</property>
+        <property name="connection.is-connection-validation-required">true</property>
 
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
 
         <mapping resource="com/simplelife/seeds/server/db/Seed.hbm.xml"/>
-        <mapping resource="com/simplelife/seeds/server/db/PreviewPic.hbm.xml"/>
+        <mapping resource="com/simplelife/seeds/server/db/SeedPicture.hbm.xml"/>
         <mapping resource="com/simplelife/seeds/server/db/SeedCaptureLog.hbm.xml"/>
         <mapping resource="com/simplelife/seeds/server/db/OperationLog.hbm.xml"/>
     </session-factory>

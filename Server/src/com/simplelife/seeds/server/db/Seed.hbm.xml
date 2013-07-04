@@ -21,9 +21,9 @@
         <property name="mosaic" column="mosaic"/>
         <property name="memo" column="memo"/>
         
-        <set name="pictures" table="PreviewPic" cascade="all">
+        <set name="pictures" table="SeedPicture" cascade="all">
         	<key column="seedId" not-null="true" />
-        	<one-to-many class="PreviewPic"/>
+        	<one-to-many class="SeedPicture"/>
         </set>
     </class>
 
