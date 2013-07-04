@@ -25,11 +25,14 @@ import org.htmlparser.tags.LinkTag;
 import org.htmlparser.util.NodeList;
 
 import com.simplelife.seeds.server.db.SeedCaptureLog;
+import com.simplelife.seeds.server.util.DBExistResult;
 import com.simplelife.seeds.server.util.DaoWrapper;
 import com.simplelife.seeds.server.util.DateUtil;
 import com.simplelife.seeds.server.util.HttpUtil;
 import com.simplelife.seeds.server.util.LogUtil;
 import com.simplelife.seeds.server.util.OperationLogUtil;
+import com.simplelife.seeds.server.util.SqlUtil;
+import com.simplelife.seeds.server.util.TableName;
 
 
 public class HtmlParser implements ISourceParser {
@@ -234,15 +237,16 @@ public class HtmlParser implements ISourceParser {
 	 */
 	public void parseSeedDetails(String htmlLink, String date)
 	{
-		String sql = "select * from SeedCaptureLog where publishDate ='" + date + "' and status >= 2 ";
-		if (DaoWrapper.exists(sql))
+		String condition = SqlUtil.getPublishDateCondition(date) + " and status >= 2 ";
+		String sql = SqlUtil.getSelectCaptureLogSql(condition);
+		if (DaoWrapper.exists(sql) == DBExistResult.existent)
 		{
 			LogUtil.info("Seeds of " + date + " have been captured.");
 			return;
 		}
 		
-		sql = "select * from SeedCaptureLog where publishDate ='" + date + "'";
-		if (!DaoWrapper.exists(sql))
+		sql = SqlUtil.getSelectCaptureLogSql(SqlUtil.getPublishDateCondition(date));
+		if (DaoWrapper.exists(sql) != DBExistResult.existent)
 		{
 			// First try of this date
 			SeedCaptureLog capLog = new SeedCaptureLog();
@@ -263,6 +267,7 @@ public class HtmlParser implements ISourceParser {
 			//DaoWrapper.save(capLog);
 			
 			OperationLogUtil.captureTaskStarted(htmlLink);
+			deleteExistentSeeds(date);
 			
 			url = new URL(htmlLink);
 			HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
@@ -285,15 +290,25 @@ public class HtmlParser implements ISourceParser {
 		}
 	}
 	
+	private void deleteExistentSeeds(String date)
+	{
+	    String sql = "delete from "+ TableName.SeedPicture +" where " + SqlUtil.seedId 
+	    		+ " in (select " + SqlUtil.seedId +" from " + TableName.Seed +" where " + SqlUtil.getPublishDateCondition(date) + ")";
+        DaoWrapper.executeSql(sql);
+        
+        sql = "delete from " + TableName.Seed + " where " + SqlUtil.getPublishDateCondition(date);
+        DaoWrapper.executeSql(sql);
+	}
+	
 	private void updateCaptureLog(String date)
 	{
-	    String sql = "update SeedCaptureLog set status = 2 where publishDate ='" + date + "'";
+	    String sql = "update "+ TableName.SeedCaptureLog +" set status = 2 where " + SqlUtil.getPublishDateCondition(date);
         DaoWrapper.executeSql(sql);
 	}
 	
 	private void deleteCaptureLog(String date)
 	{
-		String sql = "delete from SeedCaptureLog where publishDate ='" + date + "'";
+		String sql = "delete from "+ TableName.SeedCaptureLog +" where " + SqlUtil.getPublishDateCondition(date);
 		DaoWrapper.executeSql(sql);
 	}
 }
