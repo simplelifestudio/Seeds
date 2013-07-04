@@ -18,12 +18,13 @@ import org.htmlparser.Text;
 import org.htmlparser.visitors.NodeVisitor;
 import com.simplelife.seeds.server.db.Seed;
 import com.simplelife.seeds.server.util.DaoWrapper;
+import com.simplelife.seeds.server.util.DateUtil;
 import com.simplelife.seeds.server.util.LogUtil;
 
 public class HtmlNodeVisitor extends NodeVisitor {
 	private AnalyzeStatus _analyzeStatus = AnalyzeStatus.Init;
 	private Seed seed;
-	private String _publishDate;
+	private String publishDate;
 	
 	private enum AnalyzeStatus
 	{
@@ -52,20 +53,6 @@ public class HtmlNodeVisitor extends NodeVisitor {
 	private String getRealSeedLink(String seedPageLink)
 	{
 		return seedPageLink;
-		// TODO: update link of torrent page to link of torrent
-		/*
-		int index = seedPageLink.lastIndexOf("=");
-		if (index > 0)
-		{
-			try {
-                URL url = new URL(seedPageLink);
-              //url.
-    			String charCode = seedPageLink.substring(index);
-            } catch (MalformedURLException e) {
-                LogUtil.severe("Invalid URL link found");
-            }
-		}
-		*/
 	}
 	
     public void visitStringNode (Text string)    {
@@ -86,6 +73,7 @@ public class HtmlNodeVisitor extends NodeVisitor {
     		formatSeedForSave(seed);
 			DaoWrapper.save(seed);
 			LogUtil.info("Saved seed to DB: \n" + seed.toString());
+			_analyzeStatus = AnalyzeStatus.Init;
 			return;
     	}
     		
@@ -97,14 +85,11 @@ public class HtmlNodeVisitor extends NodeVisitor {
     		seed.setType("AV");
     		seed.setSource("ίδίδ°®");
     		
-    		if (_publishDate == null || _publishDate.length() == 0)
+    		if (publishDate == null || publishDate.length() == 0)
     		{
-    			String fmt = "yyyy-MM-dd";
-    			SimpleDateFormat sdf = new SimpleDateFormat(fmt);
-    			sdf.format(Calendar.getInstance().getTime());
-    			_publishDate = sdf.format(Calendar.getInstance().getTime());
+    			publishDate = DateUtil.getToday();
     		}
-    		seed.setPublishDate(_publishDate);
+    		seed.setPublishDate(publishDate);
     	}
     	else if(isFilmFormat(nodeText))
     	{
@@ -137,7 +122,7 @@ public class HtmlNodeVisitor extends NodeVisitor {
     	//_logger.log(Level.INFO,"beginParsing");
     }
     public void visitEndTag (Tag tag){
-    	_analyzeStatus = AnalyzeStatus.Init;
+    	//_analyzeStatus = AnalyzeStatus.Init;
     	//_logger.log(Level.INFO,"visitEndTag:"+tag.getText());
     }
     public void finishedParsing () {
@@ -396,17 +381,17 @@ public class HtmlNodeVisitor extends NodeVisitor {
     }
 
 	/**
-	 * @return the _publishDate
+	 * @return the publishDate
 	 */
 	public String getpublishDate() {
-		return _publishDate;
+		return publishDate;
 	}
 
 	/**
-	 * @param _publishDate the _publishDate to set
+	 * @param publishDate the publishDate to set
 	 */
 	public void setpublishDate(String publishDate) {
-		this._publishDate = publishDate;
+		this.publishDate = publishDate;
 	}
 
 }
