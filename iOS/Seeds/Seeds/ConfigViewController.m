@@ -480,9 +480,14 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _refreshClearImagesCacheCell
 {
-    unsigned long long bytesCacheSize = [_pictureAgent diskCacheImagesSize];
-    NSString* cacheSizeStr = [CBMathUtils readableStringFromBytesSize:bytesCacheSize];
-    [_clearImagesCacheCell.button setTitle:cacheSizeStr forState:UIControlStateNormal];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+        unsigned long long bytesCacheSize = [_pictureAgent diskCacheImagesSize];
+        NSString* cacheSizeStr = [CBMathUtils readableStringFromBytesSize:bytesCacheSize];
+
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [_clearImagesCacheCell.button setTitle:cacheSizeStr forState:UIControlStateNormal];        
+        });
+    });
 }
 
 - (void) _clearFavoritesBothInDatabaseAndDownloadTorrentsFolder
