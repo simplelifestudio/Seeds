@@ -11,6 +11,7 @@ package com.simplelife.seeds.android;
 
 import java.util.ArrayList;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -29,11 +30,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.simplelife.seeds.android.R.menu;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
 import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadList;
@@ -84,6 +87,9 @@ public class SeedsDetailsActivity extends Activity{
 	// SeedsEntity for internal use
 	private SeedsEntity mSeedsEntity;
 	
+	// The menuItem fav
+	private MenuItem mFavItem = null;
+	
 	// Favorite tag
 	private boolean tFavTag = false;
 	
@@ -104,6 +110,15 @@ public class SeedsDetailsActivity extends Activity{
 		// Initialization
 		initViews();
 		
+		getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
+		
+		// Check if this seed has already been saved to favorite
+		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
+		{
+			if(null != mFavItem)
+				mFavItem.setIcon(R.drawable.rating_bad);
+		}
+		
 		// Retrieve the favorite button
 		myFavoriteBtn = (Button) findViewById(R.id.favorite_btn);
 		
@@ -122,7 +137,11 @@ public class SeedsDetailsActivity extends Activity{
 		
 		// Retrieve the download seeds option
 		mDownloadView = (ImageView) findViewById(R.id.seeds_download);
-		mDownloadView.setOnClickListener(myDownloadViewListener);		
+		mDownloadView.setOnClickListener(myDownloadViewListener);
+		
+		// Set a title for this page
+		ActionBar tActionBar = getActionBar();
+		tActionBar.setTitle(R.string.seeds_details_top);
 	}	
 	
 	private void initViews(){
@@ -372,6 +391,8 @@ public class SeedsDetailsActivity extends Activity{
             		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
             		{
             			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
+            			if (null != mFavItem)
+            				mFavItem.setIcon(R.drawable.rating_bad);
             			
                 		Toast toast = Toast.makeText(getApplicationContext(),
                 				R.string.seeds_fav_done, Toast.LENGTH_SHORT);
@@ -381,14 +402,14 @@ public class SeedsDetailsActivity extends Activity{
             		else
             		{
             			myFavoriteBtn.setText(R.string.seeds_Favorite);
+            			if (null != mFavItem)
+            				mFavItem.setIcon(R.drawable.rating_good);
             			
                 		Toast toast = Toast.makeText(getApplicationContext(),
                 				R.string.seeds_unfav_done, Toast.LENGTH_SHORT);
                 	    toast.setGravity(Gravity.CENTER, 0, 0);
                 	    toast.show();
             		}
-            		//close the ProgressDialog
-                    tProgressDialog.dismiss(); 
 
                     break;
                 // Or try something here
@@ -397,17 +418,15 @@ public class SeedsDetailsActivity extends Activity{
         }
     }; 
     
-    private void addOrCancelFromFavList(){
+    private void addOrCancelFromFavList(MenuItem item){
     	
 		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
 		{
 			tFavTag = true;
-			tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Please wait...", true, false);
 		}
 		else
 		{
 			tFavTag = false;
-			tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Cancelling Favorites...", "Please wait...", true, false);
 		}
 		
 		// Set up a thread to operate with the database
@@ -470,7 +489,8 @@ public class SeedsDetailsActivity extends Activity{
             }
             case R.id.menu_addto_fav:
             {
-            	addOrCancelFromFavList();
+            	mFavItem = item;
+            	addOrCancelFromFavList(item);            	
     		    return true;
             }
             case R.id.download_seed:

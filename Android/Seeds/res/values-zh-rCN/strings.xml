@@ -51,5 +51,7 @@
     <string name="clear_cache_complete_toast">缓存已经清理</string>
     <string name="imageview_description">缩略图</string>
     <string name="no_network_connection_toast">无网络连接</string>
+    
+    <string name="seeds_http_title">HTTP服务器</string>
 
 </resources>

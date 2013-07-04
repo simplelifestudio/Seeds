@@ -16,7 +16,7 @@
           android:title="@string/seeds_details_to_grid"/>
     
     <item android:id="@+id/menu_addto_fav"
-          android:icon="@drawable/rating_important"
+          android:icon="@drawable/rating_good"
           android:showAsAction="ifRoom"
           android:title="@string/seeds_details_addto_fav"/>
            
