@@ -20,9 +20,9 @@ public class JsonCommandAlohaReq extends JsonCommandBase {
 	@Override
 	public void Execute(JSONObject jsonObj, PrintWriter out) {
 		
-		String res ="{\"command\": \"AlohaResponse\", \"paramList\": {\"content\":\"Hello Seeds App![";
-		res += DateUtil.getNowDate().toString();
-		res +="]\"}}";
+		String res ="{\n\"id\": \"AlohaResponse\",\n\"body\": \n{\n\"content\":\"Hello Seeds App! <";
+		res += DateUtil.getNow();
+		res +=">\"\n}\n}\n";
 		out.println(res);
 		LogUtil.info("Aloha response: \n" + res);
 	}

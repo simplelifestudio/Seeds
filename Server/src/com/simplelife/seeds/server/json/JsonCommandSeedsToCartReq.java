@@ -15,7 +15,12 @@ import java.util.List;
 
 import com.simplelife.seeds.server.util.DaoWrapper;
 import com.simplelife.seeds.server.util.EncryptUtil;
+import com.simplelife.seeds.server.util.ErrorCode;
+import com.simplelife.seeds.server.util.JsonKey;
 import com.simplelife.seeds.server.util.LogUtil;
+import com.simplelife.seeds.server.util.SqlUtil;
+import com.simplelife.seeds.server.util.TableName;
+import com.simplelife.seeds.server.util.DBExistResult;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -25,6 +30,9 @@ import net.sf.json.JSONObject;
  */
 public class JsonCommandSeedsToCartReq extends JsonCommandBase
 {
+	/**
+	 * Enum for saving result of adding seed to cart  
+	 */
     enum SeedToCartResult
     {
         succeed,
@@ -33,61 +41,64 @@ public class JsonCommandSeedsToCartReq extends JsonCommandBase
         failed
     }
     
-    private final static String jsonCommandKeyword = "command";
-    private final static String jsonParaListKeyword = "paramList";
-    private final static String jsonSeedIdListKeyword = "seedIdList";
-    private final static String jsonCartIdKeyword = "cartId";
-    private final static String jsonCommandSeedsToCartRes = "SeedsToCartResponse";
+    private String cartId;
 
     @Override
     public void Execute(JSONObject jsonObj, PrintWriter out)
     {
-        try {
-            LogUtil.info("Start to Execute JsonCommandSeedsRssReq");
-            String strParaList = jsonObj.getString(jsonParaListKeyword);
+    	super.Execute(jsonObj, out);
+    	
+        try 
+        {
+            LogUtil.info("Start to Execute SeedsToCartRequest");
+            String strParaList = jsonObj.getString(JsonKey.body);
             JSONObject paraObj = JSONObject.fromObject(strParaList);
-
-            if (paraObj == null) {
-                LogUtil.severe("Invalid SeedsUpdateStatusByDatesRequest command received: " + jsonObj.toString());
-                responseInvalidRequest(out, "");
+            
+            if (paraObj == null) 
+            {
+            	// Safe code, normally exception occurs if JsonKey.body can't be found or invalid
+                String err = "Invalid Json format, " + JsonKey.body +" can't be found: " + jsonObj.toString();
+                LogUtil.severe(err);
+                responseInvalidRequest(ErrorCode.IllegalMessageBody, err);
                 return;
             }
 
-            String cartId = paraObj.getString(jsonCartIdKeyword);
+            cartId = paraObj.getString(JsonKey.cartId);
             if (cartId == null || cartId.length() == 0)
             {
+            	// cartId is defined as empty, else will be catched by exception instead of here
                 cartId = EncryptUtil.getRamdomCartId();
+                LogUtil.info("Generated random cartId: " + cartId);
             }
             
-            JSONArray seedList = paraObj.getJSONArray(jsonSeedIdListKeyword);
-            if (seedList == null || seedList.size() == 0) {
-                LogUtil.severe("Invalid SeedsUpdateStatusByDatesRequest command received: " + jsonObj.toString());
-                responseInvalidRequest(out, cartId);
+            JSONArray seedList = paraObj.getJSONArray(JsonKey.seedIdList);
+            if (seedList == null || seedList.size() == 0) 
+            {
+                String err = "Invalid Json format, " + JsonKey.seedIdList +" can't be found: " + jsonObj.toString();
+                LogUtil.severe(err);
+                responseInvalidRequest(ErrorCode.IllegalMessageBody, err);
                 return;
             }
 
             responseNormalRequest(out, cartId, seedList);
-        } catch (Exception e) {
+        }
+        catch (Exception e) 
+        {
+        	responseInvalidRequest(ErrorCode.IllegalMessageBody, e.getMessage());
             LogUtil.printStackTrace(e);
         }
     }
 
-    private void responseInvalidRequest(PrintWriter out, String cartId)
-    {
-        StringBuilder strBuilder = new StringBuilder();
-        responseJsonHeader(strBuilder, cartId);
-
-        strBuilder.append("\"result\":\"Invalid Request\"\n");
-        strBuilder.append("}");
-
-        LogUtil.info(strBuilder.toString());
-        out.write(strBuilder.toString());
-    }
-
+    /**
+     * Generate response for valid request from client 
+     * @param out: output stream for client
+     * @param cartId: cart ID for client, it's given by client or generated randomly for first time 
+     * @param seedList: seed list to be added into cart
+     */
     private void responseNormalRequest(PrintWriter out, String cartId, JSONArray seedList)
     {
         StringBuilder strBuilder = new StringBuilder();
-        responseJsonHeader(strBuilder, cartId);
+        responseJsonHeader(strBuilder);
 
         String strSeedId;
         int size = seedList.size();
@@ -96,21 +107,27 @@ public class JsonCommandSeedsToCartReq extends JsonCommandBase
         List<String> failedList = new ArrayList<String>();
         SeedToCartResult result;
         
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++)
+        {
             strSeedId = seedList.getString(i);
             result = saveRssRequest(strSeedId, cartId, strBuilder);
-            
             if (result == SeedToCartResult.succeed || result == SeedToCartResult.duplicated)
             {
                 successList.add(strSeedId);
             }
+            else if  (result == SeedToCartResult.failed)
+            {
+                // TODO: response failure to client
+                failedList.add(strSeedId);
+            }
             else
             {
+                // TODO: response failure to client
                 failedList.add(strSeedId);
             }
         }
         
-        strBuilder.append("\"successSeedIdList:\":[\n");
+        strBuilder.append("\"" + JsonKey.successSeedIdList + ":\":\n[\n");
         for (int i = 0; i < successList.size()-1; i++)
         {
             strBuilder.append("\"");
@@ -120,13 +137,14 @@ public class JsonCommandSeedsToCartReq extends JsonCommandBase
         
         if (successList.size() >= 1)
         {
+        	// It doesn't need to add ',' for last item
             strBuilder.append("\"");
             strBuilder.append(successList.get(successList.size() - 1));
             strBuilder.append("\"\n");
         }
         strBuilder.append("],\n");
 
-        strBuilder.append("\"failedSeedIdList:\":[\n");
+        strBuilder.append("\"" + JsonKey.failedSeedIdList + ":\":\n[\n");
         for (int i = 0; i < failedList.size()-1; i++)
         {
             strBuilder.append("\"");
@@ -136,30 +154,31 @@ public class JsonCommandSeedsToCartReq extends JsonCommandBase
         
         if (failedList.size() >= 1)
         {
+        	// It doesn't need to add ',' for last item
             strBuilder.append("\"");
             strBuilder.append(failedList.get(failedList.size() - 1));
             strBuilder.append("\"\n");
         }
-        strBuilder.append("]\n");
-        strBuilder.append("}\n");
+        strBuilder.append("]\n}\n}\n");
         out.write(strBuilder.toString());
     }
 
-    private void responseJsonHeader(StringBuilder strBuilder, String cartId)
+    @Override
+    protected void responseJsonHeader(StringBuilder strBuilder)
     {
         strBuilder.append("{\n");
         strBuilder.append("\"");
-        strBuilder.append(jsonCommandKeyword);
+        strBuilder.append(JsonKey.id);
         strBuilder.append("\":\"");
-        strBuilder.append(jsonCommandSeedsToCartRes);
+        strBuilder.append(JsonKey.commandSeedsToCartResponse);
         strBuilder.append("\",\n");
 
         strBuilder.append("\"");
-        strBuilder.append(jsonParaListKeyword);
+        strBuilder.append(JsonKey.body);
         strBuilder.append("\":{\n");
         
         strBuilder.append("\"");
-        strBuilder.append(jsonCartIdKeyword);
+        strBuilder.append(JsonKey.cartId);
         strBuilder.append("\":\"");
         strBuilder.append(cartId);
         strBuilder.append("\"\n");
@@ -167,22 +186,33 @@ public class JsonCommandSeedsToCartReq extends JsonCommandBase
 
     private SeedToCartResult saveRssRequest(String seedId, String cartId, StringBuilder strBuilder)
     {
-        String sql = "select seedId from Seed where seedId = " + seedId;
-        if (!DaoWrapper.exists(sql)) {
+        String sql = "select " + SqlUtil.seedId + " from " + TableName.Seed + " where " + SqlUtil.seedId + " = " + seedId;
+        // TODO: return SeedToCartResult.failed if result is  errorOccurred
+        if (DaoWrapper.exists(sql) != DBExistResult.existent) {
             LogUtil.severe("Invalid seedId which can't be found in DB: " + seedId);
             return SeedToCartResult.invalid;
         }
 
-        sql = "select seedId from SeedSubscribe where userName = '" + cartId + "' and seedId = " + seedId;
-        if (DaoWrapper.exists(sql)) {
+        sql = "select " + SqlUtil.seedId + " from " + TableName.Cart + " where " + SqlUtil.cartId + " = '" + cartId + "' and " + SqlUtil.seedId +" = " + seedId;
+        DBExistResult result = DaoWrapper.exists(sql);
+        if (result == DBExistResult.existent) {
             LogUtil.warning("Duplicated request received, seed <" + seedId + "> has been subscribed by " + cartId);
             return SeedToCartResult.duplicated;
         }
+        else if (result == DBExistResult.errorOccurred)
+        {
+            LogUtil.info("Abnormal DB status, schedule next task tomorrow.");
+            return SeedToCartResult.failed;
+        }
 
-        sql = "Insert into SeedSubscribe (userName, seedId) " + "values ('" + cartId + "', " + seedId + ")";
-        if (DaoWrapper.executeSql(sql)) {
+        sql = "Insert into " + TableName.Cart +"("+ SqlUtil.cartId + ", "+ SqlUtil.seedId +") " + "values ('" + cartId + "', " + seedId + ")";
+        if (DaoWrapper.executeSql(sql))
+        {
+            LogUtil.info("Succeed to subscribe seed <" + seedId + "> for " + cartId);
             return SeedToCartResult.succeed;
-        } else {
+        }
+        else
+        {
             return SeedToCartResult.failed;
         }
     }
