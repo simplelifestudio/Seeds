@@ -9,6 +9,8 @@
 
 package com.simplelife.seeds.server.util;
 
+import java.util.Properties;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -38,7 +40,7 @@ public class HibernateSessionFactory
      */
     private static String CONFIG_FILE_LOCATION = "/com/simplelife/seeds/server/db/hibernate.cfg.xml";
     private static final ThreadLocal threadLocal = new ThreadLocal();
-    private static Configuration configuration = new Configuration();
+    private static Configuration configuration;
     private static SessionFactory sessionFactory;
     private static String configFile = CONFIG_FILE_LOCATION;
 
@@ -78,8 +80,16 @@ public class HibernateSessionFactory
     public static void rebuildSessionFactory()
     {
         try {
-            configuration.configure(configFile);
-            ServiceRegistry sr = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
+        	if (configuration == null)
+        	{
+        		configuration = new Configuration();
+        		configuration.configure(configFile);
+        	}
+        	
+            Properties properties = configuration.getProperties();
+            //<property name=></property>
+            //properties.put("connection.password", "Simplelife123");
+            ServiceRegistry sr = new ServiceRegistryBuilder().applySettings(properties).buildServiceRegistry();
             sessionFactory = configuration.buildSessionFactory(sr);
         } catch (Exception e) {
             LogUtil.printStackTrace(e);
