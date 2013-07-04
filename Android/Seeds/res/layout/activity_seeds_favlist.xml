@@ -3,26 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <RelativeLayout
-        android:id="@+id/favlist_header"
-        android:layout_width="match_parent"
-        android:layout_height="40dip"
-        android:background="#dbdbdc" >
-    	
-	    <TextView
-	        android:id="@+id/Seeds_FavList_Title"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_centerHorizontal="true"
-	        android:layout_centerVertical="true"
-	        android:gravity="center|fill"
-	        android:text="@string/seeds_favoritelist"
-	        android:textColor="@android:color/black"
-	        android:textSize="20sp" />
-
-	</RelativeLayout>
-    
+        
     
     <ListView 
         android:id="@+id/seeds_list"
