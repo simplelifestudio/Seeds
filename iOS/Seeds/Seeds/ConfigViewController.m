@@ -451,9 +451,14 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _refreshWiFiCacheImagesCell
 {
-    NSUInteger cacheImageCount = [_pictureAgent diskCacheImagesCount];
-    NSString* cachedImageCountStr = [NSString stringWithFormat:@"%d", cacheImageCount];
-    [_wifiCacheImagesCell.button setTitle:cachedImageCountStr forState:UIControlStateNormal];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+        NSUInteger cacheImageCount = [_pictureAgent diskCacheImagesCount];
+        NSString* cachedImageCountStr = [NSString stringWithFormat:@"%d", cacheImageCount];
+        
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [_wifiCacheImagesCell.button setTitle:cachedImageCountStr forState:UIControlStateNormal];
+        });
+    });
 }
 
 - (void) _refreshRunningModeCell
