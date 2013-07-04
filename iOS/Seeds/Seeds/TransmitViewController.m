@@ -24,6 +24,8 @@ if (_cancelTransmission)\
     UIBarButtonItem* _stopBarButton;
     
     BOOL _isTransmissionStarted;
+    
+    TransmissionModule* _transmitModule;
 }
 
 @end
@@ -69,6 +71,8 @@ if (_cancelTransmission)\
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    [self _stopTransmissionService];
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,10 +102,7 @@ if (_cancelTransmission)\
 {
     if (_isTransmissionStarted)
     {
-        TransmissionModule* transmitModule = [TransmissionModule sharedInstance];
-        [transmitModule stopHTTPServer];
-        
-        [self _updateConsole:NSLocalizedString(@"HTTP server stopped.", nil)];
+        [_transmitModule stopHTTPServer];
         
         _isTransmissionStarted = NO;
     }
@@ -110,6 +111,15 @@ if (_cancelTransmission)\
 - (void) _appDidEnterBackground
 {
     [self _stopTransmissionService];
+}
+
+- (void) _appDidBecomeActive
+{
+    UIViewController* vc = self.presentedViewController;
+    if (nil == vc)
+    {
+        [self _startTransmissionService];
+    }
 }
 
 -(void) _onClickStopBarButton
@@ -128,6 +138,8 @@ if (_cancelTransmission)\
 
 -(void) _setupView
 {
+    _transmitModule = [TransmissionModule sharedInstance];
+    
     _isTransmissionStarted = NO;
     
     if (nil == _stopBarButton)
@@ -140,6 +152,11 @@ if (_cancelTransmission)\
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_appDidEnterBackground)
                                                  name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_appDidBecomeActive)
+                                                 name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
 }
 
@@ -172,8 +189,6 @@ if (_cancelTransmission)\
         return;
     }
     
-    TransmissionModule* transmitModule = [TransmissionModule sharedInstance];
-    
     // Step 10:
     [self _updateConsole:NSLocalizedString(@"Torrent files are preparing...", nil)];
     NSString* torrentsFolderPath = [TransmissionModule downloadTorrentsFolderPath];
@@ -187,19 +202,19 @@ if (_cancelTransmission)\
     
     // Step 20:
     [self _updateConsole:NSLocalizedString(@"Web page is generating...", nil)];
-    BOOL flag = [transmitModule generateHtmlPageWithZipFileName:zipName];
+    BOOL flag = [_transmitModule generateHtmlPageWithZipFileName:zipName];
     if (flag)
     {
         // Step 30:
         [self _updateConsole:NSLocalizedString(@"HTTP server is initializing...", nil)];
-        flag = [transmitModule startHTTPServer];
+        flag = [_transmitModule startHTTPServer];
         if (flag)
         {
             [self _updateConsole:NSLocalizedString(@"HTTP server is starting...", nil)];
             
             // Step 40:
-            NSString* name = [transmitModule httpServerName];
-            NSInteger port = [transmitModule httpServerPort];
+            NSString* name = [_transmitModule httpServerName];
+            NSInteger port = [_transmitModule httpServerPort];
             
             if (nil != name && 0 < name.length)
             {
@@ -258,8 +273,6 @@ if (_cancelTransmission)\
         return;
     }
     
-    TransmissionModule* transmitModule = [TransmissionModule sharedInstance];
-    
     // Step 10:
     [self _updateConsole:NSLocalizedString(@"Torrent files are preparing...", nil)];
     
@@ -298,12 +311,12 @@ if (_cancelTransmission)\
     
     // Step 40:
     [self _updateConsole:NSLocalizedString(@"Web page is generating...", nil)];
-    flag = [transmitModule generateHtmlPageWithLast3Days:last3Days];
+    flag = [_transmitModule generateHtmlPageWithLast3Days:last3Days];
     if (flag)
     {
         // Step 50:
         [self _updateConsole:NSLocalizedString(@"HTTP server is initializing...", nil)];
-        flag = [transmitModule startHTTPServer];
+        flag = [_transmitModule startHTTPServer];
         if (flag)
         {
             [self _updateConsole:NSLocalizedString(@"HTTP server is starting...", nil)];
@@ -313,8 +326,8 @@ if (_cancelTransmission)\
             [self _updateConsole:NSLocalizedString(@"HTTP server failed to start.", nil)];
         }
         // Step 60:
-        NSString* name = [transmitModule httpServerName];
-        NSInteger port = [transmitModule httpServerPort];
+        NSString* name = [_transmitModule httpServerName];
+        NSInteger port = [_transmitModule httpServerPort];
         
         if (nil != name && 0 < name.length)
         {
