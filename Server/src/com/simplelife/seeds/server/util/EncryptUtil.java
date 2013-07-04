@@ -383,10 +383,4 @@ public class EncryptUtil
         String s = new String(ob);
         return s;
     }
-
-    public static void main(String args[])
-    {
-        EncryptUtil md5 = new EncryptUtil();
-        System.out.println(md5.getMD5ofStr("admin"));
-    }
 }
