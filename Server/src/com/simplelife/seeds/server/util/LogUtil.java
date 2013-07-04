@@ -49,7 +49,10 @@ public class LogUtil {
 		int length=messages.length;
 		for(int i=0;i<length;i++)
 		{
-			logger.logp(Level.SEVERE, "", "", messages[i].toString());
+		    if (messages[i].toString().contains("com.simplelife.seeds"))
+		    {
+		        logger.logp(Level.SEVERE, "", "", messages[i].toString());
+		    }
 		}
 	}
 	
@@ -59,7 +62,7 @@ public class LogUtil {
 		{
 			return;
 		}
-
+		
 		StackTraceElement traceElement = Thread.currentThread().getStackTrace()[3]; 
 		String methodName = traceElement.getMethodName();
 		String fileName = traceElement.getFileName()+ ":" + Integer.toString(traceElement.getLineNumber());
