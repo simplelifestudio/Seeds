@@ -14,15 +14,19 @@ import java.util.Timer;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import com.simplelife.seeds.server.db.SeedCaptureLog;
+import com.simplelife.seeds.server.util.DBExistResult;
 import com.simplelife.seeds.server.util.DaoWrapper;
 import com.simplelife.seeds.server.util.DateUtil;
+import com.simplelife.seeds.server.util.HibernateSessionFactory;
 import com.simplelife.seeds.server.util.LogUtil;
+import com.simplelife.seeds.server.util.SqlUtil;
+import com.simplelife.seeds.server.util.TableName;
 
 public class SeedCaptureListener implements ServletContextListener
 {
 	private static Timer timer;
-	private static int firstTriggerHour = 14;
-	private static int nextTriggerHour = 14;
+	private static int firstTriggerHour = 20;
+	private static int nextTriggerHour = 20;
 	private static int triggerCountOfToday = 0;
 
 	private static void scheduleToday()
@@ -56,16 +60,24 @@ public class SeedCaptureListener implements ServletContextListener
 
 		String today = DateUtil.getToday();
 		// succeed today
-		String sql = "select * from SeedCaptureLog where publishDate ='" + today + "' and status >= 2 ";
-		if (DaoWrapper.exists(sql))
+		String condition = SqlUtil.getPublishDateCondition(today) + " and status >= 2 ";
+		String sql = SqlUtil.getSelectCaptureLogSql(condition);
+		DBExistResult result = DaoWrapper.exists(sql); 
+		if (result == DBExistResult.existent)
 		{
 			LogUtil.info("Seeds of today [" + today + "] have been cpatured, schedule next task tomorrow.");
 			scheduleTomorrow();
 			return;
 		}
+		else if (result == DBExistResult.errorOccurred)
+		{
+		    LogUtil.info("Abnormal DB status, schedule next task tomorrow.");
+            scheduleTomorrow();
+            return;
+		}
 
-		sql = "select * from SeedCaptureLog where publishDate ='" + today + "'";
-		if (!DaoWrapper.exists(sql))
+		sql = SqlUtil.getSelectCaptureLogSql(SqlUtil.getPublishDateCondition(today));
+		if (DaoWrapper.exists(sql) != DBExistResult.existent)
 		{
 			// First try of today
 			SeedCaptureLog capLog = new SeedCaptureLog();
@@ -86,7 +98,7 @@ public class SeedCaptureListener implements ServletContextListener
 			else
 			{
 				// Give up, retry tomorrow.
-				sql = "update SeedCaptureLog set status = 1 where publishDate ='" + today + "'";
+				sql = "update "+ TableName.SeedCaptureLog +" set "+ SqlUtil.status +" = 1 where " + SqlUtil.getPublishDateCondition(today);
 				DaoWrapper.executeSql(sql);
 				scheduleTomorrow();
 			}
@@ -97,7 +109,12 @@ public class SeedCaptureListener implements ServletContextListener
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0)
 	{
-		timer.cancel();
+		if (timer != null)
+		{
+			timer.cancel();
+		}
+		
+		HibernateSessionFactory.closeCurrentSession();
 	}
 
 	@Override
