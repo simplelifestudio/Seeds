@@ -12,4 +12,7 @@
 
 +(void) exitApp;
 
++(void) asyncProcessInBackgroundThread:(void(^)()) block;
++(void) asyncProcessInMainThread:(void(^)()) block;
+
 @end
