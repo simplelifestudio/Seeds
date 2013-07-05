@@ -94,6 +94,7 @@ public class SeedsHttpServiceActivity extends Activity {
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
 		tActionBar.setTitle(R.string.seeds_http_title);
+		tActionBar.setDisplayHomeAsUpEnabled(true); 
         
 		// start button
 		findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {

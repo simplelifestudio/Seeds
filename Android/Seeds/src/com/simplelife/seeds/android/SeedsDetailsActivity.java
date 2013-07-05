@@ -67,16 +67,7 @@ public class SeedsDetailsActivity extends Activity{
 	private static final String LOGCLASS = "SeedsDetails"; 
 	
 	// Clarify the ImageLoader
-	public SeedsImageLoader tImageLoader;
-	
-	// Button to save to favorites
-	private Button myFavoriteBtn;
-	
-	// Image view to change to gridview
-	private ImageView mGotoGridView;
-	
-	// Image view to download the seeds
-	private ImageView mDownloadView;
+	public SeedsImageLoader tImageLoader;		
 	
 	// Database adapter
 	private SeedsDBAdapter mDBAdapter;
@@ -117,27 +108,7 @@ public class SeedsDetailsActivity extends Activity{
 		{
 			if(null != mFavItem)
 				mFavItem.setIcon(R.drawable.rating_bad);
-		}
-		
-		// Retrieve the favorite button
-		myFavoriteBtn = (Button) findViewById(R.id.favorite_btn);
-		
-		// Check if this seed has already been saved to favorite
-		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
-		{
-			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
-		}
-		
-		// Listen on the favorite button
-		myFavoriteBtn.setOnClickListener(myFavoriteBtnListener);
-		
-		// Retrieve the gotoGrid option
-		mGotoGridView = (ImageView) findViewById(R.id.gotoGrid);
-		mGotoGridView.setOnClickListener(myGotoGridViewListener);
-		
-		// Retrieve the download seeds option
-		mDownloadView = (ImageView) findViewById(R.id.seeds_download);
-		mDownloadView.setOnClickListener(myDownloadViewListener);
+		}						
 		
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
@@ -289,95 +260,8 @@ public class SeedsDetailsActivity extends Activity{
                 }  
             }
         }  
-    }
-    
-	private View.OnClickListener myFavoriteBtnListener = new View.OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
+    }    
 			
-			if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
-			{
-				tFavTag = true;
-				tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Please wait...", true, false);
-			}
-			else
-			{
-				tFavTag = false;
-				tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Cancelling Favorites...", "Please wait...", true, false);
-			}
-			
-			// Set up a thread to operate with the database
-			new Thread() {				
-				@Override
-				public void run() {
-					try {
-						// Get the DB adapter instance
-						SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();
-						
-						// Set the favorite key 
-						if (tFavTag)
-						{
-							mDBAdapter.updateSeedEntryFav(mSeedLocalId,false);
-							tFavTag = false;
-							tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Cancelling Favorites...", "Done!", true, false);
-						    //TODO
-							// Remove the entry if this seed is out of date
-						}
-						else
-						{
-							mDBAdapter.updateSeedEntryFav(mSeedLocalId,true);
-							tFavTag = true;
-							
-							tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Done!", true, false);							
-						}
-	            		
-	            		// Hang on for a moment
-	            		Thread.sleep(2000);
-						
-					} catch (Exception e) {
-						// Show the error message here
-					}
-
-					Message t_MsgListData = new Message();
-					t_MsgListData.what = 1;
-					handler.sendMessage(t_MsgListData);					
-				}
-			}.start();
-		}
-	};
-	
-	private View.OnClickListener myGotoGridViewListener = new View.OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-		    // Redirect to the new page
-		    Intent intent = new Intent(SeedsDetailsActivity.this, ImageGridActivity.class);
-		    intent.putExtra("seedObj", mSeedsEntity);
-		    startActivity(intent);
-		}
-	};
-	
-	private View.OnClickListener myDownloadViewListener = new View.OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-        	// Fetch the download manager to start the download
-        	DownloadManager tDownloadMgr = DownloadManager.getDownloadMgr();
-        	tDownloadMgr.startDownload(mSeedsEntity.getSeedTorrentLink());            	
-        	
-    		Toast toast = Toast.makeText(getApplicationContext(),
-    				R.string.seeds_download_added, Toast.LENGTH_SHORT);
-    	    toast.setGravity(Gravity.CENTER, 0, 0);
-    	    toast.show();
-            
-        	Intent intent = new Intent();
-        	intent.setClass(SeedsDetailsActivity.this, DownloadList.class);
-        	startActivity(intent);
-
-		}
-	};
-	
     // Define a handler to process the progress update
 	private Handler handler = new Handler(){  
   
@@ -390,7 +274,6 @@ public class SeedsDetailsActivity extends Activity{
             		// Check if this seed has already been saved to favorite
             		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
             		{
-            			myFavoriteBtn.setText(R.string.seeds_UnFavorite);
             			if (null != mFavItem)
             				mFavItem.setIcon(R.drawable.rating_bad);
             			
@@ -401,7 +284,6 @@ public class SeedsDetailsActivity extends Activity{
             		}
             		else
             		{
-            			myFavoriteBtn.setText(R.string.seeds_Favorite);
             			if (null != mFavItem)
             				mFavItem.setIcon(R.drawable.rating_good);
             			
