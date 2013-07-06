@@ -26,13 +26,13 @@ public class SeedCaptureLog {
 	/**
 	 * @return the status
 	 */
-	public int getStatus() {
+	public long getStatus() {
 		return status;
 	}
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(int status) {
+	public void setStatus(long status) {
 		this.status = status;
 	}
 	/**
@@ -48,7 +48,7 @@ public class SeedCaptureLog {
 		this.id = id;
 	}
 	private String publishDate;
-	private int status;
+	private long status;
 	private long id;
 	
 	public String toString()
@@ -57,7 +57,7 @@ public class SeedCaptureLog {
 		
 		tmpStr = "id: " + Long.toString(id) + "\n";
 		tmpStr += "publishDate: " + publishDate + "\n";
-		tmpStr += "status: " + Integer.toString(status) + "\n";
+		tmpStr += "status: " + Long.toString(status) + "\n";
 		return tmpStr;
 	}
 }

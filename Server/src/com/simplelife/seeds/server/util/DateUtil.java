@@ -107,44 +107,6 @@ public class DateUtil {
 			LogUtil.printStackTrace(e);
 			return INVALID_VALUE;
 		}
-		/*
-		boolean d1befored2 = true;
-		int days = 0;
-		try
-		{
-			if (d1.after(d2)) {
-				Calendar swap = d1;
-				d1 = d2;
-				d2 = swap;
-				d1befored2 = false;
-			}
-			
-			days = d2.get(Calendar.DAY_OF_YEAR)- d1.get(Calendar.DAY_OF_YEAR);
-			int y2 = d2.get(Calendar.YEAR);
-			if (d1.get(Calendar.YEAR) != y2) {
-			   d1 = (Calendar) d1.clone();
-			   do {
-			    days += d1.getActualMaximum(Calendar.DAY_OF_YEAR);
-			    d1.add(Calendar.YEAR, 1);
-			   } while (d1.get(Calendar.YEAR) != y2);
-			}
-		}
-		catch(Exception e)
-		{
-			LogUtil.severe("Invalid date found: " + d1 + ", " + d2 + ", " + e.getMessage());
-			LogUtil.printStackTrace(e);
-			return INVALID_VALUE;
-		}
-		
-		if (d1befored2)
-		{
-			return days;
-		}
-		else
-		{
-			return -days;
-		}
-		*/
 	}
 	
 	/**
@@ -315,12 +277,6 @@ public class DateUtil {
 			}
 			
 		}
-		
-		//if ((curHour > taskTriggerHour) || 
-		//		((curHour == taskTriggerHour) && (curMinute > taskTriggerMinute)))
-		//String sql = "select * from SeedCaptureLog where publishDate ='" + DateUtil.getToday() + "' and status >= 1 ";
-		//if (DaoWrapper.exists(sql))
-			// If seeds of today have been succeed or failed
 		return cal.getTime();
 	}
 	

@@ -1,5 +1,5 @@
 /**
- * SeedRssServlet.java
+ * CartServiceServlet.java
  * 
  * History:
  *     2013-6-12: Tomas Chen, initial version
@@ -22,8 +22,8 @@ import com.simplelife.seeds.server.db.RssUtil;
 import com.simplelife.seeds.server.util.LogUtil;
 
 
-@WebServlet("/SeedRssRequest")
-public class SeedRssServlet extends HttpServlet
+@WebServlet("/cartService")
+public class CartServiceServlet extends HttpServlet
 {
     private static final long serialVersionUID = 2L;
     
@@ -63,7 +63,8 @@ public class SeedRssServlet extends HttpServlet
     
     private void rssContent(PrintWriter out, String cartId)
     {
-        String rssContent = RssUtil.subscribe(cartId);
+    	RssUtil rssUtil = new RssUtil();
+        String rssContent = rssUtil.browseRss(cartId);
         out.print(rssContent);
         //LogUtil.info(rssContent);
     }

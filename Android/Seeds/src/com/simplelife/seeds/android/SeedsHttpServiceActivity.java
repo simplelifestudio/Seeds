@@ -20,6 +20,7 @@ import com.simplelife.seeds.android.utils.httpserver.http.Server;
 import com.simplelife.seeds.android.utils.httpserver.http.events.ServerEventListener;
 import com.simplelife.seeds.android.utils.httpserver.utils.Logger;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -86,9 +87,14 @@ public class SeedsHttpServiceActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);      
         
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         
 		setContentView(R.layout.activity_seeds_httpserver);
+		
+		// Set a title for this page
+		ActionBar tActionBar = getActionBar();
+		tActionBar.setTitle(R.string.seeds_http_title);
+		tActionBar.setDisplayHomeAsUpEnabled(true); 
         
 		// start button
 		findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {

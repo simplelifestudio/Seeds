@@ -1,5 +1,5 @@
 /**
- * GlobalLogDefinition.java 
+ * OperationLogDefinition.java 
  * 
  * History:
  *     2013-06-09: Tomas Chen, initial version
@@ -10,7 +10,7 @@
 
 package com.simplelife.seeds.server.db;
 
-public class GlobalLogDefinition {
+public class OperationLogDefinition {
 	/**
 	 * @return the id
 	 */

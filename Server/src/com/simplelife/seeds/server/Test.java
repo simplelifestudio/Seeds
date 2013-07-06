@@ -10,102 +10,205 @@
 
 package com.simplelife.seeds.server;
 
-import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 
-import org.apache.http.HttpRequest;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.message.BasicNameValuePair;
-
 import net.sf.json.JSONObject;
-import com.simplelife.seeds.server.db.LogId;
-import com.simplelife.seeds.server.db.PreviewPic;
+
+import org.apache.http.NameValuePair;
+
 import com.simplelife.seeds.server.db.RssUtil;
 import com.simplelife.seeds.server.db.Seed;
+import com.simplelife.seeds.server.db.SeedCaptureLog;
+import com.simplelife.seeds.server.db.SeedPicture;
 import com.simplelife.seeds.server.json.IJsonCommand;
 import com.simplelife.seeds.server.json.JsonCommandFactory;
 import com.simplelife.seeds.server.json.JsonUtil;
 import com.simplelife.seeds.server.parser.HtmlParser;
+import com.simplelife.seeds.server.parser.TorrentDownloader;
+import com.simplelife.seeds.server.util.DBExistResult;
 import com.simplelife.seeds.server.util.DaoWrapper;
 import com.simplelife.seeds.server.util.DateUtil;
+import com.simplelife.seeds.server.util.EncryptUtil;
+import com.simplelife.seeds.server.util.ErrorCode;
 import com.simplelife.seeds.server.util.HttpUtil;
+import com.simplelife.seeds.server.util.JsonKey;
 import com.simplelife.seeds.server.util.LogUtil;
+import com.simplelife.seeds.server.util.OperationCode;
 import com.simplelife.seeds.server.util.OperationLogUtil;
+import com.simplelife.seeds.server.util.SqlUtil;
+import com.simplelife.seeds.server.util.TableName;
 
 public class Test {
 	public static void main(String[] args)
 	{
 	    LogUtil.setLevel(Level.WARNING);
-	    //HttpUtil.setHttpProxy("87.254.212.120", 8080);
+	    HttpUtil.setHttpProxy("87.254.212.120", 8080);
+	    HttpUtil.setHostIP("127.0.0.1");
+	    //HttpUtil.setHttpPort(8080);
 	    
-	    testHttpPost();
-	    //testSave();
-	    //testSeedReq();
+	    //testJsonSeedToCartReq();
 	    //testRssContent();
+	    //testLogUtil();
+	    //testEncrypt();
 	    
-	    /*
-	    
-	    testRssContent();
-	    testLogUtil();
-	    testSeedCaptureTask();
-	    testEncrypt();
-	    testSeedRssReq();
-	    testRssSubscribe();
-	    
-	    testSave();
-		testQuery();
-		testHtmlParse();
-		testSeedReq();
-		testStrBuilder();
-		testSeedStatusReq();
-		testDateFunctions();
-		testRangeHtmlParse();
-		testOperationLog();
-		*/
-	    System.exit(0);
+	    // =========DB related=========
+	    //testSave();
+		//testQuery();
+	    //testOperationLog();
+	    //testCaptureLog();
+		
+	    // =========web related=========
+	    //testRangeHtmlParse();
+	    //testHtmlParse();
+	    //testSeedCaptureTask();
+	    //testTorrentDownload();
+        
+	    // =========JSON related=========
+	    //testJsonCommandFactory();
+	    //testJsonAlohaReq();
+	    //testAlohaResponse();
+		//testJsonSeedReq();
+	    //testJsonSeedToCartReq();
+	    testJsonSeedStatusReq();
+		
+	    // =========Base Functions=========
+		//testDateFunctions();
+	    //testGetParaListByLink();
+		
+		System.exit(0);
 	}
 
-	private static void testRssContent()
+	private static void testCaptureLog()
 	{
-	    System.out.print(RssUtil.subscribe("chen"));
+		String date = "2013-06-17";
+		
+		String sql = SqlUtil.getSelectCaptureLogSql(SqlUtil.getPublishDateCondition(date));
+        List record = DaoWrapper.query(sql, SeedCaptureLog.class);
+        
+        SeedCaptureLog log = (SeedCaptureLog) record.get(0);
+        if (log.getStatus() == 0) {
+        	System.out.print(JsonKey.notReady);
+        }
+        if (log.getStatus() == 1) {
+        	System.out.print(JsonKey.noUpdate);
+        }
+        else if (log.getStatus() == 2) {
+        	System.out.print(JsonKey.ready);
+        }
+        else {
+        	System.out.print(JsonKey.errorStatus);
+        }
 	}
-	private static void testHttpPost()
+	
+	private static void testAlohaResponse()
+	{
+        String result = "{\n\"id\": \"AlohaResponse\",\n\"body\": \n{\n\"content\":\"Hello Seeds App! <2013-07-03 10:02:09.504>\"\n}\n}";
+        JSONObject resultJsonObj = JsonUtil.createJsonObject(result);
+        if (resultJsonObj == null)
+        {
+        	System.out.print("============Error!===============");
+        }
+        else
+        {
+        	System.out.print(resultJsonObj.toString());
+        }
+	}
+	
+	private static void testJsonCommandFactory()
+	{
+		System.out.print("Invalid Json command:");
+		String command = "{\n    \"id\": \"AlohaRequest_invalid\",\n    \"body\": {\n    \"content\":\"Hello Seeds Server!\"\n    }\n}";
+	    testJsonCommand(command);
+	}
+	
+	private static void testTorrentDownload()
 	{
 	    String link = "http://www.maxp2p.com/link.php?ref=Uaaugtsvoi";
-	    int index = link.lastIndexOf("ref=");
-	    if (index <=0)
+	    String output = DateUtil.getToday() + ".torrent";
+	    TorrentDownloader dl = new TorrentDownloader(link, output);
+	    dl.run();
+	}
+	
+	private static void testRssContent()
+	{
+		RssUtil rssUtil = new RssUtil();
+	    System.out.print(rssUtil.browseRss("chen"));
+	}
+	
+	private static void testGetParaListByLink()
+	{
+	    List <NameValuePair> params;
+	    params = HttpUtil.getParaListByLink("fdsfsdafsd");
+	    if (params != null)
 	    {
-	        LogUtil.warning("Invalid link: " + link);
+	        LogUtil.severe("The result must be null");
 	    }
 	    
-	    String ref = link.substring(index);
+	    HttpUtil.getParaListByLink("http:");
+	    if (params != null)
+        {
+            LogUtil.severe("The result must be null");
+        }
 	    
-	    List <NameValuePair> params = new ArrayList<NameValuePair>();
-	    params.add(new BasicNameValuePair("ref", ref));
-	    
-		HttpUtil.post("http://www.maxp2p.com/load.php", params);
+	    HttpUtil.getParaListByLink("http:?");
+	    if (params != null)
+        {
+            LogUtil.severe("The result must be null");
+        }
+        
+	    HttpUtil.getParaListByLink("http://aaa?=");
+	    if (params != null)
+        {
+            LogUtil.severe("The result must be null");
+        }
+        
+	    HttpUtil.getParaListByLink("http://aaa?ref=");
+	    if (params != null)
+        {
+            LogUtil.severe("The result must be null");
+        }
+        
+	    params = HttpUtil.getParaListByLink("http://aaa?ref=aa");
+	    if (params == null)
+        {
+            LogUtil.severe("The result is null");
+        }
+	    else
+	    {
+	        LogUtil.info(params.toString());
+	    }
+        
+	    params = HttpUtil.getParaListByLink("http://aaa?ref1=aa&ref2=bb");
+	    if (params == null)
+        {
+            LogUtil.severe("The result is null");
+        }
+        else
+        {
+            LogUtil.info(params.toString());
+        }
 	}
 	
 	private static void testLogUtil()
 	{
+		System.out.print("Set log level to WARNING\n");
 		LogUtil.setLevel(Level.WARNING);
 		LogUtil.fine("Fine log information");
 		LogUtil.info("info log information");
 		LogUtil.severe("severe log information");
 		LogUtil.warning("warning log information");
 		
+		System.out.print("Set log level to INFO\n");
 		LogUtil.setLevel(Level.INFO);
 		LogUtil.fine("Fine log information");
 		LogUtil.info("info log information");
 		LogUtil.severe("severe log information");
 		LogUtil.warning("warning log information");
+		
+		System.out.print("Set log level to WARNING\n");
+		LogUtil.setLevel(Level.WARNING);
 	}
 	
 	private static void testSeedCaptureTask()
@@ -119,43 +222,27 @@ public class Test {
 	
 	private static void testEncrypt()
 	{
+		String plainText = "chen";
 		
-		try { 
-			String plainText = "chen";
-			MessageDigest md = MessageDigest.getInstance("MD5"); 
-			md.update(plainText.getBytes());  
-			byte b[] = md.digest(); 
-
-			int i; 
-
-			StringBuffer buf = new StringBuffer(""); 
-			for (int offset = 0; offset < b.length; offset++) { 
-			i = b[offset]; 
-			if(i<0) i+= 256; 
-			if(i<16) 
-			buf.append("0"); 
-			buf.append(Integer.toHexString(i)); 
-			} 
-
-			System.out.println("result: " + buf.toString());//32位的加密 
-
-			System.out.println("result: " + buf.toString().substring(8,24));//16位的加密 
-
-			} catch (NoSuchAlgorithmException e) { 
-			// TODO Auto-generated catch block 
-			e.printStackTrace(); 
-			} 
-	}
-	
-	private static void testRssSubscribe()
-	{
-		System.out.print(RssUtil.subscribe("chen"));
+		System.out.print("\nMD5 of chen:\n");
+		System.out.print(EncryptUtil.getMD5ofStr(plainText));
+		
+		System.out.print("\nMD5 of chen:\n");
+		System.out.print(EncryptUtil.getMD5ofStr(plainText));
+		
+		System.out.print("\nRandom cartId:\n");
+		System.out.print(EncryptUtil.getRamdomCartId());
+		
+		System.out.print("\nRandom cartId:\n");
+		System.out.print(EncryptUtil.getRamdomCartId());
+		
+		System.out.print("\n");
 	}
 	
 	private static void testOperationLog()
 	{
 		OperationLogUtil.captureTaskStarted("this is sample of link");
-		OperationLogUtil.save(LogId.ALOHA_REQUEST, "Aloha Request Received");
+		OperationLogUtil.save(OperationCode.ALOHA_REQUEST, "Aloha Request Received");
 	}
 	
 	private static void testRangeHtmlParse()
@@ -191,116 +278,204 @@ public class Test {
 		System.out.println(DateUtil.getDateStringByDayBack(5));
 		System.out.println(DateUtil.getDateStringByDayBack(20));
 	}
-	private static void testStrBuilder()
+	
+	private static void testJsonAlohaReq()
 	{
-		StringBuilder strBuilder = new StringBuilder();
-		strBuilder.append("fdajfdjkfjdslk,");
-		System.out.println(strBuilder.toString());
-		
-		strBuilder.deleteCharAt(strBuilder.length() - 1);
-		System.out.println(strBuilder.toString());
-		
+	    String command = "{\n    \"id\": \"AlohaRequest\",\n    \"body\": {\n    \"content\":\"Hello Seeds Server!\"\n    }\n}";
+	    testJsonCommand(command);
+	    
+	    command = "{\n    \"command\": \"paramList\",\n    \"body\": {\n    \"content\":\"Hello Seeds Server!\"\n    }\n}";
+        testJsonCommand(command);
 	}
 	
-	private static void testSeedRssReq()
+	private static void testJsonSeedToCartReq()
 	{
-		String command = "{\n    \"command\": \"SeedsToCartRequest\",\n    \"paramList\": {\n    \"cartId\":\"chen\",\n    \"seedIdList\": [\n            \"1\",\n            \"2\",\n            \"9999\"\n        ]\n    }\n}";
-		JSONObject jsonObj = JsonUtil.createJsonObject(command);
-		if (jsonObj == null)
-		{
-			System.out.print("Invalid command");
-			return; 
-		}
+		System.out.print("\n\n==========Normal request==========\n");
+		String command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"chen\",\n    \"seedIdList\": [\n            \"1\",\n            \"2\",\n            \"9999\"\n        ]\n    }\n}";
+		testJsonCommand(command);
 		
+		System.out.print("\n\n==========Normal request but all failed==========\n");
+		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"chen\",\n    \"seedIdList\": [\n            \"7777\",\n            \"8888\",\n            \"9999\"\n        ]\n    }\n}";
+		testJsonCommand(command);
 		
-		IJsonCommand jsonCmd = JsonCommandFactory.CreateJsonCommand(jsonObj, "127.0.0.1");
+		System.out.print("\n\n==========Normal request and all succeed==========\n");
+		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"chen\",\n    \"seedIdList\": [\n            \"1\",\n            \"2\"        ]\n    }\n}";
+		testJsonCommand(command);
 		
-		if (jsonCmd == null)
-		{
-			System.out.print("Invalid command");
-			return; 
-		}
+		// empty cartId
+		System.out.print("\n\n==========Random cartId to be generated==========\n");
+		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"\",\n    \"seedIdList\": [\n            \"1\",\n            \"2\",\n            \"9999\"\n        ]\n    }\n}";
+		testJsonCommand(command);
 		
-		PrintWriter out;
-		try {
-			out = new PrintWriter("d:/SeedsRssRequest.txt");
-			jsonCmd.Execute(jsonObj, out);
-			out.flush();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		// No cartId
+		System.out.print("\n\n==========Report error of no cartId==========\n");
+		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n   \"seedIdList\": [\n            \"1\",\n            \"2\",\n            \"9999\"\n        ]\n    }\n}";
+		testJsonCommand(command);
+		
+		// No seedIdList
+		System.out.print("\n\n==========Report error of no seedIdList==========\n");
+		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"\" }\n}";
+		testJsonCommand(command);
+
+		// Invalid body
+		System.out.print("\n\n==========Report error of no body==========\n");
+		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"paramList\": {\n    \"cartId\":\"chen\",\n    \"seedIdList\": [\n            \"aaa\",\n            \"bbb\",\n            \"9999\"\n        ]\n    }\n}";
+        testJsonCommand(command);
+		
+        // Invalid id
+        System.out.print("\n\n==========Report error of no id==========\n");
+		command = "{\n    \"command\": \"SeedsToCartRequest\",\n    \"paramList\": {\n    \"cartId\":\"chen\",\n    \"seedIdList\": [\n            \"1\",\n            \"2\",\n            \"9999\"\n        ]\n    }\n}";
+        testJsonCommand(command);
+        
+        
 	}
 	
-	private static void testSeedStatusReq()
+	private static void testJsonSeedStatusReq()
 	{
-		String command = "{\n    \"command\": \"SeedsUpdateStatusByDatesRequest\",\n    \"paramList\": {\n        \"dateList\": [\n            \"2013-05-14\",\n            \"2013-05-17\",\n            \"2013-05-18\"\n        ]\n    }\n}";
-		JSONObject jsonObj = JsonUtil.createJsonObject(command);
-		if (jsonObj == null)
-		{
-			System.out.print("Invalid command");
-			return; 
-		}
+		System.out.print("\n\n==========Normal request==========\n");
+		String command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \"2013-05-14\",\n            \"2013-05-17\",\n            \"2013-05-18\"\n        ]\n    }\n}";
+		testJsonCommand(command);
 		
-		IJsonCommand jsonCmd = JsonCommandFactory.CreateJsonCommand(jsonObj, "127.0.0.1");
+		System.out.print("\n\n==========Normal request but all invalid date==========\n");
+		command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \"2014-05-14\",\n            \"2014-05-17\",\n            \"2014-05-18\"\n        ]\n    }\n}";
+		testJsonCommand(command);
 		
-		if (jsonCmd == null)
-		{
-			System.out.print("Invalid command");
-			return; 
-		}
+		// empty dateList
+		System.out.print("\n\n==========Report error of no dateList==========\n");
+		command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n]\n    }\n}";
+		testJsonCommand(command);
 		
-		PrintWriter out;
-		try {
-			out = new PrintWriter("d:/SeedsUpdateStatusByDatesResponse.txt");
-			jsonCmd.Execute(jsonObj, out);
-			out.flush();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		// No dateList
+		System.out.print("\n\n==========Report error of no dateList==========\n");
+		command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        }\n}";
+		testJsonCommand(command);
+		
+		// Invalid body
+		System.out.print("\n\n==========Report error of no body==========\n");
+		command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"paramList\": {\n        \"dateList\": [\n            \"2013-05-14\",\n            \"2013-05-17\",\n            \"2013-05-18\"\n        ]\n    }\n}";
+        testJsonCommand(command);
+		
+        // Invalid id
+        System.out.print("\n\n==========Report error of no id==========\n");
+        command = "{\n    \"id_invalid\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \"2013-05-14\",\n            \"2013-05-17\",\n            \"2013-05-18\"\n        ]\n    }\n}";
+        testJsonCommand(command);
+        
+        System.out.print("\n\n==========Test handle of error handling==========\n");
+        String date = "2013-06-17";
+        String sql = SqlUtil.getSelectCaptureLogSql("publishDate = '" + date + "'");
+        if (DaoWrapper.exists(sql) !=  DBExistResult.existent)
+        {
+        	System.out.print("Error: record of " + date + " is nonexistent in DB");
+        	return;
+        }
+        
+        System.out.print("\n\n==========status == 0, not ready ==========\n");
+        sql = "update " + TableName.SeedCaptureLog + " set " + SqlUtil.status + " = 0 where " + SqlUtil.publishDate + " = '" + date + "'";
+        DaoWrapper.executeSql(sql);
+        command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \""+ date + "\"\n]\n    }\n}";
+		testJsonCommand(command);
+		
+		System.out.print("\n\n==========status == 1, no update ==========\n");
+        sql = "update " + TableName.SeedCaptureLog + " set " + SqlUtil.status + " = 1 where " + SqlUtil.publishDate + " = '" + date + "'";
+        DaoWrapper.executeSql(sql);
+        command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \""+ date + "\"\n]\n    }\n}";
+		testJsonCommand(command);
+		
+		System.out.print("\n\n==========status == 2, ready ==========\n");
+        sql = "update " + TableName.SeedCaptureLog + " set " + SqlUtil.status + " = 2 where " + SqlUtil.publishDate + " = '" + date + "'";
+        DaoWrapper.executeSql(sql);
+        command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \""+ date + "\"\n]\n    }\n}";
+		testJsonCommand(command);
+		
+		System.out.print("\n\n==========status == 3, abnormal date ==========\n");
+        sql = "update " + TableName.SeedCaptureLog + " set " + SqlUtil.status + " = 3 where " + SqlUtil.publishDate + " = '" + date + "'";
+        DaoWrapper.executeSql(sql);
+        command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \""+ date + "\"\n]\n    }\n}";
+		testJsonCommand(command);
 	}
 	
-	private static void testSeedReq()
+	private static void testJsonSeedReq()
 	{
-		String command = "{\n    \"command\": \"SeedsByDatesRequest\",\n    \"paramList\": {\n        \"dateList\": [\n            \"2013-05-14\",\n            \"2013-05-15\",\n            \"2013-05-17\"\n        ]\n    }\n}";
-		JSONObject jsonObj = JsonUtil.createJsonObject(command);
-		if (jsonObj == null)
-		{
-			System.out.print("Invalid command");
-			return; 
-		}
+		System.out.print("\n\n==========Normal request==========\n");
+		String command = "{\n    \"id\": \"SeedsByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \"2013-05-14\",\n            \"2013-05-17\",\n            \"2013-05-18\"\n        ]\n    }\n}";
+		testJsonCommand(command);
 		
-		IJsonCommand jsonCmd = JsonCommandFactory.CreateJsonCommand(jsonObj, "127.0.0.1");
+		System.out.print("\n\n==========Normal request but all invalid date==========\n");
+		command = "{\n    \"id\": \"SeedsByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \"2014-05-14\",\n            \"2014-05-17\",\n            \"2014-05-18\"\n        ]\n    }\n}";
+		testJsonCommand(command);
 		
-		if (jsonCmd == null)
-		{
-			System.out.print("Invalid command");
-			return; 
-		}
-		PrintWriter out;
-		try {
-			out = new PrintWriter("d:/SeedsByDatesResponse.txt");
-			jsonCmd.Execute(jsonObj, out);
-			out.flush();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		// empty dateList
+		System.out.print("\n\n==========Report error of no dateList==========\n");
+		command = "{\n    \"id\": \"SeedsByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n]\n    }\n}";
+		testJsonCommand(command);
+		
+		// No dateList
+		System.out.print("\n\n==========Report error of no dateList==========\n");
+		command = "{\n    \"id\": \"SeedsByDatesRequest\",\n    \"body\": {\n        }\n}";
+		testJsonCommand(command);
+		
+		// Invalid body
+		System.out.print("\n\n==========Report error of no body==========\n");
+		command = "{\n    \"id\": \"SeedsByDatesRequest\",\n    \"paramList\": {\n        \"dateList\": [\n            \"2013-05-14\",\n            \"2013-05-17\",\n            \"2013-05-18\"\n        ]\n    }\n}";
+        testJsonCommand(command);
+		
+        // Invalid id
+        System.out.print("\n\n==========Report error of no id==========\n");
+        command = "{\n    \"id_invalid\": \"SeedsByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \"2013-05-14\",\n            \"2013-05-17\",\n            \"2013-05-18\"\n        ]\n    }\n}";
+        testJsonCommand(command);
+	}
+	
+	private static void testJsonCommand(String command)
+	{
+	    JSONObject jsonObj = JsonUtil.createJsonObject(command);
+        if (jsonObj == null)
+        {
+            return; 
+        }
+        
+        
+        PrintWriter out;
+        try {
+            out = new PrintWriter(System.out);
+            
+            IJsonCommand jsonCmd = JsonCommandFactory.CreateJsonCommand(out, jsonObj, "127.0.0.1");
+            
+            if (jsonCmd == null)
+            {
+            	out.flush();
+                return; 
+            }
+            
+            jsonCmd.Execute(jsonObj, out);
+            out.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 	
 	private static void testHtmlParse()
 	{
 		HtmlParser parser = new HtmlParser();
+		parser.setstartDate("2013-07-02");
+		parser.setendDate("2013-07-02");
 		parser.Parse();
 	}
 	
 	private static void testQuery()
 	{
-		if (DaoWrapper.exists("select * from seed"))
+		String sql = SqlUtil.getSelectSeedSql("");
+		if (DaoWrapper.exists(sql) == DBExistResult.existent)
 		{
 			LogUtil.severe("no data found");
 			return;
 		}
 		
-		List list = DaoWrapper.query("select * from seed", Seed.class);
+		List list = DaoWrapper.query(sql, Seed.class);
+		if (list == null)
+		{
+			LogUtil.severe("Exception in DB connection, check DB configuration");
+			return;
+		}
 		java.util.Iterator iter = list.iterator();
 		while (iter.hasNext())
 		{
@@ -308,12 +483,12 @@ public class Test {
 			System.out.println(((Seed)iter.next()).getSeedId());
 		}
 		
-		list = DaoWrapper.query("select * from PreviewPic where seedId = 12", PreviewPic.class);
+		list = DaoWrapper.query(SqlUtil.getSelectSeedSql(SqlUtil.seedId + " = 12"), SeedPicture.class);
 		iter = list.iterator();
 		while (iter.hasNext())
 		{
 			//System.out.println(iter.next().getClass().toString());
-			System.out.println(((PreviewPic)iter.next()).getPictureId());
+			System.out.println(((SeedPicture)iter.next()).getPictureId());
 		}
 	}
 	
@@ -327,28 +502,28 @@ public class Test {
 		seed.setMosaic("mosaic");
 		seed.setName("name");
 		
-		seed.setPublishDate(DateUtil.getNow());
+		seed.setPublishDate(DateUtil.getToday());
 		seed.setSize("size");
 		seed.setSource("source");
 		seed.setTorrentLink("torrentLink");
 		seed.setType("type");
 		
-		PreviewPic pic = new PreviewPic();
+		SeedPicture pic = new SeedPicture();
 		pic.setMemo("memo");
 		pic.setPictureLink("pictureLink");
 		seed.addPicture(pic);
 		
-		pic = new PreviewPic();
+		pic = new SeedPicture();
 		pic.setMemo("memo2");
 		pic.setPictureLink("pictureLink2");
 		seed.addPicture(pic);
 		
-		pic = new PreviewPic();
+		pic = new SeedPicture();
 		pic.setMemo("memo3");
 		pic.setPictureLink("pictureLink3");
 		seed.addPicture(pic);
 		
-		pic = new PreviewPic();
+		pic = new SeedPicture();
 		pic.setMemo("memo4");
 		pic.setPictureLink("pictureLink4");
 		seed.addPicture(pic);

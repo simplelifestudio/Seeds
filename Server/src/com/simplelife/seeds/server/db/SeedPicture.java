@@ -1,5 +1,5 @@
 /**
- * PreviewPic.java 
+ * SeedPicture.java 
  * 
  * History:
  *     2013-06-09: Tomas Chen, initial version
@@ -10,7 +10,7 @@
 
 package com.simplelife.seeds.server.db;
 
-public class PreviewPic {
+public class SeedPicture {
 	/**
 	 * @return the seedId
 	 */

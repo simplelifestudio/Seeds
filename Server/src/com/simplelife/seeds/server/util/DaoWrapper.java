@@ -16,8 +16,8 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 
-
 public class DaoWrapper {
+	
 	public DaoWrapper()
 	{
 	}
@@ -32,42 +32,64 @@ public class DaoWrapper {
 		}
 		
 		Session session = HibernateSessionFactory.getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		try
+		if (session == null)
 		{
-			SQLQuery query = session.createSQLQuery(sql);
-			query.executeUpdate();
-			tx.commit();
-			return true;
-		}
-		catch(Exception e)
-		{
-			LogUtil.printStackTrace(e);
-			tx.rollback();
-			return false;
-			//_logger.log(Level.SEVERE, "Error occurred when execute sql, error: " + e.getMessage() + ", sql: " + sql);
-		}
-	}
-	
-	public static boolean exists(String sql)
-	{
-		if (sql == null || sql.length() == 0)
-		{
-			LogUtil.severe("Invalid SQL string: " + sql);
+			LogUtil.severe("Null hibernate session, check DB parameters");
 			return false;
 		}
 		
 		try
 		{
-			Session _session = HibernateSessionFactory.getCurrentSession();
-			SQLQuery query = _session.createSQLQuery(sql); 
-			return query.list().size() > 0;
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(sql);
+			query.executeUpdate();
+			session.getTransaction().commit();
+			return true;
 		}
 		catch(Exception e)
 		{
+		    LogUtil.severe(sql);
 			LogUtil.printStackTrace(e);
-			//_logger.log(Level.SEVERE, "Error occurred when execute sql, error: " + e.getMessage() + ", sql: " + sql);
+			if (session.getTransaction() != null)
+			{
+				session.getTransaction().rollback();
+			}
 			return false;
+		}
+	}
+	
+	public static DBExistResult exists(String sql)
+	{
+		if (sql == null || sql.length() == 0)
+		{
+			LogUtil.severe("Invalid SQL string: " + sql);
+			return DBExistResult.nonExistent;
+		}
+		
+		Session session = HibernateSessionFactory.getCurrentSession();
+		if (session == null)
+		{
+			LogUtil.severe("Null hibernate session, check DB parameters");
+			return DBExistResult.errorOccurred;
+		}
+		
+		try
+		{
+			SQLQuery query = session.createSQLQuery(sql); 
+			if (query.list().size() > 0)
+			{
+				return DBExistResult.existent;
+			}
+			else
+			{
+				return DBExistResult.nonExistent;
+			}
+		}
+		catch(Exception e)
+		{
+		    LogUtil.severe(sql);
+			LogUtil.printStackTrace(e);
+			return DBExistResult.errorOccurred;
 		}
 
 	}
@@ -80,55 +102,76 @@ public class DaoWrapper {
 			return null;
 		}
 		
+		Session session = HibernateSessionFactory.getCurrentSession();
+	    if (session == null)
+		{
+			LogUtil.severe("Null hibernate session, check DB parameters");
+			return null;
+		}
+	    
 	    try
 	    {
-		    Session _session = HibernateSessionFactory.getCurrentSession();
-		    SQLQuery query = _session.createSQLQuery(sql).addEntity(objClass); 
+		    SQLQuery query = session.createSQLQuery(sql).addEntity(objClass); 
 	    	return query.list();
 		}
 		catch(Exception e)
 		{
+		    LogUtil.severe(sql);
 			LogUtil.printStackTrace(e);
-			//_logger.log(Level.SEVERE, "Error occurred when execute sql, error: " + e.getMessage() + ", sql: " + sql);
 			return null;
 		}
 	}
 	
 	public static void delete(Object obj)
 	{
+		Session session = HibernateSessionFactory.getCurrentSession();
+		if (session == null)
+		{
+			LogUtil.severe("Null hibernate session, check DB parameters");
+			return;
+		}
+		
 		try
 		{
-			Session _session = HibernateSessionFactory.getCurrentSession();
-			_session.beginTransaction();
-			_session.delete(obj);
-			_session.getTransaction().commit();
+			session.beginTransaction();
+			session.delete(obj);
+			session.getTransaction().commit();
 		}
 		catch(Exception e)
 		{
+			if (session.getTransaction() != null)
+			{
+				session.getTransaction().rollback();
+			}
 			LogUtil.printStackTrace(e);
-			//_logger.log(Level.SEVERE, "Error occurred when delete object from DB, error: " + e.getMessage() + ", obj: " + obj.toString());
 		}
 
 	}
 	
 	public static void save(Object obj)
 	{
+		Session session = HibernateSessionFactory.getCurrentSession();
+		if (session == null)
+		{
+			LogUtil.severe("Null hibernate session, check DB parameters");
+			return;
+		}
+		
 		try
 		{
-			Session _session = HibernateSessionFactory.getCurrentSession();	
 			LogUtil.info("Start to save data to DB");
-			_session.beginTransaction();
-			_session.save(obj);
-			_session.getTransaction().commit();
+			session.beginTransaction();
+			session.save(obj);
+			session.getTransaction().commit();
 			LogUtil.info("Save data succeed");
 		}
 		catch(Exception e)
 		{
-			Session _session = HibernateSessionFactory.getCurrentSession();		
-			_session.getTransaction().rollback();
+			if (session.getTransaction() != null)
+			{
+				session.getTransaction().rollback();
+			}
 			LogUtil.printStackTrace(e);
-			//_logger.log(Level.SEVERE, "Error occurred when saving data to DB: " + e.getMessage());
-			//_logger.log(Level.SEVERE, obj.toString());
 		}
 	}
 }

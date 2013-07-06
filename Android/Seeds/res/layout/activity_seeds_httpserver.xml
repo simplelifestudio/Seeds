@@ -3,19 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    
-    <!-- Title Bar is horizontal with a single text view -->
-    <LinearLayout style="@style/HttpTitleBar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            style="@style/HttpTitleText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Android HTTP Server" />
-    
-    </LinearLayout>
-    
+       
     <!-- Main content is vertical linear, with a horizontal linear for control buttons followed by a horizontal
 text view -->
     <LinearLayout style="@style/HttpMain">       

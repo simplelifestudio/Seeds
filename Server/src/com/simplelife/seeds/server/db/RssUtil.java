@@ -8,30 +8,33 @@
  */
 package com.simplelife.seeds.server.db;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.http.NameValuePair;
+
+import com.simplelife.seeds.server.parser.TorrentDownloader;
 import com.simplelife.seeds.server.util.DaoWrapper;
 import com.simplelife.seeds.server.util.DateUtil;
+import com.simplelife.seeds.server.util.HttpUtil;
 import com.simplelife.seeds.server.util.LogUtil;
+import com.simplelife.seeds.server.util.SqlUtil;
 import com.sun.syndication.feed.rss.Channel;
 import com.sun.syndication.feed.rss.Description;
 import com.sun.syndication.feed.rss.Item;
 import com.sun.syndication.io.WireFeedOutput;
 
 public class RssUtil {
-	public static String subscribe(String userName)
+	public String browseRss(String cartId)
 	{
 		Channel channel = new Channel("rss_2.0");
-		channel.setEncoding("UTF-8");
-		setChannelHeader(userName, channel);
+		setChannelHeader(cartId, channel);
 		String output = "";
 		try {
 			// Query subscribes of this user
-			String sql = "Select Seed.seedId,type,source,publishDate,name,size,format, torrentLink, hash,mosaic, memo "
-					+ "from Seed, SeedSubscribe "
-			        + "where SeedSubscribe.userName = '" + userName + "' and Seed.seedId = SeedSubscribe.seedId";
+			String sql = SqlUtil.getSelectRssContentSql(cartId);
 			List<Seed> seeds = DaoWrapper.query(sql, Seed.class);
 			
 			if (seeds != null)
@@ -60,8 +63,9 @@ public class RssUtil {
 		return output;
 	}
 	
-	private static void setChannelHeader(String userName, Channel channel)
+	private static void setChannelHeader(String cartId, Channel channel)
 	{
+		channel.setEncoding("UTF-8");
         channel.setTitle("Seeds");
         channel.setEncoding("UTF-8");
         
@@ -89,12 +93,21 @@ public class RssUtil {
 		
 		Item item = new Item();
 		item.setTitle(seed.getName());
-		item.setLink(seed.getTorrentLink());
-        
+		
+		String torrentFile = "torrent/" + seed.getSeedId() + ".torrent";
+		File file = new File(HttpUtil.getAbsolutePath(torrentFile));
+		if (!file.exists())
+		{
+		    LogUtil.info("Torrent is not existent: " + file.getAbsolutePath());
+		    TorrentDownloader dl = new TorrentDownloader(seed.getTorrentLink(), torrentFile);
+		    dl.start();
+		}
+		
+		item.setLink(HttpUtil.getFullLink(torrentFile));
         Description desc = new Description();
         desc.setValue(seed.toString());
         item.setDescription(desc);
-  
+
         items.add(item);
 	}
 }

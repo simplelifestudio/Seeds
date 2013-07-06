@@ -1,5 +1,5 @@
 /**
- * SeedsServlet.java 
+ * SeedServiceServlet.java 
  * 
  * History:
  *     2013-06-09: Tomas Chen, initial version
@@ -21,26 +21,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.simplelife.seeds.server.json.IJsonCommand;
+import com.simplelife.seeds.server.json.JsonCommandBase;
 import com.simplelife.seeds.server.json.JsonCommandFactory;
 import com.simplelife.seeds.server.json.JsonUtil;
+import com.simplelife.seeds.server.util.ErrorCode;
 import com.simplelife.seeds.server.util.LogUtil;
 
 import net.sf.json.JSONObject;
 
 /**
- * Servlet implementation class SeedsServlet
+ * Servlet implementation class SeedServiceServlet
  */
-@WebServlet("/messageListener")
-public class SeedsServlet extends HttpServlet {
-	private final String _seedsMIME = "application/json";
-	// private final String _jsonRequestKeyword = "command";
+@WebServlet("/seedService")
+public class SeedServiceServlet extends HttpServlet {
+	private final String seedsMIME = "application/json";
 
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public SeedsServlet() {
+	public SeedServiceServlet() {
 		super();
 	}
 
@@ -75,9 +76,10 @@ public class SeedsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		LogUtil.info("Beginning of doPost, proceed request from client");
-		response.setContentType(_seedsMIME);
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType(seedsMIME);
 
-		if (!_seedsMIME.equals(request.getContentType())) {
+		if (!seedsMIME.equals(request.getContentType())) {
 			LogUtil.warning("Invalid MIME found from client: " + request.getContentType());
 		}
 
@@ -86,14 +88,14 @@ public class SeedsServlet extends HttpServlet {
 		LogUtil.info("JSON command received: " + command);
 		
 		JSONObject jsonObj = JsonUtil.createJsonObject(command);
+		PrintWriter out = response.getWriter();
 		if (jsonObj == null) {
 			LogUtil.severe( "Invalid command received: \n" + command);
+			JsonCommandBase cmdBase = new JsonCommandBase();
+			cmdBase.responseInvalidRequest(ErrorCode.IllegalMessage, "Illegal message." , command, out);
 			return;
 		}
 
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType(_seedsMIME);
-		PrintWriter out = response.getWriter();
 		executeCommand(jsonObj, out, request);
 	}
 
@@ -132,11 +134,12 @@ public class SeedsServlet extends HttpServlet {
 	 *            : output stream of http response
 	 */
 	private void executeCommand(JSONObject jsonObj, PrintWriter out, HttpServletRequest request) {
-		IJsonCommand jsonCmd = JsonCommandFactory.CreateJsonCommand(jsonObj, request.getLocalAddr());
+		IJsonCommand jsonCmd = JsonCommandFactory.CreateJsonCommand(out, jsonObj, request.getLocalAddr());
 		
 		if (jsonCmd == null)
 		{
-			return; 
+		    //out.print("Invalid JSON command received: \n" + jsonObj.toString());
+			return;
 		}
 		
 		jsonCmd.Execute(jsonObj, out);

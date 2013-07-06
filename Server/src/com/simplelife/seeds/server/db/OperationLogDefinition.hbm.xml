@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.simplelife.seeds.server">
-    <class name="GlobalLogDefinition" table="GlobalLogDefinition">
+    <class name="OperationLogDefinition" table="OperationLogDefinition">
         <id name="id" type="long" > 
             <column name="id" sql-type="int" not-null="true"/>
             <generator class="native"/>

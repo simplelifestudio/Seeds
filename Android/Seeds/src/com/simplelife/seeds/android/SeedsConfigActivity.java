@@ -15,7 +15,9 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
+import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -37,10 +39,17 @@ public class SeedsConfigActivity extends Activity {
 	private boolean mRadioTwoChecked = false;
 	private boolean mRadioThreeChecked = false;
 	
+	// For log purpose
+	private SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_seeds_config);			
+		setContentView(R.layout.activity_seeds_config);
+		
+		// Set a title for this page
+		ActionBar tActionBar = getActionBar();
+		tActionBar.setTitle(R.string.seeds_config_page);
 	}
 	
     /* Called when the user clicks the Verify button */
@@ -66,14 +75,11 @@ public class SeedsConfigActivity extends Activity {
 		    	try{
 		    		mResponse = SeedsNetworkProcess.sendAlohaReqMsg(mServerUrl);    		 
 				} catch (ClientProtocolException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mLogger.excep(e);
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mLogger.excep(e);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mLogger.excep(e);
 				}
 				Message t_MsgListData = new Message();
 				t_MsgListData.what = 0;									

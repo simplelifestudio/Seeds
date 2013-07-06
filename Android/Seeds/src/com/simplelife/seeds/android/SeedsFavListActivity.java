@@ -29,9 +29,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class SeedsFavListActivity extends Activity{
-	// Let us define some parameters here
-	//public static final String KEY_SONG = "song"; // parent node
-	//public static final String KEY_ID = "id";
+
 	public static final String KEY_TITLE  = "name";
 	public static final String KEY_SIZE   = "size";
 	public static final String KEY_FORMAT = "format";

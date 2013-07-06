@@ -1,5 +1,5 @@
 /**
- * SeedCaptureServlet.java 
+ * SeedCaptureServiceServlet.java 
  * 
  * History:
  *     2013-06-09: Tomas Chen, initial version
@@ -20,12 +20,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.simplelife.seeds.server.parser.HtmlParser;
 import com.simplelife.seeds.server.util.LogUtil;
 
-@WebServlet("/SeedCaptureRequest")
-public class SeedCaptureServlet extends HttpServlet
+@WebServlet("/seedCaptureService")
+public class SeedCaptureServiceServlet extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
 
-    public SeedCaptureServlet()
+    public SeedCaptureServiceServlet()
     {
         super();
     }

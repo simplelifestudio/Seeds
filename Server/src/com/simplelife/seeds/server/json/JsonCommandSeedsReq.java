@@ -12,43 +12,47 @@ package com.simplelife.seeds.server.json;
 import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
-import com.simplelife.seeds.server.db.PreviewPic;
+import com.simplelife.seeds.server.db.SeedPicture;
 import com.simplelife.seeds.server.db.Seed;
 import com.simplelife.seeds.server.util.DaoWrapper;
+import com.simplelife.seeds.server.util.ErrorCode;
+import com.simplelife.seeds.server.util.JsonKey;
 import com.simplelife.seeds.server.util.LogUtil;
+import com.simplelife.seeds.server.util.SqlUtil;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class JsonCommandSeedsReq extends JsonCommandBase
 {
-    private final static String jsonCommandKeyword = "command";
-    private final static String jsonParaListKeyword = "paramList";
-    private final static String jsonDateListKeyword = "dateList";
-    private final static String jsonCommandSeedsByDatesRes = "SeedsByDatesResponse";
-
     @Override
     public void Execute(JSONObject jsonObj, PrintWriter out)
     {
+    	super.Execute(jsonObj, out);
+    	
         try {
             LogUtil.info("Start to Execute SeedsUpdateStatusByDatesRequest");
-            String strParaList = jsonObj.getString(jsonParaListKeyword);
+            String strParaList = jsonObj.getString(JsonKey.body);
             JSONObject paraObj = JSONObject.fromObject(strParaList);
 
             if (paraObj == null) {
-                LogUtil.severe("Invalid SeedsUpdateStatusByDatesRequest command received: " + jsonObj.toString());
-                responseInvalidRequest(out);
+                String err = "Invalid Json format, " + JsonKey.body +" can't be found: " + jsonObj.toString();
+                LogUtil.severe(err);
+                responseInvalidRequest(ErrorCode.IllegalMessageBody, err);
                 return;
             }
 
-            JSONArray dateList = paraObj.getJSONArray(jsonDateListKeyword);
+            JSONArray dateList = paraObj.getJSONArray(JsonKey.dateList);
             if (dateList == null || dateList.size() == 0) {
-                LogUtil.severe("Invalid SeedsUpdateStatusByDatesRequest command received: " + jsonObj.toString());
-                responseInvalidRequest(out);
+                String err = "Invalid Json format, " + JsonKey.dateList +" can't be found or may be empty.";
+                LogUtil.severe(err + jsonObj.toString());
+                responseInvalidRequest(ErrorCode.IllegalMessageBody, err);
                 return;
             }
 
             responseNormalRequest(dateList, out);
         } catch (Exception e) {
+        	responseInvalidRequest(ErrorCode.IllegalMessageBody, e.getMessage());
             LogUtil.printStackTrace(e);
         }
     }
@@ -73,35 +77,24 @@ public class JsonCommandSeedsReq extends JsonCommandBase
 
         strBuilder.deleteCharAt(strBuilder.length() - 2); // remove , for last
                                                           // date
-        strBuilder.append("}\n}");
+        strBuilder.append("}\n}\n");
 
         out.write(strBuilder.toString());
         LogUtil.info("Response SeedsUpdateStatusByDatesRequest successfully: " + strDateList);
-
-        /*
-         * if (strBuilder.length() > 200) { LogUtil.info(strBuilder.toString());
-         * } else { LogUtil.info(strBuilder.substring(0, 200)); }
-         */
     }
 
-    private void responseInvalidRequest(PrintWriter out)
-    {
-        StringBuilder strBuilder = new StringBuilder();
-        strBuilder.append("}");
-        out.write(strBuilder.toString());
-    }
-
-    private void responseJsonHeader(StringBuilder strBuilder)
+    @Override
+    protected void responseJsonHeader(StringBuilder strBuilder)
     {
         strBuilder.append("{\n");
         strBuilder.append("\"");
-        strBuilder.append(jsonCommandKeyword);
+        strBuilder.append(JsonKey.id);
         strBuilder.append("\":\"");
-        strBuilder.append(jsonCommandSeedsByDatesRes);
+        strBuilder.append(JsonKey.commandSeedsByDatesResponse);
         strBuilder.append("\",\n");
 
         strBuilder.append("\"");
-        strBuilder.append(jsonParaListKeyword);
+        strBuilder.append(JsonKey.body);
         strBuilder.append("\":{\n");
     }
 
@@ -116,8 +109,7 @@ public class JsonCommandSeedsReq extends JsonCommandBase
 
     private void responseSeedDetails(String strDate, StringBuilder strBuilder)
     {
-        String sql = "Select seedId,type,source,publishDate,name,size,format, torrentLink, hash,mosaic, memo " + " from Seed"
-                + " where publishDate = '" + strDate + "'";
+    	String sql = SqlUtil.getSelectSeedSql(SqlUtil.getPublishDateCondition(strDate));
         List<Seed> seeds = DaoWrapper.query(sql, Seed.class);
         
         if (seeds != null)
@@ -131,35 +123,41 @@ public class JsonCommandSeedsReq extends JsonCommandBase
 	            responsePictureLinks(seed.getSeedId(), strBuilder);
 	            strBuilder.append("},\n");
 	        }
-	        strBuilder.deleteCharAt(strBuilder.length() - 2);
+	        
+	        if (seeds.size() > 0)
+	        {
+	        	strBuilder.deleteCharAt(strBuilder.length() - 2);
+	        }
         }
     }
 
     private void responsePictureLinks(Long seedId, StringBuilder strBuilder)
     {
-        strBuilder.append("\"piclinks\":[\n");
-        String sql = "select pictureId, seedId, pictureLink, memo " + "from PreviewPic where seedId = " + seedId.toString()
-                + " order by pictureId";
-
-        List<PreviewPic> pics = DaoWrapper.query(sql, PreviewPic.class);
+        String sql = SqlUtil.getSelectSeedPictureSql(SqlUtil.getSeedIdCondition(seedId));
+        List<SeedPicture> pics = DaoWrapper.query(sql, SeedPicture.class);
         
+        strBuilder.append("\"piclinks\":[\n");
         if (pics != null)
         {
-	        Iterator<PreviewPic> it = pics.iterator();
-	        PreviewPic prePic;
+	        Iterator<SeedPicture> it = pics.iterator();
+	        SeedPicture prePic;
 	        while (it.hasNext()) {
 	            prePic = it.next();
 	            strBuilder.append("\"");
 	            strBuilder.append(prePic.getPictureLink());
 	            strBuilder.append("\",\n");
 	        }
-	        strBuilder.deleteCharAt(strBuilder.length() - 2); // Remove last ","
+	        if (pics.size() > 0)
+	        {
+	            strBuilder.deleteCharAt(strBuilder.length() - 2); // Remove last ","
+	        }
         }
         strBuilder.append("]\n");
     }
 
     private void responseOneSeedFields(Seed seed, StringBuilder strBuilder)
     {
+        responseField(Long.toString(seed.getSeedId()), "seedId", strBuilder);
         responseField(seed.getType(), "type", strBuilder);
         responseField(seed.getSource(), "source", strBuilder);
         responseField(seed.getPublishDate(), "publishDate", strBuilder);
