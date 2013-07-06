@@ -92,7 +92,7 @@
         
         [self presentModalViewController:warningVC animated:NO];
         
-        [warningVC setCountdownSeconds:15];
+        [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS * 2];
         [warningVC setWarningText:NSLocalizedString(@"Warning of App First Launched", nil)];
     }
 }
@@ -209,7 +209,7 @@
         
         [warningVC setAgreeButtonVisible:NO];
         [warningVC setDeclineButtonVisible:NO];
-        [warningVC setCountdownSeconds:5];
+        [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS];
         [warningVC setWarningText:NSLocalizedString(@"Passcode failed attempts is too much, app will be terminated once countdown is end.", nil)];
     }
 }

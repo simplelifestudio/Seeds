@@ -180,6 +180,7 @@
 		C5F8AC4E174A3B72001E30D1 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = C5F8AC4D174A3B72001E30D1 /* index.html */; };
 		C5F8AC50174B9807001E30D1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */; };
 		C5F8AC5F174BC3B9001E30D1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F8AC5E174BC3B9001E30D1 /* Reachability.m */; };
+		C5F964CE1788D682001BAB5D /* DownloadSeedListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F964CD1788D682001BAB5D /* DownloadSeedListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -499,6 +500,8 @@
 		C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C5F8AC5D174BC3B9001E30D1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		C5F8AC5E174BC3B9001E30D1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		C5F964CC1788D682001BAB5D /* DownloadSeedListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadSeedListViewController.h; sourceTree = "<group>"; };
+		C5F964CD1788D682001BAB5D /* DownloadSeedListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadSeedListViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -941,14 +944,16 @@
 				C53B64411781C0FA0028DC41 /* WarningViewController.m */,
 				C5964C32172234C300CC1C0A /* HomeViewController.h */,
 				C5964C33172234C300CC1C0A /* HomeViewController.m */,
-				C5964C38172239D800CC1C0A /* SeedListViewController.h */,
-				C5964C39172239D800CC1C0A /* SeedListViewController.m */,
 				C5964C3B17223A0C00CC1C0A /* HelpViewController.h */,
 				C5964C3C17223A0C00CC1C0A /* HelpViewController.m */,
 				C5203D7C17479C8200D917F7 /* ConfigViewController.h */,
 				C5203D7D17479C8400D917F7 /* ConfigViewController.m */,
+				C5964C38172239D800CC1C0A /* SeedListViewController.h */,
+				C5964C39172239D800CC1C0A /* SeedListViewController.m */,
 				C5964C3E17223A6800CC1C0A /* FavoriteSeedListViewController.h */,
 				C5964C3F17223A6800CC1C0A /* FavoriteSeedListViewController.m */,
+				C5F964CC1788D682001BAB5D /* DownloadSeedListViewController.h */,
+				C5F964CD1788D682001BAB5D /* DownloadSeedListViewController.m */,
 				C5203D7617477E8300D917F7 /* TransmitViewController.h */,
 				C5203D7717477E8400D917F7 /* TransmitViewController.m */,
 				C5964C4117223A9200CC1C0A /* SeedDetailViewController.h */,
@@ -1395,6 +1400,7 @@
 				C53B644517824CF00028DC41 /* TableViewLabelCell.m in Sources */,
 				C53B644C178253580028DC41 /* TableViewButtonCell.m in Sources */,
 				C541D0771782850F00E4F560 /* CBMathUtils.m in Sources */,
+				C5F964CE1788D682001BAB5D /* DownloadSeedListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

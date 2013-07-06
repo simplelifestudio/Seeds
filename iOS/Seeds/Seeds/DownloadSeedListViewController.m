@@ -1,19 +1,19 @@
 //
-//  FavoriteSeedListViewController.m
+//  DownloadSeedListViewController.m
 //  Seeds
 //
-//  Created by Patrick Deng on 13-4-20.
+//  Created by Patrick Deng on 13-7-7.
 //  Copyright (c) 2013年 SimpleLife Studio. All rights reserved.
 //
 
-#import "FavoriteSeedListViewController.h"
+#import "DownloadSeedListViewController.h"
 
 #import "CBNotificationListenable.h"
 #import "CBFileUtils.h"
 
-@interface FavoriteSeedListViewController () <CBNotificationListenable>
+@interface DownloadSeedListViewController () <CBNotificationListenable>
 {
-    SeedsDownloadAgent* _downloadAgent;    
+    SeedsDownloadAgent* _downloadAgent;
     
     NSArray* _seedList;
     NSArray* _firstSeedPictureList;
@@ -27,7 +27,7 @@
     NSMutableArray* _pageFirstSeedPictureList;
     PagingToolbar* _pagingToolbar;
     
-    NSUInteger _currentPage;    
+    NSUInteger _currentPage;
 }
 
 @property UIBarButtonItem* editBarButton;
@@ -38,7 +38,7 @@
 
 @end
 
-@implementation FavoriteSeedListViewController
+@implementation DownloadSeedListViewController
 
 @synthesize editBarButton = _editBarButton;
 @synthesize selectAllBarButton = _selectAllBarButton;
@@ -46,9 +46,9 @@
 @synthesize cancelBarButton = _cancelBarButton;
 @synthesize selectedIndexPathInTableReadingMode = _selectedIndexPathInTableReadingMode;
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
         [self _setupViewController];
@@ -77,9 +77,9 @@
     [self.navigationController setToolbarHidden:YES];
     [self.navigationController.view addSubview:_pagingToolbar];
     
-    [self _refetchFavoriteSeedsFromDatabase];
+    [self _refetchDownloadSeedsFromAgent];
     
-    [self listenNotifications];    
+    [self listenNotifications];
     
     [super viewWillAppear:animated];
 }
@@ -90,7 +90,7 @@
     
     [self onCancelBarButtonClicked];
     
-    [self unlistenNotifications];    
+    [self unlistenNotifications];
     
     [super viewWillDisappear:animated];
 }
@@ -136,7 +136,7 @@
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{    
+{
 	if (self.tableView.isEditing)
     {
         NSArray* selectedRows = [self.tableView indexPathsForSelectedRows];
@@ -163,10 +163,10 @@
         {
             _selectedIndexPathInTableReadingMode = indexPath;
         }
-    
+        
         _selectedSeed = [_pageSeedList objectAtIndex:indexPath.row];
         
-        [self performSegueWithIdentifier:SEGUE_ID_FAVORITESEEDLIST2SEEDDETAIL sender:self];
+        [self performSegueWithIdentifier:SEGUE_ID_DOWNLOADSEEDLIST2SEEDDETAIL sender:self];
     }
 }
 
@@ -194,7 +194,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:SEGUE_ID_FAVORITESEEDLIST2SEEDDETAIL])
+    if ([[segue identifier] isEqualToString:SEGUE_ID_DOWNLOADSEEDLIST2SEEDDETAIL])
     {
         if ([segue.destinationViewController isKindOfClass:[SeedDetailViewController class]])
         {
@@ -251,14 +251,15 @@
             NSIndexPath* indexPath = [selectedRows objectAtIndex:index];
             NSUInteger recordIndex = indexPath.row;
             Seed* seed = [_pageSeedList objectAtIndex:recordIndex];
-            [self _favoriteSeed:seed favorite:NO];
+
+            [_downloadAgent deleteDownloadedSeed:seed];
         }
         
         [self onCancelBarButtonClicked];
         
-        [self _refetchFavoriteSeedsFromDatabase];
+        [self _refetchDownloadSeedsFromAgent];
         
-//        [self _showHUD:NSLocalizedString(@"Delete Done", nil)];
+        //        [self _showHUD:NSLocalizedString(@"Delete Done", nil)];
     }
 }
 
@@ -284,27 +285,12 @@
     [self _scrollToTableViewTop];
 }
 
-#pragma mark - Private Methods
-
 -(void) _showHUD:(NSString*) majorStatus
 {
-    [_HUD show:YES];    
+    [_HUD show:YES];
     _HUD.mode = MBProgressHUDModeText;
     _HUD.labelText = majorStatus;
     [_HUD hide:YES afterDelay:1];
-}
-
--(void) _favoriteSeed:(Seed*) seed favorite:(BOOL) favorite
-{
-    if (nil == seed)
-    {
-        return;
-    }
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
-        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-        [seedDAO favoriteSeed:seed andFlag:favorite];
-    });
 }
 
 - (void) _setupViewController
@@ -390,7 +376,7 @@
     [self.navigationController setNavigationBarHidden:FALSE];
     _selectAllBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"SelectAll", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onSelectAllBarButtonClicked)];
     _editBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Edit", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onEditBarButtonClicked)];
-    _deleteBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Unfavorite", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onDeleteBarButtonClicked)];
+    _deleteBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Delete", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onDeleteBarButtonClicked)];
     _cancelBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(onCancelBarButtonClicked)];
 }
 
@@ -432,7 +418,7 @@
         if (_pagingToolbar.currentPage != _currentPage)
         {
             _pagingToolbar.currentPage = _currentPage;
-        }        
+        }
         
         NSUInteger pageStartIndex = [_pagingToolbar pageStartItemIndex];
         NSUInteger pageEndIndex = [_pagingToolbar pageEndItemIndex];
@@ -458,11 +444,11 @@
     [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
 }
 
-- (void) _refetchFavoriteSeedsFromDatabase
+- (void) _refetchDownloadSeedsFromAgent
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
-        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-        _seedList = [seedDAO getFavoriteSeeds];
+
+        _seedList = [_downloadAgent downloadedSeedList];
         
         NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:_seedList.count];
         for (Seed* seed in _seedList)

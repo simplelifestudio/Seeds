@@ -151,6 +151,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define STORYBOARD_ID_SEEDPICTUREVIEWCONTROLLER @"sbid_seedpictureviewcontroller"
 #define STORYBOARD_ID_TRANSMISSIONVIEWCONTROLLER @"sbid_transmissionviewcontroller"
 #define STORYBOARD_ID_FAVORITESEEDLISTVIEWCONTROLLER @"sbid_favoriteseedlistviewcontroller"
+#define STORYBOARD_ID_DOWNLOADSEEDLISTVIEWCONTROLLER @"sbid_downloadseedlistviewcontroller"
 #define STORYBOARD_ID_WARNINGVIEWCONTROLLER @"sbid_warningviewcontroller"
 
 #define SEGUE_ID_SPLASH2NAVIGATION @"splash2navigation"
@@ -162,6 +163,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define SEGUE_ID_SEEDLIST2SEEDDETAIL @"seedlist2seeddetail"
 #define SEGUE_ID_SEEDDETAIL2SEEDPICTURE @"seeddetail2seedpicture"
 #define SEGUE_ID_FAVORITESEEDLIST2SEEDDETAIL @"favoriteseedlist2seeddetail"
+#define SEGUE_ID_DOWNLOADSEEDLIST2SEEDDETAIL @"download seedlist2seeddetail"
 
 #define UI_RENDER_SEEDLISTTABLECELL 1
 #define CELL_ID_SEEDLISTTABLECELL @"SeedListTableCell"
