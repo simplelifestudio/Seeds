@@ -38,7 +38,7 @@
 
 "Preparing" = "准备";
 "Stamps Computing" = "日期计算";
-"Pulling" = "同步";
+"Pulling" = "更新";
 "Status Checking" = "状态检测";
 "Link Analyzing" = "数据分析";
 "Seeds Parsing" = "种子解析";
@@ -50,8 +50,8 @@
 "Status Saving" = "状态保存";
 "Fail Analyzing" = "分析失败";
 "No Update" = "没有更新";
-"Pulled Yet" = "已同步过";
-"Sync Yet" = "已同步过";
+"Pulled Yet" = "已更新过";
+"Sync Yet" = "已更新过";
 "Completed" = "完成";
 "Folder Exception" = "目录异常";
 

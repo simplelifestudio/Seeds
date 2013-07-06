@@ -38,7 +38,7 @@
 
 "Preparing" = "Preparing";
 "Stamps Computing" = "Stamps Computing";
-"Pulling" = "Synchronizing";
+"Pulling" = "Updating";
 "Status Checking" = "Status Checking";
 "Link Analyzing" = "Data Analyzing";
 "Seeds Parsing" = "Seeds Parsing";
@@ -50,8 +50,8 @@
 "Status Saving" = "Status Saving";
 "Fail Analyzing" = "Fail Analyzing";
 "No Update" = "No Update";
-"Pulled Yet" = "Sync Yet";
-"Sync Yet" = "Sync Yet";
+"Pulled Yet" = "Updated Yet";
+"Sync Yet" = "Updated Yet";
 "Completed" = "Completed";
 "Folder Exception" = "Folder Exception";
 
