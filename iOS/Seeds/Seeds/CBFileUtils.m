@@ -28,10 +28,10 @@
 {
     NSAssert(nil != zipFilePath && 0 < zipFilePath.length, @"Invalid zip file path.");
     
+    ZipFile *zip = [[ZipFile alloc] initWithFileName:zipFilePath mode:ZipFileModeCreate];
+    
     if (nil != files && 0 < files.count)
-    {        
-        ZipFile *zip = [[ZipFile alloc] initWithFileName:zipFilePath mode:ZipFileModeCreate];
-        
+    {
         for (NSString* file in files)
         {
             NSString* fileName = [file lastPathComponent];
@@ -42,7 +42,7 @@
                 NSData* fileData = [self dataFromFile:file];
                 [writeStream writeData:fileData];
                 [writeStream finishedWriting];
-
+                
             }
             @catch (NSException *e)
             {
@@ -55,8 +55,9 @@
                 
             }
         }
-        [zip close];
     }
+
+    [zip close];
     
     return zipFilePath;
 }
