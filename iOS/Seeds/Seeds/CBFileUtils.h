@@ -29,6 +29,7 @@
 +(NSDate*) fileLastUpdateTime:(NSString*) fileFullPath;
 +(BOOL) deleteFile:(NSString*) fileFullPath;
 +(BOOL) createFile:(NSString*) fileFullPath content:(id) content;
++(BOOL) createDirectory:(NSString*) dirFullPath;
 +(BOOL) isFileExists:(NSString*) fileFullPath;
 
 @end

@@ -221,4 +221,17 @@
     return flag;
 }
 
++(BOOL) createDirectory:(NSString*) dirFullPath
+{
+    BOOL flag = NO;
+    
+    if (nil != dirFullPath && 0 < dirFullPath.length)
+    {
+        NSFileManager* fm = [NSFileManager defaultManager];
+        flag = [fm createDirectoryAtPath:dirFullPath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    
+    return flag;
+}
+
 @end
