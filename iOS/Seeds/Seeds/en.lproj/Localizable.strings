@@ -64,7 +64,7 @@
 "Transmission is cancel." = "Transmission is cancel...";
 "Torrents directory failed to create." = "Torrents directory failed to create.";
 "Torrent files are preparing..." = "Torrent files are preparing...";
-"Torrent files are packaging..." = "Torrent files are packaging...";
+"[%@] %d torrent files are packaging..." = "[%@] %d torrent files are packaging...";
 "Clearning old files..." = "Clearning old files...";
 "Web page is generating..." = "Web page is generating...";
 "Web page generation is fail." = "Web page generation is fail...";

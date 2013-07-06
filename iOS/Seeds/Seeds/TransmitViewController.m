@@ -208,7 +208,8 @@ if (_cancelTransmission)\
         NSString* dayFolderPath = [downloadPath stringByAppendingPathComponent:dayStr];
         NSArray* files = [CBFileUtils filesInDirectory:dayFolderPath fileExtendName:FILE_EXTENDNAME_TORRENT];
         
-        [self _updateConsole:NSLocalizedString(@"Torrent files are packaging...", nil)];
+        NSString* info = [NSString stringWithFormat:NSLocalizedString(@"[%@] %d torrent files are packaging...", nil), dayStr, files.count];
+        [self _updateConsole:info];
         NSMutableString* zipName = [NSMutableString stringWithString:downloadPath];
         [zipName appendString:@"/"];
         [zipName appendString:dayStr];
