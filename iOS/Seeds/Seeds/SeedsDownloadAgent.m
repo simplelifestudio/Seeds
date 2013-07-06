@@ -381,7 +381,14 @@ static NSString* _downloadPath;
 
 -(TorrentDownloadAgent*) _getTorrentDownloadAgent:(Seed*) seed
 {
-    TorrentDownloadAgent* agent = [[TorrentDownloadAgent alloc] initWithSeed:seed downloadPath:[SeedsDownloadAgent downloadPath]];
+    NSMutableString* downloadDirPath = [NSMutableString string];
+    [downloadDirPath appendString:_downloadPath];
+    [downloadDirPath appendString:@"/"];
+    NSString* publishDateStr = seed.publishDate;
+    [downloadDirPath appendString:publishDateStr];
+    [CBFileUtils createDirectory:downloadDirPath];
+    
+    TorrentDownloadAgent* agent = [[TorrentDownloadAgent alloc] initWithSeed:seed downloadPath:downloadDirPath];
     return agent;
 }
 
