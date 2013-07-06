@@ -40,15 +40,16 @@
 #define SEGMENT_INDEX_MODE_SERVER 1
 
 #define SECTION_INDEX_IMAGE 1
-#define SECTION_ITEMCOUNT_IMAGE 3
+#define SECTION_ITEMCOUNT_IMAGE 2
 #define SECTION_INDEX_IMAGE_ITEM_INDEX_3GDOWNLOAD 0
-#define SECTION_INDEX_IMAGE_ITEM_INDEX_WIFICACHE 1
-#define SECTION_INDEX_IMAGE_ITEM_INDEX_CLEARCACHE 2
+//#define SECTION_INDEX_IMAGE_ITEM_INDEX_WIFICACHE 1
+#define SECTION_INDEX_IMAGE_ITEM_INDEX_CLEARCACHE 1
 
 #define SECTION_INDEX_DATA 2
-#define SECTION_ITEMCOUNT_DATA 2
-#define SECTION_INDEX_DATA_ITEM_INDEX_CLEARFAVORITES 0
-#define SECTION_INDEX_DATA_ITEM_INDEX_CLEARDATABASE 1
+#define SECTION_ITEMCOUNT_DATA 3
+#define SECTION_INDEX_DATA_ITEM_INDEX_CLEARDOWNLOADS 0
+#define SECTION_INDEX_DATA_ITEM_INDEX_CLEARFAVORITES 1
+#define SECTION_INDEX_DATA_ITEM_INDEX_CLEARDATABASE 2
 
 #define SECTION_INDEX_PASSCODE 3
 #define SECTION_ITEMCOUNT_PASSCODE 2
@@ -67,6 +68,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     UserDefaultsModule* _userDefaults;
     CommunicationModule* _commModule;
     SeedPictureAgent* _pictureAgent;
+    SeedsDownloadAgent* _downloadAgent;
     GUIModule* _guiModule;
     
     PAPasscodeViewController* _passcodeViewController;
@@ -76,6 +78,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     TableViewButtonCell* _wifiCacheImagesCell;
     TableViewButtonCell* _clearImagesCacheCell;
     
+    TableViewButtonCell* _clearDownloadsCell;
     TableViewButtonCell* _clearFavoritesCell;
     TableViewButtonCell* _clearDatabaseCell;
     
@@ -203,11 +206,11 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
                     cell = _3GDownloadImagesCell;
                     break;
                 }
-                case SECTION_INDEX_IMAGE_ITEM_INDEX_WIFICACHE:
-                {
-                    cell = _wifiCacheImagesCell;
-                    break;
-                }
+//                case SECTION_INDEX_IMAGE_ITEM_INDEX_WIFICACHE:
+//                {
+//                    cell = _wifiCacheImagesCell;
+//                    break;
+//                }
                 case SECTION_INDEX_IMAGE_ITEM_INDEX_CLEARCACHE:
                 {
                     cell = _clearImagesCacheCell;
@@ -225,6 +228,11 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         {
             switch (rowInSection)
             {
+                case SECTION_INDEX_DATA_ITEM_INDEX_CLEARDOWNLOADS:
+                {
+                    cell = _clearDownloadsCell;
+                    break;
+                }
                 case SECTION_INDEX_DATA_ITEM_INDEX_CLEARFAVORITES:
                 {
                     cell = _clearFavoritesCell;
@@ -358,6 +366,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     
     _commModule = [CommunicationModule sharedInstance];
     _pictureAgent = _commModule.seedPictureAgent;
+    _downloadAgent = _commModule.seedsDownloadAgent;
     
     _guiModule = [GUIModule sharedInstance];
     
@@ -461,6 +470,19 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     });
 }
 
+- (void) _refreshClearDownloadsCell
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+        
+        NSUInteger count = [_downloadAgent downloadedSeedCount];
+        NSString* countStr = [NSString stringWithFormat:@"%d", count];
+        
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [_clearDownloadsCell.button setTitle:countStr forState:UIControlStateNormal];
+        });
+    });
+}
+
 - (void) _refreshRunningModeCell
 {
     BOOL isServerMode = [_userDefaults isServerMode];
@@ -495,22 +517,34 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     });
 }
 
-- (void) _clearFavoritesBothInDatabaseAndDownloadTorrentsFolder
+- (void) _clearDownloadsBusinessOnly
 {
-    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];    
+    [_downloadAgent resetAgent];
+    
+    [self _refreshClearDownloadsCell];
+}
+
+- (void) _clearDownloads
+{
+    [self _clearDownloadsBusinessOnly];
+    
+    [_guiModule showHUD:NSLocalizedString(@"Downloads Cleared", nil) delay:2];    
+}
+
+- (void) _clearFavoritesBusinessOnly
+{
+    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
     NSArray* favoriteSeeds = [seedDAO getFavoriteSeeds];
     for (Seed* seed in favoriteSeeds)
     {
         [seedDAO favoriteSeed:seed andFlag:NO];
-        NSString* torrentFileFullPath = [TorrentDownloadAgent torrentFileFullPath:seed];
-        [CBFileUtils deleteFile:torrentFileFullPath];
     }
     [self _refreshClearFavoritesCell];
 }
 
 - (void) _clearFavorites
 {
-    [self _clearFavoritesBothInDatabaseAndDownloadTorrentsFolder];
+    [self _clearFavoritesBusinessOnly];
     
     [_guiModule showHUD:NSLocalizedString(@"Favorites Cleared", nil) delay:2];
 }
@@ -525,7 +559,8 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _resetDatabase
 {
-    [self _clearFavoritesBothInDatabaseAndDownloadTorrentsFolder];
+    [self _clearFavoritesBusinessOnly];
+    [self _clearDownloadsBusinessOnly];
     
     id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
     [seedDAO deleteAllSeeds];
@@ -638,6 +673,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     [self _initWiFiCacheImagesCell];
     [self _initClearImagesCacheCell];
     
+    [self _initClearDownloadsCell];
     [self _initClearFavoritesCell];
     [self _initClearDatabaseCell];
     
@@ -709,6 +745,18 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         
         [_clearImagesCacheCell.button addTarget:self action:@selector(_clearImageCache) forControlEvents:UIControlEventTouchUpInside];
     }
+}
+
+- (void) _initClearDownloadsCell
+{
+    _clearDownloadsCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
+    
+    [_clearDownloadsCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    _clearDownloadsCell.label.text = NSLocalizedString(@"Clear Downloads", nil);
+    
+    [self _refreshClearDownloadsCell];
+    
+    [_clearDownloadsCell.button addTarget:self action:@selector(_clearDownloads) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) _initClearFavoritesCell

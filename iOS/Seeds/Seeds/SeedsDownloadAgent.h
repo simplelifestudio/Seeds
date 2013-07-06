@@ -23,11 +23,13 @@ typedef enum {SeedNotDownload, SeedWaitForDownload, SeedIsDownloading, SeedDownl
 -(void) deleteDownloadedSeed:(Seed*) seed;
 -(void) deleteDownloadedSeeds:(NSArray*) seeds;
 
+-(NSUInteger) downloadedSeedCount;
 -(NSArray*) downloadedSeedLocalIdList;
 -(NSArray*) downloadedSeedList;
 
 -(SeedDownloadStatus) checkDownloadStatus:(Seed*) seed;
 
 -(void) clearDownloadDirectory:(NSArray*) last3Days;
+-(void) resetAgent;
 
 @end

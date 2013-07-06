@@ -186,7 +186,7 @@
          [sql appendString:TABLE_SEED];
          
          if (nil != localIds && 0 < localIds.count)
-         {
+         {   
              [sql appendString:@" where"];
              int index = 0;
              for (NSString* sLocalId in localIds)
@@ -208,17 +208,19 @@
                  
                  index++;
              }
-         }
-         
-         FMResultSet* resultSet = [db executeQuery:sql];
-         array = [self resultSet2SeedList:resultSet databaseHandler:db];
-         BOOL hadError = [db hadError];
-         if (hadError)
-         {
-             DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+             
+             FMResultSet* resultSet = [db executeQuery:sql];
+             array = [self resultSet2SeedList:resultSet databaseHandler:db];
+             BOOL hadError = [db hadError];
+             if (hadError)
+             {
+                 DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+             }
+             
+             [resultSet close];
          }
 
-         [resultSet close];
+
          [db close];
      }];
     

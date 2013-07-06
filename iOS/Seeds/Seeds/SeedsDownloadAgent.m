@@ -55,6 +55,8 @@
 -(void) updateSeedStatus:(Seed*) seed status:(SeedDownloadStatus) status;
 -(void) removeSeed:(Seed*) seed;
 -(NSArray*) seedsWithStatus:(SeedDownloadStatus) status;
+-(void) resetQueue;
+-(NSUInteger) queueLength;
 
 @end
 
@@ -163,6 +165,18 @@
     }];
     
     return seeds;
+}
+
+-(void) resetQueue
+{
+    [self _syncWork:nil block:^(){
+        [_queue removeAllObjects];    
+    }];
+}
+
+-(NSUInteger) queueLength
+{
+    return _queue.count;
 }
 
 #pragma mark - Private Methods
@@ -347,6 +361,11 @@ static NSString* _downloadPath;
     }
 }
 
+-(NSUInteger) downloadedSeedCount
+{
+    return [_downloadQueue queueLength];
+}
+
 -(NSArray*) downloadedSeedLocalIdList
 {
     NSMutableArray* list = [NSMutableArray array];
@@ -399,6 +418,17 @@ static NSString* _downloadPath;
             [subDirFullPath appendString:subDirPath];
             [CBFileUtils deleteDirectory:subDirFullPath];
         }
+    }
+}
+
+-(void) resetAgent
+{
+    [_downloadQueue resetQueue];
+    
+    NSArray* files = [CBFileUtils filesInDirectory:_downloadPath fileExtendName:FILE_EXTENDNAME_TORRENT];
+    for (NSString* fileFullPath in files)
+    {
+        [CBFileUtils deleteFile:fileFullPath];
     }
 }
 

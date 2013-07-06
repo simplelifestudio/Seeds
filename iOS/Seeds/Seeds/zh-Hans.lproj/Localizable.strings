@@ -124,6 +124,8 @@
 "Images Cache Cleared" = "图片缓存已清空";
 
 "Data" = "数据";
+"Clear Downloads" = "清空下载";
+"Downloads Cleared" = "下载已清空";
 "Clear Favorites" = "清空收藏夹";
 "Favorites Cleared" = "收藏夹已清空";
 "Reset Database" = "重置数据库";
