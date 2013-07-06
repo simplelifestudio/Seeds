@@ -13,11 +13,11 @@
 @protocol TorrentDownloadAgentDelegate <NSObject>
 
 @required
--(void) torrentDownloadStarted:(NSString*) torrentCode;
--(void) torrentDownloadFinished:(NSString*) torrentCode;
--(void) torrentDownloadFailed:(NSString*) torrentCode error:(NSError*) error;
--(void) torrentSaveFinished:(NSString*) torrentCode filePath:(NSString*) filePath;
--(void) torrentSaveFailed:(NSString*) torrentCode filePath:(NSString*) filePath;
+-(void) torrentDownloadStarted:(Seed*) seed;
+-(void) torrentDownloadFinished:(Seed*) seed;
+-(void) torrentDownloadFailed:(Seed*) seed error:(NSError*) error;
+-(void) torrentSaveFinished:(Seed*) seed filePath:(NSString*) filePath;
+-(void) torrentSaveFailed:(Seed*) seed filePath:(NSString*) filePath;
 
 @end
 
@@ -30,7 +30,9 @@ typedef void (^TorrentDownloadFailBlock)(AFHTTPRequestOperation *operation, NSEr
 
 +(NSString*) torrentCode:(Seed*) seed;
 +(NSString*) torrentFileName:(Seed*) seed;
++(NSString*) torrentFileNameBySeedLocalId:(NSInteger) localId;
 +(NSString*) torrentFileFullPath:(Seed*) seed;
++(NSString*) torrentFileFullPathBySeedLocalId:(NSInteger) localId;
 
 -(id) initWithSeed:(Seed*) seed downloadPath:(NSString*) path;
 

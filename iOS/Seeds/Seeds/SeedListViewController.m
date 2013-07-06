@@ -8,10 +8,14 @@
 
 #import "SeedListViewController.h"
 
+#import "CBNotificationListenable.h"
+
 #import "PagingToolbar.h"
 
-@interface SeedListViewController ()
+@interface SeedListViewController () <CBNotificationListenable>
 {
+    SeedsDownloadAgent* _downloadAgent;
+    
     NSArray* _seedList;
     NSArray* _firstSeedPictureList;
     
@@ -67,12 +71,16 @@
     
     [self _refetchSeedsByDateFromDatabase];
     
+    [self listenNotifications];
+    
     [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [_pagingToolbar removeFromSuperview];
+    
+    [self unlistenNotifications];
     
     [super viewWillDisappear:animated];
 }
@@ -107,6 +115,10 @@
     
     [cell fillSeed:seed];
     [cell fillSeedPicture:picture];
+    
+    SeedDownloadStatus status = [_downloadAgent checkDownloadStatus:seed];
+    [cell updateDownloadStatus:status];
+    [cell updateFavoriteStatus:seed.favorite];
 
     return cell;
 }
@@ -175,6 +187,9 @@
 
     _pageSeedList = [NSMutableArray array];
     _pageFirstSeedPictureList = [NSMutableArray array];
+    
+    CommunicationModule* _commModule = [CommunicationModule sharedInstance];
+    _downloadAgent = _commModule.seedsDownloadAgent;
     
     [self _registerGestureRecognizers];
 }
@@ -292,6 +307,64 @@
         
         [self _constructTableDataByPage];
     });
+}
+
+-(NSInteger) _cellRowForSeed:(Seed*) seed
+{
+    NSInteger row = -1;
+    
+    if (nil != seed)
+    {
+        for (int i = 0; i < _pageSeedList.count; i++)
+        {
+            Seed* s = [_pageSeedList objectAtIndex:i];
+            if (seed.localId == s.localId)
+            {
+                row = i;
+                break;
+            }
+        }
+    }
+    
+    return row;
+}
+
+- (void) _updateCellWithSeedDownloadStatus:(NSInteger) row status:(SeedDownloadStatus) status
+{
+    if (0 <= row)
+    {
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+        SeedListTableCell* cell = (SeedListTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        [cell updateDownloadStatus:status];
+    }
+}
+
+#pragma mark - CBNotificationListenable
+
+-(void) listenNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNotificationReceived:) name:NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED object:nil];
+}
+
+-(void) unlistenNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED object:nil];
+}
+
+-(void) onNotificationReceived:(NSNotification*) notification
+{
+    if ([notification.name isEqualToString:NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED])
+    {
+        if (nil != notification.userInfo)
+        {
+            Seed* seed = [notification.userInfo valueForKey:NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED_KEY_SEED];
+            NSString* statusStr = [notification.userInfo valueForKey:NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED_KEY_STATUS];
+            SeedDownloadStatus status = statusStr.intValue;
+            
+            NSInteger cellRow = [self _cellRowForSeed:seed];
+            [self _updateCellWithSeedDownloadStatus:cellRow status:status];
+        }
+    }
 }
 
 @end

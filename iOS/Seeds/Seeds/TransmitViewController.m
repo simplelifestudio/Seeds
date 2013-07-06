@@ -191,7 +191,7 @@ if (_cancelTransmission)\
     
     // Step 10:
     [self _updateConsole:NSLocalizedString(@"Torrent files are preparing...", nil)];
-    NSString* torrentsFolderPath = [TransmissionModule downloadTorrentsFolderPath];
+    NSString* torrentsFolderPath = [SeedsDownloadAgent downloadPath];
     NSArray* files = [CBFileUtils filesInDirectory:torrentsFolderPath fileExtendName:FILE_EXTENDNAME_TORRENT];
     [self _updateConsole:NSLocalizedString(@"Torrent files are packaging...", nil)];
     NSMutableString* zipName = [NSMutableString stringWithString:FOLDER_TORRENTS];
@@ -277,7 +277,7 @@ if (_cancelTransmission)\
     [self _updateConsole:NSLocalizedString(@"Torrent files are preparing...", nil)];
     
     NSArray* last3Days = [CBDateUtils lastThreeDays];
-    NSString* torrentsPath = [TransmissionModule downloadTorrentsFolderPath];
+    NSString* torrentsPath = [SeedsDownloadAgent downloadPath];
     NSFileManager* fm = [NSFileManager defaultManager];
     BOOL flag = NO;
     NSError* error = nil;

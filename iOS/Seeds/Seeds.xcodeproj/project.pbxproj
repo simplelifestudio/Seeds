@@ -60,7 +60,7 @@
 		C5203DF11747D56400D917F7 /* ZipFile.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DE61747D56300D917F7 /* ZipFile.m */; };
 		C5203DF21747D56400D917F7 /* ZipReadStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DE81747D56300D917F7 /* ZipReadStream.m */; };
 		C5203DF31747D56400D917F7 /* ZipWriteStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DEA1747D56300D917F7 /* ZipWriteStream.m */; };
-		C5203DFC17485A8600D917F7 /* TorrentListDownloadAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DFB17485A8500D917F7 /* TorrentListDownloadAgent.m */; };
+		C5203DFC17485A8600D917F7 /* SeedsDownloadAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DFB17485A8500D917F7 /* SeedsDownloadAgent.m */; };
 		C522BA31174CF1FA001FC7BD /* GUIModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C522BA30174CF1FA001FC7BD /* GUIModule.m */; };
 		C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C531833A17237FF700264530 /* CBModuleAbstractImpl.m */; };
 		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
@@ -285,10 +285,11 @@
 		C5203DE81747D56300D917F7 /* ZipReadStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipReadStream.m; sourceTree = "<group>"; };
 		C5203DE91747D56300D917F7 /* ZipWriteStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipWriteStream.h; sourceTree = "<group>"; };
 		C5203DEA1747D56300D917F7 /* ZipWriteStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipWriteStream.m; sourceTree = "<group>"; };
-		C5203DFA17485A8500D917F7 /* TorrentListDownloadAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TorrentListDownloadAgent.h; path = Seeds/TorrentListDownloadAgent.h; sourceTree = "<group>"; };
-		C5203DFB17485A8500D917F7 /* TorrentListDownloadAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TorrentListDownloadAgent.m; path = Seeds/TorrentListDownloadAgent.m; sourceTree = "<group>"; };
+		C5203DFA17485A8500D917F7 /* SeedsDownloadAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SeedsDownloadAgent.h; path = Seeds/SeedsDownloadAgent.h; sourceTree = "<group>"; };
+		C5203DFB17485A8500D917F7 /* SeedsDownloadAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeedsDownloadAgent.m; path = Seeds/SeedsDownloadAgent.m; sourceTree = "<group>"; };
 		C522BA2F174CF1FA001FC7BD /* GUIModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIModule.h; sourceTree = "<group>"; };
 		C522BA30174CF1FA001FC7BD /* GUIModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUIModule.m; sourceTree = "<group>"; };
+		C52BB4761788003900BD40E7 /* CBNotificationListenable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBNotificationListenable.h; sourceTree = "<group>"; };
 		C531833717237FF700264530 /* CBLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLog.h; sourceTree = "<group>"; };
 		C531833817237FF700264530 /* CBModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModule.h; sourceTree = "<group>"; };
 		C531833917237FF700264530 /* CBModuleAbstractImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModuleAbstractImpl.h; sourceTree = "<group>"; };
@@ -711,6 +712,37 @@
 			path = "Objective-Zip";
 			sourceTree = "<group>";
 		};
+		C52BB4781788074E00BD40E7 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C58B0441177EDF1700F8C185 /* PagingToolbar.h */,
+				C58B0442177EDF1700F8C185 /* PagingToolbar.m */,
+				C58B043F177EDD7200F8C185 /* PagingToolbar.xib */,
+				C53B642E178164340028DC41 /* TableViewSwitcherCell.h */,
+				C53B642F178164340028DC41 /* TableViewSwitcherCell.m */,
+				C53B6430178164340028DC41 /* TableViewSwitcherCell.xib */,
+				C53B64331781731A0028DC41 /* TableViewSegmentCell.h */,
+				C53B64341781731A0028DC41 /* TableViewSegmentCell.m */,
+				C53B64351781731B0028DC41 /* TableViewSegmentCell.xib */,
+				C53B644317824CEE0028DC41 /* TableViewLabelCell.h */,
+				C53B644417824CEF0028DC41 /* TableViewLabelCell.m */,
+				C53B644617824D0C0028DC41 /* TableViewLabelCell.xib */,
+				C53B644A178253550028DC41 /* TableViewButtonCell.h */,
+				C53B644B178253570028DC41 /* TableViewButtonCell.m */,
+				C53B6448178253410028DC41 /* TableViewButtonCell.xib */,
+				C5C0CE92176D0F5900FA52C4 /* SeedDetailHeaderView.h */,
+				C5C0CE93176D0F5900FA52C4 /* SeedDetailHeaderView.m */,
+				C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */,
+				C5964C521722D87200CC1C0A /* SeedListTableCell.h */,
+				C5964C531722D87200CC1C0A /* SeedListTableCell.m */,
+				C571E09F1766145200E9AD50 /* SeedListTableCell.xib */,
+				C5A9440D172AA15A00D6FB85 /* SeedPictureCollectionCell.h */,
+				C5A9440E172AA15A00D6FB85 /* SeedPictureCollectionCell.m */,
+				C571E0A6176750BD00E9AD50 /* SeedPictureCollectionCell.xib */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
 		C531834317239FF300264530 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -739,6 +771,7 @@
 				C5203D74174714D000D917F7 /* CBModuleManager.m */,
 				C53B643D1781B6A30028DC41 /* UIDevice+Resolutions.h */,
 				C53B643E1781B6A30028DC41 /* UIDevice+Resolutions.m */,
+				C52BB4761788003900BD40E7 /* CBNotificationListenable.h */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -893,6 +926,7 @@
 		C5964C4D1722498900CC1C0A /* GUI */ = {
 			isa = PBXGroup;
 			children = (
+				C52BB4781788074E00BD40E7 /* Components */,
 				C522BA2F174CF1FA001FC7BD /* GUIModule.h */,
 				C522BA30174CF1FA001FC7BD /* GUIModule.m */,
 				C5AB11361732793B007EEE25 /* GUIStyle.h */,
@@ -901,21 +935,6 @@
 				C571E0A2176627CE00E9AD50 /* AsyncImageView.m */,
 				C5AB1133173260D9007EEE25 /* CircularProgressView.h */,
 				C5AB1134173260D9007EEE25 /* CircularProgressView.m */,
-				C58B0441177EDF1700F8C185 /* PagingToolbar.h */,
-				C58B0442177EDF1700F8C185 /* PagingToolbar.m */,
-				C58B043F177EDD7200F8C185 /* PagingToolbar.xib */,
-				C53B642E178164340028DC41 /* TableViewSwitcherCell.h */,
-				C53B642F178164340028DC41 /* TableViewSwitcherCell.m */,
-				C53B6430178164340028DC41 /* TableViewSwitcherCell.xib */,
-				C53B64331781731A0028DC41 /* TableViewSegmentCell.h */,
-				C53B64341781731A0028DC41 /* TableViewSegmentCell.m */,
-				C53B64351781731B0028DC41 /* TableViewSegmentCell.xib */,
-				C53B644317824CEE0028DC41 /* TableViewLabelCell.h */,
-				C53B644417824CEF0028DC41 /* TableViewLabelCell.m */,
-				C53B644617824D0C0028DC41 /* TableViewLabelCell.xib */,
-				C53B644A178253550028DC41 /* TableViewButtonCell.h */,
-				C53B644B178253570028DC41 /* TableViewButtonCell.m */,
-				C53B6448178253410028DC41 /* TableViewButtonCell.xib */,
 				C5964C2D17222BF500CC1C0A /* SplashViewController.h */,
 				C5964C2E17222BF500CC1C0A /* SplashViewController.m */,
 				C53B64401781C0F80028DC41 /* WarningViewController.h */,
@@ -932,21 +951,12 @@
 				C5964C3F17223A6800CC1C0A /* FavoriteSeedListViewController.m */,
 				C5203D7617477E8300D917F7 /* TransmitViewController.h */,
 				C5203D7717477E8400D917F7 /* TransmitViewController.m */,
-				C5C0CE92176D0F5900FA52C4 /* SeedDetailHeaderView.h */,
-				C5C0CE93176D0F5900FA52C4 /* SeedDetailHeaderView.m */,
-				C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */,
 				C5964C4117223A9200CC1C0A /* SeedDetailViewController.h */,
 				C5964C4217223A9200CC1C0A /* SeedDetailViewController.m */,
 				C5964C47172248AB00CC1C0A /* SeedPictureViewController.h */,
 				C5964C48172248AB00CC1C0A /* SeedPictureViewController.m */,
 				C5AB63431730A7CD00A3F1E6 /* SeedPictureScrollView.h */,
 				C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */,
-				C5964C521722D87200CC1C0A /* SeedListTableCell.h */,
-				C5964C531722D87200CC1C0A /* SeedListTableCell.m */,
-				C571E09F1766145200E9AD50 /* SeedListTableCell.xib */,
-				C5A9440D172AA15A00D6FB85 /* SeedPictureCollectionCell.h */,
-				C5A9440E172AA15A00D6FB85 /* SeedPictureCollectionCell.m */,
-				C571E0A6176750BD00E9AD50 /* SeedPictureCollectionCell.xib */,
 				C5964C1F1722290400CC1C0A /* MainStoryboard_iPhone.storyboard */,
 				C5964C221722290400CC1C0A /* MainStoryboard_iPad.storyboard */,
 				C531834B1723D6A900264530 /* Localizable.strings */,
@@ -989,8 +999,8 @@
 				C546E6E6173883CC00AEADDA /* ServerAgent.m */,
 				C5203D6D17451F7500D917F7 /* TorrentDownloadAgent.h */,
 				C5203D6E17451F7500D917F7 /* TorrentDownloadAgent.m */,
-				C5203DFA17485A8500D917F7 /* TorrentListDownloadAgent.h */,
-				C5203DFB17485A8500D917F7 /* TorrentListDownloadAgent.m */,
+				C5203DFA17485A8500D917F7 /* SeedsDownloadAgent.h */,
+				C5203DFB17485A8500D917F7 /* SeedsDownloadAgent.m */,
 				C5E0C1F2176AF6E10037811F /* SeedPictureAgent.h */,
 				C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */,
 				C58B0447178063DB00F8C185 /* NSDictionary+JSON.h */,
@@ -1368,7 +1378,7 @@
 				C5203DF11747D56400D917F7 /* ZipFile.m in Sources */,
 				C5203DF21747D56400D917F7 /* ZipReadStream.m in Sources */,
 				C5203DF31747D56400D917F7 /* ZipWriteStream.m in Sources */,
-				C5203DFC17485A8600D917F7 /* TorrentListDownloadAgent.m in Sources */,
+				C5203DFC17485A8600D917F7 /* SeedsDownloadAgent.m in Sources */,
 				C5F8AC5F174BC3B9001E30D1 /* Reachability.m in Sources */,
 				C522BA31174CF1FA001FC7BD /* GUIModule.m in Sources */,
 				C55D1ACB1751BE35000B3E34 /* PAPasscodeViewController.m in Sources */,

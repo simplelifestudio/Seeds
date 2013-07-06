@@ -11,8 +11,6 @@
 
 @interface TransmissionModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate>
 
-+(NSString*) downloadTorrentsFolderPath;
-
 -(BOOL) startHTTPServer;
 -(void) stopHTTPServer;
 

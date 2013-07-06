@@ -8,7 +8,7 @@
 
 #import "SeedsSpider.h"
 
-#import "TorrentListDownloadAgent.h"
+#import "SeedsDownloadAgent.h"
 
 #import "SDWebImagePrefetcher.h"
 
@@ -32,8 +32,7 @@
     
     if (self)
     {
-        visitor = [[SeedsVisitor alloc] init];
-        isPullOperationDone = NO;
+        [self _setupInstance];
     }
     
     return self;
@@ -130,8 +129,8 @@
     // Step 50: 删除数据库中原有相同时间标的所有记录
     // Step 60: 再将新数据保存入数据库（事务操作）
     // Step 70: 更新本地KV缓存中时间标的对应数据同步状态
-    // Step 80: 删除数据库中原有的，处于这三天之前的所有记录
-    // Step 90: 删除下载目录中原有的，处于这三天之前的的所有记录
+    // Step 80: 删除数据库中原有的，处于这三天之前的所有非收藏状态的记录
+    // Step 90: 删除下载目录中原有的，处于这三天之前的的所有文件
     
     BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
     BOOL is3GEnabled = [CBNetworkUtils is3GEnabled];
@@ -304,7 +303,7 @@
         
         NSDate* theDayBefore = days[TheDayBefore];
         
-        NSString* downloadPath = [TransmissionModule downloadTorrentsFolderPath];
+        NSString* downloadPath = [SeedsDownloadAgent downloadPath];
         NSArray* torrentFiles = [CBFileUtils filesInDirectory:downloadPath fileExtendName:FILE_EXTENDNAME_TORRENT];
         if (nil != torrentFiles && 0 < torrentFiles.count)
         {
@@ -444,6 +443,12 @@
             [seed setFavorite:NO];
         }
     }
+}
+
+-(void) _setupInstance
+{
+    visitor = [[SeedsVisitor alloc] init];
+    isPullOperationDone = NO;
 }
 
 @end

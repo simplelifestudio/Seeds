@@ -174,6 +174,71 @@
     return array;
 }
 
+-(NSArray*) getSeedsByLocalIds:(NSArray*) localIds
+{
+    __block NSArray* array = [NSMutableArray arrayWithCapacity:0];
+    
+    [databaseQueue inDatabase:^(FMDatabase* db)
+     {
+         [db open];
+         
+         NSMutableString* sql = [NSMutableString stringWithString:@"select * from "];
+         [sql appendString:TABLE_SEED];
+         
+         if (nil != localIds && 0 < localIds.count)
+         {
+             [sql appendString:@" where"];
+             int index = 0;
+             for (NSString* sLocalId in localIds)
+             {
+                 if (0 == index)
+                 {
+                     [sql appendString:@" "];
+                 }
+                 
+                 if (0 < index && index < localIds.count)
+                 {
+                     [sql appendString:@" OR "];
+                 }                 
+                 
+                 [sql appendString:TABLE_SEED_COLUMN_LOCALID];
+                 [sql appendString:@" = '"];
+                 [sql appendString:sLocalId];
+                 [sql appendString:@"'"];
+                 
+                 index++;
+             }
+         }
+         
+         FMResultSet* resultSet = [db executeQuery:sql];
+         array = [self resultSet2SeedList:resultSet databaseHandler:db];
+         BOOL hadError = [db hadError];
+         if (hadError)
+         {
+             DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+         }
+
+         [resultSet close];
+         [db close];
+     }];
+    
+    return array;
+}
+
+-(Seed*) getSeedByLocalId:(NSInteger) localId
+{
+    Seed* seed = nil;
+
+    NSString* sLocalId = [NSString stringWithFormat:@"%d", localId];
+    NSArray* seeds = [self getSeedsByLocalIds:@[sLocalId]];
+    if (0 < seeds.count)
+    {
+        seed = seeds[0];
+    }
+    
+    return seed;
+}
+
 -(NSArray*) getSeedsByDate:(NSDate*) date
 {
     __block NSArray* array = [NSMutableArray arrayWithCapacity:0];
@@ -384,11 +449,11 @@
              NSMutableString* sql = [NSMutableString stringWithString:@"delete from "];
              [sql appendString:TABLE_SEED];
              [sql appendString:@" where "];
-//             [sql appendString:TABLE_SEED_COLUMN_FAVORITE];
-//             [sql appendString:@" = "];
-//             [sql appendString:@"'"];
-//             [sql appendString:[NSString stringWithFormat:@"%d", 0]];
-//             [sql appendString:@"'"];
+             [sql appendString:TABLE_SEED_COLUMN_FAVORITE];
+             [sql appendString:@" = "];
+             [sql appendString:@"'"];
+             [sql appendString:[NSString stringWithFormat:@"%d", 0]];
+             [sql appendString:@"'"];
              NSUInteger index = 0;
              for (NSDate* day in last3Days)
              {

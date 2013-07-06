@@ -552,25 +552,14 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _refreshChangePasscodeCell
 {
-    static UIColor* originColor = nil;
-    
     BOOL isPasscodeSet = [_userDefaults isPasscodeSet];
     if (isPasscodeSet)
     {
         [_changePasscodeCell.button setEnabled:YES];
-        
-        if (nil != originColor)
-        {
-            [_changePasscodeCell.button setTitleColor:originColor forState:UIControlStateNormal];
-        }
+        [_changePasscodeCell.button setTitleColor:COLOR_TEXT_INFO forState:UIControlStateNormal];
     }
     else
-    {
-        if (nil == originColor)
-        {
-            originColor =  _changePasscodeCell.button.titleLabel.textColor;
-        }
-        
+    {        
         [_changePasscodeCell.button setEnabled:NO];
         [_changePasscodeCell.button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     }

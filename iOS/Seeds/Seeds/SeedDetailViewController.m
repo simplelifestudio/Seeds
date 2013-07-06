@@ -8,19 +8,26 @@
 
 #import "SeedDetailViewController.h"
 
-#import "TorrentDownloadAgent.h"
 #import "CBFileUtils.h"
+#import "CBNotificationListenable.h"
+
+#import "SeedsDownloadAgent.h"
+#import "TorrentDownloadAgent.h"
 
 #define _HUD_DELAY 1.5
 
-@interface SeedDetailViewController ()
+@interface SeedDetailViewController () <CBNotificationListenable>
 {
-    TorrentDownloadAgent* _downloadAgent;
+    SeedsDownloadAgent* _downloadAgent;
     
     MBProgressHUD* _HUD;
+    GUIModule* _guiModule;
     
-    UIBarButtonItem* _deleteBarButton;
+    UIBarButtonItem* _favoriteBarButton;
     UIBarButtonItem* _downloadBarButton;
+    UIActivityIndicatorView* _indicatorView;
+    
+    SeedDetailHeaderView* _headerView;
     
     NSMutableArray* _pagePictureList;
     PagingToolbar* _pagingToolbar;
@@ -66,28 +73,18 @@
     
     [self _refetchPicturesFromSeed];
     
-    [super viewWillAppear:animated];    
+    [self listenNotifications];
+    
+    [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [_pagingToolbar removeFromSuperview];
     
+    [self unlistenNotifications];
+    
     [super viewWillDisappear:animated];
-}
-
-- (void) _arrangeBarButtons
-{    
-    NSString* torrentFileFullPath = [TorrentDownloadAgent torrentFileFullPath:_seed];
-    BOOL isFileExists = [CBFileUtils isFileExists:torrentFileFullPath];
-    if (isFileExists && _seed.favorite)
-    {
-        self.navigationItem.rightBarButtonItems = @[_deleteBarButton];
-    }
-    else
-    {
-        self.navigationItem.rightBarButtonItems = @[_downloadBarButton];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -146,61 +143,18 @@
     [super viewDidUnload];
 }
 
-#pragma mark - TorrentDownloadAgentDelegate
-
--(void) torrentDownloadStarted:(NSString*) torrentCode
-{
-    _HUD.mode = MBProgressHUDModeIndeterminate;
-    _HUD.labelText = NSLocalizedString(@"Torrent Downloading", nil);
-}
-
--(void) torrentDownloadFinished:(NSString*) torrentCode
-{
-    [self _hideHUD:NSLocalizedString(@"Torrent Downloaded", nil)];
-}
-
--(void) torrentDownloadFailed:(NSString*) torrentCode error:(NSError*) error
-{
-    [self _hideHUD:NSLocalizedString(@"Download Failed", nil)];
-}
-
--(void) torrentSaveFinished:(NSString*) torrentCode filePath:(NSString*) filePath
-{
-    [self _hideHUD:NSLocalizedString(@"Torrent Saved", nil)];
-    
-    [self _favoriteSeed:YES];
-}
-
--(void) torrentSaveFailed:(NSString*) torrentCode filePath:(NSString*) filePath
-{
-    [self _hideHUD:NSLocalizedString(@"Save Failed", nil)];
-}
-
--(void) _showHUD:(NSString*) majorStatus
-{
-    _HUD.mode = MBProgressHUDModeText;
-    _HUD.labelText = majorStatus;
-    [_HUD show:YES];
-}
-
--(void) _hideHUD:(NSString*) majorStatus
-{
-    _HUD.mode = MBProgressHUDModeText;
-    _HUD.labelText = majorStatus;
-    [_HUD hide:YES afterDelay:_HUD_DELAY];
-}
-
 -(UICollectionReusableView *) collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-    SeedDetailHeaderView* headerView = nil;
-    
+{    
     if([kind isEqual:UICollectionElementKindSectionHeader])
     {
-        headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:VIEW_ID_SEEDDETAILHEADERVIEW forIndexPath:indexPath];
-        [headerView fillSeed:_seed];
+        if (nil == _headerView)
+        {
+            _headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:VIEW_ID_SEEDDETAILHEADERVIEW forIndexPath:indexPath];
+        }
+        [_headerView fillSeed:_seed];
     }
     
-    return headerView;
+    return _headerView;
 }
 
 #pragma mark - PagingDelegate
@@ -216,6 +170,83 @@
 }
 
 #pragma mark - Private Methods
+
+- (void) _arrangeBarButtons
+{
+    BOOL isFavorite = _seed.favorite;
+    if (isFavorite)
+    {
+        [_favoriteBarButton setTitle:NSLocalizedString(@"Unfavorite", nil)];
+    }
+    else
+    {
+        [_favoriteBarButton setTitle:NSLocalizedString(@"Favorite", nil)];
+    }
+    
+    [_headerView updateFavoriteStatus:isFavorite];
+    
+    SeedDownloadStatus downloadStatus = [_downloadAgent checkDownloadStatus:_seed];
+    [self _refreshUIWithSeedDownloadStatusUpdated:downloadStatus];
+}
+
+- (void) _refreshUIWithSeedDownloadStatusUpdated:(SeedDownloadStatus) status
+{
+    [self _refreshDownloadBarButtonWithStatusUpdated:status];
+    
+    [_headerView updateDownloadStatus:status];
+}
+
+- (void) _refreshDownloadBarButtonWithStatusUpdated:(SeedDownloadStatus) status
+{
+    switch (status)
+    {
+        case SeedNotDownload:
+        {
+            [_downloadBarButton setCustomView:nil];
+            [_downloadBarButton setTitle:NSLocalizedString(@"Download", nil)];
+            [_downloadBarButton setEnabled:YES];
+            break;
+        }
+        case SeedWaitForDownload:
+        {
+            [_downloadBarButton setCustomView:_indicatorView];
+            [_downloadBarButton setEnabled:NO];
+            break;
+        }
+        case SeedIsDownloading:
+        {
+            [_downloadBarButton setCustomView:_indicatorView];
+            [_downloadBarButton setEnabled:NO];
+            break;
+        }
+        case SeedDownloaded:
+        {
+            [_downloadBarButton setCustomView:nil];
+            [_downloadBarButton setTitle:NSLocalizedString(@"Delete", nil)];
+            [_downloadBarButton setEnabled:YES];
+            break;
+        }
+        case SeedDownloadFailed:
+        {
+            [_downloadBarButton setCustomView:nil];
+            [_downloadBarButton setTitle:NSLocalizedString(@"Download", nil)];
+            [_downloadBarButton setEnabled:YES];
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+}
+
+-(void) _showHUD:(NSString*) majorStatus
+{
+    _HUD.mode = MBProgressHUDModeText;
+    _HUD.labelText = majorStatus;
+    [_HUD show:YES];
+    [_HUD hide:YES afterDelay:1];
+}
 
 -(void) _constructTableDataByPage
 {
@@ -283,19 +314,43 @@
     //    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDPICTURECOLLECTIONCELL bundle:nil];
     //    [self.collectionView registerNib:nib forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
     
-    UINib* headerViewNib = [UINib nibWithNibName:VIEW_ID_SEEDDETAILHEADERVIEW bundle:nil];
-    [self.collectionView registerNib:headerViewNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:VIEW_ID_SEEDDETAILHEADERVIEW];
+    CommunicationModule* _commModule = [CommunicationModule sharedInstance];
+    _downloadAgent = _commModule.seedsDownloadAgent;
     
-    _deleteBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Delete", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickDeleteBarButton)];
-    _downloadBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Download", nil) style:UIBarButtonItemStylePlain target:self action:@selector(_onClickDownloadBarButton)];
+    _guiModule = [GUIModule sharedInstance];
+    
+    [self _setupBarButtonItems];
     
     _HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    _HUD.minSize = HUD_SIZE;
+    _HUD.minSize = HUD_CENTER_SIZE;
     [self.view addSubview:_HUD];
+    
+    _headerView = [CBUIUtils componentFromNib:VIEW_ID_SEEDDETAILHEADERVIEW owner:self options:nil];
     
     _pagePictureList = [NSMutableArray array];
     
     [self _registerGestureRecognizers];
+}
+
+- (void) _setupBarButtonItems
+{
+    UINib* headerViewNib = [UINib nibWithNibName:VIEW_ID_SEEDDETAILHEADERVIEW bundle:nil];
+    [self.collectionView registerNib:headerViewNib forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:VIEW_ID_SEEDDETAILHEADERVIEW];
+
+    _favoriteBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Favorite", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(_onClickFavoriteBarButton)];
+    
+    _downloadBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Download", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(_onClickDownloadBarButton)];
+    
+    CGRect frame = CGRectMake(0, 0, 48, 20);
+    _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    _indicatorView.frame = frame;
+    [_indicatorView startAnimating];
+    _indicatorView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin |
+                                    UIViewAutoresizingFlexibleRightMargin |
+                                    UIViewAutoresizingFlexibleTopMargin |
+                                    UIViewAutoresizingFlexibleBottomMargin);
+    
+    self.navigationItem.rightBarButtonItems = @[_downloadBarButton, _favoriteBarButton];
 }
 
 - (void) _registerGestureRecognizers
@@ -336,47 +391,37 @@
     }
 }
 
--(void) _onClickDeleteBarButton
+-(void) _onClickFavoriteBarButton
 {
-    [self _showHUD:NSLocalizedString(@"Preparing", nil)];
-    
-    NSString* torrentFileFullPath = [TorrentDownloadAgent torrentFileFullPath:_seed];
-    
-    BOOL deleteSuccess = [CBFileUtils deleteFile:torrentFileFullPath];
-    if (deleteSuccess)
+    NSString* title = [_favoriteBarButton title];
+    if ([title isEqualToString:NSLocalizedString(@"Favorite", nil)])
     {
-        [self _hideHUD:NSLocalizedString(@"Torrent Deleted", nil)];
+        [self _favoriteSeed:YES];
     }
     else
     {
-        [self _hideHUD:NSLocalizedString(@"Delete Failed", nil)];
+        [self _favoriteSeed:NO];
     }
-    
-    [self _favoriteSeed:NO];
 }
 
 - (void) _onClickDownloadBarButton
 {
-    if (![CBNetworkUtils isWiFiEnabled] && ![CBNetworkUtils is3GEnabled])
+    NSString* title = [_downloadBarButton title];
+    if ([title isEqualToString:NSLocalizedString(@"Download", nil)])
     {
-        [self _showHUD:NSLocalizedString(@"Internet Disconnected", nil)];
-        return;
-    }
-    
-    [self _showHUD:NSLocalizedString(@"Preparing", nil)];
-    
-    TransmissionModule* transModule = [TransmissionModule sharedInstance];
-    NSString* downloadDirFullPath = [transModule generateDownloadRootDirectory];
-    if (nil == downloadDirFullPath)
-    {
-        DLog(@"Download root directory is not ready.");
-        [self _hideHUD:NSLocalizedString(@"Directory Unready", nil)];
+        if (![CBNetworkUtils isWiFiEnabled] && ![CBNetworkUtils is3GEnabled])
+        {
+            [self _showHUD:NSLocalizedString(@"Internet Disconnected", nil)];
+            return;
+        }
         
-        return;
+        [_downloadAgent downloadSeed:_seed];
     }
-    
-    _downloadAgent = [[TorrentDownloadAgent alloc] initWithSeed:_seed downloadPath:downloadDirFullPath];
-    [_downloadAgent downloadWithDelegate:self];
+    else
+    {
+        [_downloadAgent deleteDownloadedSeed:_seed];
+        [self _showHUD:NSLocalizedString(@"Torrent Deleted", nil)];
+    }
 }
 
 -(void) _favoriteSeed:(BOOL) favorite
@@ -389,7 +434,7 @@
             _seed.favorite = favorite;
             
             dispatch_async(dispatch_get_main_queue(), ^(){
-                [self _arrangeBarButtons];            
+                [self _arrangeBarButtons];
             });
         }
     });
@@ -403,6 +448,55 @@
         
         [self _constructTableDataByPage];
     });
+}
+
+#pragma mark - CBNotificationListenable
+
+-(void) listenNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onNotificationReceived:) name:NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED object:nil];
+}
+
+-(void) unlistenNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED object:nil];
+}
+
+-(void) onNotificationReceived:(NSNotification*) notification
+{
+    if ([notification.name isEqualToString:NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED])
+    {
+        if (nil != notification.userInfo)
+        {
+            Seed* seed = [notification.userInfo valueForKey:NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED_KEY_SEED];
+            NSString* statusStr = [notification.userInfo valueForKey:NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED_KEY_STATUS];
+            SeedDownloadStatus status = statusStr.intValue;
+            
+            if (nil != seed && seed.localId == _seed
+                .localId)
+            {
+                [self _refreshUIWithSeedDownloadStatusUpdated:status];
+             
+                switch (status)
+                {
+                    case SeedDownloaded:
+                    {
+                        [self _showHUD:NSLocalizedString(@"Torrent Downloaded", nil)];
+                        break;
+                    }
+                    case SeedDownloadFailed:
+                    {
+                        [self _showHUD:NSLocalizedString(@"Download Failed", nil)];
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
 
 @end

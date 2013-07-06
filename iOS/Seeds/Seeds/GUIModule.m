@@ -94,7 +94,8 @@ SINGLETON(GUIModule)
         [view addSubview:_HUD];
         
         _HUD.mode = MBProgressHUDModeText;
-        _HUD.minSize = HUD_SIZE;
+        _HUD.minSize = HUD_NOTIFICATION_SIZE;
+        _HUD.yOffset = HUD_NOTIFICATION_YOFFSET;
         
         _HUD.labelText = majorStauts;
         if (minorStatus)

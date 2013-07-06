@@ -12,10 +12,12 @@
 
 @interface TorrentDownloadAgent()
 {
-    NSString* code;
-    NSString* downloadPath;
-    NSString* fileName;
-    NSString* fileFullPath;
+    Seed* _seed;
+    
+    NSString* _code;
+    NSString* _downloadPath;
+    NSString* _fileName;
+    NSString* _fileFullPath;
 }
 
 -(void) computeCode:(Seed*) seed;
@@ -48,14 +50,20 @@
 {
     NSString* fileName = nil;
     
-    NSString* code = [TorrentDownloadAgent torrentCode:seed];
-    if (nil != code && 0 < code.length)
-    {
-        NSMutableString* mutableStr = [NSMutableString string];
-        [mutableStr appendString:code];
-        [mutableStr appendString:FILE_EXTENDNAME_DOT_TORRENT];
-        fileName = mutableStr;
-    }
+    fileName = [TorrentDownloadAgent torrentFileNameBySeedLocalId:seed.localId];
+    
+    return fileName;
+}
+
++(NSString*) torrentFileNameBySeedLocalId:(NSInteger) localId
+{
+    NSString* fileName = nil;
+    
+    NSMutableString* mutableStr = [NSMutableString string];
+//    [mutableStr appendString:FILE_PREFIXNAME_SEED];
+    [mutableStr appendString:[NSString stringWithFormat:@"%d", localId]];
+    [mutableStr appendString:FILE_EXTENDNAME_DOT_TORRENT];
+    fileName = mutableStr;
     
     return fileName;
 }
@@ -66,7 +74,7 @@
     
     if (nil != seed)
     {
-        NSString* downloadPath = [TransmissionModule downloadTorrentsFolderPath];
+        NSString* downloadPath = [SeedsDownloadAgent downloadPath];
         
         NSString* fileName = [TorrentDownloadAgent torrentFileName:seed];
         if (nil != fileName && 0 < fileName.length)
@@ -78,11 +86,19 @@
     return fullPath;
 }
 
++(NSString*) torrentFileFullPathBySeedLocalId:(NSInteger) localId
+{
+    NSString* fullPath = nil;
+    
+    return fullPath;
+}
+
 -(id) initWithSeed:(Seed*) seed downloadPath:(NSString *)path
 {
     self = [super init];
     if (self)
     {
+        _seed = seed;
         [self computeCode:seed];
         [self computeDownloadFullPath:path];
     }
@@ -92,33 +108,33 @@
 
 -(void) computeCode:(Seed*) seed
 {
-    code = [TorrentDownloadAgent torrentCode:seed];
-    fileName = [TorrentDownloadAgent torrentFileName:seed];
+    _code = [TorrentDownloadAgent torrentCode:seed];
+    _fileName = [TorrentDownloadAgent torrentFileName:seed];
 }
 
 -(void) computeDownloadFullPath:(NSString*) path
 {
     if (nil != path && 0 < path.length)
     {
-        downloadPath = path;
+        _downloadPath = path;
     }
     else
     {
-        downloadPath = [CBPathUtils documentsDirectoryPath];
+        _downloadPath = [CBPathUtils documentsDirectoryPath];
     }
     
-    if (nil != fileName && 0 < fileName.length)
+    if (nil != _fileName && 0 < _fileName.length)
     {
-        fileFullPath = [downloadPath stringByAppendingPathComponent:fileName];
+        _fileFullPath = [_downloadPath stringByAppendingPathComponent:_fileName];
     }
 }
 
 -(void) download:(TorrentDownloadSuccessBlock) successBlock failBlock:(TorrentDownloadFailBlock) failBlock
 {
-    if (nil != code && 0 < code.length)
+    if (nil != _seed && 0 < _seed.localId)
     {
         NSURL *baseURL = [NSURL URLWithString:BASEURL_TORRENT];
-        NSDictionary *parameters = [NSDictionary dictionaryWithObject:code forKey:FORM_ATTRKEY_REF];
+        NSDictionary *parameters = [NSDictionary dictionaryWithObject:_code forKey:FORM_ATTRKEY_REF];
         
         AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
         [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
@@ -142,50 +158,50 @@
     _delegate = delegate;
 
     NSURL *baseURL = [NSURL URLWithString:BASEURL_TORRENT];
-    NSDictionary *parameters = [NSDictionary dictionaryWithObject:code forKey:FORM_ATTRKEY_REF];
+    NSDictionary *parameters = [NSDictionary dictionaryWithObject:_code forKey:FORM_ATTRKEY_REF];
     
     AFHTTPClient *client = [[AFHTTPClient alloc] initWithBaseURL:baseURL];
     [client registerHTTPOperationClass:[AFJSONRequestOperation class]];
     [client setDefaultHeader:HTTP_HEADER_ACCEPT value:HTTP_HEADER_FORMDATA];
     
-    if ([_delegate respondsToSelector:@selector(torrentDownloadStarted:)])
+    if (_delegate)
     {
-        [_delegate torrentDownloadStarted:code];
+        [_delegate torrentDownloadStarted:_seed];
     }
     
     [client
         postPath:URL_LOADPAGE
         parameters:parameters
         success:^(AFHTTPRequestOperation *operation, id responseObject)
-        {
-            if ([_delegate respondsToSelector:@selector(torrentDownloadFinished:)])
+        {            
+            if (_delegate)
             {
-                [_delegate torrentDownloadFinished:code];
+                [_delegate torrentDownloadFinished:_seed];
             }
          
-            BOOL flag = [CBFileUtils deleteFile:fileFullPath];
+            BOOL flag = [CBFileUtils deleteFile:_fileFullPath];
             
-            flag = [CBFileUtils createFile:fileFullPath content:responseObject];
+            flag = [CBFileUtils createFile:_fileFullPath content:responseObject];
             if(flag)
             {
-                if ([_delegate respondsToSelector:@selector(torrentSaveFinished:filePath:)])
+                if (_delegate)
                 {
-                    [_delegate torrentSaveFinished:code filePath:fileFullPath];
+                    [_delegate torrentSaveFinished:_seed filePath:_fileFullPath];
                 }
             }
             else
             {
-                if ([_delegate respondsToSelector:@selector(torrentSaveFailed:filePath:)])
+                if (_delegate)
                 {
-                    [_delegate torrentSaveFailed:code filePath:fileFullPath];
+                    [_delegate torrentSaveFailed:_seed filePath:_fileFullPath];
                 }
             }
         }
         failure:^(AFHTTPRequestOperation *operation, NSError *error)
         {
-            if ([_delegate respondsToSelector:@selector(torrentDownloadFailed:error:)])
+            if (_delegate)
             {
-                [_delegate torrentDownloadFailed:code error:error];
+                [_delegate torrentDownloadFailed:_seed error:error];
             }
         }
      ];

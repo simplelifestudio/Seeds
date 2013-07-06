@@ -27,6 +27,7 @@ SINGLETON(CommunicationModule)
 @synthesize spider = _spider;
 @synthesize serverAgent = _serverAgent;
 @synthesize seedPictureAgent = _seedPictureAgent;
+@synthesize seedsDownloadAgent = _seedsDownloadAgent;
 
 -(void) initModule
 {
@@ -40,6 +41,8 @@ SINGLETON(CommunicationModule)
     [_seedPictureAgent setMaxConcurrentDownloads:SEEDPICTURE_MAX_CONCURRENT_DOWNLOADS];
     [_seedPictureAgent setDownloadOptions:SDWebImageLowPriority];
     [_seedPictureAgent setMaxCahceAge:CACHE_EXPIRE_PERIOD];
+    
+    _seedsDownloadAgent = [[SeedsDownloadAgent alloc] init];
     
     [self registerReachability];
 }

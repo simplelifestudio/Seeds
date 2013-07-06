@@ -22,6 +22,8 @@
 @synthesize formatLabel = _formatLabel;
 @synthesize mosaicLabel = _mosaicLabel;
 @synthesize asyncImageView = _asyncImageView;
+@synthesize downloadLabel = _downloadLabel;
+@synthesize favoriteLabel = _favoriteLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -103,6 +105,65 @@
     newImageView.thumbnailType = _asyncImageView.thumbnailType;
     _asyncImageView = newImageView;
     [self addSubview:_asyncImageView];
+}
+
+-(void) updateDownloadStatus:(SeedDownloadStatus) status
+{
+    switch (status)
+    {
+        case SeedNotDownload:
+        {
+            [_downloadLabel setHidden:YES];
+            break;
+        }
+        case SeedWaitForDownload:
+        {
+            [_downloadLabel setText:NSLocalizedString(@"Downloading", nil)];
+            [_downloadLabel setTextColor:COLOR_TEXT_INFO];
+            [_downloadLabel setHidden:NO];
+            break;
+        }
+        case SeedIsDownloading:
+        {
+            [_downloadLabel setText:NSLocalizedString(@"Downloading", nil)];
+            [_downloadLabel setTextColor:COLOR_TEXT_INFO];
+            [_downloadLabel setHidden:NO];
+            break;
+        }
+        case SeedDownloaded:
+        {
+            [_downloadLabel setText:NSLocalizedString(@"Downloaded", nil)];
+            [_downloadLabel setTextColor:COLOR_TEXT_INFO];
+            [_downloadLabel setHidden:NO];
+            break;
+        }
+        case SeedDownloadFailed:
+        {
+            [_downloadLabel setText:NSLocalizedString(@"Download Failed", nil)];
+            [_downloadLabel setTextColor:COLOR_TEXT_WARNING];
+            [_downloadLabel setHidden:NO];
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+}
+
+-(void) updateFavoriteStatus:(BOOL) favorite
+{
+    if (favorite)
+    {
+        [_favoriteLabel setText:NSLocalizedString(@"Favorited", nil)];
+        [_favoriteLabel setTextColor:COLOR_TEXT_INFO];
+        [_favoriteLabel setHidden:NO];
+    }
+    else
+    {
+        [_favoriteLabel setHidden:YES];
+        [_favoriteLabel setText:NSLocalizedString(@"Unfavorited", nil)];
+    }
 }
 
 @end

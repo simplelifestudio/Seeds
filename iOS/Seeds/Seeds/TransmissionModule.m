@@ -23,19 +23,6 @@
 
 SINGLETON(TransmissionModule)
 
-+(NSString*) downloadTorrentsFolderPath
-{
-    static NSString* fullPath = nil;
-
-    if (nil == fullPath)
-    {
-        fullPath = [CBPathUtils documentsDirectoryPath];
-        fullPath = [fullPath stringByAppendingPathComponent:FOLDER_TORRENTS];
-    }
-
-    return fullPath;
-}
-
 -(void) initModule
 {
     [self setModuleIdentity:NSLocalizedString(@"Transmission Module", nil)];
@@ -69,7 +56,7 @@ SINGLETON(TransmissionModule)
 	// [httpServer setPort:12345];
 	
 	// Serve files from our embedded Web folder
-    NSString* webPath = [TransmissionModule downloadTorrentsFolderPath];
+    NSString* webPath = [SeedsDownloadAgent downloadPath];
 	DLog(@"HTTP server document root: %@", webPath);
 	[httpServer setDocumentRoot:webPath];
     
@@ -153,7 +140,7 @@ SINGLETON(TransmissionModule)
         
         NSData* data = [strAfterLinkReplaced dataUsingEncoding: encodingMode];
         
-        NSString* torrentsPath = [TransmissionModule downloadTorrentsFolderPath];
+        NSString* torrentsPath = [SeedsDownloadAgent downloadPath];
         NSString* indexHtmlFilePath = [torrentsPath stringByAppendingPathComponent:URL_INDEXPAGE];
         
         flag = [CBFileUtils dataToFile:data filePath:indexHtmlFilePath];
@@ -198,7 +185,7 @@ SINGLETON(TransmissionModule)
     
     NSData* data = [htmlCodeCopy dataUsingEncoding: encodingMode];
 
-    NSString* torrentsPath = [TransmissionModule downloadTorrentsFolderPath];
+    NSString* torrentsPath = [SeedsDownloadAgent downloadPath];
     NSString* indexHtmlFilePath = [torrentsPath stringByAppendingPathComponent:URL_INDEXPAGE];
     
     flag = [CBFileUtils dataToFile:data filePath:indexHtmlFilePath];

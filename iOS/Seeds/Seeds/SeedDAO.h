@@ -17,6 +17,8 @@
 -(NSInteger) countSeedsByDate:(NSDate*) date;
 
 -(NSArray*) getAllSeeds;
+-(NSArray*) getSeedsByLocalIds:(NSArray*) localIds;
+-(Seed*) getSeedByLocalId:(NSInteger) localId;
 -(NSArray*) getSeedsByDate:(NSDate*) date;
 -(NSArray*) getSeedsByDates:(NSArray*) dateList;
 

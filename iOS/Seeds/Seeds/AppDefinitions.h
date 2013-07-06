@@ -132,6 +132,8 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define FILE_EXTENDNAME_DOT_HTML @".html"
 #define FILE_NAME_INDEX @"index"
 
+//#define FILE_PREFIXNAME_SEED @"seed_"
+
 #define CONSOLE_LINEINFO_DISPLAY_DELAY usleep(0);
 
 // Module: GUI
@@ -180,7 +182,10 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 #define NIB_ID_PAGINGTOOLBAR @"PagingToolbar"
 
-#define HUD_SIZE CGSizeMake(135.f, 135.f)
+#define HUD_CENTER_SIZE CGSizeMake(135.f, 135.f)
+#define HUD_NOTIFICATION_SIZE CGSizeMake(320, 44)
+#define HUD_NOTIFICATION_YOFFSET -235
+
 #define HUD_DISPLAY(x) sleep(x);
 
 #define kZoomStep 2
@@ -204,5 +209,9 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 // Module: Notifications
 #define NOTIFICATION_ID_SEEDPICTUREPREFETCH_FINISHED @"seedPicturePrefetchFinished"
+
+#define NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED @"seedDownloadStatusUpdated"
+#define NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED_KEY_SEED @"seed"
+#define NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED_KEY_STATUS @"status"
 
 #endif

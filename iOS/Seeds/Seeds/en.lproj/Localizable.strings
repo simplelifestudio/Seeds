@@ -27,6 +27,8 @@
 "Stop" = "Stop";
 "Unsync" = "Unsync";
 "Download" = "Download";
+"Favorite" = "Favorite";
+"Unfavorite" = "Unfavorite";
 "SelectAll" = "SelectAll";
 "Edit" = "Edit";
 "Delete" = "Delete";
@@ -54,6 +56,8 @@
 "Folder Exception" = "Folder Exception";
 
 "Torrents Downloading" = "Torrents Downloading";
+"Download Torrent" = "Download Torrent";
+"Delete Torrent" = "Delete Torrent";
 
 "Transmission module needs WiFi environment..." = "Transmission module needs WiFi environment...";
 "Transmission module is initializing..." = "Transmission module is initializing...";
@@ -90,6 +94,10 @@
 "Torrent Deleted" = "Torrent Deleted";
 "Delete Failed" = "Delete Failed";
 "Delete Done" = "Delete Done";
+"Not Download" = "Not Download";
+"Downloading" = "Downloading";
+"Downloaded" = "Downloaded";
+"Favorited" = "Favorited";
 
 "Set Passcode" = "Set Passcode";
 "Enter a passcode" = "Enter a new passcode";

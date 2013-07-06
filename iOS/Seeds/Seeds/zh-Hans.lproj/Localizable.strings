@@ -27,6 +27,8 @@
 "Stop" = "停止";
 "Unsync" = "未同步";
 "Download" = "下载";
+"Favorite" = "收藏";
+"Unfavorite" = "取消收藏";
 "SelectAll" = "全选";
 "Edit" = "编辑";
 "Delete" = "删除";
@@ -54,6 +56,8 @@
 "Folder Exception" = "目录异常";
 
 "Torrents Downloading" = "种子下载";
+"Download Torrent" = "下载种子";
+"Delete Torrent" = "删除种子";
 
 "Transmission module needs WiFi environment..." = "传输模块需要WiFi环境...";
 "Transmission module is initializing..." = "传输模块初始化...";
@@ -90,6 +94,10 @@
 "Torrent Deleted" = "种子已删除";
 "Delete Failed" = "删除失败";
 "Delete Done" = "删除成功";
+"Not Download" = "未下载";
+"Downloading" = "下载中";
+"Downloaded" = "已下载";
+"Favorited" = "已收藏";
 
 "Set Passcode" = "设置密码";
 "Enter a passcode" = "输入新密码";
