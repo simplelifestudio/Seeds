@@ -2,16 +2,24 @@
 <resources>
 
     <string name="app_name">Seeds</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="seeds_logo">Seeds</string>
     <string name="seeds_teamlogo">Copyright © SimpleLife Studio</string>
-    <string name="seeds_befyesterday">前天</string>
-    <string name="seeds_yesterday">昨天</string>
-    <string name="seeds_today">今天</string>
-    <string name="seeds_update">更新</string>
-    <string name="seeds_config">设置</string>
-    <string name="seeds_httpserver">共享服务</string>
+    <string name="seeds_datelist_datedefault">月－日</string>
+    <string name="seeds_datelist_seedsnumberdefault">未同步</string>
+    <string name="seeds_datelist_befyesterday">前  天</string>
+    <string name="seeds_datelist_yesterday">昨  天</string>
+    <string name="seeds_datelist_today">今  天</string>
+    <string name="seeds_datelist_update">更新</string>
+    <string name="seeds_datelist_config">设置</string>
+    <string name="seeds_datelist_httpserver">共享服务</string>
+    <string name="seeds_datelist_favoritelist">收藏列表</string>
+    <string name="seeds_datelist_plswait">请稍候</string>
+    <string name="seeds_datelist_conntoserver">正在连接服务器</string>
+    <string name="seeds_datelist_retrievestatus">获取Seeds状态信息</string>
+    <string name="seeds_datelist_analyzeseedsstatus">分析Seeds状态</string>
+    <string name="seeds_datelist_analyzeseedsdata">分析Seeds数据</string>
+    <string name="seeds_datelist_dowloadseedsinfo">下载Seeds数据</string>
     <string name="seedTitle">种子名称</string>
     <string name="seedSize">种子大小</string>
     <string name="seedFormat">种子格式</string>
@@ -20,7 +28,6 @@
     <string name="seeds_config_serveraddr">服务器地址：</string>
     <string name="seeds_Favorite">收藏</string>
     <string name="seeds_UnFavorite">取消收藏</string>
-    <string name="seeds_favoritelist">收藏列表</string>
     <string name="seeds_preffilename">com.simplelife.seeds.SEEDS_STATUS_BYDATE</string>
     <string name="seeds_startverify">请输入密码</string>
     <string name="seeds_pwdmessage">请输入密码</string>

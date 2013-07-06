@@ -34,18 +34,32 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 @SuppressLint("HandlerLeak")
 public class SeedsDateListActivity extends Activity {
-
-	private Button myBefYesterdayBtn;
-	private Button myYesterdayBtn;
-	private Button myTodayBtn;
-	private Button myUpdateBtn;
-	private Button myFavListBtn;
-	private Button myConfigBtn;
-	private Button myHttpServerBtn;
-	private ProgressDialog tProgressDialog = null; 	
+	
+	// UI widgets for before yesterday
+	private LinearLayout mLayoutBefYesterday;
+	private TextView mDateTextBefYesterday;
+	private TextView mNumTextBefYesterday;
+	
+	// UI widgets for yesterday
+	private LinearLayout mLayoutYesterday;
+	private TextView mDateTextYesterday;
+	private TextView mNumTextYesterday;
+	
+	// UI widgets for today
+	private LinearLayout mLayoutToday;
+	private TextView mDateTextToday;
+	private TextView mNumTextToday;
+	
+	private Button mUpdateBtn;
+	private Button mFavListBtn;
+	private Button mConfigBtn;
+	private Button mHttpServerBtn;
+	private ProgressDialog mProgressDialog = null; 	
 	
 	// Date in string format
 	private String mDateBefYesterday;
@@ -56,6 +70,11 @@ public class SeedsDateListActivity extends Activity {
 	
 	// Below two fields should be removed or changed in final version
 	private int tSleepSeconds = 1; 
+	
+	// Members to store the number of seeds
+	private int numOfSeedsBeyYesterday = 0;
+	private int numOfSeedsYesterday = 0;
+	private int numOfSeedsToday = 0;
 	
 	// Handler message definition
 	final int MESSAGETYPE_BEFYEST = 100;
@@ -80,34 +99,42 @@ public class SeedsDateListActivity extends Activity {
 		// Start the DateList View
 		setContentView(R.layout.activity_seeds_datelist);
 		
-		// Locate those buttons
-		myBefYesterdayBtn = (Button) findViewById(R.id.befyesterday_btn);
-		myYesterdayBtn    = (Button) findViewById(R.id.yesterday_btn);
-		myTodayBtn   = (Button) findViewById(R.id.today_btn);
-		myUpdateBtn  = (Button) findViewById(R.id.update_btn);
-		myHttpServerBtn = (Button) findViewById(R.id.httpserver_btn);
-		myFavListBtn = (Button) findViewById(R.id.favlist_btn);
-		myConfigBtn  = (Button) findViewById(R.id.config_btn);
+		mLayoutBefYesterday = (LinearLayout)findViewById(R.id.layout_befyesterday);
+		mLayoutYesterday = (LinearLayout)findViewById(R.id.layout_yesterday);
+		mLayoutToday = (LinearLayout)findViewById(R.id.layout_today);
+		
+		mDateTextBefYesterday = (TextView)findViewById(R.id.date_befyesterday);
+		mDateTextYesterday = (TextView)findViewById(R.id.date_yesterday);
+		mDateTextToday = (TextView)findViewById(R.id.date_today);
+		
+		mNumTextBefYesterday = (TextView)findViewById(R.id.seedsnumber_befyesterday);
+		mNumTextYesterday = (TextView)findViewById(R.id.seedsnumber_yesterday);
+		mNumTextToday = (TextView)findViewById(R.id.seedsnumber_today);		
+
+		mUpdateBtn  = (Button) findViewById(R.id.update_btn);
+		mHttpServerBtn = (Button) findViewById(R.id.httpserver_btn);
+		mFavListBtn = (Button) findViewById(R.id.favlist_btn);
+		mConfigBtn  = (Button) findViewById(R.id.config_btn);
 		
 		// Setup the click listener
-		myBefYesterdayBtn.setOnClickListener(myBefYesterdayBtnListener);
-		myYesterdayBtn.setOnClickListener(myYesterdayBtnListener);
-		myTodayBtn.setOnClickListener(myTodayBtnListener);
-		myFavListBtn.setOnClickListener(myFavListBtnListener);
-		myConfigBtn.setOnClickListener(myConfigBtnListener);
-		myHttpServerBtn.setOnClickListener(myHttpServerBtnListener);
-		
-		mLogger.info("Working on setting the ProgressDialog style");
-		 
+		mLayoutBefYesterday.setOnClickListener(mLayoutBefYesterdayListener);
+		mLayoutYesterday.setOnClickListener(mLayoutYesterdayListener);
+		mLayoutToday.setOnClickListener(mLayoutTodayListener);		
+		mFavListBtn.setOnClickListener(myFavListBtnListener);
+		mConfigBtn.setOnClickListener(myConfigBtnListener);
+		mHttpServerBtn.setOnClickListener(myHttpServerBtnListener);
+				 
 		// Set the progress style as spinner
-		//tProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); 
-		myUpdateBtn.setOnClickListener(myUpdateBtnListener);
+		mUpdateBtn.setOnClickListener(myUpdateBtnListener);
 		
 		// Retrieve the date info 
 		SeedsDateManager tDataMgr = SeedsDateManager.getDateManager();
 		mDateToday = tDataMgr.getRealDateToday();
 		mDateYesterday = tDataMgr.getRealDateYesterday();
 		mDateBefYesterday = tDataMgr.getRealDateBefYesterday();
+		mDateTextBefYesterday.setText(mDateBefYesterday);
+		mDateTextYesterday.setText(mDateYesterday);
+		mDateTextToday.setText(mDateToday);				
 		
 		// Initialize the date array list
 		mDateArray = new ArrayList<String> ();
@@ -117,13 +144,15 @@ public class SeedsDateListActivity extends Activity {
 		        getString(R.string.seeds_preffilename), Context.MODE_PRIVATE);		
 	}
 	
-	private View.OnClickListener myBefYesterdayBtnListener = new View.OnClickListener() {
+	private View.OnClickListener mLayoutBefYesterdayListener = new View.OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
 
-			tProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", "Please wait...", true, false);
-			tProgressDialog.setCanceledOnTouchOutside(true);
+			mProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", 					          
+					          getString(R.string.seeds_datelist_plswait)+"...", true, false);
+			
+			mProgressDialog.setCanceledOnTouchOutside(true);
 			
 			// Set up a thread to communicate with server
 			new Thread() {				
@@ -131,7 +160,7 @@ public class SeedsDateListActivity extends Activity {
 				public void run() {
 					try {
 						// Only when the seeds info have not been updated
-						updateDialogStatus("Connecting to Server...");	
+						updateDialogStatus(getString(R.string.seeds_datelist_conntoserver) + "...");	
 						
 						if (!isSeedsInfoUpdated(mDateBefYesterday))
 							opeStatus = updateSeedsInfo(mDateBefYesterday);
@@ -156,13 +185,14 @@ public class SeedsDateListActivity extends Activity {
 	};
 	
 	
-	private View.OnClickListener myYesterdayBtnListener = new View.OnClickListener() {
+	private View.OnClickListener mLayoutYesterdayListener = new View.OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
 
-			tProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", "Please wait...", true, false);
-			tProgressDialog.setCanceledOnTouchOutside(true);
+			mProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", 
+					          getString(R.string.seeds_datelist_plswait)+"...", true, false);
+			mProgressDialog.setCanceledOnTouchOutside(true);
 			
 			// Set up a thread to communicate with server
 			new Thread() {
@@ -200,13 +230,14 @@ public class SeedsDateListActivity extends Activity {
 		}
 	};
 	
-	private View.OnClickListener myTodayBtnListener = new View.OnClickListener() {
+	private View.OnClickListener mLayoutTodayListener = new View.OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
 
-			tProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", "Please wait...", true, false);
-			tProgressDialog.setCanceledOnTouchOutside(true);
+			mProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", 
+					          getString(R.string.seeds_datelist_plswait)+"...", true, false);
+			mProgressDialog.setCanceledOnTouchOutside(true);
 			
 			// Set up a thread to communicate with server
 			new Thread() {				
@@ -238,8 +269,9 @@ public class SeedsDateListActivity extends Activity {
 
 		@Override
 		public void onClick(View v) {
-			tProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", "Please wait...", true, false);
-			tProgressDialog.setCanceledOnTouchOutside(true);
+			mProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", 
+					          getString(R.string.seeds_datelist_plswait)+"...", true, false);
+			mProgressDialog.setCanceledOnTouchOutside(true);
 			
 			// Set up a thread to communicate with server
 			new Thread() {
@@ -270,8 +302,9 @@ public class SeedsDateListActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			// Show the dialog
-			tProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", "Please wait...", true, false);
-			tProgressDialog.setCanceledOnTouchOutside(true);
+			mProgressDialog = ProgressDialog.show(SeedsDateListActivity.this, "Loading...", 
+					          getString(R.string.seeds_datelist_plswait)+"...", true, false);
+			mProgressDialog.setCanceledOnTouchOutside(true);
 			
 			// Set up a thread to communicate with server
 			new Thread() {				
@@ -353,7 +386,7 @@ public class SeedsDateListActivity extends Activity {
         		    bundle.putString("date", mDateBefYesterday);
         		    intent.putExtras(bundle);
         			startActivity(intent);
-        			tProgressDialog.dismiss();
+        			mProgressDialog.dismiss();
         			break;
             	}
             	case MESSAGETYPE_YESTERD:
@@ -366,7 +399,7 @@ public class SeedsDateListActivity extends Activity {
         		    bundle.putString("date", mDateYesterday);
         		    intent.putExtras(bundle);
         			startActivity(intent);
-        		    tProgressDialog.dismiss();
+        			mProgressDialog.dismiss();
         			break;
             	}
             	case MESSAGETYPE_TODAY:
@@ -378,7 +411,7 @@ public class SeedsDateListActivity extends Activity {
         		    bundle.putString("date", mDateToday);
         		    intent.putExtras(bundle);
         			startActivity(intent);
-        		    tProgressDialog.dismiss();
+        			mProgressDialog.dismiss();
         			break;
             	}
             	case MESSAGETYPE_UPDATEDIALOG:
@@ -388,7 +421,7 @@ public class SeedsDateListActivity extends Activity {
             		//String tPassinDate = bundle.getString("date");
             		String tStatus = bundle.getString("status");
             		
-            		tProgressDialog.setMessage(tStatus);
+            		mProgressDialog.setMessage(tStatus);
             		break;
             		
             	}
@@ -396,7 +429,7 @@ public class SeedsDateListActivity extends Activity {
                 case MESSAGETYPE_STAYSTILL:
                 {
                 	mLogger.debug("MESSAGETYPE_UPDATE or MESSAGETYPE_STAYSTILL!");                	
-        		    tProgressDialog.dismiss();
+                	mProgressDialog.dismiss();
                     break;
                 }
                 default:
@@ -432,26 +465,23 @@ public class SeedsDateListActivity extends Activity {
 	    mDateArray.add(tDate);
 	    
     	// Notify progress dialog to show the status
-    	//tProgressDialog.setMessage("Retrieving Seeds Info Status...");
-	    updateDialogStatus("Retrieving Seeds Info Status...");
+	    updateDialogStatus(getString(R.string.seeds_datelist_retrievestatus) + "...");
     	
     	// Communicate with server to retrieve the seeds info
-		/*respInString = stubReadExternalFile("SeedsUpdateStatusByDatesResponse.txt");
-		status = true;*/
 		try {
 			respInString = SeedsNetworkProcess.sendUpdateStatusReqMsg(mDateArray);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
+			mLogger.excep(e);
 			e.printStackTrace();
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			mLogger.excep(e);
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			mLogger.excep(e);
 			e.printStackTrace();
 		}
 		
-		Log.i("DateList", "seedsUpdateStatusReq msg communication finished, msg: "+respInString);
+		mLogger.info("seedsUpdateStatusReq msg communication finished, msg: "+respInString);
 		if (null == respInString)
 		{
 			updateDialogStatus("Retrieving Seeds Info Failed!");			
@@ -459,13 +489,13 @@ public class SeedsDateListActivity extends Activity {
 		}
 		else
 		{
-			updateDialogStatus("Analyzing Seeds Info Status...");
+			updateDialogStatus(getString(R.string.seeds_datelist_analyzeseedsstatus) + "...");
 			respInMap = SeedsJSONMessage.parseUpdateStatusRespMsg(mDateArray,respInString);			
 		}
 		
 		if (SeedsStatusByDate.isSeedsByDateReady(respInMap.get(tDate)))
 		{
-			updateDialogStatus("Downloading Seeds Info...");
+			updateDialogStatus(getString(R.string.seeds_datelist_dowloadseedsinfo) + "...");
 			respInString2 = SeedsNetworkProcess.sendSeedsByDateReqMsg(mDateArray);
 
 			if (null == respInString2)
@@ -524,9 +554,6 @@ public class SeedsDateListActivity extends Activity {
     	//tProgressDialog.setMessage("Retrieving Seeds Info Status...");
     	
     	// Communicate with server to retrieve the seeds info
-		/*respInString = stubReadExternalFile("SeedsUpdateStatusByDatesResponse.txt");
-		status = true;*/
-
 		try {
 			respInString = SeedsNetworkProcess.sendUpdateStatusReqMsg(tDateArray);
 		} catch (ClientProtocolException e) {
@@ -546,15 +573,14 @@ public class SeedsDateListActivity extends Activity {
 		}
 		else
 		{
-			//tProgressDialog.setMessage("Analyzing Seeds Info Status...");
+			updateDialogStatus(getString(R.string.seeds_datelist_analyzeseedsstatus) + "...");
 			try{
 				respInMap = SeedsJSONMessage.parseUpdateStatusRespMsg(tDateArray,respInString);			
 			}catch (JSONException e){
 				e.printStackTrace();
 			}
 		}
-		Log.i("DateList", "The size of respInMap is "+ respInMap.size());
-		Log.i("DateList", "The size of tDateArray is "+ tDateArray.size());
+		
 		int numOfDate = tDateArray.size();
 		Log.i("DateList", "The size of mDateArray is "+ mDateArray.size());
 		mDateArray.clear();
@@ -584,10 +610,8 @@ public class SeedsDateListActivity extends Activity {
 			return false;
 		}
 		
-		//tProgressDialog.setMessage("Downloading Seeds Info... ");
+		updateDialogStatus(getString(R.string.seeds_datelist_dowloadseedsinfo) + "...");
 		respInString2 = SeedsNetworkProcess.sendSeedsByDateReqMsg(mDateArray);
-		/*respInString2 = stubReadExternalFile("SeedsByDatesResponse.txt");
-		status2 =  true;*/
 		
 		if (null == respInString2)
 		{
@@ -596,18 +620,18 @@ public class SeedsDateListActivity extends Activity {
 		}
 		else
 		{
-			//tProgressDialog.setMessage("Parsing Seeds Info... ");
+			updateDialogStatus(getString(R.string.seeds_datelist_analyzeseedsdata) + "...");
 			ArrayList<SeedsEntity> tSeedsList = SeedsJSONMessage.parseSeedsByDatesRespMsg(mDateArray,respInString2);
 			
 			// Retrieve the DB process handler to get data 
 		    SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
 		    
 		    // Store the seeds info into database
-		    //tProgressDialog.setMessage("Store Seeds Info... ");
+		    updateDialogStatus("Store Seeds Info... ");
 		    int numOfSeeds = tSeedsList.size();
 		    for (int index = 0; index < numOfSeeds; index++)
 		    {
-		    	//tProgressDialog.setMessage("Store Seeds Info "+index+"/"+numOfSeeds);
+		    	updateDialogStatus("Store Seeds Info "+index+"/"+numOfSeeds);
 		    	try{
 		    		tDBAdapter.insertEntryToSeed(tSeedsList.get(index));			    	
 		    	}catch(Exception e){
