@@ -127,6 +127,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define HTTP_SERVER_NAME @"Seeds Http Server"
 #define HTTP_SERVER_PORT 8964
 
+#define FILE_EXTENDNAME_ZIP @"zip"
 #define FILE_EXTENDNAME_DOT_ZIP @".zip"
 #define FILE_EXTENDNAME_HTML @"html"
 #define FILE_EXTENDNAME_DOT_HTML @".html"

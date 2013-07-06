@@ -65,6 +65,7 @@
 "Torrents directory failed to create." = "种子目录创建失败...";
 "Torrent files are preparing..." = "种子文件准备中...";
 "Torrent files are packaging..." = "种子文件打包中...";
+"Clearning old files..." = "旧包清理中...";
 "Web page is generating..." = "网页生成中...";
 "Web page generation is fail." = "网页生成失败。";
 "HTTP server is initializing..." = "HTTP服务器初始化...";

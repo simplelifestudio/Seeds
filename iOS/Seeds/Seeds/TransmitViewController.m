@@ -176,10 +176,11 @@ if (_cancelTransmission)\
 
 - (void) _transmitTaskForUserMannuallyDownloads
 {
-    // Step 10: 对torrents目录进行扫描和打zip包
-    // Step 20: 动态生成index.html页面，包含torrents目录下所有torrent文件的zip包下载链接
-    // Step 30: 启动HTTP服务器
-    // Step 40: 更新HTTP服务器的地址和端口信息至UI
+    // Step 10: 清理旧的zip包文件    
+    // Step 20: 根据当日时间（例如5月8日）获取今天、昨天、前天三个时间标（例如[2013-5-08]，[2013-5-07]，[2013-5-06]），进行zip打包
+    // Step 30: 动态生成index.html页面，包含前天、昨天、今天三个时间标对应的torrent文件zip包下载链接
+    // Step 40: 启动HTTP服务器
+    // Step 50: 更新HTTP服务器的地址和端口信息至UI
     
     BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
     if (!isWiFiEnabled)
@@ -191,6 +192,15 @@ if (_cancelTransmission)\
     
     // Step 10:
     NSString* downloadPath = [SeedsDownloadAgent downloadPath];
+    
+    [self _updateConsole:NSLocalizedString(@"Clearning old files...", nil)];
+    NSArray* oldZipFiles = [CBFileUtils filesInDirectory:downloadPath fileExtendName:FILE_EXTENDNAME_ZIP];
+    for (NSString* oldZipFile in oldZipFiles)
+    {
+        [CBFileUtils deleteFile:oldZipFile];
+    }
+    
+    // Step 20:
     NSArray* last3Days = [CBDateUtils lastThreeDays];    
     for (NSDate* day in last3Days)
     {
@@ -207,20 +217,20 @@ if (_cancelTransmission)\
         NSString* zipFileFullPath = [CBFileUtils newZipFileWithFiles:zipName zipFiles:files];
         DLog(@"New zip file created:%@", zipFileFullPath);
     }
-        
-    // Step 20:
+    
+    // Step 30:
     [self _updateConsole:NSLocalizedString(@"Web page is generating...", nil)];
     BOOL flag = [_transmitModule generateHtmlPageWithLast3Days:last3Days];
     if (flag)
     {
-        // Step 30:
+        // Step 40:
         [self _updateConsole:NSLocalizedString(@"HTTP server is initializing...", nil)];
         flag = [_transmitModule startHTTPServer];
         if (flag)
         {
             [self _updateConsole:NSLocalizedString(@"HTTP server is starting...", nil)];
             
-            // Step 40:
+            // Step 50:
             NSString* name = [_transmitModule httpServerName];
             NSInteger port = [_transmitModule httpServerPort];
             

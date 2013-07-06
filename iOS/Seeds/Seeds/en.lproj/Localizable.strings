@@ -65,6 +65,7 @@
 "Torrents directory failed to create." = "Torrents directory failed to create.";
 "Torrent files are preparing..." = "Torrent files are preparing...";
 "Torrent files are packaging..." = "Torrent files are packaging...";
+"Clearning old files..." = "Clearning old files...";
 "Web page is generating..." = "Web page is generating...";
 "Web page generation is fail." = "Web page generation is fail...";
 "HTTP server is initializing..." = "HTTP server is initializing...";
