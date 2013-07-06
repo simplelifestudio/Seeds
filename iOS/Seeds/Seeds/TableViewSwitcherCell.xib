@@ -75,7 +75,7 @@
 							<object class="IBUISwitch" id="591674651">
 								<reference key="NSNextResponder" ref="590155492"/>
 								<int key="NSvFlags">256</int>
-								<string key="NSFrame">{{220, 4}, {94, 27}}</string>
+								<string key="NSFrame">{{219, 4}, {94, 27}}</string>
 								<reference key="NSSuperview" ref="590155492"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:590</string>

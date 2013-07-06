@@ -16,8 +16,10 @@
 
 @interface SeedsSpider()
 {
-    SeedsVisitor* visitor;
-    BOOL isPullOperationDone;
+    SeedsVisitor* _visitor;
+    BOOL _isPullOperationDone;
+    
+    SeedsDownloadAgent* _downloadAgent;
 }
 
 @end
@@ -112,7 +114,7 @@
         DLog(@"xql = %@", xql);
         
         NSArray* elements = [doc searchWithXPathQuery:xql];
-        NSArray* seeds = [visitor visitNodes:elements];
+        NSArray* seeds = [_visitor visitNodes:elements];
         [seedList addObjectsFromArray:seeds];
     }
     
@@ -299,135 +301,14 @@
         }
         
         // Step 90:
-        DLog(@"Clean old torrents.");
-        
-        NSDate* theDayBefore = days[TheDayBefore];
-        
-        NSString* downloadPath = [SeedsDownloadAgent downloadPath];
-        NSArray* torrentFiles = [CBFileUtils filesInDirectory:downloadPath fileExtendName:FILE_EXTENDNAME_TORRENT];
-        if (nil != torrentFiles && 0 < torrentFiles.count)
-        {
-            for (NSString* fileFullPath in torrentFiles)
-            {
-                NSDate* fileLastUpdateDay = [CBFileUtils fileLastUpdateTime:fileFullPath];
-                NSInteger dayIntDiff = [CBDateUtils dayDiffBetweenTwoDays:fileLastUpdateDay dateB:theDayBefore];
-                if (0 > dayIntDiff)
-                {
-                    [CBFileUtils deleteFile:fileFullPath];
-                }
-            }
-        }
+        DLog(@"Clean all old torrents before the last 3 days.");
+        [_downloadAgent clearDownloadDirectory:days];
 
         if (nil != _seedsSpiderDelegate)
         {
             [_seedsSpiderDelegate taskFinished:NSLocalizedString(@"Completed", nil) minorStatus:nil];
         }
-    }
-    
-//    CommunicationModule* commModule = [CommunicationModule sharedInstance];
-//    SeedPictureAgent* agent = commModule.seedPictureAgent;
-//    [agent prefetchSeedImages:pulledSeedList];
-    
-//    // Step XX: 下载种子文件到Documents，并按时间标创建新文件夹
-    
-//    // Step XX:
-//    NSMutableDictionary* torrentLinksByDateDic = [NSMutableDictionary dictionary];
-    // Step XX:
-//    [torrentLinksByDateDic setObject:seedList forKey:dateStr];
-//    if (hasAllSyncBefore)
-//    {
-//        if ([_torrentListDownloadAgentDelegate respondsToSelector:@selector(torrentListDownloadFinished:)])
-//        {
-//            [_torrentListDownloadAgentDelegate torrentListDownloadFinished:NSLocalizedString(@"Sync Yet", nil)];
-//        }
-//    }
-//    else
-//    {
-//        if ([_torrentListDownloadAgentDelegate respondsToSelector:@selector(torrentListDownloadFinished:)])
-//        {
-//            [_torrentListDownloadAgentDelegate torrentListDownloadFinished:NSLocalizedString(@"Completed", nil)];
-//        }
-//    }
-    
-//    NSInteger keyCount = torrentLinksByDateDic.allKeys.count;
-//    if (0 < keyCount)
-//    {
-//        // Step XX:
-//        __block BOOL directoryIsReady = NO;
-//        
-//        TorrentListDownloadAgent* downloadAgent = [[TorrentListDownloadAgent alloc] init];
-//        [torrentLinksByDateDic enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop){
-//            // Create date folder if necessary
-//            NSString* dateStr = (NSString*)key;
-//            NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
-//            NSString* torrentsPath = [TransmissionModule downloadTorrentsFolderPath];
-//            
-//            NSFileManager* fm = [NSFileManager defaultManager];
-//            NSError* error = nil;
-//            if ([fm fileExistsAtPath:torrentsPath])
-//            {
-//                directoryIsReady = YES;
-//            }
-//            else
-//            {
-//                directoryIsReady = [fm createDirectoryAtPath:torrentsPath withIntermediateDirectories:NO attributes:nil error:&error];
-//            }
-//            
-//            if (directoryIsReady)
-//            {
-//                NSString* dateFolderPath = [torrentsPath stringByAppendingPathComponent:dateStr];
-//                if ([fm fileExistsAtPath:dateFolderPath])
-//                {
-//                    directoryIsReady = [fm removeItemAtPath:dateFolderPath error:&error];
-//                    if (!directoryIsReady)
-//                    {
-//                        DLog(@"Failed to remove folder: %@ with error: %@", dateFolderPath, [error description]);
-//                    }
-//                }
-//                
-//                directoryIsReady = [fm createDirectoryAtPath:dateFolderPath withIntermediateDirectories:NO attributes:nil error:&error];
-//                if (directoryIsReady)
-//                {
-//                    // Download torrents with date
-//                    NSArray* seeds = (NSArray*)obj;
-//                    [downloadAgent addSeeds:seeds downloadPath:dateFolderPath];
-//                }
-//                else
-//                {
-//                    DLog(@"Failed to create folder: %@ with error: %@", dateFolderPath, error.localizedDescription);
-//                }
-//            }
-//            else
-//            {
-//                DLog(@"Failed to create folder: %@ with error: %@", torrentsPath, error.localizedDescription);
-//            }
-//        }];
-//        
-//        if (directoryIsReady)
-//        {
-//            [downloadAgent downloadWithDelegate:_torrentListDownloadAgentDelegate];
-//            
-//            while (!isPullOperationDone)
-//            {
-//                usleep(100);
-//            }
-//        }
-//        else
-//        {
-//            if ([_torrentListDownloadAgentDelegate respondsToSelector:@selector(torrentListDownloadFinished:)])
-//            {
-//                [_torrentListDownloadAgentDelegate torrentListDownloadFinished:NSLocalizedString(@"Folder Exception", nil)];
-//            }
-//        }
-//    }
-//    else
-//    {
-//        if ([_torrentListDownloadAgentDelegate respondsToSelector:@selector(torrentListDownloadFinished:)])
-//        {
-//            [_torrentListDownloadAgentDelegate torrentListDownloadFinished:NSLocalizedString(@"Sync Yet", nil)];
-//        }
-//    }
-    
+    }    
 }
 
 -(void) fillCommonInfoToSeeds:(NSArray*) seeds date:(NSDate*) day
@@ -447,8 +328,11 @@
 
 -(void) _setupInstance
 {
-    visitor = [[SeedsVisitor alloc] init];
-    isPullOperationDone = NO;
+    _visitor = [[SeedsVisitor alloc] init];
+    _isPullOperationDone = NO;
+    
+    CommunicationModule* _commModule = [CommunicationModule sharedInstance];
+    _downloadAgent = _commModule.seedsDownloadAgent;
 }
 
 @end

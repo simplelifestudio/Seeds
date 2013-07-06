@@ -169,18 +169,46 @@ SINGLETON(TransmissionModule)
     }
     
     NSMutableString* htmlCodeCopy = [NSMutableString stringWithString:htmlCode];
+    NSInteger dayIndex = TheDayBefore;
     for (NSDate* day in last3Days)
     {
-        NSString* dateStr = [CBDateUtils shortDateString:day];
+        NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:STANDARD_DATE_FORMAT andDate:day];
 
         NSMutableString* zipFileName = [NSMutableString stringWithString:dateStr];
-        [zipFileName appendString:FILE_EXTENDNAME_DOT_ZIP];
+//        [zipFileName appendString:FILE_EXTENDNAME_DOT_ZIP];
         
-        NSString* strAfterLinkReplaced = [CBStringUtils replaceSubString:zipFileName oldSubString:@"$LINK$" string:htmlCodeCopy];
-        htmlCodeCopy = [NSMutableString stringWithString:strAfterLinkReplaced];
+        NSString* placeHolderStr = nil;
+        switch (dayIndex)
+        {
+            case TheDayBefore:
+            {
+                placeHolderStr = @"$TheDayBefore$";
+                break;
+            }
+            case Yesterday:
+            {
+                placeHolderStr = @"$Yesterday$";
+                break;
+            }
+            case Today:
+            {
+                placeHolderStr = @"$Today$";
+                break;
+            }
+            default:
+            {
+                placeHolderStr = @"";
+                break;
+            }
+        }
         
-        NSString* strAfterDateReplaced = [CBStringUtils replaceSubString:dateStr oldSubString:@"$NAME$" string:htmlCodeCopy];
-        htmlCodeCopy = [NSMutableString stringWithString:strAfterDateReplaced];
+        for (int i = 0; i < 2; i++)
+        {
+            NSString* strAfterLinkReplaced = [CBStringUtils replaceSubString:zipFileName oldSubString:placeHolderStr string:htmlCodeCopy];
+            htmlCodeCopy = [NSMutableString stringWithString:strAfterLinkReplaced];
+        }
+        
+        dayIndex++;
     }
     
     NSData* data = [htmlCodeCopy dataUsingEncoding: encodingMode];

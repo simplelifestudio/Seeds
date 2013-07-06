@@ -35,6 +35,7 @@
         for (NSString* file in files)
         {
             NSString* fileName = [file lastPathComponent];
+            
             @try
             {
                 ZipWriteStream* writeStream = [zip writeFileInZipWithName:fileName compressionLevel:ZipCompressionLevelNone];
@@ -208,6 +209,41 @@
     return flag;
 }
 
++(BOOL) isDirectoryExists:(NSString*) dirFullPath
+{
+    BOOL flag = NO;
+    
+    NSFileManager * fm = [NSFileManager defaultManager];
+    BOOL isDir;
+    flag = [fm fileExistsAtPath:dirFullPath isDirectory:&isDir];
+    flag = (flag && isDir) ? YES : NO;
+    
+    return flag;
+}
+
++(BOOL) deleteDirectory:(NSString*) dirFullPath
+{
+    BOOL flag = NO;
+    
+    if (nil != dirFullPath && 0 < dirFullPath.length)
+    {
+        NSFileManager * fm = [NSFileManager defaultManager];
+        NSError* error = nil;
+        
+        flag = [CBFileUtils isDirectoryExists:dirFullPath];
+        if (flag)
+        {
+            flag = [fm removeItemAtPath:dirFullPath error:&error];
+            if (!flag)
+            {
+                DLog(@"Failed to delete file at path: %@ with error: %@", dirFullPath, error.localizedDescription);
+            }
+        }
+    }
+    
+    return flag;
+}
+
 +(BOOL) createFile:(NSString*) fileFullPath content:(id)content
 {
     BOOL flag = NO;
@@ -232,6 +268,20 @@
     }
     
     return flag;
+}
+
++(NSArray*) directories:(NSString*) directoryPath
+{
+    NSMutableArray* dirs = [NSMutableArray array];
+    
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSArray* subDirs = [fm contentsOfDirectoryAtPath:directoryPath error:nil];
+    if (nil != subDirs && 0 < subDirs.count)
+    {
+        [dirs addObjectsFromArray:subDirs];
+    }
+    
+    return dirs;
 }
 
 @end

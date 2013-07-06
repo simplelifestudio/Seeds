@@ -190,19 +190,27 @@ if (_cancelTransmission)\
     }
     
     // Step 10:
-    [self _updateConsole:NSLocalizedString(@"Torrent files are preparing...", nil)];
-    NSString* torrentsFolderPath = [SeedsDownloadAgent downloadPath];
-    NSArray* files = [CBFileUtils filesInDirectory:torrentsFolderPath fileExtendName:FILE_EXTENDNAME_TORRENT];
-    [self _updateConsole:NSLocalizedString(@"Torrent files are packaging...", nil)];
-    NSMutableString* zipName = [NSMutableString stringWithString:FOLDER_TORRENTS];
-    [zipName appendString:FILE_EXTENDNAME_DOT_ZIP];
-    NSString* zipFilePath = [torrentsFolderPath stringByAppendingPathComponent:zipName];
-    zipFilePath = [CBFileUtils newZipFileWithFiles:zipFilePath zipFiles:files];
-    DLog(@"New zip file created:%@", zipFilePath);
-    
+    NSString* downloadPath = [SeedsDownloadAgent downloadPath];
+    NSArray* last3Days = [CBDateUtils lastThreeDays];    
+    for (NSDate* day in last3Days)
+    {
+        NSString* dayStr = [CBDateUtils dateStringInLocalTimeZone:STANDARD_DATE_FORMAT andDate:day];
+        NSString* dayFolderPath = [downloadPath stringByAppendingPathComponent:dayStr];
+        NSArray* files = [CBFileUtils filesInDirectory:dayFolderPath fileExtendName:FILE_EXTENDNAME_TORRENT];
+        
+        [self _updateConsole:NSLocalizedString(@"Torrent files are packaging...", nil)];
+        NSMutableString* zipName = [NSMutableString stringWithString:downloadPath];
+        [zipName appendString:@"/"];
+        [zipName appendString:dayStr];
+        [zipName appendString:FILE_EXTENDNAME_DOT_ZIP];
+
+        NSString* zipFileFullPath = [CBFileUtils newZipFileWithFiles:zipName zipFiles:files];
+        DLog(@"New zip file created:%@", zipFileFullPath);
+    }
+        
     // Step 20:
     [self _updateConsole:NSLocalizedString(@"Web page is generating...", nil)];
-    BOOL flag = [_transmitModule generateHtmlPageWithZipFileName:zipName];
+    BOOL flag = [_transmitModule generateHtmlPageWithLast3Days:last3Days];
     if (flag)
     {
         // Step 30:
@@ -259,7 +267,7 @@ if (_cancelTransmission)\
 - (void) _transmitTaskForAppAutoAllDownloads
 {
     // Step 10: 根据当日时间（例如5月8日）获取今天、昨天、前天三个时间标（例如[5-08]，[5-07]，[5-06]）
-    // Step 20: 在本地KV缓存中，检查时间标对应的torrent文件打包状态：（a. 已打包；b. 未打包），如果是未打包状态，则继续下一步，反之停止操作
+    // Step 20: 清理旧文件
     // Step 30: 依次对前天、昨天、今天三个时间标对应的目录进行torrent文件扫描和打包
     // Step 40: 动态生成index.html页面，包含前天、昨天、今天三个时间标对应的torrent文件zip包下载链接
     // Step 50: 启动HTTP服务器

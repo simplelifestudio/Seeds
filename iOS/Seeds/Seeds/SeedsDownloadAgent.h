@@ -28,4 +28,6 @@ typedef enum {SeedNotDownload, SeedWaitForDownload, SeedIsDownloading, SeedDownl
 
 -(SeedDownloadStatus) checkDownloadStatus:(Seed*) seed;
 
+-(void) clearDownloadDirectory:(NSArray*) last3Days;
+
 @end

@@ -370,6 +370,38 @@ static NSString* _downloadPath;
     return list;
 }
 
+-(void) clearDownloadDirectory:(NSArray*) last3Days
+{
+    NSArray* last3DayStrs = [CBDateUtils lastThreeDayStrings:last3Days formatString:STANDARD_DATE_FORMAT];
+    
+    NSMutableString* downloadDirPath = [NSMutableString string];
+    [downloadDirPath appendString:_downloadPath];
+    NSArray* subDirs = [CBFileUtils directories:downloadDirPath];
+
+    for (NSString* subDirPath in subDirs)
+    {
+        NSString* path = [subDirPath lastPathComponent];
+        
+        BOOL flag = NO;
+        for (NSString* dayStr in last3DayStrs)
+        {
+            if ([dayStr isEqualToString:path])
+            {
+                flag = YES;
+                break;
+            }
+        }
+
+        if (!flag)
+        {
+            NSMutableString* subDirFullPath = [NSMutableString stringWithString:downloadDirPath];
+            [subDirFullPath appendString:@"/"];
+            [subDirFullPath appendString:subDirPath];
+            [CBFileUtils deleteDirectory:subDirFullPath];
+        }
+    }
+}
+
 #pragma mark - Private Methods
 
 -(void) _setupInstance
@@ -386,6 +418,7 @@ static NSString* _downloadPath;
     [downloadDirPath appendString:@"/"];
     NSString* publishDateStr = seed.publishDate;
     [downloadDirPath appendString:publishDateStr];
+    
     [CBFileUtils createDirectory:downloadDirPath];
     
     TorrentDownloadAgent* agent = [[TorrentDownloadAgent alloc] initWithSeed:seed downloadPath:downloadDirPath];
