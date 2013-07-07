@@ -307,7 +307,7 @@
 
 - (void) _updateDayLabel:(NSDate*) day dayIndex:(DayIndex) dayIndex;
 {
-    NSString* dateStr = [CBDateUtils shortDateString:day];
+    NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:STANDARD_DATE_FORMAT andDate:day];
     switch (dayIndex)
     {
         case Today:

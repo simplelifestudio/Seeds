@@ -27,7 +27,11 @@
 
 #define USERDEFAULTS_KEY_SERVERMODE @"serverMode"
 #define USERDEFAULTS_KEY_APPLAUNCHEDBEFORE @"appLaunchedBefore"
+#define USERDEFAULTS_KEY_LAST3DAYS @"last3Days"
 #define PERSISTENTDOMAIN_APP @"application"
+
+
+
 
 // Module: Communication
 #define RACHABILITY_HOST @"www.apple.com"
