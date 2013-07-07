@@ -285,21 +285,12 @@ SINGLETON(SeedsDownloadAgent)
 }
 
 static NSString* _downloadPath;
-+(NSString*) downloadPath
+static NSString* _favoritePath;
++(void) initialize
 {
-    if (nil == _downloadPath)
-    {
-        NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
-        _downloadPath = [documentsPath stringByAppendingPathComponent:FOLDER_TORRENTS];
-    }
-    return _downloadPath;
-}
-
--(void) awakeFromNib
-{
-    [self _setupInstance];
-    
-    [super awakeFromNib];
+    NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
+    _downloadPath = [documentsPath stringByAppendingPathComponent:FOLDER_TORRENTS];
+    _favoritePath = [_downloadPath stringByAppendingPathComponent:FOLDER_FAVORITES];
 }
 
 #pragma mark - Public Methods
