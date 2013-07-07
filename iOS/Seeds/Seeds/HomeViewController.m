@@ -57,6 +57,26 @@
     
     GUIModule* guiModule = [GUIModule sharedInstance];
     guiModule.homeViewController = self;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_appDidEnterBackground)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_appDidBecomeActive)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+}
+
+- (void) _appDidEnterBackground
+{
+
+}
+
+- (void) _appDidBecomeActive
+{
+    [self updateDayAndSyncStatusLabels];
 }
 
 - (void)viewWillAppear:(BOOL)animated
