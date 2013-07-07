@@ -194,7 +194,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define HUD_NOTIFICATION_SIZE CGSizeMake(300, 40)
 #define HUD_NOTIFICATION_YOFFSET 250
 
-#define HUD_DISPLAY(x) sleep(x);
+#define HUD_DISPLAY(x) usleep(x * 1000 * 1000);
 
 #define kZoomStep 2
 

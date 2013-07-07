@@ -151,7 +151,7 @@
 -(void) taskIsProcessing:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
 {
     [self _updateHUDTextStatus:majorStatus minorStatus:minorStatus];
-    HUD_DISPLAY(1)
+    HUD_DISPLAY(0.5)
 }
 
 -(void) taskCanceld:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
@@ -160,7 +160,7 @@
     _HUD.minSize = HUD_CENTER_SIZE;
     [self _updateHUDTextStatus:majorStatus minorStatus:nil];
     
-    HUD_DISPLAY(2)
+    HUD_DISPLAY(1)
 }
 
 -(void) taskFailed:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
@@ -168,7 +168,7 @@
     _HUD.mode = MBProgressHUDModeText;
     [self _updateHUDTextStatus:majorStatus minorStatus:nil];
     
-    HUD_DISPLAY(2)
+    HUD_DISPLAY(1)
 }
 
 -(void) taskFinished:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
@@ -176,7 +176,7 @@
     _HUD.mode = MBProgressHUDModeText;
     [self _updateHUDTextStatus:majorStatus minorStatus:nil];
     
-    HUD_DISPLAY(2)
+    HUD_DISPLAY(1)
 }
 
 -(void) taskDataUpdated:(id) dataLabel data:(id) data
