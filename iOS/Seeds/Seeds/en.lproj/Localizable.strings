@@ -59,9 +59,9 @@
 "Download Torrent" = "Download Torrent";
 "Delete Torrent" = "Delete Torrent";
 
-"Transmission module needs WiFi environment..." = "Transmission module needs WiFi environment...";
-"Transmission module is initializing..." = "Transmission module is initializing...";
-"Transmission is cancel." = "Transmission is cancel...";
+"Transmission module needs WiFi environment..." = "Sharing needs WiFi environment...";
+"Transmission module is initializing..." = "Module is initializing...";
+"Transmission is cancel." = "Sharing is cancel...";
 "Torrents directory failed to create." = "Torrents directory failed to create.";
 "Torrent files are preparing..." = "Torrent files are preparing...";
 "[%@] %d torrent files are packaging..." = "[%@] %d torrent files are packaging...";

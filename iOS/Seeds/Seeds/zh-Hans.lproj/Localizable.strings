@@ -59,9 +59,9 @@
 "Download Torrent" = "下载种子";
 "Delete Torrent" = "删除种子";
 
-"Transmission module needs WiFi environment..." = "传输模块需要WiFi环境...";
-"Transmission module is initializing..." = "传输模块初始化...";
-"Transmission is cancel." = "传输取消...";
+"Transmission module needs WiFi environment..." = "分享需要WiFi环境...";
+"Transmission module is initializing..." = "模块初始化...";
+"Transmission is cancel." = "分享取消...";
 "Torrents directory failed to create." = "种子目录创建失败...";
 "Torrent files are preparing..." = "种子文件准备中...";
 "[%@] %d torrent files are packaging..." = "[%@] %d 个种子文件打包中...";
