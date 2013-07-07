@@ -10,6 +10,8 @@
 package com.simplelife.seeds.server.util;
 
 import java.util.Properties;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -79,6 +81,8 @@ public class HibernateSessionFactory
      */
     public static void rebuildSessionFactory()
     {
+        Lock l = new ReentrantLock();
+        l.lock();
         try {
         	if (configuration == null)
         	{
@@ -91,8 +95,14 @@ public class HibernateSessionFactory
             //properties.put("connection.password", "Simplelife123");
             ServiceRegistry sr = new ServiceRegistryBuilder().applySettings(properties).buildServiceRegistry();
             sessionFactory = configuration.buildSessionFactory(sr);
-        } catch (Exception e) {
+        }
+        catch (Exception e) 
+        {
             LogUtil.printStackTrace(e);
+        }
+        finally
+        {
+            l.unlock();
         }
     }
 
