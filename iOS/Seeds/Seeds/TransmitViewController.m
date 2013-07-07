@@ -82,6 +82,8 @@ if (_cancelTransmission)\
 
 - (void)viewDidUnload
 {
+    [self _unregisterNotifications];
+    
     [self setConsoleView:nil];
     [super viewDidUnload];
 }
@@ -149,15 +151,26 @@ if (_cancelTransmission)\
     
     [self.navigationItem setHidesBackButton:YES];
     
+    [self _registerNotifiations];
+}
+
+- (void) _registerNotifiations
+{
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_appDidEnterBackground)
                                                  name:UIApplicationDidEnterBackgroundNotification
                                                object:nil];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(_appDidBecomeActive)
                                                  name:UIApplicationDidBecomeActiveNotification
                                                object:nil];
+}
+
+- (void) _unregisterNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 }
 
 - (void) _registerGestureRecognizers

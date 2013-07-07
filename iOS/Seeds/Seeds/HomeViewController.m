@@ -15,12 +15,12 @@
 
 @interface HomeViewController ()
 {
-    MBProgressHUD* HUD;
+    MBProgressHUD* _HUD;
     
-    UIBarButtonItem* backBarItem;
-    UIBarButtonItem* stopBarItem;
+    UIBarButtonItem* _backBarItem;
+    UIBarButtonItem* _stopBarItem;
     
-    NSArray* last3Days;
+    NSArray* _last3Days;
 }
 @end
 
@@ -58,25 +58,7 @@
     GUIModule* guiModule = [GUIModule sharedInstance];
     guiModule.homeViewController = self;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(_appDidEnterBackground)
-                                                 name:UIApplicationDidEnterBackgroundNotification
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(_appDidBecomeActive)
-                                                 name:UIApplicationDidBecomeActiveNotification
-                                               object:nil];
-}
-
-- (void) _appDidEnterBackground
-{
-
-}
-
-- (void) _appDidBecomeActive
-{
-    [self updateDayAndSyncStatusLabels];
+    [self _registerNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -84,7 +66,7 @@
     [self.navigationController setNavigationBarHidden:YES];
     [self.navigationController setToolbarHidden:YES];
     
-    [self updateDayAndSyncStatusLabels];
+    [self _refreshDayAndSyncStatusLabels];
 
     [super viewWillAppear:animated];    
 }
@@ -101,6 +83,8 @@
 
 - (void)viewDidUnload
 {
+    [self _unregisterNotifications];
+    
     [self setSyncButton:nil];
     [self setTransButton:nil];
 
@@ -117,36 +101,211 @@
     [super viewDidUnload];
 }
 
-- (IBAction)onClickSyncButton:(id)sender
-{    
-	HUD = [[MBProgressHUD alloc] initWithView:self.view];
-	[self.view addSubview:HUD];
-	HUD.delegate = self;
-    
-	[HUD showWhileExecuting:@selector(syncSeedsInfoTask) onTarget:self withObject:nil animated:YES];
-}
-
--(void) updateHUDTextStatus:(NSString*) majorStatus minorStatus:(NSString*)minorStatus
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if (nil != majorStatus && 0 < majorStatus.length)
+    // NavigationBar
+    if ([segue.identifier isEqualToString:SEGUE_ID_HOME2TRANSMIT])
     {
-        HUD.labelText = majorStatus;
+        _backBarItem = self.navigationItem.backBarButtonItem;
+        self.navigationItem.backBarButtonItem = _stopBarItem;
+    }
+    else
+    {
+        self.navigationItem.backBarButtonItem = _backBarItem;
     }
     
-    HUD.detailsLabelText = minorStatus;
+    // Date for SeedListView
+    if ([segue.identifier isEqualToString:SEGUE_ID_HOME2SEEDLIST])
+    {
+        SeedListViewController* seedListViewController = (SeedListViewController*)segue.destinationViewController;
+
+        if (sender == _todayButton)
+        {
+            seedListViewController.seedsDate = _last3Days[Today];
+        }
+        else if (sender == _yesterdayButton)
+        {
+            seedListViewController.seedsDate = _last3Days[Yesterday];
+        }
+        else if (sender == _theDayBeforeButton)
+        {
+            seedListViewController.seedsDate = _last3Days[TheDayBefore];
+        }
+    }
 }
 
-- (void)syncSeedsInfoTask
+#pragma mark - CBLongTaskStatusHUDDelegate
+
+-(void) taskStarted:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
 {
-    SpiderModule* spiderModule = [SpiderModule sharedInstance];
-    [spiderModule.spider pullSeedsInfo:last3Days];
-
-//    CommunicationModule* communicationModule = [CommunicationModule sharedInstance];
-//    ServerAgent* serverAgent = communicationModule.serverAgent;
-//    [serverAgent syncSeedsInfo];
+    _HUD.mode = MBProgressHUDModeText;
+    _HUD.minSize = HUD_CENTER_SIZE;
+    
+    [self _updateHUDTextStatus:majorStatus minorStatus:nil];
+    
+    HUD_DISPLAY(1)
+    
+    _HUD.mode = MBProgressHUDModeIndeterminate;
 }
 
-- (void) updateDayLabel:(NSDate*) day dayIndex:(DayIndex) dayIndex;
+-(void) taskIsProcessing:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
+{
+    [self _updateHUDTextStatus:majorStatus minorStatus:minorStatus];
+    HUD_DISPLAY(1)
+}
+
+-(void) taskCanceld:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
+{
+    _HUD.mode = MBProgressHUDModeText;
+    _HUD.minSize = HUD_CENTER_SIZE;
+    [self _updateHUDTextStatus:majorStatus minorStatus:nil];
+    
+    HUD_DISPLAY(2)
+}
+
+-(void) taskFailed:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
+{
+    _HUD.mode = MBProgressHUDModeText;
+    [self _updateHUDTextStatus:majorStatus minorStatus:nil];
+    
+    HUD_DISPLAY(2)
+}
+
+-(void) taskFinished:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
+{
+    _HUD.mode = MBProgressHUDModeText;
+    [self _updateHUDTextStatus:majorStatus minorStatus:nil];
+    
+    HUD_DISPLAY(2)
+}
+
+-(void) taskDataUpdated:(id) dataLabel data:(id) data
+{
+    NSAssert(nil != dataLabel, @"Nil data label");
+    NSAssert(nil != data, @"Nil data");
+    
+    NSString* sLabel = (NSString*)dataLabel;
+    NSInteger dayIndex = [sLabel integerValue];
+    NSString* sData = (NSString*)data;
+    
+    [self _refreshSyncStatusLabels:dayIndex syncStatus:sData];
+}
+
+#pragma mark - IBActions
+
+- (IBAction)onClickSyncButton:(id)sender
+{
+	_HUD = [[MBProgressHUD alloc] initWithView:self.view];
+	[self.view addSubview:_HUD];
+	_HUD.delegate = self;
+    
+	[_HUD showWhileExecuting:@selector(_syncSeedsInfoTask) onTarget:self withObject:nil animated:YES];
+}
+
+- (IBAction)onClickTodayButton:(id)sender
+{
+    [self performSegueWithIdentifier:SEGUE_ID_HOME2SEEDLIST sender:_todayButton];
+}
+
+- (IBAction)onClickYesterdayButton:(id)sender
+{
+    [self performSegueWithIdentifier:SEGUE_ID_HOME2SEEDLIST sender:_yesterdayButton];
+}
+
+- (IBAction)onClickTheDayBeforeButton:(id)sender
+{
+    [self performSegueWithIdentifier:SEGUE_ID_HOME2SEEDLIST sender:_theDayBeforeButton];
+}
+
+#pragma mark - Private Methods
+
+- (void) _refreshSyncStatusLabels:(NSInteger) dayIndex syncStatus:(NSString*) status
+{
+    NSAssert(Today >= dayIndex || TheDayBefore <= dayIndex, @"Illegal day index");
+    NSAssert(nil != status && 0 < status, @"Illegal status");
+    
+    dispatch_async(dispatch_get_main_queue(), ^()
+                   {
+                       switch (dayIndex)
+                       {
+                           case Today:
+                           {
+                               [_todaySyncStatusLabel setText:status];
+                               break;
+                           }
+                           case Yesterday:
+                           {
+                               [_yesterdaySyncStatusLabel setText:status];
+                               break;
+                           }
+                           case TheDayBefore:
+                           {
+                               [_theDayBeforeSyncStatusLabel setText:status];
+                               break;
+                           }
+                           default:
+                           {
+                               break;
+                           }
+                       }
+                   });
+}
+
+- (void) _refreshDayAndSyncStatusLabels
+{
+    _last3Days = [CBDateUtils lastThreeDays];
+    NSInteger dayIndex = TheDayBefore;
+    for (NSDate* day in _last3Days)
+    {
+        [self _updateDayLabel:day dayIndex:dayIndex];
+        
+        BOOL isThidDaySync = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
+        if (!isThidDaySync)
+        {
+            [self _refreshSyncStatusLabels:dayIndex syncStatus:NSLocalizedString(@"Unsync", nil)];
+        }
+        else
+        {
+            id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+            NSInteger seedCountByDate = [seedDAO countSeedsByDate:day];
+            
+            [self _refreshSyncStatusLabels:dayIndex syncStatus:[NSString stringWithFormat:@"%d", seedCountByDate]];
+        }
+        
+        dayIndex = dayIndex + 1;
+    }
+}
+
+- (void) _appDidEnterBackground
+{
+    
+}
+
+- (void) _appDidBecomeActive
+{
+    [self _refreshDayAndSyncStatusLabels];
+}
+
+- (void) _registerNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_appDidEnterBackground)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(_appDidBecomeActive)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+}
+
+- (void) _unregisterNotifications
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+}
+
+- (void) _updateDayLabel:(NSDate*) day dayIndex:(DayIndex) dayIndex;
 {
     NSString* dateStr = [CBDateUtils shortDateString:day];
     switch (dayIndex)
@@ -173,173 +332,24 @@
     }
 }
 
-- (void) updateDayAndSyncStatusLabels
+-(void) _updateHUDTextStatus:(NSString*) majorStatus minorStatus:(NSString*)minorStatus
 {
-    last3Days = [CBDateUtils lastThreeDays];
-    NSInteger dayIndex = TheDayBefore;
-    for (NSDate* day in last3Days)
-    {        
-        [self updateDayLabel:day dayIndex:dayIndex];
-        
-        BOOL isThidDaySync = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
-        if (!isThidDaySync)
-        {
-            [self updateSyncStatusLabels:dayIndex syncStatus:NSLocalizedString(@"Unsync", nil)];
-        }
-        else
-        {
-            id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-            NSInteger seedCountByDate = [seedDAO countSeedsByDate:day];
-            
-            [self updateSyncStatusLabels:dayIndex syncStatus:[NSString stringWithFormat:@"%d", seedCountByDate]];
-        }
-        
-        dayIndex = dayIndex + 1;
-    }
-}
-
-- (void) updateSyncStatusLabels:(NSInteger) dayIndex syncStatus:(NSString*) status
-{
-    NSAssert(Today >= dayIndex || TheDayBefore <= dayIndex, @"Illegal day index");
-    NSAssert(nil != status && 0 < status, @"Illegal status");
-    
-    dispatch_async(dispatch_get_main_queue(), ^()
+    if (nil != majorStatus && 0 < majorStatus.length)
     {
-        switch (dayIndex)
-        {
-            case Today:
-            {
-                [_todaySyncStatusLabel setText:status];
-                break;
-            }
-            case Yesterday:
-            {
-                [_yesterdaySyncStatusLabel setText:status];
-                break;
-            }
-            case TheDayBefore:
-            {
-                [_theDayBeforeSyncStatusLabel setText:status];
-                break;
-            }
-            default:
-            {
-                break;
-            }
-        }
-    });
-}
-
-- (void) hudWasHidden:(MBProgressHUD *)hud
-{
-	[HUD removeFromSuperview];
-	HUD = nil;
-}
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // NavigationBar
-    if ([segue.identifier isEqualToString:SEGUE_ID_HOME2TRANSMIT])
-    {
-        backBarItem = self.navigationItem.backBarButtonItem;
-        self.navigationItem.backBarButtonItem = stopBarItem;
-    }
-    else
-    {
-        self.navigationItem.backBarButtonItem = backBarItem;
+        _HUD.labelText = majorStatus;
     }
     
-    // Date for SeedListView
-    if ([segue.identifier isEqualToString:SEGUE_ID_HOME2SEEDLIST])
-    {
-        SeedListViewController* seedListViewController = (SeedListViewController*)segue.destinationViewController;
-
-        if (sender == _todayButton)
-        {
-            seedListViewController.seedsDate = last3Days[Today];
-        }
-        else if (sender == _yesterdayButton)
-        {
-            seedListViewController.seedsDate = last3Days[Yesterday];
-        }
-        else if (sender == _theDayBeforeButton)
-        {
-            seedListViewController.seedsDate = last3Days[TheDayBefore];
-        }
-    }
+    _HUD.detailsLabelText = minorStatus;
 }
 
-#pragma mark - CBLongTaskStatusHUDDelegate
-
--(void) taskStarted:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
+- (void)_syncSeedsInfoTask
 {
-    HUD.mode = MBProgressHUDModeText;
-    HUD.minSize = HUD_CENTER_SIZE;
+    SpiderModule* spiderModule = [SpiderModule sharedInstance];
+    [spiderModule.spider pullSeedsInfo:_last3Days];
     
-    [self updateHUDTextStatus:majorStatus minorStatus:nil];
-    
-    HUD_DISPLAY(1)
-    
-    HUD.mode = MBProgressHUDModeIndeterminate;
+    //    CommunicationModule* communicationModule = [CommunicationModule sharedInstance];
+    //    ServerAgent* serverAgent = communicationModule.serverAgent;
+    //    [serverAgent syncSeedsInfo];
 }
 
--(void) taskIsProcessing:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
-{
-    [self updateHUDTextStatus:majorStatus minorStatus:minorStatus];
-    HUD_DISPLAY(1)
-}
-
--(void) taskCanceld:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
-{
-    HUD.mode = MBProgressHUDModeText;
-    HUD.minSize = HUD_CENTER_SIZE;
-    [self updateHUDTextStatus:majorStatus minorStatus:nil];
-    
-    HUD_DISPLAY(2)
-}
-
--(void) taskFailed:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
-{
-    HUD.mode = MBProgressHUDModeText;
-    [self updateHUDTextStatus:majorStatus minorStatus:nil];
-    
-    HUD_DISPLAY(2)
-}
-
--(void) taskFinished:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
-{
-    HUD.mode = MBProgressHUDModeText;
-    [self updateHUDTextStatus:majorStatus minorStatus:nil];
-    
-    HUD_DISPLAY(2)
-}
-
--(void) taskDataUpdated:(id) dataLabel data:(id) data
-{
-    NSAssert(nil != dataLabel, @"Nil data label");
-    NSAssert(nil != data, @"Nil data");
-    
-    NSString* sLabel = (NSString*)dataLabel;
-    NSInteger dayIndex = [sLabel integerValue];
-    NSString* sData = (NSString*)data;
-    
-    [self updateSyncStatusLabels:dayIndex syncStatus:sData];
-}
-
-#pragma mark - IBActions
-
-- (IBAction)onClickTodayButton:(id)sender
-{
-    [self performSegueWithIdentifier:SEGUE_ID_HOME2SEEDLIST sender:_todayButton];
-}
-
-- (IBAction)onClickYesterdayButton:(id)sender
-{
-    [self performSegueWithIdentifier:SEGUE_ID_HOME2SEEDLIST sender:_yesterdayButton];
-}
-
-- (IBAction)onClickTheDayBeforeButton:(id)sender
-{
-    [self performSegueWithIdentifier:SEGUE_ID_HOME2SEEDLIST sender:_theDayBeforeButton];
-}
 @end
