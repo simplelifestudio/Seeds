@@ -32,6 +32,7 @@ import com.simplelife.seeds.server.util.HttpUtil;
 import com.simplelife.seeds.server.util.LogUtil;
 import com.simplelife.seeds.server.util.OperationLogUtil;
 import com.simplelife.seeds.server.util.SqlUtil;
+import com.simplelife.seeds.server.util.TableColumnName;
 import com.simplelife.seeds.server.util.TableName;
 
 
@@ -292,8 +293,8 @@ public class HtmlParser implements ISourceParser {
 	
 	private void deleteExistentSeeds(String date)
 	{
-	    String sql = "delete from "+ TableName.SeedPicture +" where " + SqlUtil.seedId 
-	    		+ " in (select " + SqlUtil.seedId +" from " + TableName.Seed +" where " + SqlUtil.getPublishDateCondition(date) + ")";
+	    String sql = "delete from "+ TableName.SeedPicture +" where " + TableColumnName.seedId 
+	    		+ " in (select " + TableColumnName.seedId +" from " + TableName.Seed +" where " + SqlUtil.getPublishDateCondition(date) + ")";
         DaoWrapper.executeSql(sql);
         
         sql = "delete from " + TableName.Seed + " where " + SqlUtil.getPublishDateCondition(date);
