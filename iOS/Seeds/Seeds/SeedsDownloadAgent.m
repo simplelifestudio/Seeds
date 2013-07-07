@@ -293,6 +293,16 @@ static NSString* _favoritePath;
     _favoritePath = [_downloadPath stringByAppendingPathComponent:FOLDER_FAVORITES];
 }
 
++(NSString*) downloadPath
+{
+    return _downloadPath;
+}
+
++(NSString*) favoritePath
+{
+    return _favoritePath;
+}
+
 #pragma mark - Public Methods
 
 -(SeedDownloadStatus) checkDownloadStatus:(Seed*) seed

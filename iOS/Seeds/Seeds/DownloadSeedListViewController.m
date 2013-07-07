@@ -28,6 +28,8 @@
     PagingToolbar* _pagingToolbar;
     
     NSUInteger _currentPage;
+    
+    id<SeedDAO> _seedDAO;
 }
 
 @property UIBarButtonItem* editBarButton;
@@ -331,6 +333,8 @@
     _downloadAgent = _commModule.seedsDownloadAgent;
     
     [self _registerGestureRecognizers];
+    
+    _seedDAO = [DAOFactory getSeedDAO];
 }
 
 - (void) _registerGestureRecognizers
@@ -453,6 +457,9 @@
         NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:_seedList.count];
         for (Seed* seed in _seedList)
         {
+            BOOL favorite = [_seedDAO isSeedFavoritedWithLocalId:seed.localId];
+            seed.favorite = favorite;
+            
             SeedPicture* picture = nil;
             if (nil != seed.seedPictures && 0 < seed.seedPictures.count)
             {

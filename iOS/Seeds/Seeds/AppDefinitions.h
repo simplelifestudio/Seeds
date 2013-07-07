@@ -63,6 +63,7 @@
 #define HTTP_HEADER_FORMDATA @"multipart/form-data"
 
 #define FOLDER_TORRENTS @"torrents"
+#define FOLDER_FAVORITES @"favorites"
 #define FILE_EXTENDNAME_DOT_TORRENT @".torrent"
 #define FILE_EXTENDNAME_TORRENT @"torrent"
 
