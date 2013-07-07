@@ -61,7 +61,7 @@
 #define SECTION_INDEX_ABOUT 4
 #define SECTION_ITEMCOUNT_ABOUT 1
 //#define SECTION_INDEX_ABOUT_ITEM_INDEX_FEEDBACK 0
-#define SECTION_INDEX_ABOUT_ITEM_INDEX_ABOUT 0
+#define SECTION_INDEX_ABOUT_ITEM_INDEX_VERSION 0
 
 typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
@@ -284,7 +284,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 //                    cell = _feedbackCell;
 //                    break;
 //                }
-                case SECTION_INDEX_ABOUT_ITEM_INDEX_ABOUT:
+                case SECTION_INDEX_ABOUT_ITEM_INDEX_VERSION:
                 {
                     cell = _aboutCell;
                     break;
@@ -848,7 +848,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         _aboutCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
         
         [_aboutCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        _aboutCell.label.text = NSLocalizedString(@"About", nil);
+        _aboutCell.label.text = NSLocalizedString(@"Version", nil);
         [_aboutCell.button setTitle:@"0.1" forState:UIControlStateNormal];
         
         [self _refreshAboutCell];
