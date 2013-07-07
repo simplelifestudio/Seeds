@@ -245,6 +245,22 @@
     return flag;
 }
 
++(BOOL) copyFile:(NSString*) sourcePath targetPath:(NSString*) targetPath
+{
+    BOOL flag = NO;
+    
+    flag = [CBFileUtils isFileExists:sourcePath];
+    if (flag)
+    {
+        [CBFileUtils deleteFile:targetPath];
+        
+        NSFileManager *fm = [NSFileManager defaultManager];
+        flag = [fm copyItemAtPath:sourcePath toPath:targetPath error:nil];
+    }
+    
+    return flag;
+}
+
 +(BOOL) createFile:(NSString*) fileFullPath content:(id)content
 {
     BOOL flag = NO;

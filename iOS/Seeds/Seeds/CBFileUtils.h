@@ -34,5 +34,6 @@
 +(BOOL) isFileExists:(NSString*) fileFullPath;
 +(BOOL) isDirectoryExists:(NSString*) dirFullPath;
 +(BOOL) deleteDirectory:(NSString*) dirFullPath;
++(BOOL) copyFile:(NSString*) sourcePath targetPath:(NSString*) targetPath;
 
 @end
