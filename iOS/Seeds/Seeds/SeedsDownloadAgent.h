@@ -26,6 +26,8 @@ typedef enum {SeedNotDownload, SeedWaitForDownload, SeedIsDownloading, SeedDownl
 -(NSUInteger) downloadedSeedCount;
 -(NSArray*) downloadedSeedLocalIdList;
 -(NSArray*) downloadedSeedList;
+-(NSArray*) totalSeedLocalLidList;
+-(NSArray*) totalSeedList;
 
 -(SeedDownloadStatus) checkDownloadStatus:(Seed*) seed;
 

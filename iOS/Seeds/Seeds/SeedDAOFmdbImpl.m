@@ -367,7 +367,13 @@
         
         NSMutableString* sql = [NSMutableString stringWithString:@"select * from "];
         [sql appendString:TABLE_SEED];
-        [sql appendString:@" where favorite = '1'"];
+        [sql appendString:@" where "];
+        [sql appendString:TABLE_SEED_COLUMN_FAVORITE];
+        [sql appendString:@" = "];
+        [sql appendString:@"'1'"];
+        [sql appendString:@" order by "];
+        [sql appendString:TABLE_SEED_COLUMN_LOCALID];
+        [sql appendString:@" desc"];
 
         FMResultSet* resultSet = [db executeQuery:sql];
         array = [self resultSet2SeedList:resultSet databaseHandler:db];

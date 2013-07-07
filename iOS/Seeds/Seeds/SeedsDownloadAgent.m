@@ -55,6 +55,7 @@
 -(void) updateSeedStatus:(Seed*) seed status:(SeedDownloadStatus) status;
 -(void) removeSeed:(Seed*) seed;
 -(NSArray*) seedsWithStatus:(SeedDownloadStatus) status;
+-(NSArray*) allSeeds;
 -(void) resetQueue;
 -(NSUInteger) queueLength;
 
@@ -161,6 +162,20 @@
             {
                 [seeds addObject:wrapper.seed];
             }
+        }
+    }];
+    
+    return seeds;
+}
+
+-(NSArray*) allSeeds
+{
+    __block NSMutableArray* seeds = [NSMutableArray array];
+    
+    [self _syncWork:nil block:^(){
+        for (SeedDownloadWrapper* wrapper in _queue)
+        {
+            [seeds addObject:wrapper.seed];
         }
     }];
     
@@ -385,6 +400,34 @@ static NSString* _downloadPath;
     NSMutableArray* list = [NSMutableArray array];
     
     [list addObjectsFromArray:[_downloadQueue seedsWithStatus:SeedDownloaded]];
+    
+    return list;
+}
+
+-(NSArray*) totalSeedLocalLidList
+{
+    NSMutableArray* list = [NSMutableArray array];
+    
+    NSArray* seedList = [self totalSeedList];
+    for (Seed* seed in seedList)
+    {
+        NSString* sLocalId = [NSString stringWithFormat:@"%d", seed.localId];
+        [list addObject:sLocalId];
+    }
+    
+    return list;
+}
+
+-(NSArray*) totalSeedList
+{
+    NSMutableArray* list = [NSMutableArray array];
+    
+    NSArray* _seedsInQueue = [_downloadQueue allSeeds];
+    for (int i = _seedsInQueue.count - 1; 0 <= i; i--)
+    {
+       Seed* seed = [_seedsInQueue objectAtIndex:i];
+        [list addObject:seed];
+    }
     
     return list;
 }
