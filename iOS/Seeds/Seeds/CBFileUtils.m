@@ -293,9 +293,18 @@
     
     NSFileManager* fm = [NSFileManager defaultManager];
     NSArray* subDirs = [fm contentsOfDirectoryAtPath:directoryPath error:nil];
-    if (nil != subDirs && 0 < subDirs.count)
+    if (nil != subDirs)
     {
-        [dirs addObjectsFromArray:subDirs];
+        for (NSString* subDir in subDirs)
+        {
+            BOOL isDir;
+            NSString* subDirFullPath = [directoryPath stringByAppendingPathComponent:subDir];
+            [fm fileExistsAtPath:subDirFullPath isDirectory:(&isDir)];
+            if (isDir)
+            {
+                [dirs addObject:subDirFullPath];
+            }
+        }
     }
     
     return dirs;
