@@ -1,5 +1,5 @@
 /**
- * IJsonCommand.java 
+ * IJsonRequest.java 
  * 
  * History:
  *     2013-06-09: Tomas Chen, initial version
@@ -13,6 +13,6 @@ package com.simplelife.seeds.server.json;
 import net.sf.json.JSONObject;
 import java.io.PrintWriter;
 
-public interface IJsonCommand {
-	public void Execute(JSONObject jsonObj, PrintWriter out);
+public interface IJsonRequest {
+	public void Execute();
 }

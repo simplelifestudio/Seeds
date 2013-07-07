@@ -16,6 +16,10 @@ import java.util.logging.Logger;
 public class LogUtil {
 	private static Logger logger = Logger.getLogger("Seeds");
 	
+	public static Level getLevel()
+	{
+	    return logger.getLevel();
+	}
 	public static void setLevel(Level level)
 	{
 	    logger.setLevel(level);

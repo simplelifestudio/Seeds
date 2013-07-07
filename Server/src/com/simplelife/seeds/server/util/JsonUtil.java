@@ -7,10 +7,9 @@
  * Copyright (c) 2013 SimpleLife Studio. All rights reserved.
  */
 
-package com.simplelife.seeds.server.json;
+package com.simplelife.seeds.server.util;
 
 import net.sf.json.JSONObject;
-import com.simplelife.seeds.server.util.LogUtil;
 
 /**
  * 

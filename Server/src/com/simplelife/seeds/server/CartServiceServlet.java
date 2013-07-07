@@ -46,7 +46,7 @@ public class CartServiceServlet extends HttpServlet
             
             if (cartId == null || cartId.length() == 0)
             {
-                LogUtil.severe("Parameter of cartId is not provided");
+                LogUtil.warning("Parameter of cartId is not provided");
                 response.getOutputStream().print("Parameter of cartId is not provided");
                 return;
             }

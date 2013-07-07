@@ -20,11 +20,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.simplelife.seeds.server.json.IJsonCommand;
-import com.simplelife.seeds.server.json.JsonCommandBase;
-import com.simplelife.seeds.server.json.JsonCommandFactory;
-import com.simplelife.seeds.server.json.JsonUtil;
+import com.simplelife.seeds.server.json.IJsonRequest;
+import com.simplelife.seeds.server.json.JsonRequestBase;
+import com.simplelife.seeds.server.json.JsonRequestFactory;
+import com.simplelife.seeds.server.json.JsonResponseBase;
 import com.simplelife.seeds.server.util.ErrorCode;
+import com.simplelife.seeds.server.util.JsonUtil;
 import com.simplelife.seeds.server.util.LogUtil;
 
 import net.sf.json.JSONObject;
@@ -90,9 +91,9 @@ public class SeedServiceServlet extends HttpServlet {
 		JSONObject jsonObj = JsonUtil.createJsonObject(command);
 		PrintWriter out = response.getWriter();
 		if (jsonObj == null) {
-			LogUtil.severe( "Invalid command received: \n" + command);
-			JsonCommandBase cmdBase = new JsonCommandBase();
-			cmdBase.responseInvalidRequest(ErrorCode.IllegalMessage, "Illegal message." , command, out);
+			LogUtil.warning( "Invalid command received: \n" + command);
+			JsonResponseBase responseBase = new JsonResponseBase(null, out);
+			responseBase.responseError(ErrorCode.IllegalMessage, "Illegal message.", command,out);
 			return;
 		}
 
@@ -134,14 +135,14 @@ public class SeedServiceServlet extends HttpServlet {
 	 *            : output stream of http response
 	 */
 	private void executeCommand(JSONObject jsonObj, PrintWriter out, HttpServletRequest request) {
-		IJsonCommand jsonCmd = JsonCommandFactory.CreateJsonCommand(out, jsonObj, request.getLocalAddr());
+		IJsonRequest jsonCmd = JsonRequestFactory.CreateJsonCommand(out, jsonObj, request.getLocalAddr());
 		
 		if (jsonCmd == null)
 		{
-		    //out.print("Invalid JSON command received: \n" + jsonObj.toString());
+		    LogUtil.warning("Illegal command received from client: " + jsonObj.toString());
 			return;
 		}
 		
-		jsonCmd.Execute(jsonObj, out);
+		jsonCmd.Execute();
 	}
 }

@@ -1,5 +1,5 @@
 /**
- * JsonCommandAlohaReq.java 
+ * JsonRequestAloha.java 
  * 
  * History:
  *     2013-06-09: Tomas Chen, initial version
@@ -15,15 +15,24 @@ import net.sf.json.JSONObject;
 import com.simplelife.seeds.server.util.DateUtil;
 import com.simplelife.seeds.server.util.LogUtil;
 
-public class JsonCommandAlohaReq extends JsonCommandBase {
+public class JsonRequestAloha extends JsonRequestBase {
 	
-	@Override
-	public void Execute(JSONObject jsonObj, PrintWriter out) {
+	/**
+     * @param jsonObj
+     * @param out
+     */
+    public JsonRequestAloha(JSONObject jsonObj, PrintWriter out)
+    {
+        super(jsonObj, out);
+    }
+
+    @Override
+	public void Execute() {
 		
-		String res ="{\n\"id\": \"AlohaResponse\",\n\"body\": \n{\n\"content\":\"Hello Seeds App! <";
+		String res ="{\"id\": \"AlohaResponse\",\"body\": {\"content\":\"Hello Seeds App! <";
 		res += DateUtil.getNow();
-		res +=">\"\n}\n}\n";
-		out.println(res);
+		res +=">\"}}";
+		outPrintWriter.println(res);
 		LogUtil.info("Aloha response: \n" + res);
 	}
 }
