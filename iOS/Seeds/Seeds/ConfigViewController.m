@@ -48,10 +48,10 @@
 #define SECTION_INDEX_IMAGE_ITEM_INDEX_CLEARCACHE 1
 
 #define SECTION_INDEX_DATA 2
-#define SECTION_ITEMCOUNT_DATA 3
+#define SECTION_ITEMCOUNT_DATA 2
 #define SECTION_INDEX_DATA_ITEM_INDEX_CLEARDOWNLOADS 0
-#define SECTION_INDEX_DATA_ITEM_INDEX_CLEARFAVORITES 1
-#define SECTION_INDEX_DATA_ITEM_INDEX_CLEARDATABASE 2
+//#define SECTION_INDEX_DATA_ITEM_INDEX_CLEARFAVORITES 1
+#define SECTION_INDEX_DATA_ITEM_INDEX_CLEARDATABASE 1
 
 #define SECTION_INDEX_PASSCODE 3
 #define SECTION_ITEMCOUNT_PASSCODE 2
@@ -235,11 +235,11 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
                     cell = _clearDownloadsCell;
                     break;
                 }
-                case SECTION_INDEX_DATA_ITEM_INDEX_CLEARFAVORITES:
-                {
-                    cell = _clearFavoritesCell;
-                    break;
-                }
+//                case SECTION_INDEX_DATA_ITEM_INDEX_CLEARFAVORITES:
+//                {
+//                    cell = _clearFavoritesCell;
+//                    break;
+//                }
                 case SECTION_INDEX_DATA_ITEM_INDEX_CLEARDATABASE:
                 {
                     cell = _clearDatabaseCell;

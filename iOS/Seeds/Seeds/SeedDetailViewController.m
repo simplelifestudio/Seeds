@@ -350,7 +350,7 @@
                                     UIViewAutoresizingFlexibleTopMargin |
                                     UIViewAutoresizingFlexibleBottomMargin);
     
-    self.navigationItem.rightBarButtonItems = @[_downloadBarButton, _favoriteBarButton];
+    self.navigationItem.rightBarButtonItems = @[_downloadBarButton];//, _favoriteBarButton];
 }
 
 - (void) _registerGestureRecognizers
