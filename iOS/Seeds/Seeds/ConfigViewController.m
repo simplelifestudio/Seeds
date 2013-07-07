@@ -57,9 +57,9 @@
 #define SECTION_INDEX_PASSCODE_ITEM_INDEX_MODIFY 1
 
 #define SECTION_INDEX_ABOUT 4
-#define SECTION_ITEMCOUNT_ABOUT 2
-#define SECTION_INDEX_ABOUT_ITEM_INDEX_FEEDBACK 0
-#define SECTION_INDEX_ABOUT_ITEM_INDEX_ABOUT 1
+#define SECTION_ITEMCOUNT_ABOUT 1
+//#define SECTION_INDEX_ABOUT_ITEM_INDEX_FEEDBACK 0
+#define SECTION_INDEX_ABOUT_ITEM_INDEX_ABOUT 0
 
 typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
@@ -277,11 +277,11 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         {
             switch (rowInSection)
             {
-                case SECTION_INDEX_ABOUT_ITEM_INDEX_FEEDBACK:
-                {
-                    cell = _feedbackCell;
-                    break;
-                }
+//                case SECTION_INDEX_ABOUT_ITEM_INDEX_FEEDBACK:
+//                {
+//                    cell = _feedbackCell;
+//                    break;
+//                }
                 case SECTION_INDEX_ABOUT_ITEM_INDEX_ABOUT:
                 {
                     cell = _aboutCell;
@@ -331,7 +331,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         }
         case SECTION_INDEX_ABOUT:
         {
-            sectionName = NSLocalizedString(@"About", nil);
+            sectionName = NSLocalizedString(@"Others", nil);
             break;
         }
         default:
