@@ -7,6 +7,8 @@
     <string name="seeds_teamlogo">Copyright © SimpleLife Studio</string>
     <string name="seeds_datelist_datedefault">月－日</string>
     <string name="seeds_datelist_seedsnumberdefault">未同步</string>
+    <string name="seeds_datelist_seedsnumbernoupdate">无数据</string>
+    <string name="seeds_datelist_seedsnumbernotready">未更新</string>
     <string name="seeds_datelist_befyesterday">前  天</string>
     <string name="seeds_datelist_yesterday">昨  天</string>
     <string name="seeds_datelist_today">今  天</string>
@@ -19,7 +21,15 @@
     <string name="seeds_datelist_retrievestatus">获取Seeds状态信息</string>
     <string name="seeds_datelist_analyzeseedsstatus">分析Seeds状态</string>
     <string name="seeds_datelist_analyzeseedsdata">分析Seeds数据</string>
-    <string name="seeds_datelist_dowloadseedsinfo">下载Seeds数据</string>
+    <string name="seeds_datelist_downloadseedsinfo">下载Seeds数据</string>
+    <string name="seeds_datelist_saveseedsinfo">保存Seeds数据</string>
+    <string name="seeds_datelist_updatestatuscommerror">与服务器连接失败</string>
+    <string name="seeds_datelist_seedsbydatecommerror">与服务器通讯失败</string>
+    <string name="seeds_datelist_seedsinfonotready">服务器数据尚未准备完成</string>
+    <string name="seeds_datelist_seedsinfonoupdate">服务器数据无更新</string>
+    <string name="seeds_datelist_emptyupdatestatusresp">检测到服务器空数据</string>
+    <string name="seeds_datelist_emptyseedsbydateresp">检测到空数据</string>
+    <string name="seeds_datelist_noneedtosync">所有数据已同步</string>
     <string name="seedTitle">种子名称</string>
     <string name="seedSize">种子大小</string>
     <string name="seedFormat">种子格式</string>
@@ -34,7 +44,7 @@
     <string name="seeds_pwdsend">发送</string>
     <string name="seeds_verify_menu_settings">设置</string>
     <string name="title_activity_display_message">密码</string>
-    <string name="seeds_severaddrmsg">请输入IP地址与</string>
+    <string name="seeds_severaddrmsg">请输入IP地址与端口</string>
     <string name="seeds_severaddrverify">验证</string>
     <string name="seeds_config_channel">选择频道：</string>
     <string name="seeds_config_channel1">动作片</string>

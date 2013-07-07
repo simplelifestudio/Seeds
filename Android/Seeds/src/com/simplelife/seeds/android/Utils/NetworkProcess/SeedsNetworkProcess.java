@@ -19,10 +19,14 @@ import android.util.Log;
 
 import com.simplelife.seeds.android.SeedsDefinitions;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
+import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 public class SeedsNetworkProcess {
 	
-	private static String mServerUrl = "http://106.187.38.52:80/seeds/messageListener";	
+	private static String mServerUrl = "http://106.187.38.52:80/seeds/messageListener";
+	
+	// For log purpose
+	private static SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
 	
 	public SeedsNetworkProcess(){
 		
@@ -35,7 +39,7 @@ public class SeedsNetworkProcess {
 	    new BasicResponseHandler();
 	    HttpPost postMethod = new HttpPost(mServerUrl);
 	    
-		Log.i("NetworkProcess","Sending Aloha Message!");
+	    mLogger.info("Sending AlohaRequest Message!");
 	    // Create Aloha Message
 		JSONObject paramList = new JSONObject();
 		paramList.put("content","Hello Seeds Server!");
@@ -102,7 +106,7 @@ public class SeedsNetworkProcess {
 	}
 
 	
-	public static String sendUpdateStatusReqMsg(ArrayList<String> inDateArray) throws JSONException, ClientProtocolException, IOException {
+	public static HttpResponse sendUpdateStatusReqMsg(ArrayList<String> inDateArray) throws JSONException, ClientProtocolException, IOException {
 		
 		// Prepare network parameters
 	    DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -112,7 +116,7 @@ public class SeedsNetworkProcess {
 	    postMethod.addHeader("Content-Type", "application/json");
 	    String respInString;
 	    
-		Log.i("NetworkProcess","Sending UpdateStatus Message!");
+		mLogger.info("Sending UpdateStatus Message!");
 		
 	    // Create UpdateStatusReq Message
 		JSONObject paramList = new JSONObject();
@@ -130,26 +134,16 @@ public class SeedsNetworkProcess {
 	    // Send the request
 		postMethod.setEntity(new StringEntity(updateStatusReq.toString()));
 		
-		Log.i("NetworkProcess","UpdateStatusReq Message "+updateStatusReq.toString());
+		mLogger.debug("UpdateStatusReq Message "+updateStatusReq.toString());
 		
 		// Retrieve the response
 		HttpResponse response = httpClient.execute(postMethod);
 		
-        // Check the response context
-		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-            
-            respInString = EntityUtils.toString(response.getEntity());
-            Log.i("NetworkProcess","Receive response msg: "+ respInString);
-            return respInString;
-            // String strsResult = strResult.replace("\r", "");            
-        } else {
-        	Log.i("NetworkProcess","UpdateStatusReq Message sending failed! Status Code: "+response.getStatusLine().getStatusCode());
-        	return null;           
-        }
+		return response;		
 		
 	}
 	
-	public static String sendSeedsByDateReqMsg (ArrayList<String> inDateArray ) throws JSONException, ClientProtocolException, IOException {
+	public static HttpResponse sendSeedsByDateReqMsg (ArrayList<String> inDateArray ) throws JSONException, ClientProtocolException, IOException {
         // Prepare network parameters
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 	    //HttpPost postMethod = new HttpPost(mServerUrl);
@@ -180,16 +174,8 @@ public class SeedsNetworkProcess {
 		// Retrieve the response
 		HttpResponse response = httpClient.execute(postMethod);
 		
-        // Check the response context
-		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-            
-            respInString = EntityUtils.toString(response.getEntity());
-            return respInString;
-            // String strsResult = strResult.replace("\r", "");            
-        } else {
-        	Log.i("NetworkProcess","SeedsByDate Message sending failed! Status Code: "+response.getStatusLine().getStatusCode());
-        	return null;           
-        }
+		return response;
+		
 	}	
 
 }

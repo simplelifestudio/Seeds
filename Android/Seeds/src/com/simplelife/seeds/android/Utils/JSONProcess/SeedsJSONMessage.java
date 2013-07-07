@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import com.simplelife.seeds.android.SeedsEntity;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 import android.util.Log;
 
@@ -21,6 +22,8 @@ public class SeedsJSONMessage {
 	public static String UpdateStatusRespons  = "SeedsUpdateStatusByDatesResponse";
 	public static String SeedsByDatesRequest  = "SeedsByDatesRequest";
 	public static String SeedsByDatesResponse = "SeedsByDatesResponse";
+	// For log purpose
+	private static SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
 	
 	public SeedsJSONMessage(){
 		
@@ -53,7 +56,7 @@ public class SeedsJSONMessage {
 		// Convert the String to JSON object
 		JSONObject tMsgInJSON = new JSONObject(inStringMsg);  
 		String msgType = (String) tMsgInJSON.get("id");
-		Log.i("SeedsJSONMessage","Parsing msg " + msgType);
+		mLogger.info("Parsing msg " + msgType);
 	    
 		// Parse the paramList part
 		JSONObject tParamList = tMsgInJSON.getJSONObject("body");
@@ -77,6 +80,7 @@ public class SeedsJSONMessage {
 		JSONObject tMsgInJSON = new JSONObject(inStringMsg);  
 		String msgType = (String) tMsgInJSON.get("id");
 		Log.i("SeedsJSONMessage","Parsing msg " + msgType);
+		Log.i("SeedsJSONMessage", inStringMsg);
 		
 		// Prepare the return Seeds List
 		ArrayList<SeedsEntity> retSeedsList = new ArrayList<SeedsEntity>();

@@ -7,7 +7,9 @@
     <string name="seeds_logo">Seeds</string>
     <string name="seeds_teamlogo">Copyright © SimpleLife Studio</string>
     <string name="seeds_datelist_datedefault">Mon-Date</string>
-    <string name="seeds_datelist_seedsnumberdefault">Not-Updated</string>
+    <string name="seeds_datelist_seedsnumberdefault">Not-Syncronized</string>
+    <string name="seeds_datelist_seedsnumbernoupdate">No-Update</string>
+    <string name="seeds_datelist_seedsnumbernotready">Not-Ready</string>
     <string name="seeds_datelist_befyesterday">前 天</string>
     <string name="seeds_datelist_yesterday">昨 天</string>
     <string name="seeds_datelist_today">今 天</string>
@@ -20,7 +22,15 @@
     <string name="seeds_datelist_retrievestatus">Retrieving Seeds Status Info</string>
     <string name="seeds_datelist_analyzeseedsstatus">Analyzing Seeds Info Status</string>
     <string name="seeds_datelist_analyzeseedsdata">Analyzing Seeds Data</string>
-    <string name="seeds_datelist_dowloadseedsinfo">Dowloading Seeds Info</string>
+    <string name="seeds_datelist_downloadseedsinfo">Dowloading Seeds Info</string>
+    <string name="seeds_datelist_saveseedsinfo">Saving Seeds Info</string>
+    <string name="seeds_datelist_updatestatuscommerror">Failed to Connect to Server</string>
+    <string name="seeds_datelist_seedsbydatecommerror">Communicate With Server Failed</string>
+    <string name="seeds_datelist_seedsinfonotready">Seeds Data Not Ready</string>
+    <string name="seeds_datelist_seedsinfonoupdate">Seeds Date No Update</string>
+    <string name="seeds_datelist_emptyupdatestatusresp">Empty Message Detected</string>
+    <string name="seeds_datelist_emptyseedsbydateresp">Empty Message Detected</string>
+    <string name="seeds_datelist_noneedtosync">All Date Has Been Syncronized</string>
     <string name="seedTitle">The title of the seed</string>
     <string name="seedSize">The size of the seed</string>
     <string name="seedFormat">The format of the seed</string>
