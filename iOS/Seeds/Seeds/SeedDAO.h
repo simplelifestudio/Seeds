@@ -33,5 +33,6 @@
 -(NSInteger) countFavoriteSeeds;
 -(NSArray*) getFavoriteSeeds;
 -(BOOL) favoriteSeed:(Seed*) seed andFlag:(BOOL) favorite;
+-(BOOL) isSeedFavoritedWithLocalId:(NSInteger) localId;
 
 @end

@@ -402,6 +402,36 @@
     return flag;
 }
 
+-(BOOL) isSeedFavoritedWithLocalId:(NSInteger) localId
+{
+    __block BOOL flag = NO;
+    
+    if (0 < localId)
+    {
+        [databaseQueue inDatabase:^(FMDatabase* db)
+         {
+             [db open];
+             
+             NSMutableString* sql = [NSMutableString stringWithString:@"select * from "];
+             [sql appendString:TABLE_SEED];
+             [sql appendString:@" where "];
+             [sql appendString:TABLE_SEED_COLUMN_LOCALID];
+             [sql appendString:@" = '"];
+             [sql appendString:[NSString stringWithFormat:@"%d", localId]];
+             [sql appendString:@"'"];
+             
+             FMResultSet* resultSet = [db executeQuery:sql];
+             Seed* seedInDB = [self resultSet2Seed:resultSet databaseHandler:db];
+             flag = seedInDB.favorite;
+             
+             [resultSet close];
+             [db close];
+         }];
+    }
+        
+    return flag;
+}
+
 -(BOOL) deleteSeedsByDate:(NSDate*) date
 {
     __block BOOL flag = NO;
