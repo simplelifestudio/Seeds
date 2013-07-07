@@ -457,10 +457,7 @@ static NSString* _favoritePath;
 
         if (!flag)
         {
-            NSMutableString* subDirFullPath = [NSMutableString stringWithString:downloadDirPath];
-            [subDirFullPath appendString:@"/"];
-            [subDirFullPath appendString:subDirPath];
-            [CBFileUtils deleteDirectory:subDirFullPath];
+            [CBFileUtils deleteDirectory:subDirPath];
         }
     }
 }

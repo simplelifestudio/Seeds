@@ -231,7 +231,8 @@
         NSFileManager * fm = [NSFileManager defaultManager];
         NSError* error = nil;
         
-        flag = [CBFileUtils isDirectoryExists:dirFullPath];
+//        flag = [CBFileUtils isDirectoryExists:dirFullPath];
+        flag = [CBFileUtils isFileExists:dirFullPath];
         if (flag)
         {
             flag = [fm removeItemAtPath:dirFullPath error:&error];
