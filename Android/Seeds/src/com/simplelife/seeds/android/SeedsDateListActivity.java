@@ -13,7 +13,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
@@ -32,10 +35,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 @SuppressLint("HandlerLeak")
 public class SeedsDateListActivity extends Activity {
@@ -170,7 +175,7 @@ public class SeedsDateListActivity extends Activity {
 						
 					} catch (Exception e) {
 						// Show the error message here
-						e.printStackTrace();
+						mLogger.excep(e);
 					}
 					Message t_MsgListData = new Message();
 					if (opeStatus)
@@ -453,96 +458,145 @@ public class SeedsDateListActivity extends Activity {
     	editor.commit();    	
     }
     
+    private TextView matchNumTextViaRealDate(String _inRealDate){
+    	
+    	if(_inRealDate.equals(mDateBefYesterday))
+    		return mNumTextBefYesterday;
+    	else if(_inRealDate.equals(mDateYesterday))
+    		return mNumTextYesterday;
+    	else
+    		return mNumTextToday;
+    }
+    
+    private void notifyUserViaToast(int _inResId){
+		
+		Toast toast = Toast.makeText(getApplicationContext(), _inResId, Toast.LENGTH_SHORT);
+	    toast.setGravity(Gravity.CENTER, 0, 0);
+	    toast.show();
+    }
+    
+    private int fetchSeedsData(ArrayList<String> _inDataArray) throws Exception{
+    	
+    	HttpResponse seedsByDateResponse = null;
+    	String respInString = null;
+    	ArrayList<SeedsEntity> tSeedsList = null; 
+    	
+		updateDialogStatus(getString(R.string.seeds_datelist_downloadseedsinfo) + "...");
+		seedsByDateResponse = SeedsNetworkProcess.sendSeedsByDateReqMsg(_inDataArray);
+		
+        // Check the response context
+		if (seedsByDateResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {            
+			respInString = EntityUtils.toString(seedsByDateResponse.getEntity());          
+        } else {
+        	mLogger.warn("SeedsByDate Message sending failed! Status Code: "
+                         + seedsByDateResponse.getStatusLine().getStatusCode());
+        	notifyUserViaToast(R.string.seeds_datelist_seedsbydatecommerror);
+        	return -1;           
+        }
+
+		if (null == respInString)
+		{
+			updateDialogStatus(getString(R.string.seeds_datelist_emptyseedsbydateresp));
+			mLogger.warn("Receiving empty seedsByDate response message!");
+			return -1;
+		}
+		else
+		{
+			mLogger.info("Parsing SeedsByDateResp Now!");
+			updateDialogStatus(getString(R.string.seeds_datelist_analyzeseedsdata) + "...");
+			try{
+				tSeedsList = SeedsJSONMessage.parseSeedsByDatesRespMsg(_inDataArray,respInString);
+			}catch(JSONException e){
+				mLogger.excep(e);
+			}
+			
+			mLogger.debug("Parsing SeedsByDateResp DONE, seeds count = "+tSeedsList.size());
+			// Retrieve the DB process handler to get data 
+		    SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
+		    
+		    // Store the seeds info into database 
+		    updateDialogStatus(getString(R.string.seeds_datelist_saveseedsinfo));
+		    int numOfSeeds = tSeedsList.size();
+		    for (int index = 0; index < numOfSeeds; index++)
+		    {
+		    	updateDialogStatus(getString(R.string.seeds_datelist_saveseedsinfo)+index+"/"+numOfSeeds);
+	    		tDBAdapter.insertEntryToSeed(tSeedsList.get(index));
+		    }		    
+		    return numOfSeeds;
+		}
+    }
+    
     private boolean updateSeedsInfo(String tDate) throws Exception{
     	
     	String respInString  = null;
-    	String respInString2 = null;
+    	HttpResponse upDateStatusResponse = null;
     	HashMap<String, String> respInMap;
-    	ArrayList<SeedsEntity> tSeedsList = null;
-    	
+    	ArrayList<String> tDateArray = new ArrayList<String> ();
+	    
 	    // Construct a single entry array so that we can reuse the interface
-    	mDateArray.clear();
-	    mDateArray.add(tDate);
+	    tDateArray.add(tDate);
 	    
     	// Notify progress dialog to show the status
 	    updateDialogStatus(getString(R.string.seeds_datelist_retrievestatus) + "...");
     	
     	// Communicate with server to retrieve the seeds info
 		try {
-			respInString = SeedsNetworkProcess.sendUpdateStatusReqMsg(mDateArray);
+			upDateStatusResponse = SeedsNetworkProcess.sendUpdateStatusReqMsg(tDateArray);
 		} catch (ClientProtocolException e) {
 			mLogger.excep(e);
-			e.printStackTrace();
 		} catch (JSONException e) {
 			mLogger.excep(e);
-			e.printStackTrace();
 		} catch (IOException e) {
 			mLogger.excep(e);
-			e.printStackTrace();
 		}
 		
-		mLogger.info("seedsUpdateStatusReq msg communication finished, msg: "+respInString);
+        // Check the response context
+		if (upDateStatusResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+            
+            respInString = EntityUtils.toString(upDateStatusResponse.getEntity());
+            mLogger.debug("Receive response msg: "+ respInString);
+            // String strsResult = strResult.replace("\r", "");            
+        } else {
+        	mLogger.warn("UpdateStatusReq Message Sending Failed! Status Code: "
+                         + upDateStatusResponse.getStatusLine().getStatusCode());
+        	notifyUserViaToast(R.string.seeds_datelist_updatestatuscommerror);
+        	return false;           
+        }
+		
 		if (null == respInString)
 		{
-			updateDialogStatus("Retrieving Seeds Info Failed!");			
+			updateDialogStatus(getString(R.string.seeds_datelist_emptyupdatestatusresp));
+			mLogger.error("Receiving empty updateStatus response message!");
 			return false;
 		}
 		else
 		{
 			updateDialogStatus(getString(R.string.seeds_datelist_analyzeseedsstatus) + "...");
-			respInMap = SeedsJSONMessage.parseUpdateStatusRespMsg(mDateArray,respInString);			
+			respInMap = SeedsJSONMessage.parseUpdateStatusRespMsg(tDateArray,respInString);			
 		}
+		
+		TextView tNumOfSeeds = matchNumTextViaRealDate(tDate);
 		
 		if (SeedsStatusByDate.isSeedsByDateReady(respInMap.get(tDate)))
 		{
-			updateDialogStatus(getString(R.string.seeds_datelist_dowloadseedsinfo) + "...");
-			respInString2 = SeedsNetworkProcess.sendSeedsByDateReqMsg(mDateArray);
-
-			if (null == respInString2)
-			{
-				// TODO: add warding info here, notify user the problem
-				updateDialogStatus("Downloading Seeds Info Failed!");
-				return false;
-			}
-			else
-			{
-				//tProgressDialog.setMessage("Parsing Seeds Info...");
-				Log.i("DateList", "Parsing SeedsByDateResp now!");
-				try{
-					tSeedsList = SeedsJSONMessage.parseSeedsByDatesRespMsg(mDateArray,respInString2);
-				}catch(JSONException e){
-					e.printStackTrace();
-				}
-				
-				Log.i("DateList", "Parsing SeedsByDateResp DONE, seeds count = "+tSeedsList.size());
-				// Retrieve the DB process handler to get data 
-			    SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
-			    
-			    // Store the seeds info into database 
-			    //tProgressDialog.setMessage("Store Seeds Info...");
-			    int numOfSeeds = tSeedsList.size();
-			    Log.i("DateList", "The size of the SeedsList is: "+numOfSeeds);
-			    for (int index = 0; index < numOfSeeds; index++)
-			    {
-			    	//tProgressDialog.setMessage("Store Seeds Info "+index+"/"+numOfSeeds);
-		    		tDBAdapter.insertEntryToSeed(tSeedsList.get(index));
-			    }
+			if (0 < fetchSeedsData(tDateArray))				
 				updateSeedsInfoStatus(tDate, true);
-			}
+			else
+				return false;
 		}
 		else if(SeedsStatusByDate.isSeedsByDateNotReady(respInMap.get(tDate)))
 		{
-			//tProgressDialog.setMessage("Seeds Info Not Ready!");
+			notifyUserViaToast(R.string.seeds_datelist_seedsinfonotready);
+			tNumOfSeeds.setText(R.string.seeds_datelist_seedsnumbernotready);
 			return false;			
 		}
 		else if(SeedsStatusByDate.isSeedsByDateNoUpdate(respInMap.get(tDate)))
-		{
-			//tProgressDialog.setMessage("Seeds Info No Update!");
+		{			
+			notifyUserViaToast(R.string.seeds_datelist_seedsinfonoupdate);
+			tNumOfSeeds.setText(R.string.seeds_datelist_seedsnumbernoupdate);
 			return false;						
-		}
-		
-		return true;
-				
+		}		
+		return true;				
     }
     
     private boolean updateSeedsInfo(ArrayList<String> tDateArray) throws Exception{
@@ -550,26 +604,40 @@ public class SeedsDateListActivity extends Activity {
     	String respInString  = null;
     	String respInString2 = null;
     	HashMap<String, String> respInMap = null;
+    	HttpResponse upDateStatusResponse = null;    	
+    	
     	// Notify progress dialog to show the status
-    	//tProgressDialog.setMessage("Retrieving Seeds Info Status...");
+	    updateDialogStatus(getString(R.string.seeds_datelist_retrievestatus) + "...");
     	
     	// Communicate with server to retrieve the seeds info
 		try {
-			respInString = SeedsNetworkProcess.sendUpdateStatusReqMsg(tDateArray);
+			upDateStatusResponse = SeedsNetworkProcess.sendUpdateStatusReqMsg(tDateArray);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			mLogger.excep(e);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			mLogger.excep(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			mLogger.excep(e);
 		}
+		
+        // Check the response context
+		if (upDateStatusResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+            
+            respInString = EntityUtils.toString(upDateStatusResponse.getEntity());
+            mLogger.debug("Receive response msg: "+ respInString);
+            // String strsResult = strResult.replace("\r", "");            
+        } else {
+        	mLogger.warn("UpdateStatusReq Message Sending Failed! Status Code: "
+                         + upDateStatusResponse.getStatusLine().getStatusCode());
+        	notifyUserViaToast(R.string.seeds_datelist_updatestatuscommerror);
+        	return false;           
+        }
 		
 		if (null == respInString)
 		{
-			//tProgressDialog.setMessage("Retrieving Seeds Info Failed!");
+			updateDialogStatus(getString(R.string.seeds_datelist_emptyupdatestatusresp));
+			mLogger.error("Receiving empty updateStatus response message!");
+			return false;
 		}
 		else
 		{
@@ -577,68 +645,32 @@ public class SeedsDateListActivity extends Activity {
 			try{
 				respInMap = SeedsJSONMessage.parseUpdateStatusRespMsg(tDateArray,respInString);			
 			}catch (JSONException e){
-				e.printStackTrace();
-			}
+				mLogger.excep(e);
+			}			
 		}
 		
+		ArrayList<String> tDateArray2 = new ArrayList<String> ();
+		tDateArray2.clear();
 		int numOfDate = tDateArray.size();
-		Log.i("DateList", "The size of mDateArray is "+ mDateArray.size());
-		mDateArray.clear();
-		Log.i("DateList", "The size of mDateArray is "+ mDateArray.size());
 		for (int index2 = 0; index2 < numOfDate; index2++)
 		{
 			String tDate = tDateArray.get(index2);
-			Log.i("DateList", "tDate: "+ tDate +"Status: " + respInMap.get(tDate));
+			mLogger.debug("tDate: "+ tDate +"Status: " + respInMap.get(tDate));
 			if (SeedsStatusByDate.isSeedsByDateReady(respInMap.get(tDate)))
 			{
-				//tProgressDialog.setMessage("Seeds Info Is Ready! "+tDate);
-				mDateArray.add(tDate);
-			}
-			else if(SeedsStatusByDate.isSeedsByDateNotReady(respInMap.get(tDate)))
-			{
-				//tProgressDialog.setMessage("Seeds Info Not Ready! "+tDate);							
-			}
-			else if(SeedsStatusByDate.isSeedsByDateNoUpdate(respInMap.get(tDate)))
-			{
-				//tProgressDialog.setMessage("Seeds Info No Update! "+tDate);										
-			}			
+				tDateArray2.add(tDate);
+			}		
 		}
-		Log.i("DateList", "The size of mDateArray is "+ mDateArray.size());
-		if (mDateArray.size() <= 0)
-		{
-			//tProgressDialog.setMessage("Seeds Info No Update!");
-			return false;
+		mLogger.debug("The size of tDateArray2 is "+ tDateArray2.size());
+		if (tDateArray2.size() <= 0)
+		{			
+			notifyUserViaToast(R.string.seeds_datelist_noneedtosync);
+			return true;
 		}
 		
-		updateDialogStatus(getString(R.string.seeds_datelist_dowloadseedsinfo) + "...");
-		respInString2 = SeedsNetworkProcess.sendSeedsByDateReqMsg(mDateArray);
-		
-		if (null == respInString2)
-		{
-			//tProgressDialog.setMessage("Downloading Seeds Info Failed!");
-			return false;
-		}
-		else
-		{
-			updateDialogStatus(getString(R.string.seeds_datelist_analyzeseedsdata) + "...");
-			ArrayList<SeedsEntity> tSeedsList = SeedsJSONMessage.parseSeedsByDatesRespMsg(mDateArray,respInString2);
-			
-			// Retrieve the DB process handler to get data 
-		    SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
-		    
-		    // Store the seeds info into database
-		    updateDialogStatus("Store Seeds Info... ");
-		    int numOfSeeds = tSeedsList.size();
-		    for (int index = 0; index < numOfSeeds; index++)
-		    {
-		    	updateDialogStatus("Store Seeds Info "+index+"/"+numOfSeeds);
-		    	try{
-		    		tDBAdapter.insertEntryToSeed(tSeedsList.get(index));			    	
-		    	}catch(Exception e){
-		    		e.printStackTrace();
-		    	}			    	
-		    }
-		    
+		updateDialogStatus(getString(R.string.seeds_datelist_downloadseedsinfo) + "...");
+		if(0 < fetchSeedsData(tDateArray2))
+		{				    
 		    int numOfDate2 = mDateArray.size();
 		    for (int index3 = 0; index3 < numOfDate2; index3++)
 		    {
@@ -646,35 +678,7 @@ public class SeedsDateListActivity extends Activity {
 		    }						
 		}
 		return true;
-    }
-    
-	public String stubReadExternalFile(String fileName){		
-		String text = "";
-		try {
-			java.io.InputStream is = getAssets().open(fileName);
-            
-            int size = is.available();
-            
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            
-            text = new String(buffer);
-			
-			
-			/*FileInputStream fin = new FileInputStream(fileName);
-
-			int length = fin.available();
-			byte[] buffer = new byte[length];
-			fin.read(buffer);
-			res = EncodingUtils.getString(buffer, "UTF-8");
-			fin.close();*/
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return text;
-    }
+    }    
 
 }
 
