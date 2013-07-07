@@ -21,6 +21,8 @@
     UIBarButtonItem* _stopBarItem;
     
     NSArray* _last3Days;
+    
+    UserDefaultsModule* _userDefaults;
 }
 @end
 
@@ -47,6 +49,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _userDefaults = [UserDefaultsModule sharedInstance];
     
     SpiderModule* spiderModule = [SpiderModule sharedInstance];
     [spiderModule.spider setSeedsSpiderDelegate:self];
@@ -251,9 +255,16 @@
                    });
 }
 
-- (void) _refreshDayAndSyncStatusLabels
+- (void) _computeLast3Days
 {
     _last3Days = [CBDateUtils lastThreeDays];
+    [_userDefaults setLastThreeDays:_last3Days];
+}
+
+- (void) _refreshDayAndSyncStatusLabels
+{
+    [self _computeLast3Days];
+                  
     NSInteger dayIndex = TheDayBefore;
     for (NSDate* day in _last3Days)
     {

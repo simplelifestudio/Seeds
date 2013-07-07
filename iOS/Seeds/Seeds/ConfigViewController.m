@@ -422,7 +422,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         
         [_wifiCacheImagesCell.button setTitle:@"Syncing" forState:UIControlStateNormal];
         
-        NSArray* last3Days = [CBDateUtils lastThreeDays];
+        NSArray* last3Days = [_userDefaults lastThreeDays];
         id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
         
         NSArray* seeds = [seedDAO getSeedsByDates:last3Days];

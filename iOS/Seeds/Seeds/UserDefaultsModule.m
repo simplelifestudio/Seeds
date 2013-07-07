@@ -249,6 +249,36 @@ SINGLETON(UserDefaultsModule)
     [self setValueForKeyInPersistentDomain:sVal forKey:USERDEFAULTS_KEY_SERVERMODE inPersistentDomain:PERSISTENTDOMAIN_APP];
 }
 
+-(NSArray*) lastThreeDays
+{
+    NSArray* last3Days = nil;
+    
+    last3Days = [self getValueForKeyInPersistentDomain:USERDEFAULTS_KEY_LASTTHREEDAYS inPersistentDomain:PERSISTENTDOMAIN_APP];
+    
+    return last3Days;
+}
+
+-(void) setLastThreeDays:(NSArray*) days
+{
+    BOOL flag = YES;
+    if (nil != days && 3 == days.count)
+    {
+        for (NSObject* obj in days)
+        {
+            if (![obj isKindOfClass:[NSDate class]])
+            {
+                flag = NO;
+                break;
+            }
+        }
+    }
+    
+    if (flag)
+    {
+        [self setValueForKeyInPersistentDomain:days forKey:USERDEFAULTS_KEY_LASTTHREEDAYS inPersistentDomain:PERSISTENTDOMAIN_APP];        
+    }
+}
+
 #pragma mark - UIApplicationDelegate
 
 -(void)applicationWillResignActive:(UIApplication *)application

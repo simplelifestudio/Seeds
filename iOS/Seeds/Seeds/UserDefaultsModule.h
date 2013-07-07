@@ -32,6 +32,8 @@
 -(void) recordAppLaunchedBefore;
 -(BOOL) isServerMode;
 -(void) enableServerMode:(BOOL) enabled;
+-(NSArray*) lastThreeDays;
+-(void) setLastThreeDays:(NSArray*) days;
 
 #pragma mark - Common
 -(NSMutableDictionary*) persistentDomainForName:(NSString*) name;

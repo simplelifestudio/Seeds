@@ -51,7 +51,8 @@
 
 -(void) aloha
 {
-    _last3Days = [CBDateUtils lastThreeDays];
+    UserDefaultsModule* _userDefaults = [UserDefaultsModule sharedInstance];
+    _last3Days = [_userDefaults lastThreeDays];
 
     NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@"Hello Seeds Server!"] forKeys:@[@"content"]];
     JSONMessage* message = [JSONMessage constructWithType:AlohaRequest messageBody:messageBody];

@@ -214,7 +214,8 @@ if (_cancelTransmission)\
     }
     
     // Step 20:
-    NSArray* last3Days = [CBDateUtils lastThreeDays];    
+    UserDefaultsModule* _userDefaults = [UserDefaultsModule sharedInstance];
+    NSArray* last3Days = [_userDefaults lastThreeDays];
     for (NSDate* day in last3Days)
     {
         NSString* dayStr = [CBDateUtils dateStringInLocalTimeZone:STANDARD_DATE_FORMAT andDate:day];
@@ -308,7 +309,9 @@ if (_cancelTransmission)\
     // Step 10:
     [self _updateConsole:NSLocalizedString(@"Torrent files are preparing...", nil)];
     
-    NSArray* last3Days = [CBDateUtils lastThreeDays];
+    UserDefaultsModule* _userDefaults = [UserDefaultsModule sharedInstance];
+    NSArray* last3Days = [_userDefaults lastThreeDays];
+    
     NSString* torrentsPath = [SeedsDownloadAgent downloadPath];
     NSFileManager* fm = [NSFileManager defaultManager];
     BOOL flag = NO;
