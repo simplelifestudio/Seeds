@@ -104,7 +104,7 @@
     AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(x, y, WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL, HEIGHT_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL)];
     newImageView.thumbnailType = _asyncImageView.thumbnailType;
     _asyncImageView = newImageView;
-    [self addSubview:_asyncImageView];
+    [self.contentView addSubview:_asyncImageView];
 }
 
 -(void) updateDownloadStatus:(SeedDownloadStatus) status
