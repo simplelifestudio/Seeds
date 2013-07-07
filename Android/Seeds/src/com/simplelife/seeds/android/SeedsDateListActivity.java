@@ -88,6 +88,8 @@ public class SeedsDateListActivity extends Activity {
 	final int MESSAGETYPE_UPDATE  = 103;
 	final int MESSAGETYPE_STAYSTILL = 104;
 	final int MESSAGETYPE_UPDATEDIALOG = 105;
+	final int MESSAGETYPE_TOAST   = 106;
+	final int MESSAGETYPE_SETTEXT = 107;
 	
 	// For log purpose
 	private SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
@@ -369,8 +371,7 @@ public class SeedsDateListActivity extends Activity {
 	    Bundle bundle = new Bundle();
 	    bundle.putString("status", inContents);	    
 		t_MsgListData.setData(bundle);
-		handler.sendMessage(t_MsgListData);					
-		
+		handler.sendMessage(t_MsgListData);							
 	}
 	
     // Define a handler to process the progress update
@@ -430,6 +431,24 @@ public class SeedsDateListActivity extends Activity {
             		break;
             		
             	}
+            	case MESSAGETYPE_TOAST:
+            	{
+            		Bundle bundle = msg.getData();             				
+            		int tResId  = bundle.getInt("resId");
+            		Toast toast = Toast.makeText(getApplicationContext(), tResId, Toast.LENGTH_SHORT);
+            	    toast.setGravity(Gravity.CENTER, 0, 0);
+            	    toast.show();
+            	    break;
+            	}
+            	case MESSAGETYPE_SETTEXT:
+            	{
+            		Bundle bundle = msg.getData();             				
+            		String tDate  = bundle.getString("inDate");
+            		int tText  = bundle.getInt("inText");
+            		TextView tNumOfSeeds = matchNumTextViaRealDate(tDate);
+            		tNumOfSeeds.setText(tText);
+            	    break;
+            	}
                 case MESSAGETYPE_UPDATE:
                 case MESSAGETYPE_STAYSTILL:
                 {
@@ -469,10 +488,26 @@ public class SeedsDateListActivity extends Activity {
     }
     
     private void notifyUserViaToast(int _inResId){
+			    
+		Message t_MsgListData = new Message();
+		t_MsgListData.what = MESSAGETYPE_TOAST;
 		
-		Toast toast = Toast.makeText(getApplicationContext(), _inResId, Toast.LENGTH_SHORT);
-	    toast.setGravity(Gravity.CENTER, 0, 0);
-	    toast.show();
+	    Bundle bundle = new Bundle();
+	    bundle.putInt("resId", _inResId);    
+		t_MsgListData.setData(bundle);
+		handler.sendMessage(t_MsgListData);		
+    }
+    
+    private void setNumOfSeedsText(String _inDate, int _inText){
+		
+    	Message t_MsgListData = new Message();
+		t_MsgListData.what = MESSAGETYPE_SETTEXT;
+		
+	    Bundle bundle = new Bundle();
+	    bundle.putString("inDate", _inDate); 
+	    bundle.putInt("inText", _inText); 
+		t_MsgListData.setData(bundle);
+		handler.sendMessage(t_MsgListData);	
     }
     
     private int fetchSeedsData(ArrayList<String> _inDataArray) throws Exception{
@@ -573,27 +608,30 @@ public class SeedsDateListActivity extends Activity {
 		{
 			updateDialogStatus(getString(R.string.seeds_datelist_analyzeseedsstatus) + "...");
 			respInMap = SeedsJSONMessage.parseUpdateStatusRespMsg(tDateArray,respInString);			
-		}
+		}		
 		
-		TextView tNumOfSeeds = matchNumTextViaRealDate(tDate);
 		
 		if (SeedsStatusByDate.isSeedsByDateReady(respInMap.get(tDate)))
-		{
-			if (0 < fetchSeedsData(tDateArray))				
+		{			
+			int tSeedsNum = fetchSeedsData(tDateArray);
+			if (0 < tSeedsNum)
+			{
 				updateSeedsInfoStatus(tDate, true);
+				//setNumOfSeedsText(tDate, R.string.seeds_datelist_seedsnumbernotready);
+			}
 			else
 				return false;
 		}
 		else if(SeedsStatusByDate.isSeedsByDateNotReady(respInMap.get(tDate)))
 		{
 			notifyUserViaToast(R.string.seeds_datelist_seedsinfonotready);
-			tNumOfSeeds.setText(R.string.seeds_datelist_seedsnumbernotready);
+			setNumOfSeedsText(tDate, R.string.seeds_datelist_seedsnumbernotready);
 			return false;			
 		}
 		else if(SeedsStatusByDate.isSeedsByDateNoUpdate(respInMap.get(tDate)))
 		{			
 			notifyUserViaToast(R.string.seeds_datelist_seedsinfonoupdate);
-			tNumOfSeeds.setText(R.string.seeds_datelist_seedsnumbernoupdate);
+			setNumOfSeedsText(tDate, R.string.seeds_datelist_seedsnumbernoupdate);
 			return false;						
 		}		
 		return true;				
