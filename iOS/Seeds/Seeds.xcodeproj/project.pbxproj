@@ -62,6 +62,7 @@
 		C5203DF31747D56400D917F7 /* ZipWriteStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DEA1747D56300D917F7 /* ZipWriteStream.m */; };
 		C5203DFC17485A8600D917F7 /* SeedsDownloadAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DFB17485A8500D917F7 /* SeedsDownloadAgent.m */; };
 		C522BA31174CF1FA001FC7BD /* GUIModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C522BA30174CF1FA001FC7BD /* GUIModule.m */; };
+		C5309DEF1789754F0000F328 /* CBHUDAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5309DEE1789754F0000F328 /* CBHUDAgent.m */; };
 		C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C531833A17237FF700264530 /* CBModuleAbstractImpl.m */; };
 		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
 		C53183461723A17E00264530 /* DatabaseModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C53183451723A17E00264530 /* DatabaseModule.m */; };
@@ -291,6 +292,8 @@
 		C522BA2F174CF1FA001FC7BD /* GUIModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIModule.h; sourceTree = "<group>"; };
 		C522BA30174CF1FA001FC7BD /* GUIModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUIModule.m; sourceTree = "<group>"; };
 		C52BB4761788003900BD40E7 /* CBNotificationListenable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBNotificationListenable.h; sourceTree = "<group>"; };
+		C5309DED1789754F0000F328 /* CBHUDAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBHUDAgent.h; sourceTree = "<group>"; };
+		C5309DEE1789754F0000F328 /* CBHUDAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBHUDAgent.m; sourceTree = "<group>"; };
 		C531833717237FF700264530 /* CBLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBLog.h; sourceTree = "<group>"; };
 		C531833817237FF700264530 /* CBModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModule.h; sourceTree = "<group>"; };
 		C531833917237FF700264530 /* CBModuleAbstractImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBModuleAbstractImpl.h; sourceTree = "<group>"; };
@@ -763,6 +766,8 @@
 				C5ADC851173930E1007F59D7 /* CBStringUtils.m */,
 				C5AB63561730C1ED00A3F1E6 /* CBUIUtils.h */,
 				C5AB63571730C1ED00A3F1E6 /* CBUIUtils.m */,
+				C5309DED1789754F0000F328 /* CBHUDAgent.h */,
+				C5309DEE1789754F0000F328 /* CBHUDAgent.m */,
 				C541D0751782850F00E4F560 /* CBMathUtils.h */,
 				C541D0761782850F00E4F560 /* CBMathUtils.m */,
 				C531833717237FF700264530 /* CBLog.h */,
@@ -1401,6 +1406,7 @@
 				C53B644C178253580028DC41 /* TableViewButtonCell.m in Sources */,
 				C541D0771782850F00E4F560 /* CBMathUtils.m in Sources */,
 				C5F964CE1788D682001BAB5D /* DownloadSeedListViewController.m in Sources */,
+				C5309DEF1789754F0000F328 /* CBHUDAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

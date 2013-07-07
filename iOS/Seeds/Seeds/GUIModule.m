@@ -7,19 +7,20 @@
 //
 
 #import "GUIModule.h"
+
+#import "CBHUDAgent.h"
+
 #import "SplashViewController.h"
 
 @interface GUIModule() <WarningDelegate>
 {
-    
+    CBHUDAgent* _HUDAgent;
 }
 
 @end
 
 @implementation GUIModule
 {
-    MBProgressHUD* _HUD;
-    
     PAPasscodeViewController* _passcodeViewController;
     BOOL _isLockViewVisible;
 }
@@ -34,7 +35,7 @@ SINGLETON(GUIModule)
     [self.serviceThread setName:NSLocalizedString(@"GUI Module Thread", nil)];
     [self setKeepAlive:FALSE];
     
-    [self _initPAPasscodeViewController];    
+    [self _initPAPasscodeViewController];
 }
 
 -(void) releaseModule
@@ -67,16 +68,6 @@ SINGLETON(GUIModule)
     MODULE_DELAY    
 }
 
--(void) constructHUD
-{
-    if (nil == _HUD)
-    {
-        UIWindow* window = [UIApplication sharedApplication].keyWindow;
-        //        MBProgressHUD* HUD = [[MBProgressHUD alloc] initWithView:view];
-        _HUD = [[MBProgressHUD alloc] initWithWindow:window];
-    }
-}
-
 -(void) showHUD:(NSString *)status delay:(NSInteger)seconds
 {
     [self showHUD:status minorStatus:nil delay:seconds];
@@ -84,36 +75,13 @@ SINGLETON(GUIModule)
 
 -(void) showHUD:(NSString*) majorStauts minorStatus:(NSString*) minorStatus delay:(NSInteger)seconds
 {
-    if (nil != _homeViewController)
+    if ((nil == _HUDAgent) && (nil != _homeViewController))
     {
         UIView* view = _homeViewController.navigationController.view;
-
-        [self constructHUD];
-        [_HUD hide:YES];
-        
-        [view addSubview:_HUD];
-        
-        _HUD.mode = MBProgressHUDModeText;
-        _HUD.minSize = HUD_NOTIFICATION_SIZE;
-        _HUD.yOffset = HUD_NOTIFICATION_YOFFSET;
-        
-        _HUD.labelText = majorStauts;
-        if (minorStatus)
-        {
-            _HUD.detailsLabelText = minorStatus;
-        }
-        else
-        {
-            _HUD.detailsLabelText = nil;
-        }
-        
-        [_HUD show:YES];
-        [_HUD hide:YES afterDelay:seconds];
+        _HUDAgent = [[CBHUDAgent alloc] initWithUIView:view];
     }
-    else
-    {
-        DLog(@"No visible view controller registered in GUI module.");
-    }
+    
+    [_HUDAgent showHUD:majorStauts minorStatus:minorStatus delay:seconds];
 }
 
 -(WarningViewController*) getWarningViewController:(NSString*) warningId delegate:(id<WarningDelegate>) delegate;

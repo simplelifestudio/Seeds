@@ -21,7 +21,8 @@
     Seed* _selectedSeed;
     
     BOOL _isSelectedAll;
-    MBProgressHUD* _HUD;
+    
+    GUIModule* _guiModule;
     
     NSMutableArray* _pageSeedList;
     NSMutableArray* _pageFirstSeedPictureList;
@@ -260,8 +261,6 @@
         [self onCancelBarButtonClicked];
         
         [self _refetchDownloadSeedsFromAgent];
-        
-        //        [self _showHUD:NSLocalizedString(@"Delete Done", nil)];
     }
 }
 
@@ -285,14 +284,6 @@
     [self _constructTableDataByPage];
     
     [self _scrollToTableViewTop];
-}
-
--(void) _showHUD:(NSString*) majorStatus
-{
-    [_HUD show:YES];
-    _HUD.mode = MBProgressHUDModeText;
-    _HUD.labelText = majorStatus;
-    [_HUD hide:YES afterDelay:1];
 }
 
 - (void) _setupViewController
@@ -322,12 +313,10 @@
     UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
     
-    _HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    _HUD.minSize = HUD_CENTER_SIZE;
-    [self.view addSubview:_HUD];
-    
     _pageSeedList = [NSMutableArray array];
     _pageFirstSeedPictureList = [NSMutableArray array];
+    
+    _guiModule = [GUIModule sharedInstance];
     
     CommunicationModule* _commModule = [CommunicationModule sharedInstance];
     _downloadAgent = _commModule.seedsDownloadAgent;

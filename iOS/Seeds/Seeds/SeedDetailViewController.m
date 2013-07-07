@@ -14,13 +14,12 @@
 #import "SeedsDownloadAgent.h"
 #import "TorrentDownloadAgent.h"
 
-#define _HUD_DELAY 1.5
+#define _HUD_DISPLAY 1
 
 @interface SeedDetailViewController () <CBNotificationListenable>
 {
     SeedsDownloadAgent* _downloadAgent;
     
-    MBProgressHUD* _HUD;
     GUIModule* _guiModule;
     
     UIBarButtonItem* _favoriteBarButton;
@@ -240,14 +239,6 @@
     }
 }
 
--(void) _showHUD:(NSString*) majorStatus
-{
-    _HUD.mode = MBProgressHUDModeText;
-    _HUD.labelText = majorStatus;
-    [_HUD show:YES];
-    [_HUD hide:YES afterDelay:1];
-}
-
 -(void) _constructTableDataByPage
 {
     NSUInteger _pageSize = _pagingToolbar.pageSize;
@@ -321,9 +312,7 @@
     
     [self _setupBarButtonItems];
     
-    _HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    _HUD.minSize = HUD_CENTER_SIZE;
-    [self.view addSubview:_HUD];
+    _guiModule = [GUIModule sharedInstance];
     
     _headerView = [CBUIUtils componentFromNib:VIEW_ID_SEEDDETAILHEADERVIEW owner:self options:nil];
     
@@ -411,7 +400,7 @@
     {
         if (![CBNetworkUtils isWiFiEnabled] && ![CBNetworkUtils is3GEnabled])
         {
-            [self _showHUD:NSLocalizedString(@"Internet Disconnected", nil)];
+            [_guiModule showHUD:NSLocalizedString(@"Internet Disconnected", nil) minorStatus:nil delay:_HUD_DISPLAY];
             return;
         }
         
@@ -420,7 +409,7 @@
     else
     {
         [_downloadAgent deleteDownloadedSeed:_seed];
-        [self _showHUD:NSLocalizedString(@"Torrent Deleted", nil)];
+        [_guiModule showHUD:NSLocalizedString(@"Torrent Deleted", nil) minorStatus:nil delay:_HUD_DISPLAY];
     }
 }
 
@@ -481,12 +470,12 @@
                 {
                     case SeedDownloaded:
                     {
-                        [self _showHUD:NSLocalizedString(@"Torrent Downloaded", nil)];
+                        [_guiModule showHUD:NSLocalizedString(@"Torrent Downloaded", nil) minorStatus:nil delay:_HUD_DISPLAY];
                         break;
                     }
                     case SeedDownloadFailed:
                     {
-                        [self _showHUD:NSLocalizedString(@"Download Failed", nil)];
+                        [_guiModule showHUD:NSLocalizedString(@"Download Failed", nil) minorStatus:nil delay:_HUD_DISPLAY];
                         break;
                     }
                     default:

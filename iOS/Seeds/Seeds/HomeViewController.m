@@ -199,8 +199,9 @@
 
 - (IBAction)onClickSyncButton:(id)sender
 {
-	_HUD = [[MBProgressHUD alloc] initWithView:self.view];
-	[self.view addSubview:_HUD];
+    UIWindow* keyWindow = [CBUIUtils getKeyWindow];
+    _HUD = [[MBProgressHUD alloc] initWithWindow:keyWindow];
+	[self.navigationController.view addSubview:_HUD];
 	_HUD.delegate = self;
     
 	[_HUD showWhileExecuting:@selector(_syncSeedsInfoTask) onTarget:self withObject:nil animated:YES];

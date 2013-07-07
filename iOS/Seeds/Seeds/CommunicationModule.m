@@ -13,6 +13,8 @@
 #import "Reachability.h"
 #import "MBProgressHUD.h"
 
+#define _HUD_DISPLAY 1
+
 @interface CommunicationModule()
 {
 
@@ -76,21 +78,21 @@ SINGLETON(CommunicationModule)
     {
         case NotReachable:
         {
-            [guiModule showHUD:NSLocalizedString(@"Internet Disconnected", nil) delay:2];
+            [guiModule showHUD:NSLocalizedString(@"Internet Disconnected", nil) delay:_HUD_DISPLAY];
             
             DLog(@"App's reachability changed to 'NotReachable'.");
             break;
         }
         case ReachableViaWiFi:
         {
-            [guiModule showHUD:NSLocalizedString(@"WiFi Connected", nil) delay:2];
+            [guiModule showHUD:NSLocalizedString(@"WiFi Connected", nil) delay:_HUD_DISPLAY];
             
             DLog(@"App's reachability changed to 'ReachableViaWiFi'.");
             break;
         }
         case ReachableViaWWAN:
         {
-            [guiModule showHUD:NSLocalizedString(@"3G/GPRS Connected", nil) delay:2];
+            [guiModule showHUD:NSLocalizedString(@"3G/GPRS Connected", nil) delay:_HUD_DISPLAY];
             
             DLog(@"App's reachability changed to 'ReachableViaWWAN'.");
             break;

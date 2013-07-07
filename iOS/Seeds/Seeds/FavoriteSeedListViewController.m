@@ -21,7 +21,8 @@
     Seed* _selectedSeed;
     
     BOOL _isSelectedAll;
-    MBProgressHUD* _HUD;
+
+    GUIModule* _guiModule;
     
     NSMutableArray* _pageSeedList;
     NSMutableArray* _pageFirstSeedPictureList;
@@ -286,14 +287,6 @@
 
 #pragma mark - Private Methods
 
--(void) _showHUD:(NSString*) majorStatus
-{
-    [_HUD show:YES];    
-    _HUD.mode = MBProgressHUDModeText;
-    _HUD.labelText = majorStatus;
-    [_HUD hide:YES afterDelay:1];
-}
-
 -(void) _favoriteSeed:(Seed*) seed favorite:(BOOL) favorite
 {
     if (nil == seed)
@@ -334,9 +327,7 @@
     UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
     
-    _HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    _HUD.minSize = HUD_CENTER_SIZE;
-    [self.view addSubview:_HUD];
+    _guiModule = [GUIModule sharedInstance];
     
     _pageSeedList = [NSMutableArray array];
     _pageFirstSeedPictureList = [NSMutableArray array];
