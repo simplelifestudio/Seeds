@@ -22,9 +22,8 @@ import com.simplelife.seeds.server.db.RssUtil;
 import com.simplelife.seeds.server.db.Seed;
 import com.simplelife.seeds.server.db.SeedCaptureLog;
 import com.simplelife.seeds.server.db.SeedPicture;
-import com.simplelife.seeds.server.json.IJsonCommand;
-import com.simplelife.seeds.server.json.JsonCommandFactory;
-import com.simplelife.seeds.server.json.JsonUtil;
+import com.simplelife.seeds.server.json.IJsonRequest;
+import com.simplelife.seeds.server.json.JsonRequestFactory;
 import com.simplelife.seeds.server.parser.HtmlParser;
 import com.simplelife.seeds.server.parser.TorrentDownloader;
 import com.simplelife.seeds.server.util.DBExistResult;
@@ -34,21 +33,22 @@ import com.simplelife.seeds.server.util.EncryptUtil;
 import com.simplelife.seeds.server.util.ErrorCode;
 import com.simplelife.seeds.server.util.HttpUtil;
 import com.simplelife.seeds.server.util.JsonKey;
+import com.simplelife.seeds.server.util.JsonUtil;
 import com.simplelife.seeds.server.util.LogUtil;
 import com.simplelife.seeds.server.util.OperationCode;
 import com.simplelife.seeds.server.util.OperationLogUtil;
 import com.simplelife.seeds.server.util.SqlUtil;
+import com.simplelife.seeds.server.util.TableColumnName;
 import com.simplelife.seeds.server.util.TableName;
 
 public class Test {
 	public static void main(String[] args)
 	{
 	    LogUtil.setLevel(Level.WARNING);
-	    HttpUtil.setHttpProxy("87.254.212.120", 8080);
-	    HttpUtil.setHostIP("127.0.0.1");
+	    //HttpUtil.setHttpProxy("87.254.212.120", 8080);
+	    //HttpUtil.setHostIP("127.0.0.1");
 	    //HttpUtil.setHttpPort(8080);
 	    
-	    //testJsonSeedToCartReq();
 	    //testRssContent();
 	    //testLogUtil();
 	    //testEncrypt();
@@ -68,18 +68,42 @@ public class Test {
 	    // =========JSON related=========
 	    //testJsonCommandFactory();
 	    //testJsonAlohaReq();
-	    //testAlohaResponse();
-		//testJsonSeedReq();
+	    //testJsonSeedStatusReq();
+	    //testJsonSeedReq();
 	    //testJsonSeedToCartReq();
-	    testJsonSeedStatusReq();
+	    
 		
 	    // =========Base Functions=========
 		//testDateFunctions();
 	    //testGetParaListByLink();
+	    testSeedCaptureTaskTimer();
 		
 		System.exit(0);
 	}
 
+	private static void testSeedCaptureTaskTimer()
+	{
+	    Level level = LogUtil.getLevel();
+	    LogUtil.setLevel(Level.INFO);
+	    SeedCaptureListener listner = new SeedCaptureListener();
+	    try
+        {
+	        listner.createTimer(DateUtil.getNowDate(), 5);
+            Thread.sleep(3000);
+            
+            listner.createTimer(DateUtil.getNowDate(), 5);
+            Thread.sleep(3000);
+            
+            listner.createTimer(DateUtil.getNowDate(), 5);
+            Thread.sleep(100000);
+        } catch (InterruptedException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+	    LogUtil.setLevel(level);
+	}
+	
 	private static void testCaptureLog()
 	{
 		String date = "2013-06-17";
@@ -102,23 +126,9 @@ public class Test {
         }
 	}
 	
-	private static void testAlohaResponse()
-	{
-        String result = "{\n\"id\": \"AlohaResponse\",\n\"body\": \n{\n\"content\":\"Hello Seeds App! <2013-07-03 10:02:09.504>\"\n}\n}";
-        JSONObject resultJsonObj = JsonUtil.createJsonObject(result);
-        if (resultJsonObj == null)
-        {
-        	System.out.print("============Error!===============");
-        }
-        else
-        {
-        	System.out.print(resultJsonObj.toString());
-        }
-	}
-	
 	private static void testJsonCommandFactory()
 	{
-		System.out.print("Invalid Json command:");
+		System.out.print("==========Report Invalid Json command===========\n");
 		String command = "{\n    \"id\": \"AlohaRequest_invalid\",\n    \"body\": {\n    \"content\":\"Hello Seeds Server!\"\n    }\n}";
 	    testJsonCommand(command);
 	}
@@ -281,9 +291,11 @@ public class Test {
 	
 	private static void testJsonAlohaReq()
 	{
+	    System.out.print("\n\n==========Normal AlohaRequest==========\n");
 	    String command = "{\n    \"id\": \"AlohaRequest\",\n    \"body\": {\n    \"content\":\"Hello Seeds Server!\"\n    }\n}";
 	    testJsonCommand(command);
 	    
+	    System.out.print("\n\n==========Report id not found==========\n");
 	    command = "{\n    \"command\": \"paramList\",\n    \"body\": {\n    \"content\":\"Hello Seeds Server!\"\n    }\n}";
         testJsonCommand(command);
 	}
@@ -308,13 +320,17 @@ public class Test {
 		testJsonCommand(command);
 		
 		// No cartId
-		System.out.print("\n\n==========Report error of no cartId==========\n");
+		System.out.print("\n\n==========No cartId, random ID to be generated==========\n");
 		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n   \"seedIdList\": [\n            \"1\",\n            \"2\",\n            \"9999\"\n        ]\n    }\n}";
 		testJsonCommand(command);
 		
 		// No seedIdList
 		System.out.print("\n\n==========Report error of no seedIdList==========\n");
 		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"\" }\n}";
+		testJsonCommand(command);
+		
+		System.out.print("\n\n==========Report error of empty seedIdList==========\n");
+		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"\", \"seedIdList\": [] }\n}";
 		testJsonCommand(command);
 
 		// Invalid body
@@ -370,25 +386,25 @@ public class Test {
         }
         
         System.out.print("\n\n==========status == 0, not ready ==========\n");
-        sql = "update " + TableName.SeedCaptureLog + " set " + SqlUtil.status + " = 0 where " + SqlUtil.publishDate + " = '" + date + "'";
+        sql = "update " + TableName.SeedCaptureLog + " set " + TableColumnName.status + " = 0 where " + TableColumnName.publishDate + " = '" + date + "'";
         DaoWrapper.executeSql(sql);
         command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \""+ date + "\"\n]\n    }\n}";
 		testJsonCommand(command);
 		
 		System.out.print("\n\n==========status == 1, no update ==========\n");
-        sql = "update " + TableName.SeedCaptureLog + " set " + SqlUtil.status + " = 1 where " + SqlUtil.publishDate + " = '" + date + "'";
+        sql = "update " + TableName.SeedCaptureLog + " set " + TableColumnName.status + " = 1 where " + TableColumnName.publishDate + " = '" + date + "'";
         DaoWrapper.executeSql(sql);
         command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \""+ date + "\"\n]\n    }\n}";
 		testJsonCommand(command);
 		
 		System.out.print("\n\n==========status == 2, ready ==========\n");
-        sql = "update " + TableName.SeedCaptureLog + " set " + SqlUtil.status + " = 2 where " + SqlUtil.publishDate + " = '" + date + "'";
+        sql = "update " + TableName.SeedCaptureLog + " set " + TableColumnName.status + " = 2 where " + TableColumnName.publishDate + " = '" + date + "'";
         DaoWrapper.executeSql(sql);
         command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \""+ date + "\"\n]\n    }\n}";
 		testJsonCommand(command);
 		
 		System.out.print("\n\n==========status == 3, abnormal date ==========\n");
-        sql = "update " + TableName.SeedCaptureLog + " set " + SqlUtil.status + " = 3 where " + SqlUtil.publishDate + " = '" + date + "'";
+        sql = "update " + TableName.SeedCaptureLog + " set " + TableColumnName.status + " = 3 where " + TableColumnName.publishDate + " = '" + date + "'";
         DaoWrapper.executeSql(sql);
         command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \""+ date + "\"\n]\n    }\n}";
 		testJsonCommand(command);
@@ -397,7 +413,7 @@ public class Test {
 	private static void testJsonSeedReq()
 	{
 		System.out.print("\n\n==========Normal request==========\n");
-		String command = "{\n    \"id\": \"SeedsByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \"2013-05-14\",\n            \"2013-05-17\",\n            \"2013-05-18\"\n        ]\n    }\n}";
+		String command = "{\n    \"id\": \"SeedsByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \"2013-06-28\",\n            \"2013-05-17\",\n            \"2013-05-18\"\n        ]\n    }\n}";
 		testJsonCommand(command);
 		
 		System.out.print("\n\n==========Normal request but all invalid date==========\n");
@@ -438,7 +454,7 @@ public class Test {
         try {
             out = new PrintWriter(System.out);
             
-            IJsonCommand jsonCmd = JsonCommandFactory.CreateJsonCommand(out, jsonObj, "127.0.0.1");
+            IJsonRequest jsonCmd = JsonRequestFactory.CreateJsonCommand(out, jsonObj, "127.0.0.1");
             
             if (jsonCmd == null)
             {
@@ -446,7 +462,7 @@ public class Test {
                 return; 
             }
             
-            jsonCmd.Execute(jsonObj, out);
+            jsonCmd.Execute();
             out.flush();
         } catch (Exception e) {
             e.printStackTrace();
@@ -483,7 +499,7 @@ public class Test {
 			System.out.println(((Seed)iter.next()).getSeedId());
 		}
 		
-		list = DaoWrapper.query(SqlUtil.getSelectSeedSql(SqlUtil.seedId + " = 12"), SeedPicture.class);
+		list = DaoWrapper.query(SqlUtil.getSelectSeedSql(TableColumnName.seedId + " = 12"), SeedPicture.class);
 		iter = list.iterator();
 		while (iter.hasNext())
 		{
