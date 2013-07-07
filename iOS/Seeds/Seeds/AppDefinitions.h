@@ -186,7 +186,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define NIB_ID_PAGINGTOOLBAR @"PagingToolbar"
 
 #define HUD_CENTER_SIZE CGSizeMake(135.f, 135.f)
-#define HUD_NOTIFICATION_SIZE CGSizeMake(320, 44)
+#define HUD_NOTIFICATION_SIZE CGSizeMake(300, 40)
 #define HUD_NOTIFICATION_YOFFSET 250
 
 #define HUD_DISPLAY(x) sleep(x);
