@@ -163,7 +163,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define SEGUE_ID_SEEDLIST2SEEDDETAIL @"seedlist2seeddetail"
 #define SEGUE_ID_SEEDDETAIL2SEEDPICTURE @"seeddetail2seedpicture"
 #define SEGUE_ID_FAVORITESEEDLIST2SEEDDETAIL @"favoriteseedlist2seeddetail"
-#define SEGUE_ID_DOWNLOADSEEDLIST2SEEDDETAIL @"download seedlist2seeddetail"
+#define SEGUE_ID_DOWNLOADSEEDLIST2SEEDDETAIL @"downloadseedlist2seeddetail"
 
 #define UI_RENDER_SEEDLISTTABLECELL 1
 #define CELL_ID_SEEDLISTTABLECELL @"SeedListTableCell"

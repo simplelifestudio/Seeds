@@ -75,11 +75,12 @@
     if (nil != seed)
     {
         NSString* downloadPath = [SeedsDownloadAgent downloadPath];
+        NSString* downloadPathWithDate = [downloadPath stringByAppendingPathComponent:seed.publishDate];
         
         NSString* fileName = [TorrentDownloadAgent torrentFileName:seed];
         if (nil != fileName && 0 < fileName.length)
         {
-            fullPath = [downloadPath stringByAppendingPathComponent:fileName];
+            fullPath = [downloadPathWithDate stringByAppendingPathComponent:fileName];
         }
     }
     
