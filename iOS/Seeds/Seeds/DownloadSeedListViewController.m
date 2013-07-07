@@ -448,7 +448,7 @@
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
 
-        _seedList = [_downloadAgent downloadedSeedList];
+        _seedList = [_downloadAgent totalSeedList];
         
         NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:_seedList.count];
         for (Seed* seed in _seedList)
