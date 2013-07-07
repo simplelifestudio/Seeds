@@ -503,6 +503,44 @@
     }
 }
 
+-(BOOL) _isSeedInPage:(Seed*) seed
+{
+    BOOL flag = NO;
+    
+    if (nil != seed)
+    {
+        for (Seed* s in _pageSeedList)
+        {
+            if (s.localId == seed.localId)
+            {
+                flag = YES;
+                break;
+            }
+        }
+    }
+    
+    return flag;
+}
+
+-(BOOL) _isSeedInList:(Seed*) seed
+{
+    BOOL flag = NO;
+    
+    if (nil != seed)
+    {
+        for (Seed* s in _seedList)
+        {
+            if (s.localId == seed.localId)
+            {
+                flag = YES;
+                break;
+            }
+        }
+    }
+    
+    return flag;
+}
+
 #pragma mark - CBNotificationListenable
 
 -(void) listenNotifications
@@ -525,8 +563,15 @@
             NSString* statusStr = [notification.userInfo valueForKey:NOTIFICATION_ID_SEEDDOWNLOADSTATUS_UPDATED_KEY_STATUS];
             SeedDownloadStatus status = statusStr.intValue;
             
-            NSInteger cellRow = [self _cellRowForSeed:seed];
-            [self _updateCellWithSeedDownloadStatus:cellRow status:status];
+            if ([self _isSeedInList:seed] && [self _isSeedInPage:seed])
+            {
+                NSInteger cellRow = [self _cellRowForSeed:seed];
+                [self _updateCellWithSeedDownloadStatus:cellRow status:status];
+            }
+            else
+            {
+                [self _refetchDownloadSeedsFromAgent];
+            }
         }
     }
 }
