@@ -119,14 +119,14 @@
         case SeedWaitForDownload:
         {
             [_downloadLabel setText:NSLocalizedString(@"Downloading", nil)];
-            [_downloadLabel setTextColor:COLOR_TEXT_INFO];
+            [_downloadLabel setTextColor:COLOR_TEXT_LOG];
             [_downloadLabel setHidden:NO];
             break;
         }
         case SeedIsDownloading:
         {
             [_downloadLabel setText:NSLocalizedString(@"Downloading", nil)];
-            [_downloadLabel setTextColor:COLOR_TEXT_INFO];
+            [_downloadLabel setTextColor:COLOR_TEXT_LOG];
             [_downloadLabel setHidden:NO];
             break;
         }
