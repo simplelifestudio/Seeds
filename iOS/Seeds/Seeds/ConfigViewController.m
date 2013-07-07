@@ -17,6 +17,8 @@
 
 #import "CBFileUtils.h"
 
+#define _HUD_DISPLAY 1
+
 #define HEIGHT_CELL_COMPONENT 27
 
 #define CELL_ID_SWITCHER @"TableViewSwitcherCell"
@@ -429,7 +431,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     }
     else
     {
-        [_guiModule showHUD:NSLocalizedString(@"Internet Disconnected", nil) delay:2];
+        [_guiModule showHUD:NSLocalizedString(@"Internet Disconnected", nil) delay:_HUD_DISPLAY];
     }
 }
 
@@ -443,7 +445,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     [minorStatus appendString:NSLocalizedString(@"Skipped:", nil)];
     [minorStatus appendString:[NSString stringWithFormat:@"%d", skippedCount]];
     
-    [_guiModule showHUD:majorStatus minorStatus:minorStatus delay:2];
+    [_guiModule showHUD:majorStatus minorStatus:minorStatus delay:_HUD_DISPLAY];
 }
 
 - (void) _on3GDownloadImagesSwitched
@@ -502,7 +504,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     
     [self _refreshWiFiCacheImagesCell];
     
-    [_guiModule showHUD:NSLocalizedString(@"Images Cache Cleared", nil) delay:2];
+    [_guiModule showHUD:NSLocalizedString(@"Images Cache Cleared", nil) delay:_HUD_DISPLAY];
 }
 
 - (void) _refreshClearImagesCacheCell
@@ -528,7 +530,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 {
     [self _clearDownloadsBusinessOnly];
     
-    [_guiModule showHUD:NSLocalizedString(@"Downloads Cleared", nil) delay:2];    
+    [_guiModule showHUD:NSLocalizedString(@"Downloads Cleared", nil) delay:_HUD_DISPLAY];    
 }
 
 - (void) _clearFavoritesBusinessOnly
@@ -546,7 +548,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 {
     [self _clearFavoritesBusinessOnly];
     
-    [_guiModule showHUD:NSLocalizedString(@"Favorites Cleared", nil) delay:2];
+    [_guiModule showHUD:NSLocalizedString(@"Favorites Cleared", nil) delay:_HUD_DISPLAY];
 }
 
 - (void) _refreshClearFavoritesCell
@@ -568,7 +570,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     
     [_userDefaults resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];    
     
-    [_guiModule showHUD:NSLocalizedString(@"Database Reseted", nil) delay:2];    
+    [_guiModule showHUD:NSLocalizedString(@"Database Reseted", nil) delay:_HUD_DISPLAY];
 }
 
 - (void) _refershClearDatabaseCell
