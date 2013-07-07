@@ -80,7 +80,6 @@ public class DateUtil {
 		}
 		catch(Exception e)
 		{
-			LogUtil.severe("Invalid date found: " + d1 + ", " + d2 + ", " + e.getMessage());
 			LogUtil.printStackTrace(e);
 			return INVALID_VALUE;
 		}
@@ -103,7 +102,6 @@ public class DateUtil {
 		}
 		catch(Exception e)
 		{
-			LogUtil.severe("Invalid date found: " + d1 + ", " + d2 + ", " + e.getMessage());
 			LogUtil.printStackTrace(e);
 			return INVALID_VALUE;
 		}
@@ -135,7 +133,6 @@ public class DateUtil {
 		}
 		catch(Exception e)
 		{
-			LogUtil.severe("Invalid date found: " + date + ", " + e.getMessage());
 			LogUtil.printStackTrace(e);
 			return null;
 		}
@@ -159,7 +156,6 @@ public class DateUtil {
 		}
 		catch(Exception e)
 		{
-			LogUtil.severe("Invalid date found: " + date + ", " + e.getMessage());
 			LogUtil.printStackTrace(e);
 			return INVALID_VALUE;
 		}
