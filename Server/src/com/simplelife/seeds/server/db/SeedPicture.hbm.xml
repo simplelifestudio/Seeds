@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.simplelife.seeds.server.db">
+    <class name="SeedPicture" table="SeedPicture">
+        <id name="pictureId" type="long" > 
+            <column name="pictureId" sql-type="int" not-null="true"/>
+            <generator class="native"/>
+        </id>
+        
+        <property name="seedId" column="seedId" insert="false" update="false"/>
+        <property name="pictureLink" column="pictureLink"/>
+        <property name="memo" column="memo"/>
+        
+        <!--
+        <many-to-one name="seedId" class="Seed" column="SEED_ID" insert="false" update="false"></many-to-one>
+        -->
+    </class>
+</hibernate-mapping>
