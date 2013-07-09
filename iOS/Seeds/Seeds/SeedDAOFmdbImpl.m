@@ -491,7 +491,7 @@
              [sql appendString:@" = "];
              [sql appendString:@"'"];
              [sql appendString:[NSString stringWithFormat:@"%d", 0]];
-             [sql appendString:@"'"];
+             [sql appendString:@"' and "];
              NSUInteger index = 0;
              for (NSDate* day in last3Days)
              {
