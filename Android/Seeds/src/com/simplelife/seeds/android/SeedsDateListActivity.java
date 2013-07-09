@@ -72,6 +72,7 @@ public class SeedsDateListActivity extends Activity {
 	private String mDateToday;
 	private ArrayList<String>  mDateArray;
 	private SharedPreferences mSharedPref;
+	private SharedPreferences mSharedPrefSeedsNum;
 	
 	// Below two fields should be removed or changed in final version
 	private int tSleepSeconds = 1; 
@@ -90,6 +91,7 @@ public class SeedsDateListActivity extends Activity {
 	final int MESSAGETYPE_UPDATEDIALOG = 105;
 	final int MESSAGETYPE_TOAST   = 106;
 	final int MESSAGETYPE_SETTEXT = 107;
+	final int MESSAGETYPE_SETTEXTSTRING = 108;
 	
 	// For log purpose
 	private SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
@@ -141,14 +143,21 @@ public class SeedsDateListActivity extends Activity {
 		mDateBefYesterday = tDataMgr.getRealDateBefYesterday();
 		mDateTextBefYesterday.setText(mDateBefYesterday);
 		mDateTextYesterday.setText(mDateYesterday);
-		mDateTextToday.setText(mDateToday);				
+		mDateTextToday.setText(mDateToday);		
 		
 		// Initialize the date array list
 		mDateArray = new ArrayList<String> ();
 		
 		// Get the shared preference file instance
 		mSharedPref = getSharedPreferences(
-		        getString(R.string.seeds_preffilename), Context.MODE_PRIVATE);		
+		        getString(R.string.seeds_preffilename), Context.MODE_PRIVATE);
+		
+		mSharedPrefSeedsNum = getSharedPreferences(
+		        getString(R.string.seeds_preffilename_seedsnum), Context.MODE_PRIVATE);
+		
+		mNumTextBefYesterday.setText(getSeedsNumberByDate(mDateBefYesterday));
+		mNumTextYesterday.setText(getSeedsNumberByDate(mDateYesterday));
+		mNumTextToday.setText(getSeedsNumberByDate(mDateToday));
 	}
 	
 	private View.OnClickListener mLayoutBefYesterdayListener = new View.OnClickListener() {
@@ -449,6 +458,15 @@ public class SeedsDateListActivity extends Activity {
             		tNumOfSeeds.setText(tText);
             	    break;
             	}
+            	case MESSAGETYPE_SETTEXTSTRING:
+            	{
+            		Bundle bundle = msg.getData();             				
+            		String tDate  = bundle.getString("inDate");
+            		String tText  = bundle.getString("inText");
+            		TextView tNumOfSeeds = matchNumTextViaRealDate(tDate);
+            		tNumOfSeeds.setText(tText);
+            	    break;           		
+            	}
                 case MESSAGETYPE_UPDATE:
                 case MESSAGETYPE_STAYSTILL:
                 {
@@ -463,18 +481,30 @@ public class SeedsDateListActivity extends Activity {
         }
     }; 
     
-    private boolean isSeedsInfoUpdated(String tDate){
+    private boolean isSeedsInfoUpdated(String _inDate){
     	
     	// Retrieve the seeds info status by date via the shared preference file
-    	return mSharedPref.getBoolean(tDate,false);    	
+    	return mSharedPref.getBoolean(_inDate,false);    	
     }
     
-    private void updateSeedsInfoStatus(String tDate, Boolean tTag){
+    private void updateSeedsInfoStatus(String _inDate, Boolean _inTag){
+    	
+    	SharedPreferences.Editor editor = mSharedPref.edit();
+    	editor.putBoolean(_inDate, _inTag);
+    	editor.commit();    	
+    }
+
+    private String getSeedsNumberByDate(String _inDate){
     	
     	// Retrieve the seeds info status by date via the shared preference file
-    	SharedPreferences.Editor editor = mSharedPref.edit();
-    	editor.putBoolean(tDate, tTag);
-    	editor.commit();    	
+    	return mSharedPrefSeedsNum.getString(_inDate, SeedsDefinitions.SEEDS_INFO_NOTSYNCED);    	
+    }
+    
+    private void storeSeedsNumber(String _inDate, String _inSeedsNum){
+    	
+    	SharedPreferences.Editor editor = mSharedPrefSeedsNum.edit();
+    	editor.putString(_inDate, _inSeedsNum);
+    	editor.commit(); 
     }
     
     private TextView matchNumTextViaRealDate(String _inRealDate){
@@ -506,6 +536,18 @@ public class SeedsDateListActivity extends Activity {
 	    Bundle bundle = new Bundle();
 	    bundle.putString("inDate", _inDate); 
 	    bundle.putInt("inText", _inText); 
+		t_MsgListData.setData(bundle);
+		handler.sendMessage(t_MsgListData);	
+    }
+    
+    private void setNumOfSeedsText(String _inDate, String _inText){
+		
+    	Message t_MsgListData = new Message();
+		t_MsgListData.what = MESSAGETYPE_SETTEXTSTRING;
+		
+	    Bundle bundle = new Bundle();
+	    bundle.putString("inDate", _inDate); 
+	    bundle.putString("inText", _inText); 
 		t_MsgListData.setData(bundle);
 		handler.sendMessage(t_MsgListData);	
     }
@@ -617,7 +659,8 @@ public class SeedsDateListActivity extends Activity {
 			if (0 < tSeedsNum)
 			{
 				updateSeedsInfoStatus(tDate, true);
-				//setNumOfSeedsText(tDate, R.string.seeds_datelist_seedsnumbernotready);
+				storeSeedsNumber(tDate, Integer.toString(tSeedsNum));
+				setNumOfSeedsText(tDate, Integer.toString(tSeedsNum));
 			}
 			else
 				return false;
@@ -625,12 +668,14 @@ public class SeedsDateListActivity extends Activity {
 		else if(SeedsStatusByDate.isSeedsByDateNotReady(respInMap.get(tDate)))
 		{
 			notifyUserViaToast(R.string.seeds_datelist_seedsinfonotready);
+			storeSeedsNumber(tDate, SeedsDefinitions.SEEDS_INFO_NOTREADY);
 			setNumOfSeedsText(tDate, R.string.seeds_datelist_seedsnumbernotready);
 			return false;			
 		}
 		else if(SeedsStatusByDate.isSeedsByDateNoUpdate(respInMap.get(tDate)))
 		{			
 			notifyUserViaToast(R.string.seeds_datelist_seedsinfonoupdate);
+			storeSeedsNumber(tDate, SeedsDefinitions.SEEDS_INFO_NOUPDATE);
 			setNumOfSeedsText(tDate, R.string.seeds_datelist_seedsnumbernoupdate);
 			return false;						
 		}		
@@ -640,7 +685,6 @@ public class SeedsDateListActivity extends Activity {
     private boolean updateSeedsInfo(ArrayList<String> tDateArray) throws Exception{
     	
     	String respInString  = null;
-    	String respInString2 = null;
     	HashMap<String, String> respInMap = null;
     	HttpResponse upDateStatusResponse = null;    	
     	

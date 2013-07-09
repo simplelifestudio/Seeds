@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.simplelife.seeds.android.SeedsDefinitions;
 import com.simplelife.seeds.android.SeedsEntity;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
@@ -144,23 +145,18 @@ public class SeedsJSONMessage {
 		return retSeedsList;		
 	}
 	
-	public static class SeedsStatusByDate {
-		
-		// The three seeds status by date 
-		public static String mReady = "READY";
-		public static String mNotReady = "NOT_READY";
-		public static String mNoUpdate = "NO_UPDATE";
+	public static class SeedsStatusByDate {		
 		
 		public SeedsStatusByDate(){
 			
 		}
 		
 		public static boolean isValidSeedsStatusByDate(String inStatus){
-			if(inStatus.equals(mReady))
+			if(inStatus.equals(SeedsDefinitions.SEEDS_INFO_READY))
 				return true;
-			else if(inStatus.equals(mNotReady))
+			else if(inStatus.equals(SeedsDefinitions.SEEDS_INFO_NOTREADY))
 				return true;
-			else if(inStatus.equals(mNoUpdate))
+			else if(inStatus.equals(SeedsDefinitions.SEEDS_INFO_NOUPDATE))
 				return true;
 			else
 				// Report a error log here and a error number
@@ -168,15 +164,15 @@ public class SeedsJSONMessage {
 		}
 		
 		public static boolean isSeedsByDateReady(String inStatus){
-			return inStatus.equals(mReady);
+			return inStatus.equals(SeedsDefinitions.SEEDS_INFO_READY);
 		}
 		
 		public static boolean isSeedsByDateNotReady(String inStatus){
-			return inStatus.equals(mNotReady);
+			return inStatus.equals(SeedsDefinitions.SEEDS_INFO_NOTREADY);
 		}
 		
 		public static boolean isSeedsByDateNoUpdate(String inStatus){
-			return inStatus.equals(mNoUpdate);
+			return inStatus.equals(SeedsDefinitions.SEEDS_INFO_NOUPDATE);
 		}
 		
 	}
