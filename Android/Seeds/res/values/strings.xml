@@ -40,6 +40,7 @@
     <string name="seeds_Favorite">Favorite</string>
     <string name="seeds_UnFavorite">取消收藏</string>
     <string name="seeds_preffilename">com.simplelife.seeds.SEEDS_STATUS_BYDATE</string>
+    <string name="seeds_preffilename_seedsnum">com.simplelife.seeds.SEEDS_NUMBER_BYDATE</string>
     <string name="seeds_startverify">Password Please</string>
     <string name="seeds_pwdmessage">Enter the password</string>
     <string name="seeds_pwdsend">Send</string>

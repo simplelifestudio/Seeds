@@ -16,6 +16,12 @@ public class SeedsDefinitions {
 	public static final String SEEDS_DATE_YESTERDAY = "yesterday";
 	public static final String SEEDS_DATE_TODAY = "today";	
 	public static final String SEEDS_SERVER_DOWNLOADPHP = "http://www.maxp2p.com/load.php";
+		
+	// The three seeds status by date 
+	public static String SEEDS_INFO_READY = "READY";
+	public static String SEEDS_INFO_NOTREADY = "NOT_READY";
+	public static String SEEDS_INFO_NOUPDATE = "NO_UPDATE";
+	public static String SEEDS_INFO_NOTSYNCED = "NOT_SYNCRONIZED";
 	
 	public class SeedsGlobalErrorCode{
 		public static final String SEEDS_ERROR_WRONGREALDATE = "Wrong Calendar Date Detected!";
