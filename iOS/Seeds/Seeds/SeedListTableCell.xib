@@ -44,7 +44,7 @@
 							<object class="IBUITextView" id="1061927158">
 								<reference key="NSNextResponder" ref="223885616"/>
 								<int key="NSvFlags">1302</int>
-								<string key="NSFrame">{{118, -8}, {200, 66}}</string>
+								<string key="NSFrame">{{118, -6}, {200, 38}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="730042693"/>
@@ -74,9 +74,9 @@
 							</object>
 							<object class="IBUILabel" id="730042693">
 								<reference key="NSNextResponder" ref="223885616"/>
-								<int key="NSvFlags">1302</int>
+								<int key="NSvFlags">1286</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{126, 66}, {80, 10}}</string>
+								<string key="NSFrame">{{126, 39}, {80, 10}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="395190708"/>
@@ -109,9 +109,9 @@
 							</object>
 							<object class="IBUILabel" id="944328825">
 								<reference key="NSNextResponder" ref="223885616"/>
-								<int key="NSvFlags">1302</int>
+								<int key="NSvFlags">1286</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{126, 79}, {80, 10}}</string>
+								<string key="NSFrame">{{126, 52}, {80, 10}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="810061728"/>
@@ -130,9 +130,9 @@
 							</object>
 							<object class="IBUILabel" id="395190708">
 								<reference key="NSNextResponder" ref="223885616"/>
-								<int key="NSvFlags">1302</int>
+								<int key="NSvFlags">1286</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{206, 66}, {30, 10}}</string>
+								<string key="NSFrame">{{206, 39}, {30, 10}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="944328825"/>
@@ -152,8 +152,8 @@
 							</object>
 							<object class="IBUILabel" id="810061728">
 								<reference key="NSNextResponder" ref="223885616"/>
-								<int key="NSvFlags">1302</int>
-								<string key="NSFrame">{{206, 79}, {30, 10}}</string>
+								<int key="NSvFlags">1286</int>
+								<string key="NSFrame">{{206, 52}, {30, 10}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="518263068"/>
@@ -175,7 +175,7 @@
 							<object class="IBUIView" id="513938367">
 								<reference key="NSNextResponder" ref="223885616"/>
 								<int key="NSvFlags">1300</int>
-								<string key="NSFrame">{{10, 3}, {100, 86}}</string>
+								<string key="NSFrame">{{10, 2}, {100, 62}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1061927158"/>
@@ -208,8 +208,8 @@
 							</object>
 							<object class="IBUILabel" id="518263068">
 								<reference key="NSNextResponder" ref="223885616"/>
-								<int key="NSvFlags">-2147482349</int>
-								<string key="NSFrame">{{258, 66}, {60, 20}}</string>
+								<int key="NSvFlags">-2147482365</int>
+								<string key="NSFrame">{{258, 39}, {60, 20}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="802337772"/>
@@ -237,8 +237,8 @@
 							</object>
 							<object class="IBUILabel" id="802337772">
 								<reference key="NSNextResponder" ref="223885616"/>
-								<int key="NSvFlags">-2147482349</int>
-								<string key="NSFrame">{{278, 79}, {40, 10}}</string>
+								<int key="NSvFlags">-2147482365</int>
+								<string key="NSFrame">{{278, 52}, {40, 10}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -264,7 +264,7 @@
 							</object>
 						</array>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrameSize">{320, 91}</string>
+						<string key="NSFrameSize">{320, 65}</string>
 						<reference key="NSSuperview" ref="764541583"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="513938367"/>
@@ -280,7 +280,7 @@
 					</object>
 				</array>
 				<object class="NSPSMatrix" key="NSFrameMatrix"/>
-				<string key="NSFrameSize">{320, 92}</string>
+				<string key="NSFrameSize">{320, 66}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="223885616"/>

@@ -150,7 +150,7 @@
     }
     else
     {
-//        DLog(@"Failed to load image with error: %@", error.localizedFailureReason);
+        DLog(@"Failed to load image with error: %@", error.debugDescription);
         
         UIImage* image = [SeedPictureAgent exceptionImageWithImagelType:_imageType imageExceptionType:ErrorImage];
 

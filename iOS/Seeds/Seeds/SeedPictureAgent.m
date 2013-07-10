@@ -256,7 +256,7 @@ SINGLETON(SeedPictureAgent)
     _userDefaults = [UserDefaultsModule sharedInstance];
     
     _imageManager = [SDWebImageManager new];
-    _downloadOptions = SDWebImageLowPriority;// | SDWebImageRetryFailed;
+    _downloadOptions = SDWebImageLowPriority | SDWebImageRetryFailed;
     _imageCache = _imageManager.imageCache;
 
     _thumbnailCacheKeys = [NSMutableDictionary dictionary];

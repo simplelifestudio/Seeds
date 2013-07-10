@@ -721,6 +721,10 @@
 		C52BB4781788074E00BD40E7 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C571E0A1176627CE00E9AD50 /* AsyncImageView.h */,
+				C571E0A2176627CE00E9AD50 /* AsyncImageView.m */,
+				C5AB1133173260D9007EEE25 /* CircularProgressView.h */,
+				C5AB1134173260D9007EEE25 /* CircularProgressView.m */,
 				C58B0441177EDF1700F8C185 /* PagingToolbar.h */,
 				C58B0442177EDF1700F8C185 /* PagingToolbar.m */,
 				C58B043F177EDD7200F8C185 /* PagingToolbar.xib */,
@@ -939,10 +943,6 @@
 				C522BA30174CF1FA001FC7BD /* GUIModule.m */,
 				C5AB11361732793B007EEE25 /* GUIStyle.h */,
 				C5AB11371732793B007EEE25 /* GUIStyle.m */,
-				C571E0A1176627CE00E9AD50 /* AsyncImageView.h */,
-				C571E0A2176627CE00E9AD50 /* AsyncImageView.m */,
-				C5AB1133173260D9007EEE25 /* CircularProgressView.h */,
-				C5AB1134173260D9007EEE25 /* CircularProgressView.m */,
 				C5964C2D17222BF500CC1C0A /* SplashViewController.h */,
 				C5964C2E17222BF500CC1C0A /* SplashViewController.m */,
 				C53B64401781C0F80028DC41 /* WarningViewController.h */,
