@@ -114,9 +114,7 @@ public class SeedsNetworkProcess {
 	    //HttpPost postMethod = new HttpPost(mServerUrl);
 	    HttpPost postMethod = new HttpPost(SeedsDefinitions.getServerUrl());
 	    postMethod.addHeader("Content-Type", "application/json");
-	    String respInString;
-	    
-		mLogger.info("Sending UpdateStatus Message!");
+	    mLogger.info("Sending UpdateStatus Message!");
 		
 	    // Create UpdateStatusReq Message
 		JSONObject paramList = new JSONObject();
@@ -132,15 +130,41 @@ public class SeedsNetworkProcess {
 		JSONObject updateStatusReq = SeedsJSONMessage.SeedsConstructMsg(SeedsJSONMessage.UpdateStatusRequest, paramList);
 		
 	    // Send the request
-		postMethod.setEntity(new StringEntity(updateStatusReq.toString()));
-		
+		postMethod.setEntity(new StringEntity(updateStatusReq.toString()));		
 		mLogger.debug("UpdateStatusReq Message "+updateStatusReq.toString());
 		
 		// Retrieve the response
 		HttpResponse response = httpClient.execute(postMethod);
 		
-		return response;		
+		return response;				
+	}
+	
+	public static HttpResponse sendUpdateStatusReqMsg(String inDate) throws JSONException, ClientProtocolException, IOException {
 		
+		// Prepare network parameters
+	    DefaultHttpClient httpClient = new DefaultHttpClient();
+	    new BasicResponseHandler();
+	    //HttpPost postMethod = new HttpPost(mServerUrl);
+	    HttpPost postMethod = new HttpPost(SeedsDefinitions.getServerUrl());
+	    postMethod.addHeader("Content-Type", "application/json");
+	    mLogger.info("Sending UpdateStatus Message!");
+		
+	    // Create UpdateStatusReq Message
+		JSONObject paramList = new JSONObject();
+		JSONArray  dateList  = new JSONArray();
+		dateList.put(inDate);		    
+		paramList.put("dateList",dateList);
+		
+		JSONObject updateStatusReq = SeedsJSONMessage.SeedsConstructMsg(SeedsJSONMessage.UpdateStatusRequest, paramList);
+		
+	    // Send the request
+		postMethod.setEntity(new StringEntity(updateStatusReq.toString()));		
+		mLogger.debug("UpdateStatusReq Message "+updateStatusReq.toString());
+		
+		// Retrieve the response
+		HttpResponse response = httpClient.execute(postMethod);
+		
+		return response;				
 	}
 	
 	public static HttpResponse sendSeedsByDateReqMsg (ArrayList<String> inDateArray ) throws JSONException, ClientProtocolException, IOException {
@@ -149,9 +173,7 @@ public class SeedsNetworkProcess {
 	    //HttpPost postMethod = new HttpPost(mServerUrl);
 		HttpPost postMethod = new HttpPost(SeedsDefinitions.getServerUrl());
 		postMethod.addHeader("Content-Type", "application/json");
-	    String respInString;
-	    
-		Log.i("NetworkProcess","Sending SeedsByDate Message!");
+	    mLogger.info("Sending SeedsByDate Message!");
 		
 	    // Create UpdateStatusReq Message
 		JSONObject paramList = new JSONObject();
@@ -174,8 +196,35 @@ public class SeedsNetworkProcess {
 		// Retrieve the response
 		HttpResponse response = httpClient.execute(postMethod);
 		
-		return response;
+		return response;		
+	}
+	
+	public static HttpResponse sendSeedsByDateReqMsg (String inDate) throws JSONException, ClientProtocolException, IOException {
+        // Prepare network parameters
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+	    //HttpPost postMethod = new HttpPost(mServerUrl);
+		HttpPost postMethod = new HttpPost(SeedsDefinitions.getServerUrl());
+		postMethod.addHeader("Content-Type", "application/json");
+	    mLogger.info("Sending SeedsByDate Message!");
 		
+	    // Create UpdateStatusReq Message
+		JSONObject paramList = new JSONObject();
+		JSONArray  dateList  = new JSONArray();
+		dateList.put(inDate);
+		
+		paramList.put("dateList",dateList);
+		
+		JSONObject updateStatusReq = SeedsJSONMessage.SeedsConstructMsg(SeedsJSONMessage.SeedsByDatesRequest, paramList);
+		
+	    // Send the request
+		postMethod.setEntity(new StringEntity(updateStatusReq.toString()));
+		
+		mLogger.debug("SeedsByDate Message: "+updateStatusReq.toString());
+		
+		// Retrieve the response
+		HttpResponse response = httpClient.execute(postMethod);
+		
+		return response;		
 	}	
 
 }

@@ -70,8 +70,26 @@ public class SeedsJSONMessage {
 			{
 				respMap.put(inDateList.get(index), tParamList.getString(inDateList.get(index)));
 			}			
-		}
+		}		
+		return respMap;
+	}
+	
+	public static HashMap<String, String> parseUpdateStatusRespMsg(String inDate, String inStringMsg) throws JSONException{
 		
+		HashMap<String, String> respMap = new HashMap<String, String>();		
+		
+		// Convert the String to JSON object
+		JSONObject tMsgInJSON = new JSONObject(inStringMsg);  
+		String msgType = (String) tMsgInJSON.get("id");
+		mLogger.info("Parsing msg " + msgType);
+	    
+		// Parse the paramList part
+		JSONObject tParamList = tMsgInJSON.getJSONObject("body");
+
+		if (SeedsStatusByDate.isValidSeedsStatusByDate(tParamList.getString(inDate)))
+		{
+			respMap.put(inDate, tParamList.getString(inDate));
+		}					
 		return respMap;
 	}
 	
@@ -139,6 +157,71 @@ public class SeedsJSONMessage {
 				{
 					break;
 				}
+			}
+		}
+		
+		return retSeedsList;		
+	}
+	
+	public static ArrayList<SeedsEntity> parseSeedsByDatesRespMsg(String inDate, String inStringMsg) throws JSONException{
+		
+		// Convert the String to JSON object
+		JSONObject tMsgInJSON = new JSONObject(inStringMsg);  
+		String msgType = (String) tMsgInJSON.get("id");
+		mLogger.debug("Parsing msg " + msgType);
+		mLogger.debug(inStringMsg);
+		
+		// Prepare the return Seeds List
+		ArrayList<SeedsEntity> retSeedsList = new ArrayList<SeedsEntity>();
+				
+		// Parse the paramList part
+		JSONObject tParamList = tMsgInJSON.getJSONObject("body");
+
+	    JSONArray tSeedsArray = tParamList.getJSONArray(inDate);
+			
+		int numOfSeeds = tSeedsArray.length();
+		mLogger.debug("The size of the seedsArray is " + numOfSeeds);
+		for (int index2 = 0; index2 < numOfSeeds; index2++)
+		{
+			// Construct single seed info
+			JSONObject tSeedsInfo = tSeedsArray.optJSONObject(index2);
+			SeedsEntity tSeedsEntity = new SeedsEntity();
+			if (tSeedsInfo.has(SeedsDBAdapter.KEY_SEEDID))
+				tSeedsEntity.setSeedId(tSeedsInfo.getInt(SeedsDBAdapter.KEY_SEEDID));
+			if (tSeedsInfo.has(SeedsDBAdapter.KEY_TYPE))
+				tSeedsEntity.setSeedType(tSeedsInfo.getString(SeedsDBAdapter.KEY_TYPE));
+			if (tSeedsInfo.has(SeedsDBAdapter.KEY_SOURCE))
+				tSeedsEntity.setSeedSource(tSeedsInfo.getString(SeedsDBAdapter.KEY_SOURCE));
+			if (tSeedsInfo.has(SeedsDBAdapter.KEY_PUBLISHDATE))
+				tSeedsEntity.setSeedPublishDate(tSeedsInfo.getString(SeedsDBAdapter.KEY_PUBLISHDATE));
+			if (tSeedsInfo.has(SeedsDBAdapter.KEY_NAME))
+				tSeedsEntity.setSeedName(tSeedsInfo.getString(SeedsDBAdapter.KEY_NAME));
+			if (tSeedsInfo.has(SeedsDBAdapter.KEY_SIZE))
+				tSeedsEntity.setSeedSize(tSeedsInfo.getString(SeedsDBAdapter.KEY_SIZE));
+			if (tSeedsInfo.has(SeedsDBAdapter.KEY_FORMAT))
+				tSeedsEntity.setSeedFormat(tSeedsInfo.getString(SeedsDBAdapter.KEY_FORMAT));
+			if (tSeedsInfo.has(SeedsDBAdapter.KEY_TORRENTLINK))
+				tSeedsEntity.setSeedTorrentLink(tSeedsInfo.getString(SeedsDBAdapter.KEY_TORRENTLINK));
+			if (tSeedsInfo.has(SeedsDBAdapter.KEY_MOSAIC))
+				tSeedsEntity.setSeedMosaic(tSeedsInfo.getString(SeedsDBAdapter.KEY_MOSAIC));
+				
+			tSeedsEntity.setSeedFavorite(false);
+			// Parse picture links
+			JSONArray tPicList  = tSeedsInfo.getJSONArray(SeedsDBAdapter.KEY_PICLINKS);
+			int numOfPicLinks = tPicList.length();
+			Log.i("SeedsJSONMessage","The size of the picArray is " + numOfPicLinks);
+			for (int index3 = 0; index3 < numOfPicLinks; index3++)
+			{
+				Log.i("SeedsJSONMessage","Pic link: " + tPicList.getString(index3));
+				tSeedsEntity.addPicLink(tPicList.getString(index3));
+				Log.i("SeedsJSONMessage","Pic link parse done! ");
+			}
+			retSeedsList.add(tSeedsEntity);	
+				
+			// Temp solution to prevent too many seeds received
+			if(retSeedsList.size() >= 100)
+			{
+				break;
 			}
 		}
 		
