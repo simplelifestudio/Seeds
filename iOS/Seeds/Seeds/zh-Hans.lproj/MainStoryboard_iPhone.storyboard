@@ -519,42 +519,42 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="4QC-Rz-AFQ">
                             <size key="itemSize" width="150" height="180"/>
-                            <size key="headerReferenceSize" width="320" height="70"/>
+                            <size key="headerReferenceSize" width="320" height="80"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="5" minY="10" maxX="5" maxY="0.0"/>
+                            <inset key="sectionInset" minX="5" minY="5" maxX="5" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SeedPictureCollectionCell" id="74G-Ku-l5W" userLabel="seedPictureCollectionCell" customClass="SeedPictureCollectionCell">
-                                <rect key="frame" x="5" y="80" width="150" height="180"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SeedPictureCollectionCell" id="4YA-jZ-RQ7" userLabel="seedPictureCollectionCell" customClass="SeedPictureCollectionCell">
+                                <rect key="frame" x="5" y="85" width="150" height="180"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="150" height="180"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="编号" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="P8t-r2-zZ9" userLabel="imageLabel">
-                                            <rect key="frame" x="0.0" y="159" width="150" height="20"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="编号" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7jH-JC-tmr" userLabel="imageLabel">
+                                            <rect key="frame" x="0.0" y="159" width="150" height="19"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" id="sdf-eD-OV7" userLabel="asyncImageView" customClass="AsyncImageView">
-                                            <rect key="frame" x="0.0" y="1" width="150" height="160"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                        <view contentMode="scaleToFill" id="hab-Xw-QfS" userLabel="asyncImageView" customClass="AsyncImageView">
+                                            <rect key="frame" x="0.0" y="-1" width="150" height="161"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                         </view>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <outlet property="asyncImageView" destination="sdf-eD-OV7" id="dnk-Th-Sld"/>
-                                    <outlet property="label" destination="P8t-r2-zZ9" id="nVO-s9-iOO"/>
-                                    <segue destination="dYQ-oU-LRn" kind="modal" identifier="seeddetail2seedpicture" modalTransitionStyle="crossDissolve" id="Pbk-Sq-jUx"/>
+                                    <outlet property="asyncImageView" destination="hab-Xw-QfS" id="MUG-jk-TFu"/>
+                                    <outlet property="label" destination="7jH-JC-tmr" id="gn4-nE-B8q"/>
+                                    <segue destination="dYQ-oU-LRn" kind="modal" identifier="seeddetail2seedpicture" id="pki-Uv-CYs"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SeedDetailHeaderView" id="oEY-6i-2iv" userLabel="seedDetailHeaderView" customClass="SeedDetailHeaderView">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="80"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </collectionReusableView>
                     </collectionView>
