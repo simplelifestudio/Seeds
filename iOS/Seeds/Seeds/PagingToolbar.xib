@@ -46,33 +46,33 @@
 					<object class="IBUIBarButtonItem" id="906205003">
 						<string key="IBUITitle">&lt;&lt;</string>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<float key="IBUIWidth">55</float>
+						<float key="IBUIWidth">54</float>
 						<int key="IBUIStyle">1</int>
 						<reference key="IBUIToolbar" ref="70012825"/>
 					</object>
 					<object class="IBUIBarButtonItem" id="940913203">
 						<string key="IBUITitle">&lt;</string>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<float key="IBUIWidth">55</float>
+						<float key="IBUIWidth">54</float>
 						<int key="IBUIStyle">1</int>
 						<reference key="IBUIToolbar" ref="70012825"/>
 					</object>
 					<object class="IBUIBarButtonItem" id="373477135">
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<float key="IBUIWidth">50</float>
+						<float key="IBUIWidth">54</float>
 						<reference key="IBUIToolbar" ref="70012825"/>
 					</object>
 					<object class="IBUIBarButtonItem" id="28074191">
 						<string key="IBUITitle">&gt;</string>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<float key="IBUIWidth">55</float>
+						<float key="IBUIWidth">54</float>
 						<int key="IBUIStyle">1</int>
 						<reference key="IBUIToolbar" ref="70012825"/>
 					</object>
 					<object class="IBUIBarButtonItem" id="992617172">
 						<string key="IBUITitle">&gt;&gt;</string>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<float key="IBUIWidth">55</float>
+						<float key="IBUIWidth">54</float>
 						<int key="IBUIStyle">1</int>
 						<reference key="IBUIToolbar" ref="70012825"/>
 					</object>

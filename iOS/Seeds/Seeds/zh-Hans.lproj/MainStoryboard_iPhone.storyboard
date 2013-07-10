@@ -549,7 +549,7 @@
                                 <connections>
                                     <outlet property="asyncImageView" destination="hab-Xw-QfS" id="MUG-jk-TFu"/>
                                     <outlet property="label" destination="7jH-JC-tmr" id="gn4-nE-B8q"/>
-                                    <segue destination="dYQ-oU-LRn" kind="modal" identifier="seeddetail2seedpicture" id="pki-Uv-CYs"/>
+                                    <segue destination="dYQ-oU-LRn" kind="modal" identifier="seeddetail2seedpicture" modalTransitionStyle="crossDissolve" id="pki-Uv-CYs"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
