@@ -22,4 +22,7 @@
 
 -(WarningViewController*) getWarningViewController:(NSString*) warningId delegate:(id<WarningDelegate>) delegate;
 
+- (BOOL) isNetworkActivityIndicatorVisible;
+- (void) setNetworkActivityIndicatorVisible:(BOOL) flag;
+
 @end

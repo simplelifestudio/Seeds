@@ -17,6 +17,8 @@
     
     CommunicationModule* _commModule;
     SeedPictureAgent* _agent;
+    
+    GUIModule* _guiModule;
 }
 
 @end
@@ -69,11 +71,15 @@
         imageType:PictureViewFullImage 
         inProgressBlock:^(NSUInteger receivedSize, long long expectedSize)
         {
+            [_guiModule setNetworkActivityIndicatorVisible:YES];
+            
             float progressVal = (float)receivedSize / (float)expectedSize;
             [_circularProgressView updateProgressCircle:progressVal];
         }
         completeBlock:^(UIImage *image, SeedImageType imageType, NSError *error, SDImageCacheType cacheType, BOOL finished)
         {
+            [_guiModule setNetworkActivityIndicatorVisible:NO];
+            
             if (image && finished)
             {
                 if (imageType != PictureViewFullImage)
@@ -177,6 +183,8 @@
 {
     _commModule = [CommunicationModule sharedInstance];
     _agent = _commModule.seedPictureAgent;
+    
+    _guiModule = [GUIModule sharedInstance];
 }
 
 - (void)_logRect:(CGRect)rect withName:(NSString *)name

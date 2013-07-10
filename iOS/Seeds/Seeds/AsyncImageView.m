@@ -20,6 +20,8 @@
     
     CommunicationModule* _commModule;
     SeedPictureAgent* _agent;
+    
+    GUIModule* _guiModule;
 }
 
 @end
@@ -52,6 +54,8 @@
     _commModule = [CommunicationModule sharedInstance];
     _agent = _commModule.seedPictureAgent;
     
+    _guiModule = [GUIModule sharedInstance];
+    
     CGRect rect = self.frame;
     CGSize size = rect.size;
     NSInteger halfWidth = size.width / 2;
@@ -66,11 +70,14 @@
     _circularProgressDelegate = self;
     
     __block AsyncImageView* blockSelf = self;
+    __block GUIModule* blockGUIModule = _guiModule;
     _inProgressBlock = ^(NSUInteger receivedSize, long long expectedSize){
         [blockSelf imageIsLoading:receivedSize expectedSize:expectedSize];
     };
     _completeBlock = ^(UIImage *image, SeedImageType imageType, NSError *error, SDImageCacheType cacheType, BOOL finished)
     {
+        [blockGUIModule setNetworkActivityIndicatorVisible:NO];
+        
         [blockSelf setImageType:imageType];
         [blockSelf imageLoaded:image error:error cacheType:cacheType finished:finished];
     };
@@ -110,6 +117,8 @@
 -(void) imageIsLoading:(NSInteger) receivedSize expectedSize:(long long) expectedSize
 {
 //    DLog(@"Seed's picture downloaded %d of %lld", receivedSize, expectedSize);
+    
+    [_guiModule setNetworkActivityIndicatorVisible:YES];
     
     float progressVal = (float)receivedSize / (float)expectedSize;
     [_circularProgressView updateProgressCircle:progressVal];

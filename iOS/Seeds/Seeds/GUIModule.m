@@ -93,6 +93,21 @@ SINGLETON(GUIModule)
     return warningVC;
 }
 
+- (BOOL) isNetworkActivityIndicatorVisible
+{
+    BOOL flag = [UIApplication sharedApplication].networkActivityIndicatorVisible;
+    
+    return flag;
+}
+
+- (void) setNetworkActivityIndicatorVisible:(BOOL) flag
+{
+    if (flag != [self isNetworkActivityIndicatorVisible])
+    {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = flag;
+    }
+}
+
 #pragma mark - PAPasscodeViewControllerDelegate
 
 - (void)PAPasscodeViewControllerDidEnterPasscode:(PAPasscodeViewController *)controller

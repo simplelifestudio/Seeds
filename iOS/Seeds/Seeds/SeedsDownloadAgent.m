@@ -10,6 +10,8 @@
 
 #import "CBFileUtils.h"
 
+#import "GUIModule.h"
+
 @interface SeedDownloadWrapper : NSObject
 {
 
@@ -266,6 +268,8 @@
     SeedsDownloadQueue* _downloadQueue;
     
     id<SeedDAO> _seedDAO;
+    
+    GUIModule* _guiModule;
 }
 
 @end
@@ -480,6 +484,8 @@ static NSString* _favoritePath;
     _downloadQueue = [[SeedsDownloadQueue alloc] init];
     
     _seedDAO = [DAOFactory getSeedDAO];
+    
+    _guiModule = [GUIModule sharedInstance];
 }
 
 -(TorrentDownloadAgent*) _getTorrentDownloadAgent:(Seed*) seed
@@ -512,16 +518,20 @@ static NSString* _favoritePath;
 
 -(void) torrentDownloadStarted:(Seed*) seed
 {
+    [_guiModule setNetworkActivityIndicatorVisible:YES];
+    
     [_downloadQueue updateSeedStatus:seed status:SeedIsDownloading];
 }
 
 -(void) torrentDownloadFinished:(Seed*) seed
 {
-    
+    [_guiModule setNetworkActivityIndicatorVisible:NO];
 }
 
 -(void) torrentDownloadFailed:(Seed*) seed error:(NSError*) error
 {
+    [_guiModule setNetworkActivityIndicatorVisible:NO];    
+    
     DLog(@"Seed(localId=%d) download failed with error:%@", seed.localId, error.localizedDescription);
     [_downloadQueue updateSeedStatus:seed status:SeedDownloadFailed];    
 }

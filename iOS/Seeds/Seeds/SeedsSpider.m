@@ -20,6 +20,8 @@
     BOOL _isPullOperationDone;
     
     SeedsDownloadAgent* _downloadAgent;
+    
+    GUIModule* _guiModule;
 }
 
 @end
@@ -145,6 +147,8 @@
         }
         return;
     }
+    
+    [_guiModule setNetworkActivityIndicatorVisible:YES];
     
     if (nil != _seedsSpiderDelegate)
     {
@@ -308,7 +312,9 @@
         {
             [_seedsSpiderDelegate taskFinished:NSLocalizedString(@"Completed", nil) minorStatus:nil];
         }
-    }    
+    }
+    
+    [_guiModule setNetworkActivityIndicatorVisible:NO];
 }
 
 -(void) fillCommonInfoToSeeds:(NSArray*) seeds date:(NSDate*) day
@@ -333,6 +339,8 @@
     
     CommunicationModule* _commModule = [CommunicationModule sharedInstance];
     _downloadAgent = _commModule.seedsDownloadAgent;
+    
+    _guiModule = [GUIModule sharedInstance];
 }
 
 @end
