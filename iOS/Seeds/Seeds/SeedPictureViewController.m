@@ -14,6 +14,9 @@
 @interface SeedPictureViewController () <SeedPictureScrollViewDelegate, CircularProgressDelegate>
 {
     CircularProgressView* _circularProgressView;
+    
+    CommunicationModule* _commModule;
+    SeedPictureAgent* _agent;
 }
 
 @end
@@ -61,36 +64,40 @@
     
     NSURL* imageURL = [NSURL URLWithString:_seedPicture.pictureLink];
     
-    CommunicationModule* commModule = [CommunicationModule sharedInstance];
-    SeedPictureAgent* agent = commModule.seedPictureAgent;
-    [agent
+    [_agent
         queueURLRequest:imageURL
+        imageType:PictureViewFullImage 
         inProgressBlock:^(NSUInteger receivedSize, long long expectedSize)
         {
             float progressVal = (float)receivedSize / (float)expectedSize;
             [_circularProgressView updateProgressCircle:progressVal];
         }
-        completeBlock:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+        completeBlock:^(UIImage *image, SeedImageType imageType, NSError *error, SDImageCacheType cacheType, BOOL finished)
         {
             if (image && finished)
             {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
-                    CommunicationModule* commModule = [CommunicationModule sharedInstance];
-                    SeedPictureAgent* agent = commModule.seedPictureAgent;
-                    
-                    [agent cacheThumbnails:image url:imageURL];
-                });
+                if (imageType != PictureViewFullImage)
+                {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+                        [_agent cacheImages:image url:imageURL];
+                    });
+                }
                 
-                [_circularProgressView removeFromSuperview];
-                [_scrollView displayImage:image];
+                dispatch_async(dispatch_get_main_queue(), ^(){
+                    [_circularProgressView removeFromSuperview];
+                    [_scrollView displayImage:image];
+                });
             }
             else
             {
 //                DLog(@"Failed to load image with error: %@", error.description);
              
-                UIImage* image = [SeedPictureAgent exceptionImageWithThumbnailType:SeedPictureViewThumbnail imageExceptionType:ErrorImage];
-                [_circularProgressView removeFromSuperview];
-                [_scrollView displayImage:image];
+                UIImage* image = [SeedPictureAgent exceptionImageWithImagelType:PictureViewThumbnail imageExceptionType:ErrorImage];
+
+                dispatch_async(dispatch_get_main_queue(), ^(){
+                    [_circularProgressView removeFromSuperview];
+                    [_scrollView displayImage:image];
+                });
             }
         }
     ];
@@ -168,7 +175,8 @@
 
 - (void) _setupView
 {
-    
+    _commModule = [CommunicationModule sharedInstance];
+    _agent = _commModule.seedPictureAgent;
 }
 
 - (void)_logRect:(CGRect)rect withName:(NSString *)name
@@ -207,14 +215,14 @@
         // fade out navigation
         [UIView animateWithDuration:0.4
                          animations:^
-         {
+        {
              [[UIApplication sharedApplication] setStatusBarHidden:TRUE withAnimation:UIStatusBarAnimationFade];
              self.navigationController.navigationBar.alpha = 0.0;
              self.navigationController.toolbar.alpha = 0.0;
-         }
+        }
                          completion:^(BOOL finished)
-         {
-         }];
+        {
+        }];
     }
 }
 

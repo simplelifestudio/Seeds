@@ -40,14 +40,14 @@
 
 - (void) setupCell
 {
-    _asyncImageView.thumbnailType = SeedPictureCollectionCellThumbnail;
+    _asyncImageView.imageType = PictureCollectionCellThumbnail;
 }
 
 -(void) fillSeedPicture:(SeedPicture*) picture pictureIdInSeed:(NSUInteger) pictureIdInSeed
 {
     if (nil == picture || picture.isPlaceHolder)
     {
-        UIImage* image = [SeedPictureAgent exceptionImageWithThumbnailType:SeedPictureCollectionCellThumbnail imageExceptionType:EmptyImage];
+        UIImage* image = [SeedPictureAgent exceptionImageWithImagelType:PictureCollectionCellThumbnail imageExceptionType:EmptyImage];
         [_asyncImageView loadImageFromLocal:image];
         
         _label.text = [NSString stringWithFormat:@"%d", pictureIdInSeed];
@@ -55,7 +55,7 @@
     else
     {
         NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
-        [_asyncImageView loadImageFromURL:imageURL];
+        [_asyncImageView loadImageFromURL:imageURL imageType:PictureCollectionCellThumbnail];
         
         _label.text = [NSString stringWithFormat:@"%d", pictureIdInSeed];
     }
@@ -73,7 +73,7 @@
     
     CGRect rectImageView = CGRectMake(x, y, rect.size.width, rect.size.height - _label.frame.size.height);
     AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:rectImageView];
-    newImageView.thumbnailType = _asyncImageView.thumbnailType;
+    newImageView.imageType = _asyncImageView.imageType;
     _asyncImageView = newImageView;
     [self addSubview:_asyncImageView];
 }

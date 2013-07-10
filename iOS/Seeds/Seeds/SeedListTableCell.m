@@ -37,7 +37,7 @@
 
 - (void) setupCell
 {
-    _asyncImageView.thumbnailType = SeedListTableCellThumbnail;
+    _asyncImageView.imageType = ListTableCellThumbnail;
 }
 
 - (void)awakeFromNib
@@ -84,13 +84,13 @@
 {
     if (nil == picture || picture.isPlaceHolder)
     {
-        UIImage* image = [SeedPictureAgent exceptionImageWithThumbnailType:SeedListTableCellThumbnail imageExceptionType:EmptyImage];
+        UIImage* image = [SeedPictureAgent exceptionImageWithImagelType:ListTableCellThumbnail imageExceptionType:EmptyImage];
         [_asyncImageView loadImageFromLocal:image];
     }
     else
     {
         NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
-        [_asyncImageView loadImageFromURL:imageURL];        
+        [_asyncImageView loadImageFromURL:imageURL imageType:ListTableCellThumbnail];
     }
 }
 
@@ -102,7 +102,7 @@
     CGFloat x = _asyncImageView.frame.origin.x;
     CGFloat y = _asyncImageView.frame.origin.y;
     AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(x, y, WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL, HEIGHT_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL)];
-    newImageView.thumbnailType = _asyncImageView.thumbnailType;
+    newImageView.imageType = _asyncImageView.imageType;
     _asyncImageView = newImageView;
     [self.contentView addSubview:_asyncImageView];
 }

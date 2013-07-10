@@ -68,14 +68,14 @@
 #define FILE_EXTENDNAME_DOT_TORRENT @".torrent"
 #define FILE_EXTENDNAME_TORRENT @"torrent"
 
-#define SEEDPICTURE_MAX_CONCURRENT_DOWNLOADS 20
+#define SEEDPICTURE_MAX_CONCURRENT_DOWNLOADS 40
 #define SEEDPICTURE_PREFETCHER_MAX_CONCURRENT_DOWNLOADS 20
 
 #define CACHE_EXPIRE_PERIOD 60*60*24*7
 
-#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL @"[thumbnail_seedlisttablecell]"
-#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL @"[thumbnail_seedpicturecollectioncell]"
-#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW @"[thumbnail_seedpictureview]"
+#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL @"seeds.thumbnails.seedlisttablecell"
+#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL @"Seeds.thumbnails.seedpicturecollectioncell"
+#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW @"seeds.thumbnails.seedpictureview"
 
 
 // Module: Spider
@@ -178,8 +178,8 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 #define HEIGHT_NAVIGATION_BAR 44
 
-#define PAGE_SIZE_SEEDLISTTABLE 5
-#define PAGE_SIZE_SEEDDETAILCOLLECTION 4
+#define PAGE_SIZE_SEEDLISTTABLE 50
+#define PAGE_SIZE_SEEDDETAILCOLLECTION 40
 
 #define CELL_ID_SEEDPICTURECOLLECTIONCELL @"SeedPictureCollectionCell"
 
@@ -209,7 +209,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define RES_XIMAGE_PICTUREVIEW @"xImage_pictureView"
 
 #define THUMBNAIL_SIZE_SEEDLISTTABLECELL CGSizeMake(100, 86)
-#define THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL CGSizeMake(180, 192)
+#define THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL CGSizeMake(150, 160)
 #define THUMBNAIL_SIZE_SEEDPICTUREVIEW CGSizeMake(320, 480)
 
 // Module: Notifications

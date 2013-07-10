@@ -11,6 +11,8 @@
 #import "CBNotificationListenable.h"
 #import "CBFileUtils.h"
 
+#define _HUD_DISPLAY 1
+
 @interface DownloadSeedListViewController () <CBNotificationListenable>
 {
     SeedsDownloadAgent* _downloadAgent;
@@ -261,6 +263,8 @@
         [self onCancelBarButtonClicked];
         
         [self _refetchDownloadSeedsFromAgent];
+
+        [_guiModule showHUD:NSLocalizedString(@"Torrent Deleted", nil) minorStatus:nil delay:_HUD_DISPLAY];
     }
 }
 

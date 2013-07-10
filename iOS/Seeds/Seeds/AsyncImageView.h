@@ -10,15 +10,17 @@
 
 #import "CircularProgressView.h"
 
+#import "SeedPictureAgent.h"
+
 @interface AsyncImageView : UIView <CircularProgressDelegate>
 {	
 }
 
 @property (nonatomic, strong) CircularProgressView* circularProgressView;
 @property (nonatomic, strong) id<CircularProgressDelegate> circularProgressDelegate;
-@property (nonatomic) ThumbnailType thumbnailType;
+@property (nonatomic) SeedImageType imageType;
 
-- (void)loadImageFromURL:(NSURL*) url;
+- (void)loadImageFromURL:(NSURL*) url imageType:(SeedImageType) imageType;
 - (void)loadImageFromLocal:(UIImage*) image;
 - (UIImage*) image;
 

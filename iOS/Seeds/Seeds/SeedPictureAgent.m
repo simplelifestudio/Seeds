@@ -12,9 +12,16 @@
 
 @interface SeedPictureAgent()
 {
+    UserDefaultsModule* _userDefaults;
+    
     SDWebImageManager* _imageManager;
     SDWebImageOptions _downloadOptions;
     SDImageCache* _imageCache;
+    
+    NSMutableDictionary* _thumbnailCacheKeys;
+    SDImageCache* _listTableCellThumbnailCache;
+    SDImageCache* _pictureCollectionCellThumbnailCache;
+    SDImageCache* _pictureViewThumbnailCache;
 }
 
 @end
@@ -59,13 +66,13 @@ SINGLETON(SeedPictureAgent)
     }
 }
 
-+(UIImage*)exceptionImageWithThumbnailType:(ThumbnailType) thumbnailType imageExceptionType:(ImageExceptionType) imageExceptionType;
++(UIImage*)exceptionImageWithImagelType:(SeedImageType) thumbnailType imageExceptionType:(ImageExceptionType) imageExceptionType;
 {
     UIImage* image = nil;
     
     switch (thumbnailType)
     {
-        case SeedListTableCellThumbnail:
+        case ListTableCellThumbnail:
         {
             switch (imageExceptionType)
             {
@@ -87,7 +94,7 @@ SINGLETON(SeedPictureAgent)
             
             break;
         }
-        case SeedPictureCollectionCellThumbnail:
+        case PictureCollectionCellThumbnail:
         {
             switch (imageExceptionType)
             {
@@ -109,7 +116,28 @@ SINGLETON(SeedPictureAgent)
             
             break;
         }
-        case SeedPictureViewThumbnail:
+        case PictureViewThumbnail:
+        {
+            switch (imageExceptionType)
+            {
+                case EmptyImage:
+                {
+                    break;
+                }
+                case ErrorImage:
+                {
+                    image = errorImageInSeedPictureView;
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+            
+            break;
+        }
+        case PictureViewFullImage:
         {
             switch (imageExceptionType)
             {
@@ -148,7 +176,7 @@ SINGLETON(SeedPictureAgent)
     
     if (image.size.width <= aSize.width && image.size.height <= aSize.height)
     {
-        DLog(@"Image is smaller than thumbnail which is being converted.");
+//        DLog(@"Image is smaller than thumbnail which is being converted.");
         return image;
     }
     
@@ -225,9 +253,16 @@ SINGLETON(SeedPictureAgent)
 
 -(void) instanceInit
 {
+    _userDefaults = [UserDefaultsModule sharedInstance];
+    
     _imageManager = [SDWebImageManager new];
-    _downloadOptions = SDWebImageLowPriority | SDWebImageRetryFailed;
+    _downloadOptions = SDWebImageLowPriority;// | SDWebImageRetryFailed;
     _imageCache = _imageManager.imageCache;
+
+    _thumbnailCacheKeys = [NSMutableDictionary dictionary];
+    _listTableCellThumbnailCache = [[SDImageCache alloc] initWithNamespace:CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL];
+    _pictureCollectionCellThumbnailCache = [[SDImageCache alloc] initWithNamespace:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL];
+    _pictureViewThumbnailCache = [[SDImageCache alloc] initWithNamespace:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW];
 }
 
 -(void) setMaxConcurrentDownloads:(NSUInteger)number
@@ -245,7 +280,7 @@ SINGLETON(SeedPictureAgent)
     _imageCache.maxCacheAge = age;
 }
 
--(void) queueRequest:(NSString*) urlPath inProgressBlock:(ImageDownloadInProgressBlock) inProgressBlock completeBlock:(ImageDownloadFinishBlock) completeBlock
+-(void) queueRequest:(NSString*) urlPath imageType:(SeedImageType) imageType inProgressBlock:(ImageDownloadInProgressBlock) inProgressBlock completeBlock:(ImageDownloadFinishBlock) completeBlock
 {
     if(nil == urlPath)
     {
@@ -253,41 +288,51 @@ SINGLETON(SeedPictureAgent)
         return;
     }
     
-    UserDefaultsModule* defaults = [UserDefaultsModule sharedInstance];
-    BOOL is3GDownloadImagesEnabled = [defaults isDownloadImagesThrough3GEnabled];
-
-    BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
-    
-    BOOL downLoadImagesThroughInternet = (is3GDownloadImagesEnabled || isWiFiEnabled);
-    
-    if (downLoadImagesThroughInternet)
-    {
-        NSURL* url = [NSURL URLWithString:urlPath];
-        [_imageManager downloadWithURL:url options:_downloadOptions progress:inProgressBlock completed:completeBlock];
-    }
-    else
-    {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
-            NSURL* url = [NSURL URLWithString:urlPath];
-            NSString* key = [self cacheKeyForURL:url];
-            [_imageCache
-             queryDiskCacheForKey:key
-             done:^(UIImage *image, SDImageCacheType cacheType)
-             {
-                 BOOL finished = (nil != image) ? YES : NO;
-                 completeBlock(image, nil, cacheType, finished);
-             }
-             ];
-        });
-    }
+    NSURL* url = [NSURL URLWithString:urlPath];
+    [CBAppUtils asyncProcessInBackgroundThread:^(){
+        UIImage* cachedImage = [self imageFromCache:url imageType:imageType];
+        if (nil != cachedImage)
+        {
+            [CBAppUtils asyncProcessInBackgroundThread:^(){
+                completeBlock(cachedImage, imageType, nil, SDImageCacheTypeDisk, YES);
+            }];
+        }
+        else
+        {
+            BOOL is3GDownloadImagesEnabled = [_userDefaults isDownloadImagesThrough3GEnabled];
+            BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
+            BOOL downLoadImagesThroughInternet = (is3GDownloadImagesEnabled || isWiFiEnabled);
+            if (downLoadImagesThroughInternet)
+            {
+                [_imageManager downloadWithURL:url options:_downloadOptions progress:inProgressBlock completed:^(UIImage* image, NSError* error, SDImageCacheType cacheType, BOOL finished){
+                    completeBlock(image, imageType, error, cacheType, finished);
+                }];
+            }
+            else
+            {
+                [CBAppUtils asyncProcessInBackgroundThread:^(){
+                    NSURL* url = [NSURL URLWithString:urlPath];
+                    NSString* key = [self cacheKeyForURL:url];
+                    [_imageCache queryDiskCacheForKey:key done:^(UIImage *image, SDImageCacheType cacheType){
+                        BOOL finished = (nil != image) ? YES : NO;
+                        completeBlock(image, imageType, nil, cacheType, finished);
+                    }];
+                    
+                    [CBAppUtils asyncProcessInBackgroundThread:^(){
+                        [_imageCache clearMemory];
+                    }];
+                }];
+            }
+        }
+    }];
 }
 
--(void) queueRequest:(NSString *)urlPath completeBlock:(ImageDownloadFinishBlock)completeBlock
+-(void) queueRequest:(NSString *)urlPath imageType:(SeedImageType) imageType completeBlock:(ImageDownloadFinishBlock)completeBlock
 {
-    [self queueRequest:urlPath inProgressBlock:nil completeBlock:completeBlock];
+    [self queueRequest:urlPath imageType:imageType inProgressBlock:nil completeBlock:completeBlock];
 }
 
--(void) queueURLRequest:(NSURL*) url inProgressBlock:(ImageDownloadInProgressBlock) inProgressBlock completeBlock:(ImageDownloadFinishBlock) completeBlock
+-(void) queueURLRequest:(NSURL*) url imageType:(SeedImageType) imageType inProgressBlock:(ImageDownloadInProgressBlock) inProgressBlock completeBlock:(ImageDownloadFinishBlock) completeBlock
 {
     if (nil == url)
     {
@@ -296,12 +341,12 @@ SINGLETON(SeedPictureAgent)
     }
     
     NSString* urlPath = url.absoluteString;
-    [self queueRequest:urlPath inProgressBlock:inProgressBlock completeBlock:completeBlock];
+    [self queueRequest:urlPath imageType:imageType inProgressBlock:inProgressBlock completeBlock:completeBlock];
 }
 
--(void) queueURLRequest:(NSURL*) url completeBlock:(ImageDownloadFinishBlock)completeBlock
+-(void) queueURLRequest:(NSURL*) url imageType:(SeedImageType) imageType completeBlock:(ImageDownloadFinishBlock)completeBlock
 {
-    [self queueURLRequest:url inProgressBlock:nil completeBlock:completeBlock];
+    [self queueURLRequest:url imageType:imageType inProgressBlock:nil completeBlock:completeBlock];
 }
 
 - (NSString *)cacheKeyForURL:(NSURL *)url
@@ -318,8 +363,21 @@ SINGLETON(SeedPictureAgent)
 
 -(void) clearCache
 {
-    [_imageCache clearMemory];
-    [_imageCache clearDisk];    
+    @synchronized(_thumbnailCacheKeys)
+    {
+        [_thumbnailCacheKeys removeAllObjects];
+        [_listTableCellThumbnailCache clearMemory];
+        [_listTableCellThumbnailCache clearDisk];
+        
+        [_pictureCollectionCellThumbnailCache clearMemory];
+        [_pictureCollectionCellThumbnailCache clearDisk];
+        
+        [_pictureViewThumbnailCache clearMemory];
+        [_pictureViewThumbnailCache clearDisk];
+        
+        [_imageCache clearMemory];
+        [_imageCache clearDisk];
+    }
 }
 
 - (unsigned long long) diskCacheImagesSize
@@ -332,92 +390,40 @@ SINGLETON(SeedPictureAgent)
     return [_imageCache getDiskCount];
 }
 
--(void) cacheThumbnails:(UIImage*) image url:(NSURL*) url
+-(void) cacheImages:(UIImage*) image url:(NSURL*) url
 {
-    if (nil == image || nil == url)
+//    DLog(@"Image's size is: %f, %f", image.size.width, image.size.height);
+    @synchronized(_thumbnailCacheKeys)
     {
-        DLog(@"Nil image or url");
-        return;
+        NSString* cacheKey = [self cacheKeyForURL:url];
+        id hasKey = [_thumbnailCacheKeys objectForKey:cacheKey];
+        if (nil == hasKey)
+        {
+            [self _saveCacheImage:url image:image imageType:ListTableCellThumbnail];
+            [self _saveCacheImage:url image:image imageType:PictureCollectionCellThumbnail];
+            [self _saveCacheImage:url image:image imageType:PictureViewThumbnail];
+            [self _saveCacheImage:url image:image imageType:PictureViewFullImage];
+            
+            [_thumbnailCacheKeys setObject:url forKey:cacheKey];
+        }
     }
-    
-    NSString* keyInOriginPicture = [self cacheKeyForURL:url];
-    
-    NSMutableString* keyInSeedListTableCell = [NSMutableString stringWithString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL];
-    [keyInSeedListTableCell appendString:keyInOriginPicture];
-    
-    NSMutableString* keyInSeedPictureCollectionCell = [NSMutableString stringWithString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL];
-    [keyInSeedPictureCollectionCell appendString:keyInOriginPicture];
-    
-    NSMutableString* keyInSeedPictureView = [NSMutableString stringWithString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW];
-    [keyInSeedPictureView appendString:keyInOriginPicture];
-    
-    UIImage* tempCachedImage = [_imageCache imageFromDiskCacheForKey:keyInSeedListTableCell];
-    if (!tempCachedImage)
-    {
-        UIImage* thumbnailInSeedListTableCell = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDLISTTABLECELL];
-        [_imageCache storeImage:thumbnailInSeedListTableCell forKey:keyInSeedListTableCell];
-    }
-        
-    tempCachedImage = [_imageCache imageFromDiskCacheForKey:keyInSeedPictureCollectionCell];
-    if (!tempCachedImage)
-    {
-        UIImage* thumbnailInSeedPictureCollectionCell = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL];
-        [_imageCache storeImage:thumbnailInSeedPictureCollectionCell forKey:keyInSeedPictureCollectionCell];
-    }
-        
-#if 0
-    tempCachedImage = [_imageCache imageFromDiskCacheForKey:keyInSeedPictureView];
-    if (!tempCachedImage)
-    {
-        UIImage* thumbnailInSeedPictureView = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTUREVIEW];
-        [_imageCache storeImage:thumbnailInSeedPictureView forKey:keyInSeedPictureView];
-    }
-#endif
 }
 
--(UIImage*) thumbnailFromCache:(NSURL*) url thumbnailType:(ThumbnailType) thumbnailType
+-(UIImage*) imageFromCache:(NSURL*) url imageType:(SeedImageType) imageType
 {
-    UIImage* thumbnail = nil;
-    NSMutableString* cachedKey = [NSMutableString string];
+    UIImage* image = nil;
     
-    if (nil != url)
+    @synchronized(_thumbnailCacheKeys)
     {
-        NSString* originPicCachedKey = [self cacheKeyForURL:url];
-        
-        switch (thumbnailType)
+        NSString* cacheKey = [self cacheKeyForURL:url];
+        id hasKey = [_thumbnailCacheKeys objectForKey:cacheKey];
+        if (nil != hasKey)
         {
-            case SeedListTableCellThumbnail:
-            {
-                [cachedKey appendString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL];
-                [cachedKey appendString:originPicCachedKey];
-                break;
-            }
-            case SeedPictureCollectionCellThumbnail:
-            {
-                [cachedKey appendString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL];
-                [cachedKey appendString:originPicCachedKey];
-                break;
-            }
-            case SeedPictureViewThumbnail:
-            {
-                [cachedKey appendString:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW];
-                [cachedKey appendString:originPicCachedKey];
-                break;
-            }
-            default:
-            {
-                break;
-            }
-        }
-        
-        if (0 < cachedKey.length)
-        {
-            thumbnail = [_imageCache imageFromMemoryCacheForKey:cachedKey];
-            thumbnail = (nil != thumbnail) ? thumbnail : [_imageCache imageFromDiskCacheForKey:cachedKey];
+            image = [self _readCacheImage:url imageType:imageType];
         }
     }
     
-    return thumbnail;
+    return image;
 }
 
 -(void) prefetchSeedImages:(NSArray*) seedList
@@ -437,7 +443,6 @@ SINGLETON(SeedPictureAgent)
         }
     }
     
-
 //    [[NSNotificationCenter defaultCenter] addObserver:self
 //                                             selector:@selector(_appDidEnterBackground)
 //                                                 name:UIApplicationDidEnterBackgroundNotification
@@ -452,10 +457,86 @@ SINGLETON(SeedPictureAgent)
     imagePrefetcher.options = SDWebImageRetryFailed;
     imagePrefetcher.maxConcurrentDownloads = SEEDPICTURE_PREFETCHER_MAX_CONCURRENT_DOWNLOADS;
     [imagePrefetcher prefetchURLs:urls completed:^(NSUInteger finishedCount, NSUInteger skippedCount){
-
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_ID_SEEDPICTUREPREFETCH_FINISHED object:self userInfo:nil];
      }];
+}
+
+-(UIImage*) _readCacheImage:(NSURL*) url imageType:(SeedImageType) imageType
+{
+    NSAssert(nil != url, @"Nil URL");
+
+    UIImage* image = nil;
+
+    NSString* cacheKey = [self cacheKeyForURL:url];    
+    
+    switch (imageType)
+    {
+        case ListTableCellThumbnail:
+        {
+            image = [_listTableCellThumbnailCache imageFromDiskCacheForKey:cacheKey];
+            break;
+        }
+        case PictureCollectionCellThumbnail:
+        {
+            image = [_pictureCollectionCellThumbnailCache imageFromDiskCacheForKey:cacheKey];
+            break;
+        }
+        case PictureViewThumbnail:
+        {
+//            image = [_pictureViewThumbnailCache imageFromDiskCacheForKey:cacheKey];
+            break;
+        }
+        case PictureViewFullImage:
+        {
+//            image = [_imageCache imageFromDiskCacheForKey:cacheKey];
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+
+    return image;
+}
+
+-(void) _saveCacheImage:(NSURL*) url image:(UIImage*) image imageType:(SeedImageType) imageType;
+{
+    NSAssert(nil != url, @"Nil URL");
+    NSAssert(nil != image, @"Nil Image");
+    
+    NSString* cacheKey = [self cacheKeyForURL:url];
+
+    switch (imageType)
+    {
+        case ListTableCellThumbnail:
+        {
+            image = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDLISTTABLECELL];
+            [_listTableCellThumbnailCache storeImage:image forKey:cacheKey];
+            break;
+        }
+        case PictureCollectionCellThumbnail:
+        {
+            image = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL];
+            [_pictureCollectionCellThumbnailCache storeImage:image forKey:cacheKey];
+            break;
+        }
+        case PictureViewThumbnail:
+        {
+//            image = [SeedPictureAgent thumbnailOfImage:image withSize:THUMBNAIL_SIZE_SEEDPICTUREVIEW];
+//            [_pictureViewThumbnailCache storeImage:image forKey:cacheKey];
+            break;
+        }
+        case PictureViewFullImage:
+        {
+            // Do nothing as SDWebImageManager will take this condition
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
 }
 
 @end

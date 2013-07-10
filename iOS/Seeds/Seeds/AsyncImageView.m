@@ -17,6 +17,9 @@
     
     ImageDownloadInProgressBlock _inProgressBlock;
     ImageDownloadFinishBlock _completeBlock;
+    
+    CommunicationModule* _commModule;
+    SeedPictureAgent* _agent;
 }
 
 @end
@@ -25,7 +28,7 @@
 
 @synthesize circularProgressView = _circularProgressView;
 @synthesize circularProgressDelegate = _circularProgressDelegate;
-@synthesize thumbnailType = _thumbnailType;
+@synthesize imageType = _imageType;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -46,6 +49,9 @@
 
 - (void) setupView
 {
+    _commModule = [CommunicationModule sharedInstance];
+    _agent = _commModule.seedPictureAgent;
+    
     CGRect rect = self.frame;
     CGSize size = rect.size;
     NSInteger halfWidth = size.width / 2;
@@ -63,13 +69,14 @@
     _inProgressBlock = ^(NSUInteger receivedSize, long long expectedSize){
         [blockSelf imageIsLoading:receivedSize expectedSize:expectedSize];
     };
-    _completeBlock = ^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished)
+    _completeBlock = ^(UIImage *image, SeedImageType imageType, NSError *error, SDImageCacheType cacheType, BOOL finished)
     {
+        [blockSelf setImageType:imageType];
         [blockSelf imageLoaded:image error:error cacheType:cacheType finished:finished];
     };
 }
 
-- (void)loadImageFromURL:(NSURL*)url
+- (void)loadImageFromURL:(NSURL*)url imageType:(SeedImageType) imageType;
 {
     _url = url;
     
@@ -80,7 +87,7 @@
     
     CommunicationModule* commModule = [CommunicationModule sharedInstance];
     SeedPictureAgent* agent = commModule.seedPictureAgent;
-    [agent queueURLRequest:url inProgressBlock:_inProgressBlock completeBlock:_completeBlock];
+    [agent queueURLRequest:url imageType:imageType inProgressBlock:_inProgressBlock completeBlock:_completeBlock];
 }
 
 - (void)loadImageFromLocal:(UIImage*) image
@@ -122,25 +129,34 @@
             [_circularProgressDelegate didFisnishProgressView];
         }
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
-            CommunicationModule* commModule = [CommunicationModule sharedInstance];
-            SeedPictureAgent* agent = commModule.seedPictureAgent;
-            
-            [agent cacheThumbnails:image url:_url];
-            
-            UIImage* thumbnail = [agent thumbnailFromCache:_url thumbnailType:_thumbnailType];
-            
-            dispatch_async(dispatch_get_main_queue(), ^(){
-                [self loadImageFromLocal:thumbnail];
+        if (_imageType != PictureViewFullImage)
+        {
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
+
+                [_agent cacheImages:image url:_url];
+                UIImage* thumbnail = [_agent imageFromCache:_url imageType:_imageType];
+                
+                dispatch_async(dispatch_get_main_queue(), ^(){
+                    [self loadImageFromLocal:thumbnail];
+                });
             });
-        });
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                [self loadImageFromLocal:image];
+            });
+        }
     }
     else
     {
 //        DLog(@"Failed to load image with error: %@", error.localizedFailureReason);
         
-        UIImage* image = [SeedPictureAgent exceptionImageWithThumbnailType:_thumbnailType imageExceptionType:ErrorImage];
-        [self loadImageFromLocal:image];
+        UIImage* image = [SeedPictureAgent exceptionImageWithImagelType:_imageType imageExceptionType:ErrorImage];
+
+        dispatch_async(dispatch_get_main_queue(), ^(){
+            [self loadImageFromLocal:image];        
+        });
     }
 }
 
