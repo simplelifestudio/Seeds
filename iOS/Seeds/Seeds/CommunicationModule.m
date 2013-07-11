@@ -137,7 +137,9 @@ SINGLETON(CommunicationModule)
 
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {
-    
+    [CBAppUtils asyncProcessInBackgroundThread:^(){
+        [_seedPictureAgent clearMemory];
+    }];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

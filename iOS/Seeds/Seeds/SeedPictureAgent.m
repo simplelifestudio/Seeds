@@ -319,7 +319,7 @@ SINGLETON(SeedPictureAgent)
                     }];
                     
                     [CBAppUtils asyncProcessInBackgroundThread:^(){
-                        [_imageCache clearMemory];
+                        [self clearMemory];
                     }];
                 }];
             }
@@ -361,11 +361,17 @@ SINGLETON(SeedPictureAgent)
     }
 }
 
--(void) clearCache
+-(void) clearMemory
+{
+    [_imageCache clearMemory];
+}
+
+-(void) clearCacheBothInMemoryAndDisk
 {
     @synchronized(_thumbnailCacheKeys)
     {
         [_thumbnailCacheKeys removeAllObjects];
+        
         [_listTableCellThumbnailCache clearMemory];
         [_listTableCellThumbnailCache clearDisk];
         

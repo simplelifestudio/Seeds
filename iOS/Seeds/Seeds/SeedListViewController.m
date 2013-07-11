@@ -14,7 +14,9 @@
 
 @interface SeedListViewController () <CBNotificationListenable>
 {
+    CommunicationModule* _commModule;
     SeedsDownloadAgent* _downloadAgent;
+    SeedPictureAgent* _pictureAgent;
     
     NSArray* _seedList;
     NSArray* _firstSeedPictureList;
@@ -81,6 +83,10 @@
     [_pagingToolbar removeFromSuperview];
     
     [self unlistenNotifications];
+    
+    [CBAppUtils asyncProcessInBackgroundThread:^(){
+        [_pictureAgent clearMemory];
+    }];    
     
     [super viewWillDisappear:animated];
 }
@@ -188,8 +194,9 @@
     _pageSeedList = [NSMutableArray array];
     _pageFirstSeedPictureList = [NSMutableArray array];
     
-    CommunicationModule* _commModule = [CommunicationModule sharedInstance];
+    _commModule = [CommunicationModule sharedInstance];
     _downloadAgent = _commModule.seedsDownloadAgent;
+    _pictureAgent = _commModule.seedPictureAgent;
     
     [self _registerGestureRecognizers];
 }

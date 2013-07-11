@@ -21,6 +21,8 @@
     SeedsDownloadAgent* _downloadAgent;
     
     GUIModule* _guiModule;
+    CommunicationModule* _commModule;
+    SeedPictureAgent* _pictureAgent;
     
     UIBarButtonItem* _favoriteBarButton;
     UIBarButtonItem* _downloadBarButton;
@@ -82,6 +84,10 @@
     [_pagingToolbar removeFromSuperview];
     
     [self unlistenNotifications];
+    
+    [CBAppUtils asyncProcessInBackgroundThread:^(){
+        [_pictureAgent clearMemory];
+    }];
     
     [super viewWillDisappear:animated];
 }
@@ -305,14 +311,13 @@
     //    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDPICTURECOLLECTIONCELL bundle:nil];
     //    [self.collectionView registerNib:nib forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
     
-    CommunicationModule* _commModule = [CommunicationModule sharedInstance];
+    _commModule = [CommunicationModule sharedInstance];
     _downloadAgent = _commModule.seedsDownloadAgent;
+    _pictureAgent = _commModule.seedPictureAgent;
     
     _guiModule = [GUIModule sharedInstance];
     
     [self _setupBarButtonItems];
-    
-    _guiModule = [GUIModule sharedInstance];
     
     _headerView = [CBUIUtils componentFromNib:VIEW_ID_SEEDDETAILHEADERVIEW owner:self options:nil];
     

@@ -36,7 +36,8 @@ typedef void(^ImageDownloadFinishBlock)(UIImage* image, SeedImageType imageType,
 -(void) cacheImages:(UIImage*) image url:(NSURL*) url;
 -(UIImage*) imageFromCache:(NSURL*) url imageType:(SeedImageType) imageType;
 
--(void) clearCache;
+-(void) clearMemory;
+-(void) clearCacheBothInMemoryAndDisk;
 
 - (unsigned long long) diskCacheImagesSize;
 - (NSUInteger) diskCacheImagesCount;

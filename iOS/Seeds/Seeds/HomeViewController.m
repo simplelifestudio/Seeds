@@ -23,6 +23,11 @@
     NSArray* _last3Days;
     
     UserDefaultsModule* _userDefaults;
+    GUIModule* _guiModule;
+    
+    CommunicationModule* _commModule;
+    ServerAgent* _serverAgent;
+    SeedPictureAgent* _pictureAgent;
 }
 @end
 
@@ -55,12 +60,13 @@
     SpiderModule* spiderModule = [SpiderModule sharedInstance];
     [spiderModule.spider setSeedsSpiderDelegate:self];
 
-    CommunicationModule* communicationModule = [CommunicationModule sharedInstance];
-    ServerAgent* serverAgent = communicationModule.serverAgent;
-    serverAgent.delegate = self;
+    _commModule = [CommunicationModule sharedInstance];
+    _serverAgent = _commModule.serverAgent;
+    _serverAgent.delegate = self;
+    _pictureAgent = _commModule.seedPictureAgent;
     
-    GUIModule* guiModule = [GUIModule sharedInstance];
-    guiModule.homeViewController = self;
+    _guiModule = [GUIModule sharedInstance];
+    _guiModule.homeViewController = self;
     
     [self _registerNotifications];
 }
@@ -69,6 +75,10 @@
 {
     [self.navigationController setNavigationBarHidden:YES];
     [self.navigationController setToolbarHidden:YES];
+    
+    [CBAppUtils asyncProcessInBackgroundThread:^(){
+        [_pictureAgent clearMemory];
+    }];
     
     [self _refreshDayAndSyncStatusLabels];
 

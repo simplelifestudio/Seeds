@@ -493,18 +493,22 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _clearImageCache
 {
-    unsigned long long bytesCacheSize = [_pictureAgent diskCacheImagesSize];
-    while (0 < bytesCacheSize)
-    {
-        [_pictureAgent clearCache];
-        bytesCacheSize = [_pictureAgent diskCacheImagesSize];
-    }
+    [CBAppUtils asyncProcessInBackgroundThread:^(){
     
-    [self _refreshClearImagesCacheCell];
-    
-    [self _refreshWiFiCacheImagesCell];
-    
-    [_guiModule showHUD:NSLocalizedString(@"Images Cache Cleared", nil) delay:_HUD_DISPLAY];
+        unsigned long long bytesCacheSize = [_pictureAgent diskCacheImagesSize];
+        while (0 < bytesCacheSize)
+        {
+            [_pictureAgent clearCacheBothInMemoryAndDisk];
+            bytesCacheSize = [_pictureAgent diskCacheImagesSize];
+        }
+        
+        [self _refreshClearImagesCacheCell];
+        [self _refreshWiFiCacheImagesCell];
+        
+        [CBAppUtils asyncProcessInMainThread:^(){
+            [_guiModule showHUD:NSLocalizedString(@"Images Cache Cleared", nil) delay:_HUD_DISPLAY];        
+        }];
+    }];
 }
 
 - (void) _refreshClearImagesCacheCell
