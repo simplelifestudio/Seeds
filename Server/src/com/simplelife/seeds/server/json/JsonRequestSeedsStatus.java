@@ -10,17 +10,13 @@
 package com.simplelife.seeds.server.json;
 
 import java.io.PrintWriter;
-import java.util.List;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import com.simplelife.seeds.server.db.SeedCaptureLog;
-import com.simplelife.seeds.server.util.DaoWrapper;
 import com.simplelife.seeds.server.util.ErrorCode;
 import com.simplelife.seeds.server.util.JsonKey;
 import com.simplelife.seeds.server.util.LogUtil;
-import com.simplelife.seeds.server.util.SqlUtil;
 
 public class JsonRequestSeedsStatus extends JsonRequestBase
 {
