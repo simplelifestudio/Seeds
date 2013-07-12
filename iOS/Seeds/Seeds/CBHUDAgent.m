@@ -16,13 +16,14 @@
 
 @interface CBHUDAgent()
 {
-    MBProgressHUD* _HUD;
     dispatch_queue_t _hudQueue;
 }
 
 @end
 
 @implementation CBHUDAgent
+
+@synthesize HUD = _HUD;
 
 -(id) initWithUIView:(UIView*) view
 {
@@ -50,6 +51,11 @@
         
         [self _showHUD:seconds];
     });
+}
+
+- (void)showHUDAnimated:(BOOL)animated whileExecutingBlock:(dispatch_block_t)block completionBlock:(MBProgressHUDCompletionBlock)completion
+{
+    [_HUD showAnimated:animated whileExecutingBlock:block completionBlock:completion];
 }
 
 -(void) attachToView:(UIView*) view

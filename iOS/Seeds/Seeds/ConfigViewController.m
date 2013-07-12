@@ -71,7 +71,9 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     CommunicationModule* _commModule;
     SeedPictureAgent* _pictureAgent;
     SeedsDownloadAgent* _downloadAgent;
+
     GUIModule* _guiModule;
+    CBHUDAgent* _HUDAgent;
     
     PAPasscodeViewController* _passcodeViewController;
     
@@ -371,6 +373,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     _downloadAgent = _commModule.seedsDownloadAgent;
     
     _guiModule = [GUIModule sharedInstance];
+    _HUDAgent = _guiModule.HUDAgent;
     
     [self _initTableCellList];
 }
@@ -493,8 +496,12 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _clearImageCache
 {
-    [CBAppUtils asyncProcessInBackgroundThread:^(){
-    
+    MBProgressHUD* HUD = _HUDAgent.HUD;
+    [HUD showAnimated:YES whileExecutingBlock:^(){
+        HUD.mode = MBProgressHUDModeIndeterminate;
+        HUD.labelText = NSLocalizedString(@"Clearing", nil);
+        sleep(_HUD_DISPLAY);
+        
         unsigned long long bytesCacheSize = [_pictureAgent diskCacheImagesSize];
         while (0 < bytesCacheSize)
         {
@@ -504,10 +511,11 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         
         [self _refreshClearImagesCacheCell];
         [self _refreshWiFiCacheImagesCell];
+
+        HUD.mode = MBProgressHUDModeText;
+        HUD.labelText = NSLocalizedString(@"Images Cache Cleared", nil);
         
-        [CBAppUtils asyncProcessInMainThread:^(){
-            [_guiModule showHUD:NSLocalizedString(@"Images Cache Cleared", nil) delay:_HUD_DISPLAY];        
-        }];
+        sleep(_HUD_DISPLAY);
     }];
 }
 
@@ -564,17 +572,26 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 }
 
 - (void) _resetDatabase
-{
-    [self _clearFavoritesBusinessOnly];
-    [self _clearDownloadsBusinessOnly];
-    
-    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-    [seedDAO deleteAllSeeds];
-    [self _refershClearDatabaseCell];
-    
-    [_userDefaults resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];    
-    
-    [_guiModule showHUD:NSLocalizedString(@"Database Reseted", nil) delay:_HUD_DISPLAY];
+{    
+    MBProgressHUD* HUD = _HUDAgent.HUD;
+    [HUD showAnimated:YES whileExecutingBlock:^(){
+        HUD.mode = MBProgressHUDModeIndeterminate;
+        HUD.labelText = NSLocalizedString(@"Clearing", nil);
+        sleep(_HUD_DISPLAY);
+        
+        [self _clearFavoritesBusinessOnly];
+        [self _clearDownloadsBusinessOnly];
+        
+        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+        [seedDAO deleteAllSeeds];
+        [self _refershClearDatabaseCell];
+        
+        [_userDefaults resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
+        HUD.mode = MBProgressHUDModeText;
+        HUD.labelText = NSLocalizedString(@"Database Reseted", nil);
+        
+        sleep(_HUD_DISPLAY);
+    }];
 }
 
 - (void) _refershClearDatabaseCell

@@ -13,9 +13,13 @@
 #import "HomeViewController.h"
 #import "WarningViewController.h"
 
+#import "CBHUDAgent.h"
+
 @interface GUIModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate, PAPasscodeViewControllerDelegate>
 
 @property (weak, nonatomic) HomeViewController* homeViewController;
+
+@property (strong, nonatomic) CBHUDAgent* HUDAgent;
 
 -(void) showHUD:(NSString*) majorStauts minorStatus:(NSString*) minorStatus delay:(NSInteger)seconds;
 -(void) showHUD:(NSString*) status delay:(NSInteger) seconds;

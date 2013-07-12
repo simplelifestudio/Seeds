@@ -14,7 +14,7 @@
 
 @interface GUIModule() <WarningDelegate>
 {
-    CBHUDAgent* _HUDAgent;
+
 }
 
 @end
@@ -26,6 +26,7 @@
 }
 
 @synthesize homeViewController = _homeViewController;
+@synthesize HUDAgent = _HUDAgent;
 
 SINGLETON(GUIModule)
 
@@ -75,13 +76,7 @@ SINGLETON(GUIModule)
 
 -(void) showHUD:(NSString*) majorStauts minorStatus:(NSString*) minorStatus delay:(NSInteger)seconds
 {
-    if ((nil == _HUDAgent) && (nil != _homeViewController))
-    {
-        UIView* view = _homeViewController.navigationController.view;
-        _HUDAgent = [[CBHUDAgent alloc] initWithUIView:view];
-    }
-    
-    [_HUDAgent showHUD:majorStauts minorStatus:minorStatus delay:seconds];
+    [self.HUDAgent showHUD:majorStauts minorStatus:minorStatus delay:seconds];
 }
 
 -(WarningViewController*) getWarningViewController:(NSString*) warningId delegate:(id<WarningDelegate>) delegate;
@@ -212,5 +207,16 @@ SINGLETON(GUIModule)
 }
 
 #pragma mark - Private Methods
+
+-(CBHUDAgent*) HUDAgent
+{
+    if ((nil == _HUDAgent) && (nil != _homeViewController))
+    {
+        UIView* view = _homeViewController.navigationController.view;
+        _HUDAgent = [[CBHUDAgent alloc] initWithUIView:view];
+    }
+    
+    return _HUDAgent;
+}
 
 @end

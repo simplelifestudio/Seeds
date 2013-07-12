@@ -12,9 +12,13 @@ typedef void(^HUDDisplayBlock)(NSString* majorStauts, NSString* minorStatus, NSI
 
 @interface CBHUDAgent : NSObject
 
+@property (strong, nonatomic) MBProgressHUD* HUD;
+
 -(id) initWithUIView:(UIView*) view;
 
 -(void) attachToView:(UIView*) view;
 -(void) showHUD:(NSString*) majorStauts minorStatus:(NSString*) minorStatus delay:(NSInteger)seconds;
+
+- (void)showHUDAnimated:(BOOL)animated whileExecutingBlock:(dispatch_block_t)block completionBlock:(MBProgressHUDCompletionBlock)completion;
 
 @end
