@@ -222,7 +222,7 @@
     return self.runningOperations.count > 0;
 }
 
-// Updated by Seeds
+#pragma mark - Updated by Seeds
 - (BOOL) isURLInFailedList:(NSURL*) url
 {
     BOOL flag = NO;
@@ -230,6 +230,17 @@
     flag = [self.failedURLs containsObject:url];
     
     return flag;
+}
+
+- (void) removeFailedURL:(NSURL *)url
+{
+    if (nil != url)
+    {
+        @synchronized(self.failedURLs)
+        {
+            [self.failedURLs removeObject:url];
+        }
+    }
 }
 
 @end

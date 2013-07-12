@@ -414,6 +414,15 @@ SINGLETON(SeedPictureAgent)
     return flag;
 }
 
+-(void) removeFailedSeedPicture:(SeedPicture *)picture
+{
+    if (nil != picture && nil != picture.pictureLink)
+    {
+        NSURL* url = [NSURL URLWithString:picture.pictureLink];
+        [_imageManager removeFailedURL:url];
+    }
+}
+
 -(void) cacheImages:(UIImage*) image url:(NSURL*) url
 {
 //    DLog(@"Image's size is: %f, %f", image.size.width, image.size.height);

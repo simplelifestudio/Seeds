@@ -164,7 +164,8 @@ typedef void(^SDWebImageCompletedWithFinishedBlock)(UIImage *image, NSError *err
  */
 - (BOOL)isRunning;
 
-// Updated by Seeds
+#pragma mark - Updated by Seeds
 - (BOOL) isURLInFailedList:(NSURL*) url;
+- (void) removeFailedURL:(NSURL*) url;
 
 @end

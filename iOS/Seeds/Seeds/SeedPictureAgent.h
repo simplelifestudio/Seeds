@@ -43,6 +43,7 @@ typedef void(^ImageDownloadFinishBlock)(UIImage* image, SeedImageType imageType,
 - (NSUInteger) diskCacheImagesCount;
 
 -(BOOL) isLoadFailedSeedPicture:(SeedPicture*) picture;
+-(void) removeFailedSeedPicture:(SeedPicture*) picture;
 
 -(void) prefetchSeedImages:(NSArray*) seedList;
 

@@ -382,6 +382,7 @@
         {
             NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
             SeedListTableCell* cell = (SeedListTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+            [_pictureAgent removeFailedSeedPicture:seedPicture];
             [cell fillSeedPicture:seedPicture];
         }
         row++;
