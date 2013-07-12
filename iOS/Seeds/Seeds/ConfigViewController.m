@@ -512,8 +512,10 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         [self _refreshClearImagesCacheCell];
         [self _refreshWiFiCacheImagesCell];
 
-        HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = NSLocalizedString(@"Images Cache Cleared", nil);
+        [CBAppUtils asyncProcessInMainThread:^(){
+            HUD.mode = MBProgressHUDModeText;
+            HUD.labelText = NSLocalizedString(@"Images Cache Cleared", nil);
+        }];
         
         sleep(_HUD_DISPLAY);
     }];
@@ -548,8 +550,10 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         
         [self _clearDownloadsBusinessOnly];
         
-        HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = NSLocalizedString(@"Downloads Cleared", nil);
+        [CBAppUtils asyncProcessInMainThread:^(){
+            HUD.mode = MBProgressHUDModeText;
+            HUD.labelText = NSLocalizedString(@"Downloads Cleared", nil);
+        }];
         
         sleep(_HUD_DISPLAY);
     }];
@@ -594,11 +598,14 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         
         id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
         [seedDAO deleteAllSeeds];
-        [self _refershClearDatabaseCell];
         
         [_userDefaults resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
-        HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = NSLocalizedString(@"Database Reseted", nil);
+        
+        [CBAppUtils asyncProcessInMainThread:^(){
+            [self _refershClearDatabaseCell];
+            HUD.mode = MBProgressHUDModeText;
+            HUD.labelText = NSLocalizedString(@"Database Reseted", nil);
+        }];
         
         sleep(_HUD_DISPLAY);
     }];
