@@ -540,9 +540,19 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _clearDownloads
 {
-    [self _clearDownloadsBusinessOnly];
-    
-    [_guiModule showHUD:NSLocalizedString(@"Downloads Cleared", nil) delay:_HUD_DISPLAY];    
+    MBProgressHUD* HUD = _HUDAgent.HUD;
+    [HUD showAnimated:YES whileExecutingBlock:^(){
+        HUD.mode = MBProgressHUDModeIndeterminate;
+        HUD.labelText = NSLocalizedString(@"Clearing", nil);
+        sleep(_HUD_DISPLAY);
+        
+        [self _clearDownloadsBusinessOnly];
+        
+        HUD.mode = MBProgressHUDModeText;
+        HUD.labelText = NSLocalizedString(@"Downloads Cleared", nil);
+        
+        sleep(_HUD_DISPLAY);
+    }];
 }
 
 - (void) _clearFavoritesBusinessOnly
