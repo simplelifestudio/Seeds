@@ -14,7 +14,7 @@
 
 @interface GUIModule() <WarningDelegate>
 {
-
+    AFNetworkActivityIndicatorManager* _networkActivityIndicator;
 }
 
 @end
@@ -36,6 +36,8 @@ SINGLETON(GUIModule)
     [self.serviceThread setName:NSLocalizedString(@"GUI Module Thread", nil)];
     [self setKeepAlive:FALSE];
     
+    _networkActivityIndicator = [AFNetworkActivityIndicatorManager sharedManager];    
+    
     [self _initPAPasscodeViewController];
 }
 
@@ -49,6 +51,8 @@ SINGLETON(GUIModule)
     DLog(@"Module:%@ is started.", self.moduleIdentity);
         
     [super startService];
+    
+    [_networkActivityIndicator setEnabled:YES];
 }
 
 -(void) _initPAPasscodeViewController
@@ -97,7 +101,7 @@ SINGLETON(GUIModule)
 
 - (void) setNetworkActivityIndicatorVisible:(BOOL) flag
 {
-    if (flag != [self isNetworkActivityIndicatorVisible])
+    if ((flag != [self isNetworkActivityIndicatorVisible]) && (![_networkActivityIndicator isNetworkActivityIndicatorVisible]))
     {
         [UIApplication sharedApplication].networkActivityIndicatorVisible = flag;
     }
