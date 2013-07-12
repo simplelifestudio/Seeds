@@ -75,6 +75,7 @@
 "HTTP server failed to start." = "HTTP服务器启动失败...";
 "HTTP server address:" = "HTTP服务器地址：";
 "HTTP server stopped." = "HTTP服务器停止运行...";
+"Now access above address through PC..." = "现在可以通过电脑访问上述地址...";
 
 "WiFi Connected" = "WiFi连接网络";
 "3G/GPRS Connected" = "3G/GPRS连接网络";

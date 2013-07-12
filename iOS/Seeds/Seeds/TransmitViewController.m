@@ -259,8 +259,9 @@ if (_cancelTransmission)\
                 [addrStr appendString:[NSString stringWithFormat:@"%d", port]];
                 
                 [addrStr insertString:NSLocalizedString(@"HTTP server address:", nil) atIndex:0];
-                
                 [self _updateConsole: addrStr];
+                
+                [self _updateConsole:NSLocalizedString(@"Now access above address through PC...", nil)];                
             }
             else
             {
