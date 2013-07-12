@@ -20,6 +20,7 @@ public class JsonKey
     public static final String errorCode = "errorCode";
     public static final String errorDescription = "errorDescription";
     public final static String dateList = "dateList";
+    public final static String piclinks= "piclinks";
     
     public final static String seedIdList = "seedIdList";
     public final static String cartId = "cartId";
