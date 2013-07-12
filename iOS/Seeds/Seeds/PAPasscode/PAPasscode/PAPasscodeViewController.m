@@ -84,7 +84,8 @@
     
     contentView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, view.bounds.size.width, view.bounds.size.height-NAVBAR_HEIGHT)];
     contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    contentView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    // Updated by Seeds
+    contentView.backgroundColor = COLOR_BACKGROUND;//[UIColor colorWithWhite:0.9 alpha:1.0];
     [view addSubview:contentView];
     
     CGFloat panelWidth = DIGIT_WIDTH*4+DIGIT_SPACING*3;
