@@ -44,6 +44,7 @@ public class DaoWrapper {
 			SQLQuery query = session.createSQLQuery(sql);
 			query.executeUpdate();
 			session.getTransaction().commit();
+			session.clear();
 			return true;
 		}
 		catch(Exception e)
@@ -55,6 +56,10 @@ public class DaoWrapper {
 				session.getTransaction().rollback();
 			}
 			return false;
+		}
+		finally
+		{
+			HibernateSessionFactory.closeCurrentSession();
 		}
 	}
 	
@@ -91,7 +96,10 @@ public class DaoWrapper {
 			LogUtil.printStackTrace(e);
 			return DBExistResult.errorOccurred;
 		}
-
+		finally
+		{
+			HibernateSessionFactory.closeCurrentSession();
+		}
 	}
 	
 	public static List query(String sql, Class objClass)
@@ -120,6 +128,10 @@ public class DaoWrapper {
 			LogUtil.printStackTrace(e);
 			return null;
 		}
+	    finally
+		{
+			HibernateSessionFactory.closeCurrentSession();
+		}
 	}
 	
 	public static void delete(Object obj)
@@ -145,7 +157,10 @@ public class DaoWrapper {
 			}
 			LogUtil.printStackTrace(e);
 		}
-
+		finally
+		{
+			HibernateSessionFactory.closeCurrentSession();
+		}
 	}
 	
 	public static void save(Object obj)
@@ -172,6 +187,10 @@ public class DaoWrapper {
 				session.getTransaction().rollback();
 			}
 			LogUtil.printStackTrace(e);
+		}
+		finally
+		{
+			HibernateSessionFactory.closeCurrentSession();
 		}
 	}
 }
