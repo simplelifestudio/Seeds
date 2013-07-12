@@ -24,4 +24,6 @@
 - (void)loadImageFromLocal:(UIImage*) image;
 - (UIImage*) image;
 
+- (void)removeOriginalImage;
+
 @end

@@ -78,7 +78,14 @@
     __block SDWebImageCombinedOperation *operation = SDWebImageCombinedOperation.new;
     __weak SDWebImageCombinedOperation *weakOperation = operation;
     
-    if (!url || !completedBlock || (!(options & SDWebImageRetryFailed) && [self.failedURLs containsObject:url]))
+    // Updated by Seeds
+    BOOL isUrlNotValid = !url;
+    BOOL isCompleteBlockNotValid = !completedBlock;
+    BOOL isOptionsNotMatchSDWebImageRetryFailed = !(options & SDWebImageRetryFailed);
+    BOOL isFailedURL = [self.failedURLs containsObject:url];
+    
+//    if (!url || !completedBlock || (!(options & SDWebImageRetryFailed) && [self.failedURLs containsObject:url]))
+    if (isUrlNotValid || isCompleteBlockNotValid || (isOptionsNotMatchSDWebImageRetryFailed && isFailedURL))
     {
         if (completedBlock) completedBlock(nil, nil, SDImageCacheTypeNone, NO);
         return operation;
@@ -213,6 +220,16 @@
 - (BOOL)isRunning
 {
     return self.runningOperations.count > 0;
+}
+
+// Updated by Seeds
+- (BOOL) isURLInFailedList:(NSURL*) url
+{
+    BOOL flag = NO;
+    
+    flag = [self.failedURLs containsObject:url];
+    
+    return flag;
 }
 
 @end

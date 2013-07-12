@@ -370,16 +370,29 @@
     }
 }
 
-- (void) _refreshFailedSeedPictureURL
+- (void) _refreshFailedSeedPictures
 {
     _isHeaderViewRefreshing = YES;
+    
+    NSUInteger row = 0;
+    for (SeedPicture* seedPicture in _pageFirstSeedPictureList)
+    {
+        BOOL isFailedPicture = [_pictureAgent isLoadFailedSeedPicture:seedPicture];
+        if (isFailedPicture)
+        {
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+            SeedListTableCell* cell = (SeedListTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+            [cell fillSeedPicture:seedPicture];
+        }
+        row++;
+    }
 }
 
-- (void) _doneRefreshFailedSeedPictureURL
+- (void) _doneRefreshFailedSeedPictures
 {
 	_isHeaderViewRefreshing = NO;
-    
-	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+	
+    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
 }
 
 #pragma mark - CBNotificationListenable
@@ -413,8 +426,8 @@
 #pragma mark - EGORefreshTableHeaderDelegate
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
 {
-    [self _refreshFailedSeedPictureURL];
-	[self performSelector:@selector(_doneRefreshFailedSeedPictureURL) withObject:nil afterDelay:3.0];
+    [self _refreshFailedSeedPictures];
+	[self performSelector:@selector(_doneRefreshFailedSeedPictures) withObject:nil afterDelay:0];
 }
 
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view

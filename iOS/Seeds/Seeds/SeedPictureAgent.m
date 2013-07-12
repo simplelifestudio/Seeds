@@ -256,7 +256,6 @@ SINGLETON(SeedPictureAgent)
     _userDefaults = [UserDefaultsModule sharedInstance];
     
     _imageManager = [SDWebImageManager new];
-    _downloadOptions = SDWebImageLowPriority | SDWebImageRetryFailed;
     _imageCache = _imageManager.imageCache;
 
     _thumbnailCacheKeys = [NSMutableDictionary dictionary];
@@ -395,6 +394,24 @@ SINGLETON(SeedPictureAgent)
 - (NSUInteger) diskCacheImagesCount
 {
     return [_imageCache getDiskCount];
+}
+
+-(BOOL) isURLInFailedList:(NSURL*) url
+{
+    return [_imageManager isURLInFailedList:url];
+}
+
+-(BOOL) isLoadFailedSeedPicture:(SeedPicture*) picture
+{
+    BOOL flag = NO;
+    
+    if (nil != picture && picture.pictureLink && 0 < picture.pictureLink.length)
+    {
+        NSURL* url = [NSURL URLWithString:picture.pictureLink];
+        flag = [_imageManager isURLInFailedList:url];
+    }
+    
+    return flag;
 }
 
 -(void) cacheImages:(UIImage*) image url:(NSURL*) url

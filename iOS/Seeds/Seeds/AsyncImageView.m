@@ -83,6 +83,19 @@
     };
 }
 
+- (void)removeOriginalImage
+{
+    if (0 < [[self subviews] count])
+    {
+        //then this must be another image, the old one is still in subviews, so remove it
+        id subView = [[self subviews] objectAtIndex:0];
+        if (subView != _circularProgressView)
+        {
+            [subView removeFromSuperview];
+        }
+    }
+}
+
 - (void)loadImageFromURL:(NSURL*)url imageType:(SeedImageType) imageType;
 {
     _url = url;
@@ -92,18 +105,14 @@
         [_circularProgressDelegate didStartProgressView];
     }
     
-    CommunicationModule* commModule = [CommunicationModule sharedInstance];
-    SeedPictureAgent* agent = commModule.seedPictureAgent;
-    [agent queueURLRequest:url imageType:imageType inProgressBlock:_inProgressBlock completeBlock:_completeBlock];
+    [self removeOriginalImage];
+    
+    [_agent queueURLRequest:url imageType:imageType inProgressBlock:_inProgressBlock completeBlock:_completeBlock];
 }
 
 - (void)loadImageFromLocal:(UIImage*) image
 {
-    if (0 < [[self subviews] count])
-    {
-        //then this must be another image, the old one is still in subviews, so remove it
-        [[[self subviews] objectAtIndex:0] removeFromSuperview];
-    }
+    [self removeOriginalImage];
     
     UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
     imageView.contentMode = UIViewContentModeScaleToFill;
