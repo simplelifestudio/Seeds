@@ -18,11 +18,11 @@
 
 @interface SeedDetailViewController () <CBNotificationListenable>
 {
+    CommunicationModule* _commModule;
     SeedsDownloadAgent* _downloadAgent;
+    SeedPictureAgent* _pictureAgent;
     
     GUIModule* _guiModule;
-    CommunicationModule* _commModule;
-    SeedPictureAgent* _pictureAgent;
     
     UIBarButtonItem* _favoriteBarButton;
     UIBarButtonItem* _downloadBarButton;
@@ -34,6 +34,9 @@
     PagingToolbar* _pagingToolbar;
     
     NSUInteger _currentPage;
+    
+    EGORefreshTableHeaderView* _refreshHeaderView;
+    BOOL _isHeaderViewRefreshing;
 }
 
 @end
@@ -120,9 +123,7 @@
 //        cell = [CBUIUtils componentFromNib:CELL_ID_SEEDPICTURECOLLECTIONCELL owner:self options:nil];
 //    }
     
-    NSUInteger pictureIdInSeed = indexPath.row;
-    pictureIdInSeed++;
-    pictureIdInSeed = (_pagingToolbar.currentPage - 1) * _pagingToolbar.pageSize + pictureIdInSeed;
+    NSUInteger pictureIdInSeed = [self _getPictureIdInSeed:indexPath];
     [cell fillSeedPicture:picture pictureIdInSeed:pictureIdInSeed];
     
     return cell;
@@ -175,6 +176,15 @@
 }
 
 #pragma mark - Private Methods
+
+-(NSUInteger) _getPictureIdInSeed:(NSIndexPath*) indexPath
+{
+    NSUInteger pictureIdInSeed = indexPath.row;
+    pictureIdInSeed++;
+    pictureIdInSeed = (_pagingToolbar.currentPage - 1) * _pagingToolbar.pageSize + pictureIdInSeed;
+    
+    return pictureIdInSeed;
+}
 
 - (void) _arrangeBarButtons
 {
@@ -277,15 +287,16 @@
     });
 }
 
+- (void) _setupViewController
+{
+    [self _setupRefreshHeaderView];
+    [self _setupCollectionView];
+    [self _setupPagingToolbar];
+}
+
 -(void) _scrollToTableViewTop
 {
     [self.collectionView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-}
-
-- (void) _setupViewController
-{
-    [self _setupCollectionView];
-    [self _setupPagingToolbar];
 }
 
 - (void) _setupPagingToolbar
@@ -302,6 +313,24 @@
     _pagingToolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
     _currentPage = 1;
+}
+
+- (void) _setupRefreshHeaderView
+{
+    _isHeaderViewRefreshing = NO;
+    
+    CGFloat x = 0.0f;
+    CGFloat y = 0.0f;
+    CGFloat yOffset = self.collectionView.bounds.size.height;
+    CGFloat width = self.view.frame.size.width;
+    CGFloat height = self.collectionView.bounds.size.height;
+    CGRect frame = CGRectMake(x, y - yOffset, width, height);
+    
+    _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:frame];
+    _refreshHeaderView.delegate = self;
+    [self.collectionView addSubview:_refreshHeaderView];
+    
+	[_refreshHeaderView refreshLastUpdatedDate];
 }
 
 - (void) _setupCollectionView
@@ -444,6 +473,34 @@
     });
 }
 
+- (void) _refreshFailedSeedPictures
+{
+    _isHeaderViewRefreshing = YES;
+    
+    NSUInteger row = 0;
+    for (SeedPicture* seedPicture in _pagePictureList)
+    {
+        BOOL isFailedPicture = [_pictureAgent isLoadFailedSeedPicture:seedPicture];
+        if (isFailedPicture)
+        {
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+            SeedPictureCollectionCell* cell = (SeedPictureCollectionCell*)[self.collectionView cellForItemAtIndexPath:indexPath];
+            [_pictureAgent removeFailedSeedPicture:seedPicture];
+            
+            NSUInteger pictureIdInSeed = [self _getPictureIdInSeed:indexPath];
+            [cell fillSeedPicture:seedPicture pictureIdInSeed:pictureIdInSeed];
+        }
+        row++;
+    }
+}
+
+- (void) _doneRefreshFailedSeedPictures
+{
+	_isHeaderViewRefreshing = NO;
+	
+    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.collectionView];
+}
+
 #pragma mark - CBNotificationListenable
 
 -(void) listenNotifications
@@ -491,6 +548,30 @@
             }
         }
     }
+}
+
+#pragma mark - EGORefreshTableHeaderDelegate
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{
+    [self _refreshFailedSeedPictures];
+	[self performSelector:@selector(_doneRefreshFailedSeedPictures) withObject:nil afterDelay:0];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+{
+    return _isHeaderViewRefreshing;
+}
+
+#pragma mark - UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
 @end

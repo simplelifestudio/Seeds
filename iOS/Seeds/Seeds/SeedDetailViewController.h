@@ -13,7 +13,9 @@
 #import "SeedDetailHeaderView.h"
 #import "PagingToolbar.h"
 
-@interface SeedDetailViewController : UICollectionViewController <PagingDelegate>
+#import "EGORefreshTableHeaderView.h"
+
+@interface SeedDetailViewController : UICollectionViewController <EGORefreshTableHeaderDelegate, PagingDelegate>
 
 @property (nonatomic, strong) Seed* seed;
 
