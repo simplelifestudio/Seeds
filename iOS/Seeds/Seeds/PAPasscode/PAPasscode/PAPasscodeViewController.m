@@ -27,6 +27,11 @@
 #define SLIDE_DURATION  0.3
 
 @interface PAPasscodeViewController ()
+// Updated by Seeds
+{
+    UINavigationItem* _titleItem;
+}
+
 - (void)cancel:(id)sender;
 - (void)handleFailedAttempt;
 - (void)handleCompleteField;
@@ -73,7 +78,8 @@
 
     UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, view.bounds.size.width, NAVBAR_HEIGHT)];
     navigationBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-//    navigationBar.items = @[self.navigationItem];
+    _titleItem = [[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Seeds", nil)];
+    [navigationBar setItems:@[_titleItem]];
     [view addSubview:navigationBar];
     
     contentView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, view.bounds.size.width, view.bounds.size.height-NAVBAR_HEIGHT)];
