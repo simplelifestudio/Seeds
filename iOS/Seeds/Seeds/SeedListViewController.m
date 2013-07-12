@@ -28,6 +28,9 @@
     PagingToolbar* _pagingToolbar;
     
     NSUInteger _currentPage;
+    
+    EGORefreshTableHeaderView* _refreshHeaderView;
+    BOOL _isHeaderViewRefreshing;
 }
 @end
 
@@ -166,8 +169,27 @@
 
 - (void) _setupViewController
 {
+    [self _setupTableHeaderView];
     [self _setupTableView];
     [self _setupPagingToolbar];
+}
+
+- (void) _setupTableHeaderView
+{
+    _isHeaderViewRefreshing = NO;
+    
+    CGFloat x = 0.0f;
+    CGFloat y = 0.0f;
+    CGFloat yOffset = self.tableView.bounds.size.height;
+    CGFloat width = self.view.frame.size.width;
+    CGFloat height = self.tableView.bounds.size.height;
+    CGRect frame = CGRectMake(x, y - yOffset, width, height);
+    
+    _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:frame];
+    _refreshHeaderView.delegate = self;
+    [self.tableView addSubview:_refreshHeaderView];
+    
+	[_refreshHeaderView refreshLastUpdatedDate];    
 }
 
 - (void) _setupPagingToolbar
@@ -188,6 +210,8 @@
 
 - (void) _setupTableView
 {
+    self.tableView.delegate = self;    
+    
     UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
     [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
 
@@ -346,6 +370,18 @@
     }
 }
 
+- (void) _refreshFailedSeedPictureURL
+{
+    _isHeaderViewRefreshing = YES;
+}
+
+- (void) _doneRefreshFailedSeedPictureURL
+{
+	_isHeaderViewRefreshing = NO;
+    
+	[_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+}
+
 #pragma mark - CBNotificationListenable
 
 -(void) listenNotifications
@@ -373,5 +409,30 @@
         }
     }
 }
+
+#pragma mark - EGORefreshTableHeaderDelegate
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{
+    [self _refreshFailedSeedPictureURL];
+	[self performSelector:@selector(_doneRefreshFailedSeedPictureURL) withObject:nil afterDelay:3.0];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+{
+    return _isHeaderViewRefreshing;
+}
+
+#pragma mark - UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{	
+	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{	
+	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
 
 @end

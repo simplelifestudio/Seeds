@@ -12,7 +12,9 @@
 #import "SeedDetailViewController.h"
 #import "PagingToolbar.h"
 
-@interface SeedListViewController : UITableViewController <PagingDelegate>
+#import "EGORefreshTableHeaderView.h"
+
+@interface SeedListViewController : UITableViewController <EGORefreshTableHeaderDelegate, PagingDelegate>
 
 @property (strong, nonatomic) NSDate* seedsDate;
 
