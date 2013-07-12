@@ -114,9 +114,9 @@ public class SeedCaptureListener implements ServletContextListener
 
 	private void createTimers()
 	{
-	    createTimer(DateUtil.getTaskTrigger(20, true));
-	    createTimer(DateUtil.getTaskTrigger(21, true));
-	    createTimer(DateUtil.getTaskTrigger(22, true));
+	    createTimer(DateUtil.getTaskTrigger(20, false));
+	    createTimer(DateUtil.getTaskTrigger(21, false));
+	    createTimer(DateUtil.getTaskTrigger(22, false));
 	}
 	
 	/**
