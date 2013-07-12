@@ -165,6 +165,9 @@ public class HtmlNodeVisitor extends NodeVisitor {
 			field = field.substring(1).trim();
 		}
 		
+		field = field.replaceAll("[\":{,}]", "");
+		field = field.replace("[", "");
+		field = field.replace("]", "");
 		return field;
     }
     
