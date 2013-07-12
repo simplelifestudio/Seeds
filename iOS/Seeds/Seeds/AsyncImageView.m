@@ -22,6 +22,8 @@
     SeedPictureAgent* _agent;
     
     GUIModule* _guiModule;
+    
+    UIImageView* _exceptionImageView;
 }
 
 @end
@@ -85,14 +87,9 @@
 
 - (void)removeOriginalImage
 {
-    if (0 < [[self subviews] count])
+    if (nil != _exceptionImageView && nil != _exceptionImageView.superview)
     {
-        //then this must be another image, the old one is still in subviews, so remove it
-        id subView = [[self subviews] objectAtIndex:0];
-        if (subView != _circularProgressView)
-        {
-            [subView removeFromSuperview];
-        }
+        [_exceptionImageView removeFromSuperview];
     }
 }
 
@@ -114,12 +111,21 @@
 {
     [self removeOriginalImage];
     
-    UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
-    imageView.contentMode = UIViewContentModeScaleToFill;
-    imageView.autoresizingMask = ( UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight );
-    [self addSubview:imageView];
-    imageView.frame = self.bounds;
-    [imageView setNeedsLayout];
+    if (nil == _exceptionImageView)
+    {
+        _exceptionImageView = [[UIImageView alloc] initWithImage:image];
+        _exceptionImageView.contentMode = UIViewContentModeScaleToFill;
+        _exceptionImageView.autoresizingMask = ( UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight );
+    }
+    else
+    {
+        [_exceptionImageView setImage:image];
+    }
+
+    [self addSubview:_exceptionImageView];
+    _exceptionImageView.frame = self.bounds;
+    
+    [_exceptionImageView setNeedsLayout];
     [self setNeedsLayout];
 }
 
