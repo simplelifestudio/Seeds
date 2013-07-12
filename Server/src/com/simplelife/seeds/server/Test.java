@@ -24,6 +24,7 @@ import com.simplelife.seeds.server.db.SeedCaptureLog;
 import com.simplelife.seeds.server.db.SeedPicture;
 import com.simplelife.seeds.server.json.IJsonRequest;
 import com.simplelife.seeds.server.json.JsonRequestFactory;
+import com.simplelife.seeds.server.parser.HtmlNodeVisitor;
 import com.simplelife.seeds.server.parser.HtmlParser;
 import com.simplelife.seeds.server.parser.TorrentDownloader;
 import com.simplelife.seeds.server.util.DBExistResult;
@@ -64,11 +65,12 @@ public class Test {
 	    //testHtmlParse();
 	    //testSeedCaptureTask();
 	    //testTorrentDownload();
+	    //testHtmlNodeVisitor();
         
 	    // =========JSON related=========
 	    //testJsonCommandFactory();
 	    //testJsonAlohaReq();
-	    //testJsonSeedStatusReq();
+	    testJsonSeedStatusReq();
 	    //testJsonSeedReq();
 	    //testJsonSeedToCartReq();
 	    
@@ -76,11 +78,29 @@ public class Test {
 	    // =========Base Functions=========
 		//testDateFunctions();
 	    //testGetParaListByLink();
-	    testSeedCaptureTaskTimer();
+	    //testSeedCaptureTaskTimer();
 		
 		System.exit(0);
 	}
 
+	private static void testHtmlNodeVisitor()
+	{
+	    HtmlNodeVisitor vistor = new HtmlNodeVisitor(true, false);
+	    
+	    String sTemp = "fjajuijkl;k\"fjdkajfkdlj;";
+	    System.out.print("before format: " + sTemp + "\n");
+	    System.out.print("before format: " + vistor.removePreTitle(sTemp)+ "\n");
+	    
+	    sTemp = "fjajuijkl[\"fjdkajfkdlj;";
+        System.out.print("before format: " + sTemp + "\n");
+        System.out.print("before format: " + vistor.removePreTitle(sTemp)+ "\n");
+        
+        sTemp = "aaaa,{\"[aa]aaa[aa;a,,a;aaa:aaaa";
+        System.out.print("before format: " + sTemp + "\n");
+        System.out.print("before format: " + vistor.removePreTitle(sTemp)+ "\n");
+	    
+	    
+	}
 	private static void testSeedCaptureTaskTimer()
 	{
 	    Level level = LogUtil.getLevel();
