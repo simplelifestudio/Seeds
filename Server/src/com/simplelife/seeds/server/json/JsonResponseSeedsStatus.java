@@ -59,28 +59,28 @@ public class JsonResponseSeedsStatus extends JsonResponseBase
         }
 	    
         int size = dateList.size();
+        String result;
+        String strDate;
         for (int i = 0; i < size; i++) {
-            responseStatus(dateList.getString(i));
+        	strDate = dateList.getString(i);
+        	result = getSeedsStatusByDate(strDate);
+            if (result.equals(JsonKey.errorStatus))
+            {
+            	// Error response has been reported in getSeedsStatusByDate
+                return;
+            }
+            
+            body.put(strDate, result);
         }
         outPrintWriter.write(toString());
         LogUtil.info("Response SeedsUpdateStatusByDatesRequest successfully: " + dateList.toString());
     }
 
-    
-    private void responseStatus(String strDate)
-    {
-        String result = getSeedsStatusByDate(strDate);
-        if (result.equals(JsonKey.errorStatus))
-        {
-            body.put(strDate, JsonKey.noUpdate);
-            return;
-        }
-        
-        body.put(strDate, result);
-    }
-
     private String getSeedsStatusByDate(String date)
     {
+    	//responseError(ErrorCode.DatabaseConnectionError, "Error occurred on database conection.");
+    	//return JsonKey.errorStatus;
+    	
         String sql = SqlUtil.getSelectCaptureLogSql(SqlUtil.getPublishDateCondition(date));
         List record = DaoWrapper.query(sql, SeedCaptureLog.class);
         if (record == null)

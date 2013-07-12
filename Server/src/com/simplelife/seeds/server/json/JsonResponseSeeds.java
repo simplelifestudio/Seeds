@@ -24,6 +24,7 @@ import com.simplelife.seeds.server.util.JsonKey;
 import com.simplelife.seeds.server.util.LogUtil;
 import com.simplelife.seeds.server.util.SqlUtil;
 import com.simplelife.seeds.server.util.TableColumnName;
+import com.simplelife.seeds.server.util.TableName;
 
 
 /**
@@ -126,11 +127,20 @@ public class JsonResponseSeeds extends JsonResponseBase
         }
     }
     
-    private void addPictureLinks(Long seedId, Hashtable<String, Object> seedFields)
+    private void addPictureLinks(long seedId, Hashtable<String, Object> seedFields)
     {
         String sql = SqlUtil.getSelectSeedPictureSql(SqlUtil.getSeedIdCondition(seedId));
+        //String sql = "select " + TableColumnName.pictureLink + " from " + TableName.SeedPicture 
+        //        + " where " + TableColumnName.seedId + " = " + Long.toString(seedId);
         List<SeedPicture> pics = DaoWrapper.query(sql, SeedPicture.class);
-        seedFields.put(TableColumnName.pictureLink, pics);
+        
+        List<String> picLinks = new ArrayList<String> ();
+        Iterator<SeedPicture> it = pics.iterator();
+        while(it.hasNext())
+        {
+            picLinks.add(it.next().getPictureLink());
+        }
+        seedFields.put(JsonKey.piclinks, picLinks);
     }
     
     /**
