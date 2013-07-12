@@ -148,7 +148,7 @@
 
 "Pull down to refresh..." = "Pull down will trigger reloading failed images";
 "Release to refresh..." = "Release to trigger reloading failed images";
-"Loading..." = "Loading...";
+"Counting failed images..." = "Counting failed images...";
 
 "Warning of Unsupported Devices" = "   Confined to developer's time and stamina, currently Seeds iOS app supports iPhone5 only, sorry for inconvenience. App will be terminated automatically once countdown is end.";
 "Passcode failed attempts is too much, app will be terminated once countdown is end." = "   Passcode failed attempts is too much, app will be terminated once countdown is end.";
