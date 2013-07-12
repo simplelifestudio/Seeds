@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C506EA4B178F9841007E9FE7 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C506EA41178F9841007E9FE7 /* EGORefreshTableHeaderView.m */; };
+		C506EA4C178F9841007E9FE7 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA43178F9841007E9FE7 /* blackArrow.png */; };
+		C506EA4D178F9841007E9FE7 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA44178F9841007E9FE7 /* blackArrow@2x.png */; };
+		C506EA4E178F9841007E9FE7 /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA45178F9841007E9FE7 /* blueArrow.png */; };
+		C506EA4F178F9841007E9FE7 /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA46178F9841007E9FE7 /* blueArrow@2x.png */; };
+		C506EA50178F9841007E9FE7 /* grayArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA47178F9841007E9FE7 /* grayArrow.png */; };
+		C506EA51178F9841007E9FE7 /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA48178F9841007E9FE7 /* grayArrow@2x.png */; };
+		C506EA52178F9841007E9FE7 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA49178F9841007E9FE7 /* whiteArrow.png */; };
+		C506EA53178F9841007E9FE7 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA4A178F9841007E9FE7 /* whiteArrow@2x.png */; };
 		C5203CDE1742829B00D917F7 /* noImage_tableCell.png in Resources */ = {isa = PBXBuildFile; fileRef = C5203CDC1742829B00D917F7 /* noImage_tableCell.png */; };
 		C5203CDF1742829B00D917F7 /* noImage_tableCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5203CDD1742829B00D917F7 /* noImage_tableCell@2x.png */; };
 		C5203CE21742848200D917F7 /* noImage_collectionCell.png in Resources */ = {isa = PBXBuildFile; fileRef = C5203CE01742848200D917F7 /* noImage_collectionCell.png */; };
@@ -185,6 +194,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C506EA40178F9841007E9FE7 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		C506EA41178F9841007E9FE7 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
+		C506EA43178F9841007E9FE7 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
+		C506EA44178F9841007E9FE7 /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
+		C506EA45178F9841007E9FE7 /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
+		C506EA46178F9841007E9FE7 /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
+		C506EA47178F9841007E9FE7 /* grayArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayArrow.png; sourceTree = "<group>"; };
+		C506EA48178F9841007E9FE7 /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
+		C506EA49178F9841007E9FE7 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
+		C506EA4A178F9841007E9FE7 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 		C50FD40A174FBC1600E5D316 /* AppDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDefinitions.h; sourceTree = "<group>"; };
 		C5203CDC1742829B00D917F7 /* noImage_tableCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noImage_tableCell.png; sourceTree = "<group>"; };
 		C5203CDD1742829B00D917F7 /* noImage_tableCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noImage_tableCell@2x.png"; sourceTree = "<group>"; };
@@ -530,6 +549,47 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C506EA3D178F9840007E9FE7 /* EGOTableViewPullRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				C506EA3E178F9841007E9FE7 /* Classes */,
+				C506EA42178F9841007E9FE7 /* Resources */,
+			);
+			path = EGOTableViewPullRefresh;
+			sourceTree = "<group>";
+		};
+		C506EA3E178F9841007E9FE7 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C506EA3F178F9841007E9FE7 /* View */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		C506EA3F178F9841007E9FE7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C506EA40178F9841007E9FE7 /* EGORefreshTableHeaderView.h */,
+				C506EA41178F9841007E9FE7 /* EGORefreshTableHeaderView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C506EA42178F9841007E9FE7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C506EA43178F9841007E9FE7 /* blackArrow.png */,
+				C506EA44178F9841007E9FE7 /* blackArrow@2x.png */,
+				C506EA45178F9841007E9FE7 /* blueArrow.png */,
+				C506EA46178F9841007E9FE7 /* blueArrow@2x.png */,
+				C506EA47178F9841007E9FE7 /* grayArrow.png */,
+				C506EA48178F9841007E9FE7 /* grayArrow@2x.png */,
+				C506EA49178F9841007E9FE7 /* whiteArrow.png */,
+				C506EA4A178F9841007E9FE7 /* whiteArrow@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		C5203CE41743BE1600D917F7 /* CocoaHTTPServer */ = {
 			isa = PBXGroup;
 			children = (
@@ -859,6 +919,7 @@
 		C57CF282172565100002B054 /* 3rd Libs */ = {
 			isa = PBXGroup;
 			children = (
+				C506EA3D178F9840007E9FE7 /* EGOTableViewPullRefresh */,
 				C55D1AB61751BE35000B3E34 /* PAPasscode */,
 				C5F8AC5C174BC3B8001E30D1 /* Reachability */,
 				C5203DD71747D55700D917F7 /* MiniZip */,
@@ -1254,6 +1315,14 @@
 				C53B64371781731B0028DC41 /* TableViewSegmentCell.xib in Resources */,
 				C53B644717824D0E0028DC41 /* TableViewLabelCell.xib in Resources */,
 				C53B6449178253420028DC41 /* TableViewButtonCell.xib in Resources */,
+				C506EA4C178F9841007E9FE7 /* blackArrow.png in Resources */,
+				C506EA4D178F9841007E9FE7 /* blackArrow@2x.png in Resources */,
+				C506EA4E178F9841007E9FE7 /* blueArrow.png in Resources */,
+				C506EA4F178F9841007E9FE7 /* blueArrow@2x.png in Resources */,
+				C506EA50178F9841007E9FE7 /* grayArrow.png in Resources */,
+				C506EA51178F9841007E9FE7 /* grayArrow@2x.png in Resources */,
+				C506EA52178F9841007E9FE7 /* whiteArrow.png in Resources */,
+				C506EA53178F9841007E9FE7 /* whiteArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1407,6 +1476,7 @@
 				C541D0771782850F00E4F560 /* CBMathUtils.m in Sources */,
 				C5F964CE1788D682001BAB5D /* DownloadSeedListViewController.m in Sources */,
 				C5309DEF1789754F0000F328 /* CBHUDAgent.m in Sources */,
+				C506EA4B178F9841007E9FE7 /* EGORefreshTableHeaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -363,6 +363,7 @@ SINGLETON(SeedPictureAgent)
 
 -(void) clearMemory
 {
+    [_pictureCollectionCellThumbnailCache clearMemory];
     [_imageCache clearMemory];
 }
 
