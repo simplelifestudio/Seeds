@@ -15,7 +15,11 @@
 
 @interface DownloadSeedListViewController () <CBNotificationListenable>
 {
+    GUIModule* _guiModule;    
+    
+    CommunicationModule* _commModule;
     SeedsDownloadAgent* _downloadAgent;
+    SeedPictureAgent* _pictureAgent;
     
     NSArray* _seedList;
     NSArray* _firstSeedPictureList;
@@ -24,8 +28,6 @@
     
     BOOL _isSelectedAll;
     
-    GUIModule* _guiModule;
-    
     NSMutableArray* _pageSeedList;
     NSMutableArray* _pageFirstSeedPictureList;
     PagingToolbar* _pagingToolbar;
@@ -33,6 +35,9 @@
     NSUInteger _currentPage;
     
     id<SeedDAO> _seedDAO;
+    
+    EGORefreshTableHeaderView* _refreshHeaderView;
+    BOOL _isHeaderViewRefreshing;
 }
 
 @property UIBarButtonItem* editBarButton;
@@ -96,6 +101,10 @@
     [self onCancelBarButtonClicked];
     
     [self unlistenNotifications];
+    
+    [CBAppUtils asyncProcessInBackgroundThread:^(){
+        [_pictureAgent clearMemory];
+    }];
     
     [super viewWillDisappear:animated];
 }
@@ -292,8 +301,27 @@
 
 - (void) _setupViewController
 {
+    [self _setupTableHeaderView];
     [self _setupTableView];
     [self _setupPagingToolbar];
+}
+
+- (void) _setupTableHeaderView
+{
+    _isHeaderViewRefreshing = NO;
+    
+    CGFloat x = 0.0f;
+    CGFloat y = 0.0f;
+    CGFloat yOffset = self.tableView.bounds.size.height;
+    CGFloat width = self.view.frame.size.width;
+    CGFloat height = self.tableView.bounds.size.height;
+    CGRect frame = CGRectMake(x, y - yOffset, width, height);
+    
+    _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:frame];
+    _refreshHeaderView.delegate = self;
+    [self.tableView addSubview:_refreshHeaderView];
+    
+	[_refreshHeaderView refreshLastUpdatedDate];
 }
 
 - (void) _setupPagingToolbar
@@ -322,8 +350,9 @@
     
     _guiModule = [GUIModule sharedInstance];
     
-    CommunicationModule* _commModule = [CommunicationModule sharedInstance];
+    _commModule = [CommunicationModule sharedInstance];
     _downloadAgent = _commModule.seedsDownloadAgent;
+    _pictureAgent = _commModule.seedPictureAgent;
     
     [self _registerGestureRecognizers];
     
@@ -541,6 +570,32 @@
     return flag;
 }
 
+- (void) _refreshFailedSeedPictures
+{
+    _isHeaderViewRefreshing = YES;
+    
+    NSUInteger row = 0;
+    for (SeedPicture* seedPicture in _pageFirstSeedPictureList)
+    {
+        BOOL isFailedPicture = [_pictureAgent isLoadFailedSeedPicture:seedPicture];
+        if (isFailedPicture)
+        {
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+            SeedListTableCell* cell = (SeedListTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+            [_pictureAgent removeFailedSeedPicture:seedPicture];
+            [cell fillSeedPicture:seedPicture];
+        }
+        row++;
+    }
+}
+
+- (void) _doneRefreshFailedSeedPictures
+{
+	_isHeaderViewRefreshing = NO;
+	
+    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+}
+
 #pragma mark - CBNotificationListenable
 
 -(void) listenNotifications
@@ -574,6 +629,30 @@
             }
         }
     }
+}
+
+#pragma mark - EGORefreshTableHeaderDelegate
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view
+{
+    [self _refreshFailedSeedPictures];
+	[self performSelector:@selector(_doneRefreshFailedSeedPictures) withObject:nil afterDelay:0];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view
+{
+    return _isHeaderViewRefreshing;
+}
+
+#pragma mark - UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+	[_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
 @end

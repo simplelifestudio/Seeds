@@ -12,6 +12,8 @@
 #import "SeedDetailViewController.h"
 #import "PagingToolbar.h"
 
-@interface DownloadSeedListViewController : UITableViewController <PagingDelegate>
+#import "EGORefreshTableHeaderView.h"
+
+@interface DownloadSeedListViewController : UITableViewController <EGORefreshTableHeaderDelegate, PagingDelegate>
 
 @end

@@ -448,5 +448,4 @@
 	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
 }
 
-
 @end
