@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C506EA4B178F9841007E9FE7 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C506EA41178F9841007E9FE7 /* EGORefreshTableHeaderView.m */; };
+		C506EA4B178F9841007E9FE7 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C506EA41178F9841007E9FE7 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C506EA4C178F9841007E9FE7 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA43178F9841007E9FE7 /* blackArrow.png */; };
 		C506EA4D178F9841007E9FE7 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA44178F9841007E9FE7 /* blackArrow@2x.png */; };
 		C506EA4E178F9841007E9FE7 /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA45178F9841007E9FE7 /* blueArrow.png */; };
@@ -16,6 +16,7 @@
 		C506EA51178F9841007E9FE7 /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA48178F9841007E9FE7 /* grayArrow@2x.png */; };
 		C506EA52178F9841007E9FE7 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA49178F9841007E9FE7 /* whiteArrow.png */; };
 		C506EA53178F9841007E9FE7 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA4A178F9841007E9FE7 /* whiteArrow@2x.png */; };
+		C506EA55178F9E2A007E9FE7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C506EA54178F9E29007E9FE7 /* QuartzCore.framework */; };
 		C5203CDE1742829B00D917F7 /* noImage_tableCell.png in Resources */ = {isa = PBXBuildFile; fileRef = C5203CDC1742829B00D917F7 /* noImage_tableCell.png */; };
 		C5203CDF1742829B00D917F7 /* noImage_tableCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5203CDD1742829B00D917F7 /* noImage_tableCell@2x.png */; };
 		C5203CE21742848200D917F7 /* noImage_collectionCell.png in Resources */ = {isa = PBXBuildFile; fileRef = C5203CE01742848200D917F7 /* noImage_collectionCell.png */; };
@@ -204,6 +205,7 @@
 		C506EA48178F9841007E9FE7 /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
 		C506EA49178F9841007E9FE7 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
 		C506EA4A178F9841007E9FE7 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
+		C506EA54178F9E29007E9FE7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C50FD40A174FBC1600E5D316 /* AppDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDefinitions.h; sourceTree = "<group>"; };
 		C5203CDC1742829B00D917F7 /* noImage_tableCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noImage_tableCell.png; sourceTree = "<group>"; };
 		C5203CDD1742829B00D917F7 /* noImage_tableCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "noImage_tableCell@2x.png"; sourceTree = "<group>"; };
@@ -531,6 +533,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C506EA55178F9E2A007E9FE7 /* QuartzCore.framework in Frameworks */,
 				C5F8AC50174B9807001E30D1 /* SystemConfiguration.framework in Frameworks */,
 				C5203DA11747B94F00D917F7 /* libz.1.2.5.dylib in Frameworks */,
 				C5203D5C1743BEC500D917F7 /* Security.framework in Frameworks */,
@@ -954,6 +957,7 @@
 		C5964C061722290400CC1C0A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C506EA54178F9E29007E9FE7 /* QuartzCore.framework */,
 				C5203DA01747B94C00D917F7 /* libz.1.2.5.dylib */,
 				C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */,
 				C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */,
