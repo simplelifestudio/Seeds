@@ -14,7 +14,7 @@
 
 @interface SeedDownloadWrapper : NSObject
 {
-
+    
 }
 
 @property (atomic) SeedDownloadStatus status;
@@ -43,7 +43,6 @@
 }
 
 @end
-
 
 @interface SeedsDownloadQueue : NSObject
 {
@@ -226,6 +225,8 @@
     NSArray* seedList = [_seedDAO getSeedsByLocalIds:sLocalIdList];
     for (Seed* seed in seedList)
     {
+        
+        
         [self addSeed:seed];
         [self updateSeedStatus:seed status:SeedDownloaded];
     }
@@ -270,6 +271,7 @@
     id<SeedDAO> _seedDAO;
     
     GUIModule* _guiModule;
+    UserDefaultsModule* _userDefaults;
 }
 
 @end
@@ -383,7 +385,9 @@ static NSString* _favoritePath;
 
 -(NSUInteger) downloadedSeedCount
 {
-    return [_downloadQueue queueLength];
+//    return [_downloadQueue queueLength];
+    
+    return [self downloadedSeedList].count;
 }
 
 -(NSArray*) downloadedSeedLocalIdList
@@ -404,7 +408,15 @@ static NSString* _favoritePath;
 {
     NSMutableArray* list = [NSMutableArray array];
     
-    [list addObjectsFromArray:[_downloadQueue seedsWithStatus:SeedDownloaded]];
+    NSArray* downloadedSeedsInQueue = [_downloadQueue seedsWithStatus:SeedDownloaded];
+    for (Seed* seed in downloadedSeedsInQueue)
+    {
+        BOOL isSeedExpired = [self _isSeedInQueueExpired:seed];
+        if (!isSeedExpired)
+        {
+            [list addObject:seed];
+        }
+    }
     
     return list;
 }
@@ -486,6 +498,7 @@ static NSString* _favoritePath;
     _seedDAO = [DAOFactory getSeedDAO];
     
     _guiModule = [GUIModule sharedInstance];
+    _userDefaults = [UserDefaultsModule sharedInstance];
 }
 
 -(TorrentDownloadAgent*) _getTorrentDownloadAgent:(Seed*) seed
@@ -512,6 +525,29 @@ static NSString* _favoritePath;
 {
     NSString* torrentFileFullPath = [TorrentDownloadAgent torrentFileFullPath:seed];
     [CBFileUtils deleteFile:torrentFileFullPath];
+}
+
+-(BOOL) _isSeedInQueueExpired:(Seed*) seed
+{
+    BOOL flag = YES;
+    
+    if (nil != seed && nil != seed.publishDate)
+    {
+        NSString* dateStr = seed.publishDate;
+        
+        NSArray* last3Dates = [_userDefaults lastThreeDays];
+        for (NSDate* date in last3Dates)
+        {
+            NSString* str = [CBDateUtils dateStringInLocalTimeZone:STANDARD_DATE_FORMAT andDate:date];
+            if ([dateStr isEqualToString:str])
+            {
+                flag = NO;
+                break;
+            }
+        }
+    }
+    
+    return flag;
 }
 
 #pragma mark - TorrentDownloadAgentDelegate
