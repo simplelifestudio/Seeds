@@ -122,6 +122,7 @@
 //    {
 //        cell = [CBUIUtils componentFromNib:CELL_ID_SEEDPICTURECOLLECTIONCELL owner:self options:nil];
 //    }
+    cell.asyncImageView.imageType = PictureCollectionCellThumbnail;
     
     NSUInteger pictureIdInSeed = [self _getPictureIdInSeed:indexPath];
     [cell fillSeedPicture:picture pictureIdInSeed:pictureIdInSeed];

@@ -73,8 +73,9 @@
         {
             [_guiModule setNetworkActivityIndicatorVisible:YES];
             
+            _circularProgressView.imageType = PictureViewFullImage;
             float progressVal = (float)receivedSize / (float)expectedSize;
-            [_circularProgressView updateProgressCircle:progressVal];
+            [_circularProgressView updateProgressCircle:progressVal totalVal:expectedSize];
         }
         completeBlock:^(UIImage *image, SeedImageType imageType, NSError *error, SDImageCacheType cacheType, BOOL finished)
         {

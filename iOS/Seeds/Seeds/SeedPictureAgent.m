@@ -66,11 +66,11 @@ SINGLETON(SeedPictureAgent)
     }
 }
 
-+(UIImage*)exceptionImageWithImagelType:(SeedImageType) thumbnailType imageExceptionType:(ImageExceptionType) imageExceptionType;
++(UIImage*)exceptionImageWithImagelType:(SeedImageType) imageType imageExceptionType:(ImageExceptionType) imageExceptionType;
 {
     UIImage* image = nil;
     
-    switch (thumbnailType)
+    switch (imageType)
     {
         case ListTableCellThumbnail:
         {

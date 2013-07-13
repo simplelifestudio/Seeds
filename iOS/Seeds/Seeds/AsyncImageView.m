@@ -80,7 +80,6 @@
     {
         [blockGUIModule setNetworkActivityIndicatorVisible:NO];
         
-        [blockSelf setImageType:imageType];
         [blockSelf imageLoaded:image error:error cacheType:cacheType finished:finished];
     };
 }
@@ -93,7 +92,7 @@
     }
 }
 
-- (void)loadImageFromURL:(NSURL*)url imageType:(SeedImageType) imageType;
+- (void)loadImageFromURL:(NSURL*)url
 {
     _url = url;
     
@@ -104,7 +103,7 @@
     
     [self removeOriginalImage];
     
-    [_agent queueURLRequest:url imageType:imageType inProgressBlock:_inProgressBlock completeBlock:_completeBlock];
+    [_agent queueURLRequest:url imageType:_imageType inProgressBlock:_inProgressBlock completeBlock:_completeBlock];
 }
 
 - (void)loadImageFromLocal:(UIImage*) image
@@ -131,12 +130,10 @@
 
 -(void) imageIsLoading:(NSInteger) receivedSize expectedSize:(long long) expectedSize
 {
-//    DLog(@"Seed's picture downloaded %d of %lld", receivedSize, expectedSize);
-    
     [_guiModule setNetworkActivityIndicatorVisible:YES];
     
     float progressVal = (float)receivedSize / (float)expectedSize;
-    [_circularProgressView updateProgressCircle:progressVal];
+    [_circularProgressView updateProgressCircle:progressVal totalVal:expectedSize];
     
     if (nil != _circularProgressDelegate)
     {
@@ -188,6 +185,13 @@
 {
 	UIImageView* iv = [[self subviews] objectAtIndex:0];
 	return [iv image];
+}
+
+- (void) setImageType:(SeedImageType)imageType
+{
+    _imageType = imageType;
+    
+    _circularProgressView.imageType = imageType;
 }
 
 #pragma CircularProgressViewDelegate

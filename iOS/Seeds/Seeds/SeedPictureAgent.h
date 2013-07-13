@@ -19,7 +19,7 @@ typedef void(^ImageDownloadFinishBlock)(UIImage* image, SeedImageType imageType,
 
 @interface SeedPictureAgent : NSObject <CBSharedInstance>
 
-+(UIImage*)exceptionImageWithImagelType:(SeedImageType) thumbnailType imageExceptionType:(ImageExceptionType) imageExceptionType;
++(UIImage*)exceptionImageWithImagelType:(SeedImageType) imageType imageExceptionType:(ImageExceptionType) imageExceptionType;
 
 +(UIImage*)thumbnailOfImage:(UIImage*)image withSize:(CGSize)aSize;
 

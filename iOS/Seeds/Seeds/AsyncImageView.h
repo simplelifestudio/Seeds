@@ -20,7 +20,7 @@
 @property (nonatomic, strong) id<CircularProgressDelegate> circularProgressDelegate;
 @property (nonatomic) SeedImageType imageType;
 
-- (void)loadImageFromURL:(NSURL*) url imageType:(SeedImageType) imageType;
+- (void)loadImageFromURL:(NSURL*) url;
 - (void)loadImageFromLocal:(UIImage*) image;
 - (UIImage*) image;
 

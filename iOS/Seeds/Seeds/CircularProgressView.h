@@ -18,6 +18,8 @@
 @property (strong, nonatomic) UIColor *progressColor;
 @property (assign, nonatomic) CGFloat lineWidth;
 
+@property (nonatomic) SeedImageType imageType;
+
 @property (assign, nonatomic) id <CircularProgressDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame
@@ -25,7 +27,7 @@
       progressColor:(UIColor *)progressColor
           lineWidth:(CGFloat)lineWidth;
 
-- (void)updateProgressCircle:(float) progressVal;
+- (void)updateProgressCircle:(float) progressVal totalVal:(float) totalVal;
 
 @end
 

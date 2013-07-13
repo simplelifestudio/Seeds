@@ -26,21 +26,16 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        [self setupCell];
+        [self _setupCell];
     }
     return self;
 }
 
 - (void)awakeFromNib
 {
-    [self setupCell];
+    [self _setupCell];
     
     [super awakeFromNib];
-}
-
-- (void) setupCell
-{
-    _asyncImageView.imageType = PictureCollectionCellThumbnail;
 }
 
 -(void) fillSeedPicture:(SeedPicture*) picture pictureIdInSeed:(NSUInteger) pictureIdInSeed
@@ -55,7 +50,7 @@
     else
     {
         NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
-        [_asyncImageView loadImageFromURL:imageURL imageType:PictureCollectionCellThumbnail];
+        [_asyncImageView loadImageFromURL:imageURL];
         
         _label.text = [NSString stringWithFormat:@"%d", pictureIdInSeed];
     }
@@ -73,9 +68,16 @@
     
     CGRect rectImageView = CGRectMake(x, y, rect.size.width, rect.size.height - _label.frame.size.height);
     AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:rectImageView];
-    newImageView.imageType = _asyncImageView.imageType;
+    newImageView.imageType = PictureCollectionCellThumbnail;
     _asyncImageView = newImageView;
     [self addSubview:_asyncImageView];
+}
+
+#pragma mark - Private Methods
+
+- (void) _setupCell
+{
+    _asyncImageView.imageType = PictureCollectionCellThumbnail;
 }
 
 @end

@@ -30,19 +30,14 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
-        [self setupCell];
+        [self _setupCell];
     }
     return self;
 }
 
-- (void) setupCell
-{
-    _asyncImageView.imageType = ListTableCellThumbnail;
-}
-
 - (void)awakeFromNib
 {
-    [self setupCell];
+    [self _setupCell];
     
     [super awakeFromNib];
 }
@@ -90,7 +85,7 @@
     else
     {
         NSURL* imageURL = [[NSURL alloc] initWithString:picture.pictureLink];
-        [_asyncImageView loadImageFromURL:imageURL imageType:ListTableCellThumbnail];
+        [_asyncImageView loadImageFromURL:imageURL];
     }
 }
 
@@ -102,7 +97,7 @@
     CGFloat x = _asyncImageView.frame.origin.x;
     CGFloat y = _asyncImageView.frame.origin.y;
     AsyncImageView* newImageView = [[AsyncImageView alloc] initWithFrame:CGRectMake(x, y, WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL, HEIGHT_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL)];
-    newImageView.imageType = _asyncImageView.imageType;
+    newImageView.imageType = ListTableCellThumbnail;
     _asyncImageView = newImageView;
     [self.contentView addSubview:_asyncImageView];
 }
@@ -164,6 +159,13 @@
         [_favoriteLabel setHidden:YES];
         [_favoriteLabel setText:NSLocalizedString(@"Unfavorited", nil)];
     }
+}
+
+#pragma mark - Private Methods
+
+- (void) _setupCell
+{
+    _asyncImageView.imageType = ListTableCellThumbnail;
 }
 
 @end
