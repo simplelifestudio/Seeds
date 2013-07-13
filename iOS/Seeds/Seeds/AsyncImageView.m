@@ -116,7 +116,7 @@
         _imageView.contentMode = UIViewContentModeScaleToFill;
         _imageView.autoresizingMask = ( UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight );
         
-        [GUIStyle formatUIImageView:_imageView];
+//        [GUIStyle formatUIImageView:_imageView];
     }
     else
     {
