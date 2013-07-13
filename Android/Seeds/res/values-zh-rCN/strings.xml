@@ -77,4 +77,19 @@
     <string name="seeds_wireless_nowifino3g">您的WIFI和蜂窝数据网络未打开，是否设置WIFI？警告：非WIFI网络将耗费大量流量！</string>
     <string name="seeds_wireless_nowifi">您的WIFI未打开，是否设置WIFI？警告：非WIFI网络将耗费大量流量！</string>
     
+    <string name="seeds_password_note">请输入您的手势密码</string>
+    <string name="seeds_password_startdraw">开始绘制</string>
+    <string name="seeds_password_logincorrect">登陆成功！</string>
+    <string name="seeds_password_loginfailed">密码错误，请重试！</string>
+    <string name="seeds_password_drawstatus">请先绘制登陆密码</string>
+    <string name="seeds_password_inputpwd">请输入手势密码</string> 
+    <string name="seeds_password_redraw">重绘</string>
+    <string name="seeds_password_save">保存</string>
+    <string name="seeds_setpassword_correct">密码正确，请输入新密码！</string>
+    <string name="seeds_setpassword_wrong">密码错误，请重新输入！</string>
+    <string name="seeds_setpassword_success">密码修改成功！</string>
+    <string name="seeds_setpassword_failed">密码为空，请重试！</string>
+    <string name="seeds_setpassword_enterpwd">请输入密码！</string>          
+    <string name="seeds_password_tooshort">密码太短，请重新输入！</string>
+    
 </resources>

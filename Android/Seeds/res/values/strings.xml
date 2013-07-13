@@ -35,7 +35,7 @@
     <string name="seedSize">The size of the seed</string>
     <string name="seedFormat">The format of the seed</string>
     <string name="seeds_details_top">Seed Details</string>
-    <string name="seeds_config_page">应用设置</string>
+    <string name="seeds_config_page">Settings</string>
     <string name="seeds_config_serveraddr">Server Address：</string>
     <string name="seeds_Favorite">Favorite</string>
     <string name="seeds_UnFavorite">取消收藏</string>
@@ -47,7 +47,7 @@
     <string name="seeds_verify_menu_settings">Settings</string>
     <string name="title_activity_display_message">Wrong Password</string>
     <string name="seeds_severaddrmsg">Enter IP Address and Port</string>
-    <string name="seeds_severaddrverify">验证</string>
+    <string name="seeds_severaddrverify">Verify</string>
     <string name="seeds_config_channel">选择频道：</string>
     <string name="seeds_config_channel1">动作片</string>
     <string name="seeds_config_channel2">剧情片</string>
@@ -77,5 +77,20 @@
     <string name="seeds_wireless_continue">Ignore</string>
     <string name="seeds_wireless_nowifino3g">Your WIFI and 3G are closed, set WIFI now? WARNING: Large data will be exhausted without WIFI!</string>
     <string name="seeds_wireless_nowifi">Your WIFI is closed, set WIFI now? WARNING: Large data will be exhausted without WIFI!</string>
+    
+    <string name="seeds_password_note">Please input your gesture</string>
+    <string name="seeds_password_startdraw">Start to draw</string>
+    <string name="seeds_password_logincorrect">Login Successfully!</string>
+    <string name="seeds_password_loginfailed">Login Failed, Please Retry!</string>
+    <string name="seeds_password_drawstatus">Please draw the guesture first</string>
+    <string name="seeds_password_inputpwd">Please enter the password</string>
+    <string name="seeds_password_redraw">Redraw</string>
+    <string name="seeds_password_save">Save</string>
+    <string name="seeds_setpassword_correct">Correct password, please enter a new password!</string>
+    <string name="seeds_setpassword_wrong">Wrong password, please retry!</string>
+    <string name="seeds_setpassword_success">Password changed successfully!</string>
+    <string name="seeds_setpassword_failed">Empty password, please retry!</string>
+    <string name="seeds_setpassword_enterpwd">Please enter the password</string> 
+    <string name="seeds_password_tooshort">The password is too short, please retry!</string>
 
 </resources>
