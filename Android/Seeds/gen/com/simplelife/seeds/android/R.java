@@ -570,6 +570,11 @@ containing a value of this type.
         public static final int seeds_toast_configsucc=0x7f070069;
         public static final int seeds_unfav_done=0x7f07006e;
         public static final int seeds_verify_menu_settings=0x7f070061;
+        public static final int seeds_wireless_continue=0x7f07007a;
+        public static final int seeds_wireless_nowifi=0x7f07007c;
+        public static final int seeds_wireless_nowifino3g=0x7f07007b;
+        public static final int seeds_wireless_setwifi=0x7f070079;
+        public static final int seeds_wireless_title=0x7f070078;
         public static final int title_activity_display_message=0x7f070062;
         /**  Text for dialog when a download exceeds the carrier-specified recommended maximum size of
         downloads over the mobile network, and the user may choose to start the download over mobile

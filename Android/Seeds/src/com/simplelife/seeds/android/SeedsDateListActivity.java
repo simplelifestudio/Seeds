@@ -24,17 +24,22 @@ import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage.SeedsStatusByDate;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
+import com.simplelife.seeds.android.utils.wirelessmanager.SeedsWirelessManager;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -70,17 +75,11 @@ public class SeedsDateListActivity extends Activity {
 	private String mDateBefYesterday;
 	private String mDateYesterday;
 	private String mDateToday;
-	private ArrayList<String>  mDateArray;
 	private SharedPreferences mSharedPref;
 	private SharedPreferences mSharedPrefSeedsNum;
 	
 	// Below two fields should be removed or changed in final version
 	private int tSleepSeconds = 1; 
-	
-	// Members to store the number of seeds
-	private int numOfSeedsBeyYesterday = 0;
-	private int numOfSeedsYesterday = 0;
-	private int numOfSeedsToday = 0;
 	
 	// Handler message definition
 	final int MESSAGETYPE_BEFYEST = 100;
@@ -145,9 +144,6 @@ public class SeedsDateListActivity extends Activity {
 		mDateTextYesterday.setText(mDateYesterday);
 		mDateTextToday.setText(mDateToday);		
 		
-		// Initialize the date array list
-		mDateArray = new ArrayList<String> ();
-		
 		// Get the shared preference file instance
 		mSharedPref = getSharedPreferences(
 		        getString(R.string.seeds_preffilename), Context.MODE_PRIVATE);
@@ -158,6 +154,9 @@ public class SeedsDateListActivity extends Activity {
 		mNumTextBefYesterday.setText(getSeedsNumberByDate(mDateBefYesterday));
 		mNumTextYesterday.setText(getSeedsNumberByDate(mDateYesterday));
 		mNumTextToday.setText(getSeedsNumberByDate(mDateToday));
+		
+		// Check if Wifi is connected
+		checkNetworkStatus();
 	}
 	
 	private View.OnClickListener mLayoutBefYesterdayListener = new View.OnClickListener() {
@@ -759,7 +758,43 @@ public class SeedsDateListActivity extends Activity {
 			}	
 		}
 		return true;
-    }    
+    }
+    
+    private void checkNetworkStatus(){
+    	boolean isWifiConnected = false;
+    	boolean is3GConnected   = false;
+    	int tShowTextId;
+    	
+    	is3GConnected = SeedsWirelessManager.isMobileDataOpen(getApplication());
+    	isWifiConnected = SeedsWirelessManager.isWifiOpen(getApplication());
+    	
+    	if(true == isWifiConnected)
+    		return;
+    	else if(true == is3GConnected)
+    		tShowTextId = R.string.seeds_wireless_nowifi;
+    	else 
+    		tShowTextId = R.string.seeds_wireless_nowifino3g;
+    	
+    	AlertDialog.Builder tBuilder = new Builder(this);
+    	tBuilder.setTitle(R.string.seeds_wireless_title);
+    	tBuilder.setMessage(tShowTextId);
+    	tBuilder.setPositiveButton(R.string.seeds_wireless_setwifi, new OnClickListener(){
+    		@Override
+    		public void onClick(DialogInterface dialog, int which){
+    			startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+    			dialog.dismiss();
+    			return;
+    		}
+    	});
+    	tBuilder.setNegativeButton(R.string.seeds_wireless_continue, new OnClickListener(){
+    		@Override
+    		public void onClick(DialogInterface dialog, int which){
+    			dialog.dismiss();
+    			return;
+    		}
+    	});
+    	tBuilder.create().show();
+    }
 
 }
 
