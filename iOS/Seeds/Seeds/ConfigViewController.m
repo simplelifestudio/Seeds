@@ -793,7 +793,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     
     [_clearDownloadsCell setSelectionStyle:UITableViewCellSelectionStyleNone];
     _clearDownloadsCell.label.text = NSLocalizedString(@"Clear Downloads", nil);
-    
+    [_clearDownloadsCell.button setTitle:NSLocalizedString(@"...", nil) forState:UIControlStateNormal];
     [self _refreshClearDownloadsCell];
     
     [_clearDownloadsCell.button addTarget:self action:@selector(_clearDownloads) forControlEvents:UIControlEventTouchUpInside];

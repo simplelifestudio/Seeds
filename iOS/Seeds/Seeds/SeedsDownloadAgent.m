@@ -385,8 +385,6 @@ static NSString* _favoritePath;
 
 -(NSUInteger) downloadedSeedCount
 {
-//    return [_downloadQueue queueLength];
-    
     return [self downloadedSeedList].count;
 }
 
@@ -442,8 +440,12 @@ static NSString* _favoritePath;
     NSArray* _seedsInQueue = [_downloadQueue allSeeds];
     for (int i = _seedsInQueue.count - 1; 0 <= i; i--)
     {
-       Seed* seed = [_seedsInQueue objectAtIndex:i];
-        [list addObject:seed];
+        Seed* seed = [_seedsInQueue objectAtIndex:i];
+        BOOL isSeedExpired = [self _isSeedInQueueExpired:seed];
+        if (!isSeedExpired)
+        {
+            [list addObject:seed];
+        }
     }
     
     return list;
