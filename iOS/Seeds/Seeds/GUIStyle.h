@@ -15,6 +15,8 @@
 #define COLOR_TEXT_LOG [UIColor blueColor]
 #define COLOR_TEXT_WARNING [UIColor redColor]
 
+#define COLOR_IMAGEVIEW_BACKGROUND [UIColor colorWithRed:0.752941 green:0.752941 blue:0.752941 alpha:1.0]
+
 #define COLOR_BACKGROUND [UIColor whiteColor]
 
 @interface GUIStyle : NSObject

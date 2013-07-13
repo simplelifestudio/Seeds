@@ -58,6 +58,8 @@
     
     _guiModule = [GUIModule sharedInstance];
     
+    self.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
+    
     CGRect rect = self.frame;
     CGSize size = rect.size;
     NSInteger halfWidth = size.width / 2;
@@ -116,7 +118,7 @@
         _imageView.contentMode = UIViewContentModeScaleToFill;
         _imageView.autoresizingMask = ( UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight );
         
-//        [GUIStyle formatUIImageView:_imageView];
+        [GUIStyle formatUIImageView:_imageView];
     }
     else
     {

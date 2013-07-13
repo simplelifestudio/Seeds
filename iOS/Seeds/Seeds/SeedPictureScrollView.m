@@ -224,6 +224,8 @@
     [self addSubview:imageView];
     self.imageView = imageView;
     
+    [GUIStyle formatUIImageView:imageView];
+    
     // add gesture recognizers to the image view
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap:)];
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
