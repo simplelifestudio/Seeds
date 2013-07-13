@@ -8,6 +8,8 @@
 
 "Seeds" = "Seeds";
 
+"Seeds: %d" = "种子数: %d";
+
 "Communication Module" = "通讯模块";
 "Communication Module Thread" = "通讯模块线程";
 "Database Module" = "数据库模块";

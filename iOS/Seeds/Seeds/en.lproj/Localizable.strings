@@ -8,6 +8,8 @@
 
 "Seeds" = "Seeds";
 
+"Seeds: %d" = "Seeds: %d";
+
 "Communication Module" = "Communication Module";
 "Communication Module Thread" = "Communication Module Thread";
 "Database Module" = "Database Module";

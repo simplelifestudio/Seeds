@@ -200,9 +200,12 @@
     
     NSString* sLabel = (NSString*)dataLabel;
     NSInteger dayIndex = [sLabel integerValue];
-    NSString* sData = (NSString*)data;
     
-    [self _refreshSyncStatusLabels:dayIndex syncStatus:sData];
+    NSString* sData = (NSString*)data;
+    NSInteger seedCountByDate = sData.integerValue;
+    NSString* syncStatus = [NSString stringWithFormat:NSLocalizedString(@"Seeds: %d", nil), seedCountByDate];
+    
+    [self _refreshSyncStatusLabels:dayIndex syncStatus:syncStatus];
 }
 
 #pragma mark - IBActions
@@ -291,7 +294,8 @@
             id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
             NSInteger seedCountByDate = [seedDAO countSeedsByDate:day];
             
-            [self _refreshSyncStatusLabels:dayIndex syncStatus:[NSString stringWithFormat:@"%d", seedCountByDate]];
+            NSString* syncStatus = [NSString stringWithFormat:NSLocalizedString(@"Seeds: %d", nil), seedCountByDate];
+            [self _refreshSyncStatusLabels:dayIndex syncStatus:syncStatus];
         }
         
         dayIndex = dayIndex + 1;
