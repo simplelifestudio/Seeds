@@ -408,10 +408,19 @@ SINGLETON(SeedPictureAgent)
     if (nil != picture && picture.pictureLink && 0 < picture.pictureLink.length)
     {
         NSURL* url = [NSURL URLWithString:picture.pictureLink];
-        flag = [_imageManager isURLInFailedList:url];
+        flag = [self isLoadFailedURL:url];
     }
     
     return flag;
+}
+
+-(void) addFailedSeedPicture:(SeedPicture*) picture
+{
+    if (nil != picture && nil != picture.pictureLink)
+    {
+        NSURL* url = [NSURL URLWithString:picture.pictureLink];
+        [self addFailedURL:url];
+    }
 }
 
 -(void) removeFailedSeedPicture:(SeedPicture *)picture
@@ -419,8 +428,27 @@ SINGLETON(SeedPictureAgent)
     if (nil != picture && nil != picture.pictureLink)
     {
         NSURL* url = [NSURL URLWithString:picture.pictureLink];
-        [_imageManager removeFailedURL:url];
+        [self removeFailedURL:url];
     }
+}
+
+-(BOOL) isLoadFailedURL:(NSURL*) url
+{
+    BOOL flag = NO;
+    
+    flag = [_imageManager isURLInFailedList:url];
+    
+    return flag;
+}
+
+-(void) addFailedURL:(NSURL*) url
+{
+    [_imageManager addFailedURL:url];
+}
+
+-(void) removeFailedURL:(NSURL*) url
+{
+    [_imageManager removeFailedURL:url];
 }
 
 -(void) cacheImages:(UIImage*) image url:(NSURL*) url

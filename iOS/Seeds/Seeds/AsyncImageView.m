@@ -175,6 +175,8 @@
         
         UIImage* image = [SeedPictureAgent exceptionImageWithImagelType:_imageType imageExceptionType:ErrorImage];
 
+        [_agent addFailedURL:_url];
+        
         dispatch_async(dispatch_get_main_queue(), ^(){
             [self loadImageFromLocal:image];        
         });
