@@ -19,4 +19,6 @@
 
 @interface GUIStyle : NSObject
 
++(void) formatUIImageView:(UIImageView*) imageView;
+
 @end

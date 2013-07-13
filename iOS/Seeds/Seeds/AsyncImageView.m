@@ -23,7 +23,7 @@
     
     GUIModule* _guiModule;
     
-    UIImageView* _exceptionImageView;
+    UIImageView* _imageView;
 }
 
 @end
@@ -86,9 +86,9 @@
 
 - (void)removeOriginalImage
 {
-    if (nil != _exceptionImageView && nil != _exceptionImageView.superview)
+    if (nil != _imageView && nil != _imageView.superview)
     {
-        [_exceptionImageView removeFromSuperview];
+        [_imageView removeFromSuperview];
     }
 }
 
@@ -110,21 +110,23 @@
 {
     [self removeOriginalImage];
     
-    if (nil == _exceptionImageView)
+    if (nil == _imageView)
     {
-        _exceptionImageView = [[UIImageView alloc] initWithImage:image];
-        _exceptionImageView.contentMode = UIViewContentModeScaleToFill;
-        _exceptionImageView.autoresizingMask = ( UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight );
+        _imageView = [[UIImageView alloc] initWithImage:image];
+        _imageView.contentMode = UIViewContentModeScaleToFill;
+        _imageView.autoresizingMask = ( UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight );
+        
+        [GUIStyle formatUIImageView:_imageView];
     }
     else
     {
-        [_exceptionImageView setImage:image];
+        [_imageView setImage:image];
     }
 
-    [self addSubview:_exceptionImageView];
-    _exceptionImageView.frame = self.bounds;
+    [self addSubview:_imageView];
+    _imageView.frame = self.bounds;
     
-    [_exceptionImageView setNeedsLayout];
+    [_imageView setNeedsLayout];
     [self setNeedsLayout];
 }
 
