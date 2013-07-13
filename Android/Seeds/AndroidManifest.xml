@@ -106,6 +106,10 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+            android:name="com.simplelife.seeds.android.SeedsSetPasswordActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="com.simplelife.seeds.android.SeedsPasswordNotifyActivity"
             android:label="@string/title_activity_display_message"
             android:parentActivityName="com.simplelife.seeds.android.SeedsPasswordActivity" >
