@@ -64,7 +64,7 @@
         {
             case ListTableCellThumbnail:
             {
-                fontSize = 5;
+                fontSize = 0;
                 break;
             }
             case PictureCollectionCellThumbnail:
@@ -79,7 +79,7 @@
             }
             case PictureViewFullImage:
             {
-                fontSize = 16;
+                fontSize = 18;
                 break;
             }
             default:
