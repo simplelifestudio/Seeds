@@ -72,5 +72,10 @@
     <string name="no_network_connection_toast">No network connection found</string>
     
     <string name="seeds_http_title">HTTP Server</string>
+    <string name="seeds_wireless_title">Notice</string>
+    <string name="seeds_wireless_setwifi">Set WIFI</string>
+    <string name="seeds_wireless_continue">Ignore</string>
+    <string name="seeds_wireless_nowifino3g">Your WIFI and 3G are closed, set WIFI now? WARNING: Large data will be exhausted without WIFI!</string>
+    <string name="seeds_wireless_nowifi">Your WIFI is closed, set WIFI now? WARNING: Large data will be exhausted without WIFI!</string>
 
 </resources>

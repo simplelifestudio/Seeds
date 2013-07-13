@@ -71,5 +71,10 @@
     <string name="no_network_connection_toast">无网络连接</string>
     
     <string name="seeds_http_title">HTTP服务器</string>
-
+    <string name="seeds_wireless_title">网络提示</string>
+    <string name="seeds_wireless_setwifi">设置WIFI</string>
+    <string name="seeds_wireless_continue">继续</string>
+    <string name="seeds_wireless_nowifino3g">您的WIFI和蜂窝数据网络未打开，是否设置WIFI？警告：非WIFI网络将耗费大量流量！</string>
+    <string name="seeds_wireless_nowifi">您的WIFI未打开，是否设置WIFI？警告：非WIFI网络将耗费大量流量！</string>
+    
 </resources>
