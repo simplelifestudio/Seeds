@@ -155,6 +155,7 @@
 "Pull down to refresh..." = "下拉重刷无效图片...";
 "Release to refresh..." = "释放后开始重刷...";
 "Counting failed images..." = "无效图片统计中...";
+"Last Updated: %@" = "最后重刷于: %@";
 
 "Warning of Unsupported Devices" = "       非常抱歉，限于开发者的时间和精力，当前iOS版的Seeds只支持iPhone5，程序会在倒计时结束后自动退出。";
 "Passcode failed attempts is too much, app will be terminated once countdown is end." = "       密码尝试失败次数过多，程序会在倒计时结束后自动退出。";
