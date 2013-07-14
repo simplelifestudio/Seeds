@@ -77,7 +77,7 @@
 "HTTP server failed to start." = "HTTP server failed to start...";
 "HTTP server address:" = "HTTP server address:";
 "HTTP server stopped." = "HTTP server stopped...";
-"Now access above address through PC..." = "Now access above address through PC...";
+"Now access above address through PC..." = "Now access HTTP server through PC to download torrents zip packages...";
 
 "WiFi Connected" = "WiFi Connected";
 "3G/GPRS Connected" = "3G/GPRS Connected";
