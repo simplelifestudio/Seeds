@@ -14,6 +14,23 @@
             android:entries="@array/seeds_config_channels" 
             android:entryValues="@array/seeds_config_channels"/>
     </PreferenceCategory>
+    <PreferenceCategory 
+        android:title="@string/seeds_config_picpref">
+        <SwitchPreference 
+            android:summary="@string/seeds_config_modifyserveraddrsum" 
+            android:key="config_network" 
+            android:summaryOff="@string/seeds_config_recpicwithoutwifisumoff" 
+            android:title="@string/seeds_config_recpicwithoutwifititle" 
+            android:summaryOn="@string/seeds_config_recpicwithoutwifisum"/>
+        <Preference android:title="@string/seeds_config_clearcachetitle" android:key="config_clearcache" android:summary="@string/seeds_config_clearcachesum"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/seeds_config_security">
+        <Preference android:title="@string/seeds_config_changepwdtitle" android:key="config_changepwd" android:summary="@string/seeds_config_changepwdsum"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/seeds_config_feedbackandhelp">
+        <Preference android:title="@string/seeds_config_feedbacktitle" android:key="config_feedback" android:summary="@string/seeds_config_feedbacksum"/>
+        <Preference android:title="@string/seeds_config_abouttitle" android:key="config_about" android:summary="@string/seeds_config_aboutsum"/>
+    </PreferenceCategory>
     
 
 </PreferenceScreen>

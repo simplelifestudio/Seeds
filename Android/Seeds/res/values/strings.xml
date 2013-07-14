@@ -103,5 +103,19 @@
         <item >Drama</item>
         <item >Melodrama</item>
     </string-array>
-
+    <string name="seeds_config_picpref">Picture Preference</string>
+    <string name="seeds_config_recpicwithoutwifititle">Receive Images Without WIFI</string>
+    <string name="seeds_config_recpicwithoutwifisum">Automatically receive images under GPRS and 3G network</string>
+    <string name="seeds_config_recpicwithoutwifisumoff">Stop receiving images under GPRS and 3G network</string> 
+    <string name="seeds_config_clearcachetitle">Clear Cache</string>
+    <string name="seeds_config_clearcachesum">Clear the images cache,current cache size:</string>      
+    <string name="seeds_config_security">Account and Security</string>
+    <string name="seeds_config_changepwdtitle">Change Password</string>
+    <string name="seeds_config_changepwdsum">Change the password when open the application</string>
+    <string name="seeds_config_feedbackandhelp">Feedback and Help</string>
+    <string name="seeds_config_feedbacktitle">Feedback Problems</string>
+    <string name="seeds_config_feedbacksum">Please feedback the problems you encountered to us</string>
+    <string name="seeds_config_abouttitle">About</string>
+    <string name="seeds_config_aboutsum">About Seeds and our team</string>
+       
 </resources>

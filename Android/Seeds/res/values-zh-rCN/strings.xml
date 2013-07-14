@@ -102,5 +102,19 @@
         <item >剧情片</item>
         <item >文艺片</item>
     </string-array>    
+    <string name="seeds_config_picpref">图片接收</string>
+    <string name="seeds_config_recpicwithoutwifititle">无WIFI时接收图片</string>
+    <string name="seeds_config_recpicwithoutwifisum">GPRS,3G网络下自动接收并显示图片</string>
+    <string name="seeds_config_recpicwithoutwifisumoff">GPRS,3G网络下停止接收并显示图片</string>    
+    <string name="seeds_config_clearcachetitle">清除缓存</string>
+    <string name="seeds_config_clearcachesum">清除接收图片产生的缓存，当前缓存：</string> 
+    <string name="seeds_config_security">账户与安全</string>
+    <string name="seeds_config_changepwdtitle">更改密码</string>
+    <string name="seeds_config_changepwdsum">更改应用打开时的密码</string>
+    <string name="seeds_config_feedbackandhelp">反馈与帮助</string>
+    <string name="seeds_config_feedbacktitle">反馈问题</string>
+    <string name="seeds_config_feedbacksum">欢迎您将使用过程中遇到的问题反馈给我们</string>
+    <string name="seeds_config_abouttitle">关于</string>
+    <string name="seeds_config_aboutsum">关于Seeds和我们的团队</string>   
     
 </resources>
