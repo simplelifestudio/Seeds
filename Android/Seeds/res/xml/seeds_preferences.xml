@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="@string/seeds_config_serverpref">
+        <EditTextPreference 
+            android:dialogTitle="@string/seeds_config_modifyserveraddrtitle"
+            android:title="@string/seeds_config_modifyserveraddrtitle" 
+            android:summary="@string/seeds_config_modifyserveraddrsum" 
+            android:key="config_changeserver"/>
+        <ListPreference 
+            android:summary="@string/seeds_config_selectchansum" 
+            android:key="config_selectchannel" 
+            android:title="@string/seeds_config_selectchantitle" 
+            android:dialogTitle="@string/seeds_config_selectchantitle" 
+            android:entries="@array/seeds_config_channels" 
+            android:entryValues="@array/seeds_config_channels"/>
+    </PreferenceCategory>
+    
+
+</PreferenceScreen>

@@ -35,8 +35,6 @@
     <string name="seedSize">The size of the seed</string>
     <string name="seedFormat">The format of the seed</string>
     <string name="seeds_details_top">Seed Details</string>
-    <string name="seeds_config_page">Settings</string>
-    <string name="seeds_config_serveraddr">Server Address：</string>
     <string name="seeds_Favorite">Favorite</string>
     <string name="seeds_UnFavorite">取消收藏</string>
     <string name="seeds_preffilename">com.simplelife.seeds.SEEDS_STATUS_BYDATE</string>
@@ -48,10 +46,6 @@
     <string name="title_activity_display_message">Wrong Password</string>
     <string name="seeds_severaddrmsg">Enter IP Address and Port</string>
     <string name="seeds_severaddrverify">Verify</string>
-    <string name="seeds_config_channel">选择频道：</string>
-    <string name="seeds_config_channel1">动作片</string>
-    <string name="seeds_config_channel2">剧情片</string>
-    <string name="seeds_config_channel3">文艺片</string>
     
     <string name="seeds_toast_configsucc">设置成功</string>
     <string name="seeds_toast_configfail">Invalid address</string>
@@ -92,5 +86,22 @@
     <string name="seeds_setpassword_failed">Empty password, please retry!</string>
     <string name="seeds_setpassword_enterpwd">Please enter the password</string> 
     <string name="seeds_password_tooshort">The password is too short, please retry!</string>
+
+    <string name="seeds_config_page">Settings</string>  
+    <string name="seeds_config_serverpref">Server Preference</string>
+    <string name="seeds_config_modifyserveraddrtitle">Change Server Address</string>
+    <string name="seeds_config_modifyserveraddrsum">Change the IP address of server, default is 106.187.38.78</string>
+    <string name="seeds_config_selectchantitle">Select Channel</string>
+    <string name="seeds_config_selectchansum">Select the Channels to which the seeds subscribed</string>
+    <string name="seeds_config_serveraddr">Server Address：</string>  
+    <string name="seeds_config_channel">选择频道：</string>
+    <string name="seeds_config_channel1">动作片</string>
+    <string name="seeds_config_channel2">剧情片</string>
+    <string name="seeds_config_channel3">文艺片</string>
+    <string-array name="seeds_config_channels">
+        <item >Action</item>
+        <item >Drama</item>
+        <item >Melodrama</item>
+    </string-array>
 
 </resources>

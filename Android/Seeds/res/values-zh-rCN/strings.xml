@@ -34,8 +34,6 @@
     <string name="seedSize">种子大小</string>
     <string name="seedFormat">种子格式</string>
     <string name="seeds_details_top">种子详情</string>
-    <string name="seeds_config_page">应用设置</string>
-    <string name="seeds_config_serveraddr">服务器地址：</string>
     <string name="seeds_Favorite">收藏</string>
     <string name="seeds_UnFavorite">取消收藏</string>
     <string name="seeds_preffilename">com.simplelife.seeds.SEEDS_STATUS_BYDATE</string>
@@ -47,10 +45,6 @@
     <string name="title_activity_display_message">密码</string>
     <string name="seeds_severaddrmsg">请输入IP地址与端口</string>
     <string name="seeds_severaddrverify">验证</string>
-    <string name="seeds_config_channel">选择频道：</string>
-    <string name="seeds_config_channel1">动作片</string>
-    <string name="seeds_config_channel2">剧情片</string>
-    <string name="seeds_config_channel3">文艺片</string>
     
     <string name="seeds_toast_configsucc">设置成功</string>
     <string name="seeds_toast_configfail">无效的地址</string>
@@ -91,5 +85,22 @@
     <string name="seeds_setpassword_failed">密码为空，请重试！</string>
     <string name="seeds_setpassword_enterpwd">请输入密码！</string>          
     <string name="seeds_password_tooshort">密码太短，请重新输入！</string>
+    
+    <string name="seeds_config_page">应用设置</string>
+    <string name="seeds_config_serverpref">服务器设置</string>
+    <string name="seeds_config_modifyserveraddrtitle">更改服务器地址</string>
+    <string name="seeds_config_modifyserveraddrsum">更改服务器的IP地址，默认为106.187.38.78</string>
+    <string name="seeds_config_selectchantitle">选择频道</string>
+    <string name="seeds_config_selectchansum">选择您所希望接收到种子的类型频道</string>
+    <string name="seeds_config_serveraddr">服务器地址：</string>
+    <string name="seeds_config_channel">选择频道：</string>
+    <string name="seeds_config_channel1">动作片</string>
+    <string name="seeds_config_channel2">剧情片</string>
+    <string name="seeds_config_channel3">文艺片</string>
+    <string-array name="seeds_config_channels">
+        <item >动作片</item>
+        <item >剧情片</item>
+        <item >文艺片</item>
+    </string-array>    
     
 </resources>

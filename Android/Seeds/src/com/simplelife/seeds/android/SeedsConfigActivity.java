@@ -23,6 +23,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceFragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -45,7 +46,11 @@ public class SeedsConfigActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_seeds_config);
+		//setContentView(R.layout.activity_seeds_config);
+		
+		getFragmentManager()
+		.beginTransaction()
+		.replace(android.R.id.content, new SeedsPreferenceFragment()).commit();
 		
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
@@ -166,5 +171,14 @@ public class SeedsConfigActivity extends Activity {
         	mRadioThreeChecked = true ;
         }        
 	}
+	
+    public static class SeedsPreferenceFragment extends PreferenceFragment{  
+        @Override  
+        public void onCreate(Bundle savedInstanceState) {  
+            // TODO Auto-generated method stub  
+            super.onCreate(savedInstanceState);  
+            addPreferencesFromResource(R.xml.seeds_preferences);  
+        }  
+    }  
 
 }
