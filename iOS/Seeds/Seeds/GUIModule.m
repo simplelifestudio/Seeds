@@ -43,6 +43,8 @@ SINGLETON(GUIModule)
 
 -(void) releaseModule
 {
+    [_HUDAgent releaseResources];
+    
     [super releaseModule];
 }
 
