@@ -50,6 +50,8 @@
     self.bouncesZoom = TRUE;
     self.decelerationRate = UIScrollViewDecelerationRateFast;
     
+    self.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
+    
     UITapGestureRecognizer *scrollViewDoubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleScrollViewDoubleTap:)];
     [scrollViewDoubleTap setNumberOfTapsRequired:2];
     [self addGestureRecognizer:scrollViewDoubleTap];

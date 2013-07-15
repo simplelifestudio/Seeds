@@ -21,10 +21,10 @@
 {
     if (nil != imageView)
     {
-        UIImageView* _imageView = imageView;
+//        UIImageView* _imageView = imageView;
         
-        _imageView.contentMode = UIViewContentModeScaleAspectFit;
-        _imageView.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
+//        _imageView.contentMode = UIViewContentModeScaleAspectFit;
+//        _imageView.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
 //        //添加边框
 //        CALayer * layer = [_imageView layer];
 //        layer.borderColor = [[UIColor whiteColor] CGColor];
