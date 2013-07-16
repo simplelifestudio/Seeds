@@ -48,7 +48,7 @@
             BOOL flag1 = nil != attrVal;
             BOOL flag2 = [CBStringUtils isSubstringIncluded:attrVal subString:@"无"];
             BOOL flag3 = [CBStringUtils isSubstringIncluded:attrVal subString:@"無"];
-            BOOL mosaic = (flag1 | flag2 | flag3) ? NO : YES;
+            BOOL mosaic = (flag1 && (flag2 | flag3)) ? NO : YES;
             [seed setMosaic:mosaic];
         }
         else if ([attrName isEqualToString:TABLE_SEED_COLUMN_HASH])
