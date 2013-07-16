@@ -20,6 +20,7 @@ import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,7 +33,6 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
-import android.view.Gravity;
 import android.widget.Toast;
 
 public class SeedsConfigActivity extends Activity {
@@ -43,7 +43,6 @@ public class SeedsConfigActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.activity_seeds_config);
 		
 		getFragmentManager()
 		.beginTransaction()
@@ -53,7 +52,7 @@ public class SeedsConfigActivity extends Activity {
 		ActionBar tActionBar = getActionBar();
 		tActionBar.setTitle(R.string.seeds_config_page);		
 	}
-	
+		
     public static class SeedsPreferenceFragment extends PreferenceFragment 
                   implements OnPreferenceChangeListener, OnPreferenceClickListener{
     	
@@ -67,7 +66,7 @@ public class SeedsConfigActivity extends Activity {
     	private Preference mPrefAbout;
     	private SharedPreferences mSharedPrefs;
     	
-    	private String mServerUrl = null;
+    	private String mServerUrl = SeedsDefinitions.getServerUrl();
     	private String mResponse  = null;
     	private ProgressDialog mProgressDialog = null;
     	
@@ -103,7 +102,18 @@ public class SeedsConfigActivity extends Activity {
             
         	if(mEditTextPrefServerAddr == preference)
         	{        		
-        		mEditTextPrefServerAddr.setSummary(mSharedPrefs.getString(preference.getKey(), "N/A"));
+        		String tServerAddr = mSharedPrefs.getString(preference.getKey(), "N/A");
+        		if(tServerAddr.equals("N/A")){
+        			showToast(R.string.seeds_config_setserveraddrfailed);
+        			mServerUrl = SeedsDefinitions.getServerUrl();
+            	}
+            	else{
+            		mServerUrl = "http://"+tServerAddr+SeedsDefinitions.SEEDS_SERVER_ADDRESS_PREFIX;
+            		mEditTextPrefServerAddr.setSummary(getString(R.string.seeds_config_setserveraddrsum) + tServerAddr);
+            	}
+        		
+        		// Set the global address
+        		SeedsDefinitions.setServerUrl(mServerUrl);    		
         	}
         	else if(mListPrefSelectChan == preference)
         	{
@@ -111,19 +121,11 @@ public class SeedsConfigActivity extends Activity {
         	}
         	else if(mSwitchPrefWifi == preference)
         	{
-        		
-        	}
-        	else if(mPrefChangePwd == preference)
-        	{
-        		
-        	}
-        	else if(mPrefFeedback == preference)
-        	{
-        		
-        	}
-        	else if(mPrefAbout == preference)
-        	{
-        		
+        		boolean tFlag = mSharedPrefs.getBoolean(preference.getKey(), true);
+        		if(true == tFlag)
+            	    SeedsDefinitions.setDownloadImageFlag(false);
+        		else
+        			SeedsDefinitions.setDownloadImageFlag(true);
         	}
             return true;    
         }
@@ -132,7 +134,7 @@ public class SeedsConfigActivity extends Activity {
         	
         	if(mPrefVerifyServer == preference)
         	{
-        		onVerifyAddress(mSharedPrefs.getString(preference.getKey(), "N/A"));
+        		onVerifyAddress(mServerUrl);
         	}
         	else if(mPrefClearCache == preference)
         	{
@@ -140,22 +142,17 @@ public class SeedsConfigActivity extends Activity {
         	}
         	else if(mPrefChangePwd == preference)
         	{
-        		
+        		Intent intent = new Intent(getActivity(), SeedsSetPasswordActivity.class);
+        		startActivity(intent);
         	}
         	
         	return false;
         }
         
         public void onVerifyAddress(String _inUrl) {   	
-        	
-        	if(_inUrl.equals("N/A")){
-        		mServerUrl = SeedsDefinitions.getServerUrl();
-        	}
-        	else{
-        		mServerUrl = "http://"+_inUrl+"/seeds/messageListener";
-        	}
-        	
-        	mProgressDialog = ProgressDialog.show(getActivity(), "Verifying...", "Communicating with server "+mServerUrl, true, false);
+        	        	
+        	mProgressDialog = ProgressDialog.show(getActivity(), "Verifying...", 
+        			          getString(R.string.seeds_config_verifyserveraddrcommun), true, false);
         	mProgressDialog.setCanceledOnTouchOutside(true);
         	
     		new Thread() {
@@ -189,36 +186,24 @@ public class SeedsConfigActivity extends Activity {
             		{
                     	if (null != mResponse)
                     	{
-                    		// Record the address
-                    		SeedsDefinitions.setServerUrl(mServerUrl);
-                    		
-                    		Toast toast = Toast.makeText(getActivity(),
-                    				R.string.seeds_toast_configsucc, Toast.LENGTH_LONG);
-                    	    toast.setGravity(Gravity.CENTER, 0, 0);
-                    	    mProgressDialog.dismiss();
-                    		toast.show();
+                    		showToast(R.string.seeds_config_verifyserveraddrsucc);
                     	}
                     	else
                     	{
-                    		// Toast here
-                    		Toast toast = Toast.makeText(getActivity(),
-                    				R.string.seeds_toast_configfail, Toast.LENGTH_LONG);
-                    	    toast.setGravity(Gravity.CENTER, 0, 0);
-                    	    mProgressDialog.dismiss();
-                    		toast.show();
-                    	} 
-                    	
-                    	
+                    		showToast(R.string.seeds_config_verifyserveraddrfail);
+                    	}
+                    	mProgressDialog.dismiss();
             		}
             	}        	
             	
             }
     	};
         
-    	private void showToast(String _message) {
-    	    Toast.makeText(getActivity(), _message, Toast.LENGTH_SHORT).show();
+    	private void showToast(int _messageId) {
+    	    Toast.makeText(getActivity(), _messageId, Toast.LENGTH_SHORT).show();
     	}
         
-    }  
+    }
 
 }
+

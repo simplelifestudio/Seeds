@@ -46,8 +46,6 @@
     <string name="seeds_severaddrmsg">请输入IP地址与端口</string>
     <string name="seeds_severaddrverify">验证</string>
     
-    <string name="seeds_toast_configsucc">设置成功</string>
-    <string name="seeds_toast_configfail">无效的地址</string>
     <string name="seeds_download_seed">下载种子</string>
     <string name="seeds_download_mgt">下载管理</string>
     <string name="seeds_download_added">已添加至下载队列</string>
@@ -95,10 +93,6 @@
     <string name="seeds_config_selectchantitle">选择频道</string>
     <string name="seeds_config_selectchansum">选择您所希望接收到种子的类型频道</string>
     <string name="seeds_config_serveraddr">服务器地址：</string>
-    <string name="seeds_config_channel">选择频道：</string>
-    <string name="seeds_config_channel1">动作片</string>
-    <string name="seeds_config_channel2">剧情片</string>
-    <string name="seeds_config_channel3">文艺片</string>
     <string-array name="seeds_config_channels">
         <item >动作片</item>
         <item >剧情片</item>
@@ -117,6 +111,12 @@
     <string name="seeds_config_feedbacktitle">反馈问题</string>
     <string name="seeds_config_feedbacksum">欢迎您将使用过程中遇到的问题反馈给我们</string>
     <string name="seeds_config_abouttitle">关于</string>
-    <string name="seeds_config_aboutsum">关于Seeds和我们的团队</string>   
+    <string name="seeds_config_aboutsum">关于Seeds和我们的团队</string>
+        
+    <string name="seeds_config_setserveraddrfailed">服务器地址设置失败</string>
+    <string name="seeds_config_setserveraddrsum">目标服务器地址更改为</string>
+    <string name="seeds_config_verifyserveraddrcommun">正在与服务器通信中</string>
+    <string name="seeds_config_verifyserveraddrsucc">验证成功，服务器正常中</string>
+    <string name="seeds_config_verifyserveraddrfail">验证失败，请确认服务器是否正确</string>
     
 </resources>

@@ -229,7 +229,7 @@ containing a value of this type.
         public static final int seeds_download_ui_menu=0x7f0b0005;
     }
     public static final class string {
-        public static final int actionbar_activity_not_found=0x7f08006a;
+        public static final int actionbar_activity_not_found=0x7f080068;
         public static final int app_name=0x7f080036;
         /**  Text for button to cancel a download because it's too large to proceed over the mobile
          network and the user does not want to queue it for Wi-Fi [CHAR LIMIT=25] 
@@ -247,11 +247,11 @@ containing a value of this type.
         /**  Text for button to cancel a download that is currently in progress [CHAR LIMIT=25] 
          */
         public static final int cancel_running_download=0x7f080033;
-        public static final int clear_cache_complete_toast=0x7f08006e;
+        public static final int clear_cache_complete_toast=0x7f08006c;
         /**  Below parameters come from the gridview open source tool Bitmapfun 
  Below parameters come from the gridview open source tool Bitmapfun 
          */
-        public static final int clear_cache_menu=0x7f08006d;
+        public static final int clear_cache_menu=0x7f08006b;
         /** 
          Text for button to delete a download that has completed, or to delete multiple download
          entries [CHAR LIMIT=25]
@@ -388,7 +388,7 @@ containing a value of this type.
          */
         public static final int download_unknown_title=0x7f08000a;
         public static final int hello_world=0x7f080037;
-        public static final int imageview_description=0x7f08006f;
+        public static final int imageview_description=0x7f08006d;
         /**  Text for button to keep a download that has not yet begun [CHAR LIMIT=25] 
          */
         public static final int keep_queued_download=0x7f080032;
@@ -405,7 +405,7 @@ containing a value of this type.
     
          */
         public static final int no_downloads=0x7f080018;
-        public static final int no_network_connection_toast=0x7f080070;
+        public static final int no_network_connection_toast=0x7f08006e;
         /**  When a download completes, a notification is displayed, and this
         string is used to indicate that the download successfully completed.
         Note that such a download could have been initiated by a variety of
@@ -529,33 +529,34 @@ containing a value of this type.
         public static final int seedTitle=0x7f080054;
         public static final int seeds_Favorite=0x7f080058;
         public static final int seeds_UnFavorite=0x7f080059;
-        public static final int seeds_config_aboutsum=0x7f08009f;
-        public static final int seeds_config_abouttitle=0x7f08009e;
-        public static final int seeds_config_changepwdsum=0x7f08009a;
-        public static final int seeds_config_changepwdtitle=0x7f080099;
-        public static final int seeds_config_channel=0x7f08008e;
-        public static final int seeds_config_channel1=0x7f08008f;
-        public static final int seeds_config_channel2=0x7f080090;
-        public static final int seeds_config_channel3=0x7f080091;
-        public static final int seeds_config_clearcachesum=0x7f080097;
-        public static final int seeds_config_clearcachetitle=0x7f080096;
-        public static final int seeds_config_feedbackandhelp=0x7f08009b;
-        public static final int seeds_config_feedbacksum=0x7f08009d;
-        public static final int seeds_config_feedbacktitle=0x7f08009c;
-        public static final int seeds_config_modifyserveraddrsum=0x7f080088;
-        public static final int seeds_config_modifyserveraddrtitle=0x7f080087;
-        public static final int seeds_config_page=0x7f080085;
-        public static final int seeds_config_picpref=0x7f080092;
-        public static final int seeds_config_recpicwithoutwifisum=0x7f080094;
-        public static final int seeds_config_recpicwithoutwifisumoff=0x7f080095;
-        public static final int seeds_config_recpicwithoutwifititle=0x7f080093;
-        public static final int seeds_config_security=0x7f080098;
-        public static final int seeds_config_selectchansum=0x7f08008c;
-        public static final int seeds_config_selectchantitle=0x7f08008b;
-        public static final int seeds_config_serveraddr=0x7f08008d;
-        public static final int seeds_config_serverpref=0x7f080086;
-        public static final int seeds_config_verifyserveraddrsum=0x7f08008a;
-        public static final int seeds_config_verifyserveraddrtitle=0x7f080089;
+        public static final int seeds_config_aboutsum=0x7f080099;
+        public static final int seeds_config_abouttitle=0x7f080098;
+        public static final int seeds_config_changepwdsum=0x7f080094;
+        public static final int seeds_config_changepwdtitle=0x7f080093;
+        public static final int seeds_config_clearcachesum=0x7f080091;
+        public static final int seeds_config_clearcachetitle=0x7f080090;
+        public static final int seeds_config_feedbackandhelp=0x7f080095;
+        public static final int seeds_config_feedbacksum=0x7f080097;
+        public static final int seeds_config_feedbacktitle=0x7f080096;
+        public static final int seeds_config_modifyserveraddrsum=0x7f080086;
+        public static final int seeds_config_modifyserveraddrtitle=0x7f080085;
+        public static final int seeds_config_page=0x7f080083;
+        public static final int seeds_config_picpref=0x7f08008c;
+        public static final int seeds_config_recpicwithoutwifisum=0x7f08008e;
+        public static final int seeds_config_recpicwithoutwifisumoff=0x7f08008f;
+        public static final int seeds_config_recpicwithoutwifititle=0x7f08008d;
+        public static final int seeds_config_security=0x7f080092;
+        public static final int seeds_config_selectchansum=0x7f08008a;
+        public static final int seeds_config_selectchantitle=0x7f080089;
+        public static final int seeds_config_serveraddr=0x7f08008b;
+        public static final int seeds_config_serverpref=0x7f080084;
+        public static final int seeds_config_setserveraddrfailed=0x7f08009a;
+        public static final int seeds_config_setserveraddrsum=0x7f08009b;
+        public static final int seeds_config_verifyserveraddrcommun=0x7f08009c;
+        public static final int seeds_config_verifyserveraddrfail=0x7f08009e;
+        public static final int seeds_config_verifyserveraddrsucc=0x7f08009d;
+        public static final int seeds_config_verifyserveraddrsum=0x7f080088;
+        public static final int seeds_config_verifyserveraddrtitle=0x7f080087;
         public static final int seeds_datelist_analyzeseedsdata=0x7f08004a;
         public static final int seeds_datelist_analyzeseedsstatus=0x7f080049;
         public static final int seeds_datelist_befyesterday=0x7f08003f;
@@ -581,46 +582,44 @@ containing a value of this type.
         public static final int seeds_datelist_update=0x7f080042;
         public static final int seeds_datelist_updatestatuscommerror=0x7f08004d;
         public static final int seeds_datelist_yesterday=0x7f080040;
-        public static final int seeds_details_addto_fav=0x7f08006c;
-        public static final int seeds_details_to_grid=0x7f08006b;
+        public static final int seeds_details_addto_fav=0x7f08006a;
+        public static final int seeds_details_to_grid=0x7f080069;
         public static final int seeds_details_top=0x7f080057;
-        public static final int seeds_download_added=0x7f080067;
-        public static final int seeds_download_mgt=0x7f080066;
-        public static final int seeds_download_seed=0x7f080065;
-        public static final int seeds_fav_done=0x7f080069;
-        public static final int seeds_http_title=0x7f080071;
+        public static final int seeds_download_added=0x7f080065;
+        public static final int seeds_download_mgt=0x7f080064;
+        public static final int seeds_download_seed=0x7f080063;
+        public static final int seeds_fav_done=0x7f080067;
+        public static final int seeds_http_title=0x7f08006f;
         public static final int seeds_logo=0x7f080039;
-        public static final int seeds_password_drawstatus=0x7f08007b;
-        public static final int seeds_password_inputpwd=0x7f08007c;
-        public static final int seeds_password_logincorrect=0x7f080079;
-        public static final int seeds_password_loginfailed=0x7f08007a;
-        public static final int seeds_password_note=0x7f080077;
-        public static final int seeds_password_redraw=0x7f08007d;
-        public static final int seeds_password_save=0x7f08007e;
-        public static final int seeds_password_startdraw=0x7f080078;
-        public static final int seeds_password_tooshort=0x7f080084;
+        public static final int seeds_password_drawstatus=0x7f080079;
+        public static final int seeds_password_inputpwd=0x7f08007a;
+        public static final int seeds_password_logincorrect=0x7f080077;
+        public static final int seeds_password_loginfailed=0x7f080078;
+        public static final int seeds_password_note=0x7f080075;
+        public static final int seeds_password_redraw=0x7f08007b;
+        public static final int seeds_password_save=0x7f08007c;
+        public static final int seeds_password_startdraw=0x7f080076;
+        public static final int seeds_password_tooshort=0x7f080082;
         public static final int seeds_preffilename=0x7f08005a;
         public static final int seeds_preffilename_seedsnum=0x7f08005b;
         public static final int seeds_pwdmessage=0x7f08005d;
         public static final int seeds_pwdsend=0x7f08005e;
-        public static final int seeds_setpassword_correct=0x7f08007f;
-        public static final int seeds_setpassword_enterpwd=0x7f080083;
-        public static final int seeds_setpassword_failed=0x7f080082;
-        public static final int seeds_setpassword_success=0x7f080081;
-        public static final int seeds_setpassword_wrong=0x7f080080;
+        public static final int seeds_setpassword_correct=0x7f08007d;
+        public static final int seeds_setpassword_enterpwd=0x7f080081;
+        public static final int seeds_setpassword_failed=0x7f080080;
+        public static final int seeds_setpassword_success=0x7f08007f;
+        public static final int seeds_setpassword_wrong=0x7f08007e;
         public static final int seeds_severaddrmsg=0x7f080061;
         public static final int seeds_severaddrverify=0x7f080062;
         public static final int seeds_startverify=0x7f08005c;
         public static final int seeds_teamlogo=0x7f08003a;
-        public static final int seeds_toast_configfail=0x7f080064;
-        public static final int seeds_toast_configsucc=0x7f080063;
-        public static final int seeds_unfav_done=0x7f080068;
+        public static final int seeds_unfav_done=0x7f080066;
         public static final int seeds_verify_menu_settings=0x7f08005f;
-        public static final int seeds_wireless_continue=0x7f080074;
-        public static final int seeds_wireless_nowifi=0x7f080076;
-        public static final int seeds_wireless_nowifino3g=0x7f080075;
-        public static final int seeds_wireless_setwifi=0x7f080073;
-        public static final int seeds_wireless_title=0x7f080072;
+        public static final int seeds_wireless_continue=0x7f080072;
+        public static final int seeds_wireless_nowifi=0x7f080074;
+        public static final int seeds_wireless_nowifino3g=0x7f080073;
+        public static final int seeds_wireless_setwifi=0x7f080071;
+        public static final int seeds_wireless_title=0x7f080070;
         public static final int title_activity_display_message=0x7f080060;
         /**  Text for dialog when a download exceeds the carrier-specified recommended maximum size of
         downloads over the mobile network, and the user may choose to start the download over mobile

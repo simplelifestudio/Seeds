@@ -25,7 +25,8 @@
             android:key="config_network" 
             android:summaryOff="@string/seeds_config_recpicwithoutwifisumoff" 
             android:title="@string/seeds_config_recpicwithoutwifititle" 
-            android:summaryOn="@string/seeds_config_recpicwithoutwifisum"/>
+            android:summaryOn="@string/seeds_config_recpicwithoutwifisum" 
+            android:defaultValue="true"/>
         <Preference 
             android:title="@string/seeds_config_clearcachetitle" 
             android:key="config_clearcache" 
