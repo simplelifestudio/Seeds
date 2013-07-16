@@ -90,6 +90,8 @@
     <string name="seeds_config_serverpref">服务器设置</string>
     <string name="seeds_config_modifyserveraddrtitle">更改服务器地址</string>
     <string name="seeds_config_modifyserveraddrsum">更改服务器的IP地址，默认为106.187.38.78</string>
+    <string name="seeds_config_verifyserveraddrtitle">验证服务器地址</string>
+    <string name="seeds_config_verifyserveraddrsum">验证服务器通信是否正常</string>
     <string name="seeds_config_selectchantitle">选择频道</string>
     <string name="seeds_config_selectchansum">选择您所希望接收到种子的类型频道</string>
     <string name="seeds_config_serveraddr">服务器地址：</string>

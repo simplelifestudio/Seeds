@@ -91,6 +91,8 @@
     <string name="seeds_config_serverpref">Server Preference</string>
     <string name="seeds_config_modifyserveraddrtitle">Change Server Address</string>
     <string name="seeds_config_modifyserveraddrsum">Change the IP address of server, default is 106.187.38.78</string>
+    <string name="seeds_config_verifyserveraddrtitle">Verify Server Address</string>
+    <string name="seeds_config_verifyserveraddrsum">Check if the server is working properly</string>    
     <string name="seeds_config_selectchantitle">Select Channel</string>
     <string name="seeds_config_selectchansum">Select the Channels to which the seeds subscribed</string>
     <string name="seeds_config_serveraddr">Server Address：</string>  
