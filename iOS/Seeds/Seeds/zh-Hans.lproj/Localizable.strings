@@ -86,13 +86,14 @@
 "Internet Disconnected" = "无网络连接";
 
 "Server Checking" = "服务器检测";
-"Server Reachable" = "服务器可达";
-"Server Unreachable" = "服务器不可达";
-"Seeds Status Unreachable" = "状态查询失败";
-"Seeds Status Received" = "状态查询成功";
-"Seeds Checking" = "种子查询";
-"Seeds Received" = "种子获取成功";
-"Seeds Unreachable" = "种子获取失败";
+"Server Reachable" = "服务器正常";
+"Server Unreachable" = "服务器异常";
+"Sync Status Checking" = "同步状态检测";
+"Sync Status Unreachable" = "同步状态异常";
+"Sync Status Received" = "同步状态正常";
+"Seeds Status Checking" = "种子状态查询";
+"Seeds Status Received" = "种子状态正常";
+"Seeds Status Unreachable" = "种子状态异常";
 "No Responsed Message" = "无响应消息";
 "Error Responsed Message" = "错误响应消息";
 "Unexpect Responsed Message" = "不匹配的响应消息";

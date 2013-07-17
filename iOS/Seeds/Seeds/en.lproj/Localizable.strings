@@ -88,11 +88,12 @@
 "Server Checking" = "Server Checking";
 "Server Reachable" = "Server Reachable";
 "Server Unreachable" = "Server Unreachable";
-"Seeds Status Received" = "Status Received";
-"Seeds Status Unreachable" = "Status Unreachable";
-"Seeds Checking" = "Seeds Checking";
-"Seeds Received" = "Seeds Received";
-"Seeds Unreachable" = "Seeds Unreachable";
+"Sync Status Checking" = "Sync Status Checking";
+"Sync Status Received" = "Sync Status Received";
+"Sync Status Unreachable" = "Sync Status Unreachable";
+"Seeds Status Checking" = "Seeds Checking";
+"Seeds Status Received" = "Seeds Received";
+"Seeds Status Unreachable" = "Seeds Unreachable";
 "No Responsed Message" = "No Responsed Message";
 "Error Responsed Message" = "Error Responsed Message";
 "Unexpect Responsed Message" = "Unexpect Responsed Message";

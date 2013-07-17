@@ -400,7 +400,7 @@
                     if (_delegate)
                     {
                         [_delegate taskIsProcessing:NSLocalizedString(@"Server Reachable", nil) minorStatus:nil];
-                        [_delegate taskIsProcessing:NSLocalizedString(@"Status Checking", nil) minorStatus:nil];
+                        [_delegate taskIsProcessing:NSLocalizedString(@"Sync Status Checking", nil) minorStatus:nil];
                     }
                     
                     responseMessage = [self seedsUpdateStatusByDatesRequest:last3Days];
@@ -420,8 +420,8 @@
                                 // Step 40
                                 if (_delegate)
                                 {
-                                    [_delegate taskIsProcessing:NSLocalizedString(@"Seeds Status Received", nil) minorStatus:nil];
-                                    [_delegate taskIsProcessing:NSLocalizedString(@"Seeds Checking", nil) minorStatus:nil];
+                                    [_delegate taskIsProcessing:NSLocalizedString(@"Sync Status Received", nil) minorStatus:nil];
+                                    [_delegate taskIsProcessing:NSLocalizedString(@"Seeds Status Checking", nil) minorStatus:nil];
                                 }
                                 
                                 responseMessage = [self seedsByDatesRequest:last3Days];
