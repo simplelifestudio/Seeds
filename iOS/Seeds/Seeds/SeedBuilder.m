@@ -10,16 +10,25 @@
 
 @interface SeedBuilder()
 {
-    Seed* seed;
+    Seed* _seed;
 }
 
 @end
 
 @implementation SeedBuilder
 
++(BOOL) verfiySeed:(Seed*) seed
+{
+    BOOL flag = NO;
+    
+    flag =  (nil != seed && nil != seed.name && 0 < seed.name.length && nil != seed.torrentLink && 0 < seed.torrentLink.length) ? YES : NO;
+    
+    return flag;
+}
+
 -(void) initSeed
 {
-    seed = [[Seed alloc] init];
+    _seed = [[Seed alloc] init];
 }
 
 -(void) resetSeed
@@ -33,15 +42,15 @@
     {
         if ([attrName isEqualToString:TABLE_SEED_COLUMN_NAME])
         {
-            [seed setName:attrVal];
+            [_seed setName:attrVal];
         }
         else if ([attrName isEqualToString:TABLE_SEED_COLUMN_FORMAT])
         {
-            [seed setFormat:attrVal];
+            [_seed setFormat:attrVal];
         }
         else if ([attrName isEqualToString:TABLE_SEED_COLUMN_SIZE])
         {
-            [seed setSize:attrVal];
+            [_seed setSize:attrVal];
         }
         else if ([attrName isEqualToString:TABLE_SEED_COLUMN_MOSAIC])
         {
@@ -49,31 +58,29 @@
             BOOL flag2 = [CBStringUtils isSubstringIncluded:attrVal subString:@"无"];
             BOOL flag3 = [CBStringUtils isSubstringIncluded:attrVal subString:@"無"];
             BOOL mosaic = (flag1 && (flag2 | flag3)) ? NO : YES;
-            [seed setMosaic:mosaic];
+            [_seed setMosaic:mosaic];
         }
         else if ([attrName isEqualToString:TABLE_SEED_COLUMN_HASH])
         {
-            [seed setHash:attrVal];
+            [_seed setHash:attrVal];
         }
         else if ([attrName isEqualToString:TABLE_SEED_COLUMN_TORRENTLINK])
         {
-            [seed setTorrentLink:attrVal];
+            [_seed setTorrentLink:attrVal];
         }
         else if ([attrName isEqualToString:TABLE_SEEDPICTURE_COLUMN_PICTURELINK])
         {
             SeedPicture* picture = [[SeedPicture alloc] init];
             picture.pictureLink = attrVal;
             
-            [seed.seedPictures addObject:picture];
+            [_seed.seedPictures addObject:picture];
         }
     }
 }
 
 -(BOOL) isSeedReady
 {
-    BOOL flag = NO;
-    flag =  (nil != seed && nil != seed.name && nil != seed.torrentLink) ? YES : NO;
-    return flag;
+    return [SeedBuilder verfiySeed:_seed];
 }
 
 -(Seed*) getSeed
@@ -81,7 +88,7 @@
     Seed* tempSeed = nil;
     if ([self isSeedReady])
     {
-        tempSeed = seed;
+        tempSeed = _seed;
     }
     else
     {

@@ -12,6 +12,8 @@
 
 @interface SeedBuilder : NSObject
 
++(BOOL) verfiySeed:(Seed*) seed;
+
 -(void) initSeed;
 -(void) resetSeed;
 -(void) fillSeedWithAttribute:(NSString*) attrName attrVal:(NSString*)attrVal;

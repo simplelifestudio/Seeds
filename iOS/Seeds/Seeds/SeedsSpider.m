@@ -136,185 +136,201 @@
     // Step 80: 删除数据库中原有的，处于这三天之前的所有非收藏状态的记录
     // Step 90: 删除下载目录中原有的，处于这三天之前的的所有文件
     
-    BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
-    BOOL is3GEnabled = [CBNetworkUtils is3GEnabled];
-    if (!isWiFiEnabled && !is3GEnabled)
+    @try
     {
-        DLog(@"No internect connection");
-        if (nil != _seedsSpiderDelegate)
+        BOOL isWiFiEnabled = [CBNetworkUtils isWiFiEnabled];
+        BOOL is3GEnabled = [CBNetworkUtils is3GEnabled];
+        if (!isWiFiEnabled && !is3GEnabled)
         {
-            [_seedsSpiderDelegate taskCanceld:NSLocalizedString(@"Internet Disconnected", nil) minorStatus:nil];
-        }
-        return;
-    }
-    
-    [_guiModule setNetworkActivityIndicatorVisible:YES];
-    
-    if (nil != _seedsSpiderDelegate)
-    {
-        [_seedsSpiderDelegate taskStarted:NSLocalizedString(@"Preparing", nil) minorStatus:nil];
-    }
-    
-//    [[UserDefaultsModule sharedInstance] resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY]; // for test only
-    
-    // Step 10:
-    
-    NSMutableArray* pulledSeedList = [NSMutableArray array];
-    
-    NSInteger hasAllSyncBefore = days.count;
-    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-    NSInteger dayIndex = TheDayBefore;
-    for (NSDate* day in days)
-    {
-        // Step 20:
-        NSString* dateStr = [CBDateUtils shortDateString:day];
-        NSMutableString* hudStr1 = [NSMutableString stringWithCapacity:0];
-        [hudStr1 appendString:dateStr];
-        [hudStr1 appendString:STR_SPACE];
-        [hudStr1 appendString:NSLocalizedString(@"Pulling", nil)];
-        if (nil != _seedsSpiderDelegate)
-        {
-            [_seedsSpiderDelegate taskIsProcessing:hudStr1 minorStatus:NSLocalizedString(@"Status Checking", nil)];
+            DLog(@"No internect connection");
+            if (_seedsSpiderDelegate)
+            {
+                [_seedsSpiderDelegate taskCanceld:NSLocalizedString(@"Internet Disconnected", nil) minorStatus:nil];
+            }
+            return;
         }
         
-        BOOL isDaySyncBefore = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
-        BOOL isDaySyncAfter = NO;
-        DLog(@"Seeds in %@ have been synchronized yet? %@", dateStr, (isDaySyncBefore) ? @"YES" : @"NO");
-        if (!isDaySyncBefore)
+        [_guiModule setNetworkActivityIndicatorVisible:YES];
+        
+        if (_seedsSpiderDelegate)
         {
-            // Step 30:
-            if (nil != _seedsSpiderDelegate)
+            [_seedsSpiderDelegate taskStarted:NSLocalizedString(@"Preparing", nil) minorStatus:nil];
+        }
+        
+        //    [[UserDefaultsModule sharedInstance] resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY]; // for test only
+        
+        // Step 10:
+        
+        NSMutableArray* pulledSeedList = [NSMutableArray array];
+        
+        NSInteger hasAllSyncBefore = days.count;
+        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+        NSInteger dayIndex = TheDayBefore;
+        for (NSDate* day in days)
+        {
+            // Step 20:
+            NSString* dateStr = [CBDateUtils shortDateString:day];
+            NSMutableString* hudStr1 = [NSMutableString stringWithCapacity:0];
+            [hudStr1 appendString:dateStr];
+            [hudStr1 appendString:STR_SPACE];
+            [hudStr1 appendString:NSLocalizedString(@"Pulling", nil)];
+            if (_seedsSpiderDelegate)
             {
-                [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Link Analyzing", nil)];
+                [_seedsSpiderDelegate taskIsProcessing:hudStr1 minorStatus:NSLocalizedString(@"Status Checking", nil)];
             }
             
-            NSString* channelLink = [self pullSeedListLinkByDate:day];
-            if (nil != channelLink && 0 < channelLink.length)
+            BOOL isDaySyncBefore = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
+            BOOL isDaySyncAfter = NO;
+            DLog(@"Seeds in %@ have been synchronized yet? %@", dateStr, (isDaySyncBefore) ? @"YES" : @"NO");
+            if (!isDaySyncBefore)
             {
-                // Step 40:
-                if (nil != _seedsSpiderDelegate)
+                // Step 30:
+                if (_seedsSpiderDelegate)
                 {
-                    [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Seeds Parsing", nil)];
+                    [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Link Analyzing", nil)];
                 }
                 
-                NSArray* seedList = [self pullSeedsFromLink:channelLink];
-                [self fillCommonInfoToSeeds:seedList date:day];
-                
-                [pulledSeedList addObjectsFromArray:seedList];
-                
-                if (nil != _seedsSpiderDelegate)
+                NSString* channelLink = [self pullSeedListLinkByDate:day];
+                if (nil != channelLink && 0 < channelLink.length)
                 {
-                    [_seedsSpiderDelegate taskDataUpdated:[NSString stringWithFormat:@"%d", dayIndex] data:[NSString stringWithFormat:@"%d", seedList.count]];
-                }
-                
-                // Step 50:
-                NSMutableString* hudStr2 = [NSMutableString stringWithCapacity:0];
-                [hudStr2 appendString:dateStr];
-                [hudStr2 appendString:STR_SPACE];
-                [hudStr2 appendString:NSLocalizedString(@"Saving", nil)];
-                if (nil != _seedsSpiderDelegate)
-                {
-                    [_seedsSpiderDelegate taskIsProcessing:hudStr2 minorStatus:NSLocalizedString(@"Seeds Organizing", nil)];
-                }
-                
-                BOOL optSuccess = [seedDAO deleteSeedsByDate:day];
-                if (optSuccess)
-                {
-                    // Step 60:
-                    if (nil != _seedsSpiderDelegate)
+                    // Step 40:
+                    if (_seedsSpiderDelegate)
                     {
-                        [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Seeds Saving", nil)];
+                        [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Seeds Parsing", nil)];
                     }
                     
-                    optSuccess = [seedDAO insertSeeds:seedList];
-                    if (!optSuccess)
+                    NSArray* seedList = [self pullSeedsFromLink:channelLink];
+                    [self fillCommonInfoToSeeds:seedList date:day];
+                    
+                    [pulledSeedList addObjectsFromArray:seedList];
+                    
+                    if (_seedsSpiderDelegate)
                     {
-                        DLog(@"Fail to save seed records into table with date: %@", dateStr);                        
-                        if (nil != _seedsSpiderDelegate)
+                        [_seedsSpiderDelegate taskDataUpdated:[NSString stringWithFormat:@"%d", dayIndex] data:[NSString stringWithFormat:@"%d", seedList.count]];
+                    }
+                    
+                    // Step 50:
+                    NSMutableString* hudStr2 = [NSMutableString stringWithCapacity:0];
+                    [hudStr2 appendString:dateStr];
+                    [hudStr2 appendString:STR_SPACE];
+                    [hudStr2 appendString:NSLocalizedString(@"Saving", nil)];
+                    if (_seedsSpiderDelegate)
+                    {
+                        [_seedsSpiderDelegate taskIsProcessing:hudStr2 minorStatus:NSLocalizedString(@"Seeds Organizing", nil)];
+                    }
+                    
+                    BOOL optSuccess = [seedDAO deleteSeedsByDate:day];
+                    if (optSuccess)
+                    {
+                        // Step 60:
+                        if (_seedsSpiderDelegate)
                         {
-                            [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Fail Saving", nil)];
+                            [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Seeds Saving", nil)];
+                        }
+                        
+                        optSuccess = [seedDAO insertSeeds:seedList];
+                        if (!optSuccess)
+                        {
+                            DLog(@"Fail to save seed records into table with date: %@", dateStr);
+                            if (_seedsSpiderDelegate)
+                            {
+                                [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Fail Saving", nil)];
+                            }
                         }
                     }
+                    else
+                    {
+                        DLog(@"Fail to clear seed table with date: %@", dateStr);
+                        if (_seedsSpiderDelegate)
+                        {
+                            [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Fail Clearing", nil)];
+                        }
+                    }
+                    
+                    // Step 70:
+                    if (_seedsSpiderDelegate)
+                    {
+                        [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Status Saving", nil)];
+                    }
+                    
+                    isDaySyncAfter = optSuccess;
                 }
                 else
                 {
-                    DLog(@"Fail to clear seed table with date: %@", dateStr);
+                    NSString* dateStr = [CBDateUtils shortDateString:day];
+                    DLog(@"Seeds channel link can't be found with date: %@", dateStr);
                     if (nil != _seedsSpiderDelegate)
                     {
-                        [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Fail Clearing", nil)];
+                        [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"No Update", nil)];
+                        
+                        if (_seedsSpiderDelegate)
+                        {
+                            [_seedsSpiderDelegate taskDataUpdated:[NSString stringWithFormat:@"%d", dayIndex] data:[NSString stringWithFormat:@"%d", 0]];
+                        }
                     }
+                    
+                    isDaySyncAfter = YES;
                 }
                 
-                // Step 70:
-                if (nil != _seedsSpiderDelegate)
-                {
-                    [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Status Saving", nil)];
-                }
+                [[UserDefaultsModule sharedInstance] setThisDaySync:day sync:isDaySyncAfter];
                 
-                isDaySyncAfter = optSuccess;
+                hasAllSyncBefore--;
             }
             else
             {
-                NSString* dateStr = [CBDateUtils shortDateString:day];
-                DLog(@"Seeds channel link can't be found with date: %@", dateStr);
-                if (nil != _seedsSpiderDelegate)
-                {
-                    [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"No Update", nil)];
-                    
-                    if ([_seedsSpiderDelegate respondsToSelector:@selector(taskDataUpdated:data:)])
-                    {
-                        [_seedsSpiderDelegate taskDataUpdated:[NSString stringWithFormat:@"%d", dayIndex] data:[NSString stringWithFormat:@"%d", 0]];
-                    }
-                }
+                DLog(@"Day: %@ has been sync before.", dateStr);
                 
-                isDaySyncAfter = YES;
+                if (_seedsSpiderDelegate)
+                {
+                    [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Pulled Yet", nil)];
+                }
             }
             
-            [[UserDefaultsModule sharedInstance] setThisDaySync:day sync:isDaySyncAfter];
-            
-            hasAllSyncBefore--;            
+            dayIndex++;
+        }
+        
+        if (hasAllSyncBefore == days.count)
+        {
+            if (_seedsSpiderDelegate)
+            {
+                [_seedsSpiderDelegate taskFinished:NSLocalizedString(@"Completed", nil) minorStatus:nil];
+            }
         }
         else
         {
-            DLog(@"Day: %@ has been sync before.", dateStr);
-            
-            if (nil != _seedsSpiderDelegate)
+            // Step 80:
+            DLog(@"Clean old and unfavorited seed records.");
+            [seedDAO deleteAllExceptLastThreeDaySeeds:days];
+            if (_seedsSpiderDelegate)
             {
-                [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Pulled Yet", nil)];
+                [_seedsSpiderDelegate taskIsProcessing:NSLocalizedString(@"Seeds Organizing", nil) minorStatus:nil];
+            }
+            
+            // Step 90:
+            DLog(@"Clean all old torrents before the last 3 days.");
+            [_downloadAgent clearDownloadDirectory:days];
+            
+            if (_seedsSpiderDelegate)
+            {
+                [_seedsSpiderDelegate taskFinished:NSLocalizedString(@"Completed", nil) minorStatus:nil];
             }
         }
-
-        dayIndex++;
-    }
         
-    if (hasAllSyncBefore == days.count)
-    {
-        if (nil != _seedsSpiderDelegate)
-        {
-            [_seedsSpiderDelegate taskFinished:NSLocalizedString(@"Completed", nil) minorStatus:nil];
-        }
+        [_guiModule setNetworkActivityIndicatorVisible:NO];
     }
-    else
+    @catch (NSException* exception)
     {
-        // Step 80:
-        DLog(@"Clean old and unfavorited seed records.");
-        [seedDAO deleteAllExceptLastThreeDaySeeds:days];
-        if (nil != _seedsSpiderDelegate)
-        {
-            [_seedsSpiderDelegate taskIsProcessing:NSLocalizedString(@"Seeds Organizing", nil) minorStatus:nil];
-        }
+        DLog(@"Caught an exception: %@", exception.debugDescription);
         
-        // Step 90:
-        DLog(@"Clean all old torrents before the last 3 days.");
-        [_downloadAgent clearDownloadDirectory:days];
-
-        if (nil != _seedsSpiderDelegate)
+        if (_seedsSpiderDelegate)
         {
-            [_seedsSpiderDelegate taskFinished:NSLocalizedString(@"Completed", nil) minorStatus:nil];
+            [_seedsSpiderDelegate taskFailed:NSLocalizedString(@"Exception Caught", nil) minorStatus:nil];
         }
     }
-    
-    [_guiModule setNetworkActivityIndicatorVisible:NO];
+    @finally
+    {
+        
+    }
 }
 
 -(void) fillCommonInfoToSeeds:(NSArray*) seeds date:(NSDate*) day
