@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -69,17 +68,17 @@ public class SeedsHttpServiceActivity extends Activity {
 		
 		@Override
 		public void onServerReady(String pAddress, int pPort) {			
-			mUpdateHandler.post(new EventMessage("Server ready on " + pAddress + ":" + String.valueOf(pPort)));
+			mUpdateHandler.post(new EventMessage(getString(R.string.seeds_http_eventserverready) + pAddress + ":" + String.valueOf(pPort)));
 		}
 		
 		@Override
 		public void onRequestServed(String pResource) {
-			mUpdateHandler.post(new EventMessage("Served " + pResource));
+			mUpdateHandler.post(new EventMessage(getString(R.string.seeds_http_eventserve) + pResource));
 		}
 		
 		@Override
 		public void onRequestError(String pResource) {
-			mUpdateHandler.post(new EventMessage("Server sent error response " + pResource));
+			mUpdateHandler.post(new EventMessage(getString(R.string.seeds_http_eventserveerror) + pResource));
 		}
 	};
 	
@@ -116,7 +115,7 @@ public class SeedsHttpServiceActivity extends Activity {
     	getInterfaces();    	
 		
     	mVibration = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-    	updateStatus("Tap on Start Server below to start serving");
+    	updateStatus(getString(R.string.seeds_http_taptostart));
 		       
     }
     
@@ -141,7 +140,7 @@ public class SeedsHttpServiceActivity extends Activity {
     
 
     private void stopServer() {
-    	updateStatus("Stopping server ...");
+    	updateStatus(getString(R.string.seeds_http_stopserver));
     	if (mHttpServer != null) {
     		mHttpServer.stop();
     	}
@@ -149,7 +148,7 @@ public class SeedsHttpServiceActivity extends Activity {
     		mServerThread.interrupt();
     	}
     	mAddressSpinner.setEnabled(true);
-		updateStatus("Server stopped.");
+		updateStatus(getString(R.string.seeds_http_serverstopped));
     }
     
     public void onStop() {

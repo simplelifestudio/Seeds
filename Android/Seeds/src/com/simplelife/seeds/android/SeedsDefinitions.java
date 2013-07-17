@@ -49,4 +49,5 @@ public class SeedsDefinitions {
 	public static boolean getDownloadImageFlag(){
 		return mDownloadImageWithoutWifiEnabled;
 	}
+	
 }

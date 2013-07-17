@@ -25,6 +25,7 @@ import android.widget.ImageView;
 
 import com.simplelife.seeds.android.R;
 import com.simplelife.seeds.android.SeedsDefinitions;
+import com.simplelife.seeds.android.utils.wirelessmanager.SeedsWirelessManager;
 
 public class SeedsImageLoader {
 
@@ -33,6 +34,7 @@ public class SeedsImageLoader {
 	private Map<ImageView, String> imageViews = Collections
 			.synchronizedMap(new WeakHashMap<ImageView, String>());
 	ExecutorService executorService;
+	Context mContext;
 	
 	private static String tag = "ImageLoader"; // for LogCat
 	
@@ -43,6 +45,7 @@ public class SeedsImageLoader {
 	public SeedsImageLoader(Context context) {
 		tFileCache = new SeedsFileCache(context);
 		executorService = Executors.newFixedThreadPool(5);
+		mContext = context;
 	}
 
 	// Note: We will finally change below methods into an array
@@ -92,7 +95,9 @@ public class SeedsImageLoader {
 		}
 		else {
 			//Log.i(tag,"Dowload the image, url=" + url);
-			if (SeedsDefinitions.getDownloadImageFlag())
+			if (SeedsDefinitions.getDownloadImageFlag()
+				||
+				SeedsWirelessManager.isWifiOpen(mContext))
 			{	
 			    queuePhoto(url, imageView);
 			    imageView.setImageResource(stub_id);

@@ -14,13 +14,13 @@ text view -->
             <Button android:id="@+id/start"
                 android:clickable="true"
                 style="@style/HttpMainButton"
-                android:text="Start server"
+                android:text="@string/seeds_http_buttonstartserver"
                 android:drawableTop="@drawable/start"/>
 
             <Button android:id="@+id/stop"
                 android:hapticFeedbackEnabled="true"
                 style="@style/HttpMainButton"
-                android:text="Stop server"
+                android:text="@string/seeds_http_buttonstopserver"
                 android:drawableTop="@drawable/stop"/>
 
          </LinearLayout>
