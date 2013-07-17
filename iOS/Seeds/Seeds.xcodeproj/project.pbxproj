@@ -70,6 +70,7 @@
 		C5203DF31747D56400D917F7 /* ZipWriteStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DEA1747D56300D917F7 /* ZipWriteStream.m */; };
 		C5203DFC17485A8600D917F7 /* SeedsDownloadAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DFB17485A8500D917F7 /* SeedsDownloadAgent.m */; };
 		C522BA31174CF1FA001FC7BD /* GUIModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C522BA30174CF1FA001FC7BD /* GUIModule.m */; };
+		C52AD0B11796E7AB00F9D174 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AD0B01796E7AB00F9D174 /* Reachability.m */; };
 		C5309DEF1789754F0000F328 /* CBHUDAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5309DEE1789754F0000F328 /* CBHUDAgent.m */; };
 		C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C531833A17237FF700264530 /* CBModuleAbstractImpl.m */; };
 		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
@@ -192,7 +193,6 @@
 		C5E0C1F4176AF6E30037811F /* SeedPictureAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */; };
 		C5F8AC4E174A3B72001E30D1 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = C5F8AC4D174A3B72001E30D1 /* index.html */; };
 		C5F8AC50174B9807001E30D1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */; };
-		C5F8AC5F174BC3B9001E30D1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F8AC5E174BC3B9001E30D1 /* Reachability.m */; };
 		C5F964CE1788D682001BAB5D /* DownloadSeedListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F964CD1788D682001BAB5D /* DownloadSeedListViewController.m */; };
 		C5FFCF4817968A7800FC0646 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FFCF4717968A7800FC0646 /* HelpViewController.m */; };
 		C5FFCF5417968E6D00FC0646 /* help1.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF4C17968E6D00FC0646 /* help1.png */; };
@@ -321,6 +321,8 @@
 		C5203DFB17485A8500D917F7 /* SeedsDownloadAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeedsDownloadAgent.m; path = Seeds/SeedsDownloadAgent.m; sourceTree = "<group>"; };
 		C522BA2F174CF1FA001FC7BD /* GUIModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIModule.h; sourceTree = "<group>"; };
 		C522BA30174CF1FA001FC7BD /* GUIModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUIModule.m; sourceTree = "<group>"; };
+		C52AD0AF1796E7AB00F9D174 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		C52AD0B01796E7AB00F9D174 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		C52BB4761788003900BD40E7 /* CBNotificationListenable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBNotificationListenable.h; sourceTree = "<group>"; };
 		C5309DED1789754F0000F328 /* CBHUDAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBHUDAgent.h; sourceTree = "<group>"; };
 		C5309DEE1789754F0000F328 /* CBHUDAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBHUDAgent.m; sourceTree = "<group>"; };
@@ -534,8 +536,6 @@
 		C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeedPictureAgent.m; path = Seeds/SeedPictureAgent.m; sourceTree = "<group>"; };
 		C5F8AC4D174A3B72001E30D1 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		C5F8AC5D174BC3B9001E30D1 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		C5F8AC5E174BC3B9001E30D1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		C5F964CC1788D682001BAB5D /* DownloadSeedListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadSeedListViewController.h; sourceTree = "<group>"; };
 		C5F964CD1788D682001BAB5D /* DownloadSeedListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadSeedListViewController.m; sourceTree = "<group>"; };
 		C5FFCF4617968A7800FC0646 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
@@ -803,6 +803,15 @@
 			path = "Objective-Zip";
 			sourceTree = "<group>";
 		};
+		C52AD0AE1796E7AB00F9D174 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				C52AD0AF1796E7AB00F9D174 /* Reachability.h */,
+				C52AD0B01796E7AB00F9D174 /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
 		C52BB4781788074E00BD40E7 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -944,9 +953,9 @@
 		C57CF282172565100002B054 /* 3rd Libs */ = {
 			isa = PBXGroup;
 			children = (
+				C52AD0AE1796E7AB00F9D174 /* Reachability */,
 				C506EA3D178F9840007E9FE7 /* EGOTableViewPullRefresh */,
 				C55D1AB61751BE35000B3E34 /* PAPasscode */,
-				C5F8AC5C174BC3B8001E30D1 /* Reachability */,
 				C5203DD71747D55700D917F7 /* MiniZip */,
 				C5203DE01747D55B00D917F7 /* Objective-Zip */,
 				C5203CE41743BE1600D917F7 /* CocoaHTTPServer */,
@@ -1254,15 +1263,6 @@
 			name = Web;
 			sourceTree = "<group>";
 		};
-		C5F8AC5C174BC3B8001E30D1 /* Reachability */ = {
-			isa = PBXGroup;
-			children = (
-				C5F8AC5D174BC3B9001E30D1 /* Reachability.h */,
-				C5F8AC5E174BC3B9001E30D1 /* Reachability.m */,
-			);
-			path = Reachability;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1505,7 +1505,6 @@
 				C5203DF21747D56400D917F7 /* ZipReadStream.m in Sources */,
 				C5203DF31747D56400D917F7 /* ZipWriteStream.m in Sources */,
 				C5203DFC17485A8600D917F7 /* SeedsDownloadAgent.m in Sources */,
-				C5F8AC5F174BC3B9001E30D1 /* Reachability.m in Sources */,
 				C522BA31174CF1FA001FC7BD /* GUIModule.m in Sources */,
 				C55D1ACB1751BE35000B3E34 /* PAPasscodeViewController.m in Sources */,
 				C571E0A3176627CE00E9AD50 /* AsyncImageView.m in Sources */,
@@ -1525,6 +1524,7 @@
 				C5309DEF1789754F0000F328 /* CBHUDAgent.m in Sources */,
 				C506EA4B178F9841007E9FE7 /* EGORefreshTableHeaderView.m in Sources */,
 				C5FFCF4817968A7800FC0646 /* HelpViewController.m in Sources */,
+				C52AD0B11796E7AB00F9D174 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
