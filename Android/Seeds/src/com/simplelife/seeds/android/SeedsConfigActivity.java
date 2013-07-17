@@ -14,6 +14,7 @@ import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
+import com.simplelife.seeds.android.utils.imageprocess.SeedsFileCache;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
@@ -86,6 +87,14 @@ public class SeedsConfigActivity extends Activity {
             mPrefFeedback   = (Preference)findPreference("config_feedback");
             mPrefAbout = (Preference)findPreference("config_about");
             
+            try {
+				mPrefClearCache.setSummary(getString(R.string.seeds_config_clearcachesum)
+						                   +SeedsFileCache.getCacheSize()+"MB");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
             mEditTextPrefServerAddr.setOnPreferenceChangeListener(this);
             mListPrefSelectChan.setOnPreferenceChangeListener(this);
             mSwitchPrefWifi.setOnPreferenceChangeListener(this);
@@ -138,7 +147,15 @@ public class SeedsConfigActivity extends Activity {
         	}
         	else if(mPrefClearCache == preference)
         	{
-        		
+        		SeedsFileCache.clearCache();
+                try {
+    				mPrefClearCache.setSummary(getString(R.string.seeds_config_clearcachesum)
+    						                   +SeedsFileCache.getCacheSize()+"MB");
+    			} catch (Exception e) {
+    				// TODO Auto-generated catch block
+    				e.printStackTrace();
+    			}
+                showToast(R.string.seeds_config_clearcachedone);
         	}
         	else if(mPrefChangePwd == preference)
         	{

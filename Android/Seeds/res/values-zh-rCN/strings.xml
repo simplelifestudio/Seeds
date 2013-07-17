@@ -118,5 +118,6 @@
     <string name="seeds_config_verifyserveraddrcommun">正在与服务器通信中</string>
     <string name="seeds_config_verifyserveraddrsucc">验证成功，服务器正常中</string>
     <string name="seeds_config_verifyserveraddrfail">验证失败，请确认服务器是否正确</string>
+    <string name="seeds_config_clearcachedone">缓存已清空</string>
     
 </resources>
