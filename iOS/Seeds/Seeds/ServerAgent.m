@@ -102,6 +102,18 @@
         seed.hash = hashStr;
         seed.memo = memoStr;
         
+        NSArray* picLinks = [seedDic objectForKey:JSONMESSAGE_KEY_PICLINKS];
+        NSMutableArray* pictures = [NSMutableArray array];
+        for (NSString* picLink in picLinks)
+        {
+            SeedPicture* picture = [[SeedPicture alloc] init];
+            picture.seedId = seed.seedId;
+            picture.pictureLink = picLink;
+            
+            [pictures addObject:picture];
+        }
+        seed.seedPictures = pictures;
+        
         BOOL isSeedLegal = [SeedBuilder verfiySeed:seed];
         if (!isSeedLegal)
         {
