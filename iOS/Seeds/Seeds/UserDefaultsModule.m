@@ -209,6 +209,18 @@ SINGLETON(UserDefaultsModule)
     [self setValueForKeyInPersistentDomain:sVal forKey:USERDEFAULTS_KEY_3GDOWNLOADIMAGES inPersistentDomain:PERSISTENTDOMAIN_NETWORK];
 }
 
+-(void) setCartId:(NSString*) cartId
+{
+    NSString* sVal = cartId;
+    [self setValueForKeyInPersistentDomain:sVal forKey:USERDEFAULTS_KEY_CARTID inPersistentDomain:PERSISTENTDOMAIN_NETWORK];
+}
+
+-(NSString*) cartId
+{
+    id value = [self getValueForKeyInPersistentDomain:USERDEFAULTS_KEY_CARTID inPersistentDomain:PERSISTENTDOMAIN_NETWORK];    
+    return (NSString*)value;
+}
+
 #pragma mark - App
 
 -(BOOL) isAppLaunchedBefore

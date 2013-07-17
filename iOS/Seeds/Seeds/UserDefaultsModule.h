@@ -26,6 +26,8 @@
 #pragma mark - Network
 -(BOOL) isDownloadImagesThrough3GEnabled;
 -(void) enableDownloadImagesThrough3G:(BOOL) enabled;
+-(void) setCartId:(NSString*) cartId;
+-(NSString*) cartId;
 
 #pragma mark - App
 -(BOOL) isAppLaunchedBefore;
