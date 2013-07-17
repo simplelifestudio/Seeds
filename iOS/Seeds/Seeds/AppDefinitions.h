@@ -10,6 +10,7 @@
 #define Seeds_AppDefinitions_h
 
 // App Global
+#define APP_VERSION @"0.1"
 #define NAMESPACE_APP @"com.simplelife.seeds.ios"
 #define MODULE_DELAY usleep(300000);
 

@@ -90,7 +90,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     TableViewButtonCell* _changePasscodeCell;
     
     TableViewButtonCell* _feedbackCell;
-    TableViewButtonCell* _aboutCell;
+    TableViewLabelCell* _aboutCell;
 
     PasscodeEnterPurpose _passcodeEnterPurpose;
 }
@@ -911,18 +911,13 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 {
     if (nil == _aboutCell)
     {
-        _aboutCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
+        _aboutCell = [CBUIUtils componentFromNib:NIB_TABLECELL_LABEL owner:self options:nil];
         
         [_aboutCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        _aboutCell.label.text = NSLocalizedString(@"Version", nil);
-        [_aboutCell.button setTitle:@"0.1" forState:UIControlStateNormal];
+        _aboutCell.majorLabel.text = NSLocalizedString(@"Version", nil);
+        _aboutCell.minorLabel.text = APP_VERSION;
         
         [self _refreshAboutCell];
-        
-        [_aboutCell.button addTarget:self action:@selector(_checkAbout) forControlEvents:UIControlEventTouchUpInside];
-        
-        [_aboutCell.button setEnabled:NO];
-        [_aboutCell.button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     }
 }
 
