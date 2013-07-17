@@ -10,6 +10,8 @@
 
 "Seeds: %d" = "Seeds: %d";
 
+"Exception Caught" = "Exception Caught";
+
 "Communication Module" = "Communication Module";
 "Communication Module Thread" = "Communication Module Thread";
 "Database Module" = "Database Module";
@@ -53,7 +55,7 @@
 "Fail Clearing" = "Fail Clearing";
 "Status Saving" = "Status Saving";
 "Fail Analyzing" = "Fail Analyzing";
-"No Update" = "No Update";
+"Not Ready" = "Not Ready";
 "Pulled Yet" = "Updated Yet";
 "Sync Yet" = "Updated Yet";
 "Completed" = "Completed";
@@ -63,7 +65,7 @@
 "Download Torrent" = "Download Torrent";
 "Delete Torrent" = "Delete Torrent";
 
-"Transmission module needs WiFi environment..." = "Sharing needs WiFi environment...";
+"Transmission module needs WiFi environment..." = "WiFi environment is necessary...";
 "Transmission module is initializing..." = "Module is initializing...";
 "Transmission is cancel." = "Sharing is cancel...";
 "Torrents directory failed to create." = "Torrents directory failed to create.";
@@ -83,13 +85,17 @@
 "3G/GPRS Connected" = "3G/GPRS Connected";
 "Internet Disconnected" = "Internet Disconnected";
 
-"Server Status Check" = "Server Status Check";
+"Server Checking" = "Server Checking";
 "Server Reachable" = "Server Reachable";
 "Server Unreachable" = "Server Unreachable";
-"Seeds Status Received" = "Seeds Status Received";
-"Seeds Status Unreachable" = "Seeds Status Unreachable";
+"Seeds Status Received" = "Status Received";
+"Seeds Status Unreachable" = "Status Unreachable";
+"Seeds Checking" = "Seeds Checking";
 "Seeds Received" = "Seeds Received";
 "Seeds Unreachable" = "Seeds Unreachable";
+"No Responsed Message" = "No Responsed Message";
+"Error Responsed Message" = "Error Responsed Message";
+"Unexpect Responsed Message" = "Unexpect Responsed Message";
 
 "Directory Unready" = "Directory Unready";
 "Torrent Downloading" = "Torrent Downloading";
@@ -120,6 +126,7 @@
 
 "Running" = "Running";
 "Server Mode" = "Server Mode";
+"Mode Switched" = "Mode Switched";
 
 "Images" = "Images";
 "Download Images Through 3G/GPRS" = "Download Images Through 3G/GPRS";
@@ -127,6 +134,7 @@
 "Caching" = "Caching";
 "Clear Images Cache" = "Clear Images Cache";
 "Clearing" = "Clearing";
+"Counting" = "Counting";
 "Images Cache Cleared" = "Images Cache Cleared";
 
 "Data" = "Data";

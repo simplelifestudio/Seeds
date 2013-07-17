@@ -21,4 +21,6 @@ typedef void(^HUDDisplayBlock)(NSString* majorStauts, NSString* minorStatus, NSI
 
 - (void)showHUDAnimated:(BOOL)animated whileExecutingBlock:(dispatch_block_t)block completionBlock:(MBProgressHUDCompletionBlock)completion;
 
+- (void) releaseResources;
+
 @end

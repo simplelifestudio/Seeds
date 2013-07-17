@@ -20,10 +20,10 @@
     if (nil != command && 0 < command.length)
     {
         NSMutableDictionary* dic = [NSMutableDictionary dictionary];
-        [dic setObject:command forKey:JSONMESSAGE_KEY_COMMAND];
+        [dic setObject:command forKey:JSONMESSAGE_KEY_ID];
         if (nil != body)
         {
-            [dic setObject:body forKey:JSONMESSAGE_KEY_PARAMLIST];
+            [dic setObject:body forKey:JSONMESSAGE_KEY_BODY];
         }
         message = [[JSONMessage alloc] init];
         [message setCommand:command];
@@ -39,6 +39,11 @@
     NSString* command = nil;
     switch (type)
     {
+        case ErrorResponse:
+        {
+            command = JSONMESSAGE_COMMAND_ERRORRESPONSE;
+            break;
+        }
         case AlohaRequest:
         {
             command = JSONMESSAGE_COMMAND_ALOHAREQUEST;
@@ -111,8 +116,8 @@
     
     if (nil != content)
     {
-        NSString* command = [content objectForKey:JSONMESSAGE_KEY_COMMAND];
-        NSDictionary* body = [content objectForKey:JSONMESSAGE_KEY_PARAMLIST];
+        NSString* command = [content objectForKey:JSONMESSAGE_KEY_ID];
+        NSDictionary* body = [content objectForKey:JSONMESSAGE_KEY_BODY];
 
         message = [JSONMessage construct:command messageBody:body];
     }
@@ -120,9 +125,48 @@
     return message;
 }
 
++(JSONMessageErrorCode) verify:(JSONMessage*) message
+{
+    JSONMessageErrorCode error = LegalResponseMessage;
+    
+    if (nil != message)
+    {
+        NSString* messageId = message.command;
+        if (nil != messageId && 0 < messageId.length)
+        {
+            if ([messageId isEqualToString:JSONMESSAGE_COMMAND_ERRORRESPONSE])
+            {
+                error = ErrorResponseMessage;
+            }
+        }
+        else
+        {
+            error = IllegalResponseMessage;
+        }
+    }
+    else
+    {
+        error = NoResponseMessage;
+    }
+    
+    return error;
+}
+
++(BOOL) isErrorResponseMessage:(JSONMessage*) message
+{
+    BOOL flag = NO;
+    
+    if (nil != message && [message.command isEqualToString:JSONMESSAGE_COMMAND_ERRORRESPONSE])
+    {
+        flag = YES;
+    }
+    
+    return flag;
+}
+
 -(NSDictionary*) content
 {
-    NSDictionary* content = [_body objectForKey:JSONMESSAGE_KEY_PARAMLIST];
+    NSDictionary* content = [NSDictionary dictionaryWithObjects:@[_command, _body] forKeys:@[JSONMESSAGE_KEY_ID, JSONMESSAGE_KEY_BODY]];
     
     return content;
 }

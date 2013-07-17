@@ -28,6 +28,8 @@
     CommunicationModule* _commModule;
     ServerAgent* _serverAgent;
     SeedPictureAgent* _pictureAgent;
+    
+    SpiderModule* _spiderModule;
 }
 @end
 
@@ -40,6 +42,11 @@
 @synthesize todayButton = _todayButton;
 @synthesize yesterdayButton = _yesterdayButton;
 @synthesize theDayBeforeButton = _theDayBeforeButton;
+@synthesize syncButton = _syncButton;
+@synthesize transButton = _transButton;
+@synthesize downloadsButton = _downloadsButton;
+@synthesize configButton = _configButton;
+@synthesize helpButton = _helpButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,6 +62,8 @@
 {
     [super viewDidLoad];
     
+    [self _formatButtons];
+    
     _userDefaults = [UserDefaultsModule sharedInstance];
     
     SpiderModule* spiderModule = [SpiderModule sharedInstance];
@@ -67,6 +76,8 @@
     
     _guiModule = [GUIModule sharedInstance];
     _guiModule.homeViewController = self;
+    
+    _spiderModule = [SpiderModule sharedInstance];
     
     [self _registerNotifications];
 }
@@ -112,6 +123,9 @@
     [self setYesterdayButton:nil];
     [self setTheDayBeforeButton:nil];
 
+    [self setDownloadsButton:nil];
+    [self setConfigButton:nil];
+    [self setHelpButton:nil];
     [super viewDidUnload];
 }
 
@@ -180,6 +194,7 @@
 -(void) taskFailed:(NSString*) majorStatus minorStatus:(NSString*) minorStatus
 {
     _HUD.mode = MBProgressHUDModeText;
+    _HUD.minSize = HUD_CENTER_SIZE;
     [self _updateHUDTextStatus:majorStatus minorStatus:nil];
     
     HUD_DISPLAY(1)
@@ -208,16 +223,28 @@
     [self _refreshSyncStatusLabels:dayIndex syncStatus:syncStatus];
 }
 
+-(void) showHUD
+{
+    _HUD.minShowTime = 1.0f;
+    _HUD.minSize = HUD_CENTER_SIZE;
+    [_HUD show:YES];
+}
+
+-(void) hideHUD
+{
+    [self hideHUD:0];
+}
+
+-(void) hideHUD:(NSTimeInterval) delay
+{
+    [_HUD hide:YES afterDelay:delay];
+}
+
 #pragma mark - IBActions
 
 - (IBAction)onClickSyncButton:(id)sender
 {
-    UIWindow* keyWindow = [CBUIUtils getKeyWindow];
-    _HUD = [[MBProgressHUD alloc] initWithWindow:keyWindow];
-	[self.navigationController.view addSubview:_HUD];
-	_HUD.delegate = self;
-    
-	[_HUD showWhileExecuting:@selector(_syncSeedsInfoTask) onTarget:self withObject:nil animated:YES];
+    [self _syncSeedsInfoTask];
 }
 
 - (IBAction)onClickTodayButton:(id)sender
@@ -368,14 +395,43 @@
     _HUD.detailsLabelText = minorStatus;
 }
 
+-(void) _formatButtons
+{
+    _todayButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
+    _yesterdayButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
+    _theDayBeforeButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
+    _downloadsButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
+    _transButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
+    _configButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
+    _helpButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
+}
+
 - (void)_syncSeedsInfoTask
 {
-    SpiderModule* spiderModule = [SpiderModule sharedInstance];
-    [spiderModule.spider pullSeedsInfo:_last3Days];
+    UIWindow* keyWindow = [CBUIUtils getKeyWindow];
+    _HUD = [[MBProgressHUD alloc] initWithWindow:keyWindow];
+	[self.navigationController.view addSubview:_HUD];
+	_HUD.delegate = self;
     
-    //    CommunicationModule* communicationModule = [CommunicationModule sharedInstance];
-    //    ServerAgent* serverAgent = communicationModule.serverAgent;
-    //    [serverAgent syncSeedsInfo];
+    BOOL isServerMode = [_userDefaults isServerMode];
+    if (isServerMode)
+    {
+        [_HUD showWhileExecuting:@selector(_syncSeedsInfoFromServer) onTarget:self withObject:nil animated:YES];
+    }
+    else
+    {
+        [_HUD showWhileExecuting:@selector(_syncSeedsInfoLocally) onTarget:self withObject:nil animated:YES];        
+    }
+}
+
+- (void) _syncSeedsInfoFromServer
+{
+    [_serverAgent syncSeedsInfo];
+}
+
+- (void) _syncSeedsInfoLocally
+{
+    [_spiderModule.spider pullSeedsInfo:_last3Days];
 }
 
 @end

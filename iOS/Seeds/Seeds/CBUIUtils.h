@@ -19,7 +19,10 @@
 -(void) taskFailed:(NSString*) majorStatus minorStatus:(NSString*) minorStatus;
 -(void) taskFinished:(NSString*) majorStatus minorStatus:(NSString*) minorStatus;
 
-@optional
+-(void) showHUD;
+-(void) hideHUD;
+-(void) hideHUD:(NSTimeInterval) delay;
+
 -(void) taskDataUpdated:(id) dataLabel data:(id) data;
 
 @end

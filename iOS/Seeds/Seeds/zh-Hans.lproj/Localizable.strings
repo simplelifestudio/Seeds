@@ -10,6 +10,8 @@
 
 "Seeds: %d" = "种子数: %d";
 
+"Exception Caught" = "异常发生";
+
 "Communication Module" = "通讯模块";
 "Communication Module Thread" = "通讯模块线程";
 "Database Module" = "数据库模块";
@@ -53,7 +55,7 @@
 "Fail Clearing" = "清除失败";
 "Status Saving" = "状态保存";
 "Fail Analyzing" = "分析失败";
-"No Update" = "没有更新";
+"Not Ready" = "未就绪";
 "Pulled Yet" = "已更新过";
 "Sync Yet" = "已更新过";
 "Completed" = "完成";
@@ -63,7 +65,7 @@
 "Download Torrent" = "下载种子";
 "Delete Torrent" = "删除种子";
 
-"Transmission module needs WiFi environment..." = "分享需要WiFi环境...";
+"Transmission module needs WiFi environment..." = "需要WiFi环境...";
 "Transmission module is initializing..." = "模块初始化...";
 "Transmission is cancel." = "分享取消...";
 "Torrents directory failed to create." = "种子目录创建失败...";
@@ -83,13 +85,17 @@
 "3G/GPRS Connected" = "3G/GPRS连接网络";
 "Internet Disconnected" = "无网络连接";
 
-"Server Status Check" = "服务器状态检测";
+"Server Checking" = "服务器检测";
 "Server Reachable" = "服务器可达";
 "Server Unreachable" = "服务器不可达";
-"Seeds Status Unreachable" = "种子状态查询失败";
-"Seeds Status Received" = "种子状态查询成功";
-"Seeds Received" = "种子信息获取成功";
-"Seeds Unreachable" = "种子信息获取失败";
+"Seeds Status Unreachable" = "状态查询失败";
+"Seeds Status Received" = "状态查询成功";
+"Seeds Checking" = "种子查询";
+"Seeds Received" = "种子获取成功";
+"Seeds Unreachable" = "种子获取失败";
+"No Responsed Message" = "无响应消息";
+"Error Responsed Message" = "错误响应消息";
+"Unexpect Responsed Message" = "不匹配的响应消息";
 
 "Directory Unready" = "目录未就绪";
 "Torrent Downloading" = "种子下载";
@@ -120,6 +126,7 @@
 
 "Running" = "运行";
 "Server Mode" = "服务器模式";
+"Mode Switched" = "模式已切换";
 
 "Images" = "图片";
 "Download Images Through 3G/GPRS" = "3G/GPRS网络下载图片";
@@ -127,6 +134,7 @@
 "Caching" = "缓存中";
 "Clear Images Cache" = "清空图片缓存";
 "Clearing" = "清理中";
+"Counting" = "统计中";
 "Images Cache Cleared" = "图片缓存已清空";
 
 "Data" = "数据";

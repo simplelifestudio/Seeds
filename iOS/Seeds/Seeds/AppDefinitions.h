@@ -33,14 +33,30 @@
 // Module: Communication
 #define RACHABILITY_HOST @"www.apple.com"
 
-#define JSONMESSAGE_KEY_COMMAND @"id"
-#define JSONMESSAGE_KEY_PARAMLIST @"body"
-#define JSONMESSAGE_KEY_DATELIST @"datelist"
+#define JSONMESSAGE_KEY_ID @"id"
+#define JSONMESSAGE_KEY_BODY @"body"
+#define JSONMESSAGE_KEY_DATELIST @"dateList"
+#define JSONMESSAGE_KEY_CONTENT @"content"
+#define JSONMESSAGE_KEY_SEEDIDLIST @"seedIdList"
+#define JSONMESSAGE_KEY_CARTID @"cartId"
+#define JSONMESSAGE_KEY_PICLINKS @"piclinks"
+#define JSONMESSAGE_KEY_NAME @"name"
+#define JSONMESSAGE_KEY_SIZE @"size"
+#define JSONMESSAGE_KEY_MOSAIC @"mosaic"
+#define JSONMESSAGE_KEY_FORMAT @"format"
+#define JSONMESSAGE_KEY_SEEDID @"seedId"
+#define JSONMESSAGE_KEY_TYPE @"type"
+#define JSONMESSAGE_KEY_SOURCE @"source"
+#define JSONMESSAGE_KEY_TORRENTLINK @"torrentLink"
+#define JSONMESSAGE_KEY_HASH @"hash"
+#define JSONMESSAGE_KEY_PUBLISHDATE @"publishDate"
+#define JSONMESSAGE_KEY_MEMO @"memo"
 
-#define JSONMESSAGE_VAL_NOUPDATE @"NO_UPDATE";
-#define JSONMESSAGE_VAL_NOTREADY @"NOT_UPDATE";
-#define JSONMESSAGE_VAL_READY @"READY";
+#define SEEDS_SYNCSTATUS_NOUPDATE @"NO_UPDATE"
+#define SEEDS_SYNCSTATUS_NOTREADY @"NOT_UPDATE"
+#define SEEDS_SYNCSTATUS_READY @"READY"
 
+#define JSONMESSAGE_COMMAND_ERRORRESPONSE @"ErrorResponse"
 #define JSONMESSAGE_COMMAND_ALOHAREQUEST @"AlohaRequest"
 #define JSONMESSAGE_COMMAND_ALOHARESPONSE @"AlohaResponse"
 #define JSONMESSAGE_COMMAND_SEEDSUPDATESTATUSBYDATESREQUEST @"SeedsUpdateStatusByDatesRequest"
@@ -53,7 +69,7 @@
 #define JSONMESSAGE_COMMAND_EXTERNALSEEDSTOCARTRESPONSE @"ExternalSeedsToCartResponse"
 
 #define BASEURL_SEEDSSERVER @"http://106.187.38.78"
-#define PATH_MESSAGELISTENER @"/seeds/seedService"
+#define REMOTEPATH_SEEDSSERVICE @"/seeds/seedService"
 
 #define BASEURL_TORRENT @"http://www.maxp2p.com/"
 #define BASEURL_TORRENTCODE @"http://www.maxp2p.com/link.php?ref="

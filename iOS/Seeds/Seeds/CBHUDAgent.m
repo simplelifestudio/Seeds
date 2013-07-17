@@ -67,6 +67,11 @@
     }
 }
 
+- (void) releaseResources
+{
+    dispatch_release(_hudQueue);
+}
+
 #pragma mark - Private Methods
 
 -(void) _setupInstance

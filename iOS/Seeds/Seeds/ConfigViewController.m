@@ -406,11 +406,41 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 - (void) _enableStandaloneMode
 {
     [_userDefaults enableServerMode:NO];
+    
+    [self _switchRunningMode];
 }
 
 - (void) _enableServerMode
 {
     [_userDefaults enableServerMode:YES];
+    
+    [self _switchRunningMode];
+}
+
+- (void) _switchRunningMode
+{
+    MBProgressHUD* HUD = _HUDAgent.HUD;
+    [HUD showAnimated:YES whileExecutingBlock:^(){
+        HUD.mode = MBProgressHUDModeIndeterminate;
+        HUD.labelText = NSLocalizedString(@"Clearing", nil);
+        sleep(_HUD_DISPLAY);
+        
+        [self _clearFavoritesBusinessOnly];
+        [self _clearDownloadsBusinessOnly];
+        
+        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+        [seedDAO deleteAllSeeds];
+        
+        [_userDefaults resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_SYNCSTATUSBYDAY];
+        
+        [CBAppUtils asyncProcessInMainThread:^(){
+            [self _refershClearDatabaseCell];
+            HUD.mode = MBProgressHUDModeText;
+            HUD.labelText = NSLocalizedString(@"Mode Switched", nil);
+        }];
+        
+        sleep(_HUD_DISPLAY);
+    }];
 }
 
 - (void) _activateWiFiImageCacheTask
@@ -444,7 +474,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     NSMutableString* minorStatus = [NSMutableString string];
     [minorStatus appendString:NSLocalizedString(@"Finished:", nil)];
     [minorStatus appendString:[NSString stringWithFormat:@"%d", finishedCount]];
-    [minorStatus appendString:@" "];
+    [minorStatus appendString:NSLocalizedString(@"Counting", nil)];
     [minorStatus appendString:NSLocalizedString(@"Skipped:", nil)];
     [minorStatus appendString:[NSString stringWithFormat:@"%d", skippedCount]];
     
@@ -735,8 +765,6 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         [_runningModeCell.switcher addTarget:self action:@selector(_onRunningModeChanged) forControlEvents:UIControlEventValueChanged];
         
         [self _refreshRunningModeCell];
-        
-        [_runningModeCell.switcher setEnabled:NO];
     }
 }
 
@@ -793,7 +821,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     
     [_clearDownloadsCell setSelectionStyle:UITableViewCellSelectionStyleNone];
     _clearDownloadsCell.label.text = NSLocalizedString(@"Clear Downloads", nil);
-    [_clearDownloadsCell.button setTitle:NSLocalizedString(@"...", nil) forState:UIControlStateNormal];
+    [_clearDownloadsCell.button setTitle:NSLocalizedString(@"Counting", nil) forState:UIControlStateNormal];
     [self _refreshClearDownloadsCell];
     
     [_clearDownloadsCell.button addTarget:self action:@selector(_clearDownloads) forControlEvents:UIControlEventTouchUpInside];

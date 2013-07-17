@@ -8,8 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+typedef enum
+{
+    LegalResponseMessage,
+    NoResponseMessage,
+    IllegalResponseMessage,
+    ErrorResponseMessage
+}
+JSONMessageErrorCode;
+
 typedef enum 
 {
+    ErrorResponse,
     AlohaRequest,
     AlohaResponse,
     SeedsUpdateStatusByDatesRequest,
@@ -31,6 +41,8 @@ JSONMessageType;
 +(JSONMessage*) construct:(NSString*) command messageBody:(NSDictionary*) body;
 +(JSONMessage*) constructWithType:(JSONMessageType) type messageBody:(NSDictionary*) body;
 +(JSONMessage*) constructWithContent:(NSDictionary*) content;
++(JSONMessageErrorCode) verify:(JSONMessage*) message;
++(BOOL) isErrorResponseMessage:(JSONMessage*) message;
 
 -(NSDictionary*) content;
 

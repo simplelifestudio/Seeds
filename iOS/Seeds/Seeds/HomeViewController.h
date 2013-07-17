@@ -31,6 +31,9 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *syncButton;
 @property (weak, nonatomic) IBOutlet UIButton *transButton;
+@property (weak, nonatomic) IBOutlet UIButton *downloadsButton;
+@property (weak, nonatomic) IBOutlet UIButton *configButton;
+@property (weak, nonatomic) IBOutlet UIButton *helpButton;
 
 - (IBAction)onClickSyncButton:(id)sender;
 
