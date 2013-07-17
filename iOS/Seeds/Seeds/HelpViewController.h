@@ -1,13 +1,23 @@
 //
-//  HelpViewController.h
-//  Seeds
+//  CaculatorHelpViewController.h
+//  dbm-watt
 //
-//  Created by Patrick Deng on 13-4-20.
-//  Copyright (c) 2013年 SimpleLife Studio. All rights reserved.
+//  Created by Patrick Deng on 13-2-24.
+//  Copyright (c) 2013年 Code Animal. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface HelpViewController : UIViewController
+@interface HelpViewController : UIViewController <UIScrollViewDelegate>
+{
+    NSMutableArray *imageArray;
+    NSTimer *displayTimer;
+}
+
+@property (weak, nonatomic) IBOutlet UIView *helpView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
+
+- (IBAction)pageTurn:(UIPageControl *)sender;
 
 @end

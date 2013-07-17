@@ -138,7 +138,6 @@
 		C5964C3017222BF500CC1C0A /* SplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5964C2E17222BF500CC1C0A /* SplashViewController.m */; };
 		C5964C34172234C300CC1C0A /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5964C33172234C300CC1C0A /* HomeViewController.m */; };
 		C5964C3A172239D800CC1C0A /* SeedListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5964C39172239D800CC1C0A /* SeedListViewController.m */; };
-		C5964C3D17223A0C00CC1C0A /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5964C3C17223A0C00CC1C0A /* HelpViewController.m */; };
 		C5964C4017223A6800CC1C0A /* FavoriteSeedListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5964C3F17223A6800CC1C0A /* FavoriteSeedListViewController.m */; };
 		C5964C4317223A9200CC1C0A /* SeedDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5964C4217223A9200CC1C0A /* SeedDetailViewController.m */; };
 		C5964C49172248AB00CC1C0A /* SeedPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5964C48172248AB00CC1C0A /* SeedPictureViewController.m */; };
@@ -195,6 +194,15 @@
 		C5F8AC50174B9807001E30D1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */; };
 		C5F8AC5F174BC3B9001E30D1 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F8AC5E174BC3B9001E30D1 /* Reachability.m */; };
 		C5F964CE1788D682001BAB5D /* DownloadSeedListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F964CD1788D682001BAB5D /* DownloadSeedListViewController.m */; };
+		C5FFCF4817968A7800FC0646 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FFCF4717968A7800FC0646 /* HelpViewController.m */; };
+		C5FFCF5417968E6D00FC0646 /* help1.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF4C17968E6D00FC0646 /* help1.png */; };
+		C5FFCF5517968E6D00FC0646 /* help1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF4D17968E6D00FC0646 /* help1@2x.png */; };
+		C5FFCF5617968E6D00FC0646 /* help2.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF4E17968E6D00FC0646 /* help2.png */; };
+		C5FFCF5717968E6D00FC0646 /* help2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF4F17968E6D00FC0646 /* help2@2x.png */; };
+		C5FFCF5817968E6D00FC0646 /* help3.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF5017968E6D00FC0646 /* help3.png */; };
+		C5FFCF5917968E6D00FC0646 /* help3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF5117968E6D00FC0646 /* help3@2x.png */; };
+		C5FFCF5A17968E6D00FC0646 /* help4.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF5217968E6D00FC0646 /* help4.png */; };
+		C5FFCF5B17968E6D00FC0646 /* help4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF5317968E6D00FC0646 /* help4@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -432,8 +440,6 @@
 		C5964C33172234C300CC1C0A /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		C5964C38172239D800CC1C0A /* SeedListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedListViewController.h; sourceTree = "<group>"; };
 		C5964C39172239D800CC1C0A /* SeedListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedListViewController.m; sourceTree = "<group>"; };
-		C5964C3B17223A0C00CC1C0A /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
-		C5964C3C17223A0C00CC1C0A /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 		C5964C3E17223A6800CC1C0A /* FavoriteSeedListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteSeedListViewController.h; sourceTree = "<group>"; };
 		C5964C3F17223A6800CC1C0A /* FavoriteSeedListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteSeedListViewController.m; sourceTree = "<group>"; };
 		C5964C4117223A9200CC1C0A /* SeedDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedDetailViewController.h; sourceTree = "<group>"; };
@@ -532,6 +538,16 @@
 		C5F8AC5E174BC3B9001E30D1 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		C5F964CC1788D682001BAB5D /* DownloadSeedListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadSeedListViewController.h; sourceTree = "<group>"; };
 		C5F964CD1788D682001BAB5D /* DownloadSeedListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadSeedListViewController.m; sourceTree = "<group>"; };
+		C5FFCF4617968A7800FC0646 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
+		C5FFCF4717968A7800FC0646 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
+		C5FFCF4C17968E6D00FC0646 /* help1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help1.png; sourceTree = "<group>"; };
+		C5FFCF4D17968E6D00FC0646 /* help1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help1@2x.png"; sourceTree = "<group>"; };
+		C5FFCF4E17968E6D00FC0646 /* help2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help2.png; sourceTree = "<group>"; };
+		C5FFCF4F17968E6D00FC0646 /* help2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help2@2x.png"; sourceTree = "<group>"; };
+		C5FFCF5017968E6D00FC0646 /* help3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help3.png; sourceTree = "<group>"; };
+		C5FFCF5117968E6D00FC0646 /* help3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help3@2x.png"; sourceTree = "<group>"; };
+		C5FFCF5217968E6D00FC0646 /* help4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help4.png; sourceTree = "<group>"; };
+		C5FFCF5317968E6D00FC0646 /* help4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help4@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1020,8 +1036,8 @@
 				C53B64411781C0FA0028DC41 /* WarningViewController.m */,
 				C5964C32172234C300CC1C0A /* HomeViewController.h */,
 				C5964C33172234C300CC1C0A /* HomeViewController.m */,
-				C5964C3B17223A0C00CC1C0A /* HelpViewController.h */,
-				C5964C3C17223A0C00CC1C0A /* HelpViewController.m */,
+				C5FFCF4617968A7800FC0646 /* HelpViewController.h */,
+				C5FFCF4717968A7800FC0646 /* HelpViewController.m */,
 				C5203D7C17479C8200D917F7 /* ConfigViewController.h */,
 				C5203D7D17479C8400D917F7 /* ConfigViewController.m */,
 				C5964C38172239D800CC1C0A /* SeedListViewController.h */,
@@ -1139,6 +1155,14 @@
 		C5A94418172ACC1000D6FB85 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C5FFCF4C17968E6D00FC0646 /* help1.png */,
+				C5FFCF4D17968E6D00FC0646 /* help1@2x.png */,
+				C5FFCF4E17968E6D00FC0646 /* help2.png */,
+				C5FFCF4F17968E6D00FC0646 /* help2@2x.png */,
+				C5FFCF5017968E6D00FC0646 /* help3.png */,
+				C5FFCF5117968E6D00FC0646 /* help3@2x.png */,
+				C5FFCF5217968E6D00FC0646 /* help4.png */,
+				C5FFCF5317968E6D00FC0646 /* help4@2x.png */,
 				C5B010F017921BFA0021A735 /* noImage_tableCell.pxm */,
 				C5B010F117921BFA0021A735 /* noImage_tableCell@2x.pxm */,
 				C5B010F217921BFA0021A735 /* xImage_collectionCell.pxm */,
@@ -1339,6 +1363,14 @@
 				C5B010F917921BFA0021A735 /* xImage_collectionCell@2x.pxm in Resources */,
 				C5B010FA17921BFA0021A735 /* xImage_tableCell.pxm in Resources */,
 				C5B010FB17921BFA0021A735 /* xImage_tableCell@2x.pxm in Resources */,
+				C5FFCF5417968E6D00FC0646 /* help1.png in Resources */,
+				C5FFCF5517968E6D00FC0646 /* help1@2x.png in Resources */,
+				C5FFCF5617968E6D00FC0646 /* help2.png in Resources */,
+				C5FFCF5717968E6D00FC0646 /* help2@2x.png in Resources */,
+				C5FFCF5817968E6D00FC0646 /* help3.png in Resources */,
+				C5FFCF5917968E6D00FC0646 /* help3@2x.png in Resources */,
+				C5FFCF5A17968E6D00FC0646 /* help4.png in Resources */,
+				C5FFCF5B17968E6D00FC0646 /* help4@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1370,7 +1402,6 @@
 				C5964C3017222BF500CC1C0A /* SplashViewController.m in Sources */,
 				C5964C34172234C300CC1C0A /* HomeViewController.m in Sources */,
 				C5964C3A172239D800CC1C0A /* SeedListViewController.m in Sources */,
-				C5964C3D17223A0C00CC1C0A /* HelpViewController.m in Sources */,
 				C5964C4017223A6800CC1C0A /* FavoriteSeedListViewController.m in Sources */,
 				C5964C4317223A9200CC1C0A /* SeedDetailViewController.m in Sources */,
 				C5964C49172248AB00CC1C0A /* SeedPictureViewController.m in Sources */,
@@ -1493,6 +1524,7 @@
 				C5F964CE1788D682001BAB5D /* DownloadSeedListViewController.m in Sources */,
 				C5309DEF1789754F0000F328 /* CBHUDAgent.m in Sources */,
 				C506EA4B178F9841007E9FE7 /* EGORefreshTableHeaderView.m in Sources */,
+				C5FFCF4817968A7800FC0646 /* HelpViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
