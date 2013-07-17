@@ -116,8 +116,17 @@
     <string name="seeds_config_setserveraddrfailed">服务器地址设置失败</string>
     <string name="seeds_config_setserveraddrsum">目标服务器地址更改为</string>
     <string name="seeds_config_verifyserveraddrcommun">正在与服务器通信中</string>
-    <string name="seeds_config_verifyserveraddrsucc">验证成功，服务器正常中</string>
+    <string name="seeds_config_verifyserveraddrsucc">验证成功，服务器正常工作中</string>
     <string name="seeds_config_verifyserveraddrfail">验证失败，请确认服务器是否正确</string>
     <string name="seeds_config_clearcachedone">缓存已清空</string>
+    
+    <string name="seeds_http_buttonstartserver">开启服务</string>
+    <string name="seeds_http_buttonstopserver">关闭服务</string>
+    <string name="seeds_http_eventserverready">服务端就绪地址 </string>
+    <string name="seeds_http_eventserve">服务指令 </string>
+    <string name="seeds_http_eventserveerror">服务端返回错误响应 </string>
+    <string name="seeds_http_taptostart">点击打开服务端开启HTTP服务</string>
+    <string name="seeds_http_stopserver">正在关闭服务...</string>
+    <string name="seeds_http_serverstopped">HTTP服务已关闭。</string>
     
 </resources>

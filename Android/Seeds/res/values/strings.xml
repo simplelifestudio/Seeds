@@ -120,5 +120,14 @@
     <string name="seeds_config_verifyserveraddrsucc">Verification successed, server is working normally</string>
     <string name="seeds_config_verifyserveraddrfail">Verification failed, please double check the server address</string>
     <string name="seeds_config_clearcachedone">The cache has been cleaned</string>
+    
+    <string name="seeds_http_buttonstartserver">Start server</string>
+    <string name="seeds_http_buttonstopserver">Stop server</string>
+    <string name="seeds_http_eventserverready">Server ready on </string>
+    <string name="seeds_http_eventserve">Served </string>
+    <string name="seeds_http_eventserveerror">Server sent error response </string>
+    <string name="seeds_http_taptostart">Tap on Start Server below to start serving</string>
+    <string name="seeds_http_stopserver">Stopping server ...</string>
+    <string name="seeds_http_serverstopped">Server stopped.</string>
        
 </resources>
