@@ -31,12 +31,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.simplelife.seeds.android.R.menu;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
 import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadList;

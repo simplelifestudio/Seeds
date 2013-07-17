@@ -28,14 +28,25 @@ public class SeedsDefinitions {
 		public static final String SEEDS_ERROR_WRONGLOGICDATE = "Wrong Logic Date Detected!";
 	}
 	
-	public static String serverUrl = "http://106.187.38.78:80/seeds/seedService";
+	public static String SEEDS_SERVER_ADDRESS_PREFIX = "/seeds/seedService";
+	public static String mServerUrl = "http://106.187.38.78:80/seeds/seedService";
+	
+	public static boolean mDownloadImageWithoutWifiEnabled = true;
+	
 	
 	public static void setServerUrl(String _inUrl){
-		serverUrl = _inUrl;
+		mServerUrl = _inUrl;
 	}
 	
 	public static String getServerUrl(){
-		return serverUrl;
+		return mServerUrl;
 	}
 	
+	public static void setDownloadImageFlag(boolean _inFlag){
+		mDownloadImageWithoutWifiEnabled = _inFlag;
+	}
+	
+	public static boolean getDownloadImageFlag(){
+		return mDownloadImageWithoutWifiEnabled;
+	}
 }

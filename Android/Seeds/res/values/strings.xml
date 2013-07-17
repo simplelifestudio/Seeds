@@ -47,8 +47,6 @@
     <string name="seeds_severaddrmsg">Enter IP Address and Port</string>
     <string name="seeds_severaddrverify">Verify</string>
     
-    <string name="seeds_toast_configsucc">设置成功</string>
-    <string name="seeds_toast_configfail">Invalid address</string>
     <string name="seeds_download_seed">Download Seeds</string>
     <string name="seeds_download_mgt">Download Management</string>
     <string name="seeds_download_added">已添加至下载队列</string>
@@ -91,13 +89,11 @@
     <string name="seeds_config_serverpref">Server Preference</string>
     <string name="seeds_config_modifyserveraddrtitle">Change Server Address</string>
     <string name="seeds_config_modifyserveraddrsum">Change the IP address of server, default is 106.187.38.78</string>
+    <string name="seeds_config_verifyserveraddrtitle">Verify Server Address</string>
+    <string name="seeds_config_verifyserveraddrsum">Check if the server is working properly</string>    
     <string name="seeds_config_selectchantitle">Select Channel</string>
     <string name="seeds_config_selectchansum">Select the Channels to which the seeds subscribed</string>
     <string name="seeds_config_serveraddr">Server Address：</string>  
-    <string name="seeds_config_channel">选择频道：</string>
-    <string name="seeds_config_channel1">动作片</string>
-    <string name="seeds_config_channel2">剧情片</string>
-    <string name="seeds_config_channel3">文艺片</string>
     <string-array name="seeds_config_channels">
         <item >Action</item>
         <item >Drama</item>
@@ -117,5 +113,11 @@
     <string name="seeds_config_feedbacksum">Please feedback the problems you encountered to us</string>
     <string name="seeds_config_abouttitle">About</string>
     <string name="seeds_config_aboutsum">About Seeds and our team</string>
+    
+    <string name="seeds_config_setserveraddrfailed">Server address set failed</string>
+    <string name="seeds_config_setserveraddrsum">The target server address is changed to </string>
+    <string name="seeds_config_verifyserveraddrcommun">Communicating with server</string>
+    <string name="seeds_config_verifyserveraddrsucc">Verification successed, server is working normally</string>
+    <string name="seeds_config_verifyserveraddrfail">Verification failed, please double check the server address</string>
        
 </resources>

@@ -24,6 +24,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.simplelife.seeds.android.R;
+import com.simplelife.seeds.android.SeedsDefinitions;
 
 public class SeedsImageLoader {
 
@@ -91,8 +92,14 @@ public class SeedsImageLoader {
 		}
 		else {
 			//Log.i(tag,"Dowload the image, url=" + url);
-			queuePhoto(url, imageView);
-			imageView.setImageResource(stub_id);
+			if (SeedsDefinitions.getDownloadImageFlag())
+			{	
+			    queuePhoto(url, imageView);
+			    imageView.setImageResource(stub_id);
+			}
+			else{
+				imageView.setImageResource(R.drawable.no_image);
+			}
 		}
 	}
 	
