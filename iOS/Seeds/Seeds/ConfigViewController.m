@@ -916,6 +916,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         [_aboutCell setSelectionStyle:UITableViewCellSelectionStyleNone];
         _aboutCell.majorLabel.text = NSLocalizedString(@"Version", nil);
         _aboutCell.minorLabel.text = APP_VERSION;
+        _aboutCell.minorLabel.textColor = COLOR_TEXT_INFO;
         
         [self _refreshAboutCell];
     }
