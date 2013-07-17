@@ -7,7 +7,7 @@ import android.util.Log;
  
 public class SeedsFileCache {
      
-    private File cacheDir;
+    private static File cacheDir;
      
     public SeedsFileCache(Context context){
         
@@ -29,12 +29,35 @@ public class SeedsFileCache {
          
     }
      
-    public void clear(){
+    public static void clear(){
         File[] files = cacheDir.listFiles();
         if(files == null)
             return;
         for(File f:files)
             f.delete();
+    }
+    
+    public static long getCacheSize()throws Exception{  
+        long size = 0;  
+        if(null==cacheDir)
+        	return 0;
+        File[] fileList = cacheDir.listFiles();  
+        for (int i = 0; i < fileList.length; i++)  
+        {  
+            if (fileList[i].isDirectory())  
+            {  
+                //size = size + getCacheSize(fileList[i]);  
+            } else  
+            {  
+                size = size + fileList[i].length();  
+            }  
+        }  
+        return size/1048576;  
+    }
+    
+    public static void clearCache(){
+    	if(null!=cacheDir)
+    		clear();
     }
  
 }

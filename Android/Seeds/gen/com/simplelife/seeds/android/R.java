@@ -533,6 +533,7 @@ containing a value of this type.
         public static final int seeds_config_abouttitle=0x7f080098;
         public static final int seeds_config_changepwdsum=0x7f080094;
         public static final int seeds_config_changepwdtitle=0x7f080093;
+        public static final int seeds_config_clearcachedone=0x7f08009f;
         public static final int seeds_config_clearcachesum=0x7f080091;
         public static final int seeds_config_clearcachetitle=0x7f080090;
         public static final int seeds_config_feedbackandhelp=0x7f080095;

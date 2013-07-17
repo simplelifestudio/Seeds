@@ -119,5 +119,6 @@
     <string name="seeds_config_verifyserveraddrcommun">Communicating with server</string>
     <string name="seeds_config_verifyserveraddrsucc">Verification successed, server is working normally</string>
     <string name="seeds_config_verifyserveraddrfail">Verification failed, please double check the server address</string>
+    <string name="seeds_config_clearcachedone">The cache has been cleaned</string>
        
 </resources>
