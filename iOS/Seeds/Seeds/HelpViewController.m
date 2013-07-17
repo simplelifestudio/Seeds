@@ -162,6 +162,7 @@
     [_helpView addSubview:_pageControl];
     [_pageControl addTarget:self action:@selector(pageTurn:)forControlEvents:UIControlEventValueChanged];
     
+    _exitButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
     [_helpView addSubview:_exitButton];
     
     // set auto display timer
