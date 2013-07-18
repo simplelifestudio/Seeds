@@ -15,6 +15,7 @@
     BOOL flag = NO;
     NSString* content = self.content;
     flag = [CBStringUtils isSubstringIncluded:content subString:@"片名"];
+
     return flag;
 }
 
@@ -30,7 +31,12 @@
 {
     BOOL flag = NO;
     NSString* content = self.content;
-    flag = [CBStringUtils isSubstringIncluded:content subString:@"格式"];
+    BOOL flag1 = [CBStringUtils isSubstringIncluded:content subString:@"影片格式"];
+    BOOL flag2 = [CBStringUtils isSubstringIncluded:content subString:@"文件類型"];
+    BOOL flag3 = [CBStringUtils isSubstringIncluded:content subString:@"文件类型"];
+    BOOL flag4 = [CBStringUtils isSubstringIncluded:content subString:@"格式类型"];
+    BOOL flag5 = [CBStringUtils isSubstringIncluded:content subString:@"格式類型"];
+    flag = (flag1 | flag2 | flag3 | flag4 | flag5);    
     return flag;
 }
 
@@ -44,15 +50,24 @@
     BOOL flag4 = [CBStringUtils isSubstringIncluded:content subString:@"是否有码"];
     BOOL flag5 = [CBStringUtils isSubstringIncluded:content subString:@"有／無碼"];
     BOOL flag6 = [CBStringUtils isSubstringIncluded:content subString:@"影片類別"];
-    flag = (flag1 | flag2 | flag3 | flag4 | flag5 | flag6);
+    BOOL flag7 = [CBStringUtils isSubstringIncluded:content subString:@"檔案類別"];
+    flag = (flag1 | flag2 | flag3 | flag4 | flag5 | flag6 | flag7);
     return flag;
 }
 
 -(BOOL) isSeedHashNode
-{
+{    
     BOOL flag = NO;
     NSString* content = self.content;
-    flag = [CBStringUtils isSubstringIncluded:content subString:@"哈希"];
+    BOOL flag1 = [CBStringUtils isSubstringIncluded:content subString:@"验证徵码"];
+    BOOL flag2 = [CBStringUtils isSubstringIncluded:content subString:@"驗證號碼"];
+    BOOL flag3 = [CBStringUtils isSubstringIncluded:content subString:@"特 征 码"];
+    BOOL flag4 = [CBStringUtils isSubstringIncluded:content subString:@"特征编码"];
+    BOOL flag5 = [CBStringUtils isSubstringIncluded:content subString:@"驗證全碼"];
+    BOOL flag6 = [CBStringUtils isSubstringIncluded:content subString:@"验证编码"];
+    BOOL flag7 = [CBStringUtils isSubstringIncluded:content subString:@"哈 希 校"];
+    BOOL flag8 = [CBStringUtils isSubstringIncluded:content subString:@"哈希"];
+    flag = (flag1 | flag2 | flag3 | flag4 | flag5 | flag6 | flag7 | flag8);
     return flag;
 }
 
@@ -64,7 +79,7 @@
     if (flag)
     {
         NSString* attrVal = [self parseSeedTorrentLink];
-        flag = [CBStringUtils isSubstringIncluded:attrVal subString:BASEURL_TORRENTCODE];
+        flag = [CBStringUtils isSubstringIncluded:attrVal subString:BASEURL_TORRENTSTORE];
     }
     return flag;
 }

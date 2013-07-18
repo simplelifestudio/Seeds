@@ -76,6 +76,7 @@
 #define BASEURL_SEEDSSERVER @"http://106.187.38.78"
 #define REMOTEPATH_SEEDSSERVICE @"/seeds/seedService"
 
+#define BASEURL_TORRENTSTORE @"www.maxp2p.com"
 #define BASEURL_TORRENT @"http://www.maxp2p.com/"
 #define BASEURL_TORRENTCODE @"http://www.maxp2p.com/link.php?ref="
 #define FORM_ATTRKEY_REF @"ref"

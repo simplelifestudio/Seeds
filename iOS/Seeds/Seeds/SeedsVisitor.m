@@ -71,6 +71,7 @@
         [_builder resetSeed];
         
         NSString* attrVal = [element parseSeedName];
+        
         [_builder fillSeedWithAttribute:TABLE_SEED_COLUMN_NAME attrVal:attrVal];
     }
     else if ([element isSeedSizeNode])
