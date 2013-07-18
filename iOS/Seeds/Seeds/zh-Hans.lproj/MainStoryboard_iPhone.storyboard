@@ -335,9 +335,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="b1w-gg-9xD" userLabel="syncButton">
-                                <rect key="frame" x="110" y="434" width="100" height="80"/>
+                                <rect key="frame" x="110" y="419" width="100" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <state key="normal" title="更新">
                                     <color key="titleColor" red="0.19607843137254902" green="0.30980392156862746" blue="0.52156862745098043" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -350,7 +350,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="aYR-KQ-Lhr" userLabel="aboutButton">
-                                <rect key="frame" x="240" y="487" width="70" height="51"/>
+                                <rect key="frame" x="240" y="472" width="70" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="帮助">
@@ -365,7 +365,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KwN-3D-h2d" userLabel="downloadsButton">
-                                <rect key="frame" x="10" y="412" width="70" height="51"/>
+                                <rect key="frame" x="10" y="402" width="70" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="下载">
@@ -380,7 +380,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JvW-9r-1BS" userLabel="transmitButton">
-                                <rect key="frame" x="10" y="487" width="70" height="51"/>
+                                <rect key="frame" x="10" y="472" width="70" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="分享">
@@ -395,7 +395,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="AVa-EW-U7W" userLabel="configButton">
-                                <rect key="frame" x="240" y="412" width="70" height="51"/>
+                                <rect key="frame" x="240" y="402" width="70" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
                                 <state key="normal" title="配置">
@@ -451,6 +451,13 @@
                                 <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="运行模式" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6GL-dg-MPC" userLabel="statusLabel">
+                                <rect key="frame" x="10" y="524.5" width="300" height="20"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -460,6 +467,7 @@
                         <outlet property="configButton" destination="AVa-EW-U7W" id="NrD-1K-04e"/>
                         <outlet property="downloadsButton" destination="KwN-3D-h2d" id="pLa-hb-OMu"/>
                         <outlet property="helpButton" destination="aYR-KQ-Lhr" id="Bcl-IK-BCj"/>
+                        <outlet property="statuLabel" destination="6GL-dg-MPC" id="Jew-8Q-bYY"/>
                         <outlet property="syncButton" destination="b1w-gg-9xD" id="cwU-gf-i9d"/>
                         <outlet property="theDayBeforeButton" destination="XCs-Ez-vjP" id="lH7-Yq-rSY"/>
                         <outlet property="theDayBeforeLabel" destination="psl-z3-rKe" id="lxI-QS-hyU"/>
@@ -680,6 +688,7 @@
                 <relationship kind="outlet" name="configButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="downloadsButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="helpButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="statuLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="syncButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="theDayBeforeButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="theDayBeforeLabel" candidateClass="UILabel"/>

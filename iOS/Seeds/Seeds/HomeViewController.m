@@ -47,13 +47,14 @@
 @synthesize downloadsButton = _downloadsButton;
 @synthesize configButton = _configButton;
 @synthesize helpButton = _helpButton;
+@synthesize statuLabel = _statuLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-
+        
     }
     return self;
 }
@@ -126,6 +127,7 @@
     [self setDownloadsButton:nil];
     [self setConfigButton:nil];
     [self setHelpButton:nil];
+    [self setStatuLabel:nil];
     [super viewDidUnload];
 }
 
@@ -327,6 +329,10 @@
         
         dayIndex = dayIndex + 1;
     }
+    
+    BOOL isServerMode = [_userDefaults isServerMode];
+    NSString* statusStr = (isServerMode) ? NSLocalizedString(@"Server Mode", nil) : NSLocalizedString(@"Standalone Mode", nil);
+    _statuLabel.text = statusStr;
 }
 
 - (void) _appDidEnterBackground
