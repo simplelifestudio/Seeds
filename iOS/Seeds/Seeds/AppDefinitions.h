@@ -32,6 +32,9 @@
 #define USERDEFAULTS_KEY_LASTTHREEDAYS @"lastThreeDays"
 #define PERSISTENTDOMAIN_APP @"application"
 
+#define USERDEFAULTS_KEY_THUMBNAILCACHEKEYS @"thumbnailCacheKeys"
+#define PERSISTENTDOMAIN_IMAGECACHE @"imageCache"
+
 // Module: Communication
 #define RACHABILITY_HOST @"www.apple.com"
 

@@ -33,6 +33,9 @@ typedef void(^ImageDownloadFinishBlock)(UIImage* image, SeedImageType imageType,
 -(void) queueURLRequest:(NSURL*) url imageType:(SeedImageType) imageType inProgressBlock:(ImageDownloadInProgressBlock) inProgressBlock completeBlock:(ImageDownloadFinishBlock) completeBlock;
 -(void) queueURLRequest:(NSURL*) url imageType:(SeedImageType) imageType completeBlock:(ImageDownloadFinishBlock)completeBlock;
 
+-(void) clearThumbnailCacheKeys;
+-(void) saveThumbnailCacheKeys;
+
 -(void) cacheImages:(UIImage*) image url:(NSURL*) url;
 -(UIImage*) imageFromCache:(NSURL*) url imageType:(SeedImageType) imageType;
 

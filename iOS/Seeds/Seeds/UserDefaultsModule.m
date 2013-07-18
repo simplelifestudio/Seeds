@@ -48,6 +48,7 @@ SINGLETON(UserDefaultsModule)
     [self resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_PASSCODE];
     [self resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_NETWORK];
     [self resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_APP];
+    [self resetDefaultsInPersistentDomain:PERSISTENTDOMAIN_IMAGECACHE];
 }
 
 -(void) resetDefaultsInPersistentDomain:(NSString*) domain
@@ -288,6 +289,32 @@ SINGLETON(UserDefaultsModule)
     if (flag)
     {
         [self setValueForKeyInPersistentDomain:days forKey:USERDEFAULTS_KEY_LASTTHREEDAYS inPersistentDomain:PERSISTENTDOMAIN_APP];        
+    }
+}
+
+#pragma mark - Cache
+
+-(NSMutableDictionary*) thumbnailCacheKeys
+{
+    NSMutableDictionary* keys = [NSMutableDictionary dictionary];
+   
+    NSData* data = [self getValueForKeyInPersistentDomain:USERDEFAULTS_KEY_THUMBNAILCACHEKEYS inPersistentDomain:PERSISTENTDOMAIN_IMAGECACHE];
+    NSDictionary* dic = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    [keys addEntriesFromDictionary:dic];
+    
+    return keys;
+}
+
+-(void) setThumbnailCacheKeys:(NSMutableDictionary*) keys
+{
+    if (nil != keys)
+    {
+        NSDictionary* dic = [NSDictionary dictionaryWithDictionary:keys];
+        
+        NSData* data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+        
+        [self setValueForKeyInPersistentDomain:data forKey:USERDEFAULTS_KEY_THUMBNAILCACHEKEYS inPersistentDomain:PERSISTENTDOMAIN_IMAGECACHE];
     }
 }
 

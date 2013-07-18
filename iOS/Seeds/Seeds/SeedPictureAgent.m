@@ -258,7 +258,8 @@ SINGLETON(SeedPictureAgent)
     _imageManager = [SDWebImageManager new];
     _imageCache = _imageManager.imageCache;
 
-    _thumbnailCacheKeys = [NSMutableDictionary dictionary];
+    _thumbnailCacheKeys = [_userDefaults thumbnailCacheKeys];
+    
     _listTableCellThumbnailCache = [[SDImageCache alloc] initWithNamespace:CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL];
     _pictureCollectionCellThumbnailCache = [[SDImageCache alloc] initWithNamespace:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL];
     _pictureViewThumbnailCache = [[SDImageCache alloc] initWithNamespace:CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW];
@@ -362,7 +363,10 @@ SINGLETON(SeedPictureAgent)
 
 -(void) clearMemory
 {
+    [_listTableCellThumbnailCache clearMemory];
     [_pictureCollectionCellThumbnailCache clearMemory];
+    [_pictureViewThumbnailCache clearMemory];
+    
     [_imageCache clearMemory];
 }
 
@@ -370,7 +374,7 @@ SINGLETON(SeedPictureAgent)
 {
     @synchronized(_thumbnailCacheKeys)
     {
-        [_thumbnailCacheKeys removeAllObjects];
+        [self clearThumbnailCacheKeys];
         
         [_listTableCellThumbnailCache clearMemory];
         [_listTableCellThumbnailCache clearDisk];
@@ -451,9 +455,20 @@ SINGLETON(SeedPictureAgent)
     [_imageManager removeFailedURL:url];
 }
 
+-(void) clearThumbnailCacheKeys
+{
+    [_thumbnailCacheKeys removeAllObjects];
+    
+    [self saveThumbnailCacheKeys];
+}
+
+-(void) saveThumbnailCacheKeys
+{
+    [_userDefaults setThumbnailCacheKeys:_thumbnailCacheKeys];
+}
+
 -(void) cacheImages:(UIImage*) image url:(NSURL*) url
 {
-//    DLog(@"Image's size is: %f, %f", image.size.width, image.size.height);
     @synchronized(_thumbnailCacheKeys)
     {
         NSString* cacheKey = [self cacheKeyForURL:url];
@@ -466,6 +481,10 @@ SINGLETON(SeedPictureAgent)
             [self _saveCacheImage:url image:image imageType:PictureViewFullImage];
             
             [_thumbnailCacheKeys setObject:url forKey:cacheKey];
+            
+            [CBAppUtils asyncProcessInBackgroundThread:^(){
+                [self saveThumbnailCacheKeys];
+            }];
         }
     }
 }

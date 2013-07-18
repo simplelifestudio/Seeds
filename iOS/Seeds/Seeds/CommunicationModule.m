@@ -41,7 +41,7 @@ SINGLETON(CommunicationModule)
     _serverAgent = [[ServerAgent alloc] init];
     _seedPictureAgent = [SeedPictureAgent sharedInstance];
     [_seedPictureAgent setMaxConcurrentDownloads:SEEDPICTURE_MAX_CONCURRENT_DOWNLOADS];
-//    [_seedPictureAgent setDownloadOptions:SDWebImageLowPriority];// | SDWebImageRetryFailed];
+    [_seedPictureAgent setDownloadOptions:SDWebImageLowPriority];// | SDWebImageRetryFailed];
     [_seedPictureAgent setMaxCahceAge:CACHE_EXPIRE_PERIOD];
     
     _seedsDownloadAgent = [[SeedsDownloadAgent alloc] init];
@@ -108,6 +108,8 @@ SINGLETON(CommunicationModule)
 {
     [self unregisterReachability];
     
+    [_seedPictureAgent saveThumbnailCacheKeys];
+    
     [self setSpider:nil];
     [self setServerAgent:nil];
     
@@ -125,9 +127,6 @@ SINGLETON(CommunicationModule)
 -(void) processService
 {
     MODULE_DELAY
-    
-//    [_serverAgent seedsToCart:@[@"20"]];
-//    [_serverAgent aloha];
 }
 
 -(void)applicationWillResignActive:(UIApplication *)application

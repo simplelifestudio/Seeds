@@ -37,6 +37,10 @@
 -(NSArray*) lastThreeDays;
 -(void) setLastThreeDays:(NSArray*) days;
 
+#pragma mark - Cache
+-(NSMutableDictionary*) thumbnailCacheKeys;
+-(void) setThumbnailCacheKeys:(NSMutableDictionary*) keys;
+
 #pragma mark - Common
 -(NSMutableDictionary*) persistentDomainForName:(NSString*) name;
 -(void) setValueForKeyInPersistentDomain:(id) value forKey:(NSString*) key inPersistentDomain:(NSString*) domain;
