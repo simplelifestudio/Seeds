@@ -289,8 +289,11 @@
 {
     JSONMessage* responseMessage = nil;
     
-    NSDictionary* seedIdListDic = [NSDictionary dictionaryWithObject:seedIds forKey:JSONMESSAGE_KEY_SEEDIDLIST];
-    [seedIdListDic setValue:cartId forKey:JSONMESSAGE_KEY_CARTID];
+    NSMutableDictionary* seedIdListDic = [NSMutableDictionary dictionaryWithObject:seedIds forKey:JSONMESSAGE_KEY_SEEDIDLIST];
+    if (nil != cartId | 0 < cartId.length)
+    {
+        [seedIdListDic setObject:cartId forKey:JSONMESSAGE_KEY_CARTID];
+    }
     JSONMessage* requestMessage = [JSONMessage constructWithType:SeedsToCartRequest messageBody:seedIdListDic];
 
     responseMessage = [self requestSync:requestMessage];

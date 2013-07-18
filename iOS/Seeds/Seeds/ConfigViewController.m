@@ -15,6 +15,8 @@
 
 #import "TorrentDownloadAgent.h"
 
+#import "CartIdViewController.h"
+
 #import "CBFileUtils.h"
 
 #define _HUD_DISPLAY 1
@@ -36,10 +38,9 @@
 #define SECTION_ITEMCOUNT_CONFIG 5
 
 #define SECTION_INDEX_MODE 0
-#define SECTION_ITEMCOUNT_MODE 1
+#define SECTION_ITEMCOUNT_MODE 2
 #define SECTION_INDEX_MODE_ITEM_INDEX_MODE 0
-#define SEGMENT_INDEX_MODE_STANDALONE 0
-#define SEGMENT_INDEX_MODE_SERVER 1
+#define SECTION_INDEX_MODE_ITEM_INDEX_CARTID 1
 
 #define SECTION_INDEX_IMAGE 1
 #define SECTION_ITEMCOUNT_IMAGE 2
@@ -76,8 +77,10 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     CBHUDAgent* _HUDAgent;
     
     PAPasscodeViewController* _passcodeViewController;
+    CartIdViewController* _cartIdViewController;
     
     TableViewSwitcherCell* _runningModeCell;
+    TableViewButtonCell* _cartIdCell;
     TableViewSwitcherCell* _3GDownloadImagesCell;
     TableViewButtonCell* _wifiCacheImagesCell;
     TableViewButtonCell* _clearImagesCacheCell;
@@ -191,6 +194,11 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
                 case SECTION_INDEX_MODE_ITEM_INDEX_MODE:
                 {
                     cell = _runningModeCell;
+                    break;
+                }
+                case SECTION_INDEX_MODE_ITEM_INDEX_CARTID:
+                {
+                    cell = _cartIdCell;
                     break;
                 }
                 default:
@@ -419,7 +427,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _switchRunningMode
 {
-    MBProgressHUD* HUD = _HUDAgent.HUD;
+    MBProgressHUD* HUD = [_HUDAgent sharedHUD];
     [HUD showAnimated:YES whileExecutingBlock:^(){
         HUD.mode = MBProgressHUDModeIndeterminate;
         HUD.labelText = NSLocalizedString(@"Clearing", nil);
@@ -435,6 +443,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         
         [CBAppUtils asyncProcessInMainThread:^(){
             [self _refershClearDatabaseCell];
+            [self _refreshCartIdCell];            
             HUD.mode = MBProgressHUDModeText;
             HUD.labelText = NSLocalizedString(@"Mode Switched", nil);
         }];
@@ -493,6 +502,21 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     [defaults enableDownloadImagesThrough3G:flag];
 }
 
+- (void) _refreshCartIdCell
+{
+    BOOL isServerMode = [_userDefaults isServerMode];    
+    if (isServerMode)
+    {
+        [_cartIdCell.button setEnabled:YES];
+        [_cartIdCell.button setTitleColor:COLOR_TEXT_INFO forState:UIControlStateNormal];
+    }
+    else
+    {
+        [_cartIdCell.button setEnabled:NO];
+        [_cartIdCell.button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    }
+}
+
 - (void) _refreshWiFiCacheImagesCell
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
@@ -526,7 +550,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _clearImageCache
 {
-    MBProgressHUD* HUD = _HUDAgent.HUD;
+    MBProgressHUD* HUD = [_HUDAgent sharedHUD];
     [HUD showAnimated:YES whileExecutingBlock:^(){
         HUD.mode = MBProgressHUDModeIndeterminate;
         HUD.labelText = NSLocalizedString(@"Clearing", nil);
@@ -572,7 +596,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _clearDownloads
 {
-    MBProgressHUD* HUD = _HUDAgent.HUD;
+    MBProgressHUD* HUD = [_HUDAgent sharedHUD];
     [HUD showAnimated:YES whileExecutingBlock:^(){
         HUD.mode = MBProgressHUDModeIndeterminate;
         HUD.labelText = NSLocalizedString(@"Clearing", nil);
@@ -617,7 +641,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _resetDatabase
 {    
-    MBProgressHUD* HUD = _HUDAgent.HUD;
+    MBProgressHUD* HUD = [_HUDAgent sharedHUD];
     [HUD showAnimated:YES whileExecutingBlock:^(){
         HUD.mode = MBProgressHUDModeIndeterminate;
         HUD.labelText = NSLocalizedString(@"Clearing", nil);
@@ -680,6 +704,17 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     
 }
 
+- (void) _manageCartId
+{
+    if (nil == _cartIdViewController)
+    {
+        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:STORYBOARD_IPHONE bundle:nil];
+        _cartIdViewController = [storyboard instantiateViewControllerWithIdentifier:STORYBOARD_ID_CARTIDVIEWCONTROLLER];
+    }
+    
+    [self.navigationController pushViewController:_cartIdViewController animated:YES];
+}
+
 - (void) _managePasscode
 {
     BOOL flag = [_managePasscodeCell.switcher isOn];
@@ -738,6 +773,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 - (void) _initTableCellList
 {
     [self _initRunningModeTableCell];
+    [self _initCartIdCell];
     
     [self _init3GDownloadImagesCell];
     [self _initWiFiCacheImagesCell];
@@ -765,6 +801,22 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         [_runningModeCell.switcher addTarget:self action:@selector(_onRunningModeChanged) forControlEvents:UIControlEventValueChanged];
         
         [self _refreshRunningModeCell];
+    }
+}
+
+- (void) _initCartIdCell
+{
+    if (nil == _cartIdCell)
+    {
+        _cartIdCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
+        
+        [_cartIdCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        _cartIdCell.label.text = NSLocalizedString(@"Subscribe", nil);
+        [_cartIdCell.button setTitle:NSLocalizedString(@"Manage", nil) forState:UIControlStateNormal];
+        
+        [self _refreshCartIdCell];
+        
+        [_cartIdCell.button addTarget:self action:@selector(_manageCartId) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 

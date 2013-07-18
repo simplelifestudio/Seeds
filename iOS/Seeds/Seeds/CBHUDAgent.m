@@ -17,13 +17,12 @@
 @interface CBHUDAgent()
 {
     dispatch_queue_t _hudQueue;
+    MBProgressHUD* _HUD;
 }
 
 @end
 
 @implementation CBHUDAgent
-
-@synthesize HUD = _HUD;
 
 -(id) initWithUIView:(UIView*) view
 {
@@ -38,15 +37,17 @@
 
 -(void) showHUD:(NSString*) majorStauts minorStatus:(NSString*) minorStatus delay:(NSInteger)seconds;
 {
+    MBProgressHUD* HUD = [self sharedHUD];
+    
     dispatch_sync(_hudQueue, ^(){
-        _HUD.labelText = majorStauts;
+        HUD.labelText = majorStauts;
         if (minorStatus)
         {
-            _HUD.detailsLabelText = minorStatus;
+            HUD.detailsLabelText = minorStatus;
         }
         else
         {
-            _HUD.detailsLabelText = nil;
+            HUD.detailsLabelText = nil;
         }
         
         [self _showHUD:seconds];
@@ -60,6 +61,15 @@
         [_HUD removeFromSuperview];
         [view addSubview:_HUD];
     }
+}
+
+-(MBProgressHUD*) sharedHUD
+{
+    _HUD.mode = MBProgressHUDModeText;
+    _HUD.labelText = nil;
+    _HUD.detailsLabelText = nil;
+    
+    return _HUD;
 }
 
 - (void) releaseResources

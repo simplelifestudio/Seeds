@@ -35,12 +35,19 @@
 "Download" = "Download";
 "Favorite" = "Favorite";
 "Unfavorite" = "Unfavorite";
+"Subscribe" = "Subscribe";
+"Subscribing" = "Subscribing";
 "SelectAll" = "SelectAll";
 "Edit" = "Edit";
 "Delete" = "Delete";
 "Cancel" = "Cancel";
 "Next" = "Next";
 "Close" = "Close";
+"Manage" = "Manage";
+"Copy" = "Copy";
+
+"Subscribe Successfully" = "Subscribe Successfully";
+"Subscribe Failed" = "Subscribe Failed";
 
 "Preparing" = "Preparing";
 "Stamps Computing" = "Stamps Computing";

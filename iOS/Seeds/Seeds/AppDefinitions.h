@@ -56,6 +56,8 @@
 #define JSONMESSAGE_KEY_HASH @"hash"
 #define JSONMESSAGE_KEY_PUBLISHDATE @"publishDate"
 #define JSONMESSAGE_KEY_MEMO @"memo"
+#define JSONMESSAGE_KEY_SUCCESSSEEDIDLIST @"successSeedIdList"
+#define JSONMESSAGE_KEY_FAILEDSEEDIDLIST @"failedSeedIdList"
 
 #define SEEDS_SYNCSTATUS_NOUPDATE @"NO_UPDATE"
 #define SEEDS_SYNCSTATUS_NOTREADY @"NOT_UPDATE"
@@ -73,8 +75,9 @@
 #define JSONMESSAGE_COMMAND_EXTERNALSEEDSTOCARTREQUEST @"ExternalSeedsToCartRequest"
 #define JSONMESSAGE_COMMAND_EXTERNALSEEDSTOCARTRESPONSE @"ExternalSeedsToCartResponse"
 
-#define BASEURL_SEEDSSERVER @"http://106.187.38.78"
+#define BASEURL_SEEDSSERVER @"http://106.187.38.78:80"
 #define REMOTEPATH_SEEDSSERVICE @"/seeds/seedService"
+#define REMOTEPATH_CARTSERVICE @"/seeds/cartService"
 
 #define BASEURL_TORRENTSTORE @"www.maxp2p.com"
 #define BASEURL_TORRENT @"http://www.maxp2p.com/"
@@ -177,6 +180,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define STORYBOARD_ID_FAVORITESEEDLISTVIEWCONTROLLER @"sbid_favoriteseedlistviewcontroller"
 #define STORYBOARD_ID_DOWNLOADSEEDLISTVIEWCONTROLLER @"sbid_downloadseedlistviewcontroller"
 #define STORYBOARD_ID_WARNINGVIEWCONTROLLER @"sbid_warningviewcontroller"
+#define STORYBOARD_ID_CARTIDVIEWCONTROLLER @"sbid_cartidviewcontroller"
 
 #define SEGUE_ID_SPLASH2NAVIGATION @"splash2navigation"
 #define SEGUE_ID_HOME2SEEDLIST @"home2seedlist"

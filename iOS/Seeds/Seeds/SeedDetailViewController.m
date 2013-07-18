@@ -18,14 +18,18 @@
 
 @interface SeedDetailViewController () <CBNotificationListenable>
 {
+    UserDefaultsModule* _userDefaults;
+    
     CommunicationModule* _commModule;
     SeedsDownloadAgent* _downloadAgent;
     SeedPictureAgent* _pictureAgent;
+    ServerAgent* _serverAgent;
     
     GUIModule* _guiModule;
     
     UIBarButtonItem* _favoriteBarButton;
     UIBarButtonItem* _downloadBarButton;
+    UIBarButtonItem* _subscribeBarButton;
     UIActivityIndicatorView* _indicatorView;
     
     SeedDetailHeaderView* _headerView;
@@ -203,6 +207,9 @@
     
     SeedDownloadStatus downloadStatus = [_downloadAgent checkDownloadStatus:_seed];
     [self _refreshUIWithSeedDownloadStatusUpdated:downloadStatus];
+    
+    BOOL isServerMode = [_userDefaults isServerMode];
+    [_subscribeBarButton setEnabled:isServerMode];
 }
 
 - (void) _refreshUIWithSeedDownloadStatusUpdated:(SeedDownloadStatus) status
@@ -341,9 +348,12 @@
     //    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDPICTURECOLLECTIONCELL bundle:nil];
     //    [self.collectionView registerNib:nib forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
     
+    _userDefaults = [UserDefaultsModule sharedInstance];
+    
     _commModule = [CommunicationModule sharedInstance];
     _downloadAgent = _commModule.seedsDownloadAgent;
     _pictureAgent = _commModule.seedPictureAgent;
+    _serverAgent = _commModule.serverAgent;
     
     _guiModule = [GUIModule sharedInstance];
     
@@ -365,6 +375,8 @@
     
     _downloadBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Download", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(_onClickDownloadBarButton)];
     
+    _subscribeBarButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Subscribe", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(_onClickSubscribeBarButton)];
+    
     CGRect frame = CGRectMake(0, 0, 48, 20);
     _indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     _indicatorView.frame = frame;
@@ -374,7 +386,7 @@
                                     UIViewAutoresizingFlexibleTopMargin |
                                     UIViewAutoresizingFlexibleBottomMargin);
     
-    self.navigationItem.rightBarButtonItems = @[_downloadBarButton];//, _favoriteBarButton];
+    self.navigationItem.rightBarButtonItems = @[_downloadBarButton, _subscribeBarButton];//, _favoriteBarButton];
 }
 
 - (void) _registerGestureRecognizers
@@ -446,6 +458,91 @@
         [_downloadAgent deleteDownloadedSeed:_seed];
         [_guiModule showHUD:NSLocalizedString(@"Torrent Deleted", nil) minorStatus:nil delay:_HUD_DISPLAY];
     }
+}
+
+- (void) _onClickSubscribeBarButton
+{
+    if (![CBNetworkUtils isWiFiEnabled] && ![CBNetworkUtils is3GEnabled])
+    {
+        [_guiModule showHUD:NSLocalizedString(@"Internet Disconnected", nil) minorStatus:nil delay:_HUD_DISPLAY];
+        return;
+    }
+    
+    MBProgressHUD* HUD = [_guiModule.HUDAgent sharedHUD];
+    HUD.mode = MBProgressHUDModeIndeterminate;
+    HUD.labelText = NSLocalizedString(@"Subscribing", nil);
+    [HUD showAnimated:YES whileExecutingBlock:^(){
+        @try
+        {
+            NSString* cartId = [_userDefaults cartId];
+            NSString* seedIdStr = [NSString stringWithFormat:@"%d", _seed.seedId];
+            JSONMessage* responseMessage = [_serverAgent seedsToCartRequest:cartId seedIds:@[seedIdStr]];
+            if (nil != responseMessage)
+            {
+                if (![JSONMessage isErrorResponseMessage:responseMessage])
+                {
+                    if ([responseMessage.command isEqualToString:JSONMESSAGE_COMMAND_SEEDSTOCARTRESPONSE])
+                    {
+                        NSDictionary* content = responseMessage.body;
+                        NSDictionary* body = [content objectForKey:JSONMESSAGE_KEY_BODY];
+                        if (nil == cartId | 0 == cartId.length)
+                        {
+                            NSString* newCartId = [body objectForKey:JSONMESSAGE_KEY_CARTID];
+                            [_userDefaults setCartId:newCartId];
+                        }
+                        
+                        __block BOOL isSeedSubscribed = NO;
+                        NSArray* successSeedIdList = [body objectForKey:JSONMESSAGE_KEY_SUCCESSSEEDIDLIST];
+                        [successSeedIdList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop)
+                        {
+                            NSString* tempSeedIdStr = (NSString*)obj;
+                            if ([tempSeedIdStr isEqualToString:seedIdStr])
+                            {
+                                isSeedSubscribed = YES;
+                                *stop = YES;
+                            }
+                        }];
+                        if (isSeedSubscribed)
+                        {
+                            HUD.mode = MBProgressHUDModeText;
+                            HUD.labelText = NSLocalizedString(@"Subscribe Successfully", nil);
+                        }
+                        else
+                        {
+                            HUD.mode = MBProgressHUDModeText;                            
+                            HUD.labelText = NSLocalizedString(@"Subscribe Failed", nil);
+                        }
+                    }
+                    else
+                    {
+                        HUD.mode = MBProgressHUDModeText;
+                        HUD.labelText = NSLocalizedString(@"Subscribe Failed", nil);
+                    }
+                }
+                else
+                {
+                    HUD.mode = MBProgressHUDModeText;
+                    HUD.labelText = NSLocalizedString(@"Subscribe Failed", nil);
+                }
+            }
+            else
+            {
+                HUD.mode = MBProgressHUDModeText;
+                HUD.labelText = NSLocalizedString(@"Subscribe Failed", nil);
+            }
+            
+        }
+        @catch(NSException* exception)
+        {
+            DLog(@"Caught an exception: %@", exception.debugDescription);
+            
+            HUD.labelText = NSLocalizedString(@"Exception Caught", nil);
+        }
+        @finally
+        {
+            sleep(_HUD_DISPLAY);
+        }
+    }];
 }
 
 -(void) _favoriteSeed:(BOOL) favorite

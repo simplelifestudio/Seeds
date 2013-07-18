@@ -35,12 +35,19 @@
 "Download" = "下载";
 "Favorite" = "收藏";
 "Unfavorite" = "取消收藏";
+"Subscribe" = "订阅";
+"Subscribing" = "订阅中";
 "SelectAll" = "全选";
 "Edit" = "编辑";
 "Delete" = "删除";
 "Cancel" = "取消";
 "Next" = "继续";
 "Close" = "关闭";
+"Manage" = "管理";
+"Copy" = "复制";
+
+"Subscribe Successfully" = "订阅成功";
+"Subscribe Failed" = "订阅失败";
 
 "Preparing" = "准备";
 "Stamps Computing" = "日期计算";
