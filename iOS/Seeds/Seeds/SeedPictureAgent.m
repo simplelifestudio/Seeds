@@ -61,8 +61,10 @@ SINGLETON(SeedPictureAgent)
 
     if (nil == errorImageInSeedPictureView)
     {
-        NSString *placeHolderPath = [[NSBundle mainBundle] pathForResource:RES_XIMAGE_PICTUREVIEW ofType:RES_PNG_FILE];
-        errorImageInSeedPictureView = [[UIImage alloc] initWithContentsOfFile:placeHolderPath];
+        NSMutableString* imageName = [NSMutableString stringWithString:RES_XIMAGE_PICTUREVIEW];
+        [imageName appendString:@"."];
+        [imageName appendString:RES_PNG_FILE];
+        errorImageInSeedPictureView = [UIImage imageNamed:imageName];
     }
 }
 

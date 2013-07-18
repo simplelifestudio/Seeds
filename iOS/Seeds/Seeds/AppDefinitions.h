@@ -233,7 +233,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 #define THUMBNAIL_SIZE_SEEDLISTTABLECELL CGSizeMake(150, 90)
 #define THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL CGSizeMake(225, 255)
-#define THUMBNAIL_SIZE_SEEDPICTUREVIEW CGSizeMake(480, 720)
+#define THUMBNAIL_SIZE_SEEDPICTUREVIEW CGSizeMake(320, 480)
 
 // Module: Notifications
 #define NOTIFICATION_ID_SEEDPICTUREPREFETCH_FINISHED @"seedPicturePrefetchFinished"

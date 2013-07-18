@@ -71,6 +71,11 @@
 		C5203DFC17485A8600D917F7 /* SeedsDownloadAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DFB17485A8500D917F7 /* SeedsDownloadAgent.m */; };
 		C522BA31174CF1FA001FC7BD /* GUIModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C522BA30174CF1FA001FC7BD /* GUIModule.m */; };
 		C52AD0B11796E7AB00F9D174 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AD0B01796E7AB00F9D174 /* Reachability.m */; };
+		C52AD0B41797C64F00F9D174 /* xImage_pictureView.pxm in Resources */ = {isa = PBXBuildFile; fileRef = C52AD0B21797C64F00F9D174 /* xImage_pictureView.pxm */; };
+		C52AD0B51797C64F00F9D174 /* xImage_pictureView@2x.pxm in Resources */ = {isa = PBXBuildFile; fileRef = C52AD0B31797C64F00F9D174 /* xImage_pictureView@2x.pxm */; };
+		C52AD0B81797C7BF00F9D174 /* xImage_pictureView-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C52AD0B61797C7BF00F9D174 /* xImage_pictureView-568h@2x.png */; };
+		C52AD0B91797C7BF00F9D174 /* xImage_pictureView-568h@2x.pxm in Resources */ = {isa = PBXBuildFile; fileRef = C52AD0B71797C7BF00F9D174 /* xImage_pictureView-568h@2x.pxm */; };
+		C52AD0BC1797CA7A00F9D174 /* UIImage+Retina4.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AD0BB1797CA7A00F9D174 /* UIImage+Retina4.m */; };
 		C5309DEF1789754F0000F328 /* CBHUDAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5309DEE1789754F0000F328 /* CBHUDAgent.m */; };
 		C531833B17237FF700264530 /* CBModuleAbstractImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = C531833A17237FF700264530 /* CBModuleAbstractImpl.m */; };
 		C5318342172390A400264530 /* CommunicationModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5318341172390A400264530 /* CommunicationModule.m */; };
@@ -323,6 +328,12 @@
 		C522BA30174CF1FA001FC7BD /* GUIModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUIModule.m; sourceTree = "<group>"; };
 		C52AD0AF1796E7AB00F9D174 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		C52AD0B01796E7AB00F9D174 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		C52AD0B21797C64F00F9D174 /* xImage_pictureView.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = xImage_pictureView.pxm; sourceTree = "<group>"; };
+		C52AD0B31797C64F00F9D174 /* xImage_pictureView@2x.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "xImage_pictureView@2x.pxm"; sourceTree = "<group>"; };
+		C52AD0B61797C7BF00F9D174 /* xImage_pictureView-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xImage_pictureView-568h@2x.png"; sourceTree = "<group>"; };
+		C52AD0B71797C7BF00F9D174 /* xImage_pictureView-568h@2x.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "xImage_pictureView-568h@2x.pxm"; sourceTree = "<group>"; };
+		C52AD0BA1797CA7A00F9D174 /* UIImage+Retina4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Retina4.h"; sourceTree = "<group>"; };
+		C52AD0BB1797CA7A00F9D174 /* UIImage+Retina4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Retina4.m"; sourceTree = "<group>"; };
 		C52BB4761788003900BD40E7 /* CBNotificationListenable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBNotificationListenable.h; sourceTree = "<group>"; };
 		C5309DED1789754F0000F328 /* CBHUDAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBHUDAgent.h; sourceTree = "<group>"; };
 		C5309DEE1789754F0000F328 /* CBHUDAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBHUDAgent.m; sourceTree = "<group>"; };
@@ -877,6 +888,8 @@
 				C5203D74174714D000D917F7 /* CBModuleManager.m */,
 				C53B643D1781B6A30028DC41 /* UIDevice+Resolutions.h */,
 				C53B643E1781B6A30028DC41 /* UIDevice+Resolutions.m */,
+				C52AD0BA1797CA7A00F9D174 /* UIImage+Retina4.h */,
+				C52AD0BB1797CA7A00F9D174 /* UIImage+Retina4.m */,
 				C52BB4761788003900BD40E7 /* CBNotificationListenable.h */,
 			);
 			name = Common;
@@ -1174,18 +1187,22 @@
 				C5FFCF5317968E6D00FC0646 /* help4@2x.png */,
 				C5B010F017921BFA0021A735 /* noImage_tableCell.pxm */,
 				C5B010F117921BFA0021A735 /* noImage_tableCell@2x.pxm */,
-				C5B010F217921BFA0021A735 /* xImage_collectionCell.pxm */,
-				C5B010F317921BFA0021A735 /* xImage_collectionCell@2x.pxm */,
 				C5B010F417921BFA0021A735 /* xImage_tableCell.pxm */,
 				C5B010F517921BFA0021A735 /* xImage_tableCell@2x.pxm */,
+				C5B010F217921BFA0021A735 /* xImage_collectionCell.pxm */,
+				C5B010F317921BFA0021A735 /* xImage_collectionCell@2x.pxm */,
+				C52AD0B21797C64F00F9D174 /* xImage_pictureView.pxm */,
+				C52AD0B31797C64F00F9D174 /* xImage_pictureView@2x.pxm */,
+				C52AD0B71797C7BF00F9D174 /* xImage_pictureView-568h@2x.pxm */,
+				C5203CDC1742829B00D917F7 /* noImage_tableCell.png */,
+				C5203CDD1742829B00D917F7 /* noImage_tableCell@2x.png */,
+				C5A4E649176B1361008A391C /* xImage_tableCell.png */,
+				C5A4E64A176B1361008A391C /* xImage_tableCell@2x.png */,
 				C5A4E644176B1360008A391C /* xImage_collectionCell.png */,
 				C5A4E645176B1361008A391C /* xImage_collectionCell@2x.png */,
 				C5A4E647176B1361008A391C /* xImage_pictureView.png */,
 				C5A4E648176B1361008A391C /* xImage_pictureView@2x.png */,
-				C5A4E649176B1361008A391C /* xImage_tableCell.png */,
-				C5A4E64A176B1361008A391C /* xImage_tableCell@2x.png */,
-				C5203CDC1742829B00D917F7 /* noImage_tableCell.png */,
-				C5203CDD1742829B00D917F7 /* noImage_tableCell@2x.png */,
+				C52AD0B61797C7BF00F9D174 /* xImage_pictureView-568h@2x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -1371,6 +1388,10 @@
 				C5FFCF5917968E6D00FC0646 /* help3@2x.png in Resources */,
 				C5FFCF5A17968E6D00FC0646 /* help4.png in Resources */,
 				C5FFCF5B17968E6D00FC0646 /* help4@2x.png in Resources */,
+				C52AD0B41797C64F00F9D174 /* xImage_pictureView.pxm in Resources */,
+				C52AD0B51797C64F00F9D174 /* xImage_pictureView@2x.pxm in Resources */,
+				C52AD0B81797C7BF00F9D174 /* xImage_pictureView-568h@2x.png in Resources */,
+				C52AD0B91797C7BF00F9D174 /* xImage_pictureView-568h@2x.pxm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1525,6 +1546,7 @@
 				C506EA4B178F9841007E9FE7 /* EGORefreshTableHeaderView.m in Sources */,
 				C5FFCF4817968A7800FC0646 /* HelpViewController.m in Sources */,
 				C52AD0B11796E7AB00F9D174 /* Reachability.m in Sources */,
+				C52AD0BC1797CA7A00F9D174 /* UIImage+Retina4.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
