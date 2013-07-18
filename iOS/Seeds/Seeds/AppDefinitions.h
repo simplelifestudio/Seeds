@@ -221,6 +221,8 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 #define HELPSCREEN_DISPLAY_SECONDS 3
 
+#define TABLEVIEW_LOAD_DISPLAY_SECONDS 0.3
+
 #define WARNING_ID_APPFIRSTLAUNCHED @"appFirstLaunched"
 #define WARNING_ID_UNSUPPORTDEVICES @"unsupportDevices"
 #define WARNING_ID_PASSCODEFAILEDATTEMPTS @"passcodeFailedAttempts"

@@ -14,6 +14,7 @@
 @interface FavoriteSeedListViewController () <CBNotificationListenable>
 {
     GUIModule* _guiModule;
+    CBHUDAgent* _HUDAgent;
     
     CommunicationModule* _commModule;
     SeedsDownloadAgent* _downloadAgent;
@@ -354,6 +355,7 @@
     [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
     
     _guiModule = [GUIModule sharedInstance];
+    _HUDAgent = _guiModule.HUDAgent;
     
     _pageSeedList = [NSMutableArray array];
     _pageFirstSeedPictureList = [NSMutableArray array];
@@ -478,31 +480,31 @@
 
 - (void) _refetchFavoriteSeedsFromDatabase
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
-        id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
-        _seedList = [seedDAO getFavoriteSeeds];
-        
-        NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:_seedList.count];
-        for (Seed* seed in _seedList)
+    id<SeedDAO> seedDAO = [DAOFactory getSeedDAO];
+    _seedList = [seedDAO getFavoriteSeeds];
+    
+    NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:_seedList.count];
+    for (Seed* seed in _seedList)
+    {
+        SeedPicture* picture = nil;
+        if (nil != seed.seedPictures && 0 < seed.seedPictures.count)
         {
-            SeedPicture* picture = nil;
-            if (nil != seed.seedPictures && 0 < seed.seedPictures.count)
-            {
-                picture = seed.seedPictures[0];
-            }
-            
-            if (nil == picture)
-            {
-                picture = [SeedPicture placeHolder];
-            }
-            [pictureArray addObject:picture];
+            picture = seed.seedPictures[0];
         }
-        _firstSeedPictureList = pictureArray;
         
-        [_pagingToolbar setItemCount:_seedList.count];
-        
+        if (nil == picture)
+        {
+            picture = [SeedPicture placeHolder];
+        }
+        [pictureArray addObject:picture];
+    }
+    _firstSeedPictureList = pictureArray;
+    
+    [_pagingToolbar setItemCount:_seedList.count];
+    
+    [CBAppUtils asyncProcessInMainThread:^(){
         [self _constructTableDataByPage];
-    });
+    }];
 }
 
 -(NSInteger) _cellRowForSeed:(Seed*) seed

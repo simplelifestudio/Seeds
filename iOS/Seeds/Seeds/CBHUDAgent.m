@@ -53,11 +53,6 @@
     });
 }
 
-- (void)showHUDAnimated:(BOOL)animated whileExecutingBlock:(dispatch_block_t)block completionBlock:(MBProgressHUDCompletionBlock)completion
-{
-    [_HUD showAnimated:animated whileExecutingBlock:block completionBlock:completion];
-}
-
 -(void) attachToView:(UIView*) view
 {
     if (nil != view)

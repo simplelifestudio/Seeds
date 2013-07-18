@@ -15,7 +15,8 @@
 
 @interface DownloadSeedListViewController () <CBNotificationListenable>
 {
-    GUIModule* _guiModule;    
+    GUIModule* _guiModule;
+    CBHUDAgent* _HUDAgent;
     
     CommunicationModule* _commModule;
     SeedsDownloadAgent* _downloadAgent;
@@ -349,6 +350,7 @@
     _pageFirstSeedPictureList = [NSMutableArray array];
     
     _guiModule = [GUIModule sharedInstance];
+    _HUDAgent = _guiModule.HUDAgent;
     
     _commModule = [CommunicationModule sharedInstance];
     _downloadAgent = _commModule.seedsDownloadAgent;
@@ -472,34 +474,33 @@
 
 - (void) _refetchDownloadSeedsFromAgent
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(){
-
-        _seedList = [_downloadAgent totalSeedList];
+    _seedList = [_downloadAgent totalSeedList];
+    
+    NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:_seedList.count];
+    for (Seed* seed in _seedList)
+    {
+        BOOL favorite = [_seedDAO isSeedFavoritedWithLocalId:seed.localId];
+        seed.favorite = favorite;
         
-        NSMutableArray* pictureArray = [NSMutableArray arrayWithCapacity:_seedList.count];
-        for (Seed* seed in _seedList)
+        SeedPicture* picture = nil;
+        if (nil != seed.seedPictures && 0 < seed.seedPictures.count)
         {
-            BOOL favorite = [_seedDAO isSeedFavoritedWithLocalId:seed.localId];
-            seed.favorite = favorite;
-            
-            SeedPicture* picture = nil;
-            if (nil != seed.seedPictures && 0 < seed.seedPictures.count)
-            {
-                picture = seed.seedPictures[0];
-            }
-            
-            if (nil == picture)
-            {
-                picture = [SeedPicture placeHolder];
-            }
-            [pictureArray addObject:picture];
+            picture = seed.seedPictures[0];
         }
-        _firstSeedPictureList = pictureArray;
         
-        [_pagingToolbar setItemCount:_seedList.count];
-        
+        if (nil == picture)
+        {
+            picture = [SeedPicture placeHolder];
+        }
+        [pictureArray addObject:picture];
+    }
+    _firstSeedPictureList = pictureArray;
+    
+    [_pagingToolbar setItemCount:_seedList.count];
+    
+    [CBAppUtils asyncProcessInMainThread:^(){
         [self _constructTableDataByPage];
-    });
+    }];
 }
 
 -(NSInteger) _cellRowForSeed:(Seed*) seed
