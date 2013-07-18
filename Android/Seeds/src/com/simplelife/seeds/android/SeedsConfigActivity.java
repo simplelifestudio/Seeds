@@ -14,13 +14,16 @@ import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
+import com.simplelife.seeds.android.SeedsAboutActivity.SeedsAboutDialog;
 import com.simplelife.seeds.android.utils.imageprocess.SeedsFileCache;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -34,6 +37,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.view.View;
 import android.widget.Toast;
 
 public class SeedsConfigActivity extends Activity {
@@ -162,6 +166,11 @@ public class SeedsConfigActivity extends Activity {
         		Intent intent = new Intent(getActivity(), SeedsSetPasswordActivity.class);
         		startActivity(intent);
         	}
+        	else if(mPrefAbout == preference)
+        	{
+        		SeedsAboutDialog tDialog = new SeedsAboutDialog(getActivity());
+        		tDialog.show();
+        	}
         	
         	return false;
         }
@@ -220,7 +229,7 @@ public class SeedsConfigActivity extends Activity {
     	    Toast.makeText(getActivity(), _messageId, Toast.LENGTH_SHORT).show();
     	}
         
-    }
+    }    
 
 }
 

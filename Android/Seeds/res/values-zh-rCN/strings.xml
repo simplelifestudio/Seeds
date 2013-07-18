@@ -129,4 +129,17 @@
     <string name="seeds_http_stopserver">正在关闭服务...</string>
     <string name="seeds_http_serverstopped">HTTP服务已关闭。</string>
     
+    <string name="seeds_helpdialog_text"> 
+    <i>作者: Chris@Simplelife Studio</i> 
+    \n  
+    \n  
+    <i>联系：simplelife.chris@gmail.com</i> 
+    \n
+    \n  
+    <b>Seeds---每天随时随地收集最新的影片信息！</b>     
+    \n  
+    \n  
+    <b>有任何建议或者反馈可以随时联系作者</b>   
+    </string>  
+    
 </resources>

@@ -129,5 +129,18 @@
     <string name="seeds_http_taptostart">Tap on Start Server below to start serving</string>
     <string name="seeds_http_stopserver">Stopping server ...</string>
     <string name="seeds_http_serverstopped">Server stopped.</string>
+    
+    <string name="seeds_helpdialog_text"> 
+    <i>Author: Chris@Simplelife Studio</i> 
+    \n  
+    \n  
+    <i>Contact: simplelife.chris@gmail.com</i> 
+    \n
+    \n  
+    <b>Seeds---Collecting the latest movie info everywhere!</b>     
+    \n  
+    \n  
+    <b>Please contact author for any problems</b>   
+    </string> 
        
 </resources>

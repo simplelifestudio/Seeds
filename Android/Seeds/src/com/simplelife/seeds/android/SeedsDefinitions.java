@@ -33,6 +33,9 @@ public class SeedsDefinitions {
 	
 	public static boolean mDownloadImageWithoutWifiEnabled = true;
 	
+	public static String RELEASE_NAME    = "Seeds  ";
+	public static String RELEASE_VERSION = "V1.0.0_Demo";
+	
 	
 	public static void setServerUrl(String _inUrl){
 		mServerUrl = _inUrl;
