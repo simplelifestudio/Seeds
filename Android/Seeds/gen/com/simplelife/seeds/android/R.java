@@ -590,6 +590,7 @@ containing a value of this type.
         public static final int seeds_download_mgt=0x7f080064;
         public static final int seeds_download_seed=0x7f080063;
         public static final int seeds_fav_done=0x7f080067;
+        public static final int seeds_helpdialog_text=0x7f0800a8;
         public static final int seeds_http_buttonstartserver=0x7f0800a0;
         public static final int seeds_http_buttonstopserver=0x7f0800a1;
         public static final int seeds_http_eventserve=0x7f0800a3;
