@@ -80,7 +80,7 @@ X. MessageFormat
             {
                 "name": "AAAAA",
                 "size": "1.4G",
-                "piclinks": [
+                "picLinks": [
                     "http://xxxx/pic1.jpg",
                     "http://xxxx/pic2.jpg"
                 ]
@@ -88,7 +88,7 @@ X. MessageFormat
             {
                 "name": "BBBBB",
                 "size": "5.7G",
-                "piclinks": [
+                "picLinks": [
                     "http://xxxx/pic1.jpg",
                     "http://xxxx/pic2.jpg"
                 ]
@@ -98,7 +98,7 @@ X. MessageFormat
             {
                 "name": "CCCCC",
                 "size": "",
-                "piclinks": [
+                "picLinks": [
                     "http://xxxx/pic1.jpg",
                     "http://xxxx/pic2.jpg"
                 ]
@@ -146,7 +146,7 @@ X. MessageFormat
                 "localId": "123",
                 "name": "CCCCC",
                 "size": "",
-                "piclinks": [
+                "picLinks": [
                     "http://xxxx/pic1.jpg",
                     "http://xxxx/pic2.jpg"
                 ]
