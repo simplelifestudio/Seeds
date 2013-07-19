@@ -18,6 +18,8 @@
 {
     dispatch_queue_t _hudQueue;
     MBProgressHUD* _HUD;
+    
+    UIView* _HUDView;
 }
 
 @end
@@ -56,15 +58,14 @@
 
 -(void) attachToView:(UIView*) view
 {
-    if (nil != view)
-    {
-        [_HUD removeFromSuperview];
-        [view addSubview:_HUD];
-    }
+    _HUDView = view;
 }
 
 -(MBProgressHUD*) sharedHUD
 {
+    _HUD = [MBProgressHUD showHUDAddedTo:_HUDView animated:YES];
+    
+    _HUD.minSize = HUD_CENTER_SIZE;
     _HUD.mode = MBProgressHUDModeText;
     _HUD.labelText = nil;
     _HUD.detailsLabelText = nil;

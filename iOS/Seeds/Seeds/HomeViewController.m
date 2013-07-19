@@ -414,10 +414,7 @@
 
 - (void)_syncSeedsInfoTask
 {
-    UIWindow* keyWindow = [CBUIUtils getKeyWindow];
-    _HUD = [[MBProgressHUD alloc] initWithWindow:keyWindow];
-	[self.navigationController.view addSubview:_HUD];
-	_HUD.delegate = self;
+    _HUD = [_guiModule.HUDAgent sharedHUD];
     
     BOOL isServerMode = [_userDefaults isServerMode];
     if (isServerMode)

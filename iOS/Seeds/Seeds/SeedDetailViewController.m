@@ -472,6 +472,9 @@
     [HUD showAnimated:YES whileExecutingBlock:^(){
         @try
         {
+            [_subscribeBarButton setEnabled:NO];
+            
+            HUD.minSize = HUD_CENTER_SIZE;            
             HUD.mode = MBProgressHUDModeIndeterminate;
             HUD.labelText = NSLocalizedString(@"Subscribing", nil);
             
@@ -546,11 +549,7 @@
     }
     completionBlock:^()
     {
-        [CBAppUtils asyncProcessInMainThread:^(){
-            HUD.mode = MBProgressHUDModeText;
-            HUD.labelText = nil;
-            HUD.detailsLabelText = nil;
-        }];
+        [_subscribeBarButton setEnabled:YES];
     }];
 }
 
