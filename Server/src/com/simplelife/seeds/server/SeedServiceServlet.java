@@ -80,8 +80,9 @@ public class SeedServiceServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType(seedsMIME);
 
-		if (!seedsMIME.equals(request.getContentType())) {
-			LogUtil.warning("Invalid MIME found from client: " + request.getContentType());
+		String clientContentType = request.getContentType(); 
+		if (!clientContentType.contains(seedsMIME)) {
+			LogUtil.warning("Invalid MIME found from client: " + clientContentType);
 		}
 
 		String command = readCommand(request);
