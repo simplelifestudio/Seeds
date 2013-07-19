@@ -77,7 +77,7 @@ public class OperationLog {
 	{
 		
 	}
-	
+
 	public OperationLog(long logId, String logInfo)
 	{
 		this.setLogId(logId);

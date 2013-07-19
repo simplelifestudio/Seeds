@@ -45,6 +45,7 @@ public class HibernateSessionFactory
     private static Configuration configuration;
     private static SessionFactory sessionFactory;
     private static String configFile = CONFIG_FILE_LOCATION;
+    private final static Lock l = new ReentrantLock();
 
     private HibernateSessionFactory()
     {
@@ -64,7 +65,15 @@ public class HibernateSessionFactory
         try {
             if (session == null || !session.isOpen()) {
                 if (sessionFactory == null) {
+                    LogUtil.info("============before Lock===========");
+                    l.lock();
+                    LogUtil.info("============after Lock===========");
+                    
                     rebuildSessionFactory();
+                    
+                    LogUtil.info("============before unlock===========");
+                    l.unlock();
+                    LogUtil.info("============after unlock===========");
                 }
                 session = (sessionFactory != null) ? sessionFactory.openSession() : null;
                 threadLocal.set(session);
@@ -81,28 +90,25 @@ public class HibernateSessionFactory
      */
     public static void rebuildSessionFactory()
     {
-        Lock l = new ReentrantLock();
-        l.lock();
         try {
         	if (configuration == null)
         	{
         		configuration = new Configuration();
         		configuration.configure(configFile);
+        		LogUtil.info("Load configuration file: " + configFile);
         	}
         	
             Properties properties = configuration.getProperties();
+            //properties.list(System.out);
             //<property name=></property>
             //properties.put("connection.password", "Simplelife123");
-            ServiceRegistry sr = new ServiceRegistryBuilder().applySettings(properties).buildServiceRegistry();
+            ServiceRegistryBuilder build = new ServiceRegistryBuilder().applySettings(properties);
+            ServiceRegistry sr = build.buildServiceRegistry();
             sessionFactory = configuration.buildSessionFactory(sr);
         }
         catch (Exception e) 
         {
             LogUtil.printStackTrace(e);
-        }
-        finally
-        {
-            l.unlock();
         }
     }
 

@@ -116,6 +116,8 @@ public class HttpUtil
     
     public static String getHostIP()
     {
+        return "106.187.38.78";
+        /*
         if (hostIPAddress != null && hostIPAddress.length() > 0)
         {
             return hostIPAddress;
@@ -150,19 +152,19 @@ public class HttpUtil
             LogUtil.printStackTrace(e);
         }
         return hostIPAddress;
+        */
     }
     
     public static String getFullLink(String relativePath)
     {
         String fullLink = "http://" + getHostIP() + ":" + Integer.toString(httpPort);
-        if (relativePath.charAt(0) == '/')
+        if (relativePath.charAt(0) != '/')
         {
-            fullLink += relativePath;
+            fullLink += "/";
         }
-        else
-        {
-            fullLink += "/" + relativePath;
-        }
+        fullLink += "/seeds";
+        fullLink += relativePath;
+        
         return fullLink;
     }
 
@@ -254,6 +256,29 @@ public class HttpUtil
 	    }
     }
 	
+	public static String getTorrentLink(long seedId)
+	{
+	    String path = getFullLink("torrents/");
+        path += Long.toString(seedId);
+        path += ".torrent";
+        
+        return path;
+	}
+	
+	public static String getSeedSavePath()
+	{
+	    return getAbsolutePath("torrents/");
+	}
+	
+	public static String getSeedSavePathFile(long seedId)
+	{
+	    String path = getSeedSavePath();
+	    path += Long.toString(seedId);
+	    path += ".torrent";
+	    
+	    return path;
+	}
+	
 	public static String getAbsolutePath(String relativePath)
 	{
 	    if (webappsRoot == null)
@@ -264,15 +289,11 @@ public class HttpUtil
 	    }
 	    
 	    String absPath = webappsRoot; 
-	    if (relativePath.charAt(0) == '/')
+	    if (relativePath.charAt(0) != '/')
         {
-            absPath += relativePath;
+	        absPath += "/";
         }
-        else
-        {
-            absPath += "/" + relativePath;
-        }
-	    
+	    absPath += "seeds/" + relativePath;
 	    return absPath;
 	}
 	
@@ -289,7 +310,7 @@ public class HttpUtil
             //absPath = absPath.replaceAll("/bin", "/webapps");
             
             
-            File file = new File(getAbsolutePath(outputFile));
+            File file = new File(outputFile);
             if (!file.exists())
             {
                 File path = file.getParentFile();

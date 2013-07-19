@@ -34,6 +34,10 @@ public class JsonRequestBase implements IJsonRequest
 	{
 	}
 	
+	/**
+	 * As common part of checking JSON command for all extended classes
+	 * @return True if JSON command is valid, otherwise return false.
+	 */
 	protected boolean CheckJsonCommand()
 	{
     	if (!jsonObject.containsKey(JsonKey.body))
@@ -48,6 +52,11 @@ public class JsonRequestBase implements IJsonRequest
 		return true;
     }
 	
+	/**
+	 * 
+	 * @param intErrorCode
+	 * @param strErrorDescription
+	 */
 	public void responseInvalidRequest(int intErrorCode, String strErrorDescription)
 	{
 	    JsonResponseBase response = new JsonResponseBase(jsonObject, outPrintWriter); 

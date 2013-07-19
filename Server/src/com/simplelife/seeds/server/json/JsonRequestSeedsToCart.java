@@ -72,14 +72,32 @@ public class JsonRequestSeedsToCart extends JsonRequestBase
             return false;
         }
 		
-        String strDateList = paraObj.getString(JsonKey.seedIdList);
-        if (strDateList.length() <= 2)
+		JSONArray seedList = paraObj.getJSONArray(JsonKey.seedIdList);
+		int size = seedList.size();
+		String strSeedId;
+		for (int i = 0; i < size; i++)
+		{
+			strSeedId = seedList.getString(i);
+			if (!strSeedId.matches("^[-+]?(([0-9]+)([.]([0-9]+))?|([.]([0-9]+))?)$"))
+			{
+				String err = "Invalid seedId found: " + strSeedId;
+	            LogUtil.warning(err + jsonObject.toString());
+	            responseInvalidRequest(ErrorCode.IllegalMessageBody, err);
+	            return false;
+			}
+		}
+		
+		/*
+		// Removed to allow empty seedIdList, then only response cartId to client 
+        String seedIdList = paraObj.getString(JsonKey.seedIdList);
+        if (seedIdList.length() <= 2)
         {
         	String err = "Illegal message body: " + JsonKey.seedIdList +" is empty.";
             LogUtil.warning(err + jsonObject.toString());
             responseInvalidRequest(ErrorCode.IllegalMessageBody, err);
             return false;
         }
+        */
         
         LogUtil.info("JSON command is valid.\n");
 	    return true;
@@ -102,7 +120,7 @@ public class JsonRequestSeedsToCart extends JsonRequestBase
             JSONObject paraObj = jsonObject.getJSONObject(JsonKey.body);
             String cartId;
             
-            if (jsonObject.containsKey(JsonKey.cartId))
+            if (paraObj.containsKey(JsonKey.cartId))
             {
                 cartId = paraObj.getString(JsonKey.cartId);
             }
@@ -117,10 +135,19 @@ public class JsonRequestSeedsToCart extends JsonRequestBase
                 LogUtil.info("Generated random cartId: " + cartId);
             }
             
-            JSONArray seedList = paraObj.getJSONArray(JsonKey.seedIdList);
             JsonResponseSeedsToCart response = new JsonResponseSeedsToCart(jsonObject, outPrintWriter);
             response.setCartId(cartId);
-            response.setSeedList(seedList);
+            
+            if (paraObj.getString(JsonKey.seedIdList).length() <=2)
+            {
+            	response.setSeedList(null);
+            }
+            else
+            {
+            	JSONArray seedList = paraObj.getJSONArray(JsonKey.seedIdList);
+            	response.setSeedList(seedList);
+            }
+            
             response.responseNormalRequest();
         }
         catch (Exception e) 

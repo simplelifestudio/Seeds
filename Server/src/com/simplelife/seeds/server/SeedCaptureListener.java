@@ -112,11 +112,13 @@ public class SeedCaptureListener implements ServletContextListener
 	}
 	*/
 
-	private void createTimers()
+	private void scheduleTasks()
 	{
-	    createTimer(DateUtil.getTaskTrigger(20, false));
-	    createTimer(DateUtil.getTaskTrigger(21, false));
-	    createTimer(DateUtil.getTaskTrigger(22, false));
+	    scheduleSeedCaptureTask(DateUtil.getTaskTrigger(20, false));
+	    scheduleSeedCaptureTask(DateUtil.getTaskTrigger(21, false));
+	    scheduleSeedCaptureTask(DateUtil.getTaskTrigger(22, false));
+	    scheduleTorrentCheckTask(DateUtil.getTaskTrigger(23, false));
+	    
 	}
 	
 	/**
@@ -124,7 +126,7 @@ public class SeedCaptureListener implements ServletContextListener
 	 * @param dateTime: the time of first execution
 	 * @param period: internal seconds of executions
 	 */
-	public void createTimer(Date dateTime, long period)
+	public void scheduleSeedCaptureTask(Date dateTime, long period)
 	{
 	    try
 	    {
@@ -139,9 +141,15 @@ public class SeedCaptureListener implements ServletContextListener
 	    }
 	}
 	
-	public void createTimer(Date dateTime)
+	public void scheduleTorrentCheckTask(Date dateTime)
 	{
-	    createTimer(dateTime, 86400);
+	    Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TorrentCheckTask(), dateTime,  86400 * 1000);
+	}
+	
+	public void scheduleSeedCaptureTask(Date dateTime)
+	{
+	    scheduleSeedCaptureTask(dateTime, 86400);
 	}
 	
 	@Override
@@ -175,7 +183,7 @@ public class SeedCaptureListener implements ServletContextListener
 
 		//scheduleNextCapture();
 		
-		createTimers();
+		scheduleTasks();
 	}
 
 }

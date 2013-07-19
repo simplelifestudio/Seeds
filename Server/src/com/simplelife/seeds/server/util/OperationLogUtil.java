@@ -33,14 +33,14 @@ public class OperationLogUtil {
 	{
 		try
 		{
-			OperationLog log = new OperationLog(logId, logInfo);
 			if (logId == 0)
 			{
 				LogUtil.severe("logId can't be 0.");
 				return;
 			}
-				
-			log.setLogDate(DateUtil.getNow());
+			
+			OperationLog log = new OperationLog(logId, logInfo);
+            log.setLogDate(DateUtil.getNow());
 			DaoWrapper.save(log);
 		}
 		catch (Exception e)

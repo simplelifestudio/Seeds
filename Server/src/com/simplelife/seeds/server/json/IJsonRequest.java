@@ -14,5 +14,8 @@ import net.sf.json.JSONObject;
 import java.io.PrintWriter;
 
 public interface IJsonRequest {
+    /**
+     * Interface of execute for all JSON request
+     */
 	public void Execute();
 }

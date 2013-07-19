@@ -143,6 +143,28 @@ public class DateUtil {
 	 * @param date: given date
 	 * @return day difference
 	 */
+	public static long getDaysFromToday(Date date)
+	{
+	    Calendar cal_start;
+        try
+        {
+            cal_start = getCalendar();
+            cal_start.setTime(date);
+            
+            return getDaysBetween(cal_start, getCalendar());
+        }
+        catch(Exception e)
+        {
+            LogUtil.printStackTrace(e);
+            return INVALID_VALUE;
+        }
+	}
+	
+	/**
+	 * Get day difference between given date and today
+	 * @param date: given date
+	 * @return day difference
+	 */
 	public static long getDaysFromToday(String date)
 	{
 		Calendar cal_start;
@@ -254,16 +276,19 @@ public class DateUtil {
 	 */
 	public static Date getTaskTrigger(int taskTriggerHour, int taskTriggerMinute, boolean tomorrow)
 	{
+		// change to start from given time
 		Calendar cal = getCalendar();
+		cal.set(Calendar.HOUR_OF_DAY, taskTriggerHour);
+		cal.set(Calendar.MINUTE, taskTriggerMinute);
+
 		
 		if (tomorrow)
 	    {
 	        cal.add(Calendar.DAY_OF_YEAR, 1);
-			cal.set(Calendar.HOUR_OF_DAY, taskTriggerHour);
-			cal.set(Calendar.MINUTE, taskTriggerMinute);
 	    }
 		else
 		{
+			/*
 			int curHour = cal.get(Calendar.HOUR_OF_DAY);
 			int curMinute = cal.get(Calendar.MINUTE);
 			if ((curHour > taskTriggerHour) || 
@@ -271,6 +296,7 @@ public class DateUtil {
 			{
 				cal.add(Calendar.MINUTE, 2);
 			}
+			*/
 			
 		}
 		return cal.getTime();

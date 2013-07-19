@@ -104,7 +104,7 @@ public class JsonResponseSeeds extends JsonResponseBase
     	Hashtable<String, Object> seedFields = new Hashtable<String, Object>();
     	seedList.add(seedFields);
     	
-        responseField(seedFields, Long.toString(seed.getSeedId()), TableColumnName.seedId);
+        responseField(seedFields, TableColumnName.seedId, Long.toString(seed.getSeedId()));
         responseField(seedFields, TableColumnName.type, seed.getType());
         responseField(seedFields, TableColumnName.source, seed.getSource());
         responseField(seedFields, TableColumnName.publishDate, seed.getPublishDate());
