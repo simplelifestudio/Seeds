@@ -34,4 +34,5 @@ public class TableColumnName
     public final static String status = "status";
     public final static String torrentLink = "torrentLink";
     public final static String type = "type";
+    public final static String date = "date";
 }
