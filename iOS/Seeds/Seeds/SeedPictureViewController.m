@@ -97,8 +97,6 @@
             }
             else
             {
-//                DLog(@"Failed to load image with error: %@", error.description);
-             
                 UIImage* image = [SeedPictureAgent exceptionImageWithImagelType:PictureViewThumbnail imageExceptionType:ErrorImage];
 
                 dispatch_async(dispatch_get_main_queue(), ^(){
