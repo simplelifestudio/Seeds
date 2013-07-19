@@ -24,7 +24,13 @@ import com.sun.syndication.feed.rss.Description;
 import com.sun.syndication.feed.rss.Item;
 import com.sun.syndication.io.WireFeedOutput;
 
-public class RssUtil {
+public class RssUtil 
+{
+    /**
+     * Return content of given cartId
+     * @param cartId: ID of cart
+     * @return: content of cart
+     */
 	public String browseRss(String cartId)
 	{
 		Channel channel = new Channel("rss_2.0");
@@ -47,34 +53,57 @@ public class RssUtil {
 				}
 				channel.setItems(items);
 			}
-		} catch (Exception e) {
+			else
+			{
+			    LogUtil.severe("Null result returned.");
+			}
+		}
+		catch (Exception e) 
+		{
 			LogUtil.printStackTrace(e);
 		}
 
-		try {
+		try 
+		{
 			WireFeedOutput out = new WireFeedOutput();
 			output = out.outputString(channel);
-		} catch (Exception e) {
+		}
+		catch (Exception e) 
+		{
 			LogUtil.printStackTrace(e);
 		}
 		
 		return output;
 	}
 	
+	/**
+	 * Add channel header for given cartID
+	 * @param cartId: ID of cart
+	 * @param channel: Object of channel for result of client
+	 */
 	private static void setChannelHeader(String cartId, Channel channel)
 	{
+	    if (channel == null)
+	    {
+	        LogUtil.severe("Null channel found.");
+	        return;
+	    }
+	    
 		channel.setEncoding("UTF-8");
-        channel.setTitle("Seeds");
+        channel.setTitle("Seeds - Cart Service");
         channel.setEncoding("UTF-8");
         
-        channel.setDescription("在这里，可以发现属于你的精彩内容");
-        
-        // TODO: update link of  here
-        channel.setLink("http://xxxx.com/rss/userName");
+        channel.setDescription("");
+        channel.setLink(HttpUtil.getFullLink("/cartService?cartId=" + cartId));
         channel.setPubDate(DateUtil.getNowDate());
 	}
 	
 	
+	/**
+	 * Add information of seed to channel
+	 * @param seed: object of seed
+	 * @param items: list of RSS items in channel
+	 */
 	private static void addSeed(Seed seed, List<Item> items)
 	{
 		if (seed == null)
@@ -92,18 +121,18 @@ public class RssUtil {
 		Item item = new Item();
 		item.setTitle(seed.getName());
 		
-		String torrentFile = "torrent/" + seed.getSeedId() + ".torrent";
-		File file = new File(HttpUtil.getAbsolutePath(torrentFile));
+		String torrentFile = HttpUtil.getSeedSavePathFile(seed.getSeedId());
+		File file = new File(torrentFile);
 		if (!file.exists())
 		{
-		    LogUtil.info("Torrent is not existent: " + file.getAbsolutePath());
+		    LogUtil.info("Torrent is not existent, start to download: " + file.getAbsolutePath());
 		    TorrentDownloader dl = new TorrentDownloader(seed.getTorrentLink(), torrentFile);
 		    dl.start();
 		}
 		
-		item.setLink(HttpUtil.getFullLink(torrentFile));
+		item.setLink(HttpUtil.getTorrentLink(seed.getSeedId()));
         Description desc = new Description();
-        desc.setValue(seed.toString());
+        desc.setValue(seed.toRssString());
         item.setDescription(desc);
 
         items.add(item);

@@ -219,50 +219,98 @@ public class Seed {
 		pictures.add(pic);
 	}
 	
+	public String toRssString()
+	{
+		StringBuilder strBuilder = new StringBuilder();
+		
+		strBuilder.append("发布日期: ");
+		strBuilder.append(getPublishDate());
+		strBuilder.append("<br>");
+
+		strBuilder.append("影片名称: ");
+		strBuilder.append(getName());
+		strBuilder.append("<br>");
+
+		strBuilder.append("影片大小: ");
+		strBuilder.append(getSize());
+		strBuilder.append("<br>");
+
+		strBuilder.append("影片格式: ");
+		strBuilder.append(getFormat());
+		strBuilder.append("<br>");
+
+		strBuilder.append("有码无码: ");
+		strBuilder.append(getMosaic());
+		strBuilder.append("<br>");
+
+		String sql = SqlUtil.getSelectSeedPictureSql(SqlUtil.getSeedIdCondition(seedId));
+        List<SeedPicture> pics = DaoWrapper.query(sql, SeedPicture.class);
+        
+		java.util.Iterator<SeedPicture> it = pics.iterator();
+		SeedPicture pic;
+		String strSeedId = Long.toString(this.seedId);
+		int i = 0;
+		while (it.hasNext())
+		{
+			pic = it.next();
+			strBuilder.append("<a href=\"");
+			//strBuilder.append(pic.getPictureId());
+			
+			//strBuilder.append(": ");
+			strBuilder.append(pic.getPictureLink());
+			strBuilder.append("\">");
+			i++;
+			strBuilder.append("图片[" + Integer.toString(i) + "]");
+			strBuilder.append("</a><br>");
+		}
+		return strBuilder.toString();
+	}
+	
 	public String toString()
 	{
 		StringBuilder strBuilder = new StringBuilder();
 		
-		strBuilder.append("\n绫�   鍨� ");
+		strBuilder.append("\n类    型: ");
 		strBuilder.append(getType());
 		strBuilder.append("\n");
 
-		strBuilder.append("鏉�   婧� ");
+		strBuilder.append("来    源: ");
 		strBuilder.append(getSource());
 		strBuilder.append("\n");
 
-		strBuilder.append("鍙戝竷鏃ユ湡: ");
+		strBuilder.append("发布日期: ");
 		strBuilder.append(getPublishDate());
 		strBuilder.append("\n");
 
-		strBuilder.append("褰辩墖鍚嶇О: ");
+		strBuilder.append("影片名称: ");
 		strBuilder.append(getName());
 		strBuilder.append("\n");
 
-		strBuilder.append("褰辩墖澶у皬: ");
+		strBuilder.append("影片大小: ");
 		strBuilder.append(getSize());
 		strBuilder.append("\n");
 
-		strBuilder.append("褰辩墖鏍煎紡: ");
+		strBuilder.append("影片格式: ");
 		strBuilder.append(getFormat());
 		strBuilder.append("\n");
 
-		strBuilder.append("绉嶅瓙閾炬帴: ");
+		strBuilder.append("影片链接: ");
 		strBuilder.append(getTorrentLink());
 		strBuilder.append("\n");
 
-		strBuilder.append("鐗�寰�鐮� ");
+		strBuilder.append("哈 希 码: ");
 		strBuilder.append(getHash());
 		strBuilder.append("\n");
 
-		strBuilder.append("鏈夌爜鏃犵爜: ");
+		strBuilder.append("有码无码: ");
 		strBuilder.append(getMosaic());
 		strBuilder.append("\n");
 
-		strBuilder.append("澶囨敞淇℃伅: ");
+		strBuilder.append("备注信息: ");
 		strBuilder.append(getMemo());
 		strBuilder.append("\n");
 
+		strBuilder.append("预览图片: \n");
 		String sql = SqlUtil.getSelectSeedPictureSql(SqlUtil.getSeedIdCondition(seedId));
         List<SeedPicture> pics = DaoWrapper.query(sql, SeedPicture.class);
         
