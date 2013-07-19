@@ -10,4 +10,11 @@
 
 @interface CartIdViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UITextView *textView;
+
+@property (weak, nonatomic) IBOutlet UIButton *changeButton;
+@property (weak, nonatomic) IBOutlet UIButton *clipboardButton;
+- (IBAction)onClickClipboardButton:(id)sender;
+- (IBAction)onClickChangeButton:(id)sender;
+
 @end

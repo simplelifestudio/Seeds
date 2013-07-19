@@ -469,11 +469,12 @@
     }
     
     MBProgressHUD* HUD = [_guiModule.HUDAgent sharedHUD];
-    HUD.mode = MBProgressHUDModeIndeterminate;
-    HUD.labelText = NSLocalizedString(@"Subscribing", nil);
     [HUD showAnimated:YES whileExecutingBlock:^(){
         @try
         {
+            HUD.mode = MBProgressHUDModeIndeterminate;
+            HUD.labelText = NSLocalizedString(@"Subscribing", nil);
+            
             NSString* cartId = [_userDefaults cartId];
             NSString* seedIdStr = [NSString stringWithFormat:@"%d", _seed.seedId];
             JSONMessage* responseMessage = [_serverAgent seedsToCartRequest:cartId seedIds:@[seedIdStr]];
@@ -540,8 +541,16 @@
         }
         @finally
         {
-            sleep(_HUD_DISPLAY);
+            [NSThread sleepForTimeInterval:_HUD_DISPLAY];
         }
+    }
+    completionBlock:^()
+    {
+        [CBAppUtils asyncProcessInMainThread:^(){
+            HUD.mode = MBProgressHUDModeText;
+            HUD.labelText = nil;
+            HUD.detailsLabelText = nil;
+        }];
     }];
 }
 

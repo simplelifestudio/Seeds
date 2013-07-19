@@ -48,6 +48,10 @@
 
 "Subscribe Successfully" = "订阅成功";
 "Subscribe Failed" = "订阅失败";
+"Copied to Clipboard" = "已复制到剪贴板";
+"Generating" = "创建中";
+"Generate Successfully" = "创建成功";
+"Generate Failed" = "创建失败";
 
 "Preparing" = "准备";
 "Stamps Computing" = "日期计算";
@@ -151,8 +155,8 @@
 "Downloads Cleared" = "下载已清空";
 "Clear Favorites" = "清空收藏";
 "Favorites Cleared" = "收藏已清空";
-"Reset Database" = "重置数据库";
-"Database Reseted" = "数据库已重置";
+"Reset Database" = "重置数据库和更新状态";
+"Database Reseted" = "数据库和更新状态已重置";
 
 "Passcode" = "密码";
 "Open Passcode" = "打开密码";

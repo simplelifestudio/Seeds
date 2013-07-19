@@ -44,7 +44,7 @@
 #define JSONMESSAGE_KEY_CONTENT @"content"
 #define JSONMESSAGE_KEY_SEEDIDLIST @"seedIdList"
 #define JSONMESSAGE_KEY_CARTID @"cartId"
-#define JSONMESSAGE_KEY_PICLINKS @"piclinks"
+#define JSONMESSAGE_KEY_PICLINKS @"picLinks"
 #define JSONMESSAGE_KEY_NAME @"name"
 #define JSONMESSAGE_KEY_SIZE @"size"
 #define JSONMESSAGE_KEY_MOSAIC @"mosaic"
@@ -76,7 +76,7 @@
 #define JSONMESSAGE_COMMAND_EXTERNALSEEDSTOCARTRESPONSE @"ExternalSeedsToCartResponse"
 
 #define BASEURL_SEEDSSERVER @"http://106.187.38.78:80"
-#define REMOTEPATH_SEEDSSERVICE @"/seeds/seedService"
+#define REMOTEPATH_SEEDSERVICE @"/seeds/seedService"
 #define REMOTEPATH_CARTSERVICE @"/seeds/cartService"
 
 #define BASEURL_TORRENTSTORE @"www.maxp2p.com"

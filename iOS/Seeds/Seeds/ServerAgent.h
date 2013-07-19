@@ -18,7 +18,7 @@ typedef void(^JSONMessageCallBackBlock)(id JSON, NSError* error);
 
 @property (nonatomic, strong) id<CBLongTaskStatusHUDDelegate> delegate;
 
-+(NSMutableURLRequest*) constructURLRequest:(JSONMessage*) message;
++(NSMutableURLRequest*) constructURLRequest:(JSONMessage*) message serverServiceType:(ServerServiceType) serverServiceType;
 +(NSArray*) seedsFromDictionary:(NSArray*) seedDics;
 +(Seed*) seedFromDictionary:(NSDictionary*) seedDic;
 
@@ -33,6 +33,7 @@ typedef void(^JSONMessageCallBackBlock)(id JSON, NSError* error);
 -(JSONMessage*) seedsUpdateStatusByDatesRequest:(NSArray*) days;
 -(JSONMessage*) seedsByDatesRequest:(NSArray*) days;
 -(JSONMessage*) seedsToCartRequest:(NSString*) cartId seedIds:(NSArray*) seedIds;
+-(NSString*) newCartId;
 
 -(void) syncSeedsInfo;
 

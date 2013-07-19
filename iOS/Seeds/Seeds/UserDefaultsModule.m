@@ -82,7 +82,7 @@ SINGLETON(UserDefaultsModule)
 -(void) setValueForKeyInPersistentDomain:(id) value forKey:(NSString*) key inPersistentDomain:(NSString*) domain
 {
     NSMutableDictionary* dic = [self persistentDomainForName:domain];
-    if (nil != dic)
+    if (nil != dic && nil != value && nil != key)
     {
         [dic setObject:value forKey:key];
         [_userDefaults setPersistentDomain:dic forName:domain];

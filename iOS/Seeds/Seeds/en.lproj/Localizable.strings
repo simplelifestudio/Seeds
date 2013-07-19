@@ -48,6 +48,10 @@
 
 "Subscribe Successfully" = "Subscribe Successfully";
 "Subscribe Failed" = "Subscribe Failed";
+"Copied to Clipboard" = "Copied to Clipboard";
+"Generating" = "Generating";
+"Generate Successfully" = "Generate Successfull";
+"Generate Failed" = "Generate Failed";
 
 "Preparing" = "Preparing";
 "Stamps Computing" = "Stamps Computing";
@@ -151,8 +155,8 @@
 "Downloads Cleared" = "Downloads Cleared";
 "Clear Favorites" = "Clear Favorites";
 "Favorites Cleared" = "Favorites Cleared";
-"Reset Database" = "Reset Database";
-"Database Reseted" = "Database Reseted";
+"Reset Database" = "Reset Database & Update Status";
+"Database Reseted" = "Database & Updated Status Reseted";
 
 "Passcode" = "Passcode";
 "Open Passcode" = "Open Passcode";

@@ -25,7 +25,7 @@
 
 @synthesize delegate = _delegate;
 
-+(NSMutableURLRequest*) constructURLRequest:(JSONMessage*) message
++(NSMutableURLRequest*) constructURLRequest:(JSONMessage*) message serverServiceType:(ServerServiceType)serverServiceType
 {
     NSAssert(nil != message, @"Nil JSON Message");
     
@@ -34,10 +34,29 @@
     AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:BASEURL_SEEDSSERVER]];
     [httpClient setParameterEncoding:AFJSONParameterEncoding];
     
-    request = [httpClient
-               requestWithMethod:@"POST"
-               path:REMOTEPATH_SEEDSSERVICE
-               parameters:message.body];
+    switch (serverServiceType)
+    {
+        case SeedService:
+        {
+            request = [httpClient
+                       requestWithMethod:@"POST"
+                       path:REMOTEPATH_SEEDSERVICE
+                       parameters:message.body];
+            break;
+        }
+        case CartService:
+        {
+            request = [httpClient
+                       requestWithMethod:@"POST"
+                       path:REMOTEPATH_SEEDSERVICE
+                       parameters:message.body];
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
     
     return request;
 }
@@ -142,13 +161,14 @@
     return self;
 }
 
-#pragma mark - Sync Invocations
+#pragma mark - Async Invocations
 
 -(void) aloha:(JSONMessageCallBackBlock) callbackBlock
 {
     NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@"Hello Seeds Server!"] forKeys:@[@"content"]];
     JSONMessage* message = [JSONMessage constructWithType:AlohaRequest messageBody:messageBody];
-    [self requestAsync:message
+    [self requestAsync:SeedService
+        requestMessage:message
         success:^(NSURLRequest* request, NSHTTPURLResponse* response, id JSON)
         {
             callbackBlock(JSON, nil);
@@ -169,7 +189,8 @@
     
     NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@[last3DayStrs[0], last3DayStrs[1], last3DayStrs[2]]] forKeys:@[JSONMESSAGE_KEY_DATELIST]];
     JSONMessage* message = [JSONMessage constructWithType:SeedsUpdateStatusByDatesRequest messageBody:messageBody];
-    [self requestAsync:message
+    [self requestAsync:SeedService
+        requestMessage:message
         success:^(NSURLRequest* request, NSHTTPURLResponse* response, id JSON)
         {
             callbackBlock(JSON, nil);
@@ -190,7 +211,8 @@
     NSDictionary* messageBody = [NSDictionary dictionaryWithObjects:@[@[last3DayStrs[0], last3DayStrs[1], last3DayStrs[2]]] forKeys:@[JSONMESSAGE_KEY_DATELIST]];
     JSONMessage* message = [JSONMessage constructWithType:SeedsByDatesRequest messageBody:messageBody];
     
-    [self requestAsync:message
+    [self requestAsync:SeedService
+        requestMessage:message
         success:^(NSURLRequest* request, NSHTTPURLResponse* response, id JSON)
         {
             callbackBlock(JSON, nil);
@@ -211,7 +233,8 @@
         [messageBody setValue:cartId forKey:JSONMESSAGE_KEY_CARTID];
         JSONMessage* message = [JSONMessage constructWithType:SeedsToCartRequest messageBody:messageBody];
         
-        [self requestAsync:message
+        [self requestAsync:SeedService
+            requestMessage:message
             success:^(NSURLRequest* request, NSHTTPURLResponse* response, id JSON)
             {
                 callbackBlock(JSON, nil);
@@ -236,7 +259,7 @@
     
     JSONMessage* requestMessage = [JSONMessage constructWithType:AlohaRequest messageBody:content];
     
-    responseMessage = [self requestSync:requestMessage];
+    responseMessage = [self requestSync:SeedService requestMessage:requestMessage];
     
     return responseMessage;
 }
@@ -258,7 +281,7 @@
 
     JSONMessage* requestMessage = [JSONMessage constructWithType:SeedsUpdateStatusByDatesRequest messageBody:dateListDic];
     
-    responseMessage = [self requestSync:requestMessage];
+    responseMessage = [self requestSync:SeedService requestMessage:requestMessage];
     
     return responseMessage;
 }
@@ -280,7 +303,7 @@
 
     JSONMessage* requestMessage = [JSONMessage constructWithType:SeedsByDatesRequest messageBody:dateListDic];
     
-    responseMessage = [self requestSync:requestMessage];
+    responseMessage = [self requestSync:SeedService requestMessage:requestMessage];
     
     return responseMessage;
 }
@@ -289,6 +312,7 @@
 {
     JSONMessage* responseMessage = nil;
     
+    seedIds = (nil != seedIds) ? seedIds : @[];
     NSMutableDictionary* seedIdListDic = [NSMutableDictionary dictionaryWithObject:seedIds forKey:JSONMESSAGE_KEY_SEEDIDLIST];
     if (nil != cartId | 0 < cartId.length)
     {
@@ -296,25 +320,47 @@
     }
     JSONMessage* requestMessage = [JSONMessage constructWithType:SeedsToCartRequest messageBody:seedIdListDic];
 
-    responseMessage = [self requestSync:requestMessage];
+    responseMessage = [self requestSync:CartService requestMessage:requestMessage];
     
     return responseMessage;
 }
 
+-(NSString*) newCartId
+{
+    NSString* cartId = nil;
+    
+    JSONMessage* responseMessage = [self seedsToCartRequest:nil seedIds:nil];
+    if (nil != responseMessage)
+    {
+        if (![JSONMessage isErrorResponseMessage:responseMessage])
+        {
+            if ([responseMessage.command isEqualToString:JSONMESSAGE_COMMAND_SEEDSTOCARTRESPONSE])
+            {
+                NSDictionary* contentDic = responseMessage.body;
+                NSDictionary* bodyDic = [contentDic objectForKey:JSONMESSAGE_KEY_BODY];
+                cartId = [bodyDic objectForKey:JSONMESSAGE_KEY_CARTID];
+            }
+        }
+    }
+    
+    return cartId;
+}
+
+
 #pragma mark - JSONMessageDelegate
 
--(void) requestAsync:
-        (JSONMessage*) requestMessage
-        success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON))success
-        failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON))failure
+-(void) requestAsync:(ServerServiceType) serverServiceType
+      requestMessage:(JSONMessage*) requestMessage
+    success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON))success
+    failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON))failure
 {
-    NSMutableURLRequest* request = [ServerAgent constructURLRequest:requestMessage];
+    NSMutableURLRequest* request = [ServerAgent constructURLRequest: requestMessage serverServiceType:serverServiceType];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:success failure:failure];
     [operation start];    
 }
 
 // Warning: This method CAN NOT be invoked in Main Thread!
--(JSONMessage*) requestSync:(JSONMessage*) requestMessage
+-(JSONMessage*) requestSync:(ServerServiceType) serverServiceType requestMessage: (JSONMessage*) requestMessage
 {
     if ([[NSThread currentThread] isMainThread])
     {
@@ -346,7 +392,7 @@
         [lock unlock];
     };
     
-    NSMutableURLRequest* request = [ServerAgent constructURLRequest:requestMessage];
+    NSMutableURLRequest* request = [ServerAgent constructURLRequest:requestMessage serverServiceType:serverServiceType];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:syncSuccessBlock failure:syncFailureBlock];
     [operation start];
     
