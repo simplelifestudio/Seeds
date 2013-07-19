@@ -209,7 +209,15 @@
     [self _refreshUIWithSeedDownloadStatusUpdated:downloadStatus];
     
     BOOL isServerMode = [_userDefaults isServerMode];
-    [_subscribeBarButton setEnabled:isServerMode];
+    
+    if (isServerMode)
+    {
+        self.navigationItem.rightBarButtonItems = @[_downloadBarButton, _subscribeBarButton];
+    }
+    else
+    {
+        self.navigationItem.rightBarButtonItems = @[_downloadBarButton];
+    }
 }
 
 - (void) _refreshUIWithSeedDownloadStatusUpdated:(SeedDownloadStatus) status
@@ -232,26 +240,26 @@
         }
         case SeedWaitForDownload:
         {
-            [_downloadBarButton setCustomView:_indicatorView];
+//            [_downloadBarButton setCustomView:_indicatorView];
             [_downloadBarButton setEnabled:NO];
             break;
         }
         case SeedIsDownloading:
         {
-            [_downloadBarButton setCustomView:_indicatorView];
+//            [_downloadBarButton setCustomView:_indicatorView];
             [_downloadBarButton setEnabled:NO];
             break;
         }
         case SeedDownloaded:
         {
-            [_downloadBarButton setCustomView:nil];
+//            [_downloadBarButton setCustomView:nil];
             [_downloadBarButton setTitle:NSLocalizedString(@"Delete", nil)];
             [_downloadBarButton setEnabled:YES];
             break;
         }
         case SeedDownloadFailed:
         {
-            [_downloadBarButton setCustomView:nil];
+//            [_downloadBarButton setCustomView:nil];
             [_downloadBarButton setTitle:NSLocalizedString(@"Download", nil)];
             [_downloadBarButton setEnabled:YES];
             break;
@@ -386,7 +394,7 @@
                                     UIViewAutoresizingFlexibleTopMargin |
                                     UIViewAutoresizingFlexibleBottomMargin);
     
-    self.navigationItem.rightBarButtonItems = @[_downloadBarButton, _subscribeBarButton];//, _favoriteBarButton];
+    self.navigationItem.rightBarButtonItems = @[_downloadBarButton, _subscribeBarButton];
 }
 
 - (void) _registerGestureRecognizers
