@@ -56,8 +56,6 @@ public class SeedsDetailsActivity extends Activity{
 	// For the layout setting
 	private SeedsSlideImageLayout tSlideLayout = null;
 	
-	private int tPageIndex = 0; 
-	
 	// The info about the Seed
 	private int mSeedLocalId;
 	
@@ -83,11 +81,7 @@ public class SeedsDetailsActivity extends Activity{
 	private boolean tFavTag = false;
 	
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-				
-		// Log the entry
-		Log.i(LOGCLASS, "Working on starting the SeedsDetailsActivity!");
-		//setTheme(android.R.style.Theme_Translucent_NoTitleBar);
+		super.onCreate(savedInstanceState);				
 				
 		// Load the seeds info
 		mSeedsEntity = (SeedsEntity) getIntent().getSerializableExtra("seedObj");
@@ -246,7 +240,6 @@ public class SeedsDetailsActivity extends Activity{
   
         @Override  
         public void onPageSelected(int index) {  
-        	tPageIndex = index;
         	tSlideLayout.setPageIndex(index);
         	//tvSlideTitle.setText(parser.getSlideTitles()[index]);
         	
@@ -372,6 +365,14 @@ public class SeedsDetailsActivity extends Activity{
             	mFavItem = item;
             	addOrCancelFromFavList(item);            	
     		    return true;
+            }
+            case R.id.rss_addtocart:
+            {
+            	return true;
+            }
+            case R.id.rss_management:
+            {
+            	return true;
             }
             case R.id.download_seed:
             {

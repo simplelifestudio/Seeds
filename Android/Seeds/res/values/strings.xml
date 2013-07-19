@@ -84,6 +84,9 @@
     <string name="seeds_setpassword_failed">Empty password, please retry!</string>
     <string name="seeds_setpassword_enterpwd">Please enter the password</string> 
     <string name="seeds_password_tooshort">The password is too short, please retry!</string>
+    
+    <string name="seeds_rss_menuaddtocart">Add To RSS Cart</string>
+    <string name="seeds_rss_management">RSS Management</string>
 
     <string name="seeds_config_page">Settings</string>  
     <string name="seeds_config_serverpref">Server Preference</string>
@@ -141,6 +144,6 @@
     \n  
     \n  
     <b>Please contact author for any problems</b>   
-    </string> 
+    </string>        
        
 </resources>
