@@ -10,6 +10,7 @@
 
 package com.simplelife.seeds.server;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
@@ -45,12 +46,11 @@ import com.simplelife.seeds.server.util.TableName;
 public class Test {
 	public static void main(String[] args)
 	{
-	    LogUtil.setLevel(Level.WARNING);
+	    //LogUtil.setLevel(Level.WARNING);
 	    //HttpUtil.setHttpProxy("87.254.212.120", 8080);
 	    //HttpUtil.setHostIP("127.0.0.1");
 	    //HttpUtil.setHttpPort(8080);
 	    
-	    //testRssContent();
 	    //testLogUtil();
 	    //testEncrypt();
 	    
@@ -66,11 +66,12 @@ public class Test {
 	    //testSeedCaptureTask();
 	    //testTorrentDownload();
 	    //testHtmlNodeVisitor();
+		testRssContent();
         
 	    // =========JSON related=========
 	    //testJsonCommandFactory();
 	    //testJsonAlohaReq();
-	    testJsonSeedStatusReq();
+	    //testJsonSeedStatusReq();
 	    //testJsonSeedReq();
 	    //testJsonSeedToCartReq();
 	    
@@ -79,10 +80,31 @@ public class Test {
 		//testDateFunctions();
 	    //testGetParaListByLink();
 	    //testSeedCaptureTaskTimer();
+		//testTaskTrigger();
+	    //testSeedCaptureTaskRun();
 		
 		System.exit(0);
 	}
+	
+	private static void testSeedCaptureTaskRun()
+	{
+	    SeedCaptureTask task = new SeedCaptureTask();
+	    task.run();
+	    
+	    TorrentCheckTask task2 = new  TorrentCheckTask();
+	    task2.run();
+	    
+	    File file = new File("E:\\work\\tomcat\\webapps/torrent");
+	    task2.checkAndDeleteFile(file);
+	}
 
+	private static void testTaskTrigger()
+	{
+		System.out.print(DateUtil.getTaskTrigger(20, false).toString() + "\n");
+		System.out.print(DateUtil.getTaskTrigger(21, false).toString() + "\n");
+		System.out.print(DateUtil.getTaskTrigger(22, false).toString() + "\n");
+	}
+	
 	private static void testHtmlNodeVisitor()
 	{
 	    HtmlNodeVisitor vistor = new HtmlNodeVisitor(true, false);
@@ -108,17 +130,17 @@ public class Test {
 	    SeedCaptureListener listner = new SeedCaptureListener();
 	    try
         {
-	        listner.createTimer(DateUtil.getNowDate(), 5);
+	        listner.scheduleSeedCaptureTask(DateUtil.getNowDate(), 5);
             Thread.sleep(3000);
             
-            listner.createTimer(DateUtil.getNowDate(), 5);
+            listner.scheduleSeedCaptureTask(DateUtil.getNowDate(), 5);
             Thread.sleep(3000);
             
-            listner.createTimer(DateUtil.getNowDate(), 5);
+            listner.scheduleSeedCaptureTask(DateUtil.getNowDate(), 5);
             Thread.sleep(100000);
-        } catch (InterruptedException e)
+        } 
+	    catch (InterruptedException e)
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 	    LogUtil.setLevel(level);
@@ -126,7 +148,7 @@ public class Test {
 	
 	private static void testCaptureLog()
 	{
-		String date = "2013-06-17";
+		String date = "2013-07-13";
 		
 		String sql = SqlUtil.getSelectCaptureLogSql(SqlUtil.getPublishDateCondition(date));
         List record = DaoWrapper.query(sql, SeedCaptureLog.class);
@@ -285,8 +307,8 @@ public class Test {
 		//parser.setstartDate(DateUtil.getDateStringByDayBack(3));
 		//parser.setendDate(DateUtil.getToday());
 
-        parser.setstartDate("2013-06-17");
-        parser.setendDate("2013-06-17");
+        parser.setstartDate("2013-07-10");
+        parser.setendDate("2013-07-17");
 
 		parser.setbaseLink("http://174.123.15.31/forumdisplay.php?fid=55&page={page}");
 		parser.setPageEnd(1);
@@ -349,7 +371,7 @@ public class Test {
 		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"\" }\n}";
 		testJsonCommand(command);
 		
-		System.out.print("\n\n==========Report error of empty seedIdList==========\n");
+		System.out.print("\n\n==========Empty seedIdList, response normally with generated cartId==========\n");
 		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"\", \"seedIdList\": [] }\n}";
 		testJsonCommand(command);
 
@@ -363,6 +385,13 @@ public class Test {
 		command = "{\n    \"command\": \"SeedsToCartRequest\",\n    \"paramList\": {\n    \"cartId\":\"chen\",\n    \"seedIdList\": [\n            \"1\",\n            \"2\",\n            \"9999\"\n        ]\n    }\n}";
         testJsonCommand(command);
         
+        System.out.print("\n\n==========Report error of invalid seedId==========\n");
+		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"chen\",\n    \"seedIdList\": [\n            \"111\",\n            \"bbb\",\n            \"9999\"\n        ]\n    }\n}";
+        testJsonCommand(command);
+        
+        System.out.print("\n\n==========Report error of invalid seedId==========\n");
+		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"chen\",\n    \"seedIdList\": [\n            \"0x111\",\n            \"bbb\",\n            \"9999\"\n        ]\n    }\n}";
+        testJsonCommand(command);
         
 	}
 	
@@ -500,16 +529,16 @@ public class Test {
 	private static void testQuery()
 	{
 		String sql = SqlUtil.getSelectSeedSql("");
-		if (DaoWrapper.exists(sql) == DBExistResult.existent)
+		if (DaoWrapper.exists(sql) != DBExistResult.existent)
 		{
-			LogUtil.severe("no data found");
+			LogUtil.severe("no data found: " + sql);
 			return;
 		}
 		
 		List list = DaoWrapper.query(sql, Seed.class);
 		if (list == null)
 		{
-			LogUtil.severe("Exception in DB connection, check DB configuration");
+			LogUtil.severe("Exception in DB connection, check DB configuration: " + sql);
 			return;
 		}
 		java.util.Iterator iter = list.iterator();
@@ -519,12 +548,12 @@ public class Test {
 			System.out.println(((Seed)iter.next()).getSeedId());
 		}
 		
-		list = DaoWrapper.query(SqlUtil.getSelectSeedSql(TableColumnName.seedId + " = 12"), SeedPicture.class);
+		list = DaoWrapper.query(SqlUtil.getSelectSeedSql(TableColumnName.seedId + " = 12"), Seed.class);
 		iter = list.iterator();
 		while (iter.hasNext())
 		{
 			//System.out.println(iter.next().getClass().toString());
-			System.out.println(((SeedPicture)iter.next()).getPictureId());
+			System.out.println(((Seed)iter.next()).getSeedId());
 		}
 	}
 	
