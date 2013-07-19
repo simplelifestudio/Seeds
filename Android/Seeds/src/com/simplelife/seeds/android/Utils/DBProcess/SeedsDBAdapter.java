@@ -52,7 +52,7 @@ public class SeedsDBAdapter {
 	public static final String KEY_MOSAIC = "mosaic";
 	public static final String KEY_MEMO   = "memo";
 	public static final String KEY_FAVORITE = "favorite";
-	public static final String KEY_PICLINKS = "piclinks";
+	public static final String KEY_PICLINKS = "picLinks";
 	public static final String KEY_LOCALID  = "seedLocalId";
 	public static final String KEY_PICTURELINK = "pictureLink";
 	

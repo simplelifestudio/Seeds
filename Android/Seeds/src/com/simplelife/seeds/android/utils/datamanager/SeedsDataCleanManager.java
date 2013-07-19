@@ -4,7 +4,7 @@
  *  SeedsDataCleanManager.java
  *  Seeds
  *
- *  Created by Chris Li on 13-5-20. 
+ *  Created by Chris Li on 13-7-17. 
  */
 package com.simplelife.seeds.android.utils.datamanager;
   
