@@ -45,13 +45,14 @@
 "Close" = "Close";
 "Manage" = "Manage";
 "Copy" = "Copy";
+"Save" = "Save";
 
 "Subscribe Successfully" = "Subscribe Successfully";
 "Subscribe Failed" = "Subscribe Failed";
 "Copied to Clipboard" = "Copied to Clipboard";
-"Generating" = "Generating";
-"Generate Successfully" = "Generate Successfull";
-"Generate Failed" = "Generate Failed";
+"Applying" = "Applying";
+"Apply Successfully" = "Apply Successfull";
+"Apply Failed" = "Apply Failed";
 
 "Preparing" = "Preparing";
 "Stamps Computing" = "Stamps Computing";

@@ -45,13 +45,14 @@
 "Close" = "关闭";
 "Manage" = "管理";
 "Copy" = "复制";
+"Save" = "保存";
 
 "Subscribe Successfully" = "订阅成功";
 "Subscribe Failed" = "订阅失败";
 "Copied to Clipboard" = "已复制到剪贴板";
-"Generating" = "创建中";
-"Generate Successfully" = "创建成功";
-"Generate Failed" = "创建失败";
+"Applying" = "申请中";
+"Apply Successfully" = "申请成功";
+"Apply Failed" = "申请失败";
 
 "Preparing" = "准备";
 "Stamps Computing" = "日期计算";
