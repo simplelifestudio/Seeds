@@ -165,7 +165,7 @@ public class HtmlNodeVisitor extends NodeVisitor {
 			field = field.substring(1).trim();
 		}
 		
-		field = field.replaceAll("[\":{,}]", "");
+		field = field.replaceAll("[\"{,}]", "");
 		field = field.replace("[", "");
 		field = field.replace("]", "");
 		return field;
@@ -221,17 +221,7 @@ public class HtmlNodeVisitor extends NodeVisitor {
     
     private boolean isFilmName(String str)
     {
-    	if (str.indexOf("影片名称") >= 0)
-    	{
-    		return true;
-    	}
-    	
-    	if (str.indexOf("影片片名") >= 0)
-    	{
-    		return true;
-    	}
-    	
-    	if (str.indexOf("影片名稱") >= 0)
+    	if (str.indexOf("片名") >= 0)
     	{
     		return true;
     	}
@@ -240,15 +230,7 @@ public class HtmlNodeVisitor extends NodeVisitor {
     
     private boolean isFilmSize(String str)
     {
-    	if (str.indexOf("影片大小") >= 0)
-    	{
-    		return true;
-    	}
-    	if (str.indexOf("檔案大小") >= 0)
-    	{
-    		return true;
-    	}
-    	if (str.indexOf("大小時間") >= 0)
+    	if (str.indexOf("大小") >= 0)
     	{
     		return true;
     	}
@@ -270,15 +252,15 @@ public class HtmlNodeVisitor extends NodeVisitor {
     	{
     		return true;
     	}
-    	if (str.indexOf("檔案類別") >= 0)
-    	{
-    		return true;
-    	}
     	if (str.indexOf("格式类型") >= 0)
     	{
     		return true;
     	}
     	if (str.indexOf("格式類型") >= 0)
+    	{
+    		return true;
+    	}
+    	if (str.indexOf("格式") >= 0)
     	{
     		return true;
     	}
@@ -310,6 +292,10 @@ public class HtmlNodeVisitor extends NodeVisitor {
     	{
     		return true;
     	}
+        if (str.indexOf("檔案類別") >= 0)
+        {
+            return true;
+        }
     	return false;
     }
     
