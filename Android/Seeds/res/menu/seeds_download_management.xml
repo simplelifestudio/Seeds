@@ -21,6 +21,16 @@
           android:title="@string/seeds_details_addto_fav"/>
            
     <item
+        android:id="@+id/rss_addtocart"
+        android:showAsAction="never"
+        android:title="@string/seeds_rss_menuaddtocart"/>
+    
+    <item
+        android:id="@+id/rss_management"
+        android:showAsAction="never"
+        android:title="@string/seeds_rss_management"/>
+        
+    <item
         android:id="@+id/download_seed"
         android:icon="@android:drawable/ic_menu_delete"
         android:showAsAction="never"

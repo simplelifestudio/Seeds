@@ -84,6 +84,9 @@
     <string name="seeds_setpassword_enterpwd">请输入密码！</string>          
     <string name="seeds_password_tooshort">密码太短，请重新输入！</string>
     
+    <string name="seeds_rss_menuaddtocart">加入订阅</string>
+    <string name="seeds_rss_management">订阅管理</string>
+    
     <string name="seeds_config_page">应用设置</string>
     <string name="seeds_config_serverpref">服务器设置</string>
     <string name="seeds_config_modifyserveraddrtitle">更改服务器地址</string>
