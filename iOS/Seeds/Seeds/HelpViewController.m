@@ -130,12 +130,17 @@
 
 -(void)_initArray
 {
-    UIImage* helpImage1 = [UIImage imageNamed:@"help1.png"];
-    UIImage* helpImage2 = [UIImage imageNamed:@"help2.png"];
-    UIImage* helpImage3 = [UIImage imageNamed:@"help3.png"];
-    UIImage* helpImage4 = [UIImage imageNamed:@"help4.png"];
+    UIImage* helpImage1 = [UIImage imageNamed:@"help_server.png"];
+    UIImage* helpImage2 = [UIImage imageNamed:@"help_standalone.png"];
+    UIImage* helpImage3 = [UIImage imageNamed:@"help_seedlist.png"];
+    UIImage* helpImage4 = [UIImage imageNamed:@"help_downlist.png"];
+    UIImage* helpImage5 = [UIImage imageNamed:@"help_seeddetail.png"];
+    UIImage* helpImage6 = [UIImage imageNamed:@"help_pictureview.png"];
+    UIImage* helpImage7 = [UIImage imageNamed:@"help_share.png"];
+    UIImage* helpImage8 = [UIImage imageNamed:@"help_config.png"];
+    UIImage* helpImage9 = [UIImage imageNamed:@"help_rssid.png"];
     
-    imageArray = [NSArray arrayWithObjects: helpImage1, helpImage2, helpImage3, helpImage4, nil];
+    imageArray = [NSArray arrayWithObjects: helpImage1, helpImage2, helpImage3, helpImage4, helpImage5, helpImage6, helpImage7, helpImage8, helpImage9, nil];
 }
 
 -(void)_configHelpViewUI
@@ -143,13 +148,15 @@
     _scrollView.delegate = self;
     
     CGFloat width = _scrollView.frame.size.width;
-    CGFloat height = _scrollView.frame.size.height;
+    CGFloat height = _scrollView.frame.size.height;  
     
     // fill images
     for (int i = 0; i < imageArray.count; i++)
     {
         UIImageView *subImageView = [[UIImageView alloc] initWithImage:[imageArray objectAtIndex:i]];
         subImageView.frame = CGRectMake(width * i, 0, width, height);
+        subImageView.contentMode = UIViewContentModeScaleAspectFit;
+        DLog(@"xxxx :%f", subImageView.frame.size.height);
         [_scrollView addSubview: subImageView];
     }
     
@@ -158,10 +165,11 @@
     [_helpView addSubview:_scrollView];
     [_scrollView scrollRectToVisible:CGRectMake(0, 0, width, height) animated:NO];
     // set page control UI attributes
+    _pageControl.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
+    _pageControl.alpha = 1.0;
+    _pageControl.numberOfPages = imageArray.count;
     [_pageControl setBounds:CGRectMake(0, 0, 18 * (_pageControl.numberOfPages + 1), 18)];
     [_pageControl.layer setCornerRadius:8];
-    _pageControl.numberOfPages = imageArray.count;
-    _pageControl.backgroundColor=[UIColor grayColor];
     _pageControl.currentPage = 0;
     _pageControl.enabled = YES;
     [_helpView addSubview:_pageControl];
