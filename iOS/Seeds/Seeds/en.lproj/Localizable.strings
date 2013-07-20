@@ -47,12 +47,13 @@
 "Copy" = "Copy";
 "Save" = "Save";
 
+"Subscribe Source" = "Subscribe Source";
 "Subscribe Successfully" = "Subscribe Successfully";
 "Subscribe Failed" = "Subscribe Failed";
 "Subscribed Before" = "Subscribed Before";
 "Copied to Clipboard" = "Copied to Clipboard";
 "Applying" = "Applying";
-"Apply Successfully" = "Apply Successfull";
+"Apply Successfully" = "Apply Successfully";
 "Apply Failed" = "Apply Failed";
 
 "Preparing" = "Preparing";
@@ -176,8 +177,8 @@
 "Finished:" = "Finished:";
 "Skipped:" = "Skipped:";
 
-"Pull down to refresh..." = "Pull down will trigger reloading failed images";
-"Release to refresh..." = "Release to trigger reloading failed images";
+"Pull down to refresh..." = "Pull down to reload failed images";
+"Release to refresh..." = "Release to reload failed images";
 "Counting failed images..." = "Counting failed images...";
 "Last Updated: %@" = "Last refreshed at: %@";
 

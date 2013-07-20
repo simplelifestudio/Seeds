@@ -811,7 +811,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         _cartIdCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
         
         [_cartIdCell setSelectionStyle:UITableViewCellSelectionStyleNone];
-        _cartIdCell.label.text = NSLocalizedString(@"Subscribe", nil);
+        _cartIdCell.label.text = NSLocalizedString(@"Subscribe Source", nil);
         [_cartIdCell.button setTitle:NSLocalizedString(@"Manage", nil) forState:UIControlStateNormal];
         
         [self _refreshCartIdCell];
