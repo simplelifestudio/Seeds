@@ -179,6 +179,16 @@
         
         return NO;
     }
+    
+    if(0 == [text length])
+    {
+        return YES;
+    }
+    if(CARTID_MAX_LENGTH <= ([textView.text length] + range.length))
+    {
+        return NO;
+    }
+    
     return YES;
 }
 
