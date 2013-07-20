@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import com.simplelife.seeds.android.SeedsDefinitions;
 import com.simplelife.seeds.android.SeedsEntity;
+import com.simplelife.seeds.android.SeedsRSSCartActivity;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
@@ -23,6 +24,8 @@ public class SeedsJSONMessage {
 	public static String UpdateStatusRespons  = "SeedsUpdateStatusByDatesResponse";
 	public static String SeedsByDatesRequest  = "SeedsByDatesRequest";
 	public static String SeedsByDatesResponse = "SeedsByDatesResponse";
+	public static String SeedsToCartRequest   = "SeedsToCartRequest";
+	public static String SeedsToCartResponse  = "SeedsToCartResponse";
 	// For log purpose
 	private static SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
 	
@@ -226,6 +229,41 @@ public class SeedsJSONMessage {
 		}
 		
 		return retSeedsList;		
+	}
+	
+	public static void parseSeedsToCartRespMsg(String _inRespMsg) throws JSONException{
+		
+		ArrayList<Integer> tSuccSeedIdList = new ArrayList();
+		ArrayList<Integer> tExistSeedIdList = new ArrayList();
+		ArrayList<Integer> tFailedSeedIdList = new ArrayList();
+		
+		JSONObject tMsgInJSON = new JSONObject(_inRespMsg);  
+		String msgType = (String) tMsgInJSON.get("id");
+		mLogger.info("Parsing msg " + msgType);
+	    
+		// Parse the paramList part
+		JSONObject tParamList = tMsgInJSON.getJSONObject("body");
+		String tCartId = (String) tParamList.get("cartId");
+		SeedsRSSCartActivity.setCartId(tCartId);
+		JSONArray tSuccIdList   = tParamList.getJSONArray("successSeedIdList");
+		JSONArray tExistIdList  = tParamList.getJSONArray("existSeedIdList");
+		JSONArray tFailedIdList = tParamList.getJSONArray("failedSeedIdList");
+		int numOfSuccId = tSuccIdList.length();
+		for (int index = 0; index < numOfSuccId; index++)
+		{
+			tSuccSeedIdList.add(tSuccIdList.getInt(index));		
+		}
+		int numOfExistId = tExistIdList.length();
+		for (int index = 0; index < numOfExistId; index++)
+		{
+			tExistSeedIdList.add(tExistIdList.getInt(index));		
+		}
+		int numOfFailedId = tFailedIdList.length();
+		for (int index = 0; index < numOfFailedId; index++)
+		{
+			tFailedSeedIdList.add(tFailedIdList.getInt(index));		
+		}
+		
 	}
 	
 	public static class SeedsStatusByDate {		

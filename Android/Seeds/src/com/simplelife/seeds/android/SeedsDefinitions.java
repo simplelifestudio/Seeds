@@ -29,6 +29,7 @@ public class SeedsDefinitions {
 	}
 	
 	public static String SEEDS_SERVER_ADDRESS_PREFIX = "/seeds/seedService";
+	public static String SEEDS_SERVER_HTTP_MIME = "application/json";
 	public static String mServerUrl = "http://106.187.38.78:80/seeds/seedService";
 	
 	public static boolean mDownloadImageWithoutWifiEnabled = true;

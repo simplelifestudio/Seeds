@@ -126,6 +126,10 @@
                   android:label="@string/app_name">
         </activity>
         
+        <activity android:name="com.simplelife.seeds.android.SeedsRSSCartActivity"
+                  android:label="@string/app_name">
+        </activity>        
+        
        <provider
             android:name="com.simplelife.seeds.android.utils.downloadprocess.DownloadProvider"
             android:authorities="com.simplelife.seeds.android.downloads" />

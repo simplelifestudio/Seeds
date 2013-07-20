@@ -8,21 +8,46 @@
  */
 package com.simplelife.seeds.android;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.ParseException;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.simplelife.seeds.android.utils.adapter.SeedsAdapter;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
+import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadList;
+import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
+import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
+import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage.SeedsStatusByDate;
+import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
+import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.NavUtils;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class SeedsRSSCartActivity extends Activity{
@@ -32,23 +57,39 @@ public class SeedsRSSCartActivity extends Activity{
 	public static final String KEY_FORMAT = "format";
 	public static final String KEY_THUMB_URL = "thumb_url";
 	
-	private static ArrayList<Integer> mSeedLocalIdInCart;
+	private static ArrayList<Integer> mSeedLocalIdInCart = new ArrayList();;
 	private ArrayList<Integer> mSeedIdInCart;
 	private ListView mListView;
 	private SeedsAdapter mAdapter;
 	private String mDate;
 	private ArrayList<SeedsEntity> mSeedsEntityList;
+	private static ArrayList<Integer> mBookSuccSeedIdList = new  ArrayList();
+	private static ArrayList<Integer> mBookExistSeedIdList = new  ArrayList();
+	private static ArrayList<Integer> mBookFailedSeedIdList = new  ArrayList();
+	private static String mCartId;
+	private ProgressDialog mProgressDialog = null; 
+	
+	private SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
+	
+	// Handler message definition
+	final int RSSMESSAGETYPE_GETLIST = 200;
+	final int RSSMESSAGETYPE_UPDATEDIALOG = 201;
+	final int RSSMESSAGETYPE_DISMISSDIALOG = 202;
+	final int RSSMESSAGETYPE_TOAST = 203;
+	final int RSSMESSAGETYPE_TOASTTEXT = 204;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// setTheme(android.R.style.Theme_Translucent_NoTitleBar);
 		// Set the list view layout
 		setContentView(R.layout.activity_seeds_favlist);
+		
+		// Set a title for this page
+		ActionBar tActionBar = getActionBar();
+		tActionBar.setTitle(R.string.seeds_rss_management);	
 				
 		// Initialize the mSeedIdInCart
-		mSeedLocalIdInCart = new ArrayList();
 		mSeedIdInCart = new ArrayList();
 		
 		// Start a new thread to get the data
@@ -56,7 +97,7 @@ public class SeedsRSSCartActivity extends Activity{
 			@Override
 			public void run() {
 				Message msg = new Message();
-				msg.what = 0;
+				msg.what = RSSMESSAGETYPE_GETLIST;
 				
 				// Retrieve the seeds list
 				msg.obj = getList();
@@ -69,17 +110,53 @@ public class SeedsRSSCartActivity extends Activity{
 	private Handler handler = new Handler(){
 		public void handleMessage(Message msg) {
 			switch(msg.what){
-			case 0 :
-				mListView = (ListView)findViewById(R.id.seeds_list);
+				case RSSMESSAGETYPE_GETLIST :
+				{
+					mListView = (ListView)findViewById(R.id.seeds_list);
 				
-				ArrayList<HashMap<String, String>> seedsList = (ArrayList<HashMap<String, String>>)msg.obj;
-				mAdapter = new SeedsAdapter(SeedsRSSCartActivity.this, seedsList);
-				mListView.setAdapter(mAdapter);
+					ArrayList<HashMap<String, String>> seedsList = (ArrayList<HashMap<String, String>>)msg.obj;
+					mAdapter = new SeedsAdapter(SeedsRSSCartActivity.this, seedsList);
+					mListView.setAdapter(mAdapter);
 
-				// Bond the click listener
-				mListView.setOnItemClickListener(new ListViewItemOnClickListener());
-				break;
+					// Bond the click listener
+					mListView.setOnItemClickListener(new ListViewItemOnClickListener());
+					break;
+				}
+				case RSSMESSAGETYPE_UPDATEDIALOG:
+				{
+					// Retrieve the date info parameter
+					Bundle bundle = msg.getData();             				
+					String tStatus = bundle.getString("status");        		
+					mProgressDialog.setMessage(tStatus);
+					break;
+				}
+				case RSSMESSAGETYPE_DISMISSDIALOG:
+				{       		
+					mProgressDialog.dismiss();
+					break;
+				}
+            	case RSSMESSAGETYPE_TOAST:
+            	{
+            		Bundle bundle = msg.getData();             				
+            		int tResId  = bundle.getInt("resId");
+            		Toast toast = Toast.makeText(getApplicationContext(), tResId, Toast.LENGTH_SHORT);
+            	    toast.setGravity(Gravity.CENTER, 0, 0);
+            	    toast.show();
+            	    break;
+            	}
+            	case RSSMESSAGETYPE_TOASTTEXT:
+            	{
+            		Bundle bundle = msg.getData();             				
+            		String tText  = bundle.getString("text");
+            		Toast toast = Toast.makeText(getApplicationContext(), tText, Toast.LENGTH_LONG);
+            	    toast.setGravity(Gravity.CENTER, 0, 0);
+            	    toast.show();
+            	    break;
+            	}
+            	default:
+            		break;
 			}
+			
 		}
 	};
 	
@@ -201,11 +278,172 @@ public class SeedsRSSCartActivity extends Activity{
 	 
 	}
 	
-	public static void addSeedToCart(int _inSeedLocalId){
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_seeds_rss_management, menu);
+		return true;
+	}
+	
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {        
+            case android.R.id.home:
+            {
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            }
+            case R.id.rss_sendreqmsg:
+            {
+            	sendRSSBookMessage();
+    		    return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+	
+	private void updateDialogStatus(String inContents){
+		
+		Message t_MsgListData = new Message();
+		t_MsgListData.what = RSSMESSAGETYPE_UPDATEDIALOG;
+		
+	    Bundle bundle = new Bundle();
+	    bundle.putString("status", inContents);	    
+		t_MsgListData.setData(bundle);
+		handler.sendMessage(t_MsgListData);							
+	}
+	
+	
+    private void notifyUserViaToast(int _inResId){
+	    
+		Message t_MsgListData = new Message();
+		t_MsgListData.what = RSSMESSAGETYPE_TOAST;
+		
+	    Bundle bundle = new Bundle();
+	    bundle.putInt("resId", _inResId);    
+		t_MsgListData.setData(bundle);
+		handler.sendMessage(t_MsgListData);		
+    }
+    
+    private void notifyUserViaToast(String _inText){
+	    
+		Message t_MsgListData = new Message();
+		t_MsgListData.what = RSSMESSAGETYPE_TOASTTEXT;
+		
+	    Bundle bundle = new Bundle();
+	    bundle.putString("text", _inText);    
+		t_MsgListData.setData(bundle);
+		handler.sendMessage(t_MsgListData);		
+    } 
+	
+	private void dismissDialog(){
+		
+		Message t_MsgListData = new Message();
+		t_MsgListData.what = RSSMESSAGETYPE_DISMISSDIALOG;
+		handler.sendMessage(t_MsgListData);							
+	}
+	
+    public static void addSeedToCart(int _inSeedLocalId){
 		mSeedLocalIdInCart.add(_inSeedLocalId);
 	}
 	
+	public static void setBookSuccSeedIdList(ArrayList<Integer> _inSuccList){
+		mBookSuccSeedIdList = _inSuccList;
+	}
+	
+	public static void setBookExistSeedIdList(ArrayList<Integer> _inExistList){
+		mBookExistSeedIdList = _inExistList;
+	}
+	
+	public static void setBookFailedSeedIdList(ArrayList<Integer> _inFailedList){
+		mBookFailedSeedIdList = _inFailedList;
+	}	
+	
+	public static void setCartId(String _inCartId){
+		mCartId = _inCartId;
+	}
+	
+	public static String getCartId(){
+		return mCartId;
+	}
+		
 	private void sendRSSBookMessage(){
 		
+		mProgressDialog = ProgressDialog.show(SeedsRSSCartActivity.this, "Loading...", 
+		          getString(R.string.seeds_rss_dialof_sendingreqmsg), true, false);
+		mProgressDialog.setCanceledOnTouchOutside(true);
+		
+		// Set up a thread to communicate with server
+		new Thread() {				
+			@Override
+			public void run() {
+				boolean tProcessFlag = true;
+				HttpResponse tMsgResp = null;
+				String tSeedsToCartResp = null;
+				
+				try {
+					tMsgResp = SeedsNetworkProcess.sendSeedsToCartReqMsg(mSeedIdInCart);
+				} catch (ClientProtocolException e) {
+					tProcessFlag = false;
+					mLogger.excep(e);			
+				} catch (JSONException e) {
+					tProcessFlag = false;
+					mLogger.excep(e);
+				} catch (IOException e) {
+					tProcessFlag = false;
+					mLogger.excep(e);
+				}
+				
+				if(false == tProcessFlag)
+				{
+					dismissDialog();
+					notifyUserViaToast(R.string.seeds_rss_toast_sendreqfailed);
+					return;
+				}
+				
+		        // Check the response context
+				if (tMsgResp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+		            
+					try {
+						tSeedsToCartResp = EntityUtils.toString(tMsgResp.getEntity());
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		            mLogger.debug("Receive response msg: "+ tSeedsToCartResp);
+		            // String strsResult = strResult.replace("\r", "");            
+		        } else {
+		        	mLogger.warn("SeedsToCartReq Message Sending Failed! Status Code: "
+		                         + tMsgResp.getStatusLine().getStatusCode());
+		        	dismissDialog();
+		        	notifyUserViaToast(R.string.seeds_datelist_updatestatuscommerror);        	
+		        	return;           
+		        }
+				
+				if (null == tSeedsToCartResp)
+				{
+					dismissDialog();
+					notifyUserViaToast(R.string.seeds_rss_toast_emptycartresp); 
+					mLogger.error("Receiving empty SeedsToCartResp message!");
+					return;
+				}
+				else
+				{
+					try {
+						SeedsJSONMessage.parseSeedsToCartRespMsg(tSeedsToCartResp);
+						notifyUserViaToast(getString(R.string.seeds_rss_toast_booksuccess)+getCartId());
+					} catch (JSONException e) {
+						mLogger.excep(e);
+					}			
+				}
+				dismissDialog();		
+			}
+		}.start();	
+		
 	}
+	
+
 }
