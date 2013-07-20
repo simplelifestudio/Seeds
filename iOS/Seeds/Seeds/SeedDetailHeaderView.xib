@@ -121,7 +121,7 @@
 						<reference key="NSNextResponder" ref="36386964"/>
 						<int key="NSvFlags">1322</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{272, 43}, {40, 16}}</string>
+						<string key="NSFrame">{{248, 43}, {60, 16}}</string>
 						<reference key="NSSuperview" ref="36386964"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="50120986"/>
@@ -134,7 +134,7 @@
 						<reference key="IBUITextColor" ref="555878992"/>
 						<reference key="IBUIHighlightedColor" ref="1067090340"/>
 						<int key="IBUIBaselineAdjustment">0</int>
-						<int key="IBUITextAlignment">1</int>
+						<int key="IBUITextAlignment">2</int>
 						<reference key="IBUIFontDescription" ref="569214625"/>
 						<reference key="IBUIFont" ref="359880338"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
@@ -142,10 +142,9 @@
 					<object class="IBUILabel" id="411903300">
 						<reference key="NSNextResponder" ref="36386964"/>
 						<int key="NSvFlags">298</int>
-						<string key="NSFrame">{{272, 61}, {40, 16}}</string>
+						<string key="NSFrame">{{248, 61}, {60, 16}}</string>
 						<reference key="NSSuperview" ref="36386964"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -156,7 +155,7 @@
 						<reference key="IBUITextColor" ref="555878992"/>
 						<reference key="IBUIHighlightedColor" ref="1067090340"/>
 						<int key="IBUIBaselineAdjustment">0</int>
-						<int key="IBUITextAlignment">1</int>
+						<int key="IBUITextAlignment">2</int>
 						<reference key="IBUIFontDescription" ref="569214625"/>
 						<reference key="IBUIFont" ref="359880338"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
@@ -165,7 +164,7 @@
 						<reference key="NSNextResponder" ref="36386964"/>
 						<int key="NSvFlags">-2147482326</int>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrame">{{120, 47}, {80, 24}}</string>
+						<string key="NSFrame">{{100, 47}, {120, 24}}</string>
 						<reference key="NSSuperview" ref="36386964"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="983545069"/>
