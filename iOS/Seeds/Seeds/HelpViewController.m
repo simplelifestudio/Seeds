@@ -156,7 +156,6 @@
         UIImageView *subImageView = [[UIImageView alloc] initWithImage:[imageArray objectAtIndex:i]];
         subImageView.frame = CGRectMake(width * i, 0, width, height);
         subImageView.contentMode = UIViewContentModeScaleAspectFit;
-        DLog(@"xxxx :%f", subImageView.frame.size.height);
         [_scrollView addSubview: subImageView];
     }
     
