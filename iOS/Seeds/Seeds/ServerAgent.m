@@ -484,17 +484,29 @@
                                             for (NSInteger index = 0; index < 3; index++)
                                             {
                                                 NSDate* day = [last3Days objectAtIndex:index];
+                                                NSString* dayStr = [last3DayStrs objectAtIndex:index];
+                                                NSString* dayShortStr = [last3DayShortStrs objectAtIndex:index];
+
+                                                NSMutableString* hudStr1 = [NSMutableString stringWithCapacity:0];
+                                                [hudStr1 appendString:dayShortStr];
+                                                [hudStr1 appendString:STR_SPACE];
+                                                [hudStr1 appendString:NSLocalizedString(@"Pulling", nil)];
+                                                
+                                                BOOL isThisDaySync = [_userDefaults isThisDaySync:day];
+                                                if (isThisDaySync)
+                                                {
+                                                    if (_delegate)
+                                                    {
+                                                        [_delegate taskIsProcessing:hudStr1 minorStatus:NSLocalizedString(@"Pulled Yet", nil)];
+                                                    }
+                                                    continue;
+                                                }
+                                                
                                                 NSString* syncStatus = [last3DaySyncStatuses objectAtIndex:index];
                                                 if ([syncStatus isEqualToString:SEEDS_SYNCSTATUS_READY])
                                                 {
-                                                    NSString* dayStr = [last3DayStrs objectAtIndex:index];
-                                                    NSString* dayShortStr = [last3DayShortStrs objectAtIndex:index];
                                                     if (_delegate)
                                                     {
-                                                        NSMutableString* hudStr1 = [NSMutableString stringWithCapacity:0];
-                                                        [hudStr1 appendString:dayShortStr];
-                                                        [hudStr1 appendString:STR_SPACE];
-                                                        [hudStr1 appendString:NSLocalizedString(@"Pulling", nil)];
                                                         [_delegate taskIsProcessing:hudStr1 minorStatus:NSLocalizedString(@"Seeds Parsing", nil)];
                                                     }
                                                     
@@ -543,7 +555,7 @@
                                             // Step 70
                                             if (_delegate)
                                             {
-                                                [_delegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Seeds Organizing", nil)];
+                                                [_delegate taskIsProcessing:NSLocalizedString(@"Seeds Organizing", nil) minorStatus:nil];
                                             }
                                             [_seedDAO deleteAllExceptLastThreeDaySeeds:last3Days];
                                             
