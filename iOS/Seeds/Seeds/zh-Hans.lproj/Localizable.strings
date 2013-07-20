@@ -94,9 +94,9 @@
 "HTTP server stopped." = "HTTP服务器停止运行...";
 "Now access above address through PC..." = "通过电脑访问HTTP服务器下载种子包...";
 
-"WiFi Connected" = "WiFi连接网络";
-"3G/GPRS Connected" = "3G/GPRS连接网络";
-"Internet Disconnected" = "无网络连接";
+"WiFi Connected" = "WiFi网络";
+"3G/GPRS Connected" = "3G/GPRS网络";
+"Internet Disconnected" = "无网络";
 
 "Server Checking" = "服务器检测";
 "Server Reachable" = "服务器正常";
@@ -145,8 +145,8 @@
 "Saved" = "已保存";
 
 "Images" = "图片";
-"Download Images Through 3G/GPRS" = "3G/GPRS网络下载图片";
-"Cache Images Through WiFi" = "WiFi网络缓存图片";
+"Download Images Through 3G/GPRS" = "3G/GPRS下载图片";
+"Cache Images Through WiFi" = "WiFi缓存图片";
 "Caching" = "缓存中";
 "Clear Images Cache" = "清空图片缓存";
 "Clearing" = "清理中";
