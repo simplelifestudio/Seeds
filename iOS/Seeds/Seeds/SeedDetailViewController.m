@@ -233,33 +233,28 @@
     {
         case SeedNotDownload:
         {
-//            [_downloadBarButton setCustomView:nil];
             [_downloadBarButton setTitle:NSLocalizedString(@"Download", nil)];
             [_downloadBarButton setEnabled:YES];
             break;
         }
         case SeedWaitForDownload:
         {
-//            [_downloadBarButton setCustomView:_indicatorView];
             [_downloadBarButton setEnabled:NO];
             break;
         }
         case SeedIsDownloading:
         {
-//            [_downloadBarButton setCustomView:_indicatorView];
             [_downloadBarButton setEnabled:NO];
             break;
         }
         case SeedDownloaded:
         {
-//            [_downloadBarButton setCustomView:nil];
             [_downloadBarButton setTitle:NSLocalizedString(@"Delete", nil)];
             [_downloadBarButton setEnabled:YES];
             break;
         }
         case SeedDownloadFailed:
         {
-//            [_downloadBarButton setCustomView:nil];
             [_downloadBarButton setTitle:NSLocalizedString(@"Download", nil)];
             [_downloadBarButton setEnabled:YES];
             break;
@@ -514,6 +509,7 @@
                                 *stop = YES;
                             }
                         }];
+                        
                         if (isSeedSubscribed)
                         {
                             HUD.mode = MBProgressHUDModeText;
@@ -521,8 +517,28 @@
                         }
                         else
                         {
-                            HUD.mode = MBProgressHUDModeText;                            
-                            HUD.labelText = NSLocalizedString(@"Subscribe Failed", nil);
+                            __block BOOL isSeedSubscribedBefore = NO;
+                            NSArray* existSeedIdList = [body objectForKey:JSONMESSAGE_KEY_EXISTSEEDIDLIST];
+                            [existSeedIdList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop)
+                             {
+                                 NSString* tempSeedIdStr = (NSString*)obj;
+                                 if ([tempSeedIdStr isEqualToString:seedIdStr])
+                                 {
+                                     isSeedSubscribedBefore = YES;
+                                     *stop = YES;
+                                 }
+                             }];
+                            
+                            if (isSeedSubscribedBefore)
+                            {
+                                HUD.mode = MBProgressHUDModeText;
+                                HUD.labelText = NSLocalizedString(@"Subscribed Before", nil);
+                            }
+                            else
+                            {
+                                HUD.mode = MBProgressHUDModeText;
+                                HUD.labelText = NSLocalizedString(@"Subscribe Failed", nil);
+                            }
                         }
                     }
                     else
