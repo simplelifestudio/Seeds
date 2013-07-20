@@ -233,7 +233,7 @@
     {
         case SeedNotDownload:
         {
-            [_downloadBarButton setCustomView:nil];
+//            [_downloadBarButton setCustomView:nil];
             [_downloadBarButton setTitle:NSLocalizedString(@"Download", nil)];
             [_downloadBarButton setEnabled:YES];
             break;

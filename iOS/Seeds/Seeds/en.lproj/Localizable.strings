@@ -141,6 +141,7 @@
 "Server Mode" = "Server Mode";
 "Standalone Mode" = "Standalone Mode";
 "Mode Switched" = "Mode Switched";
+"Saved" = "Saved";
 
 "Images" = "Images";
 "Download Images Through 3G/GPRS" = "Download Images Through 3G/GPRS";
@@ -156,8 +157,8 @@
 "Downloads Cleared" = "Downloads Cleared";
 "Clear Favorites" = "Clear Favorites";
 "Favorites Cleared" = "Favorites Cleared";
-"Reset Database" = "Reset Database & Update Status";
-"Database Reseted" = "Database & Updated Status Reseted";
+"Reset Database" = "Reset Database";
+"Database Reseted" = "Database Reseted";
 
 "Passcode" = "Passcode";
 "Open Passcode" = "Open Passcode";

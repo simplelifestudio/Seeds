@@ -141,6 +141,7 @@
 "Server Mode" = "服务器模式";
 "Standalone Mode" = "单机模式";
 "Mode Switched" = "模式已切换";
+"Saved" = "已保存";
 
 "Images" = "图片";
 "Download Images Through 3G/GPRS" = "3G/GPRS网络下载图片";
@@ -156,8 +157,8 @@
 "Downloads Cleared" = "下载已清空";
 "Clear Favorites" = "清空收藏";
 "Favorites Cleared" = "收藏已清空";
-"Reset Database" = "重置数据库和更新状态";
-"Database Reseted" = "数据库和更新状态已重置";
+"Reset Database" = "重置数据";
+"Database Reseted" = "数据已重置";
 
 "Passcode" = "密码";
 "Open Passcode" = "打开密码";

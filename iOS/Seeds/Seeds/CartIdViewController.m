@@ -21,7 +21,7 @@
     
     BOOL _isSaveNeed;
     
-    CGRect originalContentViewFrame;
+    UIBarButtonItem* _editBarButtonItem;
 }
 
 @end
@@ -31,7 +31,6 @@
 @synthesize textView = _textView;
 @synthesize clipboardButton = _clipboardButton;
 @synthesize changeButton = _changeButton;
-@synthesize editButton = _editButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -80,7 +79,7 @@
     [self setTextView:nil];
     [self setChangeButton:nil];
     [self setClipboardButton:nil];
-    [self setEditButton:nil];
+
     [super viewDidUnload];
 }
 
@@ -93,12 +92,16 @@
 {
     MBProgressHUD* HUD = [_guiModule.HUDAgent sharedHUD];
     HUD.labelText = NSLocalizedString(@"Copied to Clipboard", nil);
+    __block UIPasteboard *pboard = nil;
     [HUD showAnimated:YES whileExecutingBlock:^(){
-        UIPasteboard *pboard = [UIPasteboard generalPasteboard];
-        pboard.string = _textView.text;
-        
+        pboard = [UIPasteboard generalPasteboard];
         [NSThread sleepForTimeInterval:_HUD_DISPLAY];
     }];
+    
+    NSString* cartId = _textView.text;
+    NSString* cartFullLink = [self _composeFullCartLink:cartId];
+    
+    pboard.string = cartFullLink;
 }
 
 - (IBAction)onClickChangeButton:(id)sender
@@ -106,26 +109,6 @@
     [self _renewCartId];
     
     [self _resetEditButton];
-}
-
-- (IBAction)onClickEditButton:(id)sender
-{
-    NSString* title = _editButton.titleLabel.text;
-    if ([title isEqualToString:NSLocalizedString(@"Save", nil)])
-    {
-        [self _saveCartId];
-        [_editButton setTitle:NSLocalizedString(@"Edit", nil) forState:UIControlStateNormal];
-    }
-    else if ([title isEqualToString:NSLocalizedString(@"Cancel", nil)])
-    {
-        [self _cancelEditCartId];
-        [_editButton setTitle:NSLocalizedString(@"Edit", nil) forState:UIControlStateNormal];        
-    }
-    else if ([title isEqualToString:NSLocalizedString(@"Edit", nil)])
-    {
-        [self _startEditCartId];
-        [_editButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];        
-    }
 }
 
 #pragma mark - UITextViewDelegate
@@ -138,13 +121,34 @@
     if (![oldCartFullLink isEqualToString:textView.text])
     {
         _isSaveNeed = YES;
-        [_editButton setTitle:NSLocalizedString(@"Save", nil) forState:UIControlStateNormal];
+        [_editBarButtonItem setTitle:NSLocalizedString(@"Save", nil)];
     }
     else
     {
         _isSaveNeed = NO;
-        [_editButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
+        [_editBarButtonItem setTitle:NSLocalizedString(@"Cancel", nil)];
     }
+}
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:STR_NEWLINE])
+    {
+        [textView resignFirstResponder];
+
+        if (_isSaveNeed)
+        {
+            [self _saveCartId];
+        }
+        else
+        {
+            [self _cancelEditCartId];
+        }
+        [_editBarButtonItem setTitle:NSLocalizedString(@"Edit", nil)];
+        
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - Private Methods
@@ -152,25 +156,30 @@
 -(void) _resetEditButton
 {
     [self _cancelEditCartId];
-    [_editButton setTitle:NSLocalizedString(@"Edit", nil) forState:UIControlStateNormal];
+    [_editBarButtonItem setTitle:NSLocalizedString(@"Edit", nil)];
 }
 
 -(void) _saveCartId
 {
-    NSString* fullCartLink = _textView.text;
-    NSString* cartId = [self _decomposeCartIdFromFullCartLink:fullCartLink];
+    NSString* cartId = _textView.text;
     
     [_userDefaults setCartId:cartId];
     
     [_textView setEditable:NO];
     _textView.backgroundColor = COLOR_BACKGROUND;
     _isSaveNeed = NO;
+    
+    MBProgressHUD* HUD = [_guiModule.HUDAgent sharedHUD];
+    HUD.labelText = NSLocalizedString(@"Saved", nil);
+    [HUD showAnimated:YES whileExecutingBlock:^(){
+        [NSThread sleepForTimeInterval:_HUD_DISPLAY];
+    }];
 }
 
 -(void) _cancelEditCartId
 {
     NSString* cartId = [_userDefaults cartId];
-    _textView.text = [self _composeFullCartLink:cartId];
+    _textView.text = cartId;
     
     [_textView setEditable:NO];
     _textView.backgroundColor = COLOR_BACKGROUND;
@@ -195,20 +204,20 @@
     _isSaveNeed = NO;
     
     _textView.delegate = self;
+    _textView.keyboardType = UIKeyboardTypeASCIICapable;
+    _textView.returnKeyType = UIReturnKeyDone;
+    _textView.textColor = COLOR_TEXT_INFO;
     
-    originalContentViewFrame = self.view.frame;
+    [self _setupBarButtonItems];
     
     [self _registerGestureRecognizers];
-    
-//    [self registerForKeyboardNotifications];
 }
 
 -(void) _refereshTextView
 {
     NSString* cartId = [_userDefaults cartId];
     
-    NSString* fullCartLink = [self _composeFullCartLink:cartId];
-    _textView.text = fullCartLink;
+    _textView.text = cartId;
 }
 
 -(NSString*) _composeFullCartLink:(NSString*) cartId
@@ -270,9 +279,9 @@
         }
         completionBlock:^()
         {
-            HUD.mode = MBProgressHUDModeText;
-            HUD.labelText = nil;
-            HUD.detailsLabelText = nil;
+//            HUD.mode = MBProgressHUDModeText;
+//            HUD.labelText = nil;
+//            HUD.detailsLabelText = nil;
         }
     ];
 }
@@ -289,19 +298,19 @@
     [self.navigationController popViewControllerAnimated:TRUE];
 }
 
-- (void)registerForKeyboardNotifications
+- (void)_registerForKeyboardNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                            selector:@selector(keyboardWasShow:)
-                                                name:UIKeyboardDidShowNotification
-                                              object:nil];
+                                             selector:@selector(keyboadWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                            selector:@selector(keyboardWillBeHidden:)
-                                                name:UIKeyboardWillHideNotification
-                                              object:nil];
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 }
 
-- (void)unregisterForKeyboardNotifications
+- (void)_unregisterForKeyboardNotifications
 {
     [[NSNotificationCenter  defaultCenter] removeObserver:self
                                                    name:UIKeyboardDidShowNotification
@@ -311,37 +320,31 @@
                                                  object:nil];
 }
 
-- (void)keyboardWasShow:(NSNotification *)notification
+- (void) _setupBarButtonItems
 {
-    
-    // 取得键盘的frame，注意，因为键盘在window的层面弹出来的，所以它的frame坐标也是对应window窗口的。
-    CGRect endRect = [[notification.userInfo objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGPoint endOrigin = endRect.origin;
-    // 把键盘的frame坐标系转换到与UITextView一致的父view上来。
-    if ([UIApplication sharedApplication].keyWindow && _textView.superview) {
-        endOrigin = [self.view.superview convertPoint:endRect.origin fromView:[UIApplication sharedApplication].keyWindow];
-    }
-    
-    CGFloat adjustHeight = originalContentViewFrame.origin.y + originalContentViewFrame.size.height;
-    // 根据相对位置调整一下大小，自己画图比划一下就知道为啥要这样计算。
-    // 当然用其他的调整方式也是可以的，比如取UITextView的orgin，origin到键盘origin之间的高度作为UITextView的高度也是可以的。
-    adjustHeight -= endOrigin.y;
-    if (adjustHeight > 0) {
+    _editBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Edit", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(_onClickEditBarButtonItem)];
         
-        CGRect newRect = originalContentViewFrame;
-        newRect.size.height -= adjustHeight;
-        [UIView beginAnimations:nil context:nil];
-        self.view.frame = newRect;
-        [UIView commitAnimations];
-    }
+    self.navigationItem.rightBarButtonItems = @[_editBarButtonItem];
 }
 
-- (void)keyboardWillBeHidden:(NSNotification *)notification
+- (void) _onClickEditBarButtonItem
 {
-    // 恢复原理的大小
-    [UIView beginAnimations:nil context:nil];
-    self.view.frame = originalContentViewFrame;
-    [UIView commitAnimations];
+    NSString* title = _editBarButtonItem.title;
+    if ([title isEqualToString:NSLocalizedString(@"Save", nil)])
+    {
+        [self _saveCartId];
+        [_editBarButtonItem setTitle:NSLocalizedString(@"Edit", nil)];
+    }
+    else if ([title isEqualToString:NSLocalizedString(@"Cancel", nil)])
+    {
+        [self _cancelEditCartId];
+        [_editBarButtonItem setTitle:NSLocalizedString(@"Edit", nil)];
+    }
+    else if ([title isEqualToString:NSLocalizedString(@"Edit", nil)])
+    {
+        [self _startEditCartId];
+        [_editBarButtonItem setTitle:NSLocalizedString(@"Cancel", nil)];
+    }
 }
 
 @end

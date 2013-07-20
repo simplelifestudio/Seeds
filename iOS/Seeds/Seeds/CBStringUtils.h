@@ -15,6 +15,9 @@
 #define STR_BRACKET_LEFT @"["
 #define STR_BRACKET_RIGHT @"]"
 
+#define STR_RETURN @"\r"
+#define STR_NEWLINE @"\n"
+
 #define STR_SPACE @" "
 
 @interface CBStringUtils : NSObject
