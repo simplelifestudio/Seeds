@@ -201,14 +201,6 @@
 		C5F8AC50174B9807001E30D1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */; };
 		C5F964CE1788D682001BAB5D /* DownloadSeedListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F964CD1788D682001BAB5D /* DownloadSeedListViewController.m */; };
 		C5FFCF4817968A7800FC0646 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FFCF4717968A7800FC0646 /* HelpViewController.m */; };
-		C5FFCF5417968E6D00FC0646 /* help1.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF4C17968E6D00FC0646 /* help1.png */; };
-		C5FFCF5517968E6D00FC0646 /* help1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF4D17968E6D00FC0646 /* help1@2x.png */; };
-		C5FFCF5617968E6D00FC0646 /* help2.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF4E17968E6D00FC0646 /* help2.png */; };
-		C5FFCF5717968E6D00FC0646 /* help2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF4F17968E6D00FC0646 /* help2@2x.png */; };
-		C5FFCF5817968E6D00FC0646 /* help3.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF5017968E6D00FC0646 /* help3.png */; };
-		C5FFCF5917968E6D00FC0646 /* help3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF5117968E6D00FC0646 /* help3@2x.png */; };
-		C5FFCF5A17968E6D00FC0646 /* help4.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF5217968E6D00FC0646 /* help4.png */; };
-		C5FFCF5B17968E6D00FC0646 /* help4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FFCF5317968E6D00FC0646 /* help4@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -554,14 +546,6 @@
 		C5F964CD1788D682001BAB5D /* DownloadSeedListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadSeedListViewController.m; sourceTree = "<group>"; };
 		C5FFCF4617968A7800FC0646 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		C5FFCF4717968A7800FC0646 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
-		C5FFCF4C17968E6D00FC0646 /* help1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help1.png; sourceTree = "<group>"; };
-		C5FFCF4D17968E6D00FC0646 /* help1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help1@2x.png"; sourceTree = "<group>"; };
-		C5FFCF4E17968E6D00FC0646 /* help2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help2.png; sourceTree = "<group>"; };
-		C5FFCF4F17968E6D00FC0646 /* help2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help2@2x.png"; sourceTree = "<group>"; };
-		C5FFCF5017968E6D00FC0646 /* help3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help3.png; sourceTree = "<group>"; };
-		C5FFCF5117968E6D00FC0646 /* help3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help3@2x.png"; sourceTree = "<group>"; };
-		C5FFCF5217968E6D00FC0646 /* help4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help4.png; sourceTree = "<group>"; };
-		C5FFCF5317968E6D00FC0646 /* help4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "help4@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1182,14 +1166,6 @@
 		C5A94418172ACC1000D6FB85 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				C5FFCF4C17968E6D00FC0646 /* help1.png */,
-				C5FFCF4D17968E6D00FC0646 /* help1@2x.png */,
-				C5FFCF4E17968E6D00FC0646 /* help2.png */,
-				C5FFCF4F17968E6D00FC0646 /* help2@2x.png */,
-				C5FFCF5017968E6D00FC0646 /* help3.png */,
-				C5FFCF5117968E6D00FC0646 /* help3@2x.png */,
-				C5FFCF5217968E6D00FC0646 /* help4.png */,
-				C5FFCF5317968E6D00FC0646 /* help4@2x.png */,
 				C5B010F017921BFA0021A735 /* noImage_tableCell.pxm */,
 				C5B010F117921BFA0021A735 /* noImage_tableCell@2x.pxm */,
 				C5B010F417921BFA0021A735 /* xImage_tableCell.pxm */,
@@ -1385,14 +1361,6 @@
 				C5B010F917921BFA0021A735 /* xImage_collectionCell@2x.pxm in Resources */,
 				C5B010FA17921BFA0021A735 /* xImage_tableCell.pxm in Resources */,
 				C5B010FB17921BFA0021A735 /* xImage_tableCell@2x.pxm in Resources */,
-				C5FFCF5417968E6D00FC0646 /* help1.png in Resources */,
-				C5FFCF5517968E6D00FC0646 /* help1@2x.png in Resources */,
-				C5FFCF5617968E6D00FC0646 /* help2.png in Resources */,
-				C5FFCF5717968E6D00FC0646 /* help2@2x.png in Resources */,
-				C5FFCF5817968E6D00FC0646 /* help3.png in Resources */,
-				C5FFCF5917968E6D00FC0646 /* help3@2x.png in Resources */,
-				C5FFCF5A17968E6D00FC0646 /* help4.png in Resources */,
-				C5FFCF5B17968E6D00FC0646 /* help4@2x.png in Resources */,
 				C52AD0B41797C64F00F9D174 /* xImage_pictureView.pxm in Resources */,
 				C52AD0B51797C64F00F9D174 /* xImage_pictureView@2x.pxm in Resources */,
 				C52AD0B81797C7BF00F9D174 /* xImage_pictureView-568h@2x.png in Resources */,
