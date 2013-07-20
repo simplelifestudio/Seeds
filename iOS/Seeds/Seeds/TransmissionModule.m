@@ -11,6 +11,10 @@
 #import "HTTPServer.h"
 #import "CBFileUtils.h"
 
+#import "CartIdViewController.h"
+
+@class CartIdViewController;
+
 @interface TransmissionModule()
 {
     HTTPServer* httpServer;
@@ -210,6 +214,12 @@ SINGLETON(TransmissionModule)
         
         dayIndex++;
     }
+    
+    UserDefaultsModule* _userDefaults = [UserDefaultsModule sharedInstance];
+    NSString* cartId = [_userDefaults cartId];
+    NSString* cartFullLink = [CartIdViewController composeFullCartLink:cartId];
+    NSString* str = [CBStringUtils replaceSubString:cartFullLink oldSubString:@"$Cart$" string:htmlCodeCopy];
+    htmlCodeCopy = [NSMutableString stringWithString:str];
     
     NSData* data = [htmlCodeCopy dataUsingEncoding: encodingMode];
 

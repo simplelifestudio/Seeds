@@ -15,6 +15,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *changeButton;
 @property (weak, nonatomic) IBOutlet UIButton *clipboardButton;
 
++(NSString*) composeFullCartLink:(NSString*) cartId;
++(NSString*) decomposeCartIdFromFullCartLink:(NSString*) fullCartLink;
+
 - (IBAction)onClickClipboardButton:(id)sender;
 - (IBAction)onClickChangeButton:(id)sender;
 

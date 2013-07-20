@@ -191,7 +191,7 @@ if (_cancelTransmission)\
 {
     // Step 10: 清理旧的zip包文件    
     // Step 20: 根据当日时间（例如5月8日）获取今天、昨天、前天三个时间标（例如[2013-5-08]，[2013-5-07]，[2013-5-06]），进行zip打包
-    // Step 30: 动态生成index.html页面，包含前天、昨天、今天三个时间标对应的torrent文件zip包下载链接
+    // Step 30: 动态生成index.html页面，包含订阅源地址，前天、昨天、今天三个时间标对应的torrent文件zip包下载链接
     // Step 40: 启动HTTP服务器
     // Step 50: 更新HTTP服务器的地址和端口信息至UI
     

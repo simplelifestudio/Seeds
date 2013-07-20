@@ -32,6 +32,37 @@
 @synthesize clipboardButton = _clipboardButton;
 @synthesize changeButton = _changeButton;
 
++(NSString*) composeFullCartLink:(NSString*) cartId
+{
+    NSMutableString* str = [NSMutableString string];
+    
+    if (nil != cartId && 0 < cartId.length)
+    {
+        [str appendString:BASEURL_SEEDSSERVER];
+        [str appendString:REMOTEPATH_CARTSERVICE];
+        [str appendString:@"?cartId="];
+        [str appendString:cartId];
+    }
+    
+    return str;
+}
+
++(NSString*) decomposeCartIdFromFullCartLink:(NSString*) fullCartLink
+{
+    NSString* cartId = nil;
+    
+    if (nil != fullCartLink && 0 < fullCartLink.length)
+    {
+        NSMutableString* baseStr = [NSMutableString string];
+        [baseStr appendString:BASEURL_SEEDSSERVER];
+        [baseStr appendString:REMOTEPATH_CARTSERVICE];
+        [baseStr appendString:@"?cartId="];
+        cartId = [CBStringUtils replaceSubString:@"" oldSubString:baseStr string:fullCartLink];
+    }
+    
+    return cartId;
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -99,7 +130,7 @@
     }];
     
     NSString* cartId = _textView.text;
-    NSString* cartFullLink = [self _composeFullCartLink:cartId];
+    NSString* cartFullLink = [CartIdViewController composeFullCartLink:cartId];
     
     pboard.string = cartFullLink;
 }
@@ -116,7 +147,7 @@
 - (void)textViewDidChange:(UITextView *)textView
 {
     NSString* oldCartId = [_userDefaults cartId];
-    NSString* oldCartFullLink = [self _composeFullCartLink:oldCartId];
+    NSString* oldCartFullLink = [CartIdViewController composeFullCartLink:oldCartId];
     
     if (![oldCartFullLink isEqualToString:textView.text])
     {
@@ -218,37 +249,6 @@
     NSString* cartId = [_userDefaults cartId];
     
     _textView.text = cartId;
-}
-
--(NSString*) _composeFullCartLink:(NSString*) cartId
-{
-    NSMutableString* str = [NSMutableString string];
-    
-    if (nil != cartId && 0 < cartId.length)
-    {
-        [str appendString:BASEURL_SEEDSSERVER];
-        [str appendString:REMOTEPATH_CARTSERVICE];
-        [str appendString:@"?cartId="];
-        [str appendString:cartId];
-    }
-    
-    return str;
-}
-
--(NSString*) _decomposeCartIdFromFullCartLink:(NSString*) fullCartLink
-{
-    NSString* cartId = nil;
-    
-    if (nil != fullCartLink && 0 < fullCartLink.length)
-    {
-        NSMutableString* baseStr = [NSMutableString string];
-        [baseStr appendString:BASEURL_SEEDSSERVER];
-        [baseStr appendString:REMOTEPATH_CARTSERVICE];
-        [baseStr appendString:@"?cartId="];
-        cartId = [CBStringUtils replaceSubString:@"" oldSubString:baseStr string:fullCartLink];
-    }
-    
-    return cartId;
 }
 
 -(void) _renewCartId
