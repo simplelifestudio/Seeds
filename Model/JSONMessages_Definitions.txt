@@ -127,9 +127,11 @@ X. MessageFormat
     "body": {
     	"cartId": "ABCDEFG123456",
         "successSeedIdList": [
-            "1",
-            "7"
+            "1"
         ],
+        "existSeedIdList": [
+            "7"
+        ],        
         "failedSeedIdList": [
             "49"
         ]
