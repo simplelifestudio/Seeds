@@ -173,7 +173,17 @@
         else
         {
             [self dismissModalViewControllerAnimated:NO];
-            [self performSegueWithIdentifier:@"splash2navigation" sender:self];             
+            
+            BOOL isAppLaunchedBefore = [_userDefaults isAppLaunchedBefore];
+            
+            if (!isAppLaunchedBefore)
+            {
+                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2HELP sender:self];
+            }
+            else
+            {
+                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
+            }
         }
     }
 }
@@ -194,7 +204,17 @@
         else
         {
             [self dismissModalViewControllerAnimated:NO];
-            [self performSegueWithIdentifier:@"splash2navigation" sender:self];
+            
+            BOOL isAppLaunchedBefore = [_userDefaults isAppLaunchedBefore];
+            
+            if (!isAppLaunchedBefore)
+            {
+                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2HELP sender:self];
+            }
+            else
+            {
+                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
+            }
         }
     }
 }
@@ -253,8 +273,6 @@
     if (!appLaunchedBefore)
     {
         [self dismissModalViewControllerAnimated:NO];
-        
-        [_userDefaults recordAppLaunchedBefore];
         
         _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];
         

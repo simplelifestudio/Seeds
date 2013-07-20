@@ -11,6 +11,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface HelpViewController ()
+{
+    UserDefaultsModule* _userDefaults;
+}
 
 @end
 
@@ -118,6 +121,8 @@
 
 -(void)_setupViewController
 {
+    _userDefaults = [UserDefaultsModule sharedInstance];
+    
     [self _initArray];
     [self _configHelpViewUI];
     [self _refreshPageControlButtonsStatus];
@@ -207,7 +212,16 @@
 
 -(void) _exit
 {
-    [self dismissViewControllerAnimated:YES completion:^(){}];
+    BOOL isAppLaunchedBefore = [_userDefaults isAppLaunchedBefore];
+    if (!isAppLaunchedBefore)
+    {
+        [_userDefaults recordAppLaunchedBefore];
+        [self performSegueWithIdentifier:SEGUE_ID_HELP2NAVIGATION sender:self];
+    }
+    else
+    {
+        [self dismissViewControllerAnimated:TRUE completion:^{}];
+    }
 }
 
 -(void)_scrollToPrevPage:(id)sender

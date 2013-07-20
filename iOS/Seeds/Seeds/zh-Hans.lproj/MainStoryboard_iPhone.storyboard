@@ -52,6 +52,7 @@
                         <outlet property="progressLabel" destination="usa-WX-uJE" id="O5a-L3-bep"/>
                         <outlet property="progressView" destination="Wmi-Wq-KA2" id="wTW-0G-YNk"/>
                         <segue destination="AaN-p7-sLL" kind="modal" identifier="splash2navigation" modalTransitionStyle="crossDissolve" animates="NO" id="WaV-gg-BTe"/>
+                        <segue destination="7hw-IL-nAs" kind="modal" identifier="splash2help" modalTransitionStyle="crossDissolve" animates="NO" id="WH6-rq-lAa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wzt-lV-r8w" sceneMemberID="firstResponder"/>
@@ -75,31 +76,6 @@
             </objects>
             <point key="canvasLocation" x="-168" y="-3"/>
         </scene>
-        <!--HelpViewController-->
-        <scene sceneID="Vb8-aK-eaR">
-            <objects>
-                <viewController storyboardIdentifier="sbid_helpviewcontroller" id="rbY-hA-UEC" userLabel="HelpViewController" customClass="HelpViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="iCF-Km-gug" userLabel="helpView">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="aNt-sP-2ty" userLabel="textView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="帮助" id="d1p-0a-Smv" userLabel="aboutNavigationItem"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9ap-cW-I1d" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1276" y="-3"/>
-        </scene>
         <!--Warning View Controller - 警告-->
         <scene sceneID="ESw-K0-JZL">
             <objects>
@@ -109,7 +85,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="警告信息" id="Hjq-0o-Qx1" userLabel="warningTextView">
-                                <rect key="frame" x="10" y="68" width="300" height="180"/>
+                                <rect key="frame" x="10" y="42.5" width="300" height="260"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
@@ -146,7 +122,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gww-7Z-qKB" userLabel="countdownLabel">
-                                <rect key="frame" x="80" y="290" width="160" height="80"/>
+                                <rect key="frame" x="80" y="301" width="160" height="80"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="60"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -336,7 +312,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="Zgz-l6-5CC" kind="relationship" relationship="rootViewController" id="UxF-UZ-Hpz"/>
+                        <segue destination="Zgz-l6-5CC" kind="relationship" relationship="rootViewController" id="2IJ-vy-GK9"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lsZ-TD-nZI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -709,11 +685,12 @@
                         <outlet property="helpView" destination="D69-Q8-tTe" id="dAf-MP-VLF"/>
                         <outlet property="pageControl" destination="x74-ol-uPP" id="KWT-kX-i8k"/>
                         <outlet property="scrollView" destination="o1W-LO-aVP" id="cQ3-sJ-edq"/>
+                        <segue destination="AaN-p7-sLL" kind="modal" identifier="help2navigation" modalTransitionStyle="crossDissolve" animates="NO" id="Zxd-pu-Vc8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hgh-di-gZv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="317" y="-3"/>
+            <point key="canvasLocation" x="-805" y="1538"/>
         </scene>
     </scenes>
     <classes>
@@ -846,9 +823,6 @@
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
         </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
-        </class>
         <class className="WarningViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/WarningViewController.h"/>
             <relationships>
@@ -868,6 +842,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="Zxd-pu-Vc8"/>
+        <segue reference="WH6-rq-lAa"/>
         <segue reference="Wg4-Q0-2ZF"/>
     </inferredMetricsTieBreakers>
 </document>

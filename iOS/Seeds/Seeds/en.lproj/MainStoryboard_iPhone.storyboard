@@ -52,6 +52,7 @@
                         <outlet property="progressLabel" destination="nsb-Pq-Wts" id="Swe-zx-tVx"/>
                         <outlet property="progressView" destination="Aam-kd-uMI" id="O98-D7-295"/>
                         <segue destination="6G9-6E-VVi" kind="modal" identifier="splash2navigation" modalTransitionStyle="crossDissolve" animates="NO" id="zCs-M8-Vp0"/>
+                        <segue destination="JuO-ir-6sh" kind="modal" identifier="splash2help" modalTransitionStyle="crossDissolve" animates="NO" id="Yyy-qd-DkO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1DU-tW-wJW" sceneMemberID="firstResponder"/>
@@ -75,31 +76,6 @@
             </objects>
             <point key="canvasLocation" x="-168" y="-3"/>
         </scene>
-        <!--HelpViewController-->
-        <scene sceneID="Thl-8K-dAp">
-            <objects>
-                <viewController storyboardIdentifier="sbid_helpviewcontroller" id="qKl-l8-v2U" userLabel="HelpViewController" customClass="HelpViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="4LN-aW-2OP" userLabel="helpView">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="S4v-b7-ab1" userLabel="textView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Help" id="iPt-je-l4D" userLabel="aboutNavigationItem"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tCk-g8-uXw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1276" y="-3"/>
-        </scene>
         <!--Warning View Controller - Warning-->
         <scene sceneID="175-zd-fjg">
             <objects>
@@ -109,7 +85,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Warning Information" id="joX-KL-AMk" userLabel="warningTextView">
-                                <rect key="frame" x="10" y="68" width="300" height="180"/>
+                                <rect key="frame" x="10" y="42" width="300" height="260"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
@@ -146,7 +122,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3mZ-te-yFN" userLabel="countdownLabel">
-                                <rect key="frame" x="80" y="290" width="160" height="80"/>
+                                <rect key="frame" x="80" y="302" width="160" height="80"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="60"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -709,11 +685,12 @@
                         <outlet property="helpView" destination="L81-FY-NqU" id="hRt-ZG-WHo"/>
                         <outlet property="pageControl" destination="UPq-6q-5rI" id="VXz-ml-IF3"/>
                         <outlet property="scrollView" destination="bq6-Bp-za8" id="G4c-JT-tGC"/>
+                        <segue destination="6G9-6E-VVi" kind="modal" identifier="help2navigation" modalTransitionStyle="crossDissolve" animates="NO" id="vEL-D1-672"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2GT-49-18p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="317" y="-3"/>
+            <point key="canvasLocation" x="-853" y="1666"/>
         </scene>
     </scenes>
     <classes>
@@ -846,9 +823,6 @@
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
         </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
-        </class>
         <class className="WarningViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/WarningViewController.h"/>
             <relationships>
@@ -868,6 +842,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="vEL-D1-672"/>
+        <segue reference="Yyy-qd-DkO"/>
         <segue reference="HTd-QG-N7H"/>
     </inferredMetricsTieBreakers>
 </document>
