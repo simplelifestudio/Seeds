@@ -11,6 +11,7 @@ package com.simplelife.seeds.android;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -23,7 +24,6 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -68,13 +68,10 @@ public class SeedsDetailsActivity extends Activity{
 	// Database adapter
 	private SeedsDBAdapter mDBAdapter;
 	
-	// Progress dialog for setting as favorite operation
-	private ProgressDialog tProgressDialog = null;
-	
 	// SeedsEntity for internal use
 	private SeedsEntity mSeedsEntity;
 	
-	// The menuItem fav
+	// The menuItem favorite
 	private MenuItem mFavItem = null;
 	
 	// Favorite tag
@@ -254,6 +251,7 @@ public class SeedsDetailsActivity extends Activity{
     }    
 			
     // Define a handler to process the progress update
+	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler(){  
   
         @Override  
@@ -315,16 +313,14 @@ public class SeedsDetailsActivity extends Activity{
 					{
 						mDBAdapter.updateSeedEntryFav(mSeedLocalId,false);
 						tFavTag = false;
-						tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Cancelling Favorites...", "Done!", true, false);
-					    //TODO
-						// Remove the entry if this seed is out of date
+						ProgressDialog.show(SeedsDetailsActivity.this, "Cancelling Favorites...", "Done!", true, false);
 					}
 					else
 					{
 						mDBAdapter.updateSeedEntryFav(mSeedLocalId,true);
 						tFavTag = true;
 						
-						tProgressDialog = ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Done!", true, false);							
+						ProgressDialog.show(SeedsDetailsActivity.this, "Adding to Favorites...", "Done!", true, false);							
 					}            		
 					
 				} catch (Exception e) {
@@ -368,10 +364,17 @@ public class SeedsDetailsActivity extends Activity{
             }
             case R.id.rss_addtocart:
             {
+            	SeedsRSSCartActivity.addSeedToCart(mSeedLocalId);
+        		Toast toast = Toast.makeText(getApplicationContext(),
+        				R.string.seeds_rss_toast_addtocartdone, Toast.LENGTH_SHORT);
+        	    toast.setGravity(Gravity.CENTER, 0, 0);
+        	    toast.show();
             	return true;
             }
             case R.id.rss_management:
             {
+    		    Intent intent = new Intent(SeedsDetailsActivity.this, SeedsRSSCartActivity.class);
+    		    startActivity(intent);
             	return true;
             }
             case R.id.download_seed:

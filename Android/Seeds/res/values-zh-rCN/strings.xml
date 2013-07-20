@@ -86,6 +86,8 @@
     
     <string name="seeds_rss_menuaddtocart">加入订阅</string>
     <string name="seeds_rss_management">订阅管理</string>
+    <string name="seeds_rss_toast_addtocartdone">已加入订阅车</string>
+    <string name="seeds_rss_menu_sendreqmsg">发送订阅请求</string>
     
     <string name="seeds_config_page">应用设置</string>
     <string name="seeds_config_serverpref">服务器设置</string>
