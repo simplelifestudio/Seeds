@@ -95,6 +95,15 @@
 {
     NSString* content = self.content;
     
+    content = [self _parseHeaderContent:content];
+    
+    content = [self _parseContent:content];
+    
+    return content;
+}
+
+-(NSString*) _parseContent:(NSString*) content
+{    
     NSRange range = [content rangeOfString:STR_COLON_FULLWIDTH_1];
     if (0 < range.length)
     {
@@ -116,7 +125,7 @@
     {
         content = [content substringFromIndex:range.location + 1];
         content = [CBStringUtils trimString:content];
-        return content;        
+        return content;
     }
     
     range = [content rangeOfString:STR_BRACKET_RIGHT];
@@ -126,6 +135,91 @@
         content = [CBStringUtils trimString:content];
         return content;
     }
+    
+    return content;
+}
+
+-(NSString*) _parseHeaderContent:(NSString*) content
+{
+    NSRange range = [content rangeOfString:STR_COLON_FULLWIDTH_1];
+    if (0 == range.location)
+    {
+        NSInteger startLocation = range.location + 1;
+        if (content.length > startLocation)
+        {
+            content = [content substringFromIndex:startLocation];
+        }
+
+        return [self _parseHeaderContent:content];
+    }
+    
+    range = [content rangeOfString:STR_COLON_FULLWIDTH_2];
+    if (0 == range.location)
+    {
+        NSInteger startLocation = range.location + 1;
+        if (content.length > startLocation)
+        {
+            content = [content substringFromIndex:startLocation];
+        }
+        return [self _parseHeaderContent:content];
+    }
+    
+    range = [content rangeOfString:STR_COLON];
+    if (0 == range.location)
+    {
+        NSInteger startLocation = range.location + 1;
+        if (content.length > startLocation)
+        {
+            content = [content substringFromIndex:startLocation];
+        }
+        return [self _parseHeaderContent:content];
+    }
+    
+    range = [content rangeOfString:STR_BRACKET_LEFT];
+    if (0 == range.location)
+    {
+        NSInteger startLocation = range.location + 1;
+        if (content.length > startLocation)
+        {
+            content = [content substringFromIndex:startLocation];
+        }
+        return [self _parseHeaderContent:content];
+    }
+    
+    range = [content rangeOfString:STR_BRACKET_RIGHT];
+    if (0 == range.location)
+    {
+        NSInteger startLocation = range.location + 1;
+        if (content.length > startLocation)
+        {
+            content = [content substringFromIndex:startLocation];
+        }
+        return [self _parseHeaderContent:content];
+    }
+    
+    range = [content rangeOfString:STR_RETURN];
+    if (0 == range.location)
+    {
+        NSInteger startLocation = range.location + 1;
+        if (content.length > startLocation)
+        {
+            content = [content substringFromIndex:startLocation];
+        }
+        return [self _parseHeaderContent:content];
+    }
+    
+    range = [content rangeOfString:STR_NEWLINE];
+    if (0 == range.location)
+    {
+        NSInteger startLocation = range.location + 1;
+        if (content.length > startLocation)
+        {
+            content = [content substringFromIndex:startLocation];
+        }
+        return [self _parseHeaderContent:content];
+    }
+    
+    content = [CBStringUtils trimString:content];
     
     return content;
 }
