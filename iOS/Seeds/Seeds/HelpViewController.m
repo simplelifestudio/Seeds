@@ -198,7 +198,7 @@
     if (pageNum == imageArray.count - 1)
     {
         [displayTimer invalidate];
-//        [self _exit];
+        [self _exit];
     }
     else
     {
