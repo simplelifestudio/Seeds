@@ -186,7 +186,12 @@
     }
     if(CARTID_MAX_LENGTH <= ([textView.text length] + range.length))
     {
-        [_guiModule showHUD:NSLocalizedString(@"Length Limited", nil) delay:1];
+        MBProgressHUD* HUD = [_guiModule.HUDAgent sharedHUD];
+        HUD.labelText = NSLocalizedString(@"Length Limited", nil);
+        [HUD showAnimated:YES whileExecutingBlock:^(){
+            [NSThread sleepForTimeInterval:_HUD_DISPLAY];
+        }];
+        
         return NO;
     }
     
