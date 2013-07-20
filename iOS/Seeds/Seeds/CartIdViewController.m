@@ -186,6 +186,7 @@
     }
     if(CARTID_MAX_LENGTH <= ([textView.text length] + range.length))
     {
+        [_guiModule showHUD:NSLocalizedString(@"Length Limited", nil) delay:1];
         return NO;
     }
     
