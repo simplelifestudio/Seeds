@@ -30,6 +30,8 @@
     SeedPictureAgent* _pictureAgent;
     
     SpiderModule* _spiderModule;
+    
+    id<SeedDAO> _seedDAO;
 }
 @end
 
@@ -79,6 +81,8 @@
     _guiModule.homeViewController = self;
     
     _spiderModule = [SpiderModule sharedInstance];
+    
+    _seedDAO = [DAOFactory getSeedDAO];
     
     [self _registerNotifications];
 }
@@ -333,6 +337,10 @@
     BOOL isServerMode = [_userDefaults isServerMode];
     NSString* statusStr = (isServerMode) ? NSLocalizedString(@"Server Mode", nil) : NSLocalizedString(@"Standalone Mode", nil);
     _statuLabel.text = statusStr;
+    
+    [CBAppUtils asyncProcessInBackgroundThread:^(){
+        [_seedDAO deleteAllExceptLastThreeDaySeeds:_last3Days];
+    }];
 }
 
 - (void) _appDidEnterBackground
