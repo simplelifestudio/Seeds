@@ -219,7 +219,6 @@
     if (pageNum == imageArray.count - 1)
     {
         [displayTimer invalidate];
-        [self _exit];
     }
     else
     {
@@ -237,6 +236,7 @@
     if (!isAppLaunchedBefore)
     {
         [_userDefaults recordAppLaunchedBefore];
+
         [self performSegueWithIdentifier:SEGUE_ID_HELP2NAVIGATION sender:self];
     }
     else
