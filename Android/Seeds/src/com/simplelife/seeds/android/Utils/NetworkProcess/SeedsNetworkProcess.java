@@ -225,6 +225,37 @@ public class SeedsNetworkProcess {
 		HttpResponse response = httpClient.execute(postMethod);
 		
 		return response;		
-	}	
-
+	}
+	
+	public static HttpResponse sendSeedsToCartReqMsg (ArrayList<Integer> _inSeedIdList) throws JSONException, ClientProtocolException, IOException {
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		HttpPost postMethod = new HttpPost(SeedsDefinitions.getServerUrl());
+		postMethod.addHeader("Content-Type", SeedsDefinitions.SEEDS_SERVER_HTTP_MIME);
+	    mLogger.info("Sending SeedsToCartRequest Message!");
+		
+		JSONObject paramList = new JSONObject();
+		JSONArray  seedIdList  = new JSONArray();
+		
+		int tSeedIdListSize = _inSeedIdList.size();
+		for(int index = 0; index < tSeedIdListSize; index++)
+		{
+			seedIdList.put(_inSeedIdList.get(index));
+		}
+		
+		paramList.put("cartId","");
+		paramList.put("seedIdList",seedIdList);
+		
+		JSONObject updateStatusReq = SeedsJSONMessage.SeedsConstructMsg(SeedsJSONMessage.SeedsToCartRequest, paramList);
+		
+	    // Send the request
+		postMethod.setEntity(new StringEntity(updateStatusReq.toString()));
+		
+		mLogger.debug("SeedsToCartRequest Message: "+updateStatusReq.toString());
+		
+		// Retrieve the response
+		HttpResponse response = httpClient.execute(postMethod);
+		
+		return response;
+	}
+	
 }

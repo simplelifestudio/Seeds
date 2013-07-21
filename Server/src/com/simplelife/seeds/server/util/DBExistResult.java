@@ -11,9 +11,9 @@ package com.simplelife.seeds.server.util;
 /**
  * 
  */
-public enum DBExistResult
+public class DBExistResult
 {
-	existent,
-	nonExistent,
-	errorOccurred
+	public final static int existent = 0;
+	public final static int nonExistent = 1;
+	public final static int errorOccurred = 2;
 }

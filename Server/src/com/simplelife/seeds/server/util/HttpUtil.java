@@ -86,6 +86,11 @@ public class HttpUtil
         }
     }
 	
+    /**
+     * Return URL object by given URL string, proxy is considered
+     * @param urlStr: string of URL link
+     * @return URL object
+     */
     public static HttpURLConnection getHttpUrlConnection(String urlStr)
 	{
 		HttpURLConnection conn = null;
@@ -109,14 +114,22 @@ public class HttpUtil
 		return conn;
 	}
     
+    /**
+     * Set IP of server
+     * @param hostIP: IP address
+     */
     public static void setHostIP(String hostIP)
     {
         hostIPAddress = hostIP;
     }
     
+    /**
+     * return IP of server
+     * @return IP address of server
+     */
     public static String getHostIP()
     {
-        return "106.187.38.78";
+        return GlobalSetting.HostIP;
         /*
         if (hostIPAddress != null && hostIPAddress.length() > 0)
         {
@@ -155,19 +168,44 @@ public class HttpUtil
         */
     }
     
+    /**
+     * Get full URL link by given relative path (add server IP and seeds prefix)  
+     * @param relativePath: given relative path, such as torrent/
+     * @return full URL link
+     */
     public static String getFullLink(String relativePath)
     {
         String fullLink = "http://" + getHostIP() + ":" + Integer.toString(httpPort);
+        fullLink += "/seeds";
         if (relativePath.charAt(0) != '/')
         {
             fullLink += "/";
         }
-        fullLink += "/seeds";
         fullLink += relativePath;
         
         return fullLink;
     }
+    
+    /**
+     * Generate torrent download link by given seedId 
+     * @param seedId: ID of seed
+     * @return link of torrent
+     */
+    public static String getTorrentLink(long seedId)
+	{
+	    String path = getFullLink("torrents/");
+        path += Long.toString(seedId);
+        path += ".torrent";
+        
+        return path;
+	}
+	
 
+    /**
+     * Return post link by link of seed page
+     * @param urlStr: link of seed download page
+     * @return Post link for download seeds
+     */
     public static String getPostLink(String urlStr)
     {
         String postLink = "";
@@ -178,6 +216,11 @@ public class HttpUtil
         return postLink;
     }
     
+    /**
+     * Return parameter list by given link
+     * @param link: URL link like http://xxx.com/xxx?aaa=1&bbb=2
+     * @return: list of parameters
+     */
 	public static List <NameValuePair> getParaListByLink(String link)
 	{
 	    String orgLink = link;
@@ -239,6 +282,12 @@ public class HttpUtil
         return params;
 	}
 	
+	/**
+	 * Simulator post of http form 
+	 * @param urlStr: URL link
+	 * @param params: parameters to be posted
+	 * @param outputFile: path file name of output file, it's designed to download torrent file
+	 */
 	public static void post(String urlStr, List <NameValuePair> params, String outputFile)
 	{
 	    try
@@ -256,20 +305,11 @@ public class HttpUtil
 	    }
     }
 	
-	public static String getTorrentLink(long seedId)
-	{
-	    String path = getFullLink("torrents/");
-        path += Long.toString(seedId);
-        path += ".torrent";
-        
-        return path;
-	}
-	
-	public static String getSeedSavePath()
-	{
-	    return getAbsolutePath("torrents/");
-	}
-	
+	/**
+	 * Return path file name for downloading torrent file for given seed ID 
+	 * @param seedId: ID of seed
+	 * @return Full path file name of torrent file
+	 */
 	public static String getSeedSavePathFile(long seedId)
 	{
 	    String path = getSeedSavePath();
@@ -278,7 +318,20 @@ public class HttpUtil
 	    
 	    return path;
 	}
+
+	/**
+	 * Return path for saving torrent file
+	 */
+	public static String getSeedSavePath()
+	{
+	    return getAbsolutePath("torrents/");
+	}
 	
+	/**
+	 * Add absolute path which Tomcat locates
+	 * @param relativePath: relate path
+	 * @return Full path
+	 */
 	public static String getAbsolutePath(String relativePath)
 	{
 	    if (webappsRoot == null)
@@ -297,6 +350,11 @@ public class HttpUtil
 	    return absPath;
 	}
 	
+	/**
+	 * Save content of response into file 
+	 * @param response: HTTP response 
+	 * @param outputFile: path file name of output file
+	 */
 	private static void handleResponse(HttpResponse response, String outputFile)
 	{
 	    try

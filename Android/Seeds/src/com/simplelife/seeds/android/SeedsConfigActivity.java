@@ -19,11 +19,10 @@ import com.simplelife.seeds.android.utils.imageprocess.SeedsFileCache;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -37,7 +36,6 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
-import android.view.View;
 import android.widget.Toast;
 
 public class SeedsConfigActivity extends Activity {
@@ -56,7 +54,7 @@ public class SeedsConfigActivity extends Activity {
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
 		tActionBar.setTitle(R.string.seeds_config_page);		
-	}
+	}	
 		
     public static class SeedsPreferenceFragment extends PreferenceFragment 
                   implements OnPreferenceChangeListener, OnPreferenceClickListener{
@@ -202,7 +200,8 @@ public class SeedsConfigActivity extends Activity {
     		}.start();
         }
         
-    	private Handler handler = new Handler(){  
+    	@SuppressLint("HandlerLeak")
+		private Handler handler = new Handler(){  
     		  
             @Override  
             public void handleMessage(Message msg) {  

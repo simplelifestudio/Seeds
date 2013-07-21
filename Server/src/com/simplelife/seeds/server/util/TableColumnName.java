@@ -9,7 +9,7 @@
 package com.simplelife.seeds.server.util;
 
 /**
- * 
+ * Class defines column names in tables
  */
 public class TableColumnName
 {

@@ -12,7 +12,11 @@ package com.simplelife.seeds.server.util;
 
 import com.simplelife.seeds.server.db.OperationLog;
 
-public class OperationLogUtil {
+/**
+ * Utility class for saving operation log
+ */
+public class OperationLogUtil 
+{
 	public static void captureTaskStarted(String logInfo)
 	{
 		save(OperationCode.SEED_CAP_TASK_START, logInfo);

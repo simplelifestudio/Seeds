@@ -47,7 +47,7 @@ public class SeedsPasswordActivity extends Activity {
 			public void onComplete(String mPassword) {
 				// If the password is correct, direct to the datelist activity
 				if (mPwdView.verifyPassword(mPassword)) {
-					showToast(R.string.seeds_password_logincorrect);
+					//showToast(R.string.seeds_password_logincorrect);
 					Intent intent = new Intent(SeedsPasswordActivity.this, SeedsDateListActivity.class);
 					startActivity(intent);
 					finish();
@@ -92,7 +92,6 @@ public class SeedsPasswordActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_seeds_start_verify_menu, menu);
         return true;
     }

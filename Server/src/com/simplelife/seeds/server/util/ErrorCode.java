@@ -10,7 +10,7 @@
 package com.simplelife.seeds.server.util;
 
 /**
- * 
+ * Error code for client to indicate category of errors
  */
 public class ErrorCode
 {

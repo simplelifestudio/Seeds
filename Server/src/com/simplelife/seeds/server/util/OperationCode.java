@@ -10,7 +10,11 @@
 
 package com.simplelife.seeds.server.util;
 
-public interface OperationCode {
+/**
+ * Defines operation code for saving in DBs 
+ */
+public interface OperationCode 
+{
 	long
 	ADMIN_LOGIN = 101,
 	ADMIN_TRIGGER_SEED_CAP_TASK = 102,

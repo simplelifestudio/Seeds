@@ -88,7 +88,11 @@
     <string name="seeds_rss_menuaddtocart">Add To RSS Cart</string>
     <string name="seeds_rss_management">RSS Management</string>
     <string name="seeds_rss_toast_addtocartdone">Add to RSS cart done</string>
+    <string name="seeds_rss_toast_sendreqfailed">Network failure, book failed</string>
+    <string name="seeds_rss_toast_emptycartresp">Wrong response, book failed</string>
+    <string name="seeds_rss_toast_booksuccess">Book Successed, cart id: </string>
     <string name="seeds_rss_menu_sendreqmsg">Send RSS Message</string>
+    <string name="seeds_rss_dialof_sendingreqmsg">Sending book request...</string>
 
     <string name="seeds_config_page">Settings</string>  
     <string name="seeds_config_serverpref">Server Preference</string>

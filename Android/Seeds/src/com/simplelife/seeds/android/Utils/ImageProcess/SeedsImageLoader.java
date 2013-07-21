@@ -112,7 +112,7 @@ public class SeedsImageLoader {
 		Bitmap resizedBitmap = null;
 		// New to modify here
 		//int newWidth = 640;
-		float newWidth = 480;
+		float newWidth = 640;
 		
 		if(0 == type)
 		{

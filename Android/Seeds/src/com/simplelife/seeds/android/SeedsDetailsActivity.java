@@ -59,9 +59,6 @@ public class SeedsDetailsActivity extends Activity{
 	// The info about the Seed
 	private int mSeedLocalId;
 	
-	// For log purpose
-	private static final String LOGCLASS = "SeedsDetails"; 
-	
 	// Clarify the ImageLoader
 	public SeedsImageLoader tImageLoader;		
 	

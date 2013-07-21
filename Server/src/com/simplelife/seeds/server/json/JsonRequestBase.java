@@ -23,12 +23,20 @@ public class JsonRequestBase implements IJsonRequest
 	protected JSONObject jsonObject;
 	protected PrintWriter outPrintWriter;
 	
+	/**
+	 * Constructor
+	 * @param jsonObj: Object of JSON command which will be executed
+	 * @param out: PrintWriter for output, normally it's response for client
+	 */
 	public JsonRequestBase(	JSONObject jsonObj, PrintWriter out)
 	{
 	    jsonObject = jsonObj;
         outPrintWriter = out;
 	}
 	
+	/**
+	 * Function of executing JSON command, normally it shall be override by extended classes
+	 */
 	//@Override
 	public void Execute() 
 	{

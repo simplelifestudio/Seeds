@@ -9,7 +9,7 @@
 package com.simplelife.seeds.server.util;
 
 /**
- * 
+ * Defines key words used in JSON command
  */
 public class JsonKey
 {
@@ -20,12 +20,13 @@ public class JsonKey
     public static final String errorCode = "errorCode";
     public static final String errorDescription = "errorDescription";
     public final static String dateList = "dateList";
-    public final static String piclinks= "piclinks";
+    public final static String piclinks= "picLinks";
     
     public final static String seedIdList = "seedIdList";
     public final static String cartId = "cartId";
     public final static String successSeedIdList = "successSeedIdList";
     public final static String failedSeedIdList = "failedSeedIdList";
+    public final static String existSeedIdList = "existSeedIdList";
     public final static String noUpdate = "NO_UPDATE";
     public final static String notReady = "NOT_READY";
     public final static String ready = "READY";

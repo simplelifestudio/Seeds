@@ -35,6 +35,9 @@ public class TorrentCheckTask extends TimerTask
         checkExpiredTorrentFile();
     }
     
+    /**
+     * Remove expired RSS record in DB
+     */
     public void checkExpiredRssInDb()
     {
         String deleteDate = DateUtil.getDateStringByDayBack(GlobalSetting.torrentExpireDays);
@@ -42,6 +45,9 @@ public class TorrentCheckTask extends TimerTask
         DaoWrapper.executeSql(sql);
     }
     
+    /**
+     * Remove expired torrent file
+     */
     public void checkExpiredTorrentFile()
     {
         LogUtil.info("Start to check expired torrent file.");
@@ -64,7 +70,10 @@ public class TorrentCheckTask extends TimerTask
         LogUtil.info("Finished check expired torrent file.");
     }
     
-    
+    /**
+     * Check and delete file under given path
+     * @param seedPath: path to be checked
+     */
     public void checkAndDeleteFile(File seedPath)
     {
         File[] torrentFiles = seedPath.listFiles();

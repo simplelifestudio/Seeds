@@ -10,7 +10,7 @@
 package com.simplelife.seeds.server.util;
 
 /**
- * 
+ * Class defines table names
  */
 public class TableName
 {

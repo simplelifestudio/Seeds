@@ -121,16 +121,19 @@ public class HtmlParser implements ISourceParser {
 		endDate = DateUtil.getDateStringByDayBack(-1);
 	}
 	
-	public String getbaseLink() {
+	public String getbaseLink() 
+	{
 		return baseLink;
 	}
 
-	public void setbaseLink(String baseLink) {
+	public void setbaseLink(String baseLink)
+	{
 		this.baseLink = baseLink;
 	}
 
 	@Override
-	public void Parse() {
+	public void Parse() 
+	{
 		parsePageByDateRange();
 	}
 	
@@ -260,13 +263,6 @@ public class HtmlParser implements ISourceParser {
 		URL url;
 		try 
 		{
-			//SeedCaptureLog capLog = new SeedCaptureLog();
-			//capLog.setPublishDate(date);
-			//capLog.setStatus(1);
-			
-			//deleteCaptureLog(date);
-			//DaoWrapper.save(capLog);
-			
 			OperationLogUtil.captureTaskStarted(htmlLink);
 			deleteExistentSeeds(date);
 			
@@ -291,6 +287,10 @@ public class HtmlParser implements ISourceParser {
 		}
 	}
 	
+	/**
+	 * Delete existent seeds of given date in DB bofore saving new data
+	 * @param date: string of date
+	 */
 	private void deleteExistentSeeds(String date)
 	{
 	    String sql = "delete from "+ TableName.SeedPicture +" where " + TableColumnName.seedId 
@@ -301,12 +301,20 @@ public class HtmlParser implements ISourceParser {
         DaoWrapper.executeSql(sql);
 	}
 	
+	/**
+	 * Update status of seed capture of given date
+	 * @param date: string of date
+	 */
 	private void updateCaptureLog(String date)
 	{
 	    String sql = "update "+ TableName.SeedCaptureLog +" set status = 2 where " + SqlUtil.getPublishDateCondition(date);
         DaoWrapper.executeSql(sql);
 	}
-	
+
+	/**
+	 * Delete record of seed capture status of given date
+	 * @param date: string of date
+	 */
 	private void deleteCaptureLog(String date)
 	{
 		String sql = "delete from "+ TableName.SeedCaptureLog +" where " + SqlUtil.getPublishDateCondition(date);
