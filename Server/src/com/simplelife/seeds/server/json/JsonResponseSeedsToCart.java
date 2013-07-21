@@ -100,15 +100,20 @@ public class JsonResponseSeedsToCart extends JsonResponseBase
         
         List<String> successList = new ArrayList<String>();
         List<String> failedList = new ArrayList<String>();
+        List<String> existList = new ArrayList<String>();
         SeedToCartResult result = null;
         
         for (int i = 0; i < size; i++)
         {
             strSeedId = seedList.getString(i);
             result = saveRssRequest(strSeedId, cartId);
-            if (result == SeedToCartResult.succeed || result == SeedToCartResult.duplicated)
+            if (result == SeedToCartResult.succeed)
             {
                 successList.add(strSeedId);
+            }
+            else if (result == SeedToCartResult.duplicated)
+            {
+                existList.add(strSeedId);
             }
             else if  (result == SeedToCartResult.failed)
             {
@@ -130,14 +135,21 @@ public class JsonResponseSeedsToCart extends JsonResponseBase
         
         body.put(JsonKey.cartId, this.cartId);
         body.put(JsonKey.successSeedIdList, successList);
+        body.put(JsonKey.existSeedIdList, existList);
         body.put(JsonKey.failedSeedIdList, failedList);
         outPrintWriter.write(toString());
     }
 
+    /**
+     * Add given seed into given cart
+     * @param seedId: ID of seed
+     * @param cartId: ID of cart
+     * @return success, failed, error occurred or duplicated
+     */
     private SeedToCartResult saveRssRequest(String seedId, String cartId)
     {
         String sql = "select " + TableColumnName.seedId + " from " + TableName.Seed + " where " + TableColumnName.seedId + " = " + seedId;
-        DBExistResult result = DaoWrapper.exists(sql);
+        int result = DaoWrapper.exists(sql);
         
         if (result == DBExistResult.errorOccurred)
         {
