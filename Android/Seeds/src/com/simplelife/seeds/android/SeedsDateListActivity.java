@@ -157,7 +157,7 @@ public class SeedsDateListActivity extends Activity {
 		
 		// Check if Wifi is connected
 		checkNetworkStatus();
-	}
+	}	
 	
 	private View.OnClickListener mLayoutBefYesterdayListener = new View.OnClickListener() {
 

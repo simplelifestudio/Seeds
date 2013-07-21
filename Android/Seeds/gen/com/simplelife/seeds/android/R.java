@@ -249,6 +249,7 @@ containing a value of this type.
          */
         public static final int button_start_now=0x7f080016;
         /**  Text for button to cancel a download that is currently in progress [CHAR LIMIT=25] 
+ Text for button to cancel a download that is currently in progress [CHAR LIMIT=25] 
          */
         public static final int cancel_running_download=0x7f080033;
         public static final int clear_cache_complete_toast=0x7f08006c;
@@ -260,9 +261,17 @@ containing a value of this type.
          Text for button to delete a download that has completed, or to delete multiple download
          entries [CHAR LIMIT=25]
     
+
+         Text for button to delete a download that has completed, or to delete multiple download
+         entries [CHAR LIMIT=25]
+    
          */
         public static final int delete_download=0x7f08002f;
         /** 
+    Text for button appearing in the pop-up selection menu to deselect all currently selected
+    downloads in the download list [CHAR LIMIT=25]
+    
+
     Text for button appearing in the pop-up selection menu to deselect all currently selected
     downloads in the download list [CHAR LIMIT=25]
     
@@ -272,12 +281,21 @@ containing a value of this type.
          Text for dialog when user clicks on a download that failed because it was interrupted and
          the server doesn't support resuming downloads [CHAR LIMIT=200]
     
+
+         Text for dialog when user clicks on a download that failed because it was interrupted and
+         the server doesn't support resuming downloads [CHAR LIMIT=200]
+    
          */
         public static final int dialog_cannot_resume=0x7f08002a;
         /**  Text for dialog when user clicks on a download that failed [CHAR LIMIT=200] 
+ Text for dialog when user clicks on a download that failed [CHAR LIMIT=200] 
          */
         public static final int dialog_failed_body=0x7f080022;
         /** 
+         Text for dialog when user clicks on a download that failed because the requested
+         destination file already exists [CHAR LIMIT=200]
+    
+
          Text for dialog when user clicks on a download that failed because the requested
          destination file already exists [CHAR LIMIT=200]
     
@@ -287,9 +305,17 @@ containing a value of this type.
          Text for dialog when user clicks on a completed download but the file is missing
          [CHAR LIMIT=200]
     
+
+         Text for dialog when user clicks on a completed download but the file is missing
+         [CHAR LIMIT=200]
+    
          */
         public static final int dialog_file_missing_body=0x7f080027;
         /** 
+         Text for dialog when user clicks on a download that failed due to insufficient space on
+         the internal download cache [CHAR LIMIT=200]
+    
+
          Text for dialog when user clicks on a download that failed due to insufficient space on
          the internal download cache [CHAR LIMIT=200]
     
@@ -299,27 +325,47 @@ containing a value of this type.
          Text for dialog when user clicks on a download that failed due to insufficient space on
          external storage [CHAR LIMIT=200]
     
+
+         Text for dialog when user clicks on a download that failed due to insufficient space on
+         external storage [CHAR LIMIT=200]
+    
          */
         public static final int dialog_insufficient_space_on_external=0x7f080028;
         /** 
          Text for dialog when user clicks on a download that failed because it was requested to go
          on the external media, which is not mounted [CHAR LIMIT=200]
     
+
+         Text for dialog when user clicks on a download that failed because it was requested to go
+         on the external media, which is not mounted [CHAR LIMIT=200]
+    
          */
         public static final int dialog_media_not_found=0x7f08002c;
         /**  Text for dialog when user clicks on a paused download[CHAR LIMIT=200] 
+ Text for dialog when user clicks on a paused download[CHAR LIMIT=200] 
          */
         public static final int dialog_paused_body=0x7f080024;
         /** 
          Text for dialog when user clicks on a download that has not yet begun, but will be started
          in the future. [CHAR LIMIT=200]
     
+
+         Text for dialog when user clicks on a download that has not yet begun, but will be started
+         in the future. [CHAR LIMIT=200]
+    
          */
         public static final int dialog_queued_body=0x7f080026;
         /**  Text for dialog when user clicks on a running download[CHAR LIMIT=200] 
+ Text for dialog when user clicks on a running download[CHAR LIMIT=200] 
          */
         public static final int dialog_running_body=0x7f080023;
         /**  Dialog/toast messages 
+
+         Title of dialog that is shown when the user clicks a download for which no file is
+         available, either because the download hasn't started or because the download failed
+         [CHAR LIMIT=25]
+    
+ Dialog/toast messages 
 
          Title of dialog that is shown when the user clicks a download for which no file is
          available, either because the download hasn't started or because the download failed
@@ -331,9 +377,17 @@ containing a value of this type.
          Title for dialog when user clicks on a download that has not yet begun, but will be started
          in the future. [CHAR LIMIT=25]
     
+
+         Title for dialog when user clicks on a download that has not yet begun, but will be started
+         in the future. [CHAR LIMIT=25]
+    
          */
         public static final int dialog_title_queued_body=0x7f080025;
         /** 
+         Status indicating that the download has ended without completing successfully.  Appears for
+         an individual item in the download list.  [CHAR LIMIT=11]
+    
+
          Status indicating that the download has ended without completing successfully.  Appears for
          an individual item in the download list.  [CHAR LIMIT=11]
     
@@ -343,9 +397,18 @@ containing a value of this type.
          Menu option to sort the list of downloads by the date/time of the last activity related to
          the download [CHAR LIMIT=25]
     
+
+         Menu option to sort the list of downloads by the date/time of the last activity related to
+         the download [CHAR LIMIT=25]
+    
          */
         public static final int download_menu_sort_by_date=0x7f08001b;
         /**  Menu items 
+
+         Menu option to sort the list of downloads by the size of the downloaded file
+         [CHAR LIMIT=25]
+    
+ Menu items 
 
          Menu option to sort the list of downloads by the size of the downloaded file
          [CHAR LIMIT=25]
@@ -357,9 +420,18 @@ containing a value of this type.
          that there is no application on the device that can open the file that was downloaded
          [CHAR LIMIT=200]
     
+
+         Text for a toast appearing when a user clicks on a completed download, informing the user
+         that there is no application on the device that can open the file that was downloaded
+         [CHAR LIMIT=200]
+    
          */
         public static final int download_no_application_title=0x7f08002d;
         /** 
+         Status indicating that the system pauses downloading the file.  Appears for an
+         individual item in the download list.  [CHAR LIMIT=11]
+    
+
          Status indicating that the system pauses downloading the file.  Appears for an
          individual item in the download list.  [CHAR LIMIT=11]
     
@@ -370,9 +442,18 @@ containing a value of this type.
          Status indicating that the download has been queued to start in the future.  Appears for an
          individual item in the download list.  [CHAR LIMIT=11]
     
+ Status messages 
+
+         Status indicating that the download has been queued to start in the future.  Appears for an
+         individual item in the download list.  [CHAR LIMIT=11]
+    
          */
         public static final int download_queued=0x7f08001c;
         /** 
+         Status indicating that the system is currently downloading the file.  Appears for an
+         individual item in the download list.  [CHAR LIMIT=11]
+    
+
          Status indicating that the system is currently downloading the file.  Appears for an
          individual item in the download list.  [CHAR LIMIT=11]
     
@@ -382,9 +463,14 @@ containing a value of this type.
          Status indicating that the download has completed successfully. Appears for an individual
          item in the download list.  [CHAR LIMIT=11]
     
+
+         Status indicating that the download has completed successfully. Appears for an individual
+         item in the download list.  [CHAR LIMIT=11]
+    
          */
         public static final int download_success=0x7f08001f;
         /**  The title that appears at the top of the activity listing downloads [CHAR LIMIT=25] 
+ The title that appears at the top of the activity listing downloads [CHAR LIMIT=25] 
          */
         public static final int download_title=0x7f080017;
         /**  This is the title that is used when displaying the notification
@@ -394,6 +480,7 @@ containing a value of this type.
         public static final int hello_world=0x7f080037;
         public static final int imageview_description=0x7f08006d;
         /**  Text for button to keep a download that has not yet begun [CHAR LIMIT=25] 
+ Text for button to keep a download that has not yet begun [CHAR LIMIT=25] 
          */
         public static final int keep_queued_download=0x7f080032;
         public static final int menu_settings=0x7f080038;
@@ -401,9 +488,17 @@ containing a value of this type.
          Default title for an item in the download list for which no title was provided by the app.
          [CHAR LIMIT=20]
     
+
+         Default title for an item in the download list for which no title was provided by the app.
+         [CHAR LIMIT=20]
+    
          */
         public static final int missing_title=0x7f080019;
         /** 
+         Appears in lieu of the list of downloads if there are no downloads to view
+         [CHAR LIMIT=200]
+    
+
          Appears in lieu of the list of downloads if there are no downloads to view
          [CHAR LIMIT=200]
     
@@ -451,6 +546,7 @@ containing a value of this type.
          */
         public static final int notification_need_wifi_for_size=0x7f08000f;
         /**  Text for button to pause a download that is running. 
+ Text for button to pause a download that is running. 
          */
         public static final int pause_download=0x7f080030;
         /**  The full sentence description for the permission to access all
@@ -517,12 +613,22 @@ containing a value of this type.
          Text for button to remove the entry for a download that has not yet begun or that has
          failed [CHAR LIMIT=25]
     
+ Buttons 
+
+         Text for button to remove the entry for a download that has not yet begun or that has
+         failed [CHAR LIMIT=25]
+    
          */
         public static final int remove_download=0x7f08002e;
         /**  Text for button to resume a paused download. 
+ Text for button to resume a paused download. 
          */
         public static final int resume_download=0x7f080031;
         /** 
+         Text for button appearing in a dialog to restart a download, either one that failed or one
+         for which the downloaded file is now missing [CHAR LIMIT=25]
+    
+
          Text for button appearing in a dialog to restart a download, either one that failed or one
          for which the downloaded file is now missing [CHAR LIMIT=25]
     

@@ -18,15 +18,9 @@ import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.simplelife.seeds.android.utils.adapter.SeedsAdapter;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
-import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
-import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadList;
-import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
-import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage.SeedsStatusByDate;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
@@ -40,7 +34,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
