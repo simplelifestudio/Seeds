@@ -177,8 +177,22 @@
     _exitButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
     [_helpView addSubview:_exitButton];
     
+    [self _registerGestureRecognizers];
+    
     // set auto display timer
     [self _activateDisplayTimer:TRUE];
+}
+
+- (void) _registerGestureRecognizers
+{
+    UITapGestureRecognizer* tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_handleDoubleTap:)];
+    tapRecognizer.numberOfTapsRequired = 2;
+    [_helpView addGestureRecognizer:tapRecognizer];
+}
+
+- (void)_handleDoubleTap:(UIGestureRecognizer *)gestureRecognizer
+{
+    [self _exit];
 }
 
 -(void)_scrollToNextPage:(id)sender
