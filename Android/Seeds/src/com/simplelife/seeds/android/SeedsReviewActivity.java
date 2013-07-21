@@ -36,13 +36,10 @@ public class SeedsReviewActivity extends Activity {
 	// Clarify the class which is used to load the image via url
 	protected SeedsImageLoader imageLoader; 
 	
-	private ImageView tImageView;
-	
-    private LinearLayout tLayOutViewArea;
+	private LinearLayout tLayOutViewArea;
     private LinearLayout.LayoutParams tParam;
     private SeedsViewArea tViewArea; 
 	
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -114,23 +111,21 @@ public class SeedsReviewActivity extends Activity {
         private int imgH;       
         private SeedsTouchView touchView;
         private DisplayMetrics dm;
-        private Point imgPoint;
-        
         @SuppressWarnings("deprecation")
 		public SeedsViewArea(Context context,String imgUrl) { 
         	
         	super(context);
-        	/*dm = new DisplayMetrics();
+        	dm = new DisplayMetrics();
         	  ((Activity)context).getWindowManager().getDefaultDisplay().getMetrics(dm);
         	  imgDisplayW = dm.widthPixels;
-        	  imgDisplayH = dm.heightPixels;*/
+        	  imgDisplayH = dm.heightPixels;
         	// Fetch the window size
         	/*imgPoint = new Point();
         	((Activity)context).getWindowManager().getDefaultDisplay().getSize(imgPoint);
         	imgDisplayW = imgPoint.x;
         	imgDisplayH = imgPoint.y;*/
-            imgDisplayW = ((Activity)context).getWindowManager().getDefaultDisplay().getWidth();
-            imgDisplayH = ((Activity)context).getWindowManager().getDefaultDisplay().getHeight(); 
+            //imgDisplayW = ((Activity)context).getWindowManager().getDefaultDisplay().getWidth();
+            //imgDisplayH = ((Activity)context).getWindowManager().getDefaultDisplay().getHeight(); 
         	       
         	touchView = new SeedsTouchView(context,imgDisplayW,imgDisplayH);
         	//touchView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);

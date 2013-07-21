@@ -82,7 +82,7 @@ public class SeedsFavListActivity extends Activity{
 				tAdapter = new SeedsAdapter(SeedsFavListActivity.this, seedsList);
 				tListView.setAdapter(tAdapter);
 
-				// Bund the click listener
+				// Bond the click listener
 				tListView.setOnItemClickListener(new ListViewItemOnClickListener());
 				break;
 			}
