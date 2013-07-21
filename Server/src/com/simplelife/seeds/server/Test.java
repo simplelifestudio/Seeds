@@ -62,11 +62,11 @@ public class Test {
 		
 	    // =========web related=========
 	    //testRangeHtmlParse();
-	    //testHtmlParse();
+	    testHtmlParse();
 	    //testSeedCaptureTask();
 	    //testTorrentDownload();
 	    //testHtmlNodeVisitor();
-		testRssContent();
+		//testRssContent();
         
 	    // =========JSON related=========
 	    //testJsonCommandFactory();
@@ -344,10 +344,16 @@ public class Test {
 	
 	private static void testJsonSeedToCartReq()
 	{
+		
 		System.out.print("\n\n==========Normal request==========\n");
 		String command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"chen\",\n    \"seedIdList\": [\n            \"1\",\n            \"2\",\n            \"9999\"\n        ]\n    }\n}";
 		testJsonCommand(command);
-		
+
+		// No cartId
+		System.out.print("\n\n==========No cartId, random ID to be generated==========\n");
+		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n   \"seedIdList\": []\n    }\n}";
+		testJsonCommand(command);
+				
 		System.out.print("\n\n==========Normal request but all failed==========\n");
 		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"chen\",\n    \"seedIdList\": [\n            \"7777\",\n            \"8888\",\n            \"9999\"\n        ]\n    }\n}";
 		testJsonCommand(command);
@@ -393,6 +399,15 @@ public class Test {
 		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n    \"cartId\":\"chen\",\n    \"seedIdList\": [\n            \"0x111\",\n            \"bbb\",\n            \"9999\"\n        ]\n    }\n}";
         testJsonCommand(command);
         
+		// No cartId, empty seedId
+		System.out.print("\n\n==========Report error of empty seedId==========\n");
+		command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\n   \"seedIdList\": [\"1111\", \"\"]\n    }\n}";
+		testJsonCommand(command);
+		
+		
+		System.out.print("\n\n==========Report error of too long cartId==========\n");
+        command = "{\n    \"id\": \"SeedsToCartRequest\",\n    \"body\": {\"cartId\":\"123456789012345678901234567890123\"\n   \"seedIdList\": [\"1111\", \"\"]\n    }\n}";
+        testJsonCommand(command);
 	}
 	
 	private static void testJsonSeedStatusReq()
@@ -433,6 +448,11 @@ public class Test {
         	System.out.print("Error: record of " + date + " is nonexistent in DB");
         	return;
         }
+        
+        // Invalid id
+        System.out.print("\n\n==========Report error of invalid date==========\n");
+        command = "{\n    \"id\": \"SeedsUpdateStatusByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \"2013-5-14\",\n            \"2013-05-17\",\n            \"2013-05-18\"\n        ]\n    }\n}";
+        testJsonCommand(command);
         
         System.out.print("\n\n==========status == 0, not ready ==========\n");
         sql = "update " + TableName.SeedCaptureLog + " set " + TableColumnName.status + " = 0 where " + TableColumnName.publishDate + " = '" + date + "'";
@@ -488,6 +508,12 @@ public class Test {
         System.out.print("\n\n==========Report error of no id==========\n");
         command = "{\n    \"id_invalid\": \"SeedsByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \"2013-05-14\",\n            \"2013-05-17\",\n            \"2013-05-18\"\n        ]\n    }\n}";
         testJsonCommand(command);
+        
+        // Invalid id
+        System.out.print("\n\n==========Report error of invalid date==========\n");
+        command = "{\n    \"id\": \"SeedsByDatesRequest\",\n    \"body\": {\n        \"dateList\": [\n            \"2013-5-14\",\n            \"2013-05-17\",\n            \"2013-05-18\"\n        ]\n    }\n}";
+        testJsonCommand(command);
+
 	}
 	
 	private static void testJsonCommand(String command)
@@ -521,8 +547,8 @@ public class Test {
 	private static void testHtmlParse()
 	{
 		HtmlParser parser = new HtmlParser();
-		parser.setstartDate("2013-07-02");
-		parser.setendDate("2013-07-02");
+		parser.setstartDate("2013-07-20");
+		parser.setendDate("2013-07-20");
 		parser.Parse();
 	}
 	
