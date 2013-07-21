@@ -21,7 +21,7 @@
     <PreferenceCategory 
         android:title="@string/seeds_config_picpref">
         <SwitchPreference 
-            android:summary="@string/seeds_config_modifyserveraddrsum" 
+            android:summary="@string/seeds_config_recpicwithoutwifisum" 
             android:key="config_network" 
             android:summaryOff="@string/seeds_config_recpicwithoutwifisumoff" 
             android:title="@string/seeds_config_recpicwithoutwifititle" 

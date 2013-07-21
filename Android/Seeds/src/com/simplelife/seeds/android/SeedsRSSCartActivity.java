@@ -50,15 +50,15 @@ public class SeedsRSSCartActivity extends Activity{
 	public static final String KEY_FORMAT = "format";
 	public static final String KEY_THUMB_URL = "thumb_url";
 	
-	private static ArrayList<Integer> mSeedLocalIdInCart = new ArrayList();;
+	private static ArrayList<Integer> mSeedLocalIdInCart = new ArrayList<Integer>();;
 	private ArrayList<Integer> mSeedIdInCart;
 	private ListView mListView;
 	private SeedsAdapter mAdapter;
 	private String mDate;
 	private ArrayList<SeedsEntity> mSeedsEntityList;
-	private static ArrayList<Integer> mBookSuccSeedIdList = new  ArrayList();
-	private static ArrayList<Integer> mBookExistSeedIdList = new  ArrayList();
-	private static ArrayList<Integer> mBookFailedSeedIdList = new  ArrayList();
+	private static ArrayList<Integer> mBookSuccSeedIdList = new  ArrayList<Integer>();
+	private static ArrayList<Integer> mBookExistSeedIdList = new  ArrayList<Integer>();
+	private static ArrayList<Integer> mBookFailedSeedIdList = new  ArrayList<Integer>();
 	private static String mCartId;
 	private ProgressDialog mProgressDialog = null; 
 	
@@ -83,7 +83,7 @@ public class SeedsRSSCartActivity extends Activity{
 		tActionBar.setTitle(R.string.seeds_rss_management);	
 				
 		// Initialize the mSeedIdInCart
-		mSeedIdInCart = new ArrayList();
+		mSeedIdInCart = new ArrayList<Integer>();
 		
 		// Start a new thread to get the data
 		new Thread(new Runnable() {
@@ -97,7 +97,7 @@ public class SeedsRSSCartActivity extends Activity{
 				handler.sendMessage(msg);
 			}
 		}).start();		
-	}
+	}	
 	
 	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler(){
