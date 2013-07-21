@@ -34,12 +34,20 @@ public class JsonResponseSeeds extends JsonResponseBase
 {
     protected JSONArray dateList;
 	
+	/**
+	 * Constructor
+	 * @param jsonObj: Object of JSON command which will be executed
+	 * @param out: PrintWriter for output, normally it's response for client
+	 */
 	public JsonResponseSeeds(JSONObject jsonObj, PrintWriter out)
 	{
 	    super(jsonObj, out);
 		addHeader(JsonKey.commandSeedsByDatesResponse);
 	}
 	
+	/**
+	 * Normal response for client
+	 */
     @Override
     public void responseNormalRequest()
     {
@@ -49,7 +57,8 @@ public class JsonResponseSeeds extends JsonResponseBase
         }
         
         int size = dateList.size();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) 
+        {
             addSeeds(dateList.get(i).toString());
         }
 
@@ -57,7 +66,12 @@ public class JsonResponseSeeds extends JsonResponseBase
         LogUtil.info("Response SeedsUpdateStatusByDatesRequest successfully: " + dateList.toString());
     }
 
-    private ArrayList<Object> getSeedsTable(String date)
+    /**
+     * Return list of seeds for given date, create new one if nonexistent
+     * @param date: string of date 
+     * @return List of seeds for given date
+     */
+    private ArrayList<Object> getSeedsList(String date)
     {
         if (!body.containsKey(date))
         {
@@ -67,6 +81,10 @@ public class JsonResponseSeeds extends JsonResponseBase
         return (ArrayList<Object>) body.get(date);
     }
 
+    /**
+     * Query seeds in DB of given date and append to seed list
+     * @param strDate: string of date
+     */
     private void addSeeds(String strDate)
     {
         String sql = SqlUtil.getSelectSeedSql(SqlUtil.getPublishDateCondition(strDate));
@@ -89,9 +107,14 @@ public class JsonResponseSeeds extends JsonResponseBase
         }
     }
     
+    /**
+     * Add one seed into list
+     * @param date: string of date
+     * @param seed: object of seed queried from DB
+     */
     private void addSeed(String date, Seed seed)
     {
-    	List<Object> seedList = getSeedsTable(date);
+    	List<Object> seedList = getSeedsList(date);
     	
     	if (seed != null)
     	{
@@ -99,6 +122,11 @@ public class JsonResponseSeeds extends JsonResponseBase
     	}
     }
     
+    /**
+     * Add seed details into reponse
+     * @param seedList: list of seed
+     * @param seed: object of seed queried from DB
+     */
     private void addSeedFields(List<Object> seedList, Seed seed)
     {
     	Hashtable<String, Object> seedFields = new Hashtable<String, Object>();
@@ -119,6 +147,12 @@ public class JsonResponseSeeds extends JsonResponseBase
         addPictureLinks(seed.getSeedId(), seedFields);
     }
 
+    /**
+     * Add value of field into response, only non-null value will be added
+     * @param seedFields: Hashtable of fields
+     * @param fieldName: name of field
+     * @param fieldValue: value of field
+     */
     private void responseField(Hashtable<String, Object> seedFields, String fieldName, String fieldValue)
     {
         if ((fieldValue != null) && (fieldValue.length() > 0)) 
@@ -127,6 +161,11 @@ public class JsonResponseSeeds extends JsonResponseBase
         }
     }
     
+    /**
+     * Add preview pictures into response
+     * @param seedId: ID of seed
+     * @param seedFields: Hashtable of fields
+     */
     private void addPictureLinks(long seedId, Hashtable<String, Object> seedFields)
     {
         String sql = SqlUtil.getSelectSeedPictureSql(SqlUtil.getSeedIdCondition(seedId));

@@ -22,7 +22,13 @@ import com.simplelife.seeds.server.util.OperationLogUtil;
 
 public class JsonRequestFactory {
 	
-	
+	/**
+	 * Factory of creating command objects bases on JSON object 
+	 * @param out: PrintWriter for output, it's used to report error of invalid JSON object
+	 * @param jsonObj: the JSON object created bases on JSON command string from client
+	 * @param clientIp: IP address of client, used to save operation log
+	 * @return created command object, or null for invalid JSON object
+	 */
 	public static IJsonRequest CreateJsonCommand(PrintWriter out, JSONObject jsonObj, String clientIp)
 	{
 	    IJsonRequest jsonCmd = null;

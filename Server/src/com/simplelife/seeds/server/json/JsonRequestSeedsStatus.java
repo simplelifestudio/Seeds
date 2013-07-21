@@ -29,6 +29,9 @@ public class JsonRequestSeedsStatus extends JsonRequestBase
         super(jsonObj, out);
     }
 
+    /**
+     * Check validation of JSON command
+     */
     @Override
 	protected boolean CheckJsonCommand()
     {
@@ -52,6 +55,7 @@ public class JsonRequestSeedsStatus extends JsonRequestBase
             return false;
         }
         
+        // Check if dateList is provided
         String strDateList = paraObj.getString(JsonKey.dateList);
         if (strDateList.length() <= 2)
         {
@@ -61,10 +65,30 @@ public class JsonRequestSeedsStatus extends JsonRequestBase
             return false;
         }
         
+        // Check if format of date is valid, here only verify them by check length of date
+        JSONArray dateList = paraObj.getJSONArray(JsonKey.dateList);
+		int size = dateList.size();
+		String strDate;
+		for (int i = 0; i < size; i++)
+		{
+			strDate = dateList.getString(i).trim();
+			if (strDate.length() != 10)
+			{
+				String err = "Invalid date found, the format shall be yyyy-MM-dd: " + dateList.toString();
+	            LogUtil.warning(err + jsonObject.toString());
+	            responseInvalidRequest(ErrorCode.IllegalMessageBody, err);
+	            return false;
+			}
+		}
+        
         LogUtil.info("JSON command is valid.\n");
 	    return true;
     }
 	
+    
+    /**
+     * Function of executing JSON command
+     */
     @Override
     public void Execute()
     {

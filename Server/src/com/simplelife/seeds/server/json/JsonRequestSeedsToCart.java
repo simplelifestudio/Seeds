@@ -48,6 +48,9 @@ public class JsonRequestSeedsToCart extends JsonRequestBase
         failed
     }
     
+    /**
+     * Check validation of JSON command
+     */
     @Override
 	protected boolean CheckJsonCommand()
     {
@@ -65,6 +68,18 @@ public class JsonRequestSeedsToCart extends JsonRequestBase
 		// JsonKey.body is checked in JsonRequestBase
 		JSONObject paraObj = jsonObject.getJSONObject(JsonKey.body);
 		
+		if (paraObj.containsKey(JsonKey.cartId))
+        {
+            String cartId = paraObj.getString(JsonKey.cartId);
+            if (cartId.length() > 32)
+            {
+                String err = JsonKey.cartId + " is too long, the max length is 32.";
+                LogUtil.warning(err + jsonObject.toString());
+                responseInvalidRequest(ErrorCode.IllegalMessageBody, err);
+                return false;
+            }
+        }
+		
 		if (!paraObj.containsKey(JsonKey.seedIdList)) {
             String err = "Illegal message body: " + JsonKey.seedIdList +" can't be found.";
             LogUtil.warning(err + jsonObject.toString());
@@ -72,12 +87,13 @@ public class JsonRequestSeedsToCart extends JsonRequestBase
             return false;
         }
 		
+		// Check seedId must be digital
 		JSONArray seedList = paraObj.getJSONArray(JsonKey.seedIdList);
 		int size = seedList.size();
 		String strSeedId;
 		for (int i = 0; i < size; i++)
 		{
-			strSeedId = seedList.getString(i);
+			strSeedId = seedList.getString(i).trim();
 			if (!strSeedId.matches("^[-+]?(([0-9]+)([.]([0-9]+))?|([.]([0-9]+))?)$"))
 			{
 				String err = "Invalid seedId found: " + strSeedId;
@@ -85,24 +101,22 @@ public class JsonRequestSeedsToCart extends JsonRequestBase
 	            responseInvalidRequest(ErrorCode.IllegalMessageBody, err);
 	            return false;
 			}
+			if (strSeedId.length() == 0)
+			{
+				String err = "Empty seedId found in: " + seedList.toString();
+	            LogUtil.warning(err + jsonObject.toString());
+	            responseInvalidRequest(ErrorCode.IllegalMessageBody, err);
+	            return false;
+			}
 		}
 		
-		/*
-		// Removed to allow empty seedIdList, then only response cartId to client 
-        String seedIdList = paraObj.getString(JsonKey.seedIdList);
-        if (seedIdList.length() <= 2)
-        {
-        	String err = "Illegal message body: " + JsonKey.seedIdList +" is empty.";
-            LogUtil.warning(err + jsonObject.toString());
-            responseInvalidRequest(ErrorCode.IllegalMessageBody, err);
-            return false;
-        }
-        */
-        
         LogUtil.info("JSON command is valid.\n");
 	    return true;
     }
     
+    /**
+     * Function of executing JSON command
+     */
     @Override
     public void Execute()
     {

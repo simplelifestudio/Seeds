@@ -36,6 +36,9 @@ public class HtmlNodeVisitor extends NodeVisitor {
 		super(recurseChildren, recurseSelf);
 	}
 	
+	/**
+	 * Check if tag is picture link, and add to current seed if yes
+	 */
 	public void visitTag(Tag tag) 
 	{
 		if (_analyzeStatus != AnalyzeStatus.FilmInfo)
@@ -49,12 +52,10 @@ public class HtmlNodeVisitor extends NodeVisitor {
 			seed.addPicture(picLink);
     	}
     }
-	
-	private String getRealSeedLink(String seedPageLink)
-	{
-		return seedPageLink;
-	}
-	
+
+	/**
+	 * Handle text nodes
+	 */
     public void visitStringNode (Text string)    {
     	String nodeText = string.getText();
     	nodeText = nodeText.replaceAll("&nbsp;", "");
@@ -62,8 +63,7 @@ public class HtmlNodeVisitor extends NodeVisitor {
     	
     	if (_analyzeStatus == AnalyzeStatus.Link)
     	{
-    		String torrentLink = getRealSeedLink(nodeText);
-    		seed.setTorrentLink(torrentLink);
+    		seed.setTorrentLink(nodeText);
     		
     		if (!checkSeedForSave(seed))
     		{
@@ -79,6 +79,7 @@ public class HtmlNodeVisitor extends NodeVisitor {
     		
     	if (isFilmName(nodeText))
     	{
+    		// Start a new seed if film name found
     		_analyzeStatus = AnalyzeStatus.FilmInfo;
     		seed = new Seed();
     		seed.setName(nodeText);
@@ -129,6 +130,11 @@ public class HtmlNodeVisitor extends NodeVisitor {
     	//_logger.log(Level.INFO,"finishedParsing");
     }
     
+    /**
+     * Remove special characters
+     * @param field: string of field
+     * @return String after removing special characters  
+     */
     public String removePreTitle(String field)
     {
 		if (field == null) {
@@ -171,41 +177,58 @@ public class HtmlNodeVisitor extends NodeVisitor {
 		return field;
     }
     
+    /**
+     * Format seed fields before save
+     * @param seed: object of current seed
+     */
     private void formatSeedForSave(Seed seed)
     {
-		if (seed.getFormat() != null) {
+		if (seed.getFormat() != null) 
+		{
 			seed.setFormat(removePreTitle(seed.getFormat()));
 		}
 
-		if (seed.getHash() != null) {
+		if (seed.getHash() != null) 
+		{
 			seed.setHash(removePreTitle(seed.getHash()));
 		}
 
-		if (seed.getMemo() != null) {
+		if (seed.getMemo() != null) 
+		{
 			seed.setMemo(removePreTitle(seed.getMemo()));
 		}
 
-		if (seed.getMosaic() != null) {
+		if (seed.getMosaic() != null) 
+		{
 			seed.setMosaic(removePreTitle(seed.getMosaic()));
 		}
 
-		if (seed.getName() != null) {
+		if (seed.getName() != null) 
+		{
 			seed.setName(removePreTitle(seed.getName()));
 		}
 
-		if (seed.getSize() != null) {
+		if (seed.getSize() != null) 
+		{
 			seed.setSize(removePreTitle(seed.getSize()));
 		}
 
-		if (seed.getType() != null) {
+		if (seed.getType() != null) 
+		{
 			seed.setType(removePreTitle(seed.getType()));
 		}
 		
-		if (seed.getTorrentLink() != null) {
+		if (seed.getTorrentLink() != null) 
+		{
 			seed.setTorrentLink(removePreTitle(seed.getTorrentLink()));
 		}
     }
     
+    /**
+     * Check fields of seed to ensure it's valid for save
+     * @param seed: object of current seed
+     * @return true if ok, else false
+     */
     private boolean checkSeedForSave(Seed seed)
     {
     	if (seed.getName() == null || seed.getName().length() == 0)
@@ -218,7 +241,7 @@ public class HtmlNodeVisitor extends NodeVisitor {
     	}
     	return true;
     }
-    
+
     private boolean isFilmName(String str)
     {
     	if (str.indexOf("Æ¬Ãû") >= 0)

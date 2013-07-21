@@ -22,7 +22,11 @@ public class DaoWrapper {
 	{
 	}
 	
-	
+	/**
+	 * Execute given SQL string
+	 * @param sql: SQL string
+	 * @return true normally, else false if any error occurred or invalid SQL string
+	 */
 	public static boolean executeSql(String sql)
 	{
 		if (sql == null || sql.length() == 0)
@@ -63,7 +67,12 @@ public class DaoWrapper {
 		}
 	}
 	
-	public static DBExistResult exists(String sql)
+	/**
+	 * Check if records existent by query of given SQL string
+	 * @param sql: SQL string
+	 * @return nonExistent, existent or errorOccurred
+	 */
+	public static int exists(String sql)
 	{
 		if (sql == null || sql.length() == 0)
 		{
@@ -102,6 +111,12 @@ public class DaoWrapper {
 		}
 	}
 	
+	/**
+	 * Make query by given SQL string
+	 * @param sql: SQL string
+	 * @param objClass: class definition for mapping of return records
+	 * @return List of objects
+	 */
 	public static List query(String sql, Class objClass)
 	{
 		if (sql == null || sql.length() == 0)
@@ -134,6 +149,10 @@ public class DaoWrapper {
 		}
 	}
 	
+	/**
+	 * Delete record in DB by given object
+	 * @param obj: object to be deleted
+	 */
 	public static void delete(Object obj)
 	{
 		Session session = HibernateSessionFactory.getCurrentSession();
@@ -163,6 +182,10 @@ public class DaoWrapper {
 		}
 	}
 	
+	/**
+	 * Save object to DB
+	 * @param obj: object to be saved
+	 */
 	public static void save(Object obj)
 	{
 		Session session = HibernateSessionFactory.getCurrentSession();

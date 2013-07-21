@@ -20,6 +20,7 @@ public class LogUtil {
 	{
 	    return logger.getLevel();
 	}
+	
 	public static void setLevel(Level level)
 	{
 	    logger.setLevel(level);

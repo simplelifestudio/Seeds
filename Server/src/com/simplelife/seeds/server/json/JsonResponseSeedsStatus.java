@@ -45,12 +45,20 @@ public class JsonResponseSeedsStatus extends JsonResponseBase
         this.dateList = dateList;
     }
 
+	/**
+	 * Constructor
+	 * @param jsonObj: Object of JSON command which will be executed
+	 * @param out: PrintWriter for output, normally it's response for client
+	 */
     public JsonResponseSeedsStatus(JSONObject jsonObj, PrintWriter out)
 	{
 	    super(jsonObj, out);
 		addHeader(JsonKey.commandSeedsStatusResponse);
 	}
 	
+    /**
+     * Normal response for client
+     */
 	public void responseNormalRequest()
     {
 	    if (dateList == null)
@@ -76,6 +84,11 @@ public class JsonResponseSeedsStatus extends JsonResponseBase
         LogUtil.info("Response SeedsUpdateStatusByDatesRequest successfully: " + dateList.toString());
     }
 
+	/**
+	 * Return status of seeds capture for given date
+	 * @param date: string of date
+	 * @return status of seed capture
+	 */
     private String getSeedsStatusByDate(String date)
     {
     	//responseError(ErrorCode.DatabaseConnectionError, "Error occurred on database conection.");

@@ -201,6 +201,10 @@ public class Seed {
 		this.memo = memo;
 	}
 	
+	/**
+	 * Append a picture
+	 * @param picLink: link of picture
+	 */
 	public void addPicture(String picLink)
 	{
 		SeedPicture pic = new SeedPicture();
@@ -209,6 +213,10 @@ public class Seed {
 		pictures.add(pic);
 	}
 	
+	/**
+	 * Append a picture
+	 * @param pic: object of SeedPicture
+	 */
 	public void addPicture(SeedPicture pic)
 	{
 		if (pictures.contains(pic))
@@ -219,6 +227,10 @@ public class Seed {
 		pictures.add(pic);
 	}
 	
+	/**
+	 * Convert into string for RSS publish, some fields are hidden
+	 * @return String of fields
+	 */
 	public String toRssString()
 	{
 		StringBuilder strBuilder = new StringBuilder();
@@ -266,6 +278,9 @@ public class Seed {
 		return strBuilder.toString();
 	}
 	
+	/**
+	 * Convert values of fields into string
+	 */
 	public String toString()
 	{
 		StringBuilder strBuilder = new StringBuilder();

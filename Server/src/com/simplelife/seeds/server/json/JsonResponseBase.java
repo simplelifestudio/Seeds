@@ -27,12 +27,21 @@ public class JsonResponseBase implements IJsonResponse
 	protected JSONObject jsonObject;
     protected PrintWriter outPrintWriter;
 
+    /**
+     * Constructor
+     * @param jsonObj: Object of JSON command which triggers this response 
+     * @param out: PrintWriter for output, normally it's response for client
+     */
 	public JsonResponseBase(JSONObject jsonObj, PrintWriter out)
 	{
 	    jsonObject = jsonObj;
         outPrintWriter = out;
 	}
 	
+	/**
+	 * Append "id" and "body" into response
+	 * @param responseName
+	 */
 	protected void addHeader(String responseName)
     {
 		if (response.containsKey(JsonKey.id))
@@ -44,6 +53,14 @@ public class JsonResponseBase implements IJsonResponse
 		response.put(JsonKey.body, body);
     }
 	
+	
+	/**
+	 * Report error to client, it's common function used in extended classes
+	 * @param intErrorCode: error code, it shall be defined error code in com.simplelife.seeds.server.util.ErrorCode
+	 * @param strErrorDescription: description of error
+	 * @param strRequestMessage: the JSON string from client
+	 * @param out: PrintWriter for output, it's response for client
+	 */
 	public void responseError(int intErrorCode, String strErrorDescription, String strRequestMessage, PrintWriter out)
     {
         if (out == null)
@@ -67,6 +84,11 @@ public class JsonResponseBase implements IJsonResponse
         out.write(toString());
     }
     
+	/**
+	 * Report error to client, it's common function used in extended classes
+	 * @param intErrorCode: error code, it shall be defined error code in com.simplelife.seeds.server.util.ErrorCode
+	 * @param strErrorDescription: description of error
+	 */
 	@Override
     public void responseError(int intErrorCode, String strErrorDescription)
     {
@@ -80,7 +102,7 @@ public class JsonResponseBase implements IJsonResponse
     }
 
     /* 
-     * 
+     * Normal response for client, it shall be override by extended classes
      */
     @Override
     public void responseNormalRequest()
