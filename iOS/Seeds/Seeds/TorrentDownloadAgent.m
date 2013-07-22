@@ -180,23 +180,13 @@
                 [_delegate torrentDownloadFinished:_seed];
             }
          
-            BOOL flag = [CBFileUtils deleteFile:_fileFullPath];
-            if (flag)
+            [CBFileUtils deleteFile:_fileFullPath];
+            BOOL flag = [CBFileUtils createFile:_fileFullPath content:responseObject];
+            if(flag)
             {
-                flag = [CBFileUtils createFile:_fileFullPath content:responseObject];
-                if(flag)
+                if (_delegate)
                 {
-                    if (_delegate)
-                    {
-                        [_delegate torrentSaveFinished:_seed filePath:_fileFullPath];
-                    }
-                }
-                else
-                {
-                    if (_delegate)
-                    {
-                        [_delegate torrentSaveFailed:_seed filePath:_fileFullPath];
-                    }
+                    [_delegate torrentSaveFinished:_seed filePath:_fileFullPath];
                 }
             }
             else
