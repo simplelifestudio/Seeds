@@ -67,8 +67,14 @@
     <string name="seeds_wireless_title">Notice</string>
     <string name="seeds_wireless_setwifi">Set WIFI</string>
     <string name="seeds_wireless_continue">Ignore</string>
-    <string name="seeds_wireless_nowifino3g">Your WIFI and 3G are closed, set WIFI now? WARNING: Large data will be exhausted without WIFI!</string>
-    <string name="seeds_wireless_nowifi">Your WIFI is closed, set WIFI now? WARNING: Large data will be exhausted without WIFI!</string>
+    <string name="seeds_wireless_nowifino3g">
+        Your WIFI and 3G are closed, set WIFI now? Downloading images without WIFI has been disabled by default, please enable it inside Settings. 
+        WARNING: Large data will be exhausted without WIFI!
+    </string>
+    <string name="seeds_wireless_nowifi">
+        Your WIFI is closed, set WIFI now?  Downloading images without WIFI has been disabled by default, please enable it inside Settings. 
+        WARNING: Large data will be exhausted without WIFI!
+    </string>
     
     <string name="seeds_password_note">Please input your gesture</string>
     <string name="seeds_password_startdraw">Start to draw</string>

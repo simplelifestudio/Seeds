@@ -12,7 +12,6 @@ package com.simplelife.seeds.android;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,6 +20,7 @@ import android.util.FloatMath;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Window;
+import android.view.WindowManager.LayoutParams;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -49,7 +49,7 @@ public class SeedsReviewActivity extends Activity {
         //getWindow().setFlags(WindowManager.LayoutParams. FLAG_FULLSCREEN, 
         //                     WindowManager.LayoutParams. FLAG_FULLSCREEN); 
 		setContentView(R.layout.activity_seeds_details_fullscreen);
-		
+   	    getWindow().addFlags(LayoutParams.FLAG_FULLSCREEN);
 		// Retrieve the date info parameter
 		Bundle bundle = getIntent().getExtras();
 		final String tImgUrl = bundle.getString("imgLink");

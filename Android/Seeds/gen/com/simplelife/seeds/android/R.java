@@ -172,9 +172,9 @@ containing a value of this type.
         public static final int seed_info_link=0x7f0c0018;
         public static final int seed_info_name=0x7f0c0015;
         public static final int seed_info_size=0x7f0c0017;
-        public static final int seeds_format=0x7f0c002a;
+        public static final int seeds_format=0x7f0c0029;
         public static final int seeds_list=0x7f0c001e;
-        public static final int seeds_size=0x7f0c0029;
+        public static final int seeds_size=0x7f0c002a;
         public static final int seeds_title=0x7f0c0028;
         public static final int seeds_verify_menu_settings=0x7f0c0052;
         public static final int seedsnumber_befyesterday=0x7f0c0003;
