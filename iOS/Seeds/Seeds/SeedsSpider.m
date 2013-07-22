@@ -257,7 +257,6 @@
                 }
                 else
                 {
-                    NSString* dateStr = [CBDateUtils shortDateString:day];
                     DLog(@"Seeds channel link can't be found with date: %@", dateStr);
                     if (nil != _seedsSpiderDelegate)
                     {
