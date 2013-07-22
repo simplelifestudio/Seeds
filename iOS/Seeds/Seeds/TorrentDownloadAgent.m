@@ -181,13 +181,22 @@
             }
          
             BOOL flag = [CBFileUtils deleteFile:_fileFullPath];
-            
-            flag = [CBFileUtils createFile:_fileFullPath content:responseObject];
-            if(flag)
+            if (flag)
             {
-                if (_delegate)
+                flag = [CBFileUtils createFile:_fileFullPath content:responseObject];
+                if(flag)
                 {
-                    [_delegate torrentSaveFinished:_seed filePath:_fileFullPath];
+                    if (_delegate)
+                    {
+                        [_delegate torrentSaveFinished:_seed filePath:_fileFullPath];
+                    }
+                }
+                else
+                {
+                    if (_delegate)
+                    {
+                        [_delegate torrentSaveFailed:_seed filePath:_fileFullPath];
+                    }
                 }
             }
             else

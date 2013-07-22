@@ -92,11 +92,10 @@
     NSAssert(nil != dateA && nil != dateB, @"Nil date parameter");
     
     NSInteger dayIntDiff = 0;
-    NSTimeInterval dayDiff = 0;
     NSTimeInterval timeDiff = [dateA timeIntervalSinceDate:dateB];
     if (0 == timeDiff)
     {
-        dayDiff = 0;
+        dayIntDiff = 0;
     }
     else
     {
