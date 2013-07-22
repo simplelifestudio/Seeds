@@ -30,6 +30,7 @@
     <string name="seeds_datelist_emptyupdatestatusresp">检测到服务器空数据</string>
     <string name="seeds_datelist_emptyseedsbydateresp">检测到空数据</string>
     <string name="seeds_datelist_noneedtosync">所有数据已同步</string>
+    <string name="seeds_listperday_title">种子列表</string>
     <string name="seedTitle">种子名称</string>
     <string name="seedSize">种子大小</string>
     <string name="seedFormat">种子格式</string>
@@ -140,7 +141,7 @@
     <string name="seeds_http_eventserverready">服务端就绪地址 </string>
     <string name="seeds_http_eventserve">服务指令 </string>
     <string name="seeds_http_eventserveerror">服务端返回错误响应 </string>
-    <string name="seeds_http_taptostart">点击打开服务端开启HTTP服务</string>
+    <string name="seeds_http_taptostart">点击开启服务打开HTTP服务</string>
     <string name="seeds_http_stopserver">正在关闭服务...</string>
     <string name="seeds_http_serverstopped">HTTP服务已关闭。</string>
     
