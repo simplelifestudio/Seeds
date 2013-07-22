@@ -39,6 +39,7 @@ import android.provider.BaseColumns;
 import android.util.Log;
 import android.util.Pair;
 
+import com.simplelife.seeds.android.SeedsDefinitions;
 import com.simplelife.seeds.android.utils.downloadprocess.Downloads;
 
 /**
@@ -319,7 +320,7 @@ public class DownloadManager {
     	Uri srcUri = Uri.parse(inUrl);
     	DownloadManager.Request request = new Request(srcUri);
     	request.setDestinationInExternalPublicDir(
-    		Environment.DIRECTORY_DOWNLOADS, "/");
+    		SeedsDefinitions.SEEDS_DOWNLOAD_SUBFOLDER, "/");
     	request.setDescription("Seeds Downloading");
     	enqueue(request);
     }
