@@ -228,9 +228,6 @@ if (_cancelTransmission)\
         [zipName appendString:@"/"];
         [zipName appendString:dayStr];
         [zipName appendString:FILE_EXTENDNAME_DOT_ZIP];
-
-        NSString* zipFileFullPath = [CBFileUtils newZipFileWithFiles:zipName zipFiles:files];
-        DLog(@"New zip file created:%@", zipFileFullPath);
     }
     
     // Step 30:
