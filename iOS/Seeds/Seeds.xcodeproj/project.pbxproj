@@ -94,6 +94,7 @@
 		C53B644717824D0E0028DC41 /* TableViewLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53B644617824D0C0028DC41 /* TableViewLabelCell.xib */; };
 		C53B6449178253420028DC41 /* TableViewButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53B6448178253410028DC41 /* TableViewButtonCell.xib */; };
 		C53B644C178253580028DC41 /* TableViewButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B644B178253570028DC41 /* TableViewButtonCell.m */; };
+		C53F3071179E60D60091E902 /* Environment.m in Sources */ = {isa = PBXBuildFile; fileRef = C53F3070179E60D60091E902 /* Environment.m */; };
 		C541D0771782850F00E4F560 /* CBMathUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C541D0761782850F00E4F560 /* CBMathUtils.m */; };
 		C546E6E7173883CC00AEADDA /* JSONMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E1173883CC00AEADDA /* JSONMessage.m */; };
 		C546E6E8173883CC00AEADDA /* SeedsSpider.m in Sources */ = {isa = PBXBuildFile; fileRef = C546E6E4173883CC00AEADDA /* SeedsSpider.m */; };
@@ -381,6 +382,8 @@
 		C53B6448178253410028DC41 /* TableViewButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewButtonCell.xib; sourceTree = "<group>"; };
 		C53B644A178253550028DC41 /* TableViewButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewButtonCell.h; sourceTree = "<group>"; };
 		C53B644B178253570028DC41 /* TableViewButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewButtonCell.m; sourceTree = "<group>"; };
+		C53F306F179E60D60091E902 /* Environment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Environment.h; sourceTree = "<group>"; };
+		C53F3070179E60D60091E902 /* Environment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Environment.m; sourceTree = "<group>"; };
 		C541D0751782850F00E4F560 /* CBMathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBMathUtils.h; sourceTree = "<group>"; };
 		C541D0761782850F00E4F560 /* CBMathUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBMathUtils.m; sourceTree = "<group>"; };
 		C546E6E0173883CC00AEADDA /* JSONMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONMessage.h; path = Seeds/JSONMessage.h; sourceTree = "<group>"; };
@@ -1160,6 +1163,8 @@
 				C50FD40A174FBC1600E5D316 /* AppDefinitions.h */,
 				C5964C161722290400CC1C0A /* AppDelegate.h */,
 				C5964C171722290400CC1C0A /* AppDelegate.m */,
+				C53F306F179E60D60091E902 /* Environment.h */,
+				C53F3070179E60D60091E902 /* Environment.m */,
 				C531834317239FF300264530 /* Common */,
 				C5ADC853173A2DB5007F59D7 /* UserDefaults */,
 				C5964C4F172249A000CC1C0A /* Communication */,
@@ -1593,6 +1598,7 @@
 				C52AD0B11796E7AB00F9D174 /* Reachability.m in Sources */,
 				C52AD0BC1797CA7A00F9D174 /* UIImage+Retina4.m in Sources */,
 				C52AD0CA179836BE00F9D174 /* CartIdViewController.m in Sources */,
+				C53F3071179E60D60091E902 /* Environment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

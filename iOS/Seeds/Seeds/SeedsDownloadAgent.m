@@ -291,22 +291,14 @@ SINGLETON(SeedsDownloadAgent)
 }
 
 static NSString* _downloadPath;
-static NSString* _favoritePath;
 +(void) initialize
 {
-    NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
-    _downloadPath = [documentsPath stringByAppendingPathComponent:FOLDER_TORRENTS];
-    _favoritePath = [_downloadPath stringByAppendingPathComponent:FOLDER_FAVORITES];
+    _downloadPath = [Environment torrentsDirPath];
 }
 
 +(NSString*) downloadPath
 {
     return _downloadPath;
-}
-
-+(NSString*) favoritePath
-{
-    return _favoritePath;
 }
 
 #pragma mark - Public Methods

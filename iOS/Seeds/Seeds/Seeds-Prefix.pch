@@ -18,6 +18,7 @@
     #import "CBMathUtils.h"
 
     #import "AppDefinitions.h"
+    #import "Environment.h"
     #import "GUIStyle.h"
     #import "AppDelegate.h"
     #import "DAOFactory.h"

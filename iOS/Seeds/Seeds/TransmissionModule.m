@@ -241,8 +241,7 @@ SINGLETON(TransmissionModule)
     
     BOOL flag = NO;
     
-    NSString* documentsPath = [CBPathUtils documentsDirectoryPath];
-    NSString* torrentsPath = [documentsPath stringByAppendingPathComponent:FOLDER_TORRENTS];
+    NSString* torrentsPath = [Environment torrentsDirPath];
     
     flag = [CBPathUtils createDirectoryWithFullPath:torrentsPath];
     

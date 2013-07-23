@@ -121,7 +121,7 @@
     }
     else
     {
-        _downloadPath = [CBPathUtils documentsDirectoryPath];
+        _downloadPath = [Environment torrentsDirPath];
     }
     
     if (nil != _fileName && 0 < _fileName.length)

@@ -10,6 +10,7 @@
 #define Seeds_AppDefinitions_h
 
 // App Global
+#define APP_NAME @"Seeds"
 #define APP_VERSION @"0.1"
 #define NAMESPACE_APP @"com.simplelife.Seeds.ios"
 #define NAMESPACE_APP_CONST_CHARS "com.simplelife.Seeds.ios"
@@ -17,7 +18,7 @@
 
 // Module: UserDefaults
 #define USERDEFAULTS_KEY_SYNCSTATUSBYDAY @"syncStatusByDay:"
-#define PERSISTENTDOMAIN_SYNCSTATUSBYDAY @"syncStatusByDay"
+#define PERSISTENTDOMAIN_SYNCSTATUSBYDAY @"com.simplelife.Seeds.ios.userdefaults.syncStatusByDay"
 
 #define USERDEFAULTS_KEY_PASSCODESET @"passcodeSet"
 #define USERDEFAULTS_KEY_PASSCODE @"passcode"
