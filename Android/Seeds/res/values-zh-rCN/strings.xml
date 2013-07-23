@@ -9,6 +9,7 @@
     <string name="seeds_datelist_seedsnumberdefault">未同步</string>
     <string name="seeds_datelist_seedsnumbernoupdate">无数据</string>
     <string name="seeds_datelist_seedsnumbernotready">未更新</string>
+    <string name="seeds_datelist_seedsnumber">种子数：</string>
     <string name="seeds_datelist_befyesterday">前  天</string>
     <string name="seeds_datelist_yesterday">昨  天</string>
     <string name="seeds_datelist_today">今  天</string>
