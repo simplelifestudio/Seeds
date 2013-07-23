@@ -119,8 +119,11 @@
 		[dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
 
 		_lastUpdatedLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Last Updated: %@", nil), [dateFormatter stringFromDate:date]];
-		[[NSUserDefaults standardUserDefaults] setObject:_lastUpdatedLabel.text forKey:@"EGORefreshTableView_LastRefresh"];
-		[[NSUserDefaults standardUserDefaults] synchronize];
+        // Updated by Seeds
+//		[[NSUserDefaults standardUserDefaults] setObject:_lastUpdatedLabel.text forKey:@"EGORefreshTableView_LastRefresh"];
+//		[[NSUserDefaults standardUserDefaults] synchronize];
+        UserDefaultsModule* _userDefaults = [UserDefaultsModule sharedInstance];
+        [_userDefaults setLastRefreshStamp:_lastUpdatedLabel.text];
 		
 	} else {
 		

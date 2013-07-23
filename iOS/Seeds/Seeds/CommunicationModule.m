@@ -41,7 +41,7 @@ SINGLETON(CommunicationModule)
     _serverAgent = [[ServerAgent alloc] init];
     _seedPictureAgent = [SeedPictureAgent sharedInstance];
     [_seedPictureAgent setMaxConcurrentDownloads:SEEDPICTURE_MAX_CONCURRENT_DOWNLOADS];
-//    [_seedPictureAgent setDownloadOptions:SDWebImageLowPriority];// | SDWebImageRetryFailed];
+    [_seedPictureAgent setDownloadOptions:SDWebImageLowPriority];// | SDWebImageRetryFailed];
     [_seedPictureAgent setMaxCahceAge:CACHE_EXPIRE_PERIOD];
     
     _seedsDownloadAgent = [[SeedsDownloadAgent alloc] init];

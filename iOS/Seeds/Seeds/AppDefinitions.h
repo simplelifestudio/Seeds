@@ -11,7 +11,8 @@
 
 // App Global
 #define APP_VERSION @"0.1"
-#define NAMESPACE_APP @"com.simplelife.seeds.ios"
+#define NAMESPACE_APP @"com.simplelife.Seeds.ios"
+#define NAMESPACE_APP_CONST_CHARS "com.simplelife.Seeds.ios"
 #define MODULE_DELAY usleep(300000);
 
 // Module: UserDefaults
@@ -20,20 +21,21 @@
 
 #define USERDEFAULTS_KEY_PASSCODESET @"passcodeSet"
 #define USERDEFAULTS_KEY_PASSCODE @"passcode"
-#define PERSISTENTDOMAIN_PASSCODE @"passcode"
+#define PERSISTENTDOMAIN_PASSCODE @"com.simplelife.Seeds.ios.userdefaults.passcode"
 #define PASSCODE_ATTEMPT_TIMES 3
 
 #define USERDEFAULTS_KEY_3GDOWNLOADIMAGES @"downloadImagesThrough3G"
 #define USERDEFAULTS_KEY_CARTID @"cartId"
-#define PERSISTENTDOMAIN_NETWORK @"network"
+#define PERSISTENTDOMAIN_NETWORK @"com.simplelife.Seeds.ios.userdefaults.network"
 
 #define USERDEFAULTS_KEY_SERVERMODE @"serverMode"
 #define USERDEFAULTS_KEY_APPLAUNCHEDBEFORE @"appLaunchedBefore"
 #define USERDEFAULTS_KEY_LASTTHREEDAYS @"lastThreeDays"
-#define PERSISTENTDOMAIN_APP @"application"
+#define USERDEFAULTS_KEY_LASTREFRESH @"lastRefresh"
+#define PERSISTENTDOMAIN_APP @"com.simplelife.Seeds.ios.userdefaults.application"
 
 #define USERDEFAULTS_KEY_THUMBNAILCACHEKEYS @"thumbnailCacheKeys"
-#define PERSISTENTDOMAIN_IMAGECACHE @"imageCache"
+#define PERSISTENTDOMAIN_IMAGECACHE @"com.simplelife.Seeds.ios.userdefaults.imageCache"
 
 // Module: Communication
 #define RACHABILITY_HOST @"www.apple.com"
@@ -99,9 +101,11 @@
 
 #define CACHE_EXPIRE_PERIOD 60*60*24*7
 
-#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL @"seeds.thumbnails.seedlisttablecell"
-#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL @"Seeds.thumbnails.seedpicturecollectioncell"
-#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW @"seeds.thumbnails.seedpictureview"
+#define NAMESPACE_CACHE @"com.simplelife.Seeds.ios.cache"
+#define NAMESPACE_CACHE_CONST_CHARS "com.simplelife.Seeds.ios.cache"
+#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL @"thumbnails.seedlisttablecell"
+#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL @"thumbnails.seedpicturecollectioncell"
+#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW @"thumbnails.seedpictureview"
 
 
 // Module: Spider
