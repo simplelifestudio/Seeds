@@ -24,8 +24,10 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -132,7 +134,8 @@ public class SeedsHttpServiceActivity extends Activity {
     private void startServer() {
     	
     	mAddressSpinner.setEnabled(false);
-    	mHttpServer = new Server(mInterface, 8080, "/");
+    	Log.i("Testing", SeedsDefinitions.getDownloadDestFolder());
+    	mHttpServer = new Server(mInterface, 8080, SeedsDefinitions.getDownloadDestFolder());
 		mHttpServer.setRequestListener(mServerEvents);
 		mServerThread = new Thread(mHttpServer);
 		mServerThread.start();

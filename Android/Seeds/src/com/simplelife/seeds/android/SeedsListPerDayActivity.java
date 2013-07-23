@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -56,14 +58,18 @@ public class SeedsListPerDayActivity extends Activity {
 		// setTheme(android.R.style.Theme_Translucent_NoTitleBar);
 		// Set the list view layout
 		setContentView(R.layout.activity_seeds_listperday);
-		
+				
 		// Retrieve the date info parameter
 		Bundle bundle = getIntent().getExtras();
 		//String tPassinDate = bundle.getString("date");
 		tDate = bundle.getString("date");
 		
+		// Set a title for this page
+		ActionBar tActionBar = getActionBar();
+		tActionBar.setTitle(getString(R.string.seeds_listperday_title) + " " + tDate);
+		
 		// Initialize the tSeedIdList
-		tSeedIdList = new ArrayList();
+		tSeedIdList = new ArrayList<Integer>();
 		
 		Log.i(LOGCLASS, "The Date is  "+ tDate); 
 		// Start a new thread to get the data
@@ -81,6 +87,7 @@ public class SeedsListPerDayActivity extends Activity {
 		}).start();		
 	}
 	
+	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler(){
 		public void handleMessage(Message msg) {
 			switch(msg.what){
