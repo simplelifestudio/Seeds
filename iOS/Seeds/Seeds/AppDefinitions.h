@@ -231,7 +231,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 #define WARNING_DISPLAY_SECONDS 9
 
-#define HELPSCREEN_DISPLAY_SECONDS 3
+#define HELPSCREEN_DISPLAY_SECONDS 10
 
 #define TABLEVIEW_LOAD_DISPLAY_SECONDS 0.3
 
