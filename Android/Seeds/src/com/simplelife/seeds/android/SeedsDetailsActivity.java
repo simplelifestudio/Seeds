@@ -393,18 +393,17 @@ public class SeedsDetailsActivity extends Activity{
     @Override 
     public boolean onPrepareOptionsMenu(Menu menu){ 
      
-     super.onPrepareOptionsMenu(menu); 
+        super.onPrepareOptionsMenu(menu); 
      
-     MenuItem tFavItem = menu.findItem(R.id.menu_addto_fav); 
+        MenuItem tFavItem = menu.findItem(R.id.menu_addto_fav); 
      
-	 // Check if this seed has already been saved to favorite
-	 if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
-	 {
-		 if(null != tFavItem)
-			 tFavItem.setIcon(R.drawable.rating_bad);
-	 }
-     
-     return true;      
+	    // Check if this seed has already been saved to favorite
+	    if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
+	    {
+            if(null != tFavItem)
+                tFavItem.setIcon(R.drawable.rating_bad);
+        }     
+        return true;      
     } 
 		
 }
