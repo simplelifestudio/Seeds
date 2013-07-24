@@ -63,16 +63,24 @@
     return seedList;
 }
 
+static BOOL isZeroLengthSeedNameFound = NO;
 -(void) visitTextNode:(TFHppleElement*) element
-{
-    if ([element isSeedNameNode])
+{    
+    if ([element isSeedNameNode] || isZeroLengthSeedNameFound)
     {
         // Seed object begins
         [_builder resetSeed];
         
         NSString* attrVal = [element parseSeedName];
-        
-        [_builder fillSeedWithAttribute:TABLE_SEED_COLUMN_NAME attrVal:attrVal];
+        if (0 < attrVal.length)
+        {
+            [_builder fillSeedWithAttribute:TABLE_SEED_COLUMN_NAME attrVal:attrVal];
+            isZeroLengthSeedNameFound = NO;
+        }
+        else
+        {
+            isZeroLengthSeedNameFound = YES;
+        }
     }
     else if ([element isSeedSizeNode])
     {

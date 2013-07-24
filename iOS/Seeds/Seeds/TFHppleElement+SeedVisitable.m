@@ -15,7 +15,7 @@
     BOOL flag = NO;
     NSString* content = self.content;
     flag = [CBStringUtils isSubstringIncluded:content subString:@"片名"];
-
+    
     return flag;
 }
 
