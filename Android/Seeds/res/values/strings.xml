@@ -10,6 +10,7 @@
     <string name="seeds_datelist_seedsnumberdefault">Not-Syncronized</string>
     <string name="seeds_datelist_seedsnumbernoupdate">No-Update</string>
     <string name="seeds_datelist_seedsnumbernotready">Not-Ready</string>
+    <string name="seeds_datelist_seedsnumber">Seeds Number: </string>
     <string name="seeds_datelist_befyesterday">前 天</string>
     <string name="seeds_datelist_yesterday">昨 天</string>
     <string name="seeds_datelist_today">今 天</string>
