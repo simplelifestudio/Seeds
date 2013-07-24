@@ -93,7 +93,7 @@ SINGLETON(DatabaseModule)
             optCode = [fileManager fileExistsAtPath:_databaseFileDirPath isDirectory:&b];
             if (!optCode)
             {
-                optCode = [fileManager createDirectoryAtPath:_databaseFileDirPath withIntermediateDirectories:YES attributes:nil error:nil];
+                [fileManager createDirectoryAtPath:_databaseFileDirPath withIntermediateDirectories:YES attributes:nil error:nil];
             }
             
             optCode = [fileManager copyItemAtPath:_databaseFilePathInXcodeProject toPath:_databaseFilePath error:&error];
