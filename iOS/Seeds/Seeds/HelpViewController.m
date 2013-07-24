@@ -130,17 +130,14 @@
 
 -(void)_initArray
 {
-    UIImage* helpImage1 = [UIImage imageNamed:@"help_server.png"];
-    UIImage* helpImage2 = [UIImage imageNamed:@"help_standalone.png"];
-    UIImage* helpImage3 = [UIImage imageNamed:@"help_seedlist.png"];
-    UIImage* helpImage4 = [UIImage imageNamed:@"help_downlist.png"];
-    UIImage* helpImage5 = [UIImage imageNamed:@"help_seeddetail.png"];
-    UIImage* helpImage6 = [UIImage imageNamed:@"help_pictureview.png"];
-    UIImage* helpImage7 = [UIImage imageNamed:@"help_share.png"];
-    UIImage* helpImage8 = [UIImage imageNamed:@"help_config.png"];
-    UIImage* helpImage9 = [UIImage imageNamed:@"help_rssid.png"];
+    UIImage* helpImage1 = [UIImage imageNamed:@"help_01.jpg"];
+    UIImage* helpImage2 = [UIImage imageNamed:@"help_02.jpg"];
+    UIImage* helpImage3 = [UIImage imageNamed:@"help_03.jpg"];
+    UIImage* helpImage4 = [UIImage imageNamed:@"help_04.jpg"];
+    UIImage* helpImage5 = [UIImage imageNamed:@"help_05.jpg"];
+    UIImage* helpImage6 = [UIImage imageNamed:@"help_06.jpg"];
     
-    imageArray = [NSArray arrayWithObjects: helpImage1, helpImage2, helpImage3, helpImage4, helpImage5, helpImage6, helpImage7, helpImage8, helpImage9, nil];
+    imageArray = [NSArray arrayWithObjects: helpImage1, helpImage2, helpImage3, helpImage4, helpImage5, helpImage6, nil];
 }
 
 -(void)_configHelpViewUI
