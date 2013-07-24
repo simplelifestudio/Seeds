@@ -70,7 +70,6 @@ public class SeedsImageLoader {
 	final int stub_id = R.drawable.empty_photo;
 	
 	public void DisplayImage(String url, ImageView imageView, int type) {
-		Log.i(tag,"Trying to display the image, url=" + url);
 		
 		if(url == "Nothing To Show")
 		{
@@ -94,7 +93,6 @@ public class SeedsImageLoader {
 			setCurrentImgHeight(bitmapToShow.getHeight());
 		}
 		else {
-			//Log.i(tag,"Dowload the image, url=" + url);
 			if (SeedsDefinitions.getDownloadImageFlag()
 				||
 				SeedsWirelessManager.isWifiOpen(mContext))

@@ -87,14 +87,7 @@ public class SeedsDetailsActivity extends Activity{
 		// Initialization
 		initViews();
 		
-		getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
-		
-		// Check if this seed has already been saved to favorite
-		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
-		{
-			if(null != mFavItem)
-				mFavItem.setIcon(R.drawable.rating_bad);
-		}						
+		getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);							
 		
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
@@ -396,6 +389,21 @@ public class SeedsDetailsActivity extends Activity{
         }
         return super.onOptionsItemSelected(item);
     }
-
+    
+    @Override 
+    public boolean onPrepareOptionsMenu(Menu menu){ 
+     
+        super.onPrepareOptionsMenu(menu); 
+     
+        MenuItem tFavItem = menu.findItem(R.id.menu_addto_fav); 
+     
+	    // Check if this seed has already been saved to favorite
+	    if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
+	    {
+            if(null != tFavItem)
+                tFavItem.setIcon(R.drawable.rating_bad);
+        }     
+        return true;      
+    } 
 		
 }
