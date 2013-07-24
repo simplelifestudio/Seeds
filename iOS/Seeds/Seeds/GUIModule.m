@@ -118,11 +118,11 @@ SINGLETON(GUIModule)
     {
         if (vc != _passcodeViewController)
         {
-            [vc dismissModalViewControllerAnimated:NO];
+            [vc dismissViewControllerAnimated:NO completion:nil];
         }
         else
         {
-            [_homeViewController dismissModalViewControllerAnimated:NO];
+            [_homeViewController dismissViewControllerAnimated:NO completion:nil];
         }
         
         _isLockViewVisible = NO;
@@ -135,7 +135,7 @@ SINGLETON(GUIModule)
     {
         WarningViewController* warningVC = [self getWarningViewController:WARNING_ID_PASSCODEFAILEDATTEMPTS delegate:self];
         
-        [_passcodeViewController presentModalViewController:warningVC animated:NO];
+        [_passcodeViewController presentViewController:warningVC animated:NO completion:nil];
         
         [warningVC setAgreeButtonVisible:NO];
         [warningVC setDeclineButtonVisible:NO];
@@ -173,13 +173,13 @@ SINGLETON(GUIModule)
             {
                 if (vc != _passcodeViewController)
                 {
-                    [vc presentModalViewController:_passcodeViewController animated:NO];
+                    [vc presentViewController:_passcodeViewController animated:NO completion:nil];
                     _isLockViewVisible = YES;
                 }
             }
             else
             {
-                [_homeViewController presentModalViewController:_passcodeViewController animated:NO];
+                [_homeViewController presentViewController:_passcodeViewController animated:NO completion:nil];
                 _isLockViewVisible = YES;
             }
         }

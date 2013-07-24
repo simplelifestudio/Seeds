@@ -72,7 +72,7 @@
     {
         WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_UNSUPPORTOSVERSION delegate:self];
         
-        [self presentModalViewController:warningVC animated:NO];
+        [self presentViewController:warningVC animated:NO completion:nil];
         
         [warningVC setAgreeButtonVisible:NO];
         [warningVC setDeclineButtonVisible:NO];
@@ -87,7 +87,7 @@
     {
         WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_UNSUPPORTDEVICE delegate:self];
         
-        [self presentModalViewController:warningVC animated:NO];
+        [self presentViewController:warningVC animated:NO completion:nil];
         
         [warningVC setAgreeButtonVisible:NO];
         [warningVC setDeclineButtonVisible:NO];
@@ -106,7 +106,7 @@
     {
         WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_APPFIRSTLAUNCHED delegate:self];
         
-        [self presentModalViewController:warningVC animated:NO];
+        [self presentViewController:warningVC animated:NO completion:nil];
         
         [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS];
         [warningVC setWarningText:NSLocalizedString(@"Warning of App First Launched", nil)];
@@ -184,11 +184,11 @@
     {
         if (vc != _passcodeViewController)
         {
-            [vc dismissModalViewControllerAnimated:NO];
+            [vc dismissViewControllerAnimated:NO completion:nil];
         }
         else
         {
-            [self dismissModalViewControllerAnimated:NO];
+            [self dismissViewControllerAnimated:NO completion:nil];
             
             BOOL isAppLaunchedBefore = [_userDefaults isAppLaunchedBefore];
             
@@ -219,7 +219,7 @@
         }
         else
         {
-            [self dismissModalViewControllerAnimated:NO];
+            [self dismissViewControllerAnimated:NO completion:nil];
             
             BOOL isAppLaunchedBefore = [_userDefaults isAppLaunchedBefore];
             
@@ -288,13 +288,14 @@
     BOOL appLaunchedBefore = [_userDefaults isAppLaunchedBefore];
     if (!appLaunchedBefore)
     {
-        [self dismissModalViewControllerAnimated:NO];
+        [self dismissViewControllerAnimated:NO completion:nil];
         
         _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];
         
         _passcodeViewController.delegate = self;
         _passcodeViewController.simple = YES;
-        [self presentModalViewController:_passcodeViewController animated:NO];
+
+        [self presentViewController:_passcodeViewController animated:NO completion:nil];
     }
     else
     {
@@ -309,11 +310,11 @@
             _passcodeViewController.delegate = self;
             _passcodeViewController.simple = YES;
             
-            [self presentModalViewController:_passcodeViewController animated:NO];
+            [self presentViewController:_passcodeViewController animated:NO completion:nil];
         }
         else
         {
-            [self dismissModalViewControllerAnimated:NO];
+            [self dismissViewControllerAnimated:NO completion:nil];
             [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
         }
     }

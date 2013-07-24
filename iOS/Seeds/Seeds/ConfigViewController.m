@@ -734,7 +734,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     _passcodeViewController.delegate = self;
     _passcodeViewController.simple = YES;
     
-    [self presentModalViewController:_passcodeViewController animated:NO];
+    [self presentViewController:_passcodeViewController animated:NO completion:nil];
 }
 
 - (void) _changePasscode
@@ -757,7 +757,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     _passcodeViewController.delegate = self;
     _passcodeViewController.simple = YES;
     
-    [self presentModalViewController:_passcodeViewController animated:NO];
+    [self presentViewController:_passcodeViewController animated:NO completion:nil];
 }
 
 - (void) _composeFeedback
@@ -986,12 +986,12 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     NSString* passcode = _passcodeViewController.passcode;
     [_userDefaults setPasscode:passcode];
     
-    [_passcodeViewController dismissModalViewControllerAnimated:NO];
+    [_passcodeViewController dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)PAPasscodeViewControllerDidEnterPasscode:(PAPasscodeViewController *)controller
 {
-    [_passcodeViewController dismissModalViewControllerAnimated:NO];
+    [_passcodeViewController dismissViewControllerAnimated:NO completion:nil];
     
     switch (_passcodeEnterPurpose)
     {
@@ -1008,7 +1008,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
             _passcodeViewController.delegate = self;
             _passcodeViewController.simple = YES;
             
-            [self presentModalViewController:_passcodeViewController animated:NO];
+            [self presentViewController:_passcodeViewController animated:NO completion:nil];
             
             break;
         }
@@ -1026,7 +1026,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     
     [self _refreshChangePasscodeCell];
     
-    [_passcodeViewController dismissModalViewControllerAnimated:NO];
+    [_passcodeViewController dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)PAPasscodeViewController:(PAPasscodeViewController *)controller didFailToEnterPasscode:(NSInteger)attempts
@@ -1035,7 +1035,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     {
         WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_PASSCODEFAILEDATTEMPTS delegate:self];
         
-        [_passcodeViewController presentModalViewController:warningVC animated:NO];
+        [self presentViewController:warningVC animated:NO completion:nil];
         
         [warningVC setAgreeButtonVisible:NO];
         [warningVC setDeclineButtonVisible:NO];

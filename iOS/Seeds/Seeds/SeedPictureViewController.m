@@ -146,14 +146,14 @@
 
 - (void)scrollviewSingleTapped:(UITapGestureRecognizer *)recognizer
 {
-    [self dismissModalViewControllerAnimated:TRUE];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - SeedPictureScrollViewDelegate
 
 - (void)pictureViewDidSingleTap:(SeedPictureScrollView *)photoView
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)pictureViewDidDoubleTap:(SeedPictureScrollView *)photoView
