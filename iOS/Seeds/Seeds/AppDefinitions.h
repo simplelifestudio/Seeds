@@ -238,7 +238,8 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define CARTID_MAX_LENGTH 32
 
 #define WARNING_ID_APPFIRSTLAUNCHED @"appFirstLaunched"
-#define WARNING_ID_UNSUPPORTDEVICES @"unsupportDevices"
+#define WARNING_ID_UNSUPPORTDEVICE @"unsupportDevice"
+#define WARNING_ID_UNSUPPORTOSVERSION @"unsupportOSVersion"
 #define WARNING_ID_PASSCODEFAILEDATTEMPTS @"passcodeFailedAttempts"
 
 #define RES_PNG_FILE @"png"

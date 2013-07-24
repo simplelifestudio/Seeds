@@ -51,4 +51,11 @@
     return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
 }
 
++ (BOOL)isRunningOniOS6AndLater
+{
+    float version = [[UIDevice currentDevice] systemVersion].floatValue;
+    BOOL flag = (6.0 <= version) ? YES : NO;
+    return flag;
+}
+
 @end

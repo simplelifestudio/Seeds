@@ -67,19 +67,35 @@
 
 - (void) finishFadingSplashScreen
 {
-    if (![UIDevice isRunningOniPhone5])
+    BOOL isOSVersion6AndLater = [UIDevice isRunningOniOS6AndLater];
+    if (!isOSVersion6AndLater)
     {
-        WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_UNSUPPORTDEVICES delegate:self];
+        WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_UNSUPPORTOSVERSION delegate:self];
         
         [self presentModalViewController:warningVC animated:NO];
         
         [warningVC setAgreeButtonVisible:NO];
         [warningVC setDeclineButtonVisible:NO];
         [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS];
-        [warningVC setWarningText:NSLocalizedString(@"Warning of Unsupported Devices", nil)];
+        [warningVC setWarningText:NSLocalizedString(@"Warning of Unsupported iOS Version", nil)];
         
         return;
     }
+    
+//    BOOL isScreen4InchRetina = [UIDevice isRunningOniPhone5];
+//    if (!isScreen4InchRetina)
+//    {
+//        WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_UNSUPPORTDEVICE delegate:self];
+//        
+//        [self presentModalViewController:warningVC animated:NO];
+//        
+//        [warningVC setAgreeButtonVisible:NO];
+//        [warningVC setDeclineButtonVisible:NO];
+//        [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS];
+//        [warningVC setWarningText:NSLocalizedString(@"Warning of Unsupported Screen Resolution", nil)];
+//        
+//        return;
+//    }
     
     BOOL appLaunchedBefore = [_userDefaults isAppLaunchedBefore];
     if (appLaunchedBefore)
