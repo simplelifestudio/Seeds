@@ -67,6 +67,7 @@
 "Seeds Organizing" = "种子整理";
 "Seeds Saving" = "种子保存";
 "Fail Saving" = "保存失败";
+"Fail Parsing" = "解析失败";
 "Fail Clearing" = "清除失败";
 "Status Saving" = "状态保存";
 "Fail Analyzing" = "分析失败";
@@ -75,6 +76,7 @@
 "Sync Yet" = "已更新过";
 "Completed" = "完成";
 "Folder Exception" = "目录异常";
+"No Update" = "没有更新";
 
 "Torrents Downloading" = "种子下载";
 "Download Torrent" = "下载种子";

@@ -19,8 +19,8 @@
 
 @property (nonatomic, strong) id<CBLongTaskStatusHUDDelegate> seedsSpiderDelegate;
 
--(NSString*) pullSeedListLinkByDate:(NSDate*) date;
--(NSArray*) pullSeedsFromLink:(NSString*) link;
+-(NSString*) pullSeedListLinkByDate:(NSDate*) date error:(__autoreleasing NSError**)errorPtr;
+-(NSArray*) pullSeedsFromLink:(NSString*) link error:(__autoreleasing NSError**)errorPtr;
 
 -(void) pullSeedsInfo:(NSArray*) days;
 

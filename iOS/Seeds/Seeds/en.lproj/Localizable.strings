@@ -67,6 +67,7 @@
 "Seeds Organizing" = "Seeds Organizing";
 "Seeds Saving" = "Seeds Saving";
 "Fail Saving" = "Fail Saving";
+"Fail Parsing" = "Fail Parsing";
 "Fail Clearing" = "Fail Clearing";
 "Status Saving" = "Status Saving";
 "Fail Analyzing" = "Fail Analyzing";
@@ -75,6 +76,7 @@
 "Sync Yet" = "Updated Yet";
 "Completed" = "Completed";
 "Folder Exception" = "Folder Exception";
+"No Update" = "No Update";
 
 "Torrents Downloading" = "Torrents Downloading";
 "Download Torrent" = "Download Torrent";
