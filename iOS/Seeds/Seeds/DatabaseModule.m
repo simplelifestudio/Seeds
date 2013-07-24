@@ -89,7 +89,8 @@ SINGLETON(DatabaseModule)
             optCode = [fileManager removeItemAtPath:_databaseFilePath error:nil];
             DLog(@"Database File in App Sandbox removed: %@", (optCode) ? @"YES" : @"NO");
             NSString* _databaseFileDirPath = [_databaseFilePath stringByDeletingLastPathComponent];
-            optCode = [fileManager fileExistsAtPath:_databaseFileDirPath isDirectory:YES];
+            BOOL b = YES;
+            optCode = [fileManager fileExistsAtPath:_databaseFileDirPath isDirectory:&b];
             if (!optCode)
             {
                 optCode = [fileManager createDirectoryAtPath:_databaseFileDirPath withIntermediateDirectories:YES attributes:nil error:nil];
