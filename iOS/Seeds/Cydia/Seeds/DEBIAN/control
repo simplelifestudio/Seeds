@@ -1,6 +1,6 @@
-Package: com.simplelife.Seeds.ios
+Package: SeedsCloud
 Name: Seeds
-Version: 0.1-3
+Version: 0.1-4
 Architecture: iphoneos-arm
 Description: BTing AV Anytime Anywhere
 Homepage: http://www.seedscloud.tk

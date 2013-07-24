@@ -130,12 +130,12 @@
 
 -(void)_initArray
 {
-    UIImage* helpImage1 = [UIImage imageNamed:@"help_01.jpg"];
-    UIImage* helpImage2 = [UIImage imageNamed:@"help_02.jpg"];
-    UIImage* helpImage3 = [UIImage imageNamed:@"help_03.jpg"];
-    UIImage* helpImage4 = [UIImage imageNamed:@"help_04.jpg"];
-    UIImage* helpImage5 = [UIImage imageNamed:@"help_05.jpg"];
-    UIImage* helpImage6 = [UIImage imageNamed:@"help_06.jpg"];
+    UIImage* helpImage1 = [UIImage imageNamed:@"help_01.JPG"];
+    UIImage* helpImage2 = [UIImage imageNamed:@"help_02.JPG"];
+    UIImage* helpImage3 = [UIImage imageNamed:@"help_03.JPG"];
+    UIImage* helpImage4 = [UIImage imageNamed:@"help_04.JPG"];
+    UIImage* helpImage5 = [UIImage imageNamed:@"help_05.JPG"];
+    UIImage* helpImage6 = [UIImage imageNamed:@"help_06.JPG"];
     
     imageArray = [NSArray arrayWithObjects: helpImage1, helpImage2, helpImage3, helpImage4, helpImage5, helpImage6, nil];
 }
