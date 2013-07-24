@@ -229,7 +229,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 #define kZoomStep 2
 
-#define WARNING_DISPLAY_SECONDS 5
+#define WARNING_DISPLAY_SECONDS 9
 
 #define HELPSCREEN_DISPLAY_SECONDS 3
 

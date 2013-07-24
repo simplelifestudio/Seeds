@@ -92,7 +92,7 @@
         
         [self presentModalViewController:warningVC animated:NO];
         
-        [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS * 2];
+        [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS];
         [warningVC setWarningText:NSLocalizedString(@"Warning of App First Launched", nil)];
     }
 }
