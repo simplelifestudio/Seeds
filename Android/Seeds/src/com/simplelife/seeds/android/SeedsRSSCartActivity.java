@@ -185,7 +185,10 @@ public class SeedsRSSCartActivity extends Activity{
 			
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put(SeedsDBAdapter.KEY_NAME, tSeedsEntity.getSeedName());
-			map.put(SeedsDBAdapter.KEY_SIZE, tSeedsEntity.getSeedSize());
+			map.put(SeedsDBAdapter.KEY_SIZE, 
+					tSeedsEntity.getSeedSize()+" / "
+			       +tSeedsEntity.getPicLinks().size()
+			       +getString(R.string.seeds_listperday_seedspics));
 			map.put(SeedsDBAdapter.KEY_FORMAT, tSeedsEntity.getSeedFormat());
 			String tMosaic = (tSeedsEntity.getSeedMosaic())
 					       ? getString(R.string.seeds_listperday_withmosaic)
@@ -340,8 +343,13 @@ public class SeedsRSSCartActivity extends Activity{
 		handler.sendMessage(t_MsgListData);							
 	}
 	
-    public static void addSeedToCart(int _inSeedLocalId){
-		mSeedLocalIdInCart.add(_inSeedLocalId);
+    public static boolean addSeedToCart(int _inSeedLocalId){
+    	if(mSeedLocalIdInCart.contains(_inSeedLocalId))
+    		return false;
+    	else
+    		mSeedLocalIdInCart.add(_inSeedLocalId);
+    				
+    	return true;
 	}
 	
 	public static void setBookSuccSeedIdList(ArrayList<Integer> _inSuccList){

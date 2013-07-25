@@ -4,7 +4,6 @@
  *  SeedsDetailsActivity.java
  *  Seeds
  *
- *  Created by Chris Li on 13-5-20. 
  */
 
 package com.simplelife.seeds.android;
@@ -354,9 +353,14 @@ public class SeedsDetailsActivity extends Activity{
             }
             case R.id.rss_addtocart:
             {
-            	SeedsRSSCartActivity.addSeedToCart(mSeedLocalId);
+            	int tShowId;
+            	if(!SeedsRSSCartActivity.addSeedToCart(mSeedLocalId))
+            		tShowId = R.string.seeds_rss_toast_addtocartnonecc;
+            	else
+            		tShowId = R.string.seeds_rss_toast_addtocartdone;
+
         		Toast toast = Toast.makeText(getApplicationContext(),
-        				R.string.seeds_rss_toast_addtocartdone, Toast.LENGTH_SHORT);
+        				tShowId, Toast.LENGTH_SHORT);
         	    toast.setGravity(Gravity.CENTER, 0, 0);
         	    toast.show();
             	return true;
