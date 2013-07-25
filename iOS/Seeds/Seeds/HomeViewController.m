@@ -88,13 +88,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated
-{
-//    UIViewController* rootVC = [CBUIUtils getKeyWindow].rootViewController;
-//    if (rootVC != self.navigationController)
-//    {
-//        [CBUIUtils getKeyWindow].rootViewController = self.navigationController;
-//    }
-    
+{    
     [self.navigationController setNavigationBarHidden:YES];
     [self.navigationController setToolbarHidden:YES];
     
