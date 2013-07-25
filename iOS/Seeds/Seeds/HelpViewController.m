@@ -244,7 +244,8 @@
     {
         [_userDefaults recordAppLaunchedBefore];
 
-        [self performSegueWithIdentifier:SEGUE_ID_HELP2NAVIGATION sender:self];
+        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController pushViewController:_guiModule.homeViewController animated:YES];
     }
     else
     {

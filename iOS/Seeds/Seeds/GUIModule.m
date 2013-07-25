@@ -81,6 +81,17 @@ SINGLETON(GUIModule)
     _helpViewController = nil;
 }
 
+-(HomeViewController*) homeViewController
+{
+    if (nil == _homeViewController)
+    {
+        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:STORYBOARD_IPHONE bundle:nil];
+        _homeViewController = [storyboard instantiateViewControllerWithIdentifier:STORYBOARD_ID_HOMEVIEWCONTROLLER];
+    }
+    
+    return _homeViewController;
+}
+
 -(CBHUDAgent*) HUDAgent
 {
     if ((nil == _HUDAgent) && (nil != _homeViewController))

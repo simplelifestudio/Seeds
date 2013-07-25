@@ -82,20 +82,20 @@
         return;
     }
     
-    BOOL isScreen4InchRetina = [UIDevice isRunningOniPhone5];
-    if (!isScreen4InchRetina)
-    {
-        WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_UNSUPPORTDEVICE delegate:self];
-        
-        [self presentViewController:warningVC animated:NO completion:nil];
-        
-        [warningVC setAgreeButtonVisible:NO];
-        [warningVC setDeclineButtonVisible:NO];
-        [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS];
-        [warningVC setWarningText:NSLocalizedString(@"Warning of Unsupported Screen Resolution", nil)];
-        
-        return;
-    }
+//    BOOL isScreen4InchRetina = [UIDevice isRunningOniPhone5];
+//    if (!isScreen4InchRetina)
+//    {
+//        WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_UNSUPPORTDEVICE delegate:self];
+//        
+//        [self presentViewController:warningVC animated:NO completion:nil];
+//        
+//        [warningVC setAgreeButtonVisible:NO];
+//        [warningVC setDeclineButtonVisible:NO];
+//        [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS];
+//        [warningVC setWarningText:NSLocalizedString(@"Warning of Unsupported Screen Resolution", nil)];
+//        
+//        return;
+//    }
     
     BOOL appLaunchedBefore = [_userDefaults isAppLaunchedBefore];
     if (appLaunchedBefore)
@@ -191,17 +191,18 @@
         else
         {
             [self dismissViewControllerAnimated:NO completion:nil];
-            
-            BOOL isAppLaunchedBefore = [_userDefaults isAppLaunchedBefore];
-            
-            if (!isAppLaunchedBefore)
-            {
-                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2HELP sender:self];
-            }
-            else
-            {
-                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
-            }
+
+            [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
+//            BOOL isAppLaunchedBefore = [_userDefaults isAppLaunchedBefore];
+//            
+//            if (!isAppLaunchedBefore)
+//            {
+//                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2HELP sender:self];
+//            }
+//            else
+//            {
+//                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
+//            }
         }
     }
 }
@@ -223,16 +224,17 @@
         {
             [self dismissViewControllerAnimated:NO completion:nil];
             
-            BOOL isAppLaunchedBefore = [_userDefaults isAppLaunchedBefore];
-            
-            if (!isAppLaunchedBefore)
-            {
-                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2HELP sender:self];
-            }
-            else
-            {
-                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
-            }
+//            BOOL isAppLaunchedBefore = [_userDefaults isAppLaunchedBefore];
+//            
+//            if (!isAppLaunchedBefore)
+//            {
+//                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2HELP sender:self];
+//            }
+//            else
+//            {
+//                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
+//            }
+            [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
         }
     }
 }

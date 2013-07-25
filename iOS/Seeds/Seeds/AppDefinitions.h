@@ -189,10 +189,8 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define STORYBOARD_ID_CARTIDVIEWCONTROLLER @"sbid_cartidviewcontroller"
 
 #define SEGUE_ID_SPLASH2NAVIGATION @"splash2navigation"
-#define SEGUE_ID_SPLASH2HELP @"splash2help"
 #define SEGUE_ID_HOME2SEEDLIST @"home2seedlist"
 #define SEGUE_ID_HOME2HELP @"home2help"
-#define SEGUE_ID_HELP2NAVIGATION @"help2navigation"
 #define SEGUE_ID_HOME2CONFIG @"home2config"
 #define SEGUE_ID_HOME2TRANSMIT @"home2transmit"
 #define SEGUE_ID_HOME2FAVORITESEEDLIST @"home2favoriteseedlist"
