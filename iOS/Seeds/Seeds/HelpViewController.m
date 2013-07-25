@@ -13,6 +13,8 @@
 @interface HelpViewController ()
 {
     UserDefaultsModule* _userDefaults;
+    
+    GUIModule* _guiModule;
 }
 
 @end
@@ -33,6 +35,11 @@
         
     }
     return self;
+}
+
+- (void) awakeFromNib
+{
+    [super awakeFromNib];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -122,6 +129,9 @@
 -(void)_setupViewController
 {
     _userDefaults = [UserDefaultsModule sharedInstance];
+    
+    _guiModule = [GUIModule sharedInstance];
+    _guiModule.helpViewController = self;
     
     [self _initArray];
     [self _configHelpViewUI];

@@ -22,10 +22,10 @@
 @implementation GUIModule
 {
     PAPasscodeViewController* _passcodeViewController;
-    BOOL _isLockViewVisible;
 }
 
 @synthesize homeViewController = _homeViewController;
+@synthesize helpViewController = _helpViewController;
 @synthesize HUDAgent = _HUDAgent;
 
 SINGLETON(GUIModule)
@@ -62,9 +62,6 @@ SINGLETON(GUIModule)
     _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionEnter];
     _passcodeViewController.delegate = self;
     _passcodeViewController.simple = YES;
-    _passcodeViewController.passcode = @"1002";
-    
-    _isLockViewVisible = NO;
 }
 
 -(void) processService
@@ -73,6 +70,23 @@ SINGLETON(GUIModule)
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     
     MODULE_DELAY    
+}
+
+-(void) setHomeViewController:(HomeViewController *)homeViewController
+{
+    _homeViewController = homeViewController;
+    _helpViewController = nil;
+}
+
+-(CBHUDAgent*) HUDAgent
+{
+    if ((nil == _HUDAgent) && (nil != _homeViewController))
+    {
+        UIView* view = _homeViewController.navigationController.view;
+        _HUDAgent = [[CBHUDAgent alloc] initWithUIView:view];
+    }
+    
+    return _HUDAgent;
 }
 
 -(void) showHUD:(NSString *)status delay:(NSInteger)seconds
@@ -113,20 +127,7 @@ SINGLETON(GUIModule)
 
 - (void)PAPasscodeViewControllerDidEnterPasscode:(PAPasscodeViewController *)controller
 {
-    UIViewController* vc = _homeViewController.presentedViewController;
-    if (nil != vc)
-    {
-        if (vc != _passcodeViewController)
-        {
-            [vc dismissViewControllerAnimated:NO completion:nil];
-        }
-        else
-        {
-            [_homeViewController dismissViewControllerAnimated:NO completion:nil];
-        }
-        
-        _isLockViewVisible = NO;
-    }
+    [self _showPasscodeViewController:NO];
 }
 
 - (void)PAPasscodeViewController:(PAPasscodeViewController *)controller didFailToEnterPasscode:(NSInteger)attempts
@@ -163,26 +164,10 @@ SINGLETON(GUIModule)
     
     if (isPasscodeSet)
     {
-        if (!_isLockViewVisible)
-        {
-            NSString* passcode = [_userDefaults passcode];
-            _passcodeViewController.passcode = passcode;
-            
-            UIViewController* vc = _homeViewController.presentedViewController;
-            if (nil != vc)
-            {
-                if (vc != _passcodeViewController)
-                {
-                    [vc presentViewController:_passcodeViewController animated:NO completion:nil];
-                    _isLockViewVisible = YES;
-                }
-            }
-            else
-            {
-                [_homeViewController presentViewController:_passcodeViewController animated:NO completion:nil];
-                _isLockViewVisible = YES;
-            }
-        }
+        NSString* passcode = [_userDefaults passcode];
+        _passcodeViewController.passcode = passcode;
+        
+        [self _showPasscodeViewController:YES];
     }
 }
 
@@ -214,15 +199,36 @@ SINGLETON(GUIModule)
 
 #pragma mark - Private Methods
 
--(CBHUDAgent*) HUDAgent
+-(UIViewController*) _currentRootViewController
 {
-    if ((nil == _HUDAgent) && (nil != _homeViewController))
-    {
-        UIView* view = _homeViewController.navigationController.view;
-        _HUDAgent = [[CBHUDAgent alloc] initWithUIView:view];
-    }
+//    UIViewController* rootVC = (nil != _helpViewController) ? _helpViewController : _homeViewController;
+    UIViewController* rootVC = (nil != _homeViewController) ? _homeViewController : _helpViewController;
+    return rootVC;
+}
+
+-(void) _showPasscodeViewController:(BOOL) visible
+{
+    UIViewController* rootVC = [self _currentRootViewController];
     
-    return _HUDAgent;
+    if (rootVC)
+    {        
+        if (visible)
+        {
+            UIViewController* vc = rootVC.presentedViewController;
+            if (nil != vc)
+            {
+                [vc presentViewController:_passcodeViewController animated:NO completion:nil];
+            }
+            else
+            {
+                [rootVC presentViewController:_passcodeViewController animated:NO completion:nil];                
+            }
+        }
+        else
+        {
+            [_passcodeViewController dismissViewControllerAnimated:NO completion:nil];
+        }
+    }
 }
 
 @end
