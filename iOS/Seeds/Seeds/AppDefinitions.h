@@ -16,6 +16,8 @@
 #define NAMESPACE_APP_CONST_CHARS "com.simplelife.Seeds.ios"
 #define MODULE_DELAY usleep(300000);
 
+#define SCREEN_4INCHRETINA_ONLY 1
+
 // Module: UserDefaults
 #define USERDEFAULTS_KEY_SYNCSTATUSBYDAY @"syncStatusByDay:"
 #define PERSISTENTDOMAIN_SYNCSTATUSBYDAY @"com.simplelife.Seeds.ios.userdefaults.syncStatusByDay"
