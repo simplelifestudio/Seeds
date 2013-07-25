@@ -104,6 +104,8 @@
     }
     else
     {
+        [_userDefaults enableServerMode:YES];
+        
         WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_APPFIRSTLAUNCHED delegate:self];
         
         [self presentViewController:warningVC animated:NO completion:nil];
