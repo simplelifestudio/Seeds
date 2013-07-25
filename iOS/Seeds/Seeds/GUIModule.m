@@ -15,6 +15,7 @@
 @interface GUIModule() <WarningDelegate>
 {
     AFNetworkActivityIndicatorManager* _networkActivityIndicator;
+    BOOL _isPasscodeVCVisible;
 }
 
 @end
@@ -35,6 +36,8 @@ SINGLETON(GUIModule)
     [self setModuleIdentity:NSLocalizedString(@"GUI Module", nil)];
     [self.serviceThread setName:NSLocalizedString(@"GUI Module Thread", nil)];
     [self setKeepAlive:FALSE];
+    
+    _isPasscodeVCVisible = NO;
     
     _networkActivityIndicator = [AFNetworkActivityIndicatorManager sharedManager];    
     
@@ -201,7 +204,6 @@ SINGLETON(GUIModule)
 
 -(UIViewController*) _currentRootViewController
 {
-//    UIViewController* rootVC = (nil != _helpViewController) ? _helpViewController : _homeViewController;
     UIViewController* rootVC = (nil != _homeViewController) ? _homeViewController : _helpViewController;
     return rootVC;
 }
@@ -214,19 +216,28 @@ SINGLETON(GUIModule)
     {        
         if (visible)
         {
-            UIViewController* vc = rootVC.presentedViewController;
-            if (nil != vc)
+            if (!_isPasscodeVCVisible)
             {
-                [vc presentViewController:_passcodeViewController animated:NO completion:nil];
-            }
-            else
-            {
-                [rootVC presentViewController:_passcodeViewController animated:NO completion:nil];                
+                UIViewController* vc = rootVC.presentedViewController;
+                if (nil != vc)
+                {
+                    [vc presentViewController:_passcodeViewController animated:NO completion:nil];
+                }
+                else
+                {
+                    [rootVC presentViewController:_passcodeViewController animated:NO completion:nil];
+                }
+                
+                _isPasscodeVCVisible = YES;
             }
         }
         else
         {
-            [_passcodeViewController dismissViewControllerAnimated:NO completion:nil];
+            if (_isPasscodeVCVisible)
+            {
+                [_passcodeViewController dismissViewControllerAnimated:NO completion:nil];
+                _isPasscodeVCVisible = NO;
+            }
         }
     }
 }
