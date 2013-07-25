@@ -36,6 +36,7 @@
     <string name="seeds_listperday_mosaictag">有</string>
     <string name="seeds_listperday_withmosaic">有码</string>
     <string name="seeds_listperday_withoutmosaic">无码</string>
+    <string name="seeds_listperday_seedspics"> 图</string>
     <string name="seedTitle">种子名称</string>
     <string name="seedSize">种子大小</string>
     <string name="seedFormat">种子格式</string>
@@ -99,6 +100,7 @@
     <string name="seeds_rss_menuaddtocart">加入订阅</string>
     <string name="seeds_rss_management">订阅管理</string>
     <string name="seeds_rss_toast_addtocartdone">已加入订阅车</string>
+    <string name="seeds_rss_toast_addtocartnonecc">该种子已经被订阅</string>
     <string name="seeds_rss_toast_sendreqfailed">网络错误，订阅失败</string>
     <string name="seeds_rss_toast_emptycartresp">消息错误，订阅失败</string>
     <string name="seeds_rss_toast_booksuccess">订阅成功，订阅编号： </string>
@@ -151,16 +153,7 @@
     <string name="seeds_http_serverstopped">HTTP服务已关闭。</string>
     
     <string name="seeds_helpdialog_text"> 
-    <i>作者: Chris@Simplelife Studio</i> 
-    \n  
-    \n  
-    <i>联系：simplelife.chris@gmail.com</i> 
-    \n
-    \n  
-    <b>Seeds---每天随时随地收集最新的影片信息！</b>     
-    \n  
-    \n  
-    <b>有任何建议或者反馈可以随时联系作者</b>   
+    <i>Seeds---每天随时随地收集最新的影片信息！</i> 
     </string>  
     
 </resources>

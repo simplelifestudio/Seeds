@@ -37,6 +37,7 @@
     <string name="seeds_listperday_mosaictag">有</string>
     <string name="seeds_listperday_withmosaic">Mocaic</string>
     <string name="seeds_listperday_withoutmosaic">No-Mosaic</string>
+    <string name="seeds_listperday_seedspics"> Images</string>
     <string name="seedTitle">The title of the seed</string>
     <string name="seedSize">The size of the seed</string>
     <string name="seedFormat">The format of the seed</string>
@@ -100,6 +101,7 @@
     <string name="seeds_rss_menuaddtocart">Add To RSS Cart</string>
     <string name="seeds_rss_management">RSS Management</string>
     <string name="seeds_rss_toast_addtocartdone">Add to RSS cart done</string>
+    <string name="seeds_rss_toast_addtocartnonecc">This seed is already in cart</string>
     <string name="seeds_rss_toast_sendreqfailed">Network failure, book failed</string>
     <string name="seeds_rss_toast_emptycartresp">Wrong response, book failed</string>
     <string name="seeds_rss_toast_booksuccess">Book Successed, cart id: </string>
@@ -152,16 +154,7 @@
     <string name="seeds_http_serverstopped">Server stopped.</string>
     
     <string name="seeds_helpdialog_text"> 
-    <i>Author: Chris@Simplelife Studio</i> 
-    \n  
-    \n  
-    <i>Contact: simplelife.chris@gmail.com</i> 
-    \n
-    \n  
-    <b>Seeds---Collecting the latest movie info everywhere!</b>     
-    \n  
-    \n  
-    <b>Please contact author for any problems</b>   
+    <i>Seeds---Collecting the latest movie info everywhere!</i> 
     </string>        
        
 </resources>
