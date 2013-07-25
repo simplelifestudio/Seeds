@@ -109,7 +109,8 @@
     {
         content = [content substringFromIndex:range.location + 1];
         content = [CBStringUtils trimString:content];
-        return content;
+        
+        return [self _parseContent:content];
     }
     
     range = [content rangeOfString:STR_COLON_FULLWIDTH_2];
@@ -117,7 +118,8 @@
     {
         content = [content substringFromIndex:range.location + 1];
         content = [CBStringUtils trimString:content];
-        return content;
+        
+        return [self _parseContent:content];        
     }
     
     range = [content rangeOfString:STR_COLON];
@@ -125,7 +127,8 @@
     {
         content = [content substringFromIndex:range.location + 1];
         content = [CBStringUtils trimString:content];
-        return content;
+        
+        return [self _parseContent:content];        
     }
     
     range = [content rangeOfString:STR_BRACKET_RIGHT];
@@ -133,7 +136,8 @@
     {
         content = [content substringFromIndex:range.location + 1];
         content = [CBStringUtils trimString:content];
-        return content;
+        
+        return [self _parseContent:content];        
     }
     
     return content;
