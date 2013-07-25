@@ -56,6 +56,8 @@
 "Apply Successfully" = "Apply Successfully";
 "Apply Failed" = "Apply Failed";
 "Length Limited" = "Length Limited";
+"RSS ID Ready" = "RSS ID Ready";
+"Please check RSS ID in Config" = "Please set RSS ID in Config firstly";
 
 "Preparing" = "Preparing";
 "Stamps Computing" = "Stamps Computing";

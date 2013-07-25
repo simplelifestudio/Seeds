@@ -179,7 +179,6 @@ SINGLETON(TransmissionModule)
         NSString* dateStr = [CBDateUtils dateStringInLocalTimeZone:STANDARD_DATE_FORMAT andDate:day];
 
         NSMutableString* zipFileName = [NSMutableString stringWithString:dateStr];
-//        [zipFileName appendString:FILE_EXTENDNAME_DOT_ZIP];
         
         NSString* placeHolderStr = nil;
         switch (dayIndex)
@@ -217,8 +216,18 @@ SINGLETON(TransmissionModule)
     
     UserDefaultsModule* _userDefaults = [UserDefaultsModule sharedInstance];
     NSString* cartId = [_userDefaults cartId];
+    BOOL isCartSet = NO;
+    if (nil != cartId && 0 < cartId.length)
+    {
+        isCartSet = YES;
+    }
+    
     NSString* cartFullLink = [CartIdViewController composeFullCartLink:cartId];
     NSString* str = [CBStringUtils replaceSubString:cartFullLink oldSubString:@"$Cart$" string:htmlCodeCopy];
+    htmlCodeCopy = [NSMutableString stringWithString:str];
+    
+    NSString* cartStatus = (isCartSet) ? NSLocalizedString(@"RSS ID Ready", nil) : NSLocalizedString(@"Not Ready, Please check RSS ID in Config", nil);
+    str = [CBStringUtils replaceSubString:cartStatus oldSubString:@"$CartStatus$" string:htmlCodeCopy];
     htmlCodeCopy = [NSMutableString stringWithString:str];
     
     NSData* data = [htmlCodeCopy dataUsingEncoding: encodingMode];

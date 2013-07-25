@@ -56,6 +56,8 @@
 "Apply Successfully" = "申请成功";
 "Apply Failed" = "申请失败";
 "Length Limited" = "长度限制";
+"RSS ID Ready" = "RSS ID已设定";
+"Not Ready, Please check RSS ID in Config" = "请先前往配置界面设定RSS ID";
 
 "Preparing" = "准备";
 "Stamps Computing" = "日期计算";
