@@ -29,6 +29,7 @@ import android.widget.ListView;
 
 import com.simplelife.seeds.android.utils.adapter.SeedsAdapter;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
 
 public class SeedsListPerDayActivity extends Activity {
 
@@ -132,7 +133,10 @@ public class SeedsListPerDayActivity extends Activity {
 			
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put(SeedsDBAdapter.KEY_NAME, tSeedsEntity.getSeedName());
-			map.put(SeedsDBAdapter.KEY_SIZE, tSeedsEntity.getSeedSize());
+			map.put(SeedsDBAdapter.KEY_SIZE, 
+					tSeedsEntity.getSeedSize()+" / "
+			       +tSeedsEntity.getPicLinks().size()
+			       +getString(R.string.seeds_listperday_seedspics));
 			map.put(SeedsDBAdapter.KEY_FORMAT, tSeedsEntity.getSeedFormat());
 			String tMosaic = (tSeedsEntity.getSeedMosaic())
 					       ? getString(R.string.seeds_listperday_withmosaic)

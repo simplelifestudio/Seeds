@@ -121,7 +121,10 @@ public class SeedsFavListActivity extends Activity{
 			
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put(SeedsDBAdapter.KEY_NAME, tSeedsEntity.getSeedName());
-			map.put(SeedsDBAdapter.KEY_SIZE, tSeedsEntity.getSeedSize());
+			map.put(SeedsDBAdapter.KEY_SIZE, 
+					tSeedsEntity.getSeedSize()+" / "
+			       +tSeedsEntity.getPicLinks().size()
+			       +getString(R.string.seeds_listperday_seedspics));
 			map.put(SeedsDBAdapter.KEY_FORMAT, tSeedsEntity.getSeedFormat());
 			String tMosaic = (tSeedsEntity.getSeedMosaic())
 					       ? getString(R.string.seeds_listperday_withmosaic)
