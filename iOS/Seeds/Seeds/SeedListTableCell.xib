@@ -132,7 +132,7 @@
 								<reference key="NSNextResponder" ref="223885616"/>
 								<int key="NSvFlags">1286</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{205, 39}, {60, 10}}</string>
+								<string key="NSFrame">{{206, 39}, {60, 10}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="944328825"/>
