@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.simplelife.seeds.android.R;
 import com.simplelife.seeds.android.SeedsListPerDayActivity;
+import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.imageprocess.SeedsImageLoader;
 
 public class SeedsAdapter extends BaseAdapter {
@@ -60,15 +61,17 @@ public class SeedsAdapter extends BaseAdapter {
 		TextView title  = (TextView) vi.findViewById(R.id.seeds_title); 
 		TextView size   = (TextView) vi.findViewById(R.id.seeds_size); 
 		TextView format = (TextView) vi.findViewById(R.id.seeds_format);
+		TextView mosaic = (TextView) vi.findViewById(R.id.seeds_mosaic);
 		ImageView thumb_image = (ImageView) vi.findViewById(R.id.list_image);
 
 		HashMap<String, String> seedList = new HashMap<String, String>();
 		seedList = data.get(position);
 
 		// Set the values for the list view
-		title.setText(seedList.get(SeedsListPerDayActivity.KEY_TITLE));
-		size.setText(seedList.get(SeedsListPerDayActivity.KEY_SIZE));
-		format.setText(seedList.get(SeedsListPerDayActivity.KEY_FORMAT));
+		title.setText(seedList.get(SeedsDBAdapter.KEY_NAME));
+		size.setText(seedList.get(SeedsDBAdapter.KEY_SIZE));
+		format.setText(seedList.get(SeedsDBAdapter.KEY_FORMAT));
+		mosaic.setText(seedList.get(SeedsDBAdapter.KEY_MOSAIC));
 		imageLoader.DisplayImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL),
 				thumb_image,0);
 		return vi;

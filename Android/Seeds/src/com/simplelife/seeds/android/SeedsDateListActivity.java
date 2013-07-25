@@ -586,7 +586,7 @@ public class SeedsDateListActivity extends Activity {
 			mLogger.info("Parsing SeedsByDateResp Now!");
 			updateDialogStatus(getString(R.string.seeds_datelist_analyzeseedsdata) + " "+_inDate+"...");
 			try{
-				tSeedsList = SeedsJSONMessage.parseSeedsByDatesRespMsg(_inDate,respInString);
+				tSeedsList = SeedsJSONMessage.parseSeedsByDatesRespMsg(_inDate,respInString,getApplication());
 			}catch(JSONException e){
 				mLogger.excep(e);
 			}

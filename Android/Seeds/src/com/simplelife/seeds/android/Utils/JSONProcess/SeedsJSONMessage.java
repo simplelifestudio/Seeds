@@ -7,12 +7,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.simplelife.seeds.android.R;
 import com.simplelife.seeds.android.SeedsDefinitions;
 import com.simplelife.seeds.android.SeedsEntity;
 import com.simplelife.seeds.android.SeedsRSSCartActivity;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
+import android.content.Context;
 import android.util.Log;
 
 public class SeedsJSONMessage {
@@ -96,7 +98,7 @@ public class SeedsJSONMessage {
 		return respMap;
 	}
 	
-	public static ArrayList<SeedsEntity> parseSeedsByDatesRespMsg(ArrayList<String> inDateList, String inStringMsg) throws JSONException{
+	public static ArrayList<SeedsEntity> parseSeedsByDatesRespMsg(ArrayList<String> inDateList, String inStringMsg, Context inContext) throws JSONException{
 		
 		// Convert the String to JSON object
 		JSONObject tMsgInJSON = new JSONObject(inStringMsg);  
@@ -140,7 +142,12 @@ public class SeedsJSONMessage {
 				if (tSeedsInfo.has(SeedsDBAdapter.KEY_TORRENTLINK))
 					tSeedsEntity.setSeedTorrentLink(tSeedsInfo.getString(SeedsDBAdapter.KEY_TORRENTLINK));
 				if (tSeedsInfo.has(SeedsDBAdapter.KEY_MOSAIC))
-					tSeedsEntity.setSeedMosaic(tSeedsInfo.getString(SeedsDBAdapter.KEY_MOSAIC));
+				{
+					if(isSeedsWithMosaic(inContext, tSeedsInfo.getString(SeedsDBAdapter.KEY_MOSAIC)))
+						tSeedsEntity.setSeedMosaic(true);
+					else
+						tSeedsEntity.setSeedMosaic(false);
+				}
 				
 				tSeedsEntity.setSeedFavorite(false);
 				// Parse picture links
@@ -166,7 +173,7 @@ public class SeedsJSONMessage {
 		return retSeedsList;		
 	}
 	
-	public static ArrayList<SeedsEntity> parseSeedsByDatesRespMsg(String inDate, String inStringMsg) throws JSONException{
+	public static ArrayList<SeedsEntity> parseSeedsByDatesRespMsg(String inDate, String inStringMsg, Context inContext) throws JSONException{
 		
 		// Convert the String to JSON object
 		JSONObject tMsgInJSON = new JSONObject(inStringMsg);  
@@ -206,8 +213,12 @@ public class SeedsJSONMessage {
 			if (tSeedsInfo.has(SeedsDBAdapter.KEY_TORRENTLINK))
 				tSeedsEntity.setSeedTorrentLink(tSeedsInfo.getString(SeedsDBAdapter.KEY_TORRENTLINK));
 			if (tSeedsInfo.has(SeedsDBAdapter.KEY_MOSAIC))
-				tSeedsEntity.setSeedMosaic(tSeedsInfo.getString(SeedsDBAdapter.KEY_MOSAIC));
-				
+			{
+				if(isSeedsWithMosaic(inContext, tSeedsInfo.getString(SeedsDBAdapter.KEY_MOSAIC)))
+					tSeedsEntity.setSeedMosaic(true);
+				else
+					tSeedsEntity.setSeedMosaic(false);
+			}	
 			tSeedsEntity.setSeedFavorite(false);
 			// Parse picture links
 			JSONArray tPicList  = tSeedsInfo.getJSONArray(SeedsDBAdapter.KEY_PICLINKS);
@@ -231,11 +242,19 @@ public class SeedsJSONMessage {
 		return retSeedsList;		
 	}
 	
+	public static boolean isSeedsWithMosaic(Context _inContext, String _inField){
+
+		if(_inField.contains(_inContext.getString(R.string.seeds_listperday_mosaictag)))
+			return true;
+		else
+			return false;
+	}
+	
 	public static void parseSeedsToCartRespMsg(String _inRespMsg) throws JSONException{
 		
-		ArrayList<Integer> tSuccSeedIdList = new ArrayList();
-		ArrayList<Integer> tExistSeedIdList = new ArrayList();
-		ArrayList<Integer> tFailedSeedIdList = new ArrayList();
+		ArrayList<Integer> tSuccSeedIdList = new ArrayList<Integer>();
+		ArrayList<Integer> tExistSeedIdList = new ArrayList<Integer>();
+		ArrayList<Integer> tFailedSeedIdList = new ArrayList<Integer>();
 		
 		JSONObject tMsgInJSON = new JSONObject(_inRespMsg);  
 		String msgType = (String) tMsgInJSON.get("id");

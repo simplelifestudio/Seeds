@@ -33,6 +33,10 @@
     <string name="seeds_datelist_emptyseedsbydateresp">Empty Message Detected</string>
     <string name="seeds_datelist_noneedtosync">All Date Has Been Syncronized</string>
     <string name="seeds_listperday_title">Seeds List</string>
+    <string name="seeds_listperday_mosaic">Mosaic</string>
+    <string name="seeds_listperday_mosaictag">有</string>
+    <string name="seeds_listperday_withmosaic">Mocaic</string>
+    <string name="seeds_listperday_withoutmosaic">No-Mosaic</string>
     <string name="seedTitle">The title of the seed</string>
     <string name="seedSize">The size of the seed</string>
     <string name="seedFormat">The format of the seed</string>
