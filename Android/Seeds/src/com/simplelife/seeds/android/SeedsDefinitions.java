@@ -42,7 +42,7 @@ public class SeedsDefinitions {
 	public static boolean mDownloadImageWithoutWifiEnabled = true;
 	
 	public static String RELEASE_NAME    = "Seeds  ";
-	public static String RELEASE_VERSION = "V1.0.0_Demo";
+	public static String RELEASE_VERSION = "V0.1_Demo";
 	
 	public static void setDownloadDestFolder(String _inFolder){
 		SEEDS_DOWNLOAD_DESTFOLDER = _inFolder;
