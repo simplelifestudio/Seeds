@@ -17,6 +17,9 @@
 		C506EA52178F9841007E9FE7 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA49178F9841007E9FE7 /* whiteArrow.png */; };
 		C506EA53178F9841007E9FE7 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA4A178F9841007E9FE7 /* whiteArrow@2x.png */; };
 		C506EA55178F9E2A007E9FE7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C506EA54178F9E29007E9FE7 /* QuartzCore.framework */; };
+		C510FB4517A2A68200AAF51F /* control in Resources */ = {isa = PBXBuildFile; fileRef = C510FB4217A2A68200AAF51F /* control */; };
+		C510FB4617A2A68200AAF51F /* deb_scripts.txt in Resources */ = {isa = PBXBuildFile; fileRef = C510FB4317A2A68200AAF51F /* deb_scripts.txt */; };
+		C510FB4717A2A68200AAF51F /* postrm in Resources */ = {isa = PBXBuildFile; fileRef = C510FB4417A2A68200AAF51F /* postrm */; };
 		C514A64517A12586009D57A1 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C514A64417A12584009D57A1 /* NavigationViewController.m */; };
 		C514A65C17A15CB4009D57A1 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = C514A65617A15CAC009D57A1 /* Icon-72.png */; };
 		C514A65D17A15CB4009D57A1 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = C514A65717A15CAD009D57A1 /* Icon-Small-50.png */; };
@@ -230,6 +233,9 @@
 		C506EA4A178F9841007E9FE7 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 		C506EA54178F9E29007E9FE7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		C50FD40A174FBC1600E5D316 /* AppDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDefinitions.h; sourceTree = "<group>"; };
+		C510FB4217A2A68200AAF51F /* control */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = control; sourceTree = "<group>"; };
+		C510FB4317A2A68200AAF51F /* deb_scripts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = deb_scripts.txt; sourceTree = "<group>"; };
+		C510FB4417A2A68200AAF51F /* postrm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = postrm; sourceTree = "<group>"; };
 		C514A64317A12583009D57A1 /* NavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
 		C514A64417A12584009D57A1 /* NavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
 		C514A65617A15CAC009D57A1 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
@@ -643,6 +649,16 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		C510FB4117A2A66B00AAF51F /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				C510FB4217A2A68200AAF51F /* control */,
+				C510FB4317A2A68200AAF51F /* deb_scripts.txt */,
+				C510FB4417A2A68200AAF51F /* postrm */,
+			);
+			name = Scripts;
+			sourceTree = "<group>";
+		};
 		C5203CE41743BE1600D917F7 /* CocoaHTTPServer */ = {
 			isa = PBXGroup;
 			children = (
@@ -1048,6 +1064,7 @@
 		C5964C0E1722290400CC1C0A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C510FB4117A2A66B00AAF51F /* Scripts */,
 				C5F8AC4C174A3B60001E30D1 /* Web */,
 				C5A94418172ACC1000D6FB85 /* Images */,
 				C5964C0F1722290400CC1C0A /* Seeds-Info.plist */,
@@ -1423,6 +1440,9 @@
 				C514A65F17A15CB4009D57A1 /* Icon.png in Resources */,
 				C514A66017A15CB4009D57A1 /* Icon@2x.png in Resources */,
 				C514A66117A15CB4009D57A1 /* iTunesArtwork in Resources */,
+				C510FB4517A2A68200AAF51F /* control in Resources */,
+				C510FB4617A2A68200AAF51F /* deb_scripts.txt in Resources */,
+				C510FB4717A2A68200AAF51F /* postrm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
