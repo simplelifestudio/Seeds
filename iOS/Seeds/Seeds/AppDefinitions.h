@@ -193,6 +193,9 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define STORYBOARD_ID_DOWNLOADSEEDLISTVIEWCONTROLLER @"sbid_downloadseedlistviewcontroller"
 #define STORYBOARD_ID_WARNINGVIEWCONTROLLER @"sbid_warningviewcontroller"
 #define STORYBOARD_ID_CARTIDVIEWCONTROLLER @"sbid_cartidviewcontroller"
+#define STORYBOARD_ID_SEEDLISTVIWECONTROLLER_SMALLER @"sbid_seedlistviewcontroller_smaller"
+#define STORYBOARD_ID_SEEDDETAILVIEWCONTROLLER_SMALLER @"sbid_seeddetailviewcontroller_smaller"
+#define STORYBOARD_ID_DOWNLOADSEEDLISTVIEWCONTROLLER_SMALLER @"sbid_downloadseedlistviewcontroller_smaller"
 
 #define SEGUE_ID_SPLASH2NAVIGATION @"splash2navigation"
 #define SEGUE_ID_HOME2SEEDLIST @"home2seedlist"
@@ -200,21 +203,30 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define SEGUE_ID_HOME2CONFIG @"home2config"
 #define SEGUE_ID_HOME2TRANSMIT @"home2transmit"
 #define SEGUE_ID_HOME2FAVORITESEEDLIST @"home2favoriteseedlist"
+#define SEGUE_ID_HOME2DOWNLOADSEEDLIST @"home2downloadseedlist"
+#define SEGUE_ID_HOME2DOWNLOADSEEDLIST_SMALLER @"home2downloadseedlistsmaller"
 #define SEGUE_ID_SEEDLIST2SEEDDETAIL @"seedlist2seeddetail"
 #define SEGUE_ID_SEEDDETAIL2SEEDPICTURE @"seeddetail2seedpicture"
 #define SEGUE_ID_FAVORITESEEDLIST2SEEDDETAIL @"favoriteseedlist2seeddetail"
 #define SEGUE_ID_DOWNLOADSEEDLIST2SEEDDETAIL @"downloadseedlist2seeddetail"
+#define SEGUE_ID_HOME2SEEDLISTSMALLER @"home2seedlistsmaller"
+#define SEGUE_ID_SEEDLISTSMALLER2SEEDDETAILSMALLER @"seedlistsmaller2seeddetailsmaller"
+#define SEGUE_ID_SEEDDETAILSMALLER2SEEDPICTURE @"seeddetailsmaller2seedpicture"
+#define SEGUE_ID_DOWNLOADSEEDLISTSMALLER2SEEDDETAILSMALLER @"downloadseedlistsmaller2seeddetailsmaller"
+#define SEGUE_ID_FAVORITESEEDLISTSMALLER2SEEDDETAILSMALLER @"favoriteseedlistsmaller2seeddetailsmaller"
 
 #define UI_RENDER_SEEDLISTTABLECELL 1
 #define CELL_ID_SEEDLISTTABLECELL @"SeedListTableCell"
-#define CELL_ID_SEEDLISTTABLEACTIONCELL @"SeedListTableActionCell"
+#define CELL_ID_SEEDLISTTABLESMALLERCELL @"SeedListTableSmallerCell"
 
 #define WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL 100
 #define HEIGHT_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL 60
+#define WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLESMALLERCELL 100
+#define HEIGHT_ASYNCIMAGEVIEW_IN_SEEDLISTTABLESMALLERCELL 56
 
 #define HEIGHT_NAVIGATION_BAR 44
 
-#define PAGE_SIZE_SEEDLISTTABLE 7
+#define PAGE_SIZE_SEEDLISTTABLE ((IS_IPHONE5) ? 7 : 6)
 #define PAGE_SIZE_SEEDDETAILCOLLECTION 4
 
 #define CELL_ID_SEEDPICTURECOLLECTIONCELL @"SeedPictureCollectionCell"

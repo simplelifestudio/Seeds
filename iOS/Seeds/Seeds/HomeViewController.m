@@ -12,6 +12,7 @@
 #import "GUIModule.h"
 
 #import "SeedListViewController.h"
+#import "DownloadSeedListViewController.h"
 
 @interface HomeViewController ()
 {
@@ -148,11 +149,27 @@
         self.navigationItem.backBarButtonItem = _backBarItem;
     }
     
-    // Date for SeedListView
     if ([segue.identifier isEqualToString:SEGUE_ID_HOME2SEEDLIST])
     {
         SeedListViewController* seedListViewController = (SeedListViewController*)segue.destinationViewController;
 
+        if (sender == _todayButton)
+        {
+            seedListViewController.seedsDate = _last3Days[Today];
+        }
+        else if (sender == _yesterdayButton)
+        {
+            seedListViewController.seedsDate = _last3Days[Yesterday];
+        }
+        else if (sender == _theDayBeforeButton)
+        {
+            seedListViewController.seedsDate = _last3Days[TheDayBefore];
+        }
+    }
+    else if ([segue.identifier isEqualToString:SEGUE_ID_HOME2SEEDLISTSMALLER])
+    {
+        SeedListViewController* seedListViewController = (SeedListViewController*)segue.destinationViewController;
+        
         if (sender == _todayButton)
         {
             seedListViewController.seedsDate = _last3Days[Today];
@@ -253,19 +270,66 @@
     [self _syncSeedsInfoTask];
 }
 
+- (IBAction)onClickDownloadButton:(id)sender
+{
+    NSString* segueId = nil;
+    if (IS_IPHONE5)
+    {
+        segueId = SEGUE_ID_HOME2DOWNLOADSEEDLIST;
+    }
+    else
+    {
+        segueId = SEGUE_ID_HOME2DOWNLOADSEEDLIST_SMALLER;
+    }
+    
+    [self performSegueWithIdentifier:segueId sender:_downloadsButton];
+}
+
 - (IBAction)onClickTodayButton:(id)sender
 {
-    [self performSegueWithIdentifier:SEGUE_ID_HOME2SEEDLIST sender:_todayButton];
+    NSString* segueId = nil;
+    if (IS_IPHONE5)
+    {
+        segueId = SEGUE_ID_HOME2SEEDLIST;
+    }
+    else
+    {
+        segueId = SEGUE_ID_HOME2SEEDLISTSMALLER;
+    }
+    
+    [self performSegueWithIdentifier:segueId sender:_todayButton];
 }
 
 - (IBAction)onClickYesterdayButton:(id)sender
 {
-    [self performSegueWithIdentifier:SEGUE_ID_HOME2SEEDLIST sender:_yesterdayButton];
+    NSString* segueId = nil;
+    
+    if (IS_IPHONE5)
+    {
+        segueId = SEGUE_ID_HOME2SEEDLIST;
+    }
+    else
+    {
+        segueId = SEGUE_ID_HOME2SEEDLISTSMALLER;
+    }
+    
+    [self performSegueWithIdentifier:segueId sender:_yesterdayButton];
 }
 
 - (IBAction)onClickTheDayBeforeButton:(id)sender
 {
-    [self performSegueWithIdentifier:SEGUE_ID_HOME2SEEDLIST sender:_theDayBeforeButton];
+    NSString* segueId = nil;
+    
+    if (IS_IPHONE5)
+    {
+        segueId = SEGUE_ID_HOME2SEEDLIST;
+    }
+    else
+    {
+        segueId = SEGUE_ID_HOME2SEEDLISTSMALLER;
+    }
+    
+    [self performSegueWithIdentifier:segueId sender:_theDayBeforeButton];
 }
 
 #pragma mark - Private Methods

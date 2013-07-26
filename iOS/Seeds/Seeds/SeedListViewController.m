@@ -8,6 +8,9 @@
 
 #import "SeedListViewController.h"
 
+#import "SeedListTableCell.h"
+#import "SeedListTableSmallerCell.h"
+
 #import "CBNotificationListenable.h"
 
 #import "PagingToolbar.h"
@@ -116,23 +119,46 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SeedListTableCell* cell = [tableView dequeueReusableCellWithIdentifier:CELL_ID_SEEDLISTTABLECELL forIndexPath:indexPath];
-    if (nil == cell)
+    if (IS_IPHONE5)
     {
-        cell = [CBUIUtils componentFromNib:CELL_ID_SEEDLISTTABLECELL owner:self options:nil];
+        SeedListTableCell* cell = [tableView dequeueReusableCellWithIdentifier:CELL_ID_SEEDLISTTABLECELL forIndexPath:indexPath];
+        if (nil == cell)
+        {
+            cell = [CBUIUtils componentFromNib:CELL_ID_SEEDLISTTABLECELL owner:self options:nil];
+        }
+        
+        Seed* seed = [_pageSeedList objectAtIndex:indexPath.row];
+        SeedPicture* picture = [_pageFirstSeedPictureList objectAtIndex:indexPath.row];
+        
+        [cell fillSeed:seed];
+        [cell fillSeedPicture:picture];
+        
+        SeedDownloadStatus status = [_downloadAgent checkDownloadStatus:seed];
+        [cell updateDownloadStatus:status];
+        [cell updateFavoriteStatus:seed.favorite];
+        
+        return cell;        
     }
-    
-    Seed* seed = [_pageSeedList objectAtIndex:indexPath.row];
-    SeedPicture* picture = [_pageFirstSeedPictureList objectAtIndex:indexPath.row];
-    
-    [cell fillSeed:seed];
-    [cell fillSeedPicture:picture];
-    
-    SeedDownloadStatus status = [_downloadAgent checkDownloadStatus:seed];
-    [cell updateDownloadStatus:status];
-    [cell updateFavoriteStatus:seed.favorite];
-
-    return cell;
+    else
+    {
+        SeedListTableSmallerCell* cell = [tableView dequeueReusableCellWithIdentifier:CELL_ID_SEEDLISTTABLESMALLERCELL forIndexPath:indexPath];
+        if (nil == cell)
+        {
+            cell = [CBUIUtils componentFromNib:CELL_ID_SEEDLISTTABLESMALLERCELL owner:self options:nil];
+        }
+        
+        Seed* seed = [_pageSeedList objectAtIndex:indexPath.row];
+        SeedPicture* picture = [_pageFirstSeedPictureList objectAtIndex:indexPath.row];
+        
+        [cell fillSeed:seed];
+        [cell fillSeedPicture:picture];
+        
+        SeedDownloadStatus status = [_downloadAgent checkDownloadStatus:seed];
+        [cell updateDownloadStatus:status];
+        [cell updateFavoriteStatus:seed.favorite];
+        
+        return cell;
+    }
 }
 
 #pragma mark - Table view delegate
@@ -141,12 +167,30 @@
 {    
     _selectedSeed = [_pageSeedList objectAtIndex:indexPath.row];
     
-    [self performSegueWithIdentifier:SEGUE_ID_SEEDLIST2SEEDDETAIL sender:self];
+    NSString* segueId = nil;
+    if (IS_IPHONE5)
+    {
+        segueId = SEGUE_ID_SEEDLIST2SEEDDETAIL;
+    }
+    else
+    {
+        segueId = SEGUE_ID_SEEDLISTSMALLER2SEEDDETAILSMALLER;
+    }
+    
+    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:SEGUE_ID_SEEDLIST2SEEDDETAIL])
+    if ([segue.identifier isEqualToString:SEGUE_ID_SEEDLIST2SEEDDETAIL])
+    {
+        if ([segue.destinationViewController isKindOfClass:[SeedDetailViewController class]])
+        {
+            SeedDetailViewController* seedDetailViewController = segue.destinationViewController;
+            [seedDetailViewController setSeed:_selectedSeed];
+        }
+    }
+    else if ([segue.identifier isEqualToString:SEGUE_ID_SEEDLISTSMALLER2SEEDDETAILSMALLER])
     {
         if ([segue.destinationViewController isKindOfClass:[SeedDetailViewController class]])
         {
@@ -215,8 +259,16 @@
 {
     self.tableView.delegate = self;    
     
-    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
-    [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
+    if (IS_IPHONE5)
+    {
+        UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLECELL bundle:nil];
+        [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLECELL];
+    }
+    else
+    {
+        UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDLISTTABLESMALLERCELL bundle:nil];
+        [self.tableView registerNib:nib forCellReuseIdentifier:CELL_ID_SEEDLISTTABLESMALLERCELL];
+    }
 
     _pageSeedList = [NSMutableArray array];
     _pageFirstSeedPictureList = [NSMutableArray array];
@@ -371,8 +423,17 @@
     if (0 <= row)
     {
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-        SeedListTableCell* cell = (SeedListTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-        [cell updateDownloadStatus:status];
+
+        if (IS_IPHONE5)
+        {
+            SeedListTableCell* cell = (SeedListTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+            [cell updateDownloadStatus:status];
+        }
+        else
+        {
+            SeedListTableSmallerCell* cell = (SeedListTableSmallerCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+            [cell updateDownloadStatus:status];
+        }
     }
 }
 
@@ -387,9 +448,19 @@
         if (isFailedPicture)
         {
             NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-            SeedListTableCell* cell = (SeedListTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-            [_pictureAgent removeFailedSeedPicture:seedPicture];
-            [cell fillSeedPicture:seedPicture];
+
+            if (IS_IPHONE5)
+            {
+                SeedListTableCell* cell = (SeedListTableCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+                [_pictureAgent removeFailedSeedPicture:seedPicture];
+                [cell fillSeedPicture:seedPicture];
+            }
+            else
+            {
+                SeedListTableSmallerCell* cell = (SeedListTableSmallerCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+                [_pictureAgent removeFailedSeedPicture:seedPicture];
+                [cell fillSeedPicture:seedPicture];
+            }
         }
         row++;
     }

@@ -20,6 +20,8 @@
 		C510FB4517A2A68200AAF51F /* control in Resources */ = {isa = PBXBuildFile; fileRef = C510FB4217A2A68200AAF51F /* control */; };
 		C510FB4617A2A68200AAF51F /* deb_scripts.txt in Resources */ = {isa = PBXBuildFile; fileRef = C510FB4317A2A68200AAF51F /* deb_scripts.txt */; };
 		C510FB4717A2A68200AAF51F /* postrm in Resources */ = {isa = PBXBuildFile; fileRef = C510FB4417A2A68200AAF51F /* postrm */; };
+		C510FB4A17A2B31000AAF51F /* SeedListTableSmallerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C510FB4917A2B31000AAF51F /* SeedListTableSmallerCell.m */; };
+		C510FB4C17A2B39000AAF51F /* SeedListTableSmallerCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C510FB4B17A2B39000AAF51F /* SeedListTableSmallerCell.xib */; };
 		C514A64517A12586009D57A1 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C514A64417A12584009D57A1 /* NavigationViewController.m */; };
 		C514A65C17A15CB4009D57A1 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = C514A65617A15CAC009D57A1 /* Icon-72.png */; };
 		C514A65D17A15CB4009D57A1 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = C514A65717A15CAD009D57A1 /* Icon-Small-50.png */; };
@@ -236,6 +238,9 @@
 		C510FB4217A2A68200AAF51F /* control */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = control; sourceTree = "<group>"; };
 		C510FB4317A2A68200AAF51F /* deb_scripts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = deb_scripts.txt; sourceTree = "<group>"; };
 		C510FB4417A2A68200AAF51F /* postrm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = postrm; sourceTree = "<group>"; };
+		C510FB4817A2B31000AAF51F /* SeedListTableSmallerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedListTableSmallerCell.h; sourceTree = "<group>"; };
+		C510FB4917A2B31000AAF51F /* SeedListTableSmallerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedListTableSmallerCell.m; sourceTree = "<group>"; };
+		C510FB4B17A2B39000AAF51F /* SeedListTableSmallerCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeedListTableSmallerCell.xib; sourceTree = "<group>"; };
 		C514A64317A12583009D57A1 /* NavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
 		C514A64417A12584009D57A1 /* NavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
 		C514A65617A15CAC009D57A1 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
@@ -884,6 +889,9 @@
 				C5964C521722D87200CC1C0A /* SeedListTableCell.h */,
 				C5964C531722D87200CC1C0A /* SeedListTableCell.m */,
 				C571E09F1766145200E9AD50 /* SeedListTableCell.xib */,
+				C510FB4817A2B31000AAF51F /* SeedListTableSmallerCell.h */,
+				C510FB4917A2B31000AAF51F /* SeedListTableSmallerCell.m */,
+				C510FB4B17A2B39000AAF51F /* SeedListTableSmallerCell.xib */,
 				C5A9440D172AA15A00D6FB85 /* SeedPictureCollectionCell.h */,
 				C5A9440E172AA15A00D6FB85 /* SeedPictureCollectionCell.m */,
 				C571E0A6176750BD00E9AD50 /* SeedPictureCollectionCell.xib */,
@@ -1443,6 +1451,7 @@
 				C510FB4517A2A68200AAF51F /* control in Resources */,
 				C510FB4617A2A68200AAF51F /* deb_scripts.txt in Resources */,
 				C510FB4717A2A68200AAF51F /* postrm in Resources */,
+				C510FB4C17A2B39000AAF51F /* SeedListTableSmallerCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1601,6 +1610,7 @@
 				C52AD0CA179836BE00F9D174 /* CartIdViewController.m in Sources */,
 				C53F3071179E60D60091E902 /* Environment.m in Sources */,
 				C514A64517A12586009D57A1 /* NavigationViewController.m in Sources */,
+				C510FB4A17A2B31000AAF51F /* SeedListTableSmallerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

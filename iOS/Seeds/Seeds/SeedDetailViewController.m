@@ -136,7 +136,18 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:SEGUE_ID_SEEDDETAIL2SEEDPICTURE])
+    if ([segue.identifier isEqualToString:SEGUE_ID_SEEDDETAIL2SEEDPICTURE])
+    {
+        if ([[segue destinationViewController] isKindOfClass:[SeedPictureViewController class]])
+        {
+            NSIndexPath *selectedIndexPath = [[self.collectionView indexPathsForSelectedItems] objectAtIndex:0];
+            SeedPicture* selctedPicture = [_pagePictureList objectAtIndex:selectedIndexPath.row];
+            
+            SeedPictureViewController* seedPictureViewController = segue.destinationViewController;
+            [seedPictureViewController setSeedPicture:selctedPicture];
+        }
+    }
+    else if ([segue.identifier isEqualToString:SEGUE_ID_SEEDDETAILSMALLER2SEEDPICTURE])
     {
         if ([[segue destinationViewController] isKindOfClass:[SeedPictureViewController class]])
         {
