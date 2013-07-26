@@ -41,7 +41,7 @@
 {
     MBProgressHUD* HUD = [self sharedHUD];
     
-    dispatch_sync(_hudQueue, ^(){
+//    dispatch_sync(_hudQueue, ^(){
         HUD.labelText = majorStauts;
         if (minorStatus)
         {
@@ -53,7 +53,7 @@
         }
         
         [self _showHUD:seconds];
-    });
+//    });
 }
 
 -(void) attachToView:(UIView*) view
