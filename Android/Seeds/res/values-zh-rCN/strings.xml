@@ -136,6 +136,9 @@
     <string name="seeds_config_clearcachetitle">清除缓存</string>
     <string name="seeds_config_clearcachesum">清除接收图片产生的缓存，当前缓存：</string> 
     <string name="seeds_config_security">账户与安全</string>
+    <string name="seeds_config_enblepwdtitle">密码保护</string>
+    <string name="seeds_config_enblepwdtitlesumon">打开应用时需输入手势密码</string>
+    <string name="seeds_config_enblepwdtitlesumoff">无须密码直接打开应用</string>
     <string name="seeds_config_changepwdtitle">更改密码</string>
     <string name="seeds_config_changepwdsum">更改应用打开时的密码</string>
     <string name="seeds_config_feedbackandhelp">反馈与帮助</string>
@@ -150,6 +153,8 @@
     <string name="seeds_config_verifyserveraddrsucc">验证成功，服务器正常工作中</string>
     <string name="seeds_config_verifyserveraddrfail">验证失败，请确认服务器是否正确</string>
     <string name="seeds_config_clearcachedone">缓存已清空</string>
+    
+    <string name="seeds_config_toast_changepwdunavail">密码保护已关闭,无法更改密码</string>
     
     <string name="seeds_http_buttonstartserver">开启服务</string>
     <string name="seeds_http_buttonstopserver">关闭服务</string>

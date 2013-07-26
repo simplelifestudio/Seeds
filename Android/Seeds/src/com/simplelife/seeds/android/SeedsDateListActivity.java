@@ -39,7 +39,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
@@ -768,12 +767,7 @@ public class SeedsDateListActivity extends Activity {
     	boolean isWifiConnected = false;
     	boolean is3GConnected   = false;
     	int tShowTextId;
-    	
-    	// Check the app configuration first
-    	SharedPreferences tSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
-    	boolean tIsRecvPicEnabled = tSharedPrefs.getBoolean("config_network", true);
-    	SeedsDefinitions.setDownloadImageFlag(tIsRecvPicEnabled);
-    	
+    	    	
     	is3GConnected = SeedsWirelessManager.isMobileDataOpen(getApplication());
     	isWifiConnected = SeedsWirelessManager.isWifiOpen(getApplication());
     	

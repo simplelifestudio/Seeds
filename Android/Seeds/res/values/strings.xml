@@ -137,6 +137,9 @@
     <string name="seeds_config_clearcachetitle">Clear Cache</string>
     <string name="seeds_config_clearcachesum">Clear the images cache,current cache size:</string>      
     <string name="seeds_config_security">Account and Security</string>
+    <string name="seeds_config_enblepwdtitle">Password Protect</string>
+    <string name="seeds_config_enblepwdtitlesumon">Need enter password to log on</string>
+    <string name="seeds_config_enblepwdtitlesumoff">Free log on without password</string>
     <string name="seeds_config_changepwdtitle">Change Password</string>
     <string name="seeds_config_changepwdsum">Change the password when open the application</string>
     <string name="seeds_config_feedbackandhelp">Feedback and Help</string>
@@ -151,6 +154,8 @@
     <string name="seeds_config_verifyserveraddrsucc">Verification successed, server is working normally</string>
     <string name="seeds_config_verifyserveraddrfail">Verification failed, please double check the server address</string>
     <string name="seeds_config_clearcachedone">The cache has been cleaned</string>
+    
+    <string name="seeds_config_toast_changepwdunavail">Password protect is disabled, can not change password</string>
     
     <string name="seeds_http_buttonstartserver">Start server</string>
     <string name="seeds_http_buttonstopserver">Stop server</string>
