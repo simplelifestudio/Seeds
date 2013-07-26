@@ -16,7 +16,11 @@
 #define NAMESPACE_APP_CONST_CHARS "com.simplelife.Seeds.ios"
 #define MODULE_DELAY usleep(300000);
 
-#define SCREEN_4INCHRETINA_ONLY 1
+#define SCREEN_4INCHRETINA_ONLY 0
+
+#define IS_IPAD1_OR_2_OR_MINI ([UIDevice currentResolution] == UIDevice_iPhoneStandardRes)
+#define IS_IPHONE4_OR_4S ([UIDevice currentResolution] == UIDevice_iPhoneHiRes)
+#define IS_IPHONE5 ([UIDevice currentResolution] == UIDevice_iPhoneTallerHiRes)
 
 // Module: UserDefaults
 #define USERDEFAULTS_KEY_SYNCSTATUSBYDAY @"syncStatusByDay:"
@@ -207,8 +211,6 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 #define WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL 100
 #define HEIGHT_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL 60
-#define WIDTH_ASYNCIMAGEVIEW_IN_SEEDPICTURECOLLECTIONCELL 150
-#define HEIGHT_ASYNCIMAGEVIEW_IN_SEEDPICTURECOLLECTIONCELL 170
 
 #define HEIGHT_NAVIGATION_BAR 44
 
@@ -248,6 +250,10 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define RES_XIMAGE_TABLECELL @"xImage_tableCell"
 #define RES_XIMAGE_COLLECTIONCELL @"xImage_collectionCell"
 #define RES_XIMAGE_PICTUREVIEW @"xImage_pictureView"
+
+#define FONT_SIZE_ZOOMRATE_CIRCULARVIEW_FOR_IPAD1_OR_2_OR_MINI 0.8
+#define FONT_SIZE_ZOOMRATE_CIRCULARVIEW_FOR_IPHONE4_OR_4S 0.8
+#define FONT_SIZE_ZOOMRATE_CIRCULARVIEW_FOR_IPHONE5 1
 
 #define THUMBNAIL_SIZE_SEEDLISTTABLECELL CGSizeMake(150, 90)
 #define THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL CGSizeMake(225, 255)
