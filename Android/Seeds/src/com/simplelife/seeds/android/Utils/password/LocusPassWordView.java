@@ -527,8 +527,8 @@ public class LocusPassWordView extends View {
 	public boolean verifyPassword(String password) {
 		boolean verify = false;
 		if (StringUtil.isNotEmpty(password)) {
-			if (password.equals(getPassword())
-					|| password.equals("0,2,8,6,3,1,5,7,4")) {
+			if (password.equals(getPassword())) 
+			{
 				verify = true;
 			}
 		}

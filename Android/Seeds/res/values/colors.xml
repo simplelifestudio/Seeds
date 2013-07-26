@@ -29,9 +29,10 @@
     <!-- Below colours are for action bar -->
     <color name="actionbar_separator">#8B1A1A</color>
     <color name="actionbar_title">#FFFFFF</color>
-    <color name="actionbar_background_start">#8B1A1A</color>
-    <color name="actionbar_background_end">#CD2626</color>
-    <color name="actionbar_background_item_pressed_start">#FF7F00</color>
-    <color name="actionbar_background_item_pressed_end">#EE7600</color>
+    <color name="actionbar_title_sleep">#A9A9A9</color>
+    <color name="actionbar_background_start">#808080</color>
+    <color name="actionbar_background_end">#C0C0C0</color>
+    <color name="actionbar_background_item_pressed_start">#AFEEEE</color>
+    <color name="actionbar_background_item_pressed_end">#87CEEB</color>
 
 </resources>

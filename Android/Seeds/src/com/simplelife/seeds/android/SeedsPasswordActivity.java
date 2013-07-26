@@ -4,7 +4,6 @@
  *  SeedsPasswordActivity.java
  *  Seeds
  *
- *  Created by Chris Li on 13-5-20. 
  */
 
 package com.simplelife.seeds.android;
@@ -67,7 +66,7 @@ public class SeedsPasswordActivity extends Activity {
 		if (mPwdView.isPasswordEmpty()) {
 			mPwdView.setVisibility(View.GONE);
 			noSetPassword.setVisibility(View.VISIBLE);
-			toastTv.setText(R.string.seeds_password_drawstatus);
+			toastTv.setText(R.string.seeds_password_create);
 			noSetPassword.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
