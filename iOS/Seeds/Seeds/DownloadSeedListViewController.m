@@ -475,7 +475,6 @@
 - (void) _initTableView
 {
     self.tableView.allowsMultipleSelectionDuringEditing = TRUE;
-    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0,0,0,5)];
     _isSelectedAll = FALSE;
 }
 

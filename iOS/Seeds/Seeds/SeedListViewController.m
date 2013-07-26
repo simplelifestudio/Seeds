@@ -61,17 +61,12 @@
     [super awakeFromNib];
 }
 
-- (void) setSeedsDate:(NSDate *)seedsDate
-{
-    _seedsDate = seedsDate;
-    
-    NSString* shortDayStr = [CBDateUtils shortDateString:seedsDate];
-    self.title = shortDayStr;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self _initUIBarButtons];
+    [self _initTableView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -103,6 +98,16 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Public Methods
+
+- (void) setSeedsDate:(NSDate *)seedsDate
+{
+    _seedsDate = seedsDate;
+    
+    NSString* shortDayStr = [CBDateUtils shortDateString:seedsDate];
+    self.title = shortDayStr;
 }
 
 #pragma mark - Table view data source
@@ -318,6 +323,16 @@
     {
         [self.navigationController popViewControllerAnimated:TRUE];
     }
+}
+
+- (void) _initUIBarButtons
+{
+    [self.navigationController setNavigationBarHidden:FALSE];
+}
+
+- (void) _initTableView
+{
+    
 }
 
 -(void) _constructTableDataByPage
