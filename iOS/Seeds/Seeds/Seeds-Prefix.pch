@@ -16,6 +16,7 @@
     #import "CBPathUtils.h"
     #import "CBAppUtils.h"
     #import "CBMathUtils.h"
+    #import "UIDevice+Resolutions.h"
 
     #import "AppDefinitions.h"
     #import "Environment.h"
