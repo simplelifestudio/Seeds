@@ -3,9 +3,8 @@
  *  
  *  SeedsAdapter.java
  *  Seeds
- *
- *  Created by Chris Li on 13-5-20. 
  */
+/*
 package com.simplelife.seeds.android.utils.adapter;
 
 import java.util.ArrayList;
@@ -23,6 +22,8 @@ import android.widget.TextView;
 import com.simplelife.seeds.android.R;
 import com.simplelife.seeds.android.SeedsListPerDayActivity;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.gridview.gridviewprovider.Images;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
 import com.simplelife.seeds.android.utils.imageprocess.SeedsImageLoader;
 
 public class SeedsAdapter extends BaseAdapter {
@@ -30,15 +31,18 @@ public class SeedsAdapter extends BaseAdapter {
 	private Activity activity;
 	private ArrayList<HashMap<String, String>> data;
 	private static LayoutInflater inflater = null;
+    private int mImageThumbSize;
+    private ImageFetcher mImageFetcher;
 	
 	// Clarify the class which is used to load the image via url
-	public SeedsImageLoader imageLoader; 
+	//public SeedsImageLoader imageLoader; 
 
 	public SeedsAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
 		activity = a;
 		data     = d;
 		inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		imageLoader = new SeedsImageLoader(activity.getApplicationContext());
+		mImageThumbSize = a.getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
+		//imageLoader = new SeedsImageLoader(activity.getApplicationContext());
 	}
 
 	public int getCount() {
@@ -72,8 +76,9 @@ public class SeedsAdapter extends BaseAdapter {
 		size.setText(seedList.get(SeedsDBAdapter.KEY_SIZE));
 		format.setText(seedList.get(SeedsDBAdapter.KEY_FORMAT));
 		mosaic.setText(seedList.get(SeedsDBAdapter.KEY_MOSAIC));
-		imageLoader.DisplayImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL),
-				thumb_image,0);
+		mImageFetcher.loadImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL), thumb_image);
+		//imageLoader.DisplayImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL),
+		//		thumb_image,0);
 		return vi;
 	}
-}
+}*/
