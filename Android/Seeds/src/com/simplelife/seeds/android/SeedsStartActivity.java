@@ -3,8 +3,6 @@
  *  
  *  SeedsStartActivity.java
  *  Seeds
- *
- *  Created by Chris Li on 13-5-20. 
  */
 
 package com.simplelife.seeds.android;
@@ -14,7 +12,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -29,6 +29,7 @@ import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 public class SeedsStartActivity extends Activity {
 	
 	private static BroadcastReceiver mReceiver = null;
+	private boolean mIsPwdProtEnabled = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,9 @@ public class SeedsStartActivity extends Activity {
 		final View startView = View.inflate(this,R.layout.activity_seeds_start,null);
 		//setContentView(R.layout.activity_seeds_start);
 		setContentView(startView);
+		
+		// Check the app setting on start
+		checkConfigurationOnStart();
 		
 		// Fade in and fade out
 		AlphaAnimation fadeShow = new AlphaAnimation(0.3f,1.0f);
@@ -76,7 +80,13 @@ public class SeedsStartActivity extends Activity {
 	}
 	
 	private void redirectTo(){       
-		Intent intent = new Intent(this, SeedsPasswordActivity.class);
+		Intent intent;
+		if (mIsPwdProtEnabled)
+		{
+			intent = new Intent(this, SeedsPasswordActivity.class);	
+		}else{
+			intent = new Intent(this, SeedsDateListActivity.class);
+		}				
 		startActivity(intent);
 		finish();
 	}
@@ -107,6 +117,16 @@ public class SeedsStartActivity extends Activity {
 	      super.onDestroy();
     }
 
-
+    private void checkConfigurationOnStart(){
+    	
+    	SharedPreferences tSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
+    	
+    	// Check if the password protect is enabled
+    	mIsPwdProtEnabled = tSharedPrefs.getBoolean("config_enablepwd", true);
+    	
+    	// Check is downloading images without wifi is enabled
+    	boolean tIsRecvPicEnabled = tSharedPrefs.getBoolean("config_network", true);
+    	SeedsDefinitions.setDownloadImageFlag(tIsRecvPicEnabled);
+    }
 
 }

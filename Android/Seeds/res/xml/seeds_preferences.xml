@@ -10,13 +10,13 @@
             android:summary="@string/seeds_config_verifyserveraddrsum" 
             android:key="config_verifyserver" 
             android:title="@string/seeds_config_verifyserveraddrtitle"/>
-        <ListPreference 
+        <!--  ListPreference 
             android:summary="@string/seeds_config_selectchansum" 
             android:key="config_selectchannel" 
             android:title="@string/seeds_config_selectchantitle" 
             android:dialogTitle="@string/seeds_config_selectchantitle" 
             android:entries="@array/seeds_config_channels" 
-            android:entryValues="@array/seeds_config_channels"/>
+            android:entryValues="@array/seeds_config_channels"/-->
     </PreferenceCategory>
     <PreferenceCategory 
         android:title="@string/seeds_config_picpref">
@@ -34,10 +34,18 @@
     </PreferenceCategory>
     <PreferenceCategory 
         android:title="@string/seeds_config_security">
+        <SwitchPreference 
+            android:title="@string/seeds_config_enblepwdtitle" 
+            android:summary="@string/seeds_config_enblepwdtitlesumon" 
+            android:key="config_enablepwd" 
+            android:summaryOff="@string/seeds_config_enblepwdtitlesumoff" 
+            android:summaryOn="@string/seeds_config_enblepwdtitlesumon" 
+            android:defaultValue="true"/>
         <Preference 
             android:title="@string/seeds_config_changepwdtitle" 
             android:key="config_changepwd" 
             android:summary="@string/seeds_config_changepwdsum"/>
+        
     </PreferenceCategory>
     <PreferenceCategory 
         android:title="@string/seeds_config_feedbackandhelp">

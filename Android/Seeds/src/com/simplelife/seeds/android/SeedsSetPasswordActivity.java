@@ -3,8 +3,6 @@
  *  
  *  SeedsSetPasswordActivity.java
  *  Seeds
- *
- *  Created by Chris Li on 13-5-20. 
  */
 
 package com.simplelife.seeds.android;
@@ -21,14 +19,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SeedsSetPasswordActivity extends Activity {
 	private LocusPassWordView mPwdView;
 	private String mPassword;
-	private boolean mNeedverify = true;
+	private String mFirstPassword;
+	private boolean mNeedVerify = true;
+	private boolean mFirstTryFlag = false;
+	private boolean mSecondTryFlag = false;
+	private boolean mIsFirstCreation = false;
 	private Toast mToast;
+	private TextView mTitle;
+	private TextView mCancel;
+	private TextView mSave;
 	
 	private void showToast(int _messageId) {
 		if (null == mToast) {
@@ -45,57 +50,152 @@ public class SeedsSetPasswordActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_seeds_login_setpassword);
 		mPwdView = (LocusPassWordView) this.findViewById(R.id.mLocusPassWordView);
+		mCancel  = (TextView) this.findViewById(R.id.setpwd_reset);
+		mSave    = (TextView) this.findViewById(R.id.setpwd_save);
+		mTitle   = (TextView) this.findViewById(R.id.setpwd_title);
+		
+		// Confirm if there is already a password
+		if (!mPwdView.isPasswordEmpty())
+		{
+			mCancel.setVisibility(View.GONE);
+			mSave.setVisibility(View.GONE);
+			mTitle.setText(R.string.seeds_setpassword_entercurrnt);
+		}
+		else
+		{
+			this.mNeedVerify = false;
+			this.mIsFirstCreation = true;
+			mTitle.setText(R.string.seeds_password_drawstatus);
+			//showToast(R.string.seeds_setpassword_enterpwd);		
+		}
+		mSave.setTextColor(getResources().getColor(R.color.actionbar_title_sleep));
+		mCancel.setOnClickListener(mOnClickListener);
+
 		mPwdView.setOnCompleteListener(new OnCompleteListener() {
 			@Override
 			public void onComplete(String _password) {
 				mPassword = _password;
-				if (mNeedverify) {
+				if (mNeedVerify) {
 					if (mPwdView.verifyPassword(_password)) {
+						mTitle.setText(R.string.seeds_password_drawstatus);
 						showToast(R.string.seeds_setpassword_correct);
 						mPwdView.clearPassword();
-						mNeedverify = false;
+						mCancel.setVisibility(View.VISIBLE);
+						mSave.setVisibility(View.VISIBLE);
+						mNeedVerify = false;
 					} else {
 						showToast(R.string.seeds_setpassword_wrong);
 						mPwdView.clearPassword();
 						mPassword = "";
 					}
 				}
+				else{
+					if (!mFirstTryFlag){
+						mTitle.setText(R.string.seeds_password_drawsrecorded);
+						mSave.setTextColor(getResources().getColor(R.color.actionbar_title));
+						mSave.setOnClickListener(mOnClickListener);
+						mCancel.setText(R.string.seeds_password_redraw);
+						mFirstTryFlag = true;
+					}
+					else if (!mSecondTryFlag){
+						if (verifyLocalPassword(_password)){
+							mTitle.setText(R.string.seeds_password_confirmdrawstatusdone);
+							mSave.setTextColor(getResources().getColor(R.color.actionbar_title));
+							mSave.setOnClickListener(mOnClickListener);
+							mCancel.setText(R.string.seeds_password_redraw);
+							mSecondTryFlag = true;
+						} else {
+							showToast(R.string.seeds_setpassword_wrong);
+							mPwdView.clearPassword();
+							mPassword = "";
+						}
+
+					}					
+				}
+					
+
 			}
 		});
 
-		OnClickListener mOnClickListener = new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				switch (v.getId()) {
-				case R.id.tvSave:
+	}
+	
+	private OnClickListener mOnClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.setpwd_save:
+				if ((mFirstTryFlag)&&(!mSecondTryFlag))
+				{
+					if (StringUtil.isNotEmpty(mPassword)) {
+						//mPwdView.resetPassWord(mPassword);
+						mPwdView.clearPassword();
+						mFirstPassword = mPassword;
+						mTitle.setText(R.string.seeds_password_confirmdrawstatus);
+						mSave.setText(R.string.seeds_password_save);
+						mSave.setTextColor(getResources().getColor(R.color.actionbar_title_sleep));
+						mSave.setClickable(false);
+						mCancel.setText(R.string.seeds_password_cancel);
+					} else {
+						mPwdView.clearPassword();
+						showToast(R.string.seeds_setpassword_failed);
+					}
+				}
+				else if(mSecondTryFlag){
 					if (StringUtil.isNotEmpty(mPassword)) {
 						mPwdView.resetPassWord(mPassword);
 						mPwdView.clearPassword();
-						showToast(R.string.seeds_setpassword_success);
+						if(mIsFirstCreation)
+							showToast(R.string.seeds_setpassword_firstsuccess);
+						else
+							showToast(R.string.seeds_setpassword_success);
 						startActivity(new Intent(SeedsSetPasswordActivity.this,
 								SeedsPasswordActivity.class));
 						finish();
 					} else {
 						mPwdView.clearPassword();
 						showToast(R.string.seeds_setpassword_failed);
-					}
-					break;
-				case R.id.tvReset:
-					mPwdView.clearPassword();
-					break;
+					}					
 				}
-			}
-		};
-		Button buttonSave = (Button) this.findViewById(R.id.tvSave);
-		buttonSave.setOnClickListener(mOnClickListener);
-		Button tvReset = (Button) this.findViewById(R.id.tvReset);
-		tvReset.setOnClickListener(mOnClickListener);
-		if (mPwdView.isPasswordEmpty()) {
-			this.mNeedverify = false;
-			showToast(R.string.seeds_setpassword_enterpwd);
-		}
 
-	}	
+				break;
+			case R.id.setpwd_reset:
+				if(mCancel.getText().equals(getString(R.string.seeds_password_cancel)))
+				{
+					finish();
+				}
+				else{
+					if((mFirstTryFlag)&&(!mSecondTryFlag))
+					{
+						mTitle.setText(R.string.seeds_password_drawstatus);
+						mCancel.setText(R.string.seeds_password_cancel);
+						mSave.setTextColor(getResources().getColor(R.color.actionbar_title_sleep));
+						mSave.setClickable(false);
+						mPwdView.clearPassword();
+						mFirstTryFlag = false;
+					}else if(mSecondTryFlag){
+						mTitle.setText(R.string.seeds_password_confirmdrawstatus);
+						mCancel.setText(R.string.seeds_password_cancel);
+						mSave.setTextColor(getResources().getColor(R.color.actionbar_title_sleep));
+						mSave.setClickable(false);
+						mPwdView.clearPassword();	
+						mSecondTryFlag = false;
+					}					
+				}
+				break;
+			}
+		}
+	};
+	
+	public boolean verifyLocalPassword(String _password) {
+		boolean verify = false;
+		if (StringUtil.isNotEmpty(_password)) {
+			if (_password.equals(mFirstPassword)) 
+			{
+				verify = true;
+			}
+		}
+		return verify;
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

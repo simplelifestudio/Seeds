@@ -56,6 +56,8 @@
 "Apply Successfully" = "Apply Successfully";
 "Apply Failed" = "Apply Failed";
 "Length Limited" = "Length Limited";
+"RSS ID Ready" = "Click to GO";
+"Please check RSS ID in Config" = "Please set RSS ID in Config firstly";
 
 "Preparing" = "Preparing";
 "Stamps Computing" = "Stamps Computing";
@@ -67,6 +69,7 @@
 "Seeds Organizing" = "Seeds Organizing";
 "Seeds Saving" = "Seeds Saving";
 "Fail Saving" = "Fail Saving";
+"Fail Parsing" = "Fail Parsing";
 "Fail Clearing" = "Fail Clearing";
 "Status Saving" = "Status Saving";
 "Fail Analyzing" = "Fail Analyzing";
@@ -75,6 +78,7 @@
 "Sync Yet" = "Updated Yet";
 "Completed" = "Completed";
 "Folder Exception" = "Folder Exception";
+"No Update" = "No Update";
 
 "Torrents Downloading" = "Torrents Downloading";
 "Download Torrent" = "Download Torrent";
@@ -183,6 +187,7 @@
 "Counting failed images..." = "Counting failed images...";
 "Last Updated: %@" = "Last refreshed at: %@";
 
-"Warning of Unsupported Devices" = "   Confined to developer's time and stamina, currently Seeds iOS app supports iPhone5 only, sorry for inconvenience. App will be terminated automatically once countdown is end.";
+"Warning of Unsupported Screen Resolution" = "  Confined to developer's time and stamina, currently Seeds iOS app supports devices with 4 Inches Retina Screen only, sorry for inconvenience. App will be terminated automatically once countdown is end.";
+"Warning of Unsupported iOS Version" = "   Confined to developer's time and stamina, currently Seeds app supports iOS 6 and later versions only, sorry for inconvenience. App will be terminated automatically once countdown is end.";
 "Passcode failed attempts is too much, app will be terminated once countdown is end." = "   Passcode failed attempts is too much, app will be terminated once countdown is end.";
 "Warning of App First Launched" = "     The major purpose of Seeds is for technical learning and discussion, and it is forbidden to be published in any commercial domain. Finally, please make sure you are over 18 years old before entering. Without acknowledge, app will be terminated automatically once coutdown is end.";

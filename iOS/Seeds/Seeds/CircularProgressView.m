@@ -88,6 +88,19 @@
             }
         }
         
+        if (IS_IPHONE5)
+        {
+            fontSize = fontSize * FONT_SIZE_ZOOMRATE_CIRCULARVIEW_FOR_IPHONE5;
+        }
+        else if (IS_IPHONE4_OR_4S)
+        {
+            fontSize = round(fontSize * FONT_SIZE_ZOOMRATE_CIRCULARVIEW_FOR_IPHONE4_OR_4S);
+        }
+        else if (IS_IPAD1_OR_2_OR_MINI)
+        {
+            fontSize = round(fontSize * FONT_SIZE_ZOOMRATE_CIRCULARVIEW_FOR_IPAD1_OR_2_OR_MINI);
+        }
+        
         if (0 < fontSize)
         {
             NSString* title = [CBMathUtils readableStringFromBytesSize:_total];

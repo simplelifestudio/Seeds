@@ -39,7 +39,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.view.Gravity;
 import android.view.View;
@@ -152,9 +151,12 @@ public class SeedsDateListActivity extends Activity {
 		mSharedPrefSeedsNum = getSharedPreferences(
 		        getString(R.string.seeds_preffilename_seedsnum), Context.MODE_PRIVATE);
 		
-		mNumTextBefYesterday.setText(getSeedsNumberByDate(mDateBefYesterday));
-		mNumTextYesterday.setText(getSeedsNumberByDate(mDateYesterday));
-		mNumTextToday.setText(getSeedsNumberByDate(mDateToday));
+		mNumTextBefYesterday.setText(getString(R.string.seeds_datelist_seedsnumber)
+				                    +getSeedsNumberByDate(mDateBefYesterday));
+		mNumTextYesterday.setText(getString(R.string.seeds_datelist_seedsnumber)
+				                 +getSeedsNumberByDate(mDateYesterday));
+		mNumTextToday.setText(getString(R.string.seeds_datelist_seedsnumber)
+				             +getSeedsNumberByDate(mDateToday));
 		
 		// Check if Wifi is connected
 		checkNetworkStatus();
@@ -465,7 +467,7 @@ public class SeedsDateListActivity extends Activity {
             		String tDate  = bundle.getString("inDate");
             		String tText  = bundle.getString("inText");
             		TextView tNumOfSeeds = matchNumTextViaRealDate(tDate);
-            		tNumOfSeeds.setText(tText);
+            		tNumOfSeeds.setText(getString(R.string.seeds_datelist_seedsnumber)+tText);
             	    break;           		
             	}
                 case MESSAGETYPE_UPDATE:
@@ -498,7 +500,7 @@ public class SeedsDateListActivity extends Activity {
     private String getSeedsNumberByDate(String _inDate){
     	
     	// Retrieve the seeds info status by date via the shared preference file
-    	return mSharedPrefSeedsNum.getString(_inDate, SeedsDefinitions.SEEDS_INFO_NOTSYNCED);    	
+    	return mSharedPrefSeedsNum.getString(_inDate, getString(R.string.seeds_datelist_seedsnumberdefault));    	
     }
     
     private void storeSeedsNumber(String _inDate, String _inSeedsNum){
@@ -583,7 +585,7 @@ public class SeedsDateListActivity extends Activity {
 			mLogger.info("Parsing SeedsByDateResp Now!");
 			updateDialogStatus(getString(R.string.seeds_datelist_analyzeseedsdata) + " "+_inDate+"...");
 			try{
-				tSeedsList = SeedsJSONMessage.parseSeedsByDatesRespMsg(_inDate,respInString);
+				tSeedsList = SeedsJSONMessage.parseSeedsByDatesRespMsg(_inDate,respInString,getApplication());
 			}catch(JSONException e){
 				mLogger.excep(e);
 			}
@@ -765,12 +767,7 @@ public class SeedsDateListActivity extends Activity {
     	boolean isWifiConnected = false;
     	boolean is3GConnected   = false;
     	int tShowTextId;
-    	
-    	// Check the app configuration first
-    	SharedPreferences tSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplication());
-    	boolean tIsRecvPicEnabled = tSharedPrefs.getBoolean("config_network", true);
-    	SeedsDefinitions.setDownloadImageFlag(tIsRecvPicEnabled);
-    	
+    	    	
     	is3GConnected = SeedsWirelessManager.isMobileDataOpen(getApplication());
     	isWifiConnected = SeedsWirelessManager.isWifiOpen(getApplication());
     	

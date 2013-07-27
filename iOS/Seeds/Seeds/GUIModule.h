@@ -11,6 +11,7 @@
 
 #import "PAPasscodeViewController.h"
 #import "HomeViewController.h"
+#import "HelpViewController.h"
 #import "WarningViewController.h"
 
 #import "CBHUDAgent.h"
@@ -18,6 +19,7 @@
 @interface GUIModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate, PAPasscodeViewControllerDelegate>
 
 @property (weak, nonatomic) HomeViewController* homeViewController;
+@property (weak, nonatomic) HelpViewController* helpViewController;
 
 @property (strong, nonatomic) CBHUDAgent* HUDAgent;
 

@@ -121,7 +121,7 @@
     }
     else
     {
-        _downloadPath = [CBPathUtils documentsDirectoryPath];
+        _downloadPath = [Environment torrentsDirPath];
     }
     
     if (nil != _fileName && 0 < _fileName.length)
@@ -180,9 +180,8 @@
                 [_delegate torrentDownloadFinished:_seed];
             }
          
-            BOOL flag = [CBFileUtils deleteFile:_fileFullPath];
-            
-            flag = [CBFileUtils createFile:_fileFullPath content:responseObject];
+            [CBFileUtils deleteFile:_fileFullPath];
+            BOOL flag = [CBFileUtils createFile:_fileFullPath content:responseObject];
             if(flag)
             {
                 if (_delegate)

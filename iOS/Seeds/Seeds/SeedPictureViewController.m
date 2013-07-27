@@ -51,11 +51,16 @@
     [super viewDidLoad];
 
     _scrollView.photoViewDelegate = self;
+        
+    CGRect rect = self.view.frame;
+    CGSize size = rect.size;
+    NSInteger halfWidth = size.width / 2;
+    NSInteger halfHeight = size.height / 2;
+    NSInteger radius = (halfWidth < halfHeight) ? halfWidth : halfHeight * 0.8;
+    CGFloat x = halfWidth - radius / 2;
+    CGFloat y = halfHeight - radius / 2;
+    NSInteger lineWidth = radius / 8;    
     
-    NSInteger radius = 150;
-    CGFloat x = self.view.center.x - radius / 2;
-    CGFloat y = self.view.center.y - radius / 2;
-    NSInteger lineWidth = 20;
     _circularProgressView = [[CircularProgressView alloc] initWithFrame:CGRectMake(x, y, radius, radius) backColor:COLOR_CIRCULAR_PROGRESS_BACKGROUND progressColor:COLOR_CIRCULAR_PROGRESS lineWidth:lineWidth];
     [self registerCircularProgressDelegate];
 }
@@ -146,14 +151,14 @@
 
 - (void)scrollviewSingleTapped:(UITapGestureRecognizer *)recognizer
 {
-    [self dismissModalViewControllerAnimated:TRUE];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - SeedPictureScrollViewDelegate
 
 - (void)pictureViewDidSingleTap:(SeedPictureScrollView *)photoView
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)pictureViewDidDoubleTap:(SeedPictureScrollView *)photoView

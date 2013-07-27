@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SeedListTableCell.h"
 #import "SeedDetailViewController.h"
 #import "PagingToolbar.h"
 

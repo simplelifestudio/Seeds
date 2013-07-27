@@ -16,7 +16,7 @@
 
 #define _HUD_DISPLAY 1
 
-@interface SeedDetailViewController () <CBNotificationListenable>
+@interface SeedDetailViewController () <CBNotificationListenable, UICollectionViewDelegateFlowLayout>
 {
     UserDefaultsModule* _userDefaults;
     
@@ -127,16 +127,27 @@
 //        cell = [CBUIUtils componentFromNib:CELL_ID_SEEDPICTURECOLLECTIONCELL owner:self options:nil];
 //    }
     cell.asyncImageView.imageType = PictureCollectionCellThumbnail;
-    
+
     NSUInteger pictureIdInSeed = [self _getPictureIdInSeed:indexPath];
     [cell fillSeedPicture:picture pictureIdInSeed:pictureIdInSeed];
-    
+
     return cell;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:SEGUE_ID_SEEDDETAIL2SEEDPICTURE])
+    if ([segue.identifier isEqualToString:SEGUE_ID_SEEDDETAIL2SEEDPICTURE])
+    {
+        if ([[segue destinationViewController] isKindOfClass:[SeedPictureViewController class]])
+        {
+            NSIndexPath *selectedIndexPath = [[self.collectionView indexPathsForSelectedItems] objectAtIndex:0];
+            SeedPicture* selctedPicture = [_pagePictureList objectAtIndex:selectedIndexPath.row];
+            
+            SeedPictureViewController* seedPictureViewController = segue.destinationViewController;
+            [seedPictureViewController setSeedPicture:selctedPicture];
+        }
+    }
+    else if ([segue.identifier isEqualToString:SEGUE_ID_SEEDDETAILSMALLER2SEEDPICTURE])
     {
         if ([[segue destinationViewController] isKindOfClass:[SeedPictureViewController class]])
         {
@@ -346,10 +357,10 @@
 
 - (void) _setupCollectionView
 {
-    //    [self.collectionView registerClass:[SeedPictureCollectionCell class] forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
-    
-    //    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDPICTURECOLLECTIONCELL bundle:nil];
-    //    [self.collectionView registerNib:nib forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
+//    [self.collectionView registerClass:[SeedPictureCollectionCell class] forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
+//    
+//    UINib* nib = [UINib nibWithNibName:CELL_ID_SEEDPICTURECOLLECTIONCELL bundle:nil];
+//    [self.collectionView registerNib:nib forCellWithReuseIdentifier:CELL_ID_SEEDPICTURECOLLECTIONCELL];
     
     _userDefaults = [UserDefaultsModule sharedInstance];
     
@@ -707,6 +718,30 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
 	[_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewFlowLayout* layout = (UICollectionViewFlowLayout*)collectionViewLayout;
+    
+    CGSize cellSize = layout.itemSize;
+    
+//    if (IS_IPHONE5)
+//    {
+//        cellSize = COMPONENT_SIZE_SEEDPICTURECOLLECTIONCELL_FOR_IPHONE5;
+//    }
+//    else if (IS_IPHONE4_OR_4S)
+//    {
+//        cellSize = COMPONENT_SIZE_SEEDPICTURECOLLECTIONCELL_FOR_IPHONE4_OR_4S;
+//    }
+//    else if (IS_IPAD1_OR_2_OR_MINI)
+//    {
+//        cellSize = COMPONENT_SIZE_SEEDPICTURECOLLECTIONCELL_FOR_IPAD1_OR_2_OR_MINI;
+//    }
+    
+    return cellSize;
 }
 
 @end

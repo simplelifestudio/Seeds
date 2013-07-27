@@ -13,6 +13,8 @@
 @interface HelpViewController ()
 {
     UserDefaultsModule* _userDefaults;
+    
+    GUIModule* _guiModule;
 }
 
 @end
@@ -33,6 +35,11 @@
         
     }
     return self;
+}
+
+- (void) awakeFromNib
+{
+    [super awakeFromNib];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -123,6 +130,9 @@
 {
     _userDefaults = [UserDefaultsModule sharedInstance];
     
+    _guiModule = [GUIModule sharedInstance];
+    _guiModule.helpViewController = self;
+    
     [self _initArray];
     [self _configHelpViewUI];
     [self _refreshPageControlButtonsStatus];
@@ -130,17 +140,14 @@
 
 -(void)_initArray
 {
-    UIImage* helpImage1 = [UIImage imageNamed:@"help_server.png"];
-    UIImage* helpImage2 = [UIImage imageNamed:@"help_standalone.png"];
-    UIImage* helpImage3 = [UIImage imageNamed:@"help_seedlist.png"];
-    UIImage* helpImage4 = [UIImage imageNamed:@"help_downlist.png"];
-    UIImage* helpImage5 = [UIImage imageNamed:@"help_seeddetail.png"];
-    UIImage* helpImage6 = [UIImage imageNamed:@"help_pictureview.png"];
-    UIImage* helpImage7 = [UIImage imageNamed:@"help_share.png"];
-    UIImage* helpImage8 = [UIImage imageNamed:@"help_config.png"];
-    UIImage* helpImage9 = [UIImage imageNamed:@"help_rssid.png"];
+    UIImage* helpImage1 = [UIImage imageNamed:@"help_01.JPG"];
+    UIImage* helpImage2 = [UIImage imageNamed:@"help_02.JPG"];
+    UIImage* helpImage3 = [UIImage imageNamed:@"help_03.JPG"];
+    UIImage* helpImage4 = [UIImage imageNamed:@"help_04.JPG"];
+    UIImage* helpImage5 = [UIImage imageNamed:@"help_05.JPG"];
+    UIImage* helpImage6 = [UIImage imageNamed:@"help_06.JPG"];
     
-    imageArray = [NSArray arrayWithObjects: helpImage1, helpImage2, helpImage3, helpImage4, helpImage5, helpImage6, helpImage7, helpImage8, helpImage9, nil];
+    imageArray = [NSArray arrayWithObjects: helpImage1, helpImage2, helpImage3, helpImage4, helpImage5, helpImage6, nil];
 }
 
 -(void)_configHelpViewUI
@@ -155,7 +162,7 @@
     {
         UIImageView *subImageView = [[UIImageView alloc] initWithImage:[imageArray objectAtIndex:i]];
         subImageView.frame = CGRectMake(width * i, 0, width, height);
-        subImageView.contentMode = UIViewContentModeScaleAspectFit;
+        subImageView.contentMode = UIViewContentModeScaleToFill;//UIViewContentModeScaleAspectFit;
         [_scrollView addSubview: subImageView];
     }
     
@@ -177,8 +184,22 @@
     _exitButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
     [_helpView addSubview:_exitButton];
     
+    [self _registerGestureRecognizers];
+    
     // set auto display timer
     [self _activateDisplayTimer:TRUE];
+}
+
+- (void) _registerGestureRecognizers
+{
+    UITapGestureRecognizer* tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_handleDoubleTap:)];
+    tapRecognizer.numberOfTapsRequired = 2;
+    [_helpView addGestureRecognizer:tapRecognizer];
+}
+
+- (void)_handleDoubleTap:(UIGestureRecognizer *)gestureRecognizer
+{
+    [self _exit];
 }
 
 -(void)_scrollToNextPage:(id)sender
@@ -205,7 +226,6 @@
     if (pageNum == imageArray.count - 1)
     {
         [displayTimer invalidate];
-        [self _exit];
     }
     else
     {
@@ -223,7 +243,9 @@
     if (!isAppLaunchedBefore)
     {
         [_userDefaults recordAppLaunchedBefore];
-        [self performSegueWithIdentifier:SEGUE_ID_HELP2NAVIGATION sender:self];
+
+        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController pushViewController:_guiModule.homeViewController animated:YES];
     }
     else
     {

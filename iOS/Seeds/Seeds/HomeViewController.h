@@ -37,5 +37,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *statuLabel;
 
 - (IBAction)onClickSyncButton:(id)sender;
+- (IBAction)onClickDownloadButton:(id)sender;
 
 @end

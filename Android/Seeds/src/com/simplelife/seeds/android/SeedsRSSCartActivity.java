@@ -45,9 +45,6 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class SeedsRSSCartActivity extends Activity{
 	
-	public static final String KEY_TITLE  = "name";
-	public static final String KEY_SIZE   = "size";
-	public static final String KEY_FORMAT = "format";
 	public static final String KEY_THUMB_URL = "thumb_url";
 	
 	private static ArrayList<Integer> mSeedLocalIdInCart = new ArrayList<Integer>();;
@@ -187,9 +184,16 @@ public class SeedsRSSCartActivity extends Activity{
 				tFirstImgUrl = "Nothing To Show";
 			
 			HashMap<String, String> map = new HashMap<String, String>();
-			map.put(KEY_TITLE, tSeedsEntity.getSeedName());
-			map.put(KEY_SIZE, tSeedsEntity.getSeedSize());
-			map.put(KEY_FORMAT, tSeedsEntity.getSeedFormat());
+			map.put(SeedsDBAdapter.KEY_NAME, tSeedsEntity.getSeedName());
+			map.put(SeedsDBAdapter.KEY_SIZE, 
+					tSeedsEntity.getSeedSize()+" / "
+			       +tSeedsEntity.getPicLinks().size()
+			       +getString(R.string.seeds_listperday_seedspics));
+			map.put(SeedsDBAdapter.KEY_FORMAT, tSeedsEntity.getSeedFormat());
+			String tMosaic = (tSeedsEntity.getSeedMosaic())
+					       ? getString(R.string.seeds_listperday_withmosaic)
+					       : getString(R.string.seeds_listperday_withoutmosaic);
+			map.put(SeedsDBAdapter.KEY_MOSAIC, tMosaic);
 			map.put(KEY_THUMB_URL, tFirstImgUrl);
 			
 			// Add the instance into the array
@@ -234,7 +238,10 @@ public class SeedsRSSCartActivity extends Activity{
 				tSeedsEntity.setSeedFormat(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_FORMAT)));
 				tSeedsEntity.setSeedTorrentLink(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_TORRENTLINK)));
 				tSeedsEntity.setSeedHash(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_HASH)));
-				tSeedsEntity.setSeedMosaic(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_MOSAIC)));
+				if(1 == tResult.getInt(tResult.getColumnIndex(SeedsDBAdapter.KEY_MOSAIC)))
+					tSeedsEntity.setSeedMosaic(true);
+				else
+					tSeedsEntity.setSeedMosaic(false);
 				if(1 == tResult.getInt(tResult.getColumnIndex(SeedsDBAdapter.KEY_FAVORITE)))
 					tSeedsEntity.setSeedFavorite(true);
 				else
@@ -336,8 +343,13 @@ public class SeedsRSSCartActivity extends Activity{
 		handler.sendMessage(t_MsgListData);							
 	}
 	
-    public static void addSeedToCart(int _inSeedLocalId){
-		mSeedLocalIdInCart.add(_inSeedLocalId);
+    public static boolean addSeedToCart(int _inSeedLocalId){
+    	if(mSeedLocalIdInCart.contains(_inSeedLocalId))
+    		return false;
+    	else
+    		mSeedLocalIdInCart.add(_inSeedLocalId);
+    				
+    	return true;
 	}
 	
 	public static void setBookSuccSeedIdList(ArrayList<Integer> _inSuccList){

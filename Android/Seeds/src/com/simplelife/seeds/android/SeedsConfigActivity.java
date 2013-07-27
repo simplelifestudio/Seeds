@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.EditTextPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -61,8 +60,9 @@ public class SeedsConfigActivity extends Activity {
     	
     	private EditTextPreference mEditTextPrefServerAddr;
     	private Preference mPrefVerifyServer;
-    	private ListPreference mListPrefSelectChan;
+    	//private ListPreference mListPrefSelectChan;
     	private SwitchPreference mSwitchPrefWifi;
+    	private SwitchPreference mSwitchEnablePwd;
     	private Preference mPrefClearCache;
     	private Preference mPrefChangePwd;
     	private Preference mPrefFeedback;
@@ -82,8 +82,9 @@ public class SeedsConfigActivity extends Activity {
             
             mEditTextPrefServerAddr = (EditTextPreference)findPreference("config_changeserver");
             mPrefVerifyServer   = (Preference)findPreference("config_verifyserver");
-            mListPrefSelectChan = (ListPreference)findPreference("config_selectchannel");
-            mSwitchPrefWifi = (SwitchPreference)findPreference("config_network");
+            //mListPrefSelectChan = (ListPreference)findPreference("config_selectchannel");
+            mSwitchPrefWifi  = (SwitchPreference)findPreference("config_network");
+            mSwitchEnablePwd = (SwitchPreference)findPreference("config_enablepwd");
             mPrefClearCache = (Preference)findPreference("config_clearcache");
             mPrefChangePwd  = (Preference)findPreference("config_changepwd");
             mPrefFeedback   = (Preference)findPreference("config_feedback");
@@ -98,7 +99,7 @@ public class SeedsConfigActivity extends Activity {
 			}
             
             mEditTextPrefServerAddr.setOnPreferenceChangeListener(this);
-            mListPrefSelectChan.setOnPreferenceChangeListener(this);
+            //mListPrefSelectChan.setOnPreferenceChangeListener(this);
             mSwitchPrefWifi.setOnPreferenceChangeListener(this);
             
             mPrefVerifyServer.setOnPreferenceClickListener(this);
@@ -125,10 +126,6 @@ public class SeedsConfigActivity extends Activity {
         		
         		// Set the global address
         		SeedsDefinitions.setServerUrl(mServerUrl);    		
-        	}
-        	else if(mListPrefSelectChan == preference)
-        	{
-        		// Do Nothing Now
         	}
         	else if(mSwitchPrefWifi == preference)
         	{
@@ -161,8 +158,14 @@ public class SeedsConfigActivity extends Activity {
         	}
         	else if(mPrefChangePwd == preference)
         	{
-        		Intent intent = new Intent(getActivity(), SeedsSetPasswordActivity.class);
-        		startActivity(intent);
+        		boolean tPwdFlag = mSharedPrefs.getBoolean("config_enablepwd", true);
+        		if (false == tPwdFlag)
+        		{
+        			showToast(R.string.seeds_config_toast_changepwdunavail);
+        		}else{
+            		Intent intent = new Intent(getActivity(), SeedsSetPasswordActivity.class);
+            		startActivity(intent);        			
+        		}
         	}
         	else if(mPrefAbout == preference)
         	{

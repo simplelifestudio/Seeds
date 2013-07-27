@@ -4,7 +4,6 @@
  *  SeedsDetailsActivity.java
  *  Seeds
  *
- *  Created by Chris Li on 13-5-20. 
  */
 
 package com.simplelife.seeds.android;
@@ -87,14 +86,7 @@ public class SeedsDetailsActivity extends Activity{
 		// Initialization
 		initViews();
 		
-		getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
-		
-		// Check if this seed has already been saved to favorite
-		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
-		{
-			if(null != mFavItem)
-				mFavItem.setIcon(R.drawable.rating_bad);
-		}						
+		getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);							
 		
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
@@ -361,9 +353,14 @@ public class SeedsDetailsActivity extends Activity{
             }
             case R.id.rss_addtocart:
             {
-            	SeedsRSSCartActivity.addSeedToCart(mSeedLocalId);
+            	int tShowId;
+            	if(!SeedsRSSCartActivity.addSeedToCart(mSeedLocalId))
+            		tShowId = R.string.seeds_rss_toast_addtocartnonecc;
+            	else
+            		tShowId = R.string.seeds_rss_toast_addtocartdone;
+
         		Toast toast = Toast.makeText(getApplicationContext(),
-        				R.string.seeds_rss_toast_addtocartdone, Toast.LENGTH_SHORT);
+        				tShowId, Toast.LENGTH_SHORT);
         	    toast.setGravity(Gravity.CENTER, 0, 0);
         	    toast.show();
             	return true;
@@ -396,6 +393,21 @@ public class SeedsDetailsActivity extends Activity{
         }
         return super.onOptionsItemSelected(item);
     }
-
+    
+    @Override 
+    public boolean onPrepareOptionsMenu(Menu menu){ 
+     
+        super.onPrepareOptionsMenu(menu); 
+     
+        MenuItem tFavItem = menu.findItem(R.id.menu_addto_fav); 
+     
+	    // Check if this seed has already been saved to favorite
+	    if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
+	    {
+            if(null != tFavItem)
+                tFavItem.setIcon(R.drawable.rating_bad);
+        }     
+        return true;      
+    } 
 		
 }

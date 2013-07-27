@@ -10,30 +10,39 @@
 #define Seeds_AppDefinitions_h
 
 // App Global
+#define APP_NAME @"Seeds"
 #define APP_VERSION @"0.1"
-#define NAMESPACE_APP @"com.simplelife.seeds.ios"
+#define NAMESPACE_APP @"com.simplelife.Seeds.ios"
+#define NAMESPACE_APP_CONST_CHARS "com.simplelife.Seeds.ios"
 #define MODULE_DELAY usleep(300000);
+
+#define SCREEN_4INCHRETINA_ONLY 0
+
+#define IS_IPAD1_OR_2_OR_MINI ([UIDevice currentResolution] == UIDevice_iPhoneStandardRes)
+#define IS_IPHONE4_OR_4S ([UIDevice currentResolution] == UIDevice_iPhoneHiRes)
+#define IS_IPHONE5 ([UIDevice currentResolution] == UIDevice_iPhoneTallerHiRes)
 
 // Module: UserDefaults
 #define USERDEFAULTS_KEY_SYNCSTATUSBYDAY @"syncStatusByDay:"
-#define PERSISTENTDOMAIN_SYNCSTATUSBYDAY @"syncStatusByDay"
+#define PERSISTENTDOMAIN_SYNCSTATUSBYDAY @"com.simplelife.Seeds.ios.userdefaults.syncStatusByDay"
 
 #define USERDEFAULTS_KEY_PASSCODESET @"passcodeSet"
 #define USERDEFAULTS_KEY_PASSCODE @"passcode"
-#define PERSISTENTDOMAIN_PASSCODE @"passcode"
+#define PERSISTENTDOMAIN_PASSCODE @"com.simplelife.Seeds.ios.userdefaults.passcode"
 #define PASSCODE_ATTEMPT_TIMES 3
 
 #define USERDEFAULTS_KEY_3GDOWNLOADIMAGES @"downloadImagesThrough3G"
 #define USERDEFAULTS_KEY_CARTID @"cartId"
-#define PERSISTENTDOMAIN_NETWORK @"network"
+#define PERSISTENTDOMAIN_NETWORK @"com.simplelife.Seeds.ios.userdefaults.network"
 
 #define USERDEFAULTS_KEY_SERVERMODE @"serverMode"
 #define USERDEFAULTS_KEY_APPLAUNCHEDBEFORE @"appLaunchedBefore"
 #define USERDEFAULTS_KEY_LASTTHREEDAYS @"lastThreeDays"
-#define PERSISTENTDOMAIN_APP @"application"
+#define USERDEFAULTS_KEY_LASTREFRESH @"lastRefresh"
+#define PERSISTENTDOMAIN_APP @"com.simplelife.Seeds.ios.userdefaults.application"
 
 #define USERDEFAULTS_KEY_THUMBNAILCACHEKEYS @"thumbnailCacheKeys"
-#define PERSISTENTDOMAIN_IMAGECACHE @"imageCache"
+#define PERSISTENTDOMAIN_IMAGECACHE @"com.simplelife.Seeds.ios.userdefaults.imageCache"
 
 // Module: Communication
 #define RACHABILITY_HOST @"www.apple.com"
@@ -99,9 +108,11 @@
 
 #define CACHE_EXPIRE_PERIOD 60*60*24*7
 
-#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL @"seeds.thumbnails.seedlisttablecell"
-#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL @"Seeds.thumbnails.seedpicturecollectioncell"
-#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW @"seeds.thumbnails.seedpictureview"
+#define NAMESPACE_CACHE @"com.simplelife.Seeds.ios.cache"
+#define NAMESPACE_CACHE_CONST_CHARS "com.simplelife.Seeds.ios.cache"
+#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDLISTTABLECELL @"thumbnails.seedlisttablecell"
+#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTURECOLLECTIONCELL @"thumbnails.seedpicturecollectioncell"
+#define CACHEKEY_SUFFIX_THUMBNAIL_SEEDPICTUREVIEW @"thumbnails.seedpictureview"
 
 
 // Module: Spider
@@ -182,32 +193,40 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define STORYBOARD_ID_DOWNLOADSEEDLISTVIEWCONTROLLER @"sbid_downloadseedlistviewcontroller"
 #define STORYBOARD_ID_WARNINGVIEWCONTROLLER @"sbid_warningviewcontroller"
 #define STORYBOARD_ID_CARTIDVIEWCONTROLLER @"sbid_cartidviewcontroller"
+#define STORYBOARD_ID_SEEDLISTVIWECONTROLLER_SMALLER @"sbid_seedlistviewcontroller_smaller"
+#define STORYBOARD_ID_SEEDDETAILVIEWCONTROLLER_SMALLER @"sbid_seeddetailviewcontroller_smaller"
+#define STORYBOARD_ID_DOWNLOADSEEDLISTVIEWCONTROLLER_SMALLER @"sbid_downloadseedlistviewcontroller_smaller"
 
 #define SEGUE_ID_SPLASH2NAVIGATION @"splash2navigation"
-#define SEGUE_ID_SPLASH2HELP @"splash2help"
 #define SEGUE_ID_HOME2SEEDLIST @"home2seedlist"
 #define SEGUE_ID_HOME2HELP @"home2help"
-#define SEGUE_ID_HELP2NAVIGATION @"help2navigation"
 #define SEGUE_ID_HOME2CONFIG @"home2config"
 #define SEGUE_ID_HOME2TRANSMIT @"home2transmit"
 #define SEGUE_ID_HOME2FAVORITESEEDLIST @"home2favoriteseedlist"
+#define SEGUE_ID_HOME2DOWNLOADSEEDLIST @"home2downloadseedlist"
+#define SEGUE_ID_HOME2DOWNLOADSEEDLIST_SMALLER @"home2downloadseedlistsmaller"
 #define SEGUE_ID_SEEDLIST2SEEDDETAIL @"seedlist2seeddetail"
 #define SEGUE_ID_SEEDDETAIL2SEEDPICTURE @"seeddetail2seedpicture"
 #define SEGUE_ID_FAVORITESEEDLIST2SEEDDETAIL @"favoriteseedlist2seeddetail"
 #define SEGUE_ID_DOWNLOADSEEDLIST2SEEDDETAIL @"downloadseedlist2seeddetail"
+#define SEGUE_ID_HOME2SEEDLISTSMALLER @"home2seedlistsmaller"
+#define SEGUE_ID_SEEDLISTSMALLER2SEEDDETAILSMALLER @"seedlistsmaller2seeddetailsmaller"
+#define SEGUE_ID_SEEDDETAILSMALLER2SEEDPICTURE @"seeddetailsmaller2seedpicture"
+#define SEGUE_ID_DOWNLOADSEEDLISTSMALLER2SEEDDETAILSMALLER @"downloadseedlistsmaller2seeddetailsmaller"
+#define SEGUE_ID_FAVORITESEEDLISTSMALLER2SEEDDETAILSMALLER @"favoriteseedlistsmaller2seeddetailsmaller"
 
 #define UI_RENDER_SEEDLISTTABLECELL 1
 #define CELL_ID_SEEDLISTTABLECELL @"SeedListTableCell"
-#define CELL_ID_SEEDLISTTABLEACTIONCELL @"SeedListTableActionCell"
+#define CELL_ID_SEEDLISTTABLESMALLERCELL @"SeedListTableSmallerCell"
 
 #define WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL 100
 #define HEIGHT_ASYNCIMAGEVIEW_IN_SEEDLISTTABLECELL 60
-#define WIDTH_ASYNCIMAGEVIEW_IN_SEEDPICTURECOLLECTIONCELL 150
-#define HEIGHT_ASYNCIMAGEVIEW_IN_SEEDPICTURECOLLECTIONCELL 170
+#define WIDTH_ASYNCIMAGEVIEW_IN_SEEDLISTTABLESMALLERCELL 100
+#define HEIGHT_ASYNCIMAGEVIEW_IN_SEEDLISTTABLESMALLERCELL 56
 
 #define HEIGHT_NAVIGATION_BAR 44
 
-#define PAGE_SIZE_SEEDLISTTABLE 7
+#define PAGE_SIZE_SEEDLISTTABLE ((IS_IPHONE5) ? 7 : 6)
 #define PAGE_SIZE_SEEDDETAILCOLLECTION 4
 
 #define CELL_ID_SEEDPICTURECOLLECTIONCELL @"SeedPictureCollectionCell"
@@ -224,16 +243,17 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 #define kZoomStep 2
 
-#define WARNING_DISPLAY_SECONDS 5
+#define WARNING_DISPLAY_SECONDS 9
 
-#define HELPSCREEN_DISPLAY_SECONDS 3
+#define HELPSCREEN_DISPLAY_SECONDS 10
 
 #define TABLEVIEW_LOAD_DISPLAY_SECONDS 0.3
 
 #define CARTID_MAX_LENGTH 32
 
 #define WARNING_ID_APPFIRSTLAUNCHED @"appFirstLaunched"
-#define WARNING_ID_UNSUPPORTDEVICES @"unsupportDevices"
+#define WARNING_ID_UNSUPPORTDEVICE @"unsupportDevice"
+#define WARNING_ID_UNSUPPORTOSVERSION @"unsupportOSVersion"
 #define WARNING_ID_PASSCODEFAILEDATTEMPTS @"passcodeFailedAttempts"
 
 #define RES_PNG_FILE @"png"
@@ -242,6 +262,10 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define RES_XIMAGE_TABLECELL @"xImage_tableCell"
 #define RES_XIMAGE_COLLECTIONCELL @"xImage_collectionCell"
 #define RES_XIMAGE_PICTUREVIEW @"xImage_pictureView"
+
+#define FONT_SIZE_ZOOMRATE_CIRCULARVIEW_FOR_IPAD1_OR_2_OR_MINI 0.8
+#define FONT_SIZE_ZOOMRATE_CIRCULARVIEW_FOR_IPHONE4_OR_4S 0.8
+#define FONT_SIZE_ZOOMRATE_CIRCULARVIEW_FOR_IPHONE5 1
 
 #define THUMBNAIL_SIZE_SEEDLISTTABLECELL CGSizeMake(150, 90)
 #define THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL CGSizeMake(225, 255)

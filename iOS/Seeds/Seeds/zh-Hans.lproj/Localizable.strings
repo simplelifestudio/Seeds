@@ -56,6 +56,8 @@
 "Apply Successfully" = "申请成功";
 "Apply Failed" = "申请失败";
 "Length Limited" = "长度限制";
+"RSS ID Ready" = "点击前往";
+"Not Ready, Please check RSS ID in Config" = "请先前往配置界面设定RSS ID";
 
 "Preparing" = "准备";
 "Stamps Computing" = "日期计算";
@@ -67,6 +69,7 @@
 "Seeds Organizing" = "种子整理";
 "Seeds Saving" = "种子保存";
 "Fail Saving" = "保存失败";
+"Fail Parsing" = "解析失败";
 "Fail Clearing" = "清除失败";
 "Status Saving" = "状态保存";
 "Fail Analyzing" = "分析失败";
@@ -75,6 +78,7 @@
 "Sync Yet" = "已更新过";
 "Completed" = "完成";
 "Folder Exception" = "目录异常";
+"No Update" = "没有更新";
 
 "Torrents Downloading" = "种子下载";
 "Download Torrent" = "下载种子";
@@ -183,6 +187,7 @@
 "Counting failed images..." = "无效图片统计中...";
 "Last Updated: %@" = "最后重刷于: %@";
 
-"Warning of Unsupported Devices" = "       非常抱歉，限于开发者的时间和精力，当前iOS版的Seeds只支持iPhone5，程序会在倒计时结束后自动退出。";
+"Warning of Unsupported Screen Resolution" = "       非常抱歉，限于开发者的时间和精力，当前iOS版的Seeds只支持4英寸Retina屏幕的设备，程序会在倒计时结束后自动退出。";
+"Warning of Unsupported iOS Version" = "       非常抱歉，限于开发者的时间和精力，当前Seeds的最低运行平台为iOS 6，程序会在倒计时结束后自动退出。";
 "Passcode failed attempts is too much, app will be terminated once countdown is end." = "       密码尝试失败次数过多，程序会在倒计时结束后自动退出。";
 "Warning of App First Launched" = "       本软件的主要意图为开发技术学习与讨论，严禁用于任何商业意图和对外传播。在进入程序之前，请确认你已年满18周岁。如不确认，程序将在倒计时结束后自动退出。";

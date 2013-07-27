@@ -15,7 +15,7 @@
     BOOL flag = NO;
     NSString* content = self.content;
     flag = [CBStringUtils isSubstringIncluded:content subString:@"片名"];
-
+    
     return flag;
 }
 
@@ -109,7 +109,8 @@
     {
         content = [content substringFromIndex:range.location + 1];
         content = [CBStringUtils trimString:content];
-        return content;
+        
+        return [self _parseContent:content];
     }
     
     range = [content rangeOfString:STR_COLON_FULLWIDTH_2];
@@ -117,7 +118,8 @@
     {
         content = [content substringFromIndex:range.location + 1];
         content = [CBStringUtils trimString:content];
-        return content;
+        
+        return [self _parseContent:content];        
     }
     
     range = [content rangeOfString:STR_COLON];
@@ -125,15 +127,26 @@
     {
         content = [content substringFromIndex:range.location + 1];
         content = [CBStringUtils trimString:content];
-        return content;
+        
+        return [self _parseContent:content];        
     }
     
-    range = [content rangeOfString:STR_BRACKET_RIGHT];
+    range = [content rangeOfString:STR_BRACKET_RIGHT_1];
     if (0 < range.length)
     {
         content = [content substringFromIndex:range.location + 1];
         content = [CBStringUtils trimString:content];
-        return content;
+        
+        return [self _parseContent:content];        
+    }
+    
+    range = [content rangeOfString:STR_BRACKET_RIGHT_2];
+    if (0 < range.length)
+    {
+        content = [content substringFromIndex:range.location + 1];
+        content = [CBStringUtils trimString:content];
+        
+        return [self _parseContent:content];
     }
     
     return content;
@@ -175,7 +188,7 @@
         return [self _parseHeaderContent:content];
     }
     
-    range = [content rangeOfString:STR_BRACKET_LEFT];
+    range = [content rangeOfString:STR_BRACKET_LEFT_1];
     if (0 == range.location)
     {
         NSInteger startLocation = range.location + 1;
@@ -186,7 +199,29 @@
         return [self _parseHeaderContent:content];
     }
     
-    range = [content rangeOfString:STR_BRACKET_RIGHT];
+    range = [content rangeOfString:STR_BRACKET_RIGHT_1];
+    if (0 == range.location)
+    {
+        NSInteger startLocation = range.location + 1;
+        if (content.length > startLocation)
+        {
+            content = [content substringFromIndex:startLocation];
+        }
+        return [self _parseHeaderContent:content];
+    }
+    
+    range = [content rangeOfString:STR_BRACKET_LEFT_2];
+    if (0 == range.location)
+    {
+        NSInteger startLocation = range.location + 1;
+        if (content.length > startLocation)
+        {
+            content = [content substringFromIndex:startLocation];
+        }
+        return [self _parseHeaderContent:content];
+    }
+    
+    range = [content rangeOfString:STR_BRACKET_RIGHT_2];
     if (0 == range.location)
     {
         NSInteger startLocation = range.location + 1;

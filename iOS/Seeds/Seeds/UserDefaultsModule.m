@@ -292,6 +292,20 @@ SINGLETON(UserDefaultsModule)
     }
 }
 
+-(NSString*) lastRefreshStamp
+{
+    NSString* stamp = nil;
+    
+    stamp = [self getValueForKeyInPersistentDomain:USERDEFAULTS_KEY_LASTREFRESH inPersistentDomain:PERSISTENTDOMAIN_APP];
+    
+    return stamp;
+}
+
+-(void) setLastRefreshStamp:(NSString*) stamp
+{
+    [self setValueForKeyInPersistentDomain:stamp forKey:USERDEFAULTS_KEY_LASTREFRESH inPersistentDomain:PERSISTENTDOMAIN_APP];
+}
+
 #pragma mark - Cache
 
 -(NSMutableDictionary*) thumbnailCacheKeys

@@ -129,9 +129,8 @@ public class SeedsEntity implements Serializable {
 		this.hash = inHash;
 	}
 	
-	public void setSeedMosaic(String inMosaic){
-		//this.mosaic = inMosaic;
-		this.mosaic = false;
+	public void setSeedMosaic(boolean inMosaic){
+		this.mosaic = inMosaic;
 	}
 	
 	public void setSeedMemo(String inMemo){

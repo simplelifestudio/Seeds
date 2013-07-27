@@ -42,7 +42,7 @@
     return self;
 }
 
--(NSString*) pullSeedListLinkByDate:(NSDate *)date
+-(NSString*) pullSeedListLinkByDate:(NSDate *)date error:(__autoreleasing NSError**)errorPtr
 {
     NSMutableString* link = [NSMutableString stringWithCapacity:0];
     
@@ -68,8 +68,8 @@
         NSData* data = [NSData dataWithContentsOfURL:channelUrl options:NSDataReadingMappedIfSafe error:&error];
         if (0 != error.code)
         {
+            *errorPtr = error;
             DLog(@"Access Link: %@ end error = %d", LINK_SEEDLIST_CHANNEL, [error code]);
-            // TODO: Need feedback to UI
             return link;
         }
 
@@ -95,18 +95,18 @@
     return link;
 }
 
--(NSArray*) pullSeedsFromLink:(NSString*) link
+-(NSArray*) pullSeedsFromLink:(NSString*) link error:(__autoreleasing NSError**)errorPtr
 {
     NSMutableArray* seedList = [NSMutableArray arrayWithCapacity:0];
     
     if (nil != link && 0 < link.length)
     {
-        NSError* error = nil;
+        NSError* __autoreleasing error = nil;
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:link] options:NSDataReadingMappedIfSafe error:&error];
         if (0 != error.code)
         {
             DLog(@"Access Link: %@ end error = %d", link, [error code]);
-            // TODO: Need feedback on UI
+            *errorPtr = error;            
             return seedList;
         }
         
@@ -190,7 +190,19 @@
                     [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Link Analyzing", nil)];
                 }
                 
-                NSString* channelLink = [self pullSeedListLinkByDate:day];
+                NSError* error = nil;
+                NSString* channelLink = [self pullSeedListLinkByDate:day error:&error];
+                if (0 != error.code)
+                {
+                    DLog(@"Fail to pull seed list link by date: %@ with error: %@", day, error);
+                    if (_seedsSpiderDelegate)
+                    {
+                        [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Fail Analyzing", nil)];
+                    }
+                    
+                    continue;
+                }
+                
                 if (nil != channelLink && 0 < channelLink.length)
                 {
                     // Step 40:
@@ -199,14 +211,28 @@
                         [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Seeds Parsing", nil)];
                     }
                     
-                    NSArray* seedList = [self pullSeedsFromLink:channelLink];
-                    [self fillCommonInfoToSeeds:seedList date:day];
-                    
-                    [pulledSeedList addObjectsFromArray:seedList];
-                    
-                    if (_seedsSpiderDelegate)
+                    error = nil;
+                    NSArray* seedList = [self pullSeedsFromLink:channelLink error:&error];
+                    if (0 != error.code)
                     {
-                        [_seedsSpiderDelegate taskDataUpdated:[NSString stringWithFormat:@"%d", dayIndex] data:[NSString stringWithFormat:@"%d", seedList.count]];
+                        DLog(@"Fail to pull seeds from link: %@ with error: %@", channelLink, error);
+                        if (_seedsSpiderDelegate)
+                        {
+                            [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Fail Parsing", nil)];
+                        }
+                        
+                        continue;
+                    }
+                    else
+                    {
+                        [self fillCommonInfoToSeeds:seedList date:day];
+                        
+                        [pulledSeedList addObjectsFromArray:seedList];
+                        
+                        if (_seedsSpiderDelegate)
+                        {
+                            [_seedsSpiderDelegate taskDataUpdated:[NSString stringWithFormat:@"%d", dayIndex] data:[NSString stringWithFormat:@"%d", seedList.count]];
+                        }
                     }
                     
                     // Step 50:
@@ -257,7 +283,6 @@
                 }
                 else
                 {
-                    NSString* dateStr = [CBDateUtils shortDateString:day];
                     DLog(@"Seeds channel link can't be found with date: %@", dateStr);
                     if (nil != _seedsSpiderDelegate)
                     {

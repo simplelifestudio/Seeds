@@ -12,8 +12,11 @@
 #define STR_COLON_FULLWIDTH_1 @"︰"
 #define STR_COLON_FULLWIDTH_2 @"："
 
-#define STR_BRACKET_LEFT @"["
-#define STR_BRACKET_RIGHT @"]"
+#define STR_BRACKET_LEFT_1 @"["
+#define STR_BRACKET_RIGHT_1 @"]"
+
+#define STR_BRACKET_LEFT_2 @"【"
+#define STR_BRACKET_RIGHT_2 @"】"
 
 #define STR_RETURN @"\r"
 #define STR_NEWLINE @"\n"

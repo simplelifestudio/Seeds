@@ -15,6 +15,7 @@
 @interface GUIModule() <WarningDelegate>
 {
     AFNetworkActivityIndicatorManager* _networkActivityIndicator;
+    BOOL _isPasscodeVCVisible;
 }
 
 @end
@@ -22,10 +23,10 @@
 @implementation GUIModule
 {
     PAPasscodeViewController* _passcodeViewController;
-    BOOL _isLockViewVisible;
 }
 
 @synthesize homeViewController = _homeViewController;
+@synthesize helpViewController = _helpViewController;
 @synthesize HUDAgent = _HUDAgent;
 
 SINGLETON(GUIModule)
@@ -35,6 +36,8 @@ SINGLETON(GUIModule)
     [self setModuleIdentity:NSLocalizedString(@"GUI Module", nil)];
     [self.serviceThread setName:NSLocalizedString(@"GUI Module Thread", nil)];
     [self setKeepAlive:FALSE];
+    
+    _isPasscodeVCVisible = NO;
     
     _networkActivityIndicator = [AFNetworkActivityIndicatorManager sharedManager];    
     
@@ -62,9 +65,6 @@ SINGLETON(GUIModule)
     _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionEnter];
     _passcodeViewController.delegate = self;
     _passcodeViewController.simple = YES;
-    _passcodeViewController.passcode = @"1002";
-    
-    _isLockViewVisible = NO;
 }
 
 -(void) processService
@@ -73,6 +73,34 @@ SINGLETON(GUIModule)
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     
     MODULE_DELAY    
+}
+
+-(void) setHomeViewController:(HomeViewController *)homeViewController
+{
+    _homeViewController = homeViewController;
+    _helpViewController = nil;
+}
+
+-(HomeViewController*) homeViewController
+{
+    if (nil == _homeViewController)
+    {
+        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:STORYBOARD_IPHONE bundle:nil];
+        _homeViewController = [storyboard instantiateViewControllerWithIdentifier:STORYBOARD_ID_HOMEVIEWCONTROLLER];
+    }
+    
+    return _homeViewController;
+}
+
+-(CBHUDAgent*) HUDAgent
+{
+    if ((nil == _HUDAgent) && (nil != _homeViewController))
+    {
+        UIView* view = _homeViewController.navigationController.view;
+        _HUDAgent = [[CBHUDAgent alloc] initWithUIView:view];
+    }
+    
+    return _HUDAgent;
 }
 
 -(void) showHUD:(NSString *)status delay:(NSInteger)seconds
@@ -113,20 +141,7 @@ SINGLETON(GUIModule)
 
 - (void)PAPasscodeViewControllerDidEnterPasscode:(PAPasscodeViewController *)controller
 {
-    UIViewController* vc = _homeViewController.presentedViewController;
-    if (nil != vc)
-    {
-        if (vc != _passcodeViewController)
-        {
-            [vc dismissModalViewControllerAnimated:NO];
-        }
-        else
-        {
-            [_homeViewController dismissModalViewControllerAnimated:NO];
-        }
-        
-        _isLockViewVisible = NO;
-    }
+    [self _showPasscodeViewController:NO];
 }
 
 - (void)PAPasscodeViewController:(PAPasscodeViewController *)controller didFailToEnterPasscode:(NSInteger)attempts
@@ -135,7 +150,7 @@ SINGLETON(GUIModule)
     {
         WarningViewController* warningVC = [self getWarningViewController:WARNING_ID_PASSCODEFAILEDATTEMPTS delegate:self];
         
-        [_passcodeViewController presentModalViewController:warningVC animated:NO];
+        [_passcodeViewController presentViewController:warningVC animated:NO completion:nil];
         
         [warningVC setAgreeButtonVisible:NO];
         [warningVC setDeclineButtonVisible:NO];
@@ -163,26 +178,10 @@ SINGLETON(GUIModule)
     
     if (isPasscodeSet)
     {
-        if (!_isLockViewVisible)
-        {
-            NSString* passcode = [_userDefaults passcode];
-            _passcodeViewController.passcode = passcode;
-            
-            UIViewController* vc = _homeViewController.presentedViewController;
-            if (nil != vc)
-            {
-                if (vc != _passcodeViewController)
-                {
-                    [vc presentModalViewController:_passcodeViewController animated:NO];
-                    _isLockViewVisible = YES;
-                }
-            }
-            else
-            {
-                [_homeViewController presentModalViewController:_passcodeViewController animated:NO];
-                _isLockViewVisible = YES;
-            }
-        }
+        NSString* passcode = [_userDefaults passcode];
+        _passcodeViewController.passcode = passcode;
+        
+        [self _showPasscodeViewController:YES];
     }
 }
 
@@ -214,15 +213,44 @@ SINGLETON(GUIModule)
 
 #pragma mark - Private Methods
 
--(CBHUDAgent*) HUDAgent
+-(UIViewController*) _currentRootViewController
 {
-    if ((nil == _HUDAgent) && (nil != _homeViewController))
-    {
-        UIView* view = _homeViewController.navigationController.view;
-        _HUDAgent = [[CBHUDAgent alloc] initWithUIView:view];
-    }
+    UIViewController* rootVC = (nil != _homeViewController) ? _homeViewController : _helpViewController;
+    return rootVC;
+}
+
+-(void) _showPasscodeViewController:(BOOL) visible
+{
+    UIViewController* rootVC = [self _currentRootViewController];
     
-    return _HUDAgent;
+    if (rootVC)
+    {        
+        if (visible)
+        {
+            if (!_isPasscodeVCVisible)
+            {
+                UIViewController* vc = rootVC.presentedViewController;
+                if (nil != vc)
+                {
+                    [vc presentViewController:_passcodeViewController animated:NO completion:nil];
+                }
+                else
+                {
+                    [rootVC presentViewController:_passcodeViewController animated:NO completion:nil];
+                }
+                
+                _isPasscodeVCVisible = YES;
+            }
+        }
+        else
+        {
+            if (_isPasscodeVCVisible)
+            {
+                [_passcodeViewController dismissViewControllerAnimated:NO completion:nil];
+                _isPasscodeVCVisible = NO;
+            }
+        }
+    }
 }
 
 @end

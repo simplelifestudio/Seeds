@@ -67,19 +67,37 @@
 
 - (void) finishFadingSplashScreen
 {
-    if (![UIDevice isRunningOniPhone5])
+    BOOL isOSVersion6AndLater = [UIDevice isRunningOniOS6AndLater];
+    if (!isOSVersion6AndLater)
     {
-        WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_UNSUPPORTDEVICES delegate:self];
+        WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_UNSUPPORTOSVERSION delegate:self];
         
-        [self presentModalViewController:warningVC animated:NO];
+        [self presentViewController:warningVC animated:NO completion:nil];
         
         [warningVC setAgreeButtonVisible:NO];
         [warningVC setDeclineButtonVisible:NO];
         [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS];
-        [warningVC setWarningText:NSLocalizedString(@"Currently Seeds iOS app supports iPhone5 only, sorry for inconvenience. App will be terminated automatically once countdown is end.", nil)];
+        [warningVC setWarningText:NSLocalizedString(@"Warning of Unsupported iOS Version", nil)];
         
         return;
     }
+    
+#if SCREEN_4INCHRETINA_ONLY
+    BOOL isScreen4InchRetina = [UIDevice isRunningOniPhone5];
+    if (!isScreen4InchRetina)
+    {
+        WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_UNSUPPORTDEVICE delegate:self];
+        
+        [self presentViewController:warningVC animated:NO completion:nil];
+        
+        [warningVC setAgreeButtonVisible:NO];
+        [warningVC setDeclineButtonVisible:NO];
+        [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS];
+        [warningVC setWarningText:NSLocalizedString(@"Warning of Unsupported Screen Resolution", nil)];
+        
+        return;
+    }
+#endif
     
     BOOL appLaunchedBefore = [_userDefaults isAppLaunchedBefore];
     if (appLaunchedBefore)
@@ -88,11 +106,13 @@
     }
     else
     {
+        [_userDefaults enableServerMode:YES];
+        
         WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_APPFIRSTLAUNCHED delegate:self];
         
-        [self presentModalViewController:warningVC animated:NO];
+        [self presentViewController:warningVC animated:NO completion:nil];
         
-        [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS * 2];
+        [warningVC setCountdownSeconds:WARNING_DISPLAY_SECONDS];
         [warningVC setWarningText:NSLocalizedString(@"Warning of App First Launched", nil)];
     }
 }
@@ -168,22 +188,23 @@
     {
         if (vc != _passcodeViewController)
         {
-            [vc dismissModalViewControllerAnimated:NO];
+            [vc dismissViewControllerAnimated:NO completion:nil];
         }
         else
         {
-            [self dismissModalViewControllerAnimated:NO];
-            
-            BOOL isAppLaunchedBefore = [_userDefaults isAppLaunchedBefore];
-            
-            if (!isAppLaunchedBefore)
-            {
-                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2HELP sender:self];
-            }
-            else
-            {
-                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
-            }
+            [self dismissViewControllerAnimated:NO completion:nil];
+
+            [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
+//            BOOL isAppLaunchedBefore = [_userDefaults isAppLaunchedBefore];
+//            
+//            if (!isAppLaunchedBefore)
+//            {
+//                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2HELP sender:self];
+//            }
+//            else
+//            {
+//                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
+//            }
         }
     }
 }
@@ -203,18 +224,19 @@
         }
         else
         {
-            [self dismissModalViewControllerAnimated:NO];
+            [self dismissViewControllerAnimated:NO completion:nil];
             
-            BOOL isAppLaunchedBefore = [_userDefaults isAppLaunchedBefore];
-            
-            if (!isAppLaunchedBefore)
-            {
-                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2HELP sender:self];
-            }
-            else
-            {
-                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
-            }
+//            BOOL isAppLaunchedBefore = [_userDefaults isAppLaunchedBefore];
+//            
+//            if (!isAppLaunchedBefore)
+//            {
+//                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2HELP sender:self];
+//            }
+//            else
+//            {
+//                [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
+//            }
+            [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
         }
     }
 }
@@ -272,13 +294,14 @@
     BOOL appLaunchedBefore = [_userDefaults isAppLaunchedBefore];
     if (!appLaunchedBefore)
     {
-        [self dismissModalViewControllerAnimated:NO];
+        [self dismissViewControllerAnimated:NO completion:nil];
         
         _passcodeViewController = [[PAPasscodeViewController alloc] initForAction:PasscodeActionSet];
         
         _passcodeViewController.delegate = self;
         _passcodeViewController.simple = YES;
-        [self presentModalViewController:_passcodeViewController animated:NO];
+
+        [self presentViewController:_passcodeViewController animated:NO completion:nil];
     }
     else
     {
@@ -293,11 +316,11 @@
             _passcodeViewController.delegate = self;
             _passcodeViewController.simple = YES;
             
-            [self presentModalViewController:_passcodeViewController animated:NO];
+            [self presentViewController:_passcodeViewController animated:NO completion:nil];
         }
         else
         {
-            [self dismissModalViewControllerAnimated:NO];
+            [self dismissViewControllerAnimated:NO completion:nil];
             [self performSegueWithIdentifier:SEGUE_ID_SPLASH2NAVIGATION sender:self];
         }
     }

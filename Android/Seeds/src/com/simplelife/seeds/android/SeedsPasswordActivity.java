@@ -4,7 +4,6 @@
  *  SeedsPasswordActivity.java
  *  Seeds
  *
- *  Created by Chris Li on 13-5-20. 
  */
 
 package com.simplelife.seeds.android;
@@ -47,7 +46,7 @@ public class SeedsPasswordActivity extends Activity {
 			public void onComplete(String mPassword) {
 				// If the password is correct, direct to the datelist activity
 				if (mPwdView.verifyPassword(mPassword)) {
-					showToast(R.string.seeds_password_logincorrect);
+					//showToast(R.string.seeds_password_logincorrect);
 					Intent intent = new Intent(SeedsPasswordActivity.this, SeedsDateListActivity.class);
 					startActivity(intent);
 					finish();
@@ -67,7 +66,7 @@ public class SeedsPasswordActivity extends Activity {
 		if (mPwdView.isPasswordEmpty()) {
 			mPwdView.setVisibility(View.GONE);
 			noSetPassword.setVisibility(View.VISIBLE);
-			toastTv.setText(R.string.seeds_password_drawstatus);
+			toastTv.setText(R.string.seeds_password_create);
 			noSetPassword.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {

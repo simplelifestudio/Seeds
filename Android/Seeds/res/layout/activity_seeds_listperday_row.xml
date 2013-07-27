@@ -31,10 +31,13 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toLeftOf="@+id/seeds_format"
+        android:layout_marginRight="2dip"
         android:text="@string/seedTitle"
         android:textColor="#040404"
         android:textSize="15sp"
         android:textStyle="bold"
+        android:lines="2"
         android:ellipsize="end"
         android:typeface="sans" />
 
@@ -46,10 +49,12 @@
         android:layout_below="@id/seeds_title"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toLeftOf="@+id/seeds_mosaic"
         android:contentDescription="@string/hello_world"
         android:text="@string/seedSize"
         android:textColor="#343434"
-        android:textSize="10sp" />
+        android:textSize="12sp"
+        android:ellipsize="end" />
 
     <!-- The format of the Seeds -->
     <TextView
@@ -58,12 +63,25 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@id/seeds_title"
-        android:layout_marginRight="5dip"
+        android:layout_marginRight="3dip"
         android:gravity="right"
         android:text="@string/seedFormat"
         android:textColor="#10bcc9"
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:textStyle="bold" />
+        <!-- The format of the Seeds -->
+        
+    <TextView
+        android:id="@+id/seeds_mosaic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/seeds_size"
+        android:layout_marginRight="3dip"
+        android:gravity="right"
+        android:text="@string/seeds_listperday_mosaic"
+        android:textColor="#343434"
+        android:textSize="12sp" />
 
     <!-- Check out the details -->
     <ImageView

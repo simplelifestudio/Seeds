@@ -42,12 +42,11 @@
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUILabel" id="783567866">
 								<reference key="NSNextResponder" ref="178979657"/>
-								<int key="NSvFlags">1306</int>
+								<int key="NSvFlags">1290</int>
 								<object class="NSPSMatrix" key="NSFrameMatrix"/>
-								<string key="NSFrame">{{0, 168.5}, {150, 20}}</string>
+								<string key="NSFrame">{{0, 158}, {150, 20}}</string>
 								<reference key="NSSuperview" ref="178979657"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -76,7 +75,7 @@
 							<object class="IBUIView" id="1052858364">
 								<reference key="NSNextResponder" ref="178979657"/>
 								<int key="NSvFlags">1330</int>
-								<string key="NSFrame">{{0, -0.5}, {150, 170}}</string>
+								<string key="NSFrame">{{0, -0.5}, {150, 160}}</string>
 								<reference key="NSSuperview" ref="178979657"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="783567866"/>
@@ -92,7 +91,7 @@
 							</object>
 						</array>
 						<object class="NSPSMatrix" key="NSFrameMatrix"/>
-						<string key="NSFrameSize">{150, 190}</string>
+						<string key="NSFrameSize">{150, 180}</string>
 						<reference key="NSSuperview" ref="825047625"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1052858364"/>
@@ -108,7 +107,7 @@
 					</object>
 				</array>
 				<object class="NSPSMatrix" key="NSFrameMatrix"/>
-				<string key="NSFrameSize">{150, 190}</string>
+				<string key="NSFrameSize">{150, 180}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="178979657"/>

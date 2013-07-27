@@ -43,7 +43,7 @@
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUITextView" id="1061927158">
 								<reference key="NSNextResponder" ref="223885616"/>
-								<int key="NSvFlags">1302</int>
+								<int key="NSvFlags">1315</int>
 								<string key="NSFrame">{{118, -6}, {200, 38}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
@@ -172,8 +172,8 @@
 							</object>
 							<object class="IBUIView" id="513938367">
 								<reference key="NSNextResponder" ref="223885616"/>
-								<int key="NSvFlags">1300</int>
-								<string key="NSFrame">{{10, 2}, {100, 62}}</string>
+								<int key="NSvFlags">1284</int>
+								<string key="NSFrame">{{10, 3}, {100, 60}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="1061927158"/>
@@ -239,7 +239,6 @@
 								<string key="NSFrame">{{278, 52}, {40, 10}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -279,7 +278,6 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="223885616"/>
 				<string key="IBUIReuseIdentifier">SeedListTableCell</string>
-				<integer value="92" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">

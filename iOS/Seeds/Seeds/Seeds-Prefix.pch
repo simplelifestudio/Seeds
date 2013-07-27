@@ -16,8 +16,10 @@
     #import "CBPathUtils.h"
     #import "CBAppUtils.h"
     #import "CBMathUtils.h"
+    #import "UIDevice+Resolutions.h"
 
     #import "AppDefinitions.h"
+    #import "Environment.h"
     #import "GUIStyle.h"
     #import "AppDelegate.h"
     #import "DAOFactory.h"

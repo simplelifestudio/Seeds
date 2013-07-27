@@ -59,15 +59,11 @@ SINGLETON(DatabaseModule)
 {
     if (nil == _databaseFilePath)
     {
-        NSString* dbFileInXcodeProject = [[NSBundle mainBundle] pathForResource:DATABASE_FILE_NAME ofType:DATABASE_FILE_TYPE];
-        DLog(@"Database File in Xcode Project: %@", dbFileInXcodeProject);
-
-        NSString *documentsDir = [CBPathUtils documentsDirectoryPath];
+        _databaseFilePath = [Environment databaseFilePath];
         
-        _databaseFilePath = [documentsDir stringByAppendingPathComponent:DATABASE_FILE_FULL_NAME];
-        DLog(@"Database File in App Sandbox: %@", _databaseFilePath);
+        NSString* _databaseFilePathInXcodeProject = [Environment databaseFilePathInXcodeProject];
         
-        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSFileManager* fileManager = [NSFileManager defaultManager];
         BOOL optCode = [fileManager fileExistsAtPath:_databaseFilePath];
         DLog(@"Database File in App Sandbox exists: %@", (optCode) ? @"YES" : @"NO");
         
@@ -92,7 +88,15 @@ SINGLETON(DatabaseModule)
             DLog(@"Database File need re-copy: %@", (needCopy) ? @"YES" : @"NO");
             optCode = [fileManager removeItemAtPath:_databaseFilePath error:nil];
             DLog(@"Database File in App Sandbox removed: %@", (optCode) ? @"YES" : @"NO");
-            optCode = [fileManager copyItemAtPath:dbFileInXcodeProject toPath:_databaseFilePath error:&error];
+            NSString* _databaseFileDirPath = [_databaseFilePath stringByDeletingLastPathComponent];
+            BOOL b = YES;
+            optCode = [fileManager fileExistsAtPath:_databaseFileDirPath isDirectory:&b];
+            if (!optCode)
+            {
+                [fileManager createDirectoryAtPath:_databaseFileDirPath withIntermediateDirectories:YES attributes:nil error:nil];
+            }
+            
+            optCode = [fileManager copyItemAtPath:_databaseFilePathInXcodeProject toPath:_databaseFilePath error:&error];
             DLog(@"Database File in App Sandbox copied: %@", (optCode) ? @"YES" : @"NO");
         }
     }

@@ -9,6 +9,8 @@
 
 package com.simplelife.seeds.android;
 
+import android.os.Environment;
+
 public class SeedsDefinitions {
 	
 	// The string definitions of the dates
@@ -32,11 +34,23 @@ public class SeedsDefinitions {
 	public static String SEEDS_SERVER_HTTP_MIME = "application/json";
 	public static String mServerUrl = "http://106.187.38.78:80/seeds/seedService";
 	
+	public static String SEEDS_DOWNLOAD_SUBFOLDER = Environment.DIRECTORY_DOWNLOADS;
+	public static String SEEDS_DOWNLOAD_DESTFOLDER = Environment.getExternalStorageDirectory().getPath() 
+			                                       + "/"
+			                                       + SEEDS_DOWNLOAD_SUBFOLDER;
+	
 	public static boolean mDownloadImageWithoutWifiEnabled = true;
 	
 	public static String RELEASE_NAME    = "Seeds  ";
-	public static String RELEASE_VERSION = "V1.0.0_Demo";
+	public static String RELEASE_VERSION = "V0.1_Demo";
 	
+	public static void setDownloadDestFolder(String _inFolder){
+		SEEDS_DOWNLOAD_DESTFOLDER = _inFolder;
+	}
+	
+	public static String getDownloadDestFolder(){
+		return SEEDS_DOWNLOAD_DESTFOLDER;
+	}
 	
 	public static void setServerUrl(String _inUrl){
 		mServerUrl = _inUrl;

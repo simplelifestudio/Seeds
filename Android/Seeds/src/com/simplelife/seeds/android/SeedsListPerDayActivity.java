@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -27,15 +29,10 @@ import android.widget.ListView;
 
 import com.simplelife.seeds.android.utils.adapter.SeedsAdapter;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
 
 public class SeedsListPerDayActivity extends Activity {
 
-	// Let us define some parameters here
-	//public static final String KEY_SONG = "song"; // parent node
-	//public static final String KEY_ID = "id";
-	public static final String KEY_TITLE  = "name";
-	public static final String KEY_SIZE   = "size";
-	public static final String KEY_FORMAT = "format";
 	public static final String KEY_THUMB_URL = "thumb_url";
 
 	private ListView tListView;
@@ -56,14 +53,18 @@ public class SeedsListPerDayActivity extends Activity {
 		// setTheme(android.R.style.Theme_Translucent_NoTitleBar);
 		// Set the list view layout
 		setContentView(R.layout.activity_seeds_listperday);
-		
+				
 		// Retrieve the date info parameter
 		Bundle bundle = getIntent().getExtras();
 		//String tPassinDate = bundle.getString("date");
 		tDate = bundle.getString("date");
 		
+		// Set a title for this page
+		ActionBar tActionBar = getActionBar();
+		tActionBar.setTitle(getString(R.string.seeds_listperday_title) + " " + tDate);
+		
 		// Initialize the tSeedIdList
-		tSeedIdList = new ArrayList();
+		tSeedIdList = new ArrayList<Integer>();
 		
 		Log.i(LOGCLASS, "The Date is  "+ tDate); 
 		// Start a new thread to get the data
@@ -81,6 +82,7 @@ public class SeedsListPerDayActivity extends Activity {
 		}).start();		
 	}
 	
+	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler(){
 		public void handleMessage(Message msg) {
 			switch(msg.what){
@@ -130,9 +132,16 @@ public class SeedsListPerDayActivity extends Activity {
 				tFirstImgUrl = "Nothing To Show";
 			
 			HashMap<String, String> map = new HashMap<String, String>();
-			map.put(KEY_TITLE, tSeedsEntity.getSeedName());
-			map.put(KEY_SIZE, tSeedsEntity.getSeedSize());
-			map.put(KEY_FORMAT, tSeedsEntity.getSeedFormat());
+			map.put(SeedsDBAdapter.KEY_NAME, tSeedsEntity.getSeedName());
+			map.put(SeedsDBAdapter.KEY_SIZE, 
+					tSeedsEntity.getSeedSize()+" / "
+			       +tSeedsEntity.getPicLinks().size()
+			       +getString(R.string.seeds_listperday_seedspics));
+			map.put(SeedsDBAdapter.KEY_FORMAT, tSeedsEntity.getSeedFormat());
+			String tMosaic = (tSeedsEntity.getSeedMosaic())
+					       ? getString(R.string.seeds_listperday_withmosaic)
+					       : getString(R.string.seeds_listperday_withoutmosaic);
+			map.put(SeedsDBAdapter.KEY_MOSAIC, tMosaic);
 			map.put(KEY_THUMB_URL, tFirstImgUrl);
 			
 			// Add the instance into the array
@@ -176,7 +185,10 @@ public class SeedsListPerDayActivity extends Activity {
 			tSeedsEntity.setSeedFormat(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_FORMAT)));
 			tSeedsEntity.setSeedTorrentLink(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_TORRENTLINK)));
 			tSeedsEntity.setSeedHash(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_HASH)));
-			tSeedsEntity.setSeedMosaic(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_MOSAIC)));
+			if(1 == tResult.getInt(tResult.getColumnIndex(SeedsDBAdapter.KEY_MOSAIC)))
+				tSeedsEntity.setSeedMosaic(true);
+			else
+				tSeedsEntity.setSeedMosaic(false);
 			if(1 == tResult.getInt(tResult.getColumnIndex(SeedsDBAdapter.KEY_FAVORITE)))
 				tSeedsEntity.setSeedFavorite(true);
 			else

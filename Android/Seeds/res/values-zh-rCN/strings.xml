@@ -9,6 +9,7 @@
     <string name="seeds_datelist_seedsnumberdefault">未同步</string>
     <string name="seeds_datelist_seedsnumbernoupdate">无数据</string>
     <string name="seeds_datelist_seedsnumbernotready">未更新</string>
+    <string name="seeds_datelist_seedsnumber">种子数：</string>
     <string name="seeds_datelist_befyesterday">前  天</string>
     <string name="seeds_datelist_yesterday">昨  天</string>
     <string name="seeds_datelist_today">今  天</string>
@@ -30,6 +31,12 @@
     <string name="seeds_datelist_emptyupdatestatusresp">检测到服务器空数据</string>
     <string name="seeds_datelist_emptyseedsbydateresp">检测到空数据</string>
     <string name="seeds_datelist_noneedtosync">所有数据已同步</string>
+    <string name="seeds_listperday_title">种子列表</string>
+    <string name="seeds_listperday_mosaic">有码/无码</string>
+    <string name="seeds_listperday_mosaictag">有</string>
+    <string name="seeds_listperday_withmosaic">有码</string>
+    <string name="seeds_listperday_withoutmosaic">无码</string>
+    <string name="seeds_listperday_seedspics"> 图</string>
     <string name="seedTitle">种子名称</string>
     <string name="seedSize">种子大小</string>
     <string name="seedFormat">种子格式</string>
@@ -66,20 +73,34 @@
     <string name="seeds_wireless_title">网络提示</string>
     <string name="seeds_wireless_setwifi">设置WIFI</string>
     <string name="seeds_wireless_continue">继续</string>
-    <string name="seeds_wireless_nowifino3g">您的WIFI和蜂窝数据网络未打开，是否设置WIFI？警告：非WIFI网络将耗费大量流量！</string>
-    <string name="seeds_wireless_nowifi">您的WIFI未打开，是否设置WIFI？警告：非WIFI网络将耗费大量流量！</string>
+    <string name="seeds_wireless_nowifino3g">
+                  您的WIFI和蜂窝数据网络未打开，是否设置WIFI？非WIFI环境下默认停止下载图片，请在设置栏中打开。
+                  警告：非WIFI网络将耗费大量流量！
+    </string>
+    <string name="seeds_wireless_nowifi">
+                   您的WIFI未打开，是否设置WIFI？非WIFI环境下默认停止下载图片，请在设置栏中打开。
+                   警告：非WIFI网络将耗费大量流量！
+    </string>
     
     <string name="seeds_password_note">请输入您的手势密码</string>
+    <string name="seeds_password_create">创建新的解锁图案</string>
     <string name="seeds_password_startdraw">开始绘制</string>
     <string name="seeds_password_logincorrect">登陆成功！</string>
     <string name="seeds_password_loginfailed">密码错误，请重试！</string>
-    <string name="seeds_password_drawstatus">请先绘制登陆密码</string>
-    <string name="seeds_password_inputpwd">请输入手势密码</string> 
+    <string name="seeds_password_drawstatus">请绘制新的登陆图案:</string>
+    <string name="seeds_password_drawsrecorded">图案已记录！</string>
+    <string name="seeds_password_confirmdrawstatus">请再次绘制图案进行确认:</string>
+    <string name="seeds_password_confirmdrawstatusdone">您的新解锁图案:</string>
+    <string name="seeds_password_inputpwd">请输入手势密码</string>
+    <string name="seeds_password_cancel">取消</string> 
     <string name="seeds_password_redraw">重绘</string>
-    <string name="seeds_password_save">保存</string>
+    <string name="seeds_password_continue">继续</string>
+    <string name="seeds_password_save">确认</string>
+    <string name="seeds_setpassword_entercurrnt">请确认当前已保存的图案:</string>
     <string name="seeds_setpassword_correct">密码正确，请输入新密码！</string>
     <string name="seeds_setpassword_wrong">密码错误，请重新输入！</string>
     <string name="seeds_setpassword_success">密码修改成功！</string>
+    <string name="seeds_setpassword_firstsuccess">密码创建成功！</string>
     <string name="seeds_setpassword_failed">密码为空，请重试！</string>
     <string name="seeds_setpassword_enterpwd">请输入密码！</string>          
     <string name="seeds_password_tooshort">密码太短，请重新输入！</string>
@@ -87,6 +108,7 @@
     <string name="seeds_rss_menuaddtocart">加入订阅</string>
     <string name="seeds_rss_management">订阅管理</string>
     <string name="seeds_rss_toast_addtocartdone">已加入订阅车</string>
+    <string name="seeds_rss_toast_addtocartnonecc">该种子已经被订阅</string>
     <string name="seeds_rss_toast_sendreqfailed">网络错误，订阅失败</string>
     <string name="seeds_rss_toast_emptycartresp">消息错误，订阅失败</string>
     <string name="seeds_rss_toast_booksuccess">订阅成功，订阅编号： </string>
@@ -114,6 +136,9 @@
     <string name="seeds_config_clearcachetitle">清除缓存</string>
     <string name="seeds_config_clearcachesum">清除接收图片产生的缓存，当前缓存：</string> 
     <string name="seeds_config_security">账户与安全</string>
+    <string name="seeds_config_enblepwdtitle">密码保护</string>
+    <string name="seeds_config_enblepwdtitlesumon">打开应用时需输入手势密码</string>
+    <string name="seeds_config_enblepwdtitlesumoff">无须密码直接打开应用</string>
     <string name="seeds_config_changepwdtitle">更改密码</string>
     <string name="seeds_config_changepwdsum">更改应用打开时的密码</string>
     <string name="seeds_config_feedbackandhelp">反馈与帮助</string>
@@ -129,26 +154,19 @@
     <string name="seeds_config_verifyserveraddrfail">验证失败，请确认服务器是否正确</string>
     <string name="seeds_config_clearcachedone">缓存已清空</string>
     
+    <string name="seeds_config_toast_changepwdunavail">密码保护已关闭,无法更改密码</string>
+    
     <string name="seeds_http_buttonstartserver">开启服务</string>
     <string name="seeds_http_buttonstopserver">关闭服务</string>
     <string name="seeds_http_eventserverready">服务端就绪地址 </string>
     <string name="seeds_http_eventserve">服务指令 </string>
     <string name="seeds_http_eventserveerror">服务端返回错误响应 </string>
-    <string name="seeds_http_taptostart">点击打开服务端开启HTTP服务</string>
+    <string name="seeds_http_taptostart">点击开启服务打开HTTP服务</string>
     <string name="seeds_http_stopserver">正在关闭服务...</string>
     <string name="seeds_http_serverstopped">HTTP服务已关闭。</string>
     
     <string name="seeds_helpdialog_text"> 
-    <i>作者: Chris@Simplelife Studio</i> 
-    \n  
-    \n  
-    <i>联系：simplelife.chris@gmail.com</i> 
-    \n
-    \n  
-    <b>Seeds---每天随时随地收集最新的影片信息！</b>     
-    \n  
-    \n  
-    <b>有任何建议或者反馈可以随时联系作者</b>   
+    <i>Seeds---每天随时随地收集最新的影片信息！</i> 
     </string>  
     
 </resources>

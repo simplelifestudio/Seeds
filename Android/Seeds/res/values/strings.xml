@@ -10,6 +10,7 @@
     <string name="seeds_datelist_seedsnumberdefault">Not-Syncronized</string>
     <string name="seeds_datelist_seedsnumbernoupdate">No-Update</string>
     <string name="seeds_datelist_seedsnumbernotready">Not-Ready</string>
+    <string name="seeds_datelist_seedsnumber">Seeds Number: </string>
     <string name="seeds_datelist_befyesterday">前 天</string>
     <string name="seeds_datelist_yesterday">昨 天</string>
     <string name="seeds_datelist_today">今 天</string>
@@ -31,6 +32,12 @@
     <string name="seeds_datelist_emptyupdatestatusresp">Empty Message Detected</string>
     <string name="seeds_datelist_emptyseedsbydateresp">Empty Message Detected</string>
     <string name="seeds_datelist_noneedtosync">All Date Has Been Syncronized</string>
+    <string name="seeds_listperday_title">Seeds List</string>
+    <string name="seeds_listperday_mosaic">Mosaic</string>
+    <string name="seeds_listperday_mosaictag">有</string>
+    <string name="seeds_listperday_withmosaic">Mocaic</string>
+    <string name="seeds_listperday_withoutmosaic">No-Mosaic</string>
+    <string name="seeds_listperday_seedspics"> Images</string>
     <string name="seedTitle">The title of the seed</string>
     <string name="seedSize">The size of the seed</string>
     <string name="seedFormat">The format of the seed</string>
@@ -67,20 +74,34 @@
     <string name="seeds_wireless_title">Notice</string>
     <string name="seeds_wireless_setwifi">Set WIFI</string>
     <string name="seeds_wireless_continue">Ignore</string>
-    <string name="seeds_wireless_nowifino3g">Your WIFI and 3G are closed, set WIFI now? WARNING: Large data will be exhausted without WIFI!</string>
-    <string name="seeds_wireless_nowifi">Your WIFI is closed, set WIFI now? WARNING: Large data will be exhausted without WIFI!</string>
+    <string name="seeds_wireless_nowifino3g">
+        Your WIFI and 3G are closed, set WIFI now? Downloading images without WIFI has been disabled by default, please enable it inside Settings. 
+        WARNING: Large data will be exhausted without WIFI!
+    </string>
+    <string name="seeds_wireless_nowifi">
+        Your WIFI is closed, set WIFI now?  Downloading images without WIFI has been disabled by default, please enable it inside Settings. 
+        WARNING: Large data will be exhausted without WIFI!
+    </string>
     
     <string name="seeds_password_note">Please input your gesture</string>
+    <string name="seeds_password_create">Create gesture password</string>
     <string name="seeds_password_startdraw">Start to draw</string>
     <string name="seeds_password_logincorrect">Login Successfully!</string>
     <string name="seeds_password_loginfailed">Login Failed, Please Retry!</string>
-    <string name="seeds_password_drawstatus">Please draw the guesture first</string>
+    <string name="seeds_password_drawstatus">Please specify a new gesture password</string>
+    <string name="seeds_password_drawsrecorded">The password has been recorded!</string>
+    <string name="seeds_password_confirmdrawstatus">Please re-enter the password to confirm:</string>
+    <string name="seeds_password_confirmdrawstatusdone">Your new gesture password:</string>
     <string name="seeds_password_inputpwd">Please enter the password</string>
+    <string name="seeds_password_cancel">Cancel</string>
     <string name="seeds_password_redraw">Redraw</string>
-    <string name="seeds_password_save">Save</string>
+    <string name="seeds_password_continue">Continue</string>
+    <string name="seeds_password_save">Confirm</string>
+    <string name="seeds_setpassword_entercurrnt">Please confirm the current password:</string>
     <string name="seeds_setpassword_correct">Correct password, please enter a new password!</string>
     <string name="seeds_setpassword_wrong">Wrong password, please retry!</string>
     <string name="seeds_setpassword_success">Password changed successfully!</string>
+    <string name="seeds_setpassword_firstsuccess">Password created successfully!</string>
     <string name="seeds_setpassword_failed">Empty password, please retry!</string>
     <string name="seeds_setpassword_enterpwd">Please enter the password</string> 
     <string name="seeds_password_tooshort">The password is too short, please retry!</string>
@@ -88,6 +109,7 @@
     <string name="seeds_rss_menuaddtocart">Add To RSS Cart</string>
     <string name="seeds_rss_management">RSS Management</string>
     <string name="seeds_rss_toast_addtocartdone">Add to RSS cart done</string>
+    <string name="seeds_rss_toast_addtocartnonecc">This seed is already in cart</string>
     <string name="seeds_rss_toast_sendreqfailed">Network failure, book failed</string>
     <string name="seeds_rss_toast_emptycartresp">Wrong response, book failed</string>
     <string name="seeds_rss_toast_booksuccess">Book Successed, cart id: </string>
@@ -115,6 +137,9 @@
     <string name="seeds_config_clearcachetitle">Clear Cache</string>
     <string name="seeds_config_clearcachesum">Clear the images cache,current cache size:</string>      
     <string name="seeds_config_security">Account and Security</string>
+    <string name="seeds_config_enblepwdtitle">Password Protect</string>
+    <string name="seeds_config_enblepwdtitlesumon">Need enter password to log on</string>
+    <string name="seeds_config_enblepwdtitlesumoff">Free log on without password</string>
     <string name="seeds_config_changepwdtitle">Change Password</string>
     <string name="seeds_config_changepwdsum">Change the password when open the application</string>
     <string name="seeds_config_feedbackandhelp">Feedback and Help</string>
@@ -130,6 +155,8 @@
     <string name="seeds_config_verifyserveraddrfail">Verification failed, please double check the server address</string>
     <string name="seeds_config_clearcachedone">The cache has been cleaned</string>
     
+    <string name="seeds_config_toast_changepwdunavail">Password protect is disabled, can not change password</string>
+    
     <string name="seeds_http_buttonstartserver">Start server</string>
     <string name="seeds_http_buttonstopserver">Stop server</string>
     <string name="seeds_http_eventserverready">Server ready on </string>
@@ -140,16 +167,7 @@
     <string name="seeds_http_serverstopped">Server stopped.</string>
     
     <string name="seeds_helpdialog_text"> 
-    <i>Author: Chris@Simplelife Studio</i> 
-    \n  
-    \n  
-    <i>Contact: simplelife.chris@gmail.com</i> 
-    \n
-    \n  
-    <b>Seeds---Collecting the latest movie info everywhere!</b>     
-    \n  
-    \n  
-    <b>Please contact author for any problems</b>   
+    <i>Seeds---Collecting the latest movie info everywhere!</i> 
     </string>        
        
 </resources>

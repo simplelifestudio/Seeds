@@ -115,7 +115,7 @@
     if (nil == _imageView)
     {
         _imageView = [[UIImageView alloc] initWithImage:image];
-        _imageView.contentMode = UIViewContentModeScaleToFill;
+        _imageView.contentMode = UIViewContentModeScaleAspectFit;// UIViewContentModeScaleToFill;
         _imageView.autoresizingMask = ( UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight );
         
         [GUIStyle formatUIImageView:_imageView];
@@ -125,6 +125,7 @@
         [_imageView setImage:image];
     }
 
+    [_circularProgressView removeFromSuperview];
     [self addSubview:_imageView];
     _imageView.frame = self.bounds;
     

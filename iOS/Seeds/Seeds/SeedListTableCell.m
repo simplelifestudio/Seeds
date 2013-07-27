@@ -58,6 +58,8 @@
         [view setBackgroundColor:[UIColor clearColor]];
         
         [self setSelectedBackgroundView:view];
+        
+        [_asyncImageView setBackgroundColor:COLOR_IMAGEVIEW_BACKGROUND];
     }
 }
 

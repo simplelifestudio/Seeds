@@ -36,6 +36,8 @@
 -(void) enableServerMode:(BOOL) enabled;
 -(NSArray*) lastThreeDays;
 -(void) setLastThreeDays:(NSArray*) days;
+-(NSString*) lastRefreshStamp;
+-(void) setLastRefreshStamp:(NSString*) stamp;
 
 #pragma mark - Cache
 -(NSMutableDictionary*) thumbnailCacheKeys;

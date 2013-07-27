@@ -16,7 +16,6 @@ typedef enum {SeedNotDownload, SeedWaitForDownload, SeedIsDownloading, SeedDownl
 @interface SeedsDownloadAgent : NSObject <CBSharedInstance>
 
 +(NSString*) downloadPath;
-+(NSString*) favoritePath;
 
 -(void) downloadSeed:(Seed*) seed;
 -(void) downloadSeeds:(NSArray*) seeds;
