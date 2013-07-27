@@ -3,48 +3,34 @@
  *  
  *  SeedsListPerDayActivity.java
  *  Seeds
- *
- *  Created by Chris Li on 13-5-20. 
  */
 
 package com.simplelife.seeds.android;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
-import com.simplelife.seeds.android.utils.adapter.SeedsAdapter;
+import com.simplelife.seeds.android.SeedsFavListActivity.ListViewItemOnClickListener;
+import com.simplelife.seeds.android.SeedsListActivity.SeedsAdapter;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache.ImageCacheParams;
 
-public class SeedsListPerDayActivity extends Activity {
-
-	public static final String KEY_THUMB_URL = "thumb_url";
-
-	private ListView tListView;
-	private SeedsAdapter tAdapter;
-	protected String tDate;
-	protected int tSeedId;
-	protected List<Integer> tSeedIdList;
+public class SeedsListPerDayActivity extends SeedsListActivity {
 	
-	private ArrayList<SeedsEntity> mSeedsEntityList;
-	
-	// For log purpose
-	private static final String LOGCLASS = "SeedsListPerDay"; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +43,24 @@ public class SeedsListPerDayActivity extends Activity {
 		// Retrieve the date info parameter
 		Bundle bundle = getIntent().getExtras();
 		//String tPassinDate = bundle.getString("date");
-		tDate = bundle.getString("date");
+		mDate = bundle.getString("date");
 		
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
-		tActionBar.setTitle(getString(R.string.seeds_listperday_title) + " " + tDate);
+		tActionBar.setTitle(getString(R.string.seeds_listperday_title) + " " + mDate);
 		
 		// Initialize the tSeedIdList
-		tSeedIdList = new ArrayList<Integer>();
+		mSeedIdList = new ArrayList<Integer>();
 		
-		Log.i(LOGCLASS, "The Date is  "+ tDate); 
+        mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
+
+        ImageCacheParams cacheParams = new ImageCacheParams(this, SeedsDefinitions.SEEDS_THUMBS_CACHE_DIR);
+
+        // The ImageFetcher takes care of loading images into our ImageView children asynchronously
+        mImageFetcher = new ImageFetcher(this, mImageThumbSize);
+        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
+        mImageFetcher.addImageCache(this.getSupportFragmentManager(), cacheParams);
+		
 		// Start a new thread to get the data
 		new Thread(new Runnable() {
 			@Override
@@ -83,23 +77,23 @@ public class SeedsListPerDayActivity extends Activity {
 	}
 	
 	@SuppressLint("HandlerLeak")
-	private Handler handler = new Handler(){
+	protected Handler handler = new Handler(){
 		public void handleMessage(Message msg) {
 			switch(msg.what){
 			case 0 :
-				tListView = (ListView)findViewById(R.id.seeds_list);
+				mListView = (ListView)findViewById(R.id.seeds_list);
 				
 				ArrayList<HashMap<String, String>> seedsList = (ArrayList<HashMap<String, String>>)msg.obj;
-				tAdapter = new SeedsAdapter(SeedsListPerDayActivity.this, seedsList);
-				tListView.setAdapter(tAdapter);
+				mAdapter = new SeedsAdapter(SeedsListPerDayActivity.this, seedsList);
+				mListView.setAdapter(mAdapter);
 
-				// Bund the click listener
-				tListView.setOnItemClickListener(new ListViewItemOnClickListener());
+				// Bond the click listener
+				mListView.setOnItemClickListener(new ListViewItemOnClickListener());
 				break;
 			}
 		}
 	};
-	
+			
 	class ListViewItemOnClickListener implements OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view,
@@ -111,50 +105,8 @@ public class SeedsListPerDayActivity extends Activity {
 			startActivity(intent);
 		}
 	}
-
-	private ArrayList<HashMap<String, String>> getList() {
-		
-		ArrayList<HashMap<String, String>> seedsList = new ArrayList<HashMap<String, String>>();
-		String tFirstImgUrl;
-		
-		// Load all the seeds info
-		loadSeedsInfo();
-		
-		// Walk through the SeedsEntity List
-		int tListSize = mSeedsEntityList.size();
-		for (int index = 0; index < tListSize; index++)
-		{
-			SeedsEntity tSeedsEntity = mSeedsEntityList.get(index);
-					
-			if(tSeedsEntity.getSeedIsPicAvail())
-				tFirstImgUrl = tSeedsEntity.getPicLinks().get(0);
-			else
-				tFirstImgUrl = "Nothing To Show";
-			
-			HashMap<String, String> map = new HashMap<String, String>();
-			map.put(SeedsDBAdapter.KEY_NAME, tSeedsEntity.getSeedName());
-			map.put(SeedsDBAdapter.KEY_SIZE, 
-					tSeedsEntity.getSeedSize()+" / "
-			       +tSeedsEntity.getPicLinks().size()
-			       +getString(R.string.seeds_listperday_seedspics));
-			map.put(SeedsDBAdapter.KEY_FORMAT, tSeedsEntity.getSeedFormat());
-			String tMosaic = (tSeedsEntity.getSeedMosaic())
-					       ? getString(R.string.seeds_listperday_withmosaic)
-					       : getString(R.string.seeds_listperday_withoutmosaic);
-			map.put(SeedsDBAdapter.KEY_MOSAIC, tMosaic);
-			map.put(KEY_THUMB_URL, tFirstImgUrl);
-			
-			// Add the instance into the array
-			seedsList.add(map);
-			
-			// Record the seedId info
-			tSeedIdList.add(tSeedsEntity.getSeedId());
-		}
-		
-		return seedsList;	
-	}
 	
-	private void loadSeedsInfo(){
+	protected void loadSeedsInfo(){
 		
 		int localId;
 		SeedsEntity tSeedsEntity;
@@ -163,12 +115,11 @@ public class SeedsListPerDayActivity extends Activity {
 		mSeedsEntityList = new ArrayList<SeedsEntity>(); 
 		
 		// Retrieve the DB process handler to get data 
-		SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();
+		SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
 		
 		// Query the Seed table first
-		Cursor tResult = mDBAdapter.getSeedEntryViaPublishDate(tDate);		
+		Cursor tResult = tDBAdapter.getSeedEntryViaPublishDate(mDate);		
 		
-		Log.i(LOGCLASS, "The size of the tResult is  "+ tResult.getCount());
 		tResult.moveToFirst(); 
 		while (!tResult.isAfterLast()) 
 	    {
@@ -179,7 +130,7 @@ public class SeedsListPerDayActivity extends Activity {
 			tSeedsEntity.setSeedId(tResult.getInt(tResult.getColumnIndex(SeedsDBAdapter.KEY_SEEDID)));
 			tSeedsEntity.setSeedType(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_TYPE)));
 			tSeedsEntity.setSeedSource(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_SOURCE)));
-			tSeedsEntity.setSeedPublishDate(tDate);
+			tSeedsEntity.setSeedPublishDate(mDate);
 			tSeedsEntity.setSeedName(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_NAME)));
 			tSeedsEntity.setSeedSize(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_SIZE)));
 			tSeedsEntity.setSeedFormat(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_FORMAT)));
@@ -195,7 +146,7 @@ public class SeedsListPerDayActivity extends Activity {
 				tSeedsEntity.setSeedFavorite(false);
 			
 			// Query the seedPic table
-			Cursor tImgResult = mDBAdapter.getSeedPicFirstEntryViaLocalId(localId);
+			Cursor tImgResult = tDBAdapter.getSeedPicFirstEntryViaLocalId(localId);
 			
 			if(tImgResult.getCount()<=0)
 			{
@@ -213,7 +164,8 @@ public class SeedsListPerDayActivity extends Activity {
 					tImgResult.moveToNext(); 
 				}
 				tSeedsEntity.setSeedIsPicAvail(true);											
-			}						
+			}
+			tImgResult.close();
 			
 			// Add into the seedsEntity list
 			mSeedsEntityList.add(tSeedsEntity);
@@ -222,6 +174,6 @@ public class SeedsListPerDayActivity extends Activity {
 	        tResult.moveToNext();	        
 	    }		
 		tResult.close(); 
-	}
+	}	
 		
 }

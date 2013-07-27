@@ -3,8 +3,6 @@
  *  
  *  SeedsRSSCartActivity.java
  *  Seeds
- *
- *  Created by Chris Li on 13-7-19. 
  */
 package com.simplelife.seeds.android;
 
@@ -18,15 +16,12 @@ import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
-import com.simplelife.seeds.android.utils.adapter.SeedsAdapter;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
-import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
@@ -43,23 +38,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class SeedsRSSCartActivity extends Activity{
-	
-	public static final String KEY_THUMB_URL = "thumb_url";
-	
-	private static ArrayList<Integer> mSeedLocalIdInCart = new ArrayList<Integer>();;
+public class SeedsRSSCartActivity extends SeedsListActivity{	
+		
 	private ArrayList<Integer> mSeedIdInCart;
-	private ListView mListView;
-	private SeedsAdapter mAdapter;
-	private String mDate;
 	private ArrayList<SeedsEntity> mSeedsEntityList;
+	private static ArrayList<Integer> mSeedLocalIdInCart = new ArrayList<Integer>();;
 	private static ArrayList<Integer> mBookSuccSeedIdList = new  ArrayList<Integer>();
 	private static ArrayList<Integer> mBookExistSeedIdList = new  ArrayList<Integer>();
 	private static ArrayList<Integer> mBookFailedSeedIdList = new  ArrayList<Integer>();
 	private static String mCartId;
 	private ProgressDialog mProgressDialog = null; 
-	
-	private SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
 	
 	// Handler message definition
 	final int RSSMESSAGETYPE_GETLIST = 200;
@@ -162,48 +150,9 @@ public class SeedsRSSCartActivity extends Activity{
 		    intent.putExtra("seedObj", mSeedsEntityList.get(position));
 			startActivity(intent);
 		}
-	}	
+	}		
 	
-	private ArrayList<HashMap<String, String>> getList() {
-		
-		ArrayList<HashMap<String, String>> seedsList = new ArrayList<HashMap<String, String>>();
-		String tFirstImgUrl;
-		
-		// Load all the seeds info
-		loadSeedsInfo();
-		
-		// Walk through the SeedsEntity List
-		int tListSize = mSeedsEntityList.size();
-		for (int index = 0; index < tListSize; index++)
-		{
-			SeedsEntity tSeedsEntity = mSeedsEntityList.get(index);
-					
-			if(tSeedsEntity.getSeedIsPicAvail())
-				tFirstImgUrl = tSeedsEntity.getPicLinks().get(0);
-			else
-				tFirstImgUrl = "Nothing To Show";
-			
-			HashMap<String, String> map = new HashMap<String, String>();
-			map.put(SeedsDBAdapter.KEY_NAME, tSeedsEntity.getSeedName());
-			map.put(SeedsDBAdapter.KEY_SIZE, 
-					tSeedsEntity.getSeedSize()+" / "
-			       +tSeedsEntity.getPicLinks().size()
-			       +getString(R.string.seeds_listperday_seedspics));
-			map.put(SeedsDBAdapter.KEY_FORMAT, tSeedsEntity.getSeedFormat());
-			String tMosaic = (tSeedsEntity.getSeedMosaic())
-					       ? getString(R.string.seeds_listperday_withmosaic)
-					       : getString(R.string.seeds_listperday_withoutmosaic);
-			map.put(SeedsDBAdapter.KEY_MOSAIC, tMosaic);
-			map.put(KEY_THUMB_URL, tFirstImgUrl);
-			
-			// Add the instance into the array
-			seedsList.add(map);			
-		}
-		
-		return seedsList;	
-	}
-	
-	private void loadSeedsInfo(){
+	protected void loadSeedsInfo(){
 		
 		int localId;
 		int remoteId;
