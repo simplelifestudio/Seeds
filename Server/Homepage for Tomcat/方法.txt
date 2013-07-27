@@ -1,0 +1,2 @@
+将index.html拷贝到apache-tomcat-7.0.40/webapps/ROOT下
+同时需要注意/webapps/ROOT/WEB-INF/web.xml中定义的index.html在index.jsp前面（不过默认就是这种顺序）
