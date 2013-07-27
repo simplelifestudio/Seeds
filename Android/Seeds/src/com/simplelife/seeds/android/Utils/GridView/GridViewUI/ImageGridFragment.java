@@ -43,6 +43,7 @@ import com.simplelife.seeds.android.utils.gridview.gridviewprovider.Images;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageDetailActivity;
 import com.simplelife.seeds.android.BuildConfig;
 import com.simplelife.seeds.android.R;
+import com.simplelife.seeds.android.SeedsDefinitions;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache.ImageCacheParams;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.Utils;
@@ -56,7 +57,7 @@ import com.simplelife.seeds.android.utils.gridview.gridviewutil.Utils;
  */
 public class ImageGridFragment extends Fragment implements AdapterView.OnItemClickListener {
     private static final String TAG = "ImageGridFragment";
-    private static final String IMAGE_CACHE_DIR = "thumbs";
+    //private static final String IMAGE_CACHE_DIR = "thumbs";
 
     private int mImageThumbSize;
     private int mImageThumbSpacing;
@@ -78,7 +79,7 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
 
         mAdapter = new ImageAdapter(getActivity());
 
-        ImageCacheParams cacheParams = new ImageCacheParams(getActivity(), IMAGE_CACHE_DIR);
+        ImageCacheParams cacheParams = new ImageCacheParams(getActivity(), SeedsDefinitions.SEEDS_THUMBS_CACHE_DIR);
 
         cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
 
