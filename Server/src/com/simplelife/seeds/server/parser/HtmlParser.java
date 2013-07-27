@@ -38,7 +38,7 @@ import com.simplelife.seeds.server.util.TableName;
 
 public class HtmlParser implements ISourceParser {
 	private String baseLink;
-	private final int parseDays = 3;
+	private final int parseDays = 2;
 	//private final String _encode = "GBK";
 	private List<String> keyWordList = new ArrayList<String>();
 	private String startDate;
@@ -118,7 +118,8 @@ public class HtmlParser implements ISourceParser {
 		pageStart = 1;
 		pageEnd = 1;
 		startDate = DateUtil.getDateStringByDayBack(parseDays);
-		endDate = DateUtil.getDateStringByDayBack(-1);
+		//endDate = DateUtil.getDateStringByDayBack(-1);
+		endDate = DateUtil.getToday();
 	}
 	
 	public String getbaseLink() 
@@ -266,8 +267,10 @@ public class HtmlParser implements ISourceParser {
 			OperationLogUtil.captureTaskStarted(htmlLink);
 			deleteExistentSeeds(date);
 			
-			url = new URL(htmlLink);
-			HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+			
+			//url = new URL(htmlLink);
+			//HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+			HttpURLConnection urlConn = HttpUtil.getHttpUrlConnection(htmlLink);
 			Parser parser = new Parser(urlConn);
 			
 			HtmlNodeVisitor visitor = new HtmlNodeVisitor( true, false );
@@ -291,7 +294,7 @@ public class HtmlParser implements ISourceParser {
 	 * Delete existent seeds of given date in DB bofore saving new data
 	 * @param date: string of date
 	 */
-	private void deleteExistentSeeds(String date)
+	public void deleteExistentSeeds(String date)
 	{
 	    String sql = "delete from "+ TableName.SeedPicture +" where " + TableColumnName.seedId 
 	    		+ " in (select " + TableColumnName.seedId +" from " + TableName.Seed +" where " + SqlUtil.getPublishDateCondition(date) + ")";
@@ -315,9 +318,17 @@ public class HtmlParser implements ISourceParser {
 	 * Delete record of seed capture status of given date
 	 * @param date: string of date
 	 */
-	private void deleteCaptureLog(String date)
+	public void deleteCaptureLog(String date)
 	{
 		String sql = "delete from "+ TableName.SeedCaptureLog +" where " + SqlUtil.getPublishDateCondition(date);
+		DaoWrapper.executeSql(sql);
+	}
+	
+	public void deleteCaptureLog(String startDate, String endDate)
+	{
+		String sql = "delete from "+ TableName.SeedCaptureLog 
+				+" where " + TableColumnName.publishDate + " >= '" + startDate + "' and "
+				+ TableColumnName.publishDate + " <= '" + endDate + "'";
 		DaoWrapper.executeSql(sql);
 	}
 }
