@@ -16,14 +16,20 @@
 
 package com.simplelife.seeds.android.utils.gridview.gridviewui;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -37,13 +43,18 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
+import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadList;
 import com.simplelife.seeds.android.utils.gridview.gridviewprovider.Images;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageDetailActivity;
 import com.simplelife.seeds.android.BuildConfig;
 import com.simplelife.seeds.android.R;
 import com.simplelife.seeds.android.SeedsDefinitions;
+import com.simplelife.seeds.android.SeedsRSSCartActivity;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache.ImageCacheParams;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.Utils;
@@ -63,6 +74,18 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
     private int mImageThumbSpacing;
     private ImageAdapter mAdapter;
     private ImageFetcher mImageFetcher;
+    
+	// The menuItem favorite
+	private MenuItem mFavItem = null;
+	
+	// Favorite tag
+	private boolean mFavTag = false;
+	
+	// Seed local id
+	private int mSeedLocalId = Images.getSeedLocalId();
+	
+	// Database adapter
+	private SeedsDBAdapter mDBAdapter;
 
     /**
      * Empty constructor as per the Fragment documentation
@@ -77,7 +100,10 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
         mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
         mImageThumbSpacing = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_spacing);
 
-        mAdapter = new ImageAdapter(getActivity());
+        mAdapter = new ImageAdapter(getActivity());        
+		
+		// Retrieve the adapter instance
+		mDBAdapter = SeedsDBAdapter.getAdapter();
 
         ImageCacheParams cacheParams = new ImageCacheParams(getActivity(), SeedsDefinitions.SEEDS_THUMBS_CACHE_DIR);
 
@@ -138,6 +164,31 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
                     }
                 });
 
+		// Set a title for this page
+		ActionBar tActionBar = getActivity().getActionBar();
+		tActionBar.setTitle(R.string.seeds_details_top);
+		
+		// Show the details info of the seed
+		// Prepare the seeds text info
+		String tSeedName   = Images.getSeedsEntity().getSeedName(); 
+		String tSeedSize   = Images.getSeedsEntity().getSeedSize(); 
+		String tSeedFormat = Images.getSeedsEntity().getSeedFormat(); 
+		String tSeedMosaic = (Images.getSeedsEntity().getSeedMosaic())
+			               ? getString(R.string.seeds_listperday_withmosaic)
+			               : getString(R.string.seeds_listperday_withoutmosaic);
+		TextView tTextViewName   = (TextView)v.findViewById(R.id.seed_grid_info_name);
+		TextView tTextViewFormat = (TextView)v.findViewById(R.id.seed_grid_info_format);
+		TextView tTextViewSize   = (TextView)v.findViewById(R.id.seed_grid_info_size);
+		TextView tTextViewMosaic = (TextView)v.findViewById(R.id.seed_grid_info_mosaic);
+		if(null != tSeedName)
+			  tTextViewName.setText(getString(R.string.seedTitle)+": "+tSeedName);
+		if(null != tSeedFormat)
+			tTextViewFormat.setText(getString(R.string.seedFormat)+": "+tSeedFormat);
+		if(null != tSeedSize)
+			  tTextViewSize.setText(getString(R.string.seedSize)+": "+tSeedSize);
+		if(null != tSeedMosaic)
+			tTextViewMosaic.setText(getString(R.string.seeds_listperday_mosaic)+": "+tSeedMosaic);
+        
         return v;
     }
 
@@ -178,6 +229,90 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
             startActivity(i);
         }
     }
+    
+    private void addOrCancelFromFavList(MenuItem item){
+    	
+		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
+		{
+			mFavTag = true;
+		}
+		else
+		{
+			mFavTag = false;
+		}
+		
+		// Set up a thread to operate with the database
+		new Thread() {				
+			@Override
+			public void run() {
+				try {
+					// Get the DB adapter instance
+					SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();
+					
+					// Set the favorite key 
+					if (mFavTag)
+					{
+						mDBAdapter.updateSeedEntryFav(mSeedLocalId,false);
+						mFavTag = false;
+						ProgressDialog.show(getActivity(), "Cancelling Favorites...", "Done!", true, false);
+					}
+					else
+					{
+						mDBAdapter.updateSeedEntryFav(mSeedLocalId,true);
+						mFavTag = true;
+						
+						ProgressDialog.show(getActivity(), "Adding to Favorites...", "Done!", true, false);							
+					}            		
+					
+				} catch (Exception e) {
+					// Show the error message here
+				}
+
+				Message t_MsgListData = new Message();
+				t_MsgListData.what = 1;
+				handler.sendMessage(t_MsgListData);					
+			}
+		}.start();
+	}
+    
+    // Define a handler to process the progress update
+	@SuppressLint("HandlerLeak")
+	private Handler handler = new Handler(){  
+  
+        @Override  
+        public void handleMessage(Message msg) {  
+              
+            switch (msg.what) {
+            	
+            	case 1:
+            		// Check if this seed has already been saved to favorite
+            		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
+            		{
+            			if (null != mFavItem)
+            				mFavItem.setIcon(R.drawable.rating_not_important);
+            			
+                		Toast toast = Toast.makeText(getActivity(),
+                				R.string.seeds_fav_done, Toast.LENGTH_SHORT);
+                	    toast.setGravity(Gravity.CENTER, 0, 0);
+                	    toast.show();
+            		}
+            		else
+            		{
+            			if (null != mFavItem)
+            				mFavItem.setIcon(R.drawable.rating_important);
+            			
+                		Toast toast = Toast.makeText(getActivity(),
+                				R.string.seeds_unfav_done, Toast.LENGTH_SHORT);
+                	    toast.setGravity(Gravity.CENTER, 0, 0);
+                	    toast.show();
+            		}
+
+                    break;
+                // Or try something here
+            }
+             
+        }
+    }; 
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -187,14 +322,76 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.clear_cache:
-                mImageFetcher.clearCache();
-                Toast.makeText(getActivity(), R.string.clear_cache_complete_toast,
-                        Toast.LENGTH_SHORT).show();
-                return true;
+        case R.id.menu_addto_fav:
+        {
+        	mFavItem = item;
+        	addOrCancelFromFavList(item);            	
+		    return true;
         }
-        return super.onOptionsItemSelected(item);
+        case R.id.rss_addtocart:
+        {
+        	int tShowId;
+        	if(!SeedsRSSCartActivity.addSeedToCart(mSeedLocalId))
+        		tShowId = R.string.seeds_rss_toast_addtocartnonecc;
+        	else
+        		tShowId = R.string.seeds_rss_toast_addtocartdone;
+
+    		Toast toast = Toast.makeText(getActivity(),
+    				tShowId, Toast.LENGTH_SHORT);
+    	    toast.setGravity(Gravity.CENTER, 0, 0);
+    	    toast.show();
+        	return true;
+        }
+        case R.id.rss_management:
+        {
+		    Intent intent = new Intent(getActivity(), SeedsRSSCartActivity.class);
+		    startActivity(intent);
+        	return true;
+        }
+        case R.id.download_seed:
+        {
+        	// Fetch the download manager to start the download
+        	DownloadManager tDownloadMgr = DownloadManager.getDownloadMgr();
+        	tDownloadMgr.startDownload(Images.getSeedsEntity().getSeedTorrentLink());            	
+        	
+    		Toast toast = Toast.makeText(getActivity(),
+    				R.string.seeds_download_added, Toast.LENGTH_SHORT);
+    	    toast.setGravity(Gravity.CENTER, 0, 0);
+    	    toast.show();
+            return true;
+        }
+        case R.id.download_mgt:
+        {
+        	Intent intent = new Intent(getActivity(), DownloadList.class);
+        	startActivity(intent);
+        	return true;
+        }    
+        case R.id.clear_cache:
+        {
+            mImageFetcher.clearCache();
+            Toast.makeText(getActivity(), R.string.clear_cache_complete_toast,
+                  Toast.LENGTH_SHORT).show();
+            return true;
+        }
     }
+		return true;
+    }
+    
+    @Override 
+    public void onPrepareOptionsMenu(Menu menu){ 
+     
+        super.onPrepareOptionsMenu(menu); 
+     
+        MenuItem tFavItem = menu.findItem(R.id.menu_addto_fav); 
+     
+	    // Check if this seed has already been saved to favorite
+	    if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
+	    {
+            if(null != tFavItem)
+                tFavItem.setIcon(R.drawable.rating_not_important);
+        }     
+        return;      
+    } 
 
     /**
      * The main adapter that backs the GridView. This is fairly standard except the number of
@@ -218,8 +415,8 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
             TypedValue tv = new TypedValue();
             if (context.getTheme().resolveAttribute(
                     android.R.attr.actionBarSize, tv, true)) {
-                mActionBarHeight = TypedValue.complexToDimensionPixelSize(
-                        tv.data, context.getResources().getDisplayMetrics());
+            	/*mActionBarHeight = TypedValue.complexToDimensionPixelSize(
+                        tv.data, context.getResources().getDisplayMetrics());*/
             }
         }
 
