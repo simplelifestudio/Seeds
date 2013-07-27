@@ -21,14 +21,28 @@ import com.simplelife.seeds.server.util.DaoWrapper;
 import com.simplelife.seeds.server.util.DateUtil;
 import com.simplelife.seeds.server.util.LogUtil;
 
-public class HtmlNodeVisitor extends NodeVisitor {
-	private AnalyzeStatus _analyzeStatus = AnalyzeStatus.Init;
+public class HtmlNodeVisitor extends NodeVisitor 
+{
+	private final char charColon =':';
+	private final char charColonFullwidth1 ='©U';
+	private final char charColonFullwidth2 ='£º';
+
+	private final char charBracketLeft ='[';
+	private final char charBracketRight =']';
+
+	private final char charReturn ='\r';
+	private final char charNewline ='\n';	
+	
+	private int _analyzeStatus = AnalyzeStatus.Init;
 	private Seed seed;
 	private String publishDate;
 	
-	private enum AnalyzeStatus
+	private interface AnalyzeStatus
 	{
-		Init, FilmInfo, Link;
+		public final static int Init = 1;
+		public final static int FilmInfo = 2;
+		public final static int WaitForName = 3;
+		public final static int Link = 4;
 	}
 	
 	public HtmlNodeVisitor(boolean recurseChildren, boolean recurseSelf)
@@ -60,17 +74,31 @@ public class HtmlNodeVisitor extends NodeVisitor {
     	String nodeText = string.getText();
     	nodeText = nodeText.replaceAll("&nbsp;", "");
     	nodeText = nodeText.trim();
+    	if (_analyzeStatus == AnalyzeStatus.WaitForName)
+    	{
+    		seed.setName(formatText(nodeText, true));
+    		_analyzeStatus = AnalyzeStatus.FilmInfo;
+    		return;
+    	}
     	
     	if (_analyzeStatus == AnalyzeStatus.Link)
     	{
-    		seed.setTorrentLink(nodeText);
-    		
+    	    String torrentLink = formatText(nodeText, false);
+    	    if (torrentLink.length() == 0)
+    	    {
+    	        // we don't change status here, as the next node may be the link we want
+    	        LogUtil.severe("Empty torrent link found.");
+    	        return;
+    	    }
+    	    
+    		seed.setTorrentLink(torrentLink);
     		if (!checkSeedForSave(seed))
     		{
-    			LogUtil.warning("Invalid seed info for save: " + seed.toString());
+    			LogUtil.severe("Invalid seed info for save: " + seed.toString());
+    			_analyzeStatus = AnalyzeStatus.Init;
     			return;
     		}
-    		formatSeedForSave(seed);
+    		
 			DaoWrapper.save(seed);
 			LogUtil.info("Saved seed to DB: \n" + seed.toString());
 			_analyzeStatus = AnalyzeStatus.Init;
@@ -82,7 +110,18 @@ public class HtmlNodeVisitor extends NodeVisitor {
     		// Start a new seed if film name found
     		_analyzeStatus = AnalyzeStatus.FilmInfo;
     		seed = new Seed();
-    		seed.setName(nodeText);
+    		
+    		String filmName = formatText(nodeText, true);
+    		if (filmName.length() == 0)
+    		{
+    			_analyzeStatus = AnalyzeStatus.WaitForName;
+    		}
+    		else
+    		{
+    			seed.setName(filmName);
+    		}
+    		
+    		//seed.setName(nodeText);
     		seed.setType("AV");
     		seed.setSource("ßäßä°®");
     		
@@ -94,15 +133,15 @@ public class HtmlNodeVisitor extends NodeVisitor {
     	}
     	else if(isFilmFormat(nodeText))
     	{
-    		seed.setFormat(nodeText);
+    		seed.setFormat(formatText(nodeText, true));
     	}
     	else if(isFilmSize(nodeText))
     	{
-    		seed.setSize(nodeText);
+    		seed.setSize(formatText(nodeText, true));
     	}
     	else if(isFilmMosaic(nodeText))
     	{
-    		seed.setMosaic(nodeText);
+    		seed.setMosaic(formatText(nodeText, true));
     	}
     	else if(isTorrentLink(nodeText))
     	{
@@ -113,21 +152,141 @@ public class HtmlNodeVisitor extends NodeVisitor {
     	}
     	else if(isHash(nodeText))
     	{
-    		seed.setHash(nodeText);
+    		seed.setHash(formatText(nodeText, true));
     	}
     }
-    public void visitRemarkNode (Remark remark) {
+    public void visitRemarkNode (Remark remark) 
+    {
     	//_logger.log(Level.INFO,"This is Remark:"+remark.getText());
     }
-    public void beginParsing () {
+    
+    public void beginParsing () 
+    {
     	//_logger.log(Level.INFO,"beginParsing");
     }
-    public void visitEndTag (Tag tag){
+    
+    public void visitEndTag (Tag tag)
+    {
     	//_analyzeStatus = AnalyzeStatus.Init;
     	//_logger.log(Level.INFO,"visitEndTag:"+tag.getText());
     }
-    public void finishedParsing () {
+    
+    public void finishedParsing () 
+    {
     	//_logger.log(Level.INFO,"finishedParsing");
+    }
+    
+    
+    /**
+     * Cut sub string before special char
+     * @param field: string to be checked
+     * @param charToCut: char to be checked
+     * @return String after remove
+     */
+    private String cutString(String field, char charToCut)
+    {
+    	int index = field.indexOf(charToCut);
+    	if (index == field.length() - 1)
+    	{
+    		return "";
+    	}
+    	
+    	if (index >= 0)
+    	{
+    		field = field.substring(index + 1).trim();
+    	}
+    	return field;
+    }
+    
+    /**
+     * Check and remove head char if found
+     * @param field: string to be checked
+     * @param charHead: char to be checked 
+     * @return String after remove
+     */
+    private String removeHead(String field, char charHead)
+    {
+		if (field.charAt(0) == charHead)
+		{
+			field = field.substring(1).trim();
+		}
+		return field;
+    }
+    
+    /**
+     * Cut sub string before special char
+     * @param field: field to be formatted
+     * @param removeColon: if colon will be removed or not
+     * @return String after remove
+     */
+    public String cutSpecialChar(String field, boolean removeColon)
+    {
+    	if (field == null) 
+		{
+			return null;
+		}
+		
+		if (field.length() == 0)
+		{
+			return "";
+		}
+		
+		int len = 0;
+		while (len != field.length())
+		{
+			len = field.length();
+			if (removeColon)
+			{
+				field = cutString(field, charColon);
+			}
+			
+			field = cutString(field, charColonFullwidth1);
+			field = cutString(field, charColonFullwidth2);
+			field = cutString(field, charBracketLeft);
+			field = cutString(field, charBracketRight);
+			field = cutString(field, charReturn);
+			field = cutString(field, charNewline);
+		}
+		
+		return field;
+    }
+    
+    /**
+     * Remove special heading chars in field  
+     * @param field: String to be checked
+     * @param removeColon: if colon will be removed or not
+     * @return String after remove
+     */
+    public String removeHeadSpecialChar(String field, boolean removeColon)
+    {
+		if (field == null) 
+		{
+			return null;
+		}
+		
+		if (field.length() == 0)
+		{
+			return "";
+		}
+		
+		int len = 0;
+		while (len != field.length())
+		{
+			len = field.length();
+			if (removeColon)
+			{
+				field = removeHead(field, charColon);
+			}
+			
+			field = removeHead(field, charColonFullwidth1);
+			field = removeHead(field, charColonFullwidth2);
+			field = removeHead(field, charBracketLeft);
+			field = removeHead(field, charBracketRight);
+			field = removeHead(field, charReturn);
+			field = removeHead(field, charNewline);
+		}
+		
+		return field;
     }
     
     /**
@@ -135,95 +294,14 @@ public class HtmlNodeVisitor extends NodeVisitor {
      * @param field: string of field
      * @return String after removing special characters  
      */
-    public String removePreTitle(String field)
+    public String formatText(String field, boolean removeColon)
     {
-		if (field == null) {
-			return null;
-		}
-		
-		int index = field.indexOf("Link");
-		if (index >= 0) {
-			// Link URL: [url]http://www.maxp2p.com/link.php?ref=ft48srXUSU
-			index = field.indexOf("http://");
-			field = field.substring(index).trim();
-			return field;
-		}
-		
-		index = field.indexOf("]");
-		if (index > 0) {
-			field = field.substring(index + 1).trim();
-		}
-		else
-		{
-			index = field.indexOf("¡¿");
-			if (index > 0) {
-				field = field.substring(index + 1).trim();
-			}
-		}
-		
-		index = field.indexOf(":");
-		if (index == 0) {
-			field = field.substring(1).trim();
-		}
-		
-		index = field.indexOf("£º");
-		if (index == 0) {
-			field = field.substring(1).trim();
-		}
-		
-		field = field.replaceAll("[\"{,}]", "");
-		field = field.replace("[", "");
-		field = field.replace("]", "");
+    	field = removeHeadSpecialChar(field, removeColon);
+    	field = cutSpecialChar(field, removeColon);
 		return field;
     }
     
-    /**
-     * Format seed fields before save
-     * @param seed: object of current seed
-     */
-    private void formatSeedForSave(Seed seed)
-    {
-		if (seed.getFormat() != null) 
-		{
-			seed.setFormat(removePreTitle(seed.getFormat()));
-		}
-
-		if (seed.getHash() != null) 
-		{
-			seed.setHash(removePreTitle(seed.getHash()));
-		}
-
-		if (seed.getMemo() != null) 
-		{
-			seed.setMemo(removePreTitle(seed.getMemo()));
-		}
-
-		if (seed.getMosaic() != null) 
-		{
-			seed.setMosaic(removePreTitle(seed.getMosaic()));
-		}
-
-		if (seed.getName() != null) 
-		{
-			seed.setName(removePreTitle(seed.getName()));
-		}
-
-		if (seed.getSize() != null) 
-		{
-			seed.setSize(removePreTitle(seed.getSize()));
-		}
-
-		if (seed.getType() != null) 
-		{
-			seed.setType(removePreTitle(seed.getType()));
-		}
-		
-		if (seed.getTorrentLink() != null) 
-		{
-			seed.setTorrentLink(removePreTitle(seed.getTorrentLink()));
-		}
-    }
-    
+   
     /**
      * Check fields of seed to ensure it's valid for save
      * @param seed: object of current seed
