@@ -157,10 +157,13 @@ public abstract class SeedsListActivity extends FragmentActivity {
 			TextView mosaic = (TextView) vi.findViewById(R.id.seeds_mosaic);
 			ImageView thumb_image = (ImageView) vi.findViewById(R.id.list_image);			
 			
-			int width  = 75; //thumb_image.getMaxWidth();
+			/*int width  = 75; //thumb_image.getMaxWidth();
 			int height = 75; //thumb_image.getMaxHeight();
 			mImageFetcher.setImageSize(width, height);
 			Log.i("ListActivity", "width = "+width+" height="+height);
+			*/
+			
+			thumb_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 			HashMap<String, String> seedList = new HashMap<String, String>();
 			seedList = data.get(position);
@@ -170,9 +173,9 @@ public abstract class SeedsListActivity extends FragmentActivity {
 			size.setText(seedList.get(SeedsDBAdapter.KEY_SIZE));
 			format.setText(seedList.get(SeedsDBAdapter.KEY_FORMAT));
 			mosaic.setText(seedList.get(SeedsDBAdapter.KEY_MOSAIC));
-			//mImageFetcher.loadImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL), thumb_image);
-			imageLoader.DisplayImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL),
-					thumb_image,0);
+			mImageFetcher.loadImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL), thumb_image);
+			/*imageLoader.DisplayImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL),
+					thumb_image,0);*/
 			return vi;
 		}
 		

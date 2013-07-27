@@ -253,7 +253,7 @@ public class SeedsDetailsActivity extends Activity{
             		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
             		{
             			if (null != mFavItem)
-            				mFavItem.setIcon(R.drawable.rating_bad);
+            				mFavItem.setIcon(R.drawable.rating_not_important);
             			
                 		Toast toast = Toast.makeText(getApplicationContext(),
                 				R.string.seeds_fav_done, Toast.LENGTH_SHORT);
@@ -263,7 +263,7 @@ public class SeedsDetailsActivity extends Activity{
             		else
             		{
             			if (null != mFavItem)
-            				mFavItem.setIcon(R.drawable.rating_good);
+            				mFavItem.setIcon(R.drawable.rating_important);
             			
                 		Toast toast = Toast.makeText(getApplicationContext(),
                 				R.string.seeds_unfav_done, Toast.LENGTH_SHORT);
@@ -405,7 +405,7 @@ public class SeedsDetailsActivity extends Activity{
 	    if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
 	    {
             if(null != tFavItem)
-                tFavItem.setIcon(R.drawable.rating_bad);
+                tFavItem.setIcon(R.drawable.rating_not_important);
         }     
         return true;      
     } 

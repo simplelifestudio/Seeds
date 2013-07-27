@@ -99,7 +99,7 @@ public class SeedsListPerDayActivity extends SeedsListActivity {
 		public void onItemClick(AdapterView<?> parent, View view,
 				int position, long id) {
 			
-			Intent intent = new Intent(SeedsListPerDayActivity.this, SeedsDetailsActivity.class);
+			Intent intent = new Intent(SeedsListPerDayActivity.this, ImageGridActivity.class);
 			// Pass the seed entity
 		    intent.putExtra("seedObj", mSeedsEntityList.get(position));
 			startActivity(intent);
