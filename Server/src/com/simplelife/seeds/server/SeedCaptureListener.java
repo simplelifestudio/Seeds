@@ -114,11 +114,10 @@ public class SeedCaptureListener implements ServletContextListener
 
 	private void scheduleTasks()
 	{
-	    scheduleSeedCaptureTask(DateUtil.getTaskTrigger(20, false));
-	    scheduleSeedCaptureTask(DateUtil.getTaskTrigger(21, false));
-	    scheduleSeedCaptureTask(DateUtil.getTaskTrigger(22, false));
+	    scheduleSeedCaptureTask(DateUtil.getTaskTrigger(0, false));
+	    scheduleSeedCaptureTask(DateUtil.getTaskTrigger(1, false));
+	    scheduleSeedCaptureTask(DateUtil.getTaskTrigger(2, false));
 	    scheduleTorrentCheckTask(DateUtil.getTaskTrigger(23, false));
-	    
 	}
 	
 	/**
