@@ -226,7 +226,8 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 						tImgResult.moveToNext(); 
 					}
 					tSeedsEntity.setSeedIsPicAvail(true);											
-				}						
+				}
+				tImgResult.close();
 				
 				// Add into the seedsEntity list
 				mSeedsEntityList.add(tSeedsEntity);
