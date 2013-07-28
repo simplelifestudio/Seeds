@@ -45,8 +45,6 @@ SINGLETON(CommunicationModule)
     [_seedPictureAgent setMaxCahceAge:CACHE_EXPIRE_PERIOD];
     
     _seedsDownloadAgent = [[SeedsDownloadAgent alloc] init];
-    
-    [self registerReachability];
 }
 
 - (void)registerReachability
@@ -127,6 +125,8 @@ SINGLETON(CommunicationModule)
 -(void) processService
 {
     MODULE_DELAY
+    
+    [self registerReachability];
 }
 
 -(void)applicationWillResignActive:(UIApplication *)application
@@ -139,6 +139,8 @@ SINGLETON(CommunicationModule)
     [CBAppUtils asyncProcessInBackgroundThread:^(){
         [_seedPictureAgent clearMemory];
     }];
+    
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -148,7 +150,7 @@ SINGLETON(CommunicationModule)
 
 -(void)applicationWillEnterForeground:(UIApplication *)application
 {
-    
+
 }
 
 @end

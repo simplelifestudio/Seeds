@@ -10,13 +10,8 @@
 
 #import "MBProgressHUD.h"
 
-#define QUEUE_ID_HUD "Seeds_Queue_HUD"
-
-
-
 @interface CBHUDAgent()
 {
-    dispatch_queue_t _hudQueue;
     MBProgressHUD* _HUD;
     
     UIView* _HUDView;
@@ -40,20 +35,21 @@
 -(void) showHUD:(NSString*) majorStauts minorStatus:(NSString*) minorStatus delay:(NSInteger)seconds;
 {
     MBProgressHUD* HUD = [self sharedHUD];
+
+    HUD.labelText = majorStauts;
+    if (minorStatus)
+    {
+        HUD.detailsLabelText = minorStatus;
+    }
+    else
+    {
+        HUD.detailsLabelText = nil;
+    }
     
-//    dispatch_sync(_hudQueue, ^(){
-        HUD.labelText = majorStauts;
-        if (minorStatus)
-        {
-            HUD.detailsLabelText = minorStatus;
-        }
-        else
-        {
-            HUD.detailsLabelText = nil;
-        }
-        
-        [self _showHUD:seconds];
-//    });
+    [HUD showAnimated:YES whileExecutingBlock:^(){
+        [NSThread sleepForTimeInterval:seconds];
+    }];
+
 }
 
 -(void) attachToView:(UIView*) view
@@ -75,7 +71,6 @@
 
 - (void) releaseResources
 {
-    dispatch_release(_hudQueue);
 }
 
 #pragma mark - Private Methods
@@ -83,8 +78,6 @@
 -(void) _setupInstance
 {
     [self _setupHUD];
-    
-    _hudQueue = dispatch_queue_create(QUEUE_ID_HUD, DISPATCH_QUEUE_SERIAL);
 }
 
 -(void) _setupHUD
@@ -93,14 +86,6 @@
     _HUD = [[MBProgressHUD alloc] initWithWindow:keyWindow];
     _HUD.mode = MBProgressHUDModeText;
     _HUD.minSize = HUD_CENTER_SIZE;
-}
-
--(void) _showHUD:(NSUInteger) seconds
-{
-    [CBAppUtils asyncProcessInMainThread:^(){
-        [_HUD show:YES];
-        [_HUD hide:YES afterDelay:seconds];
-    }];
 }
 
 @end
