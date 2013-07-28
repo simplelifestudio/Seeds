@@ -594,6 +594,31 @@ public class ImageCache {
     }
 
     /**
+     * Get the size of external app cache directory.
+     *
+     * @param context The context to use
+     * @return The external cache dir
+     */
+    public static long getCacheSize(Context context, File cacheDir) throws Exception{ 
+        
+        long size = 0;
+    	if(null == cacheDir)
+        	return 0;
+        File[] fileList = cacheDir.listFiles();  
+        for (int i = 0; i < fileList.length; i++)  
+        {  
+            if (fileList[i].isDirectory())  
+            {  
+                size = size + ImageCache.getCacheSize(context, fileList[i]);  
+            } else  
+            {  
+                size = size + fileList[i].length();  
+            }  
+        }  
+        return size;  
+    }
+    
+    /**
      * Check how much usable space is available at a given path.
      *
      * @param path The path to check
