@@ -15,7 +15,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,21 +56,21 @@ public abstract class SeedsListActivity extends FragmentActivity {
     @Override
     public void onResume() {
         super.onResume();
-        //mImageFetcher.setExitTasksEarly(false);
+        mImageFetcher.setExitTasksEarly(false);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        //mImageFetcher.setPauseWork(false);
-        //mImageFetcher.setExitTasksEarly(true);
-        //mImageFetcher.flushCache();
+        mImageFetcher.setPauseWork(false);
+        mImageFetcher.setExitTasksEarly(true);
+        mImageFetcher.flushCache();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //mImageFetcher.closeCache();
+        mImageFetcher.closeCache();
     }	
 
 	protected ArrayList<HashMap<String, String>> getList() {

@@ -43,6 +43,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -180,6 +181,7 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
 		TextView tTextViewFormat = (TextView)v.findViewById(R.id.seed_grid_info_format);
 		TextView tTextViewSize   = (TextView)v.findViewById(R.id.seed_grid_info_size);
 		TextView tTextViewMosaic = (TextView)v.findViewById(R.id.seed_grid_info_mosaic);
+
 		if(null != tSeedName)
 			  tTextViewName.setText(getString(R.string.seedTitle)+": "+tSeedName);
 		if(null != tSeedFormat)

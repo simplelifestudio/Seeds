@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -75,7 +76,7 @@ public class SeedsFavListActivity extends SeedsListActivity{
 				int position, long id) {
 			
 			// Redirect to the details page
-			Intent intent = new Intent(SeedsFavListActivity.this, SeedsDetailsActivity.class);
+			Intent intent = new Intent(SeedsFavListActivity.this, ImageGridActivity.class);
 
 			// Pass the seed entity
 		    intent.putExtra("seedObj", mSeedsEntityList.get(position));

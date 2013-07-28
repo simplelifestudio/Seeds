@@ -18,10 +18,11 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/seed_grid_info_backgroud"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
+        android:background="#696969"
         android:orientation="vertical" >
 
         <TextView
@@ -29,33 +30,62 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textColor="@android:color/white"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="13sp" />
+        
+        <LinearLayout
+            android:id="@+id/seed_grid_info_divider1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seed_grid_info_name"
+            android:background="@drawable/divider_horizontal_line"
+            android:orientation="vertical" >
+        </LinearLayout>
 
         <TextView
             android:id="@+id/seed_grid_info_format"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:layout_below="@id/seed_grid_info_divider1"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/seed_grid_info_size"
+            android:layout_gravity="left"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:ellipsize="end"  />
 
+        
         <TextView
             android:id="@+id/seed_grid_info_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/seed_grid_info_format"
+            android:layout_marginRight="3dip"
+            android:gravity="right"
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:id="@+id/seed_grid_info_divider2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
-
+            android:layout_below="@id/seed_grid_info_format"
+            android:background="@drawable/divider_horizontal_line"
+            android:orientation="vertical" >
+        </LinearLayout>
+        
         <TextView
             android:id="@+id/seed_grid_info_mosaic"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/seed_grid_info_divider2"
             android:layout_gravity="center_vertical|center_horizontal"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
-    </LinearLayout>
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
+    </RelativeLayout>
         
     <GridView 
         android:id="@+id/gridView"

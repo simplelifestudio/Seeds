@@ -17,6 +17,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
 
@@ -144,7 +145,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 				int position, long id) {
 			
 			// Redirect to the details page
-			Intent intent = new Intent(SeedsRSSCartActivity.this, SeedsDetailsActivity.class);
+			Intent intent = new Intent(SeedsRSSCartActivity.this, ImageGridActivity.class);
 
 			// Pass the seed entity
 		    intent.putExtra("seedObj", mSeedsEntityList.get(position));
