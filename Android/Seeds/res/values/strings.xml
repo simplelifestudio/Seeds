@@ -34,7 +34,8 @@
     <string name="seeds_datelist_noneedtosync">All Date Has Been Syncronized</string>
     <string name="seeds_listperday_title">Seeds List</string>
     <string name="seeds_listperday_mosaic">Mosaic</string>
-    <string name="seeds_listperday_mosaictag">有</string>
+    <string name="seeds_listperday_nomosaictag1">无</string>
+    <string name="seeds_listperday_nomosaictag2">無</string>
     <string name="seeds_listperday_withmosaic">Mocaic</string>
     <string name="seeds_listperday_withoutmosaic">No-Mosaic</string>
     <string name="seeds_listperday_seedspics"> Images</string>

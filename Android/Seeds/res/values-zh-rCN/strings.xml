@@ -33,7 +33,8 @@
     <string name="seeds_datelist_noneedtosync">所有数据已同步</string>
     <string name="seeds_listperday_title">种子列表</string>
     <string name="seeds_listperday_mosaic">有码/无码</string>
-    <string name="seeds_listperday_mosaictag">有</string>
+    <string name="seeds_listperday_nomosaictag1">无</string>
+    <string name="seeds_listperday_nomosaictag2">無</string>
     <string name="seeds_listperday_withmosaic">有码</string>
     <string name="seeds_listperday_withoutmosaic">无码</string>
     <string name="seeds_listperday_seedspics"> 图</string>
