@@ -60,7 +60,7 @@
     <string name="seeds_download_added">已添加至下载队列</string>
     <string name="seeds_unfav_done">取消收藏成功</string>
     <string name="seeds_fav_done">收藏成功</string>
-    <string name="actionbar_activity_not_found">Failed to open intent...</string>
+    <string name="actionbar_activity_not_found">Failed to open intent&#8230;</string>
 
     <string name="seeds_details_to_grid">Grid Mode</string> 
     <string name="seeds_details_addto_fav">Add to Fav List</string>    
@@ -115,7 +115,7 @@
     <string name="seeds_rss_toast_emptycartresp">Wrong response, book failed</string>
     <string name="seeds_rss_toast_booksuccess">Book Successed, cart id: </string>
     <string name="seeds_rss_menu_sendreqmsg">Send RSS Message</string>
-    <string name="seeds_rss_dialof_sendingreqmsg">Sending book request...</string>
+    <string name="seeds_rss_dialof_sendingreqmsg">Sending book request&#8230;</string>
 
     <string name="seeds_config_page">Settings</string>  
     <string name="seeds_config_serverpref">Server Preference</string>
@@ -157,6 +157,7 @@
     <string name="seeds_config_clearcachedone">The cache has been cleaned</string>
     
     <string name="seeds_config_toast_changepwdunavail">Password protect is disabled, can not change password</string>
+    <string name="seeds_config_toast_clearcache">Clearing cache&#8230;</string>
     
     <string name="seeds_http_buttonstartserver">Start server</string>
     <string name="seeds_http_buttonstopserver">Stop server</string>
@@ -164,7 +165,7 @@
     <string name="seeds_http_eventserve">Served </string>
     <string name="seeds_http_eventserveerror">Server sent error response </string>
     <string name="seeds_http_taptostart">Tap on Start Server below to start serving</string>
-    <string name="seeds_http_stopserver">Stopping server ...</string>
+    <string name="seeds_http_stopserver">Stopping server&#8230;</string>
     <string name="seeds_http_serverstopped">Server stopped.</string>
     
     <string name="seeds_helpdialog_text"> 

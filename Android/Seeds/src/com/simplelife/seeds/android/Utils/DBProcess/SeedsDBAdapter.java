@@ -293,6 +293,7 @@ public class SeedsDBAdapter {
  	
  	public boolean isSeedSaveToFavorite(int _localId){
 	    
+ 		boolean rtnFlag;
  		Cursor mCursor = mSQLiteDatabase.query(true, 
 	    		DATABASE_TABLE_SEED, 
 	    		new String[]{KEY_FAVORITE}, 
@@ -305,9 +306,12 @@ public class SeedsDBAdapter {
 	    }
 	    
 	    if (1 == mCursor.getInt(mCursor.getColumnIndex(KEY_FAVORITE)))
-	    	return true;
+	    	rtnFlag = true;
 	    else
-	    	return false;
+	    	rtnFlag = false;
+	    
+	    mCursor.close();
+	    return rtnFlag;
  	}
  	
  	public void syncDataBase(){
@@ -332,6 +336,7 @@ public class SeedsDBAdapter {
 	        }
 			tResult.moveToNext();
 	    }
+		tResult.close();
 		
  	}
  	 

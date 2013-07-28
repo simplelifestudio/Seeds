@@ -75,6 +75,9 @@ public class SeedsConfigActivity extends Activity {
     	private String mResponse  = null;
     	private ProgressDialog mProgressDialog = null;
     	
+    	private final int MESSAGE_CONFIG_VERIFYSERVER = 0;
+    	private final int MEESAGE_CONFIG_CLEARCACHE   = 1;
+    	
         @Override  
         public void onCreate(Bundle savedInstanceState) {    
             super.onCreate(savedInstanceState);  
@@ -92,11 +95,8 @@ public class SeedsConfigActivity extends Activity {
             mPrefFeedback   = (Preference)findPreference("config_feedback");
             mPrefAbout = (Preference)findPreference("config_about");
             
-            try {
-            	
-            	long tCacheSizeInBytes = ImageCache.getCacheSize(getActivity(), ImageCache.getExternalCacheDir(getActivity()));
-            	String tCacheSizeInString = FormetFileSize(tCacheSizeInBytes);
-				
+            try {            	
+            	String tCacheSizeInString = getCacheDirSize();				
             	mPrefClearCache.setSummary(getString(R.string.seeds_config_clearcachesum)+tCacheSizeInString);
 			} catch (Exception e) {
 				mLogger.excep(e);
@@ -150,14 +150,7 @@ public class SeedsConfigActivity extends Activity {
         	}
         	else if(mPrefClearCache == preference)
         	{
-        		SeedsFileCache.clearCache();
-                try {
-    				mPrefClearCache.setSummary(getString(R.string.seeds_config_clearcachesum)
-    						                   +SeedsFileCache.getCacheSize()+"MB");
-    			} catch (Exception e) {
-    				mLogger.excep(e);
-    			}
-                showToast(R.string.seeds_config_clearcachedone);
+        		onClearCache();
         	}
         	else if(mPrefChangePwd == preference)
         	{
@@ -200,7 +193,25 @@ public class SeedsConfigActivity extends Activity {
     					mLogger.excep(e);
     				}
     				Message t_MsgListData = new Message();
-    				t_MsgListData.what = 0;									
+    				t_MsgListData.what = MESSAGE_CONFIG_VERIFYSERVER;									
+    				handler.sendMessage(t_MsgListData);	
+    			}				
+    		}.start();
+        }
+        
+        public void onClearCache() {   	
+        	
+        	mProgressDialog = ProgressDialog.show(getActivity(), "Loading...", 
+        			          getString(R.string.seeds_config_toast_clearcache), true, false);
+        	mProgressDialog.setCanceledOnTouchOutside(true);
+        	
+    		new Thread() {
+    						
+    			@Override
+    			public void run() {
+    		    	ImageCache.clearImageCache(ImageCache.getExternalCacheDir(getActivity()));
+    				Message t_MsgListData = new Message();
+    				t_MsgListData.what = MEESAGE_CONFIG_CLEARCACHE;									
     				handler.sendMessage(t_MsgListData);	
     			}				
     		}.start();
@@ -213,7 +224,7 @@ public class SeedsConfigActivity extends Activity {
             public void handleMessage(Message msg) {  
             	
             	switch (msg.what) {
-            		case 0:
+            		case MESSAGE_CONFIG_VERIFYSERVER:
             		{
                     	if (null != mResponse)
                     	{
@@ -225,6 +236,17 @@ public class SeedsConfigActivity extends Activity {
                     	}
                     	mProgressDialog.dismiss();
             		}
+            		case MEESAGE_CONFIG_CLEARCACHE:
+            		{
+                        try {
+            				String tCacheSize = getCacheDirSize();
+                        	mPrefClearCache.setSummary(getString(R.string.seeds_config_clearcachesum)+tCacheSize);
+            			} catch (Exception e) {
+            				mLogger.excep(e);
+            			}
+                        mProgressDialog.dismiss();
+                        showToast(R.string.seeds_config_clearcachedone);
+            		}
             	}        	
             	
             }
@@ -232,6 +254,18 @@ public class SeedsConfigActivity extends Activity {
         
     	private void showToast(int _messageId) {
     	    Toast.makeText(getActivity(), _messageId, Toast.LENGTH_SHORT).show();
+    	}
+    	
+    	public String getCacheDirSize(){
+        	long tCacheSizeInBytes = 0;
+			try {
+				tCacheSizeInBytes = ImageCache.getCacheSize(getActivity(), ImageCache.getExternalCacheDir(getActivity()));
+			} catch (Exception e) {
+				mLogger.excep(e);
+			}
+        	String tCacheSizeInString = FormetFileSize(tCacheSizeInBytes);
+        	
+        	return tCacheSizeInString;
     	}
     	
     	public String FormetFileSize(long fileS){

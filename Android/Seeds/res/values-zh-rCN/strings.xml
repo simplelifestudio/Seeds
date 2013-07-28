@@ -114,7 +114,7 @@
     <string name="seeds_rss_toast_emptycartresp">消息错误，订阅失败</string>
     <string name="seeds_rss_toast_booksuccess">订阅成功，订阅编号： </string>
     <string name="seeds_rss_menu_sendreqmsg">发送订阅请求</string>
-    <string name="seeds_rss_dialof_sendingreqmsg">正在发送订阅请求...</string>
+    <string name="seeds_rss_dialof_sendingreqmsg">正在发送订阅请求&#8230;</string>
     
     <string name="seeds_config_page">应用设置</string>
     <string name="seeds_config_serverpref">服务器设置</string>
@@ -156,6 +156,7 @@
     <string name="seeds_config_clearcachedone">缓存已清空</string>
     
     <string name="seeds_config_toast_changepwdunavail">密码保护已关闭,无法更改密码</string>
+    <string name="seeds_config_toast_clearcache">正在清理缓存&#8230;</string>
     
     <string name="seeds_http_buttonstartserver">开启服务</string>
     <string name="seeds_http_buttonstopserver">关闭服务</string>
@@ -163,7 +164,7 @@
     <string name="seeds_http_eventserve">服务指令 </string>
     <string name="seeds_http_eventserveerror">服务端返回错误响应 </string>
     <string name="seeds_http_taptostart">点击开启服务打开HTTP服务</string>
-    <string name="seeds_http_stopserver">正在关闭服务...</string>
+    <string name="seeds_http_stopserver">正在关闭服务&#8230;</string>
     <string name="seeds_http_serverstopped">HTTP服务已关闭。</string>
     
     <string name="seeds_helpdialog_text"> 

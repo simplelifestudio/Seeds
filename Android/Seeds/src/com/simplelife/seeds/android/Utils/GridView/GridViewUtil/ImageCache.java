@@ -208,6 +208,7 @@ public class ImageCache {
                 }
             }
             mDiskCacheStarting = false;
+            Log.e(TAG, "mDiskCacheStarting set is false! - ");
             mDiskCacheLock.notifyAll();
         }
     }
@@ -299,6 +300,7 @@ public class ImageCache {
         synchronized (mDiskCacheLock) {
             while (mDiskCacheStarting) {
                 try {
+                	Log.d(TAG, "mDiskCacheStarting is true, waiting...");
                     mDiskCacheLock.wait();
                 } catch (InterruptedException e) {}
             }
@@ -616,6 +618,22 @@ public class ImageCache {
             }  
         }  
         return size;  
+    }
+    
+    public static void clearImageCache(File cacheDir){
+        File[] fileList = cacheDir.listFiles();
+        if(fileList == null)
+            return;
+        for (int i = 0; i < fileList.length; i++) 
+        {
+            if (fileList[i].isDirectory())  
+            {  
+                ImageCache.clearImageCache(fileList[i]);  
+            } else  
+            {  
+            	fileList[i].delete();  
+            } 
+        }
     }
     
     /**
