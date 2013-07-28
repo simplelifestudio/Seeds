@@ -12,8 +12,11 @@ import java.util.HashMap;
 
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache.ImageCacheParams;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -32,10 +35,23 @@ public class SeedsFavListActivity extends SeedsListActivity{
 		
 		// setTheme(android.R.style.Theme_Translucent_NoTitleBar);
 		// Set the list view layout
-		setContentView(R.layout.activity_seeds_favlist);
+		setContentView(R.layout.activity_seeds_favlist);				
 				
+		// Set a title for this page
+		ActionBar tActionBar = getActionBar();
+		tActionBar.setTitle(getString(R.string.seeds_datelist_favoritelist));
+		
 		// Initialize the tSeedIdList
 		mSeedIdList = new ArrayList<Integer>();
+		
+        mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
+
+        ImageCacheParams cacheParams = new ImageCacheParams(this, SeedsDefinitions.SEEDS_THUMBS_CACHE_DIR);
+
+        // The ImageFetcher takes care of loading images into our ImageView children asynchronously
+        mImageFetcher = new ImageFetcher(this, mImageThumbSize);
+        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
+        mImageFetcher.addImageCache(this.getSupportFragmentManager(), cacheParams);
 		
 		// Start a new thread to get the data
 		new Thread(new Runnable() {

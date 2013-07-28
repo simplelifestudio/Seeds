@@ -18,6 +18,8 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache.ImageCacheParams;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
 
@@ -40,10 +42,9 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class SeedsRSSCartActivity extends SeedsListActivity{	
-		
-	private ArrayList<Integer> mSeedIdInCart;
-	private ArrayList<SeedsEntity> mSeedsEntityList;
-	private static ArrayList<Integer> mSeedLocalIdInCart = new ArrayList<Integer>();;
+			
+	private ArrayList<Integer> mSeedIdInCart = new ArrayList<Integer>();
+	private static ArrayList<Integer> mSeedLocalIdInCart = new ArrayList<Integer>();
 	private static ArrayList<Integer> mBookSuccSeedIdList = new  ArrayList<Integer>();
 	private static ArrayList<Integer> mBookExistSeedIdList = new  ArrayList<Integer>();
 	private static ArrayList<Integer> mBookFailedSeedIdList = new  ArrayList<Integer>();
@@ -66,10 +67,19 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 		
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
-		tActionBar.setTitle(R.string.seeds_rss_management);	
-				
-		// Initialize the mSeedIdInCart
-		mSeedIdInCart = new ArrayList<Integer>();
+		tActionBar.setTitle(R.string.seeds_rss_management);					
+		
+		// Initialize the tSeedIdList
+		mSeedIdList = new ArrayList<Integer>();
+		
+        mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
+
+        ImageCacheParams cacheParams = new ImageCacheParams(this, SeedsDefinitions.SEEDS_THUMBS_CACHE_DIR);
+
+        // The ImageFetcher takes care of loading images into our ImageView children asynchronously
+        mImageFetcher = new ImageFetcher(this, mImageThumbSize);
+        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
+        mImageFetcher.addImageCache(this.getSupportFragmentManager(), cacheParams);
 		
 		// Start a new thread to get the data
 		new Thread(new Runnable() {

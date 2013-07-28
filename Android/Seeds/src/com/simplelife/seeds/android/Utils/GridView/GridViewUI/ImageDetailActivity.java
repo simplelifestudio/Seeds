@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.simplelife.seeds.android.BuildConfig;
 import com.simplelife.seeds.android.R;
+import com.simplelife.seeds.android.SeedsDefinitions;
 import com.simplelife.seeds.android.utils.gridview.gridviewprovider.Images;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
@@ -72,7 +73,7 @@ public class ImageDetailActivity extends FragmentActivity implements OnClickList
         final int longest = (height > width ? height : width) / 2;
 
         ImageCache.ImageCacheParams cacheParams =
-                new ImageCache.ImageCacheParams(this, IMAGE_CACHE_DIR);
+                new ImageCache.ImageCacheParams(this, SeedsDefinitions.SEEDS_IMAGE_CACHE_DIR);
         cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
 
         // The ImageFetcher takes care of loading images into our ImageView children asynchronously

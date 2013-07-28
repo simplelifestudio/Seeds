@@ -234,7 +234,7 @@ public class SeedsDBAdapter {
  	{
  		Cursor mCursor = mSQLiteDatabase.query(true, 
 	    		DATABASE_TABLE_SEED, 
-	    		new String[]{KEY_ID_SEED, KEY_SEEDID, KEY_TYPE, KEY_SOURCE, KEY_NAME, 
+	    		new String[]{KEY_ID_SEED, KEY_SEEDID, KEY_TYPE, KEY_SOURCE, KEY_PUBLISHDATE, KEY_NAME, 
  				KEY_SIZE, KEY_FORMAT, KEY_TORRENTLINK, KEY_HASH, KEY_MOSAIC,KEY_FAVORITE}, 
 	    		KEY_FAVORITE+ "=1",
 	    		null,null,null,null,null);

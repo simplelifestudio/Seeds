@@ -26,7 +26,6 @@ import android.widget.ListView;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.RecyclingImageView;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
-import com.simplelife.seeds.android.utils.imageprocess.SeedsImageLoader;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 public abstract class SeedsListActivity extends FragmentActivity {
@@ -121,16 +120,12 @@ public abstract class SeedsListActivity extends FragmentActivity {
 
 		protected Activity activity;
 		protected ArrayList<HashMap<String, String>> data;
-		protected LayoutInflater inflater = null;
-		
-		// Clarify the class which is used to load the image via url
-		public SeedsImageLoader imageLoader; 
+		protected LayoutInflater inflater = null;		
 
 		public SeedsAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
 			activity = a;
 			data     = d;
 			inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			imageLoader = new SeedsImageLoader(activity.getApplicationContext());
 		}
 
 		public int getCount() {

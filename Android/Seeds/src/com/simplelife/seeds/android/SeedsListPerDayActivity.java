@@ -22,8 +22,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.simplelife.seeds.android.SeedsFavListActivity.ListViewItemOnClickListener;
-import com.simplelife.seeds.android.SeedsListActivity.SeedsAdapter;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;

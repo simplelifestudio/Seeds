@@ -38,7 +38,7 @@
         <LinearLayout
             android:id="@+id/seed_grid_info_divider1"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             android:layout_below="@id/seed_grid_info_name"
             android:background="@drawable/divider_horizontal_line"
             android:orientation="vertical" >
@@ -71,7 +71,7 @@
         <LinearLayout
             android:id="@+id/seed_grid_info_divider2"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1dp"
             android:layout_below="@id/seed_grid_info_format"
             android:background="@drawable/divider_horizontal_line"
             android:orientation="vertical" >
