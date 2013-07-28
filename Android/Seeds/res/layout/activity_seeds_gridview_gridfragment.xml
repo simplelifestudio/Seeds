@@ -40,7 +40,7 @@
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_below="@id/seed_grid_info_name"
-            android:background="@drawable/divider_horizontal_line"
+            android:background="@drawable/seeds_divideline"
             android:orientation="vertical" >
         </LinearLayout>
 
@@ -73,7 +73,7 @@
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_below="@id/seed_grid_info_format"
-            android:background="@drawable/divider_horizontal_line"
+            android:background="@drawable/seeds_divideline"
             android:orientation="vertical" >
         </LinearLayout>
         
