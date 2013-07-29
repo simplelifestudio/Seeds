@@ -252,6 +252,14 @@ public abstract class ImageWorker {
             final String dataString = String.valueOf(data);
             Bitmap bitmap = null;
             BitmapDrawable drawable = null;
+            
+            if(isCancelled())
+            {
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG, "doInBackground - task cancelled, stop background processing "+dataString);
+                }
+            	return drawable;
+            }
 
             // Wait here if work is paused and the task is not cancelled
             synchronized (mPauseWorkLock) {

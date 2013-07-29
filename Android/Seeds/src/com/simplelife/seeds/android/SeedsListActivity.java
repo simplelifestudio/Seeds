@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import android.widget.ListView;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.RecyclingImageView;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageWorker;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 public abstract class SeedsListActivity extends FragmentActivity {
@@ -42,6 +44,7 @@ public abstract class SeedsListActivity extends FragmentActivity {
     protected ImageFetcher mImageFetcher;
 	
     protected ArrayList<SeedsEntity> mSeedsEntityList;
+    protected ArrayList<ImageView> mImageViewList;
 	
 	// For log purpose
     protected SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger(); 
@@ -50,6 +53,7 @@ public abstract class SeedsListActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		mImageViewList = new ArrayList<ImageView>();
 	}
 	
     @Override
@@ -69,6 +73,18 @@ public abstract class SeedsListActivity extends FragmentActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.i("SeedsListActivity", "Destroying image views!");
+        int tImageViewSize = mImageViewList.size();
+        for(int index=0; index<tImageViewSize; index++)
+        {
+        	ImageView tImageView = mImageViewList.get(index);
+            if (tImageView != null) {
+                // Cancel any pending image work
+                ImageWorker.cancelWork(tImageView);
+                tImageView.setImageDrawable(null);
+            }
+        }
+
         mImageFetcher.closeCache();
     }	
 
@@ -168,6 +184,7 @@ public abstract class SeedsListActivity extends FragmentActivity {
 			format.setText(seedList.get(SeedsDBAdapter.KEY_FORMAT));
 			mosaic.setText(seedList.get(SeedsDBAdapter.KEY_MOSAIC));
 			mImageFetcher.loadImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL), thumb_image);
+			mImageViewList.add(thumb_image);
 			/*imageLoader.DisplayImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL),
 					thumb_image,0);*/
 			return vi;
