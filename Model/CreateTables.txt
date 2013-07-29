@@ -20,10 +20,10 @@ CREATE TABLE `seeds`.`Seed` (
 
   
 
-CREATE TABLE `seeds`.`PreviewPic` (
+CREATE TABLE `seeds`.`SeedPicture` (
   `pictureId` int(11) NOT NULL AUTO_INCREMENT,
   `seedId` int(11) DEFAULT NULL,
-  `pictureLink` varchar(256) DEFAULT NULL,
+  `pictureLink` varchar(512) DEFAULT NULL,
   `memo` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`pictureId`),
   KEY `seedId_idx` (`seedId`),
@@ -40,49 +40,52 @@ CREATE TABLE `seeds`.`SeedCaptureLog` (
 
 
 
-CREATE TABLE `GlobalLogDefinition` (
+CREATE TABLE `seeds`.`OperationLogDefinition` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `logId` int(11) NOT NULL,
+  `operationCode` int(11) NOT NULL,
   `description` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `logId_UNIQUE` (`logId`)
+  UNIQUE KEY `logId_UNIQUE` (`operationCode`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 
-CREATE TABLE `OperationLog` (
+CREATE TABLE `seeds`.`OperationLog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `logDate` varchar(64) DEFAULT NULL,
-  `logId` int(11) DEFAULT NULL,
+  `operationCode` int(11) DEFAULT NULL,
   `logInfo` varchar(256) DEFAULT NULL,
   `memo` varchar(256) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `logId_idx` (`logId`),
-  CONSTRAINT `logId` FOREIGN KEY (`logId`) REFERENCES `GlobalLogDefinition` (`logId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `logId_idx` (`operationCode`),
+  CONSTRAINT `operationCode` FOREIGN KEY (`operationCode`) REFERENCES `OperationLogDefinition` (`operationCode`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-CREATE  TABLE `seeds`.`SeedSubscribe` (
+CREATE  TABLE `seeds`.`Cart` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `userName` VARCHAR(32) NULL ,
+  `cartId` VARCHAR(32) NULL ,
   `seedId` INT NULL ,
+  `date` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`) );
 
 
 
-insert into GlobalLogDefinition(logId, description) values(1, "Seed抓取任务开始");
-insert into GlobalLogDefinition(logId, description) values(2, "Seed分析成功");
-insert into GlobalLogDefinition(logId, description) values(3, "Seed分析失败");
-insert into GlobalLogDefinition(logId, description) values(4, "Seed分析失败，系统放弃当天分析任务");
-insert into GlobalLogDefinition(logId, description) values(101, "管理员登陆");
-insert into GlobalLogDefinition(logId, description) values(102, "管理员手工触发信息源分析任务");
-insert into GlobalLogDefinition(logId, description) values(103, "管理员设置用户状态");
-insert into GlobalLogDefinition(logId, description) values(201, "用户注册");
-insert into GlobalLogDefinition(logId, description) values(202, "用户登陆");
-insert into GlobalLogDefinition(logId, description) values(203, "用户注销");
-insert into GlobalLogDefinition(logId, description) values(204, "用户查询seed状态");
-insert into GlobalLogDefinition(logId, description) values(205, "用户查询seed信息");
-insert into GlobalLogDefinition(logId, description) values(206, "客户端发送aloha请求");
-insert into GlobalLogDefinition(logId, description) values(207, "用户发送请求推送seed");
+insert into seeds.OperationLogDefinition(operationCode, description) values(101, "管理员登陆");
+insert into seeds.OperationLogDefinition(operationCode, description) values(102, "管理员手工触发信息源分析任务");
+insert into seeds.OperationLogDefinition(operationCode, description) values(103, "管理员设置用户状态");
 
+insert into seeds.OperationLogDefinition(operationCode, description) values(1001, "用户注册");
+insert into seeds.OperationLogDefinition(operationCode, description) values(1002, "用户登陆");
+insert into seeds.OperationLogDefinition(operationCode, description) values(1003, "用户注销");
+
+insert into seeds.OperationLogDefinition(operationCode, description) values(1004, "客户端发送aloha请求");
+insert into seeds.OperationLogDefinition(operationCode, description) values(1005, "用户查询seed状态");
+insert into seeds.OperationLogDefinition(operationCode, description) values(1006, "用户查询seed信息");
+insert into seeds.OperationLogDefinition(operationCode, description) values(1007, "用户发送请求推送seed");
+
+insert into seeds.OperationLogDefinition(operationCode, description) values(1008, "Seed抓取任务开始");
+insert into seeds.OperationLogDefinition(operationCode, description) values(1009, "Seed分析成功");
+insert into seeds.OperationLogDefinition(operationCode, description) values(1010, "Seed分析失败");
+insert into seeds.OperationLogDefinition(operationCode, description) values(1011, "Seed分析失败，系统放弃当天分析任务");
 
 
