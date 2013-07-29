@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">  
+
+    <item
+        android:id="@+id/download_mgt_datelist"
+        android:icon="@drawable/dowload_management"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/seeds_download_mgt"/>  
+        
+    <item
+        android:id="@+id/rss_management_datelist"
+        android:icon="@drawable/rss_management"        
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/seeds_rss_management"/>
+                 
+</menu>

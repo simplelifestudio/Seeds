@@ -126,7 +126,7 @@ containing a value of this type.
         public static final int actionbar_title=0x7f0c0044;
         public static final int address=0x7f0c002b;
         public static final int appIcon=0x7f0c0053;
-        public static final int clear_cache=0x7f0c005e;
+        public static final int clear_cache=0x7f0c0060;
         public static final int config_btn=0x7f0c000f;
         public static final int date_befyesterday=0x7f0c0001;
         public static final int date_ordered_list=0x7f0c0046;
@@ -136,11 +136,12 @@ containing a value of this type.
         public static final int deselect_all=0x7f0c004b;
         public static final int download_checkbox=0x7f0c004c;
         public static final int download_icon=0x7f0c004d;
-        public static final int download_menu_sort_by_date=0x7f0c0064;
-        public static final int download_menu_sort_by_size=0x7f0c0063;
-        public static final int download_mgt=0x7f0c005d;
+        public static final int download_menu_sort_by_date=0x7f0c0066;
+        public static final int download_menu_sort_by_size=0x7f0c0065;
+        public static final int download_mgt=0x7f0c005f;
+        public static final int download_mgt_datelist=0x7f0c0059;
         public static final int download_progress=0x7f0c004f;
-        public static final int download_seed=0x7f0c005c;
+        public static final int download_seed=0x7f0c005e;
         public static final int download_title=0x7f0c004e;
         public static final int edit_message=0x7f0c003b;
         public static final int empty=0x7f0c0048;
@@ -160,9 +161,9 @@ containing a value of this type.
         public static final int list_image=0x7f0c002e;
         public static final int login_toast=0x7f0c0033;
         public static final int mLocusPassWordView=0x7f0c0034;
-        public static final int menu_addto_fav=0x7f0c0059;
-        public static final int menu_settings=0x7f0c0060;
-        public static final int menu_to_grid=0x7f0c0062;
+        public static final int menu_addto_fav=0x7f0c005b;
+        public static final int menu_settings=0x7f0c0062;
+        public static final int menu_to_grid=0x7f0c0064;
         public static final int name_befyesterday=0x7f0c0002;
         public static final int name_today=0x7f0c000a;
         public static final int name_yesterday=0x7f0c0006;
@@ -170,9 +171,10 @@ containing a value of this type.
         public static final int paused_text=0x7f0c0058;
         public static final int progress_bar=0x7f0c0057;
         public static final int progress_text=0x7f0c0054;
-        public static final int rss_addtocart=0x7f0c005a;
-        public static final int rss_management=0x7f0c005b;
-        public static final int rss_sendreqmsg=0x7f0c005f;
+        public static final int rss_addtocart=0x7f0c005c;
+        public static final int rss_management=0x7f0c005d;
+        public static final int rss_management_datelist=0x7f0c005a;
+        public static final int rss_sendreqmsg=0x7f0c0061;
         public static final int screen=0x7f0c003c;
         public static final int seed_grid_info_backgroud=0x7f0c0021;
         public static final int seed_grid_info_divider1=0x7f0c0023;
@@ -190,7 +192,7 @@ containing a value of this type.
         public static final int seeds_mosaic=0x7f0c0032;
         public static final int seeds_size=0x7f0c0031;
         public static final int seeds_title=0x7f0c002f;
-        public static final int seeds_verify_menu_settings=0x7f0c0061;
+        public static final int seeds_verify_menu_settings=0x7f0c0063;
         public static final int seedsnumber_befyesterday=0x7f0c0003;
         public static final int seedsnumber_today=0x7f0c000b;
         public static final int seedsnumber_yesterday=0x7f0c0007;
@@ -239,13 +241,14 @@ containing a value of this type.
         public static final int seeds_download_status_bar_ongoing_event_progress_bar=0x7f030017;
     }
     public static final class menu {
-        public static final int activity_seeds_gridview_menu=0x7f0b0000;
-        public static final int activity_seeds_rss_management=0x7f0b0001;
-        public static final int activity_seeds_start=0x7f0b0002;
-        public static final int activity_seeds_start_display_message=0x7f0b0003;
-        public static final int activity_seeds_start_verify_menu=0x7f0b0004;
-        public static final int seeds_download_management=0x7f0b0005;
-        public static final int seeds_download_ui_menu=0x7f0b0006;
+        public static final int activity_seeds_datelist_menu=0x7f0b0000;
+        public static final int activity_seeds_gridview_menu=0x7f0b0001;
+        public static final int activity_seeds_rss_management=0x7f0b0002;
+        public static final int activity_seeds_start=0x7f0b0003;
+        public static final int activity_seeds_start_display_message=0x7f0b0004;
+        public static final int activity_seeds_start_verify_menu=0x7f0b0005;
+        public static final int seeds_download_management=0x7f0b0006;
+        public static final int seeds_download_ui_menu=0x7f0b0007;
     }
     public static final class string {
         public static final int actionbar_activity_not_found=0x7f080070;
