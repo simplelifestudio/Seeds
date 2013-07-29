@@ -49,7 +49,7 @@ public class ImageFetcher extends ImageResizer {
     private DiskLruCache mHttpDiskCache;
     private File mHttpCacheDir;
     private boolean mHttpDiskCacheStarting = true;
-    private final Object mHttpDiskCacheLock = new Object();
+    //private final Object mHttpDiskCacheLock = new Object();
     private static final int DISK_CACHE_INDEX = 0;
 
     /**
@@ -90,7 +90,7 @@ public class ImageFetcher extends ImageResizer {
         if (!mHttpCacheDir.exists()) {
             mHttpCacheDir.mkdirs();
         }
-        synchronized (mHttpDiskCacheLock) {
+        //synchronized (mHttpDiskCacheLock) {
             if (ImageCache.getUsableSpace(mHttpCacheDir) > HTTP_CACHE_SIZE) {
                 try {
                     mHttpDiskCache = DiskLruCache.open(mHttpCacheDir, 1, 1, HTTP_CACHE_SIZE);
@@ -102,14 +102,14 @@ public class ImageFetcher extends ImageResizer {
                 }
             }
             mHttpDiskCacheStarting = false;
-            mHttpDiskCacheLock.notifyAll();
-        }
+           // mHttpDiskCacheLock.notifyAll();
+        //}
     }
 
     @Override
     protected void clearCacheInternal() {
         super.clearCacheInternal();
-        synchronized (mHttpDiskCacheLock) {
+        //synchronized (mHttpDiskCacheLock) {
             if (mHttpDiskCache != null && !mHttpDiskCache.isClosed()) {
                 try {
                     mHttpDiskCache.delete();
@@ -123,13 +123,13 @@ public class ImageFetcher extends ImageResizer {
                 mHttpDiskCacheStarting = true;
                 initHttpDiskCache();
             }
-        }
+        //}
     }
 
     @Override
     protected void flushCacheInternal() {
         super.flushCacheInternal();
-        synchronized (mHttpDiskCacheLock) {
+        //synchronized (mHttpDiskCacheLock) {
             if (mHttpDiskCache != null) {
                 try {
                     mHttpDiskCache.flush();
@@ -140,13 +140,13 @@ public class ImageFetcher extends ImageResizer {
                     Log.e(TAG, "flush - " + e);
                 }
             }
-        }
+        //}
     }
 
     @Override
     protected void closeCacheInternal() {
         super.closeCacheInternal();
-        synchronized (mHttpDiskCacheLock) {
+        //synchronized (mHttpDiskCacheLock) {
             if (mHttpDiskCache != null) {
                 try {
                     if (!mHttpDiskCache.isClosed()) {
@@ -160,7 +160,7 @@ public class ImageFetcher extends ImageResizer {
                     Log.e(TAG, "closeCacheInternal - " + e);
                 }
             }
-        }
+        //}
     }
 
     /**
@@ -194,13 +194,13 @@ public class ImageFetcher extends ImageResizer {
         FileDescriptor fileDescriptor = null;
         FileInputStream fileInputStream = null;
         DiskLruCache.Snapshot snapshot;
-        synchronized (mHttpDiskCacheLock) {
+        //synchronized (mHttpDiskCacheLock) {
             // Wait for disk cache to initialize
-            while (mHttpDiskCacheStarting) {
+            /*while (mHttpDiskCacheStarting) {
                 try {
                     mHttpDiskCacheLock.wait();
                 } catch (InterruptedException e) {}
-            }
+            }*/
 
             if (mHttpDiskCache != null) {
                 try {
@@ -237,7 +237,7 @@ public class ImageFetcher extends ImageResizer {
                     }
                 }
             }
-        }
+        //}
 
         Bitmap bitmap = null;
         if (fileDescriptor != null) {
