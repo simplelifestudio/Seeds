@@ -65,7 +65,7 @@ public class SeedsDateManager {
     	return mDateToday;
     }
     
-    public String logicDateToRealDate(String _inRealDate){
+    public String realDateToLogicDate(String _inRealDate){
     	
     	if(_inRealDate.equals(mDateBefYesterday))
     		return SeedsDefinitions.SEEDS_DATE_BEFYESTERDAY;
@@ -77,7 +77,7 @@ public class SeedsDateManager {
     		return SeedsGlobalErrorCode.SEEDS_ERROR_WRONGREALDATE;    	
     }
     
-    public String realDateToLogicDate(String _inLogicDate){
+    public String logicDateToRealDate(String _inLogicDate){
     	if(_inLogicDate.equals(SeedsDefinitions.SEEDS_DATE_BEFYESTERDAY))
     		return mDateBefYesterday;
     	else if(_inLogicDate.equals(SeedsDefinitions.SEEDS_DATE_YESTERDAY))
