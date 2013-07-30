@@ -17,6 +17,8 @@
 package com.simplelife.seeds.android.utils.gridview.gridviewutil;
 
 import com.simplelife.seeds.android.BuildConfig;
+import com.simplelife.seeds.android.SeedsDateManager;
+import com.simplelife.seeds.android.SeedsDefinitions;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -53,6 +55,9 @@ import java.util.Iterator;
  */
 public class ImageCache {
     private static final String TAG = "ImageCache";
+    private static final String TAG_BEF = "ImageCacheBef";
+    private static final String TAG_YES = "ImageCacheYes";
+    private static final String TAG_TOD = "ImageCacheTod";
 
     // Default memory cache size in kilobytes
     private static final int DEFAULT_MEM_CACHE_SIZE = 1024 * 5; // 5MB
@@ -99,10 +104,10 @@ public class ImageCache {
      * @return An existing retained ImageCache object or a new one if one did not exist
      */
     public static ImageCache getInstance(
-            FragmentManager fragmentManager, ImageCacheParams cacheParams) {
+            FragmentManager fragmentManager, ImageCacheParams cacheParams, String realDate) {
 
         // Search for, or create an instance of the non-UI RetainFragment
-        final RetainFragment mRetainFragment = findOrCreateRetainFragment(fragmentManager);
+        final RetainFragment mRetainFragment = findOrCreateRetainFragment(fragmentManager, realDate);
 
         // See if we already have an ImageCache stored in RetainFragment
         ImageCache imageCache = (ImageCache) mRetainFragment.getObject();
@@ -659,14 +664,27 @@ public class ImageCache {
      * @return The existing instance of the Fragment or the new instance if just
      *         created.
      */
-    private static RetainFragment findOrCreateRetainFragment(FragmentManager fm) {
+    private static RetainFragment findOrCreateRetainFragment(FragmentManager fm, String realDate) {
         // Check to see if we have retained the worker fragment.
-        RetainFragment mRetainFragment = (RetainFragment) fm.findFragmentByTag(TAG);
+    	String tTAG = TAG; 
+    	SeedsDateManager tDataMgr = SeedsDateManager.getDateManager();
+    	String tLogicDate = tDataMgr.realDateToLogicDate(realDate);
+    	if(tLogicDate.equals(SeedsDefinitions.SEEDS_DATE_BEFYESTERDAY))
+    	{
+    		tTAG = TAG_BEF;
+    	}else if(tLogicDate.equals(SeedsDefinitions.SEEDS_DATE_YESTERDAY))
+    	{
+    		tTAG = TAG_YES;
+    	}else if(tLogicDate.equals(SeedsDefinitions.SEEDS_DATE_TODAY))
+    	{
+    		tTAG = TAG_TOD;
+    	}
+    	RetainFragment mRetainFragment = (RetainFragment) fm.findFragmentByTag(tTAG);
 
         // If not retained (or first time running), we need to create and add it.
         if (mRetainFragment == null) {
             mRetainFragment = new RetainFragment();
-            fm.beginTransaction().add(mRetainFragment, TAG).commitAllowingStateLoss();
+            fm.beginTransaction().add(mRetainFragment, tTAG).commitAllowingStateLoss();
         }
 
         return mRetainFragment;

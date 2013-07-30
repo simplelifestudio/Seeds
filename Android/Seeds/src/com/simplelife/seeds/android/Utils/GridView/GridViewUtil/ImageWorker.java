@@ -124,9 +124,9 @@ public abstract class ImageWorker {
      * @param cacheParams The cache parameters to use for the image cache.
      */
     public void addImageCache(FragmentManager fragmentManager,
-            ImageCache.ImageCacheParams cacheParams) {
+            ImageCache.ImageCacheParams cacheParams, String realDate) {
         mImageCacheParams = cacheParams;
-        mImageCache = ImageCache.getInstance(fragmentManager, mImageCacheParams);
+        mImageCache = ImageCache.getInstance(fragmentManager, mImageCacheParams, realDate);
         new CacheAsyncTask().execute(MESSAGE_INIT_DISK_CACHE);
     }
 
@@ -137,9 +137,9 @@ public abstract class ImageWorker {
      * @param diskCacheDirectoryName See
      * {@link ImageCache.ImageCacheParams#ImageCacheParams(Context, String)}.
      */
-    public void addImageCache(FragmentActivity activity, String diskCacheDirectoryName) {
+    public void addImageCache(FragmentActivity activity, String diskCacheDirectoryName, String realDate) {
         mImageCacheParams = new ImageCache.ImageCacheParams(activity, diskCacheDirectoryName);
-        mImageCache = ImageCache.getInstance(activity.getSupportFragmentManager(), mImageCacheParams);
+        mImageCache = ImageCache.getInstance(activity.getSupportFragmentManager(), mImageCacheParams, realDate);
         new CacheAsyncTask().execute(MESSAGE_INIT_DISK_CACHE);
     }
 

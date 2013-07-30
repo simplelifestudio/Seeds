@@ -57,7 +57,7 @@ public class SeedsListPerDayActivity extends SeedsListActivity {
         // The ImageFetcher takes care of loading images into our ImageView children asynchronously
         mImageFetcher = new ImageFetcher(this, mImageThumbSize);
         mImageFetcher.setLoadingImage(R.drawable.empty_photo);
-        mImageFetcher.addImageCache(this.getSupportFragmentManager(), cacheParams);
+        mImageFetcher.addImageCache(this.getSupportFragmentManager(), cacheParams, mDate);
 		
 		// Start a new thread to get the data
 		new Thread(new Runnable() {
