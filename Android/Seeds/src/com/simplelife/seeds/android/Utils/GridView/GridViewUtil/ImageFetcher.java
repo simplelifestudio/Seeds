@@ -42,9 +42,9 @@ import java.net.URL;
  */
 public class ImageFetcher extends ImageResizer {
     private static final String TAG = "ImageFetcher";
-    private static final int HTTP_CACHE_SIZE = 10 * 1024 * 1024; // 10MB
+    private static final int HTTP_CACHE_SIZE = 20 * 1024 * 1024; // 20MB
     private static final String HTTP_CACHE_DIR = "http";
-    private static final int IO_BUFFER_SIZE = 8 * 1024;
+    private static final int IO_BUFFER_SIZE = 10 * 1024;
 
     private DiskLruCache mHttpDiskCache;
     private File mHttpCacheDir;
@@ -195,7 +195,7 @@ public class ImageFetcher extends ImageResizer {
         FileInputStream fileInputStream = null;
         DiskLruCache.Snapshot snapshot;
         synchronized (mHttpDiskCacheLock) {
-            // Wait for disk cache to initialize
+        	// Wait for disk cache to initialize
             while (mHttpDiskCacheStarting) {
                 try {
                     mHttpDiskCacheLock.wait();
@@ -272,6 +272,8 @@ public class ImageFetcher extends ImageResizer {
         try {
             final URL url = new URL(urlString);
             urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setConnectTimeout(30000);
+            urlConnection.setReadTimeout(30000);
             in = new BufferedInputStream(urlConnection.getInputStream(), IO_BUFFER_SIZE);
             out = new BufferedOutputStream(outputStream, IO_BUFFER_SIZE);
 
