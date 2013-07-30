@@ -78,6 +78,7 @@ public abstract class ImageWorker {
         }
 
         BitmapDrawable value = null;
+        Bitmap bitmap = null;
 
         if (mImageCache != null) {
             value = mImageCache.getBitmapFromMemCache(String.valueOf(data));
@@ -86,16 +87,37 @@ public abstract class ImageWorker {
         if (value != null) {
             // Bitmap found in memory cache
             imageView.setImageDrawable(value);
-        } else if (cancelPotentialWork(data, imageView)) {
-            final BitmapWorkerTask task = new BitmapWorkerTask(imageView);
-            final AsyncDrawable asyncDrawable =
-                    new AsyncDrawable(mResources, mLoadingBitmap, task);
-            imageView.setImageDrawable(asyncDrawable);
+        }else{
+            if (mImageCache != null && !mExitTasksEarly) {
+                bitmap = mImageCache.getBitmapFromDiskCache(String.valueOf(data));
+            }
+            
+            if (bitmap != null) {
+            	Log.d(TAG, "Disk cache hit out of thread");
+                if (Utils.hasHoneycomb()) {
+                    // Running on Honeycomb or newer, so wrap in a standard BitmapDrawable
+                	value = new BitmapDrawable(mResources, bitmap);
+                } else {
+                    // Running on Gingerbread or older, so wrap in a RecyclingBitmapDrawable
+                    // which will recycle automatically
+                	value = new RecyclingBitmapDrawable(mResources, bitmap);
+                }
 
-            // NOTE: This uses a custom version of AsyncTask that has been pulled from the
-            // framework and slightly modified. Refer to the docs at the top of the class
-            // for more info on what was changed.
-            task.executeOnExecutor(AsyncTask.DUAL_THREAD_EXECUTOR, data);
+                if (value != null) {
+                    mImageCache.addBitmapToCache(String.valueOf(data), value);
+                    imageView.setImageDrawable(value);
+                }
+            }else if (cancelPotentialWork(data, imageView)) {
+                final BitmapWorkerTask task = new BitmapWorkerTask(imageView);
+                final AsyncDrawable asyncDrawable =
+                    new AsyncDrawable(mResources, mLoadingBitmap, task);
+                imageView.setImageDrawable(asyncDrawable);
+
+                // NOTE: This uses a custom version of AsyncTask that has been pulled from the
+                // framework and slightly modified. Refer to the docs at the top of the class
+                // for more info on what was changed.
+                task.executeOnExecutor(AsyncTask.DUAL_THREAD_EXECUTOR, data);
+            }
         }
     }
 
@@ -237,6 +259,7 @@ public abstract class ImageWorker {
 
         public BitmapWorkerTask(ImageView imageView) {
             imageViewReference = new WeakReference<ImageView>(imageView);
+
         }
 
         /**
@@ -274,10 +297,10 @@ public abstract class ImageWorker {
             // thread and the ImageView that was originally bound to this task is still bound back
             // to this task and our "exit early" flag is not set then try and fetch the bitmap from
             // the cache
-            if (mImageCache != null && !isCancelled() && getAttachedImageView() != null
+            /*if (mImageCache != null && !isCancelled() && getAttachedImageView() != null
                     && !mExitTasksEarly) {
                 bitmap = mImageCache.getBitmapFromDiskCache(dataString);
-            }
+            }*/
 
             // If the bitmap was not found in the cache and this task has not been cancelled by
             // another thread and the ImageView that was originally bound to this task is still

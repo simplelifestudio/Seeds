@@ -213,7 +213,6 @@ public class ImageCache {
                 }
             }
             mDiskCacheStarting = false;
-            Log.e(TAG, "mDiskCacheStarting set is false! - ");
             mDiskCacheLock.notifyAll();
         }
     }
