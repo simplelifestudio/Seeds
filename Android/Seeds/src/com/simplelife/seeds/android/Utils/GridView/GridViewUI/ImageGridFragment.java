@@ -354,7 +354,9 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
         {
         	// Fetch the download manager to start the download
         	DownloadManager tDownloadMgr = DownloadManager.getDownloadMgr();
-        	tDownloadMgr.startDownload(Images.getSeedsEntity().getSeedTorrentLink());            	
+        	tDownloadMgr.startDownload(Images.getSeedsEntity().getSeedTorrentLink(),
+        			                   Images.getSeedsEntity().getSeedPublishDate(),
+        			                   Images.getSeedsEntity().getSeedName());            	
         	
     		Toast toast = Toast.makeText(getActivity(),
     				R.string.seeds_download_added, Toast.LENGTH_SHORT);

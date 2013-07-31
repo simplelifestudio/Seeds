@@ -316,11 +316,12 @@ public class DownloadManager {
         return mDownloadMgr;  
     }
     
-    public void startDownload(String inUrl){
+    public void startDownload(String inUrl, String inDate, String inName){
     	Uri srcUri = Uri.parse(inUrl);
     	DownloadManager.Request request = new Request(srcUri);
     	request.setDestinationInExternalPublicDir(
-    		SeedsDefinitions.SEEDS_DOWNLOAD_SUBFOLDER, "/");
+    		SeedsDefinitions.SEEDS_DOWNLOAD_SUBFOLDER +"/" + inDate, "/");
+    	request.setTitle(inName);
     	request.setDescription("Seeds Downloading");
     	enqueue(request);
     }

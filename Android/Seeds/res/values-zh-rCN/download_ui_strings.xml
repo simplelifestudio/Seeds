@@ -166,6 +166,6 @@
     Text for button appearing in the pop-up selection menu to deselect all currently selected
     downloads in the download list [CHAR LIMIT=25]
     -->
-    <string name="deselect_all">删除选中</string>
+    <string name="deselect_all">取消选中</string>
 
 </resources>

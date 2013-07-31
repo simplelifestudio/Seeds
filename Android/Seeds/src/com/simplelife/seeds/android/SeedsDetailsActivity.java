@@ -375,7 +375,9 @@ public class SeedsDetailsActivity extends Activity{
             {
             	// Fetch the download manager to start the download
             	DownloadManager tDownloadMgr = DownloadManager.getDownloadMgr();
-            	tDownloadMgr.startDownload(mSeedsEntity.getSeedTorrentLink());            	
+            	tDownloadMgr.startDownload(mSeedsEntity.getSeedTorrentLink()
+            			                  ,mSeedsEntity.getSeedPublishDate()
+            			                  ,mSeedsEntity.getSeedName());            	
             	
         		Toast toast = Toast.makeText(getApplicationContext(),
         				R.string.seeds_download_added, Toast.LENGTH_SHORT);
