@@ -105,45 +105,50 @@
 -(NSString*) _parseContent:(NSString*) content
 {    
     NSRange range = [content rangeOfString:STR_COLON_FULLWIDTH_1];
-    if (0 < range.length)
+    NSInteger rangeLocation = range.location + 1;
+    if (0 < range.length && content.length > rangeLocation)
     {
-        content = [content substringFromIndex:range.location + 1];
+        content = [content substringFromIndex:rangeLocation];
         content = [CBStringUtils trimString:content];
         
         return [self _parseContent:content];
     }
     
     range = [content rangeOfString:STR_COLON_FULLWIDTH_2];
-    if (0 < range.length)
+    rangeLocation = range.location + 1;
+    if (0 < range.length && content.length > rangeLocation)
     {
-        content = [content substringFromIndex:range.location + 1];
+        content = [content substringFromIndex:rangeLocation];
         content = [CBStringUtils trimString:content];
         
         return [self _parseContent:content];        
     }
     
     range = [content rangeOfString:STR_COLON];
-    if (0 < range.length)
+    rangeLocation = range.location + 1;
+    if (0 < range.length && content.length > rangeLocation)
     {
-        content = [content substringFromIndex:range.location + 1];
+        content = [content substringFromIndex:rangeLocation];
         content = [CBStringUtils trimString:content];
         
         return [self _parseContent:content];        
     }
     
     range = [content rangeOfString:STR_BRACKET_RIGHT_1];
-    if (0 < range.length)
+    rangeLocation = range.location + 1;    
+    if (0 < range.length && content.length > rangeLocation)
     {
-        content = [content substringFromIndex:range.location + 1];
+        content = [content substringFromIndex:rangeLocation];
         content = [CBStringUtils trimString:content];
         
         return [self _parseContent:content];        
     }
     
     range = [content rangeOfString:STR_BRACKET_RIGHT_2];
-    if (0 < range.length)
+    rangeLocation = range.location + 1;    
+    if (0 < range.length && content.length > rangeLocation)
     {
-        content = [content substringFromIndex:range.location + 1];
+        content = [content substringFromIndex:rangeLocation];
         content = [CBStringUtils trimString:content];
         
         return [self _parseContent:content];
