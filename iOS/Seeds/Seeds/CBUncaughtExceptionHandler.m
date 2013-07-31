@@ -77,9 +77,9 @@ const NSInteger UncaughtExceptionHandlerReportAddressCount = 5;
 	
 	while (!dismissed)
 	{
-		for (NSString *mode in (NSArray *)CFBridgingRelease(allModes))
+		for (NSString *mode in (__bridge NSArray *)allModes)
 		{
-			CFRunLoopRunInMode((CFStringRef)CFBridgingRetain(mode), 0.001, false);
+			CFRunLoopRunInMode((__bridge CFStringRef)mode, 0.001, false);
 		}
 	}
 	
