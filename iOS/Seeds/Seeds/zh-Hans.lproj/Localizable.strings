@@ -12,7 +12,7 @@
 
 "Exception Caught" = "异常发生";
 "Unhandled Exception" = "未截获的异常";
-"You can try to continue but the application may be unstable.\n\nDebug details follow:\n%@\n%@" = "你可以尝试继续运行已出于不稳定状态的程序。\n\n调试信息如下:\n%@\n%@";
+"You can try to continue but the application may be unstable.\n\nDebug details follow:\n%@\n%@" = "你可以尝试继续运行已处于不稳定状态的程序。\n调试信息如下:\n%@\n%@";
 
 "Communication Module" = "通讯模块";
 "Communication Module Thread" = "通讯模块线程";
@@ -193,7 +193,7 @@
 "Counting failed images..." = "无效图片统计中...";
 "Last Updated: %@" = "最后重刷于: %@";
 
-"Signal %d was raised." = "收到信号：%d。";
+"Signal %d was raised." = "收到信号：%d";
 
 "Warning of Unsupported Screen Resolution" = "       非常抱歉，限于开发者的时间和精力，当前iOS版的Seeds只支持4英寸Retina屏幕的设备，程序会在倒计时结束后自动退出。";
 "Warning of Unsupported iOS Version" = "       非常抱歉，限于开发者的时间和精力，当前Seeds的最低运行平台为iOS 6，程序会在倒计时结束后自动退出。";
