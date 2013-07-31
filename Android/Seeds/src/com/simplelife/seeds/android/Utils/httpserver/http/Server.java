@@ -57,8 +57,12 @@ public class Server implements Runnable {
 	public Server(InetAddress pInterface, int pPort, String pRoot) {
 		mRunFlag = true;
 		mInterface = pInterface;
+		mPort = pPort;		
 		mWebRoot = new File(pRoot);
-		mPort = pPort;
+
+        // Create the folder if it does not exist
+		if(!mWebRoot.exists())
+        	mWebRoot.mkdirs();
 	}
 	
 	/**
@@ -86,8 +90,8 @@ public class Server implements Runnable {
 		Logger.debug("Server thread initialised!  Attempting to start server on " + mInterface.toString() + ":" + mPort);
 		
 		//Looper.prepare();
-        Socket workerSocket = null;  
-		
+        Socket workerSocket = null;  		
+        
         if (!mWebRoot.canRead()) {
         	Logger.error("Cannot start server as unable to read root directory at " + mWebRoot.getAbsolutePath());
         	return;

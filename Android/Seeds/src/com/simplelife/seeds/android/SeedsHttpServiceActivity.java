@@ -2,9 +2,7 @@
  *  Copyright (C) 2013 SimpleLife Studio All rights reserved
  *  
  *  SeedsHttpServiceActivity.java
- *  Seeds
- *
- *  Created by Chris Li on 13-6-20. 
+ *  Seeds 
  */
 
 package com.simplelife.seeds.android;
@@ -100,7 +98,10 @@ public class SeedsHttpServiceActivity extends Activity {
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
 		tActionBar.setTitle(R.string.seeds_http_title);
-		tActionBar.setDisplayHomeAsUpEnabled(true); 
+		tActionBar.setDisplayHomeAsUpEnabled(true);
+		
+		// Setup the css files for web review
+		new CopyUtil(this).assetsCopy();
         
 		// start button
 		findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
@@ -201,8 +202,8 @@ public class SeedsHttpServiceActivity extends Activity {
 
 		public boolean assetsCopy() {
 			try {
-				assetsCopy("wfs", Environment.getExternalStorageDirectory()
-						+ "/.wfs"); 
+				assetsCopy("SeedsWebService", Environment.getExternalStorageDirectory()
+						+ "/.SeedsWebService"); 
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
