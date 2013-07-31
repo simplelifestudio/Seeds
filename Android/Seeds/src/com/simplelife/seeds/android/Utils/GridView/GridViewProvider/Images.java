@@ -24,12 +24,19 @@ import com.simplelife.seeds.android.SeedsEntity;
 public class Images {
 	
 	private static SeedsEntity mSeedsEntity;
+	
+	private static int mSeedLocalId = 1;
 
 	public static void setSeedsEntity(SeedsEntity _SeedsEntity){
 		mSeedsEntity = _SeedsEntity;
+		mSeedLocalId = mSeedsEntity.getSeedLocalId();
 	}
 	
 	public static SeedsEntity getSeedsEntity(){
 		return mSeedsEntity;
+	}
+	
+	public static int getSeedLocalId(){
+		return mSeedLocalId;
 	}
 }

@@ -59,6 +59,11 @@ public class HttpUtil
         return httpPort;
     }
 	
+	public static String getDefaultXsl()
+	{
+	    return "cart.xsl";
+	}
+	
 	public static void setHttpProxy(String ipAddress, int port)
 	{
 		proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(ipAddress, port));
@@ -177,9 +182,12 @@ public class HttpUtil
     {
         String fullLink = "http://" + getHostIP() + ":" + Integer.toString(httpPort);
         fullLink += "/seeds";
-        if (relativePath.charAt(0) != '/')
+        if (relativePath.length() > 0)
         {
-            fullLink += "/";
+            if (relativePath.charAt(0) != '/')
+            {
+                fullLink += "/";
+            }
         }
         fullLink += relativePath;
         

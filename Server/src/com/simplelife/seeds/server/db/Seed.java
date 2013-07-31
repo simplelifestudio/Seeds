@@ -234,26 +234,26 @@ public class Seed {
 	public String toRssString()
 	{
 		StringBuilder strBuilder = new StringBuilder();
-		
-		strBuilder.append("发布日期: ");
-		strBuilder.append(getPublishDate());
-		strBuilder.append("<br>");
 
-		strBuilder.append("影片名称: ");
-		strBuilder.append(getName());
-		strBuilder.append("<br>");
+        strBuilder.append("影片名称: ");
+        strBuilder.append(getName());
+        strBuilder.append("\n");
 
 		strBuilder.append("影片大小: ");
 		strBuilder.append(getSize());
-		strBuilder.append("<br>");
+		strBuilder.append("\n");
 
 		strBuilder.append("影片格式: ");
 		strBuilder.append(getFormat());
-		strBuilder.append("<br>");
+		strBuilder.append("\n");
 
 		strBuilder.append("有码无码: ");
 		strBuilder.append(getMosaic());
-		strBuilder.append("<br>");
+		strBuilder.append("\n");
+
+		strBuilder.append("发布日期: ");
+        strBuilder.append(getPublishDate());
+        strBuilder.append("\n");
 
 		String sql = SqlUtil.getSelectSeedPictureSql(SqlUtil.getSeedIdCondition(seedId));
         List<SeedPicture> pics = DaoWrapper.query(sql, SeedPicture.class);
@@ -265,15 +265,17 @@ public class Seed {
 		while (it.hasNext())
 		{
 			pic = it.next();
-			strBuilder.append("<a href=\"");
+			//strBuilder.append("<a href=\"");
 			//strBuilder.append(pic.getPictureId());
 			
 			//strBuilder.append(": ");
-			strBuilder.append(pic.getPictureLink());
-			strBuilder.append("\">");
+			//strBuilder.append(pic.getPictureLink());
+			//strBuilder.append("\">");
 			i++;
 			strBuilder.append("图片[" + Integer.toString(i) + "]");
-			strBuilder.append("</a><br>");
+			strBuilder.append(pic.getPictureLink());
+			strBuilder.append("\n");
+			//strBuilder.append("</a><br>");
 		}
 		return strBuilder.toString();
 	}

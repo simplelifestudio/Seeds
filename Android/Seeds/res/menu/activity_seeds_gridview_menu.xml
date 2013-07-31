@@ -15,11 +15,41 @@
   limitations under the License.
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-
+    
+    <item android:id="@+id/menu_addto_fav"
+          android:icon="@drawable/rating_important"
+          android:showAsAction="ifRoom"
+          android:title="@string/seeds_details_addto_fav"/>
+           
+    <item
+        android:id="@+id/rss_addtocart"
+        android:icon="@drawable/rss_add_to_cart"
+        android:showAsAction="ifRoom"
+        android:title="@string/seeds_rss_menuaddtocart"/>
+    
+    <item
+        android:id="@+id/rss_management"
+        android:icon="@drawable/rss_management"
+        android:showAsAction="ifRoom"
+        android:title="@string/seeds_rss_management"/>
+        
+    <item
+        android:id="@+id/download_seed"
+        android:icon="@drawable/av_download"
+        android:showAsAction="ifRoom"
+        android:title="@string/seeds_download_seed"/>
+    
+    <item
+        android:id="@+id/download_mgt"
+        android:icon="@drawable/dowload_management"
+        android:showAsAction="ifRoom"
+        android:title="@string/seeds_download_mgt"/>
+    
     <item
         android:id="@+id/clear_cache"
         android:icon="@android:drawable/ic_menu_delete"
         android:showAsAction="never"
         android:title="@string/clear_cache_menu"/>
+    
 
 </menu>

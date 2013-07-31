@@ -20,6 +20,9 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
+import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadList;
+import com.simplelife.seeds.android.utils.gridview.gridviewprovider.Images;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage.SeedsStatusByDate;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
@@ -41,6 +44,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -797,6 +803,33 @@ public class SeedsDateListActivity extends Activity {
     		}
     	});
     	tBuilder.create().show();
+    }
+    
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.activity_seeds_datelist_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.rss_management_datelist:
+        {
+		    Intent intent = new Intent(SeedsDateListActivity.this, SeedsRSSCartActivity.class);
+		    startActivity(intent);
+        	return true;
+        }
+        
+        case R.id.download_mgt_datelist:
+        {
+        	Intent intent = new Intent(SeedsDateListActivity.this, DownloadList.class);
+        	startActivity(intent);
+        	return true;
+        }   
+        }
+		return true;
     }
 
 }

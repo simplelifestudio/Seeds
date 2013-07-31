@@ -3,45 +3,31 @@
  *  
  *  SeedsFavListActivity.java
  *  Seeds
- *
- *  Created by Chris Li on 13-5-20. 
  */
 
 package com.simplelife.seeds.android;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import com.simplelife.seeds.android.utils.adapter.SeedsAdapter;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
+import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache.ImageCacheParams;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class SeedsFavListActivity extends Activity{
-
-	public static final String KEY_THUMB_URL = "thumb_url";
-
-	private ListView tListView;
-	private SeedsAdapter tAdapter;
-	protected String tDate;
-	protected String tFirstImgUrl;
-	protected int tSeedLocalId;
-	protected List<Integer> tSeedIdList;
-	private ArrayList<SeedsEntity> mSeedsEntityList;
-	
-	// For log purpose
-	private static final String LOGCLASS = "SeedsFavList"; 
+public class SeedsFavListActivity extends SeedsListActivity{
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +35,23 @@ public class SeedsFavListActivity extends Activity{
 		
 		// setTheme(android.R.style.Theme_Translucent_NoTitleBar);
 		// Set the list view layout
-		setContentView(R.layout.activity_seeds_favlist);
+		setContentView(R.layout.activity_seeds_favlist);				
 				
+		// Set a title for this page
+		ActionBar tActionBar = getActionBar();
+		tActionBar.setTitle(getString(R.string.seeds_datelist_favoritelist));
+		
 		// Initialize the tSeedIdList
-		tSeedIdList = new ArrayList();
+		mSeedIdList = new ArrayList<Integer>();
+		
+        mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
+
+        ImageCacheParams cacheParams = new ImageCacheParams(this, SeedsDefinitions.SEEDS_THUMBS_CACHE_DIR);
+
+        // The ImageFetcher takes care of loading images into our ImageView children asynchronously
+        mImageFetcher = new ImageFetcher(this, mImageThumbSize);
+        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
+        mImageFetcher.addImageCache(this.getSupportFragmentManager(), cacheParams, "FAVTAG");
 		
 		// Start a new thread to get the data
 		new Thread(new Runnable() {
@@ -69,18 +68,19 @@ public class SeedsFavListActivity extends Activity{
 		}).start();		
 	}
 	
-	private Handler handler = new Handler(){
+	@SuppressLint("HandlerLeak")
+	protected Handler handler = new Handler(){
 		public void handleMessage(Message msg) {
 			switch(msg.what){
 			case 0 :
-				tListView = (ListView)findViewById(R.id.seeds_list);
+				mListView = (ListView)findViewById(R.id.seeds_list);
 				
 				ArrayList<HashMap<String, String>> seedsList = (ArrayList<HashMap<String, String>>)msg.obj;
-				tAdapter = new SeedsAdapter(SeedsFavListActivity.this, seedsList);
-				tListView.setAdapter(tAdapter);
+				mAdapter = new SeedsAdapter(SeedsFavListActivity.this, seedsList);
+				mListView.setAdapter(mAdapter);
 
 				// Bond the click listener
-				tListView.setOnItemClickListener(new ListViewItemOnClickListener());
+				mListView.setOnItemClickListener(new ListViewItemOnClickListener());
 				break;
 			}
 		}
@@ -92,57 +92,15 @@ public class SeedsFavListActivity extends Activity{
 				int position, long id) {
 			
 			// Redirect to the details page
-			Intent intent = new Intent(SeedsFavListActivity.this, SeedsDetailsActivity.class);
+			Intent intent = new Intent(SeedsFavListActivity.this, ImageGridActivity.class);
 
 			// Pass the seed entity
 		    intent.putExtra("seedObj", mSeedsEntityList.get(position));
 			startActivity(intent);
 		}
-	}	
+	}		
 	
-	private ArrayList<HashMap<String, String>> getList() {
-		
-		ArrayList<HashMap<String, String>> seedsList = new ArrayList<HashMap<String, String>>();
-		String tFirstImgUrl;
-		
-		// Load all the seeds info
-		loadSeedsInfo();
-		
-		// Walk through the SeedsEntity List
-		int tListSize = mSeedsEntityList.size();
-		for (int index = 0; index < tListSize; index++)
-		{
-			SeedsEntity tSeedsEntity = mSeedsEntityList.get(index);
-					
-			if(tSeedsEntity.getSeedIsPicAvail())
-				tFirstImgUrl = tSeedsEntity.getPicLinks().get(0);
-			else
-				tFirstImgUrl = "Nothing To Show";
-			
-			HashMap<String, String> map = new HashMap<String, String>();
-			map.put(SeedsDBAdapter.KEY_NAME, tSeedsEntity.getSeedName());
-			map.put(SeedsDBAdapter.KEY_SIZE, 
-					tSeedsEntity.getSeedSize()+" / "
-			       +tSeedsEntity.getPicLinks().size()
-			       +getString(R.string.seeds_listperday_seedspics));
-			map.put(SeedsDBAdapter.KEY_FORMAT, tSeedsEntity.getSeedFormat());
-			String tMosaic = (tSeedsEntity.getSeedMosaic())
-					       ? getString(R.string.seeds_listperday_withmosaic)
-					       : getString(R.string.seeds_listperday_withoutmosaic);
-			map.put(SeedsDBAdapter.KEY_MOSAIC, tMosaic);
-			map.put(KEY_THUMB_URL, tFirstImgUrl);
-			
-			// Add the instance into the array
-			seedsList.add(map);
-			
-			// Record the seedId info
-			tSeedIdList.add(tSeedsEntity.getSeedId());
-		}
-		
-		return seedsList;	
-	}
-	
-	private void loadSeedsInfo(){
+	protected void loadSeedsInfo(){
 		
 		int localId;
 		SeedsEntity tSeedsEntity;
@@ -151,12 +109,11 @@ public class SeedsFavListActivity extends Activity{
 		mSeedsEntityList = new ArrayList<SeedsEntity>(); 
 		
 		// Retrieve the DB process handler to get data 
-		SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();
+		SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
 		
 		// Get the seeds entries according to the favorite tag
-		Cursor tResult = mDBAdapter.getSeedEntryViaFavTag();	
+		Cursor tResult = tDBAdapter.getSeedEntryViaFavTag();	
 		
-		Log.i(LOGCLASS, "The size of the tResult is  "+ tResult.getCount());
 		tResult.moveToFirst(); 
 		while (!tResult.isAfterLast()) 
 	    {
@@ -167,7 +124,7 @@ public class SeedsFavListActivity extends Activity{
 			tSeedsEntity.setSeedId(tResult.getInt(tResult.getColumnIndex(SeedsDBAdapter.KEY_SEEDID)));
 			tSeedsEntity.setSeedType(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_TYPE)));
 			tSeedsEntity.setSeedSource(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_SOURCE)));
-			tSeedsEntity.setSeedPublishDate(tDate);
+			tSeedsEntity.setSeedPublishDate(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_PUBLISHDATE)));
 			tSeedsEntity.setSeedName(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_NAME)));
 			tSeedsEntity.setSeedSize(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_SIZE)));
 			tSeedsEntity.setSeedFormat(tResult.getString(tResult.getColumnIndex(SeedsDBAdapter.KEY_FORMAT)));
@@ -183,7 +140,7 @@ public class SeedsFavListActivity extends Activity{
 				tSeedsEntity.setSeedFavorite(false);
 			
 			// Query the seedPic table
-			Cursor tImgResult = mDBAdapter.getSeedPicFirstEntryViaLocalId(localId);
+			Cursor tImgResult = tDBAdapter.getSeedPicFirstEntryViaLocalId(localId);
 			
 			if(tImgResult.getCount()<=0)
 			{
@@ -201,7 +158,8 @@ public class SeedsFavListActivity extends Activity{
 					tImgResult.moveToNext(); 
 				}
 				tSeedsEntity.setSeedIsPicAvail(true);											
-			}						
+			}
+			tImgResult.close();
 			
 			// Add into the seedsEntity list
 			mSeedsEntityList.add(tSeedsEntity);

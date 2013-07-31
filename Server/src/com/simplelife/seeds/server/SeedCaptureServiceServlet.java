@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.simplelife.seeds.server.parser.HtmlParser;
+import com.simplelife.seeds.server.util.DateUtil;
 import com.simplelife.seeds.server.util.LogUtil;
 
 @WebServlet("/seedCaptureService")
@@ -66,9 +67,10 @@ public class SeedCaptureServiceServlet extends HttpServlet
             parser.setPageStart(Integer.parseInt(startPage));
             parser.setPageEnd(Integer.parseInt(endPage));
 
+            //parser.deleteCaptureLog(startDate, endDate);
+
             parser.Parse();
             response.getOutputStream().print("Seed capture request is submitted successfully!");
-
         } catch (Exception e) {
             LogUtil.printStackTrace(e);
             response.getOutputStream().print(e.getStackTrace().toString());

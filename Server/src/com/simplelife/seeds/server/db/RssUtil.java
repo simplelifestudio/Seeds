@@ -73,6 +73,16 @@ public class RssUtil
 			LogUtil.printStackTrace(e);
 		}
 		
+		String beforeReplace = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+		String afterReplace = beforeReplace + "\n" + "<?xml-stylesheet type=\"text/xsl\" href=\"" + HttpUtil.getDefaultXsl() + "\"?>";
+		
+		//int index = output.indexOf(beforeReplace);
+		//if ( index > 0)
+		{
+		    output = output.substring(beforeReplace.length());
+		    output = afterReplace + output;
+		}
+		//output.replace(beforeReplace, afterReplace);
 		return output;
 	}
 	

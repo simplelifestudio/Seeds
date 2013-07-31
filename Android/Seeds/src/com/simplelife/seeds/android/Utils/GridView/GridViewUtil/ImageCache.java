@@ -17,6 +17,8 @@
 package com.simplelife.seeds.android.utils.gridview.gridviewutil;
 
 import com.simplelife.seeds.android.BuildConfig;
+import com.simplelife.seeds.android.SeedsDateManager;
+import com.simplelife.seeds.android.SeedsDefinitions;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -53,12 +55,15 @@ import java.util.Iterator;
  */
 public class ImageCache {
     private static final String TAG = "ImageCache";
+    private static final String TAG_BEF = "ImageCacheBef";
+    private static final String TAG_YES = "ImageCacheYes";
+    private static final String TAG_TOD = "ImageCacheTod";
 
     // Default memory cache size in kilobytes
     private static final int DEFAULT_MEM_CACHE_SIZE = 1024 * 5; // 5MB
 
     // Default disk cache size in bytes
-    private static final int DEFAULT_DISK_CACHE_SIZE = 1024 * 1024 * 10; // 10MB
+    private static final int DEFAULT_DISK_CACHE_SIZE = 1024 * 1024 * 20; // 20MB
 
     // Compression settings when writing images to disk cache
     private static final CompressFormat DEFAULT_COMPRESS_FORMAT = CompressFormat.JPEG;
@@ -99,10 +104,10 @@ public class ImageCache {
      * @return An existing retained ImageCache object or a new one if one did not exist
      */
     public static ImageCache getInstance(
-            FragmentManager fragmentManager, ImageCacheParams cacheParams) {
+            FragmentManager fragmentManager, ImageCacheParams cacheParams, String realDate) {
 
         // Search for, or create an instance of the non-UI RetainFragment
-        final RetainFragment mRetainFragment = findOrCreateRetainFragment(fragmentManager);
+        final RetainFragment mRetainFragment = findOrCreateRetainFragment(fragmentManager, realDate);
 
         // See if we already have an ImageCache stored in RetainFragment
         ImageCache imageCache = (ImageCache) mRetainFragment.getObject();
@@ -273,7 +278,7 @@ public class ImageCache {
      * @return The bitmap drawable if found in cache, null otherwise
      */
     public BitmapDrawable getBitmapFromMemCache(String data) {
-        BitmapDrawable memValue = null;
+        BitmapDrawable memValue = null;                
 
         if (mMemoryCache != null) {
             memValue = mMemoryCache.get(data);
@@ -299,6 +304,7 @@ public class ImageCache {
         synchronized (mDiskCacheLock) {
             while (mDiskCacheStarting) {
                 try {
+                	Log.d(TAG, "mDiskCacheStarting is true, waiting...");
                     mDiskCacheLock.wait();
                 } catch (InterruptedException e) {}
             }
@@ -509,10 +515,10 @@ public class ImageCache {
     public static File getDiskCacheDir(Context context, String uniqueName) {
         // Check if media is mounted or storage is built-in, if so, try and use external cache dir
         // otherwise use internal cache dir
-        final String cachePath =
-                Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) ||
-                        !isExternalStorageRemovable() ? getExternalCacheDir(context).getPath() :
-                                context.getCacheDir().getPath();
+    	// ||!isExternalStorageRemovable()
+        final String cachePath = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                               ? getExternalCacheDir(context).getPath() 
+                               : context.getCacheDir().getPath();
 
         return new File(cachePath + File.separator + uniqueName);
     }
@@ -594,6 +600,47 @@ public class ImageCache {
     }
 
     /**
+     * Get the size of external app cache directory.
+     *
+     * @param context The context to use
+     * @return The external cache dir
+     */
+    public static long getCacheSize(Context context, File cacheDir) throws Exception{ 
+        
+        long size = 0;
+    	if(null == cacheDir)
+        	return 0;
+        File[] fileList = cacheDir.listFiles();  
+        for (int i = 0; i < fileList.length; i++)  
+        {  
+            if (fileList[i].isDirectory())  
+            {  
+                size = size + ImageCache.getCacheSize(context, fileList[i]);  
+            } else  
+            {  
+                size = size + fileList[i].length();  
+            }  
+        }  
+        return size;  
+    }
+    
+    public static void clearImageCache(File cacheDir){
+        File[] fileList = cacheDir.listFiles();
+        if(fileList == null)
+            return;
+        for (int i = 0; i < fileList.length; i++) 
+        {
+            if (fileList[i].isDirectory())  
+            {  
+                ImageCache.clearImageCache(fileList[i]);  
+            } else  
+            {  
+            	fileList[i].delete();  
+            } 
+        }
+    }
+    
+    /**
      * Check how much usable space is available at a given path.
      *
      * @param path The path to check
@@ -616,14 +663,27 @@ public class ImageCache {
      * @return The existing instance of the Fragment or the new instance if just
      *         created.
      */
-    private static RetainFragment findOrCreateRetainFragment(FragmentManager fm) {
+    private static RetainFragment findOrCreateRetainFragment(FragmentManager fm, String realDate) {
         // Check to see if we have retained the worker fragment.
-        RetainFragment mRetainFragment = (RetainFragment) fm.findFragmentByTag(TAG);
+    	String tTAG = TAG; 
+    	SeedsDateManager tDataMgr = SeedsDateManager.getDateManager();
+    	String tLogicDate = tDataMgr.realDateToLogicDate(realDate);
+    	if(tLogicDate.equals(SeedsDefinitions.SEEDS_DATE_BEFYESTERDAY))
+    	{
+    		tTAG = TAG_BEF;
+    	}else if(tLogicDate.equals(SeedsDefinitions.SEEDS_DATE_YESTERDAY))
+    	{
+    		tTAG = TAG_YES;
+    	}else if(tLogicDate.equals(SeedsDefinitions.SEEDS_DATE_TODAY))
+    	{
+    		tTAG = TAG_TOD;
+    	}
+    	RetainFragment mRetainFragment = (RetainFragment) fm.findFragmentByTag(tTAG);
 
         // If not retained (or first time running), we need to create and add it.
         if (mRetainFragment == null) {
             mRetainFragment = new RetainFragment();
-            fm.beginTransaction().add(mRetainFragment, TAG).commitAllowingStateLoss();
+            fm.beginTransaction().add(mRetainFragment, tTAG).commitAllowingStateLoss();
         }
 
         return mRetainFragment;

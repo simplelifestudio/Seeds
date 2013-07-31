@@ -160,6 +160,24 @@ public class DateUtil {
         }
 	}
 	
+	public static String increaseDate(String startDate, int days)
+	{
+		Calendar cal_start;
+		try
+		{
+			Date date_start = getDefaultDateFormatter().parse(startDate);
+			cal_start = getCalendar();
+			cal_start.setTime(date_start);
+			cal_start.add(Calendar.DAY_OF_YEAR, days);
+			return getDefaultDateFormatter().format(cal_start.getTime());
+		}
+		catch(Exception e)
+		{
+			LogUtil.printStackTrace(e);
+			return null;
+		}
+	}
+	
 	/**
 	 * Get day difference between given date and today
 	 * @param date: given date

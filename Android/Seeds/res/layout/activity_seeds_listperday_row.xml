@@ -59,7 +59,7 @@
     <!-- The format of the Seeds -->
     <TextView
         android:id="@+id/seeds_format"
-        android:layout_width="wrap_content"
+        android:layout_width="60dip"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@id/seeds_title"
@@ -67,9 +67,10 @@
         android:gravity="right"
         android:text="@string/seedFormat"
         android:textColor="#10bcc9"
+        android:lines="1"
         android:textSize="12sp"
-        android:textStyle="bold" />
-        <!-- The format of the Seeds -->
+        android:textStyle="bold" 
+        android:ellipsize="end"/>
         
     <TextView
         android:id="@+id/seeds_mosaic"

@@ -47,7 +47,7 @@ public class Test {
 	public static void main(String[] args)
 	{
 	    //LogUtil.setLevel(Level.WARNING);
-	    //HttpUtil.setHttpProxy("87.254.212.120", 8080);
+	    HttpUtil.setHttpProxy("87.254.212.120", 8080);
 	    //HttpUtil.setHostIP("127.0.0.1");
 	    //HttpUtil.setHttpPort(8080);
 	    
@@ -109,20 +109,31 @@ public class Test {
 	{
 	    HtmlNodeVisitor vistor = new HtmlNodeVisitor(true, false);
 	    
-	    String sTemp = "fjajuijkl;k\"fjdkajfkdlj;";
-	    System.out.print("before format: " + sTemp + "\n");
-	    System.out.print("before format: " + vistor.removePreTitle(sTemp)+ "\n");
+	    String sTemp = "fjajuij:£º£ºkl;k\"fjdkajfkdlj;";
+	    System.out.print("before format: " + sTemp + " and doesn't remove :\n");
+	    System.out.print("before format: " + vistor.formatText(sTemp, false)+ "\n");
+	    
+	    System.out.print("before format: " + sTemp + " and remove : \n");
+	    System.out.print("before format: " + vistor.formatText(sTemp, true)+ "\n");
 	    
 	    sTemp = "fjajuijkl[\"fjdkajfkdlj;";
         System.out.print("before format: " + sTemp + "\n");
-        System.out.print("before format: " + vistor.removePreTitle(sTemp)+ "\n");
+        System.out.print("before format: " + vistor.formatText(sTemp, true)+ "\n");
         
         sTemp = "aaaa,{\"[aa]aaa[aa;a,,a;aaa:aaaa";
         System.out.print("before format: " + sTemp + "\n");
-        System.out.print("before format: " + vistor.removePreTitle(sTemp)+ "\n");
-	    
-	    
+        System.out.print("before format: " + vistor.formatText(sTemp, true)+ "\n");
+        
+        sTemp = "http://xxxx.com/seeds/aaa";
+        System.out.print("before format: " + sTemp + " and remove :\n");
+        System.out.print("before format: " + vistor.formatText(sTemp, true)+ "\n");
+        
+        sTemp = "http://xxxx.com/seeds/aaa";
+        System.out.print("before format: " + sTemp + " and doesn't remove :\n");
+        System.out.print("before format: " + vistor.formatText(sTemp, false)+ "\n");
 	}
+	
+	
 	private static void testSeedCaptureTaskTimer()
 	{
 	    Level level = LogUtil.getLevel();
@@ -547,8 +558,10 @@ public class Test {
 	private static void testHtmlParse()
 	{
 		HtmlParser parser = new HtmlParser();
-		parser.setstartDate("2013-07-20");
-		parser.setendDate("2013-07-20");
+		String sDate = "2013-07-24";
+		parser.setstartDate(sDate);
+		parser.setendDate(sDate);
+		parser.deleteCaptureLog(sDate);
 		parser.Parse();
 	}
 	

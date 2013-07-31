@@ -244,10 +244,12 @@ public class SeedsJSONMessage {
 	
 	public static boolean isSeedsWithMosaic(Context _inContext, String _inField){
 
-		if(_inField.contains(_inContext.getString(R.string.seeds_listperday_mosaictag)))
-			return true;
-		else
+		if((_inField.contains(_inContext.getString(R.string.seeds_listperday_nomosaictag1)))
+		  ||
+		  (_inField.contains(_inContext.getString(R.string.seeds_listperday_nomosaictag2))))
 			return false;
+		else
+			return true;
 	}
 	
 	public static void parseSeedsToCartRespMsg(String _inRespMsg) throws JSONException{

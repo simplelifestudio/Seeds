@@ -39,6 +39,10 @@ public class SeedsDefinitions {
 			                                       + "/"
 			                                       + SEEDS_DOWNLOAD_SUBFOLDER;
 	
+	public static String SEEDS_THUMBS_CACHE_DIR = "thumbs";
+	public static String SEEDS_IMAGE_CACHE_DIR  = "images";
+	public static String SEEDS_HTTP_CACHE_DIR   = "http";
+	
 	public static boolean mDownloadImageWithoutWifiEnabled = true;
 	
 	public static String RELEASE_NAME    = "Seeds  ";
