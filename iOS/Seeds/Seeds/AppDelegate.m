@@ -20,8 +20,12 @@
     // Modules initialization
     _moduleManager = [CBModuleManager sharedInstance];
     
+    id<CBModule> crashReportModule = [CrashReportModule sharedInstance];
+    crashReportModule.moduleWeightFactor = 0.1;
+    [_moduleManager registerModule:crashReportModule];
+    
     id<CBModule> databaseModule = [DatabaseModule sharedInstance];
-    databaseModule.moduleWeightFactor = 0.3;
+    databaseModule.moduleWeightFactor = 0.2;
     [_moduleManager registerModule:databaseModule];
     
     id<CBModule> userDefaultModule = [UserDefaultsModule sharedInstance];

@@ -11,6 +11,8 @@
 "Seeds: %d" = "Seeds: %d";
 
 "Exception Caught" = "Exception Caught";
+"Unhandled Exception" = "Unhandled Exception";
+"You can try to continue but the application may be unstable.\n\nDebug details follow:\n%@\n%@" = "You can try to continue but the application may be unstable.\n\nDebug details follow:\n%@\n%@";
 
 "Communication Module" = "Communication Module";
 "Communication Module Thread" = "Communication Module Thread";
@@ -24,6 +26,8 @@
 "Transmission Module Thread" = "Transmission Module Thread";
 "GUI Module" = "GUI Module";
 "GUI Module Thread" = "GUI Module Thread";
+"CrashReport Module" = "CrashReport Module";
+"CrashReport Module Thread" = "CrashReport Module Thread";
 
 "Loading: " = "Loading: ";
 "Mosaic" = "Mosaic";
@@ -46,6 +50,8 @@
 "Manage" = "Manage";
 "Copy" = "Copy";
 "Save" = "Save";
+"Quit" = "Quit";
+"Continue" = "Continue";
 
 "Subscribe Source" = "RSS ID";
 "Subscribe Successfully" = "Subscribe Successfully";
@@ -186,6 +192,8 @@
 "Release to refresh..." = "Release to reload failed images";
 "Counting failed images..." = "Counting failed images...";
 "Last Updated: %@" = "Last refreshed at: %@";
+
+"Signal %d was raised." = "Signal %d was raised.";
 
 "Warning of Unsupported Screen Resolution" = "  Confined to developer's time and stamina, currently Seeds iOS app supports devices with 4 Inches Retina Screen only, sorry for inconvenience. App will be terminated automatically once countdown is end.";
 "Warning of Unsupported iOS Version" = "   Confined to developer's time and stamina, currently Seeds app supports iOS 6 and later versions only, sorry for inconvenience. App will be terminated automatically once countdown is end.";

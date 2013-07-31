@@ -10,6 +10,7 @@
 
 #import "CBModuleManager.h"
 
+#import "CrashReportModule.h"
 #import "GUIModule.h"
 #import "UserDefaultsModule.h"
 #import "CommunicationModule.h"
