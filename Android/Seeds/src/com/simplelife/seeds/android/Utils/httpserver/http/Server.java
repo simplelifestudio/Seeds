@@ -31,6 +31,9 @@ public class Server implements Runnable {
 	private static final int QUEUE_TIMEOUT = 30000;
 	private static final int MAX_SOCKET_BACKLOG = 80;
 	
+	public static final String SUFFIX_ZIP = "..zip";
+	public static final String SUFFIX_DEL = "..del";
+	
 	private static File mWebRoot;
 	
 	public static final String SERVER_NAME = "AndroidHTTPServer (android/linux)";

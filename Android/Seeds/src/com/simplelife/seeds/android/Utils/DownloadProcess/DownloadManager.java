@@ -319,8 +319,15 @@ public class DownloadManager {
     public void startDownload(String inUrl, String inDate, String inName){
     	Uri srcUri = Uri.parse(inUrl);
     	DownloadManager.Request request = new Request(srcUri);
-    	request.setDestinationInExternalPublicDir(
-    		SeedsDefinitions.SEEDS_DOWNLOAD_SUBFOLDER +"/" + inDate, "/");
+    	
+    	String tTargetDir = SeedsDefinitions.SEEDS_DOWNLOAD_DESTFOLDER + "/" + inDate;
+    	String tDestDir = SeedsDefinitions.SEEDS_DOWNLOAD_SUBFOLDER + "/" + inDate;
+        // Create the folder if it does not exist
+    	File tTargetFile = new File(tTargetDir);
+		if(!tTargetFile.exists())
+			tTargetFile.mkdirs();
+					
+    	request.setDestinationInExternalPublicDir(tDestDir, "/");
     	request.setTitle(inName);
     	request.setDescription("Seeds Downloading");
     	enqueue(request);
