@@ -49,7 +49,8 @@ public class SeedsHttpServiceActivity extends Activity {
 	private InetAddress mInterface;
 	
 	private Spinner mAddressSpinner;
-
+	
+	private static Context mContext;
 	
 	/** Handler for server event reporting */
 	private Handler mUpdateHandler = new Handler();
@@ -92,9 +93,9 @@ public class SeedsHttpServiceActivity extends Activity {
         super.onCreate(savedInstanceState);      
         
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_seeds_httpserver);
+        mContext = getApplication();
         
-		setContentView(R.layout.activity_seeds_httpserver);
-		
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
 		tActionBar.setTitle(R.string.seeds_http_title);
@@ -190,6 +191,10 @@ public class SeedsHttpServiceActivity extends Activity {
 		} catch (SocketException e) {
 			Logger.error("Problem enumerating network interfaces");
 		}
+	}
+	
+	public static Context getHttpActivityContext(){
+		return mContext;
 	}
 	
 	public class CopyUtil {

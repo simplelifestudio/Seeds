@@ -145,11 +145,11 @@ public class SeedsDateListActivity extends Activity {
 		SeedsDateManager tDataMgr = SeedsDateManager.getDateManager();
 		/*mDateToday = tDataMgr.getRealDateToday();
 		mDateYesterday = tDataMgr.getRealDateYesterday();
-		mDateBefYesterday = tDataMgr.getRealDateBefYesterday();
-		mDateTextBefYesterday.setText(mDateBefYesterday);*/
+		mDateBefYesterday = tDataMgr.getRealDateBefYesterday();*/		
 		mDateToday = "2013-07-31";
-		mDateBefYesterday = "2013-07-30";		
+		mDateYesterday = "2013-07-30";		
 		mDateBefYesterday = "2013-07-29";
+		mDateTextBefYesterday.setText(mDateBefYesterday);
 		mDateTextYesterday.setText(mDateYesterday);
 		mDateTextToday.setText(mDateToday);		
 		

@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 
+import com.simplelife.seeds.android.R;
+import com.simplelife.seeds.android.SeedsHttpServiceActivity;
 import com.simplelife.seeds.android.utils.httpserver.http.Server;
 import com.simplelife.seeds.android.utils.httpserver.http.utils.HttpMethod;
 import com.simplelife.seeds.android.utils.httpserver.http.utils.HttpStatus;
@@ -177,23 +179,23 @@ public class SimpleDirectoryWorker implements SimpleWorkerInterface {
 		sb.append("<span><a href=\"");
 		sb.append(link);
 		sb.append(Server.SUFFIX_ZIP);
-		sb.append("\">Download</a></span>");
-		if (f.canWrite() && !hasWfsDir(f)) {
+		sb.append("\">"+SeedsHttpServiceActivity.getHttpActivityContext().getString(R.string.seeds_http_webdownloadbtn)+"</a></span>");
+		if (f.canWrite() && !haSeedsWebDir(f)) {
 			sb.append("<span><a href=\"");
 			sb.append(link);
 			sb.append(Server.SUFFIX_DEL);
 			sb.append("\" onclick=\"return confirmDelete('");
 			sb.append(link);
 			sb.append(Server.SUFFIX_DEL);
-			sb.append("')\">Delete</a></span>");
+			sb.append("')\">"+SeedsHttpServiceActivity.getHttpActivityContext().getString(R.string.seeds_http_webdeletebtn)+"</a></span>");
 		}
 		sb.append("</td>\n</tr>\n");
 	}
 	
-	public static boolean hasWfsDir(File f) {
+	public static boolean haSeedsWebDir(File f) {
 		String path = f.isDirectory() ? f.getAbsolutePath() + "/" : f
 				.getAbsolutePath();
-		return path.indexOf("/.wfs/") != -1;
+		return path.indexOf("/.SeedsWebService/") != -1;
 	}
 	
 	private String formatFileSize(long len) {

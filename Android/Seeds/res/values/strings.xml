@@ -167,6 +167,8 @@
     <string name="seeds_http_taptostart">Tap on Start Server below to start serving</string>
     <string name="seeds_http_stopserver">Stopping server&#8230;</string>
     <string name="seeds_http_serverstopped">Server stopped.</string>
+    <string name="seeds_http_webdownloadbtn">Download</string>
+    <string name="seeds_http_webdeletebtn">Delete</string>
     
     <string name="seeds_helpdialog_text"> 
     <i>Seeds---Collecting the latest movie info everywhere!</i> 

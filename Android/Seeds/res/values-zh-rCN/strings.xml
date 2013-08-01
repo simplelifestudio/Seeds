@@ -166,6 +166,8 @@
     <string name="seeds_http_taptostart">点击开启服务打开HTTP服务</string>
     <string name="seeds_http_stopserver">正在关闭服务&#8230;</string>
     <string name="seeds_http_serverstopped">HTTP服务已关闭。</string>
+    <string name="seeds_http_webdownloadbtn">下载</string>
+    <string name="seeds_http_webdeletebtn">删除</string>
     
     <string name="seeds_helpdialog_text"> 
     <i>Seeds---每天随时随地收集最新的影片信息！</i> 
