@@ -39,6 +39,11 @@
     NSString* command = nil;
     switch (type)
     {
+        case TimeoutResponse:
+        {
+            command = JSONMESSAGE_COMMAND_TIMEOUTRESPONSE;
+            break;
+        }
         case ErrorResponse:
         {
             command = JSONMESSAGE_COMMAND_ERRORRESPONSE;
@@ -138,6 +143,10 @@
             {
                 error = ErrorResponseMessage;
             }
+            else if ([messageId isEqualToString:JSONMESSAGE_COMMAND_TIMEOUTRESPONSE])
+            {
+                error = TimeoutresponseMessage;
+            }
         }
         else
         {
@@ -157,6 +166,18 @@
     BOOL flag = NO;
     
     if (nil != message && [message.command isEqualToString:JSONMESSAGE_COMMAND_ERRORRESPONSE])
+    {
+        flag = YES;
+    }
+    
+    return flag;
+}
+
++(BOOL) isTimeoutResponseMessage:(JSONMessage*)message
+{
+    BOOL flag = NO;
+    
+    if (nil != message && [message.command isEqualToString:JSONMESSAGE_COMMAND_TIMEOUTRESPONSE])
     {
         flag = YES;
     }

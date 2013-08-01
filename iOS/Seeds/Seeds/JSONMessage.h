@@ -13,12 +13,14 @@ typedef enum
     LegalResponseMessage,
     NoResponseMessage,
     IllegalResponseMessage,
-    ErrorResponseMessage
+    ErrorResponseMessage,
+    TimeoutresponseMessage
 }
 JSONMessageErrorCode;
 
 typedef enum 
 {
+    TimeoutResponse,
     ErrorResponse,
     AlohaRequest,
     AlohaResponse,
@@ -42,6 +44,7 @@ JSONMessageType;
 +(JSONMessage*) constructWithType:(JSONMessageType) type messageBody:(NSDictionary*) body;
 +(JSONMessage*) constructWithContent:(NSDictionary*) content;
 +(JSONMessageErrorCode) verify:(JSONMessage*) message;
++(BOOL) isTimeoutResponseMessage:(JSONMessage*) message;
 +(BOOL) isErrorResponseMessage:(JSONMessage*) message;
 
 -(NSDictionary*) content;

@@ -275,29 +275,50 @@
         {
             HUD.mode = MBProgressHUDModeIndeterminate;
             HUD.labelText = NSLocalizedString(@"Applying", nil);
-            NSString* cartId = [_serverAgent newCartId];
-            if (nil != cartId && 0 < cartId.length)
+            
+            NSString* cartId = nil;
+            
+            JSONMessage* responseMessage = [_serverAgent newCartIdRequest];
+            if ([JSONMessage isTimeoutResponseMessage:responseMessage])
             {
-                [_userDefaults setCartId:cartId];
-                [CBAppUtils asyncProcessInMainThread:^(){
-                    [self _refereshTextView];
-                }];
                 HUD.mode = MBProgressHUDModeText;
-                HUD.labelText = NSLocalizedString(@"Apply Successfully", nil);
+                HUD.labelText = NSLocalizedString(@"Communication Timeout", nil);
+            }
+            else if ([JSONMessage isErrorResponseMessage:responseMessage])
+            {
+                HUD.mode = MBProgressHUDModeText;
+                HUD.labelText = NSLocalizedString(@"Error Response Message", nil);
             }
             else
             {
-                HUD.mode = MBProgressHUDModeText;
-                HUD.labelText = NSLocalizedString(@"Apply Failed", nil);
+                if ([responseMessage.command isEqualToString:JSONMESSAGE_COMMAND_SEEDSTOCARTRESPONSE])
+                {
+                    NSDictionary* contentDic = responseMessage.body;
+                    NSDictionary* bodyDic = [contentDic objectForKey:JSONMESSAGE_KEY_BODY];
+                    cartId = [bodyDic objectForKey:JSONMESSAGE_KEY_CARTID];
+                    
+                    if (nil != cartId && 0 < cartId.length)
+                    {
+                        [_userDefaults setCartId:cartId];
+                        [CBAppUtils asyncProcessInMainThread:^(){
+                            [self _refereshTextView];
+                        }];
+                        HUD.mode = MBProgressHUDModeText;
+                        HUD.labelText = NSLocalizedString(@"Apply Successfully", nil);
+                    }
+                    else
+                    {
+                        HUD.mode = MBProgressHUDModeText;
+                        HUD.labelText = NSLocalizedString(@"Apply Failed", nil);
+                    }                    
+                }
             }
             
             [NSThread sleepForTimeInterval:_HUD_DISPLAY];
         }
         completionBlock:^()
         {
-//            HUD.mode = MBProgressHUDModeText;
-//            HUD.labelText = nil;
-//            HUD.detailsLabelText = nil;
+
         }
     ];
 }

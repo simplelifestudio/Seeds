@@ -325,6 +325,13 @@
     return responseMessage;
 }
 
+-(JSONMessage*) newCartIdRequest
+{
+    JSONMessage* responseMessage = [self seedsToCartRequest:nil seedIds:nil];    
+
+    return responseMessage;
+}
+
 -(NSString*) newCartId
 {
     NSString* cartId = nil;
@@ -332,7 +339,15 @@
     JSONMessage* responseMessage = [self seedsToCartRequest:nil seedIds:nil];
     if (nil != responseMessage)
     {
-        if (![JSONMessage isErrorResponseMessage:responseMessage])
+        if ([JSONMessage isTimeoutResponseMessage:responseMessage])
+        {
+            
+        }
+        else if ([JSONMessage isErrorResponseMessage:responseMessage])
+        {
+            
+        }
+        else
         {
             if ([responseMessage.command isEqualToString:JSONMESSAGE_COMMAND_SEEDSTOCARTRESPONSE])
             {
@@ -368,7 +383,11 @@
         return nil;
     }
     
-    __block JSONMessage* responseMessage;
+    NSTimeInterval timeout = JSON_MESSAGE_TIMEOUT;
+    NSDate* startTimeStamp = [NSDate date];
+    NSDate* endTimeStamp = [NSDate dateWithTimeInterval:timeout sinceDate:startTimeStamp];
+    
+    __block JSONMessage* responseMessage = nil;
 
     __block NSCondition* lock = [[NSCondition alloc] init];
     
@@ -397,8 +416,13 @@
     [operation start];
     
     [lock lock];
-    [lock wait];
+    BOOL flag = [lock waitUntilDate:endTimeStamp];
     [lock unlock];
+    
+    if (!flag)
+    {
+        responseMessage = [JSONMessage constructWithType:TimeoutResponse messageBody:nil];
+    }
     
     return responseMessage;
 }
@@ -440,7 +464,21 @@
         JSONMessage* responseMessage = [self alohaRequest];
         if (nil != responseMessage)
         {
-            if (![JSONMessage isErrorResponseMessage:responseMessage])
+            if ([JSONMessage isTimeoutResponseMessage:responseMessage])
+            {
+                if (_delegate)
+                {
+                    [_delegate taskFailed:NSLocalizedString(@"Communication Timeout", nil) minorStatus:nil];
+                }
+            }
+            else if ([JSONMessage isErrorResponseMessage:responseMessage])
+            {
+                if (_delegate)
+                {
+                    [_delegate taskFailed:NSLocalizedString(@"Error Responsed Message", nil) minorStatus:nil];
+                }
+            }
+            else
             {
                 if ([responseMessage.command isEqualToString:JSONMESSAGE_COMMAND_ALOHARESPONSE])
                 {
@@ -455,7 +493,21 @@
                     responseMessage = [self seedsUpdateStatusByDatesRequest:last3Days];
                     if (nil != responseMessage)
                     {
-                        if (![JSONMessage isErrorResponseMessage:responseMessage])
+                        if ([JSONMessage isTimeoutResponseMessage:responseMessage])
+                        {
+                            if (_delegate)
+                            {
+                                [_delegate taskFailed:NSLocalizedString(@"Communication Timeout", nil) minorStatus:nil];
+                            }
+                        }
+                        else if ([JSONMessage isErrorResponseMessage:responseMessage])
+                        {
+                            if (_delegate)
+                            {
+                                [_delegate taskFailed:NSLocalizedString(@"Error Responsed Message", nil) minorStatus:nil];
+                            }
+                        }
+                        else
                         {
                             if ([responseMessage.command isEqualToString:JSONMESSAGE_COMMAND_SEEDSUPDATESTATUSBYDATESRESPONSE])
                             {
@@ -476,7 +528,21 @@
                                 responseMessage = [self seedsByDatesRequest:last3Days];
                                 if (nil != responseMessage)
                                 {
-                                    if (![JSONMessage isErrorResponseMessage:responseMessage])
+                                    if ([JSONMessage isTimeoutResponseMessage:responseMessage])
+                                    {
+                                        if (_delegate)
+                                        {
+                                            [_delegate taskFailed:NSLocalizedString(@"Communication Timeout", nil) minorStatus:nil];
+                                        }
+                                    }
+                                    else if ([JSONMessage isErrorResponseMessage:responseMessage])
+                                    {
+                                        if (_delegate)
+                                        {
+                                            [_delegate taskFailed:NSLocalizedString(@"Error Responsed Message", nil) minorStatus:nil];
+                                        }
+                                    }
+                                    else
                                     {
                                         if ([responseMessage.command isEqualToString:JSONMESSAGE_COMMAND_SEEDSBYDATESRESPONSE])
                                         {
@@ -486,7 +552,7 @@
                                                 NSDate* day = [last3Days objectAtIndex:index];
                                                 NSString* dayStr = [last3DayStrs objectAtIndex:index];
                                                 NSString* dayShortStr = [last3DayShortStrs objectAtIndex:index];
-
+                                                
                                                 NSMutableString* hudStr1 = [NSMutableString stringWithCapacity:0];
                                                 [hudStr1 appendString:dayShortStr];
                                                 [hudStr1 appendString:STR_SPACE];
@@ -541,7 +607,7 @@
                                                         [_delegate taskDataUpdated:[NSString stringWithFormat:@"%d", index] data:[NSString stringWithFormat:@"%d", 0]];
                                                     }
                                                     
-                                                    [_userDefaults setThisDaySync:day sync:YES];                                                    
+                                                    [_userDefaults setThisDaySync:day sync:YES];
                                                 }
                                                 else if ([syncStatus isEqualToString:SEEDS_SYNCSTATUS_NOTREADY])
                                                 {
@@ -575,13 +641,6 @@
                                             }
                                         }
                                     }
-                                    else
-                                    {
-                                        if (_delegate)
-                                        {
-                                            [_delegate taskFailed:NSLocalizedString(@"Error Responsed Message", nil) minorStatus:nil];
-                                        }
-                                    }
                                 }
                                 else
                                 {
@@ -597,13 +656,6 @@
                                 {
                                     [_delegate taskFailed:NSLocalizedString(@"Unexpect Response Message", nil) minorStatus:nil];
                                 }
-                            }
-                        }
-                        else
-                        {
-                            if (_delegate)
-                            {
-                                [_delegate taskFailed:NSLocalizedString(@"Error Responsed Message", nil) minorStatus:nil];
                             }
                         }
                     }
@@ -623,21 +675,14 @@
                     }
                 }
             }
-            else
-            {
-                if (_delegate)
-                {
-                    [_delegate taskFailed:NSLocalizedString(@"Error Responsed Message", nil) minorStatus:nil];                            
-                }
-            }
         }
         else
         {
             if (_delegate)
             {
-                [_delegate taskFailed:NSLocalizedString(@"No Responsed Message", nil) minorStatus:nil];            
+                [_delegate taskFailed:NSLocalizedString(@"No Responsed Message", nil) minorStatus:nil];
             }
-        }    
+        }
     }
     @catch(NSException* exception)
     {
@@ -653,5 +698,7 @@
     
     }
 }
+
+#pragma mark - Private Methods
 
 @end

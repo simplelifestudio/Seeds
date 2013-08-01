@@ -33,6 +33,7 @@ typedef void(^JSONMessageCallBackBlock)(id JSON, NSError* error);
 -(JSONMessage*) seedsUpdateStatusByDatesRequest:(NSArray*) days;
 -(JSONMessage*) seedsByDatesRequest:(NSArray*) days;
 -(JSONMessage*) seedsToCartRequest:(NSString*) cartId seedIds:(NSArray*) seedIds;
+-(JSONMessage*) newCartIdRequest;
 -(NSString*) newCartId;
 
 -(void) syncSeedsInfo;

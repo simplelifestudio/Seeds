@@ -14,6 +14,8 @@
 "Unhandled Exception" = "未截获的异常";
 "You can try to continue but the application may be unstable.\n\nDebug details follow:\n%@\n%@" = "你可以尝试继续运行已处于不稳定状态的程序。\n调试信息如下:\n%@\n%@";
 
+"Communication Timeout" = "通讯超时";
+
 "Communication Module" = "通讯模块";
 "Communication Module Thread" = "通讯模块线程";
 "Database Module" = "数据库模块";

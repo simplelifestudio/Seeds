@@ -497,7 +497,17 @@
             JSONMessage* responseMessage = [_serverAgent seedsToCartRequest:cartId seedIds:@[seedIdStr]];
             if (nil != responseMessage)
             {
-                if (![JSONMessage isErrorResponseMessage:responseMessage])
+                if ([JSONMessage isTimeoutResponseMessage:responseMessage])
+                {
+                    HUD.mode = MBProgressHUDModeText;
+                    HUD.labelText = NSLocalizedString(@"Communication Timeout", nil);
+                }
+                else if ([JSONMessage isErrorResponseMessage:responseMessage])
+                {
+                    HUD.mode = MBProgressHUDModeText;
+                    HUD.labelText = NSLocalizedString(@"Subscribe Failed", nil);
+                }
+                else
                 {
                     if ([responseMessage.command isEqualToString:JSONMESSAGE_COMMAND_SEEDSTOCARTRESPONSE])
                     {
@@ -512,14 +522,14 @@
                         __block BOOL isSeedSubscribed = NO;
                         NSArray* successSeedIdList = [body objectForKey:JSONMESSAGE_KEY_SUCCESSSEEDIDLIST];
                         [successSeedIdList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop)
-                        {
-                            NSString* tempSeedIdStr = (NSString*)obj;
-                            if ([tempSeedIdStr isEqualToString:seedIdStr])
-                            {
-                                isSeedSubscribed = YES;
-                                *stop = YES;
-                            }
-                        }];
+                         {
+                             NSString* tempSeedIdStr = (NSString*)obj;
+                             if ([tempSeedIdStr isEqualToString:seedIdStr])
+                             {
+                                 isSeedSubscribed = YES;
+                                 *stop = YES;
+                             }
+                         }];
                         
                         if (isSeedSubscribed)
                         {
@@ -552,24 +562,13 @@
                             }
                         }
                     }
-                    else
-                    {
-                        HUD.mode = MBProgressHUDModeText;
-                        HUD.labelText = NSLocalizedString(@"Subscribe Failed", nil);
-                    }
-                }
-                else
-                {
-                    HUD.mode = MBProgressHUDModeText;
-                    HUD.labelText = NSLocalizedString(@"Subscribe Failed", nil);
-                }
+                }                
             }
             else
             {
                 HUD.mode = MBProgressHUDModeText;
                 HUD.labelText = NSLocalizedString(@"Subscribe Failed", nil);
             }
-            
         }
         @catch(NSException* exception)
         {

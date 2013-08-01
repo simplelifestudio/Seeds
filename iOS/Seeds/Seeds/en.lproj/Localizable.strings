@@ -14,6 +14,8 @@
 "Unhandled Exception" = "Unhandled Exception";
 "You can try to continue but the application may be unstable.\n\nDebug details follow:\n%@\n%@" = "You can try to continue but the application may be unstable.\nDebug details follow:\n%@\n%@";
 
+"Communication Timeout" = "Communication Timeout";
+
 "Communication Module" = "Communication Module";
 "Communication Module Thread" = "Communication Module Thread";
 "Database Module" = "Database Module";
