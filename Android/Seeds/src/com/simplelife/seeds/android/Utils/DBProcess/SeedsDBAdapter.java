@@ -106,7 +106,7 @@ public class SeedsDBAdapter {
 		mSQLiteDatabase = mDBHandler.getDatabase(DATABASE_NAME);
 		
 		// Synchronize the database
-		adpInstance.syncDataBase();
+		//adpInstance.syncDataBase();
     }  
       
     public static SeedsDBAdapter getAdapter(){  

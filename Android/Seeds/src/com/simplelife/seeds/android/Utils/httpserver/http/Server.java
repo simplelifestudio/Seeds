@@ -31,6 +31,9 @@ public class Server implements Runnable {
 	private static final int QUEUE_TIMEOUT = 30000;
 	private static final int MAX_SOCKET_BACKLOG = 80;
 	
+	public static final String SUFFIX_ZIP = "..zip";
+	public static final String SUFFIX_DEL = "..del";
+	
 	private static File mWebRoot;
 	
 	public static final String SERVER_NAME = "AndroidHTTPServer (android/linux)";
@@ -57,8 +60,12 @@ public class Server implements Runnable {
 	public Server(InetAddress pInterface, int pPort, String pRoot) {
 		mRunFlag = true;
 		mInterface = pInterface;
+		mPort = pPort;		
 		mWebRoot = new File(pRoot);
-		mPort = pPort;
+
+        // Create the folder if it does not exist
+		if(!mWebRoot.exists())
+        	mWebRoot.mkdirs();
 	}
 	
 	/**
@@ -86,8 +93,8 @@ public class Server implements Runnable {
 		Logger.debug("Server thread initialised!  Attempting to start server on " + mInterface.toString() + ":" + mPort);
 		
 		//Looper.prepare();
-        Socket workerSocket = null;  
-		
+        Socket workerSocket = null;  		
+        
         if (!mWebRoot.canRead()) {
         	Logger.error("Cannot start server as unable to read root directory at " + mWebRoot.getAbsolutePath());
         	return;

@@ -1,8 +1,12 @@
 package com.simplelife.seeds.android.utils.httpserver.http.workers.simple.implementations;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Date;
 
 import com.simplelife.seeds.android.utils.httpserver.http.Server;
 import com.simplelife.seeds.android.utils.httpserver.http.utils.HttpMethod;
@@ -40,6 +44,13 @@ public class SimpleDirectoryWorker implements SimpleWorkerInterface {
 				throw new SimpleWorkerException(HttpStatus.HTTP405);
 			} else {
 				
+				String target = null;
+				try {
+					target = URLDecoder.decode(pRequest.getResource(), "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				resource = new File(Server.getRoot() + URLDecoder.decode(pRequest.getResource()));
 				
 				if (!resource.exists() || !resource.canRead()) {
@@ -48,11 +59,39 @@ public class SimpleDirectoryWorker implements SimpleWorkerInterface {
 					throw new SimpleWorkerException(HttpStatus.HTTP500);			
 				} else {	
 					
-					File[] children = resource.listFiles();
+					//File[] children = resource.listFiles();
 					StringBuffer buffer = new StringBuffer();
 					
-					buffer.append("<h1>").append(pRequest.getResource()).append("</h1>");
+					//buffer.append("<h1>").append(pRequest.getResource()).append("</h1>");
 					
+					buffer.append("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<title>");
+					buffer.append(null == target ? resource.getAbsolutePath() : target);
+					buffer.append("Seeds Http Server</title>\n");
+					buffer.append("<link rel=\"shortcut icon\" href=\"/mnt/sdcard/.SeedsWebService/img/favicon.ico\">\n");
+					buffer.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"/mnt/sdcard/.SeedsWebService/css/seedsWebService.css\">\n");
+					buffer.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"/mnt/sdcard/.SeedsWebService/css/examples.css\">\n");
+					buffer.append("<script type=\"text/javascript\" src=\"/mnt/sdcard/.SeedsWebService/js/jquery-1.7.2.min.js\"></script>\n");
+					buffer.append("<script type=\"text/javascript\" src=\"/mnt/sdcard/.SeedsWebService/js/jquery-impromptu.4.0.min.js\"></script>\n");
+					buffer.append("<script type=\"text/javascript\" src=\"/mnt/sdcard/.SeedsWebService/js/seedsWebService.js\"></script>\n");
+					buffer.append("</head>\n<body>\n<h1 id=\"header\">");
+					buffer.append(null == target ? resource.getAbsolutePath() : target);
+					buffer.append("</h1>\n<table id=\"table\">\n");
+					buffer.append("<tr class=\"header\">\n<td>$100</td>\n<td class=\"detailsColumn\">details</td>\n<td class=\"detailsColumn\">details</td>\n<td class=\"detailsColumn\">details</td>\n</tr>\n");
+					
+					if (!isSamePath(resource.getAbsolutePath(), Server.getRoot().getAbsolutePath())) {
+						buffer.append("<tr>\n<td><a class=\"icon up\" href=\"..\">details</a></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n");
+					}
+					
+					File[] files = resource.listFiles();
+					if (null != files) {
+						sort(files);
+						for (File f : files) {
+							appendRow(buffer, f);
+						}
+					}
+					buffer.append("</table>\n<hr noshade>\n<em>Welcome to <a target=\"_blank\" href=\"http://vaero.blog.51cto.com/\">Seeds App Server</a>!</em>\n</body>\n</html>");					
+										
+					/*
 					if (children == null || children.length == 0) {
 						buffer.append("This directory has no files.");
 					} else {
@@ -68,7 +107,7 @@ public class SimpleDirectoryWorker implements SimpleWorkerInterface {
 							buffer.append(child.getName());
 							buffer.append("</a><br />");							
 						}
-					}
+					}*/
 					
 					String type = "text/html";
 										
@@ -82,6 +121,92 @@ public class SimpleDirectoryWorker implements SimpleWorkerInterface {
 		}
 		
 		return response;
+	}
+	
+	private void sort(File[] files) {
+		Arrays.sort(files, new Comparator<File>() {
+			@Override
+			public int compare(File f1, File f2) {
+				if (f1.isDirectory() && !f2.isDirectory()) {
+					return -1;
+				} else if (!f1.isDirectory() && f2.isDirectory()) {
+					return 1;
+				} else {
+					return f1.toString().compareToIgnoreCase(f2.toString());
+				}
+			}
+		});
+	}
+	
+	private boolean isSamePath(String a, String b) {
+		String left = a.substring(b.length(), a.length());
+		if (left.length() >= 2) {
+			return false;
+		}
+		if (left.length() == 1 && !left.equals("/")) {
+			return false;
+		}
+		return true;
+	}
+	
+	private SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd ahh:mm");
+	
+	private void appendRow(StringBuffer sb, File f) {
+		String clazz, link, size;
+		if (f.isDirectory()) {
+			clazz = "icon dir";
+			link = f.getName() + "/";
+			size = "";
+		} else {
+			clazz = "icon file";
+			link = f.getName();
+			size = formatFileSize(f.length());
+		}
+		sb.append("<tr>\n<td><a class=\"");
+		sb.append(clazz);
+		sb.append("\" href=\"");
+		sb.append(link);
+		sb.append("\">");
+		sb.append(link);
+		sb.append("</a></td>\n");
+		sb.append("<td class=\"detailsColumn\">");
+		sb.append(size);
+		sb.append("</td>\n<td class=\"detailsColumn\">");
+		sb.append(sdf.format(new Date(f.lastModified())));
+		sb.append("</td>\n<td class=\"operateColumn\">");
+		sb.append("<span><a href=\"");
+		sb.append(link);
+		sb.append(Server.SUFFIX_ZIP);
+		sb.append("\">Download</a></span>");
+		if (f.canWrite() && !hasWfsDir(f)) {
+			sb.append("<span><a href=\"");
+			sb.append(link);
+			sb.append(Server.SUFFIX_DEL);
+			sb.append("\" onclick=\"return confirmDelete('");
+			sb.append(link);
+			sb.append(Server.SUFFIX_DEL);
+			sb.append("')\">Delete</a></span>");
+		}
+		sb.append("</td>\n</tr>\n");
+	}
+	
+	public static boolean hasWfsDir(File f) {
+		String path = f.isDirectory() ? f.getAbsolutePath() + "/" : f
+				.getAbsolutePath();
+		return path.indexOf("/.wfs/") != -1;
+	}
+	
+	private String formatFileSize(long len) {
+		if (len < 1024)
+			return len + " B";
+		else if (len < 1024 * 1024)
+			return len / 1024 + "." + (len % 1024 / 10 % 100) + " KB";
+		else if (len < 1024 * 1024 * 1024)
+			return len / (1024 * 1024) + "." + len % (1024 * 1024) / 10 % 100
+					+ " MB";
+		else
+			return len / (1024 * 1024 * 1024) + "." + len
+					% (1024 * 1024 * 1024) / 10 % 100 + " MB";
 	}
 	
 }

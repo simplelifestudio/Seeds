@@ -34,7 +34,7 @@ public class SeedsDefinitions {
 	public static String SEEDS_SERVER_HTTP_MIME = "application/json";
 	public static String mServerUrl = "http://106.187.38.78:80/seeds/seedService";
 	
-	public static String SEEDS_DOWNLOAD_SUBFOLDER = Environment.DIRECTORY_DOWNLOADS;
+	public static String SEEDS_DOWNLOAD_SUBFOLDER = Environment.DIRECTORY_DOWNLOADS + "/" + "Seeds";
 	public static String SEEDS_DOWNLOAD_DESTFOLDER = Environment.getExternalStorageDirectory().getPath() 
 			                                       + "/"
 			                                       + SEEDS_DOWNLOAD_SUBFOLDER;
