@@ -120,7 +120,9 @@
     <string name="seeds_config_page">Settings</string>  
     <string name="seeds_config_serverpref">Server Preference</string>
     <string name="seeds_config_modifyserveraddrtitle">Change Server Address</string>
-    <string name="seeds_config_modifyserveraddrsum">Change the IP address of server, default is 106.187.38.78</string>
+    <string name="seeds_config_modifyserveraddrsum">Change the IP address of server</string>
+    <string name="seeds_config_resetserveraddrtitle">Reset Server Address</string>
+    <string name="seeds_config_resetserveraddrsum">Reset the target server address to default</string>
     <string name="seeds_config_verifyserveraddrtitle">Verify Server Address</string>
     <string name="seeds_config_verifyserveraddrsum">Check if the server is working properly</string>    
     <string name="seeds_config_selectchantitle">Select Channel</string>
@@ -149,7 +151,8 @@
     <string name="seeds_config_abouttitle">About</string>
     <string name="seeds_config_aboutsum">About Seeds and our team</string>
     
-    <string name="seeds_config_setserveraddrfailed">Server address set failed</string>
+    <string name="seeds_config_setserveraddrfailed">Server address set failed,please check if the input IP address is valid</string>
+    <string name="seeds_config_setserveraddrindefault">The target server address is in default</string>
     <string name="seeds_config_setserveraddrsum">The target server address is changed to </string>
     <string name="seeds_config_verifyserveraddrcommun">Communicating with server</string>
     <string name="seeds_config_verifyserveraddrsucc">Verification successed, server is working normally</string>
@@ -158,6 +161,7 @@
     
     <string name="seeds_config_toast_changepwdunavail">Password protect is disabled, can not change password</string>
     <string name="seeds_config_toast_clearcache">Clearing cache&#8230;</string>
+    <string name="seeds_config_toast_resetserver">The server address has been reset</string>
     
     <string name="seeds_http_buttonstartserver">Start server</string>
     <string name="seeds_http_buttonstopserver">Stop server</string>

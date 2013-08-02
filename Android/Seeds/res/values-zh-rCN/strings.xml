@@ -119,7 +119,9 @@
     <string name="seeds_config_page">应用设置</string>
     <string name="seeds_config_serverpref">服务器设置</string>
     <string name="seeds_config_modifyserveraddrtitle">更改服务器地址</string>
-    <string name="seeds_config_modifyserveraddrsum">更改服务器的IP地址，默认为106.187.38.78</string>
+    <string name="seeds_config_modifyserveraddrsum">更改服务器的IP地址</string>
+    <string name="seeds_config_resetserveraddrtitle">重置服务器地址</string>
+    <string name="seeds_config_resetserveraddrsum">将服务器地址恢复到系统默认地址</string>
     <string name="seeds_config_verifyserveraddrtitle">验证服务器地址</string>
     <string name="seeds_config_verifyserveraddrsum">验证服务器通信是否正常</string>
     <string name="seeds_config_selectchantitle">选择频道</string>
@@ -148,15 +150,17 @@
     <string name="seeds_config_abouttitle">关于</string>
     <string name="seeds_config_aboutsum">关于Seeds和我们的团队</string>
         
-    <string name="seeds_config_setserveraddrfailed">服务器地址设置失败</string>
+    <string name="seeds_config_setserveraddrfailed">服务器地址设置失败，请确认IP地址是否合法</string>
+    <string name="seeds_config_setserveraddrindefault">目标服务器地址处于默认状态</string>
     <string name="seeds_config_setserveraddrsum">目标服务器地址更改为</string>
-    <string name="seeds_config_verifyserveraddrcommun">正在与服务器通信中</string>
+    <string name="seeds_config_verifyserveraddrcommun">正在验证服务器地址：</string>
     <string name="seeds_config_verifyserveraddrsucc">验证成功，服务器正常工作中</string>
     <string name="seeds_config_verifyserveraddrfail">验证失败，请确认服务器是否正确</string>
     <string name="seeds_config_clearcachedone">缓存已清空</string>
     
     <string name="seeds_config_toast_changepwdunavail">密码保护已关闭,无法更改密码</string>
     <string name="seeds_config_toast_clearcache">正在清理缓存&#8230;</string>
+    <string name="seeds_config_toast_resetserver">服务器地址已恢复到默认地址</string>
     
     <string name="seeds_http_buttonstartserver">开启服务</string>
     <string name="seeds_http_buttonstopserver">关闭服务</string>

@@ -29,10 +29,13 @@ public class SeedsDefinitions {
 		public static final String SEEDS_ERROR_WRONGREALDATE = "Wrong Calendar Date Detected!";
 		public static final String SEEDS_ERROR_WRONGLOGICDATE = "Wrong Logic Date Detected!";
 	}
-	
-	public static String SEEDS_SERVER_ADDRESS_PREFIX = "/seeds/seedService";
+		
 	public static String SEEDS_SERVER_HTTP_MIME = "application/json";
-	public static String mServerUrl = "http://106.187.38.78:80/seeds/seedService";
+	public static String SEEDS_SERVER_DEFAUL_IPANDPORT = "106.187.38.78:80";
+	public static String SEEDS_SERVER_ADDRESS_PREFIX = "/seeds/seedService";
+	public static String SEEDS_SERVER_DEFAULT_FULLADDR = 
+			"http://" + SEEDS_SERVER_DEFAUL_IPANDPORT + SEEDS_SERVER_ADDRESS_PREFIX;
+	public static String mServerUrl = SEEDS_SERVER_DEFAULT_FULLADDR;
 	
 	public static String SEEDS_DOWNLOAD_SUBFOLDER = Environment.DIRECTORY_DOWNLOADS + "/" + "Seeds";
 	public static String SEEDS_DOWNLOAD_DESTFOLDER = Environment.getExternalStorageDirectory().getPath() 
@@ -70,6 +73,10 @@ public class SeedsDefinitions {
 	
 	public static boolean getDownloadImageFlag(){
 		return mDownloadImageWithoutWifiEnabled;
+	}
+	
+	public static void resetServerAddress(){
+		mServerUrl = SEEDS_SERVER_DEFAULT_FULLADDR;
 	}
 	
 }

@@ -11,6 +11,8 @@ package com.simplelife.seeds.android;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
@@ -61,6 +63,7 @@ public class SeedsConfigActivity extends Activity {
     	
     	private EditTextPreference mEditTextPrefServerAddr;
     	private Preference mPrefVerifyServer;
+    	private Preference mPrefResetServer;
     	//private ListPreference mListPrefSelectChan;
     	private SwitchPreference mSwitchPrefWifi;
     	private SwitchPreference mSwitchEnablePwd;
@@ -70,6 +73,7 @@ public class SeedsConfigActivity extends Activity {
     	private Preference mPrefAbout;
     	private SharedPreferences mSharedPrefs;
     	
+    	private String mServerIp  = SeedsDefinitions.SEEDS_SERVER_DEFAUL_IPANDPORT;
     	private String mServerUrl = SeedsDefinitions.getServerUrl();
     	private String mResponse  = null;
     	private ProgressDialog mProgressDialog = null;
@@ -85,7 +89,8 @@ public class SeedsConfigActivity extends Activity {
             mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
             
             mEditTextPrefServerAddr = (EditTextPreference)findPreference("config_changeserver");
-            mPrefVerifyServer   = (Preference)findPreference("config_verifyserver");
+            mPrefVerifyServer = (Preference)findPreference("config_verifyserver");
+            mPrefResetServer  = (Preference)findPreference("config_resetserver");
             //mListPrefSelectChan = (ListPreference)findPreference("config_selectchannel");
             mSwitchPrefWifi  = (SwitchPreference)findPreference("config_network");
             mSwitchEnablePwd = (SwitchPreference)findPreference("config_enablepwd");
@@ -106,6 +111,7 @@ public class SeedsConfigActivity extends Activity {
             mSwitchPrefWifi.setOnPreferenceChangeListener(this);
             
             mPrefVerifyServer.setOnPreferenceClickListener(this);
+            mPrefResetServer.setOnPreferenceClickListener(this);
             mPrefClearCache.setOnPreferenceClickListener(this);
             mPrefChangePwd.setOnPreferenceClickListener(this);
             //mPrefFeedback.setOnPreferenceClickListener(this);
@@ -117,14 +123,16 @@ public class SeedsConfigActivity extends Activity {
             
         	if(mEditTextPrefServerAddr == preference)
         	{        		
-        		String tServerAddr = mSharedPrefs.getString(preference.getKey(), "N/A");
-        		if(tServerAddr.equals("N/A")){
-        			showToast(R.string.seeds_config_setserveraddrfailed);
-        			mServerUrl = SeedsDefinitions.getServerUrl();
-            	}
-            	else{
+        		//String tServerAddr = mSharedPrefs.getString(preference.getKey(), "N/A");
+        		String tServerAddr = newValue.toString();
+        		
+        		if(isValidIp(tServerAddr)){
             		mServerUrl = "http://"+tServerAddr+SeedsDefinitions.SEEDS_SERVER_ADDRESS_PREFIX;
             		mEditTextPrefServerAddr.setSummary(getString(R.string.seeds_config_setserveraddrsum) + tServerAddr);
+            	}
+            	else{
+        			showToast(R.string.seeds_config_setserveraddrfailed);
+        			mEditTextPrefServerAddr.setText(SeedsDefinitions.SEEDS_SERVER_DEFAULT_FULLADDR);
             	}
         		
         		// Set the global address
@@ -143,6 +151,10 @@ public class SeedsConfigActivity extends Activity {
         
         public boolean onPreferenceClick(Preference preference) {
         	
+        	if(mPrefResetServer == preference)
+        	{
+        		onResetAddress();
+        	}
         	if(mPrefVerifyServer == preference)
         	{
         		onVerifyAddress(mServerUrl);
@@ -171,10 +183,27 @@ public class SeedsConfigActivity extends Activity {
         	return false;
         }
         
+        public boolean isValidIp(String _inIpAddr){
+            String test = "^(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|[1-9])\\."
+                        + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
+                        + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
+                        + "(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$";
+            Pattern pattern = Pattern.compile(test);
+            Matcher matcher = pattern.matcher(_inIpAddr);
+            return matcher.matches();
+        }
+        
+        public void onResetAddress(){
+        	SeedsDefinitions.resetServerAddress();
+        	mServerUrl = SeedsDefinitions.getServerUrl();
+        	showToast(R.string.seeds_config_toast_resetserver);
+        	mEditTextPrefServerAddr.setSummary(getString(R.string.seeds_config_setserveraddrindefault));
+        }
+        
         public void onVerifyAddress(String _inUrl) {   	
         	        	
         	mProgressDialog = ProgressDialog.show(getActivity(), "Verifying...", 
-        			          getString(R.string.seeds_config_verifyserveraddrcommun), true, false);
+        			          getString(R.string.seeds_config_verifyserveraddrcommun)+mServerUrl, true, false);
         	mProgressDialog.setCanceledOnTouchOutside(true);
         	
     		new Thread() {
@@ -252,7 +281,8 @@ public class SeedsConfigActivity extends Activity {
     	};
         
     	private void showToast(int _messageId) {
-    	    Toast.makeText(getActivity(), _messageId, Toast.LENGTH_SHORT).show();
+    		if(null != getActivity())
+    			Toast.makeText(getActivity(), _messageId, Toast.LENGTH_SHORT).show();
     	}
     	
     	public String getCacheDirSize(){

@@ -5,7 +5,11 @@
             android:dialogTitle="@string/seeds_config_modifyserveraddrtitle"
             android:title="@string/seeds_config_modifyserveraddrtitle" 
             android:summary="@string/seeds_config_modifyserveraddrsum" 
-            android:key="config_changeserver"/>
+            android:key="config_changeserver" android:defaultValue="0.0.0.0"/>
+        <Preference 
+            android:summary="@string/seeds_config_resetserveraddrsum" 
+            android:key="config_resetserver" 
+            android:title="@string/seeds_config_resetserveraddrtitle"/>
         <Preference 
             android:summary="@string/seeds_config_verifyserveraddrsum" 
             android:key="config_verifyserver" 
