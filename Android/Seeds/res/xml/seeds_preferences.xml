@@ -49,10 +49,10 @@
     </PreferenceCategory>
     <PreferenceCategory 
         android:title="@string/seeds_config_feedbackandhelp">
-        <Preference 
+        <!--Preference 
             android:title="@string/seeds_config_feedbacktitle" 
             android:key="config_feedback" 
-            android:summary="@string/seeds_config_feedbacksum"/>
+            android:summary="@string/seeds_config_feedbacksum"/-->
         <Preference 
             android:title="@string/seeds_config_abouttitle" 
             android:key="config_about" 

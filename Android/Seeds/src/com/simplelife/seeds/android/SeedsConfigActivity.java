@@ -17,7 +17,6 @@ import org.json.JSONException;
 
 import com.simplelife.seeds.android.SeedsAboutActivity.SeedsAboutDialog;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache;
-import com.simplelife.seeds.android.utils.imageprocess.SeedsFileCache;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
@@ -67,7 +66,7 @@ public class SeedsConfigActivity extends Activity {
     	private SwitchPreference mSwitchEnablePwd;
     	private Preference mPrefClearCache;
     	private Preference mPrefChangePwd;
-    	private Preference mPrefFeedback;
+    	//private Preference mPrefFeedback;
     	private Preference mPrefAbout;
     	private SharedPreferences mSharedPrefs;
     	
@@ -92,7 +91,7 @@ public class SeedsConfigActivity extends Activity {
             mSwitchEnablePwd = (SwitchPreference)findPreference("config_enablepwd");
             mPrefClearCache = (Preference)findPreference("config_clearcache");
             mPrefChangePwd  = (Preference)findPreference("config_changepwd");
-            mPrefFeedback   = (Preference)findPreference("config_feedback");
+            //mPrefFeedback   = (Preference)findPreference("config_feedback");
             mPrefAbout = (Preference)findPreference("config_about");
             
             try {            	
@@ -109,7 +108,7 @@ public class SeedsConfigActivity extends Activity {
             mPrefVerifyServer.setOnPreferenceClickListener(this);
             mPrefClearCache.setOnPreferenceClickListener(this);
             mPrefChangePwd.setOnPreferenceClickListener(this);
-            mPrefFeedback.setOnPreferenceClickListener(this);
+            //mPrefFeedback.setOnPreferenceClickListener(this);
             mPrefAbout.setOnPreferenceClickListener(this);
         }
         
