@@ -31,7 +31,7 @@ public class SeedsDefinitions {
 	}
 		
 	public static String SEEDS_SERVER_HTTP_MIME = "application/json";
-	public static String SEEDS_SERVER_DEFAUL_IPANDPORT = "106.187.38.78:80";
+	public static String SEEDS_SERVER_DEFAUL_IPANDPORT = "192.81.135.31:80";
 	public static String SEEDS_SERVER_ADDRESS_PREFIX = "/seeds/seedService";
 	public static String SEEDS_SERVER_DEFAULT_FULLADDR = 
 			"http://" + SEEDS_SERVER_DEFAUL_IPANDPORT + SEEDS_SERVER_ADDRESS_PREFIX;

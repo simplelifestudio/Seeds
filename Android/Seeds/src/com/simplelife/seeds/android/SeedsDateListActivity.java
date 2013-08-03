@@ -143,12 +143,9 @@ public class SeedsDateListActivity extends Activity {
 		
 		// Retrieve the date info 
 		SeedsDateManager tDataMgr = SeedsDateManager.getDateManager();
-		/*mDateToday = tDataMgr.getRealDateToday();
+		mDateToday = tDataMgr.getRealDateToday();
 		mDateYesterday = tDataMgr.getRealDateYesterday();
-		mDateBefYesterday = tDataMgr.getRealDateBefYesterday();*/		
-		mDateToday = "2013-07-31";
-		mDateYesterday = "2013-07-30";		
-		mDateBefYesterday = "2013-07-29";
+		mDateBefYesterday = tDataMgr.getRealDateBefYesterday();		
 		mDateTextBefYesterday.setText(mDateBefYesterday);
 		mDateTextYesterday.setText(mDateYesterday);
 		mDateTextToday.setText(mDateToday);		
