@@ -263,6 +263,7 @@ public class SeedsConfigActivity extends Activity {
                     		showToast(R.string.seeds_config_verifyserveraddrfail);
                     	}
                     	mProgressDialog.dismiss();
+                    	break;
             		}
             		case MEESAGE_CONFIG_CLEARCACHE:
             		{
@@ -274,6 +275,7 @@ public class SeedsConfigActivity extends Activity {
             			}
                         mProgressDialog.dismiss();
                         showToast(R.string.seeds_config_clearcachedone);
+                        break;
             		}
             	}        	
             	

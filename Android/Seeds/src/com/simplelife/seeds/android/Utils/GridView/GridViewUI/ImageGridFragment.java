@@ -291,7 +291,7 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
             		if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
             		{
             			if (null != mFavItem)
-            				mFavItem.setIcon(R.drawable.rating_not_important);
+            				mFavItem.setIcon(R.drawable.rating_not_important_large);
             			
                 		Toast toast = Toast.makeText(getActivity(),
                 				R.string.seeds_fav_done, Toast.LENGTH_SHORT);
@@ -301,7 +301,7 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
             		else
             		{
             			if (null != mFavItem)
-            				mFavItem.setIcon(R.drawable.rating_important);
+            				mFavItem.setIcon(R.drawable.rating_important_large);
             			
                 		Toast toast = Toast.makeText(getActivity(),
                 				R.string.seeds_unfav_done, Toast.LENGTH_SHORT);
@@ -392,7 +392,7 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
 	    if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
 	    {
             if(null != tFavItem)
-                tFavItem.setIcon(R.drawable.rating_not_important);
+                tFavItem.setIcon(R.drawable.rating_not_important_large);
         }     
         return;      
     } 
