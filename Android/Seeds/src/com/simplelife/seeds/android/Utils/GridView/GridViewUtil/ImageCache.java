@@ -19,6 +19,7 @@ package com.simplelife.seeds.android.utils.gridview.gridviewutil;
 import com.simplelife.seeds.android.BuildConfig;
 import com.simplelife.seeds.android.SeedsDateManager;
 import com.simplelife.seeds.android.SeedsDefinitions;
+import com.simplelife.seeds.android.SeedsDefinitions.SeedsGlobalErrorCode;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -73,7 +74,7 @@ public class ImageCache {
     // Constants to easily toggle various caches
     private static final boolean DEFAULT_MEM_CACHE_ENABLED = true;
     private static final boolean DEFAULT_DISK_CACHE_ENABLED = true;
-    private static final boolean DEFAULT_INIT_DISK_CACHE_ON_CREATE = false;
+    private static final boolean DEFAULT_INIT_DISK_CACHE_ON_CREATE = true;
 
     private DiskLruCache mDiskLruCache;
     private LruCache<String, BitmapDrawable> mMemoryCache;
@@ -179,7 +180,7 @@ public class ImageCache {
         // on a separate thread due to disk access.
         if (cacheParams.initDiskCacheOnCreate) {
             // Set up disk cache
-            initDiskCache();
+        	initDiskCache();
         }
     }
 
@@ -307,6 +308,7 @@ public class ImageCache {
                 	Log.d(TAG, "mDiskCacheStarting is true, waiting...");
                     mDiskCacheLock.wait();
                 } catch (InterruptedException e) {}
+                Log.d(TAG, "mDiskCacheStarting is unlocked");
             }
             if (mDiskLruCache != null) {
                 InputStream inputStream = null;
@@ -666,9 +668,13 @@ public class ImageCache {
     private static RetainFragment findOrCreateRetainFragment(FragmentManager fm, String realDate) {
         // Check to see if we have retained the worker fragment.
     	String tTAG = TAG; 
+
     	SeedsDateManager tDataMgr = SeedsDateManager.getDateManager();
     	String tLogicDate = tDataMgr.realDateToLogicDate(realDate);
-    	if(tLogicDate.equals(SeedsDefinitions.SEEDS_DATE_BEFYESTERDAY))
+    	if(tLogicDate.equals(SeedsGlobalErrorCode.SEEDS_ERROR_WRONGREALDATE))
+    	{
+    		tTAG = realDate;
+    	}else if(tLogicDate.equals(SeedsDefinitions.SEEDS_DATE_BEFYESTERDAY))
     	{
     		tTAG = TAG_BEF;
     	}else if(tLogicDate.equals(SeedsDefinitions.SEEDS_DATE_YESTERDAY))

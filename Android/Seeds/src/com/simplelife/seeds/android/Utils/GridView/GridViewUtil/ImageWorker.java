@@ -164,7 +164,7 @@ public abstract class ImageWorker {
             ImageCache.ImageCacheParams cacheParams, String realDate) {
         mImageCacheParams = cacheParams;
         mImageCache = ImageCache.getInstance(fragmentManager, mImageCacheParams, realDate);
-        new CacheAsyncTask().execute(MESSAGE_INIT_DISK_CACHE);
+        //new CacheAsyncTask().execute(MESSAGE_INIT_DISK_CACHE);
     }
 
     /**
