@@ -421,6 +421,7 @@
     
     if (!flag)
     {
+        [operation cancel];
         responseMessage = [JSONMessage constructWithType:TimeoutResponse messageBody:nil];
     }
     
