@@ -14,6 +14,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LogUtil {
+    public static String LogLevelFine = "Fine";
+    public static String LogLevelInfo = "Info";
+    public static String LogLevelWarning = "Warning";
+    public static String LogLevelSevere = "Severe";
+    
+    
 	private static Logger logger = Logger.getLogger("Seeds");
 	
 	public static Level getLevel()

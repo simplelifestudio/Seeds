@@ -134,7 +134,7 @@ public class HttpUtil
      */
     public static String getHostIP()
     {
-        return GlobalSetting.HostIP;
+        return GlobalSetting.getHostIP();
         /*
         if (hostIPAddress != null && hostIPAddress.length() > 0)
         {
