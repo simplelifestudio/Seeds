@@ -18,6 +18,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 
 import com.simplelife.seeds.android.SeedsAboutActivity.SeedsAboutDialog;
+import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
@@ -25,7 +26,10 @@ import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -68,6 +72,8 @@ public class SeedsConfigActivity extends Activity {
     	private SwitchPreference mSwitchPrefWifi;
     	private SwitchPreference mSwitchEnablePwd;
     	private Preference mPrefClearCache;
+    	private Preference mPrefClearSyncInfo;
+    	private Preference mPrefClearDatabase;
     	private Preference mPrefChangePwd;
     	//private Preference mPrefFeedback;
     	private Preference mPrefAbout;
@@ -78,8 +84,10 @@ public class SeedsConfigActivity extends Activity {
     	private String mResponse  = null;
     	private ProgressDialog mProgressDialog = null;
     	
-    	private final int MESSAGE_CONFIG_VERIFYSERVER = 0;
-    	private final int MEESAGE_CONFIG_CLEARCACHE   = 1;
+    	private final int MESSAGE_CONFIG_VERIFYSERVER  = 0;
+    	private final int MEESAGE_CONFIG_CLEARCACHE    = 1;
+    	private final int MEESAGE_CONFIG_CLEARSYNC     = 2;
+    	private final int MEESAGE_CONFIG_CLEARDATABASE = 3;
     	
         @Override  
         public void onCreate(Bundle savedInstanceState) {    
@@ -95,6 +103,8 @@ public class SeedsConfigActivity extends Activity {
             mSwitchPrefWifi  = (SwitchPreference)findPreference("config_network");
             mSwitchEnablePwd = (SwitchPreference)findPreference("config_enablepwd");
             mPrefClearCache = (Preference)findPreference("config_clearcache");
+            mPrefClearSyncInfo = (Preference)findPreference("config_cleardatainfo");
+            mPrefClearDatabase = (Preference)findPreference("config_cleardatabase");
             mPrefChangePwd  = (Preference)findPreference("config_changepwd");
             //mPrefFeedback   = (Preference)findPreference("config_feedback");
             mPrefAbout = (Preference)findPreference("config_about");
@@ -113,6 +123,8 @@ public class SeedsConfigActivity extends Activity {
             mPrefVerifyServer.setOnPreferenceClickListener(this);
             mPrefResetServer.setOnPreferenceClickListener(this);
             mPrefClearCache.setOnPreferenceClickListener(this);
+            mPrefClearSyncInfo.setOnPreferenceClickListener(this);
+            mPrefClearDatabase.setOnPreferenceClickListener(this);
             mPrefChangePwd.setOnPreferenceClickListener(this);
             //mPrefFeedback.setOnPreferenceClickListener(this);
             mPrefAbout.setOnPreferenceClickListener(this);
@@ -162,6 +174,13 @@ public class SeedsConfigActivity extends Activity {
         	else if(mPrefClearCache == preference)
         	{
         		onClearCache();
+        	}
+        	else if(mPrefClearSyncInfo == preference)
+        	{
+        		onClearSyncStatusDialog();
+        	}else if(mPrefClearDatabase == preference)
+        	{
+        		onClearDatabaseDialog();
         	}
         	else if(mPrefChangePwd == preference)
         	{
@@ -277,10 +296,94 @@ public class SeedsConfigActivity extends Activity {
                         showToast(R.string.seeds_config_clearcachedone);
                         break;
             		}
+            		case MEESAGE_CONFIG_CLEARSYNC:
+            		{
+                        mProgressDialog.dismiss();
+                        showToast(R.string.seeds_config_clearsyncdialogdone);
+                        break;
+            		}
+            		case MEESAGE_CONFIG_CLEARDATABASE:
+            		{
+                        mProgressDialog.dismiss();
+                        showToast(R.string.seeds_config_cleardatabasedialogdone);
+                        break;
+            		}
             	}        	
             	
             }
     	};
+    	
+    	protected void onClearSyncStatusDialog() {
+    		AlertDialog.Builder builder = new Builder(getActivity());
+    		builder.setMessage(getString(R.string.seeds_config_clearsyncdialogmsg));
+    		builder.setTitle(getString(R.string.seeds_config_clearsyncdialognote));
+    		builder.setPositiveButton(R.string.seeds_config_clearsyncdialogpos, new DialogInterface.OnClickListener() {
+    		    @Override
+    	        public void onClick(DialogInterface dialog, int which) {
+    			    dialog.dismiss();
+    	            mProgressDialog = ProgressDialog.show(getActivity(), "Loading...", 
+      			          getString(R.string.seeds_config_clearsyncdialoging), true, false);
+      	            mProgressDialog.setCanceledOnTouchOutside(true);      	
+  		            new Thread() {  						
+  			            @Override
+  			            public void run() {
+  			            SeedsDateListActivity.clearSeedsInfoStatus();
+  			            SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
+  			            // Leave the seeds that are saved as favorite
+  			            tDBAdapter.clearDataBase(true);
+  				        Message t_MsgListData = new Message();
+  				        t_MsgListData.what = MEESAGE_CONFIG_CLEARSYNC;									
+  				        handler.sendMessage(t_MsgListData);	
+  			            }				
+  		            }.start();
+    		    }
+    		});
+
+    		builder.setNegativeButton(R.string.seeds_config_clearsyncdialogneg, new DialogInterface.OnClickListener() {
+    		    @Override
+    		    public void onClick(DialogInterface dialog, int which) {
+    		        dialog.dismiss();
+    		    }
+    		});
+
+    		builder.create().show();
+    	}
+    	
+    	protected void onClearDatabaseDialog() {
+    		AlertDialog.Builder builder = new Builder(getActivity());
+    		builder.setMessage(getString(R.string.seeds_config_cleardatabasedialogmsg));
+    		builder.setTitle(getString(R.string.seeds_config_cleardatabasedialognote));
+    		builder.setPositiveButton(R.string.seeds_config_cleardatabasedialogpos, new DialogInterface.OnClickListener() {
+    		    @Override
+    	        public void onClick(DialogInterface dialog, int which) {
+    			    dialog.dismiss();
+    	            mProgressDialog = ProgressDialog.show(getActivity(), "Loading...", 
+      			          getString(R.string.seeds_config_cleardatabasedialoging), true, false);
+      	            mProgressDialog.setCanceledOnTouchOutside(true);      	
+  		            new Thread() {  						
+  			            @Override
+  			            public void run() {
+  			            SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
+  			            // Do not leave the seeds that are saved as favorite
+  			            tDBAdapter.clearDataBase(false);
+  			            SeedsDateListActivity.clearSeedsInfoStatus();
+  				        Message t_MsgListData = new Message();
+  				        t_MsgListData.what = MEESAGE_CONFIG_CLEARDATABASE;									
+  				        handler.sendMessage(t_MsgListData);	
+  			            }				
+  		            }.start();
+    		    }
+    		});
+
+    		builder.setNegativeButton(R.string.seeds_config_cleardatabasedialogneg, new DialogInterface.OnClickListener() {
+    		    @Override
+    		    public void onClick(DialogInterface dialog, int which) {
+    		        dialog.dismiss();
+    		    }
+    		});
+
+    		builder.create().show();
+    	}
         
     	private void showToast(int _messageId) {
     		if(null != getActivity())

@@ -150,6 +150,11 @@
     <string name="seeds_config_feedbacksum">Please feedback the problems you encountered to us</string>
     <string name="seeds_config_abouttitle">About</string>
     <string name="seeds_config_aboutsum">About Seeds and our team</string>
+    <string name="seeds_config_data">Data Store</string>
+    <string name="seeds_config_cleardatainfotitle">Reset Sync Status</string>
+    <string name="seeds_config_cleardatainfosum">Reset data sync status of three days</string>     
+    <string name="seeds_config_cleardatabasetitle">Clear Database</string>
+    <string name="seeds_config_cleardatabasesum">Clear all the seeds info of local database, including the favorite list</string>
     
     <string name="seeds_config_setserveraddrfailed">Server address set failed,please check if the input IP address is valid</string>
     <string name="seeds_config_setserveraddrindefault">The target server address is in default</string>
@@ -158,6 +163,18 @@
     <string name="seeds_config_verifyserveraddrsucc">Verification successed, server is working normally</string>
     <string name="seeds_config_verifyserveraddrfail">Verification failed, please double check the server address</string>
     <string name="seeds_config_clearcachedone">The cache has been cleaned</string>
+    <string name="seeds_config_clearsyncdialogmsg">Confirm to reset the data sync status?</string>
+    <string name="seeds_config_clearsyncdialognote">Note</string>
+    <string name="seeds_config_clearsyncdialogpos">Confirm</string>
+    <string name="seeds_config_clearsyncdialogneg">Cancel</string>
+    <string name="seeds_config_clearsyncdialoging">Resetting the data sync status&#8230;</string>
+    <string name="seeds_config_clearsyncdialogdone">The data sync status have been reset</string>    
+    <string name="seeds_config_cleardatabasedialogmsg">Confirm to clear the database?</string>
+    <string name="seeds_config_cleardatabasedialognote">Note</string>
+    <string name="seeds_config_cleardatabasedialogpos">Confirm</string>
+    <string name="seeds_config_cleardatabasedialogneg">Cancel</string>
+    <string name="seeds_config_cleardatabasedialoging">Clearing the local database&#8230;</string>
+    <string name="seeds_config_cleardatabasedialogdone">The local database has been cleared</string>
     
     <string name="seeds_config_toast_changepwdunavail">Password protect is disabled, can not change password</string>
     <string name="seeds_config_toast_clearcache">Clearing cache&#8230;</string>

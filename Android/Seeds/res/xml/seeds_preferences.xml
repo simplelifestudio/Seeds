@@ -37,6 +37,17 @@
             android:summary="@string/seeds_config_clearcachesum"/>
     </PreferenceCategory>
     <PreferenceCategory 
+        android:title="@string/seeds_config_data">
+        <Preference 
+            android:key="config_cleardatainfo" 
+            android:title="@string/seeds_config_cleardatainfotitle" 
+            android:summary="@string/seeds_config_cleardatainfosum"/>
+        <Preference 
+            android:key="config_cleardatabase" 
+            android:title="@string/seeds_config_cleardatabasetitle" 
+            android:summary="@string/seeds_config_cleardatabasesum"/>        
+    </PreferenceCategory>
+    <PreferenceCategory 
         android:title="@string/seeds_config_security">
         <SwitchPreference 
             android:title="@string/seeds_config_enblepwdtitle" 

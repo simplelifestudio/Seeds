@@ -148,7 +148,12 @@
     <string name="seeds_config_feedbacktitle">反馈问题</string>
     <string name="seeds_config_feedbacksum">欢迎您将使用过程中遇到的问题反馈给我们</string>
     <string name="seeds_config_abouttitle">关于</string>
-    <string name="seeds_config_aboutsum">关于Seeds和我们的团队</string>
+    <string name="seeds_config_aboutsum">关于Seeds和我们的团队</string>    
+    <string name="seeds_config_data">数据存储</string>
+    <string name="seeds_config_cleardatainfotitle">重置数据同步</string>
+    <string name="seeds_config_cleardatainfosum">重置前天／昨天／今天的数据同步状态</string>     
+    <string name="seeds_config_cleardatabasetitle">清空数据库</string>
+    <string name="seeds_config_cleardatabasesum">清空本地数据库所有种子信息，包括收藏列表</string>
         
     <string name="seeds_config_setserveraddrfailed">服务器地址设置失败，请确认IP地址是否合法</string>
     <string name="seeds_config_setserveraddrindefault">目标服务器地址处于默认状态</string>
@@ -156,7 +161,19 @@
     <string name="seeds_config_verifyserveraddrcommun">正在验证服务器地址：</string>
     <string name="seeds_config_verifyserveraddrsucc">验证成功，服务器正常工作中</string>
     <string name="seeds_config_verifyserveraddrfail">验证失败，请确认服务器是否正确</string>
-    <string name="seeds_config_clearcachedone">缓存已清空</string>
+    <string name="seeds_config_clearcachedone">缓存已清空</string>    
+    <string name="seeds_config_clearsyncdialogmsg">确认重置数据同步信息吗？</string>
+    <string name="seeds_config_clearsyncdialognote">提示</string>
+    <string name="seeds_config_clearsyncdialogpos">确认</string>
+    <string name="seeds_config_clearsyncdialogneg">取消</string>
+    <string name="seeds_config_clearsyncdialoging">正在重置数据同步状态&#8230;</string>
+    <string name="seeds_config_clearsyncdialogdone">数据同步状态已经重置</string>    
+    <string name="seeds_config_cleardatabasedialogmsg">确认清空数据库信息吗？</string>
+    <string name="seeds_config_cleardatabasedialognote">提示</string>
+    <string name="seeds_config_cleardatabasedialogpos">确认</string>
+    <string name="seeds_config_cleardatabasedialogneg">取消</string>
+    <string name="seeds_config_cleardatabasedialoging">正在清空数据库&#8230;</string>
+    <string name="seeds_config_cleardatabasedialogdone">数据库已经清空</string>
     
     <string name="seeds_config_toast_changepwdunavail">密码保护已关闭,无法更改密码</string>
     <string name="seeds_config_toast_clearcache">正在清理缓存&#8230;</string>
