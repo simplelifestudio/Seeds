@@ -734,7 +734,7 @@ containing a value of this type.
         public static final int seeds_download_mgt=0x7f08006c;
         public static final int seeds_download_seed=0x7f08006b;
         public static final int seeds_fav_done=0x7f08006f;
-        public static final int seeds_helpdialog_text=0x7f0800cc;
+        public static final int seeds_helpdialog_text=0x7f0800d0;
         public static final int seeds_http_buttonstartserver=0x7f0800c2;
         public static final int seeds_http_buttonstopserver=0x7f0800c3;
         public static final int seeds_http_eventserve=0x7f0800c5;
@@ -746,6 +746,10 @@ containing a value of this type.
         public static final int seeds_http_title=0x7f080077;
         public static final int seeds_http_webdeletebtn=0x7f0800cb;
         public static final int seeds_http_webdownloadbtn=0x7f0800ca;
+        public static final int seeds_http_webtitledate=0x7f0800ce;
+        public static final int seeds_http_webtitlename=0x7f0800cc;
+        public static final int seeds_http_webtitleopera=0x7f0800cf;
+        public static final int seeds_http_webtitlesize=0x7f0800cd;
         public static final int seeds_listperday_mosaic=0x7f080056;
         public static final int seeds_listperday_nomosaictag1=0x7f080057;
         public static final int seeds_listperday_nomosaictag2=0x7f080058;

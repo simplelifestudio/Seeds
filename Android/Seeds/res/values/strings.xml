@@ -173,6 +173,10 @@
     <string name="seeds_http_serverstopped">Server stopped.</string>
     <string name="seeds_http_webdownloadbtn">Download</string>
     <string name="seeds_http_webdeletebtn">Delete</string>
+    <string name="seeds_http_webtitlename">Name</string>
+    <string name="seeds_http_webtitlesize">Size</string>
+    <string name="seeds_http_webtitledate">Modify Date</string>
+    <string name="seeds_http_webtitleopera">Operations</string>
     
     <string name="seeds_helpdialog_text"> 
     <i>Seeds---Collecting the latest movie info everywhere!</i> 

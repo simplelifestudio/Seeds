@@ -172,6 +172,10 @@
     <string name="seeds_http_serverstopped">HTTP服务已关闭。</string>
     <string name="seeds_http_webdownloadbtn">下载</string>
     <string name="seeds_http_webdeletebtn">删除</string>
+    <string name="seeds_http_webtitlename">名称</string>
+    <string name="seeds_http_webtitlesize">大小</string>
+    <string name="seeds_http_webtitledate">修改日期</string>
+    <string name="seeds_http_webtitleopera">处理操作</string>
     
     <string name="seeds_helpdialog_text"> 
     <i>Seeds---每天随时随地收集最新的影片信息！</i> 

@@ -18,6 +18,8 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import com.simplelife.seeds.android.utils.httpserver.WebService;
+
 import com.simplelife.seeds.android.utils.httpserver.http.Server;
 import com.simplelife.seeds.android.utils.httpserver.http.events.ServerEventListener;
 import com.simplelife.seeds.android.utils.httpserver.utils.Logger;
@@ -25,6 +27,7 @@ import com.simplelife.seeds.android.utils.httpserver.utils.Logger;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -51,6 +54,8 @@ public class SeedsHttpServiceActivity extends Activity {
 	private Spinner mAddressSpinner;
 	
 	private static Context mContext;
+	
+	private Intent mIntent;
 	
 	/** Handler for server event reporting */
 	private Handler mUpdateHandler = new Handler();
@@ -99,7 +104,7 @@ public class SeedsHttpServiceActivity extends Activity {
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
 		tActionBar.setTitle(R.string.seeds_http_title);
-		tActionBar.setDisplayHomeAsUpEnabled(true);
+		tActionBar.setDisplayHomeAsUpEnabled(true);				
 		
 		// Setup the css files for web review
 		new CopyUtil(this).assetsCopy();
@@ -108,7 +113,7 @@ public class SeedsHttpServiceActivity extends Activity {
 		findViewById(R.id.start).setOnClickListener(new View.OnClickListener() {
 		    public void onClick(View v) {       
 		    	vibrate();
-		    	startServer();
+		    	startServer();		    	
 		    }
 		});
 		        
@@ -116,7 +121,7 @@ public class SeedsHttpServiceActivity extends Activity {
 		findViewById(R.id.stop).setOnClickListener(new View.OnClickListener() {
 		    public void onClick(View v) {       
 		    	vibrate();
-		    	stopServer();
+		    	stopServer();		    	
 		    }
 		});
 		
@@ -125,6 +130,8 @@ public class SeedsHttpServiceActivity extends Activity {
 		
     	mVibration = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
     	updateStatus(getString(R.string.seeds_http_taptostart));
+    	
+    	mIntent = new Intent(this, WebService.class);
 		       
     }
     
@@ -141,24 +148,29 @@ public class SeedsHttpServiceActivity extends Activity {
     private void startServer() {
     	
     	mAddressSpinner.setEnabled(false);
-    	Log.i("Testing", SeedsDefinitions.getDownloadDestFolder());
+    	/*Log.i("Testing", SeedsDefinitions.getDownloadDestFolder());
     	mHttpServer = new Server(mInterface, 8080, SeedsDefinitions.getDownloadDestFolder());
 		mHttpServer.setRequestListener(mServerEvents);
 		mServerThread = new Thread(mHttpServer);
-		mServerThread.start();
+		mServerThread.start();*/
+		
+		startService(mIntent);
+		updateStatus(getString(R.string.seeds_http_eventserverready));
     }
     
 
     private void stopServer() {
     	updateStatus(getString(R.string.seeds_http_stopserver));
-    	if (mHttpServer != null) {
+    	/*if (mHttpServer != null) {
     		mHttpServer.stop();
     	}
     	if (mServerThread != null) {
     		mServerThread.interrupt();
-    	}
+    	}*/
     	mAddressSpinner.setEnabled(true);
 		updateStatus(getString(R.string.seeds_http_serverstopped));
+		
+		stopService(mIntent);
     }
     
     public void onStop() {
