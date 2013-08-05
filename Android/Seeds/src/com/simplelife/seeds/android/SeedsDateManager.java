@@ -11,6 +11,7 @@ package com.simplelife.seeds.android;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import com.simplelife.seeds.android.SeedsDefinitions.SeedsGlobalErrorCode;
 
@@ -63,6 +64,11 @@ public class SeedsDateManager {
     
     public String getRealDateToday(){
     	return mDateToday;
+    }
+    
+    public String getRealTimeNow(){
+    	String tTime = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+    	return tTime;
     }
     
     public String realDateToLogicDate(String _inRealDate){

@@ -111,8 +111,7 @@ public class SeedsReviewActivity extends Activity {
         private int imgH;       
         private SeedsTouchView touchView;
         private DisplayMetrics dm;
-        @SuppressWarnings("deprecation")
-		public SeedsViewArea(Context context,String imgUrl) { 
+        public SeedsViewArea(Context context,String imgUrl) { 
         	
         	super(context);
         	dm = new DisplayMetrics();

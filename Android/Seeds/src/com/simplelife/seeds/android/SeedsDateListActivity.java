@@ -103,9 +103,7 @@ public class SeedsDateListActivity extends Activity {
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		mLogger.info("Working on starting the DateListActivity!"); 
+		super.onCreate(savedInstanceState);		
 		
 		// Start the DateList View
 		setContentView(R.layout.activity_seeds_datelist);

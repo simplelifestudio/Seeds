@@ -12,7 +12,14 @@
                
     <item
         android:id="@+id/rss_sendreqmsg"
-        android:showAsAction="never"
-        android:title="@string/seeds_rss_menu_sendreqmsg"/>    
+        android:icon="@drawable/send_rss_book_request"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/seeds_rss_menu_sendreqmsg"/>
+    
+    <item
+        android:id="@+id/rss_removeall"
+        android:icon="@drawable/content_discard"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/seeds_rss_menu_removeall"/> 
 
 </menu>

@@ -44,7 +44,7 @@
     <string name="seedFormat">The format of the seed</string>
     <string name="seeds_details_top">Seed Details</string>
     <string name="seeds_Favorite">Favorite</string>
-    <string name="seeds_UnFavorite">取消收藏</string>
+    <string name="seeds_UnFavorite">UnFavorite</string>
     <string name="seeds_preffilename">com.simplelife.seeds.SEEDS_STATUS_BYDATE</string>
     <string name="seeds_preffilename_seedsnum">com.simplelife.seeds.SEEDS_NUMBER_BYDATE</string>
     <string name="seeds_startverify">Password Please</string>
@@ -57,9 +57,9 @@
     
     <string name="seeds_download_seed">Download Seeds</string>
     <string name="seeds_download_mgt">Download Management</string>
-    <string name="seeds_download_added">已添加至下载队列</string>
-    <string name="seeds_unfav_done">取消收藏成功</string>
-    <string name="seeds_fav_done">收藏成功</string>
+    <string name="seeds_download_added">Added to download queue</string>
+    <string name="seeds_unfav_done">Remove from favorite done</string>
+    <string name="seeds_fav_done">Favorited successfully</string>
     <string name="actionbar_activity_not_found">Failed to open intent&#8230;</string>
 
     <string name="seeds_details_to_grid">Grid Mode</string> 
@@ -115,7 +115,15 @@
     <string name="seeds_rss_toast_emptycartresp">Wrong response, book failed</string>
     <string name="seeds_rss_toast_booksuccess">Book Successed, cart id: </string>
     <string name="seeds_rss_menu_sendreqmsg">Send RSS Message</string>
-    <string name="seeds_rss_dialof_sendingreqmsg">Sending book request&#8230;</string>
+    <string name="seeds_rss_menu_removeall">Remove</string>
+    <string name="seeds_rss_dialog_sendingreqmsg">Sending book request&#8230;</string>
+    <string name="seeds_rss_dialog_message">Book successfully! Store the cart ID into file? Cart ID:</string>
+    <string name="seeds_rss_dialog_note">Note</string>
+    <string name="seeds_rss_dialog_btnpos">Confirm</string>
+    <string name="seeds_rss_dialog_btnneg">Cancel</string>
+    <string name="seeds_rss_dialog_writefile">Creating file&#8230;</string>
+    <string name="seeds_rss_dialog_filecreated">Cart ID has been stored in file: </string>
+    <string name="seeds_rss_dialog_fileget">Please use the Share Servce to get the file from smart phone.</string>
 
     <string name="seeds_config_page">Settings</string>  
     <string name="seeds_config_serverpref">Server Preference</string>
