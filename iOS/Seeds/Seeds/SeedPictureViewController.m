@@ -159,6 +159,10 @@
 - (void)pictureViewDidSingleTap:(SeedPictureScrollView *)photoView
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [CBAppUtils asyncProcessInBackgroundThread:^(){
+        [_agent clearMemory];
+    }];
 }
 
 - (void)pictureViewDidDoubleTap:(SeedPictureScrollView *)photoView
