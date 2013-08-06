@@ -171,3 +171,21 @@ X. MessageFormat
         ]
     }
 }
+
+11. WSTestRequest
+{
+    "id": "WSTestRequest",
+    "body":
+    {
+    	"content":"Are you there?"
+    }
+}
+
+12. WSTestResponse
+{
+    "id": "WSTestResponse",
+    "body":
+    {
+    	"content":"Yes, What's up?"
+    }
+}
