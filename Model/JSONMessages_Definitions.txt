@@ -172,20 +172,11 @@ X. MessageFormat
     }
 }
 
-11. WSTestRequest
+11. WSChatMessage
 {
-    "id": "WSTestRequest",
+    "id": "WSChatMessage",
     "body":
     {
     	"content":"Are you there?"
-    }
-}
-
-12. WSTestResponse
-{
-    "id": "WSTestResponse",
-    "body":
-    {
-    	"content":"Yes, What's up?"
     }
 }
