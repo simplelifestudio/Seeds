@@ -30,6 +30,8 @@
 "GUI Module Thread" = "GUI模块线程";
 "CrashReport Module" = "CrashReport模块";
 "CrashReport Module Thread" = "CrashReport模块线程";
+"WebSocket Module" = "WebSocket模块";
+"WebSocket Module Thread" = "WebSocket模块线程";
 
 "Loading: " = "加载：";
 "Mosaic" = "有码";

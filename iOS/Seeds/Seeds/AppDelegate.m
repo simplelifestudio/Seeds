@@ -33,8 +33,12 @@
     [_moduleManager registerModule:userDefaultModule];
     
     id<CBModule> communicationModule = [CommunicationModule sharedInstance];
-    communicationModule.moduleWeightFactor = 0.2;
+    communicationModule.moduleWeightFactor = 0.15;
     [_moduleManager registerModule:communicationModule];
+    
+    id<CBModule> webSocketModule = [WebSocketModule sharedInstance];
+    webSocketModule.moduleWeightFactor = 0.05;
+    [_moduleManager registerModule:webSocketModule];
     
     id<CBModule> spiderModule = [SpiderModule sharedInstance];
     spiderModule.moduleWeightFactor = 0.2;

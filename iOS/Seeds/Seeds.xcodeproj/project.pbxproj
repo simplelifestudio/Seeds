@@ -100,6 +100,7 @@
 		C53968EA17B0942400C98451 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = C53968E317B0942400C98451 /* base64.c */; };
 		C53968EB17B0942400C98451 /* NSData+SRB64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = C53968E617B0942400C98451 /* NSData+SRB64Additions.m */; };
 		C53968EC17B0942400C98451 /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = C53968E917B0942400C98451 /* SRWebSocket.m */; };
+		C53968EF17B095AD00C98451 /* WebSocketModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C53968EE17B095AD00C98451 /* WebSocketModule.m */; };
 		C53B6431178164340028DC41 /* TableViewSwitcherCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B642F178164340028DC41 /* TableViewSwitcherCell.m */; };
 		C53B6432178164340028DC41 /* TableViewSwitcherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C53B6430178164340028DC41 /* TableViewSwitcherCell.xib */; };
 		C53B64361781731B0028DC41 /* TableViewSegmentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C53B64341781731A0028DC41 /* TableViewSegmentCell.m */; };
@@ -394,6 +395,8 @@
 		C53968E717B0942400C98451 /* SocketRocket-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SocketRocket-Prefix.pch"; sourceTree = "<group>"; };
 		C53968E817B0942400C98451 /* SRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRWebSocket.h; sourceTree = "<group>"; };
 		C53968E917B0942400C98451 /* SRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRWebSocket.m; sourceTree = "<group>"; };
+		C53968ED17B095AD00C98451 /* WebSocketModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocketModule.h; sourceTree = "<group>"; };
+		C53968EE17B095AD00C98451 /* WebSocketModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebSocketModule.m; sourceTree = "<group>"; };
 		C53B642E178164340028DC41 /* TableViewSwitcherCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewSwitcherCell.h; sourceTree = "<group>"; };
 		C53B642F178164340028DC41 /* TableViewSwitcherCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewSwitcherCell.m; sourceTree = "<group>"; };
 		C53B6430178164340028DC41 /* TableViewSwitcherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewSwitcherCell.xib; sourceTree = "<group>"; };
@@ -960,6 +963,8 @@
 		C53968DF17AFC44400C98451 /* WebSocket */ = {
 			isa = PBXGroup;
 			children = (
+				C53968ED17B095AD00C98451 /* WebSocketModule.h */,
+				C53968EE17B095AD00C98451 /* WebSocketModule.m */,
 			);
 			name = WebSocket;
 			path = Seeds;
@@ -1672,6 +1677,7 @@
 				C53968EA17B0942400C98451 /* base64.c in Sources */,
 				C53968EB17B0942400C98451 /* NSData+SRB64Additions.m in Sources */,
 				C53968EC17B0942400C98451 /* SRWebSocket.m in Sources */,
+				C53968EF17B095AD00C98451 /* WebSocketModule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

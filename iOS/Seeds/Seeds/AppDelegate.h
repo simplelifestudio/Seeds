@@ -17,6 +17,7 @@
 #import "DatabaseModule.h"
 #import "SpiderModule.h"
 #import "TransmissionModule.h"
+#import "WebSocketModule.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
