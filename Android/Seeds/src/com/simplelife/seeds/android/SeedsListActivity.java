@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.ListView;
 
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
-import com.simplelife.seeds.android.utils.gridview.gridviewui.RecyclingImageView;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageWorker;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;

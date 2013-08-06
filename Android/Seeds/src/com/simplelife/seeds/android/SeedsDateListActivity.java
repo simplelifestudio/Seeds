@@ -20,9 +20,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
-import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
 import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadList;
-import com.simplelife.seeds.android.utils.gridview.gridviewprovider.Images;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage.SeedsStatusByDate;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
@@ -45,7 +43,6 @@ import android.os.Message;
 import android.provider.Settings;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -81,8 +78,8 @@ public class SeedsDateListActivity extends Activity {
 	private String mDateBefYesterday;
 	private String mDateYesterday;
 	private String mDateToday;
-	private SharedPreferences mSharedPref;
-	private SharedPreferences mSharedPrefSeedsNum;
+	private static SharedPreferences mSharedPref;
+	private static SharedPreferences mSharedPrefSeedsNum;
 	
 	// Below two fields should be removed or changed in final version
 	private int tSleepSeconds = 1; 
@@ -106,9 +103,7 @@ public class SeedsDateListActivity extends Activity {
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		
-		mLogger.info("Working on starting the DateListActivity!"); 
+		super.onCreate(savedInstanceState);		
 		
 		// Start the DateList View
 		setContentView(R.layout.activity_seeds_datelist);
@@ -139,17 +134,22 @@ public class SeedsDateListActivity extends Activity {
 		mHttpServerBtn.setOnClickListener(myHttpServerBtnListener);
 				 
 		// Set the progress style as spinner
-		mUpdateBtn.setOnClickListener(myUpdateBtnListener);
+		mUpdateBtn.setOnClickListener(myUpdateBtnListener);		
+		
+		// Check if Wifi is connected
+		checkNetworkStatus();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
 		
 		// Retrieve the date info 
 		SeedsDateManager tDataMgr = SeedsDateManager.getDateManager();
-		/*mDateToday = tDataMgr.getRealDateToday();
+		mDateToday = tDataMgr.getRealDateToday();
 		mDateYesterday = tDataMgr.getRealDateYesterday();
-		mDateBefYesterday = tDataMgr.getRealDateBefYesterday();
-		mDateTextBefYesterday.setText(mDateBefYesterday);*/
-		mDateToday = "2013-07-31";
-		mDateBefYesterday = "2013-07-30";		
-		mDateBefYesterday = "2013-07-29";
+		mDateBefYesterday = tDataMgr.getRealDateBefYesterday();		
+		mDateTextBefYesterday.setText(mDateBefYesterday);
 		mDateTextYesterday.setText(mDateYesterday);
 		mDateTextToday.setText(mDateToday);		
 		
@@ -166,10 +166,7 @@ public class SeedsDateListActivity extends Activity {
 				                 +getSeedsNumberByDate(mDateYesterday));
 		mNumTextToday.setText(getString(R.string.seeds_datelist_seedsnumber)
 				             +getSeedsNumberByDate(mDateToday));
-		
-		// Check if Wifi is connected
-		checkNetworkStatus();
-	}	
+	}
 	
 	private View.OnClickListener mLayoutBefYesterdayListener = new View.OnClickListener() {
 
@@ -505,6 +502,13 @@ public class SeedsDateListActivity extends Activity {
     	editor.putBoolean(_inDate, _inTag);
     	editor.commit();    	
     }
+    
+    public static void clearSeedsInfoStatus(){
+    	SharedPreferences.Editor editor = mSharedPref.edit();
+    	editor.clear();
+    	editor.commit();
+    	clearSeedsNumberStatus();
+    }
 
     private String getSeedsNumberByDate(String _inDate){
     	
@@ -517,6 +521,12 @@ public class SeedsDateListActivity extends Activity {
     	SharedPreferences.Editor editor = mSharedPrefSeedsNum.edit();
     	editor.putString(_inDate, _inSeedsNum);
     	editor.commit(); 
+    }
+    
+    public static void clearSeedsNumberStatus(){
+    	SharedPreferences.Editor editor = mSharedPrefSeedsNum.edit();
+    	editor.clear();
+    	editor.commit();  
     }
     
     private TextView matchNumTextViaRealDate(String _inRealDate){
@@ -675,14 +685,14 @@ public class SeedsDateListActivity extends Activity {
 		else if(SeedsStatusByDate.isSeedsByDateNotReady(respInMap.get(tDate)))
 		{
 			notifyUserViaToast(R.string.seeds_datelist_seedsinfonotready);
-			storeSeedsNumber(tDate, SeedsDefinitions.SEEDS_INFO_NOTREADY);
+			storeSeedsNumber(tDate, getString(R.string.seeds_datelist_seedsnumbernotready));
 			setNumOfSeedsText(tDate, R.string.seeds_datelist_seedsnumbernotready);
 			return false;			
 		}
 		else if(SeedsStatusByDate.isSeedsByDateNoUpdate(respInMap.get(tDate)))
 		{			
 			notifyUserViaToast(R.string.seeds_datelist_seedsinfonoupdate);
-			storeSeedsNumber(tDate, SeedsDefinitions.SEEDS_INFO_NOUPDATE);
+			storeSeedsNumber(tDate, getString(R.string.seeds_datelist_seedsnumbernoupdate));
 			setNumOfSeedsText(tDate, R.string.seeds_datelist_seedsnumbernoupdate);
 			return false;						
 		}		
@@ -757,14 +767,14 @@ public class SeedsDateListActivity extends Activity {
 			else if(SeedsStatusByDate.isSeedsByDateNotReady(respInMap.get(tDate)))
 			{
 				notifyUserViaToast(R.string.seeds_datelist_seedsinfonotready);
-				storeSeedsNumber(tDate, SeedsDefinitions.SEEDS_INFO_NOTREADY);
+				storeSeedsNumber(tDate, getString(R.string.seeds_datelist_seedsnumbernotready));
 				setNumOfSeedsText(tDate, R.string.seeds_datelist_seedsnumbernotready);
 				return false;			
 			}
 			else if(SeedsStatusByDate.isSeedsByDateNoUpdate(respInMap.get(tDate)))
 			{			
 				notifyUserViaToast(R.string.seeds_datelist_seedsinfonoupdate);
-				storeSeedsNumber(tDate, SeedsDefinitions.SEEDS_INFO_NOUPDATE);
+				storeSeedsNumber(tDate, getString(R.string.seeds_datelist_seedsnumbernoupdate));
 				setNumOfSeedsText(tDate, R.string.seeds_datelist_seedsnumbernoupdate);
 				return false;						
 			}	

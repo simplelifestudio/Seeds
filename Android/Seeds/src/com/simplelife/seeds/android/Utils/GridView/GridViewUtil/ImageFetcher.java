@@ -78,6 +78,7 @@ public class ImageFetcher extends ImageResizer {
     private void init(Context context) {
         checkConnection(context);
         mHttpCacheDir = ImageCache.getDiskCacheDir(context, HTTP_CACHE_DIR);
+        initHttpDiskCache();
     }
 
     @Override
@@ -91,6 +92,7 @@ public class ImageFetcher extends ImageResizer {
             mHttpCacheDir.mkdirs();
         }
         synchronized (mHttpDiskCacheLock) {
+        	if (mHttpDiskCache == null || mHttpDiskCache.isClosed()) {
             if (ImageCache.getUsableSpace(mHttpCacheDir) > HTTP_CACHE_SIZE) {
                 try {
                     mHttpDiskCache = DiskLruCache.open(mHttpCacheDir, 1, 1, HTTP_CACHE_SIZE);
@@ -101,6 +103,8 @@ public class ImageFetcher extends ImageResizer {
                     mHttpDiskCache = null;
                 }
             }
+        	}
+            Log.d(TAG, "Setting mHttpDiskCacheStarting to false and notifyAll...");
             mHttpDiskCacheStarting = false;
             mHttpDiskCacheLock.notifyAll();
         }
@@ -194,15 +198,16 @@ public class ImageFetcher extends ImageResizer {
         FileDescriptor fileDescriptor = null;
         FileInputStream fileInputStream = null;
         DiskLruCache.Snapshot snapshot;
-        //synchronized (mHttpDiskCacheLock) {
+        synchronized (mHttpDiskCacheLock) {
         	// Wait for disk cache to initialize
             while (mHttpDiskCacheStarting) {
-            	synchronized (mHttpDiskCacheLock) {
                 try {
-                    mHttpDiskCacheLock.wait();
+                	Log.d(TAG, "processBitmap2 - waiting...");
+                	mHttpDiskCacheLock.wait();
                 } catch (InterruptedException e) {}
-            	}
             }
+            
+            Log.d(TAG, "processBitmap2 - " + data);
 
             if (mHttpDiskCache != null) {
                 try {
@@ -239,7 +244,7 @@ public class ImageFetcher extends ImageResizer {
                     }
                 }
             }
-        //}
+        }
 
         Bitmap bitmap = null;
         if (fileDescriptor != null) {

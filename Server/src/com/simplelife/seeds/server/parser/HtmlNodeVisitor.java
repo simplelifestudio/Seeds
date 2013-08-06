@@ -28,7 +28,9 @@ public class HtmlNodeVisitor extends NodeVisitor
 	private final char charColonFullwidth2 ='£º';
 
 	private final char charBracketLeft ='[';
+	private final char charBracketLeftChn ='¡¾';
 	private final char charBracketRight =']';
+	private final char charBracketRightChn ='¡¿';
 
 	private final char charReturn ='\r';
 	private final char charNewline ='\n';	
@@ -188,7 +190,7 @@ public class HtmlNodeVisitor extends NodeVisitor
     	int index = field.indexOf(charToCut);
     	if (index == field.length() - 1)
     	{
-    		return "";
+    		return field;
     	}
     	
     	if (index >= 0)
@@ -242,10 +244,11 @@ public class HtmlNodeVisitor extends NodeVisitor
 			
 			field = cutString(field, charColonFullwidth1);
 			field = cutString(field, charColonFullwidth2);
-			field = cutString(field, charBracketLeft);
+			//field = cutString(field, charBracketLeft);
 			field = cutString(field, charBracketRight);
-			field = cutString(field, charReturn);
-			field = cutString(field, charNewline);
+			field = cutString(field, charBracketRightChn);
+			//field = cutString(field, charReturn);
+			//field = cutString(field, charNewline);
 		}
 		
 		return field;
@@ -281,7 +284,9 @@ public class HtmlNodeVisitor extends NodeVisitor
 			field = removeHead(field, charColonFullwidth1);
 			field = removeHead(field, charColonFullwidth2);
 			field = removeHead(field, charBracketLeft);
+			field = removeHead(field, charBracketLeftChn);
 			field = removeHead(field, charBracketRight);
+			field = removeHead(field, charBracketRightChn);
 			field = removeHead(field, charReturn);
 			field = removeHead(field, charNewline);
 		}

@@ -3,14 +3,14 @@
 
     <item
         android:id="@+id/download_mgt_datelist"
-        android:icon="@drawable/dowload_management"
-        android:showAsAction="ifRoom|withText"
+        android:icon="@drawable/download_management_large"
+        android:showAsAction="ifRoom"
         android:title="@string/seeds_download_mgt"/>  
         
     <item
         android:id="@+id/rss_management_datelist"
-        android:icon="@drawable/rss_management"        
-        android:showAsAction="ifRoom|withText"
+        android:icon="@drawable/rss_management_large"        
+        android:showAsAction="ifRoom"
         android:title="@string/seeds_rss_management"/>
                  
 </menu>

@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.simplelife.seeds.android.SeedsDateManager;
 import com.simplelife.seeds.android.SeedsEntity;
+import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 import android.content.ContentValues;
 import android.content.Context;  
@@ -82,7 +83,9 @@ public class SeedsDBAdapter {
  	private final Context context; 
  	
     // Singleton Pattern  
-    private static SeedsDBAdapter adpInstance = null;  
+    private static SeedsDBAdapter adpInstance = null; 
+    
+    private SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
       
     /** 
      * Initialize SeedsDBManager 
@@ -106,7 +109,7 @@ public class SeedsDBAdapter {
 		mSQLiteDatabase = mDBHandler.getDatabase(DATABASE_NAME);
 		
 		// Synchronize the database
-		//adpInstance.syncDataBase();
+		adpInstance.syncDataBase();
     }  
       
     public static SeedsDBAdapter getAdapter(){  
@@ -180,8 +183,21 @@ public class SeedsDBAdapter {
  
  	public boolean removeSeedEntry(int _localId) {  
  
- 		boolean status1 = mSQLiteDatabase.delete(DATABASE_TABLE_SEED, KEY_ID_SEED + "=" + _localId, null) > 0; 
- 		boolean status2 = mSQLiteDatabase.delete(DATABASE_TABLE_SEEDPIC, KEY_LOCALID + "=" + _localId, null) > 0;
+ 		boolean status1 = false;
+ 		boolean status2 = false;
+ 		// Start transaction
+	    mSQLiteDatabase.beginTransaction();
+	    try{
+	 		status1 = mSQLiteDatabase.delete(DATABASE_TABLE_SEED, KEY_ID_SEED + "=" + _localId, null) > 0; 
+	 		status2 = mSQLiteDatabase.delete(DATABASE_TABLE_SEEDPIC, KEY_LOCALID + "=" + _localId, null) > 0;   		    	
+	    	mSQLiteDatabase.setTransactionSuccessful();
+	    }catch(Exception e){
+	    	mSQLiteDatabase.endTransaction();
+	    	mLogger.excep(e);	    	
+	    }finally{
+	    	mSQLiteDatabase.endTransaction();
+	    }
+
  		
  		return status1 && status2;
  	}  
@@ -338,6 +354,28 @@ public class SeedsDBAdapter {
 	    }
 		tResult.close();
 		
+ 	}
+ 	
+ 	public void clearDataBase(boolean _leaveFav){
+		
+		Cursor tResult = getAllSeedEntries();
+		tResult.moveToFirst(); 
+		while (!tResult.isAfterLast()) 
+	    {
+			int tLocalId = tResult.getInt(tResult.getColumnIndex(SeedsDBAdapter.KEY_ID_SEED));
+			if(false == _leaveFav)
+			{
+		        removeSeedEntry(tLocalId);
+								
+			}else{
+				if(!isSeedSaveToFavorite(tLocalId))
+				{
+					removeSeedEntry(tLocalId);
+				}
+			}
+			tResult.moveToNext();
+	    }
+		tResult.close();		
  	}
  	 
 }

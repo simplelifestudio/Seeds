@@ -33,6 +33,7 @@ import com.simplelife.seeds.server.util.DaoWrapper;
 import com.simplelife.seeds.server.util.DateUtil;
 import com.simplelife.seeds.server.util.EncryptUtil;
 import com.simplelife.seeds.server.util.ErrorCode;
+import com.simplelife.seeds.server.util.GlobalSetting;
 import com.simplelife.seeds.server.util.HttpUtil;
 import com.simplelife.seeds.server.util.JsonKey;
 import com.simplelife.seeds.server.util.JsonUtil;
@@ -47,7 +48,7 @@ public class Test {
 	public static void main(String[] args)
 	{
 	    //LogUtil.setLevel(Level.WARNING);
-	    HttpUtil.setHttpProxy("87.254.212.120", 8080);
+	    //HttpUtil.setHttpProxy("87.254.212.120", 8080);
 	    //HttpUtil.setHostIP("127.0.0.1");
 	    //HttpUtil.setHttpPort(8080);
 	    
@@ -62,7 +63,7 @@ public class Test {
 		
 	    // =========web related=========
 	    //testRangeHtmlParse();
-	    testHtmlParse();
+	    //testHtmlParse();
 	    //testSeedCaptureTask();
 	    //testTorrentDownload();
 	    //testHtmlNodeVisitor();
@@ -82,8 +83,143 @@ public class Test {
 	    //testSeedCaptureTaskTimer();
 		//testTaskTrigger();
 	    //testSeedCaptureTaskRun();
+	    testGlobalSetting();
 		
 		System.exit(0);
+	}
+	
+	private static void testGlobalSetting()
+	{
+	    GlobalSettingServlet servlet = new GlobalSettingServlet();
+	    String ipAddress = GlobalSetting.getHostIP();
+	    String tempIp = "257.1.5.2";
+	    try
+	    {
+	        servlet.parseIpAddress(tempIp);
+	    }
+	    catch(Exception e)
+	    {
+	        
+	    }
+	    
+	    System.out.print("===========Check IP==========\n");
+	    if (tempIp.equals(GlobalSetting.getHostIP()))
+	    {
+	        System.out.print("WRONG, wrong IP has been set to global setting\n");
+	    }
+
+	     
+	    tempIp = "ab.1.5.2";
+        try
+        {
+            servlet.parseIpAddress(tempIp);
+        }
+        catch(Exception e)
+        {
+            
+        }
+        
+        if (tempIp.equals(GlobalSetting.getHostIP()))
+        {
+            System.out.print("WRONG, wrong IP has been set to global setting\n");
+        }
+        
+        tempIp = "192.168.3.2";
+        servlet.parseIpAddress(tempIp);
+        if (ipAddress.equals(GlobalSetting.getHostIP()))
+        {
+            System.out.print("WRONG, correct IP was not set to global setting\n");
+        }
+        else
+        {
+            if (!tempIp.equals(GlobalSetting.getHostIP()))
+            {
+                System.out.print("WRONG, correct IP was not set to global setting\n");
+            }
+        }
+        
+        
+        System.out.print("===========Check log level==========\n");
+        String tmpLogLevel = "info";
+        servlet.parseLogLevel(tmpLogLevel);
+        if (GlobalSetting.getLogLevel() != Level.INFO)
+        {
+            System.out.print("WRONG, info level was not set to global setting\n");
+        }
+        
+        tmpLogLevel = "Info";
+        servlet.parseLogLevel(tmpLogLevel);
+        if (GlobalSetting.getLogLevel() != Level.INFO)
+        {
+            System.out.print("WRONG, info level was not set to global setting\n");
+        }
+        
+        tmpLogLevel = "fine";
+        servlet.parseLogLevel(tmpLogLevel);
+        if (GlobalSetting.getLogLevel() != Level.FINE)
+        {
+            System.out.print("WRONG, fine level was not set to global setting\n");
+        }
+        
+        tmpLogLevel = "Fine";
+        servlet.parseLogLevel(tmpLogLevel);
+        if (GlobalSetting.getLogLevel() != Level.FINE)
+        {
+            System.out.print("WRONG, fine level was not set to global setting\n");
+        }
+        
+        tmpLogLevel = "warning";
+        servlet.parseLogLevel(tmpLogLevel);
+        if (GlobalSetting.getLogLevel() != Level.WARNING)
+        {
+            System.out.print("WRONG, warning level was not set to global setting\n");
+        }
+        
+        tmpLogLevel = "Warning";
+        servlet.parseLogLevel(tmpLogLevel);
+        if (GlobalSetting.getLogLevel() != Level.WARNING)
+        {
+            System.out.print("WRONG, warning level was not set to global setting\n");
+        }
+        
+        tmpLogLevel = "severe";
+        servlet.parseLogLevel(tmpLogLevel);
+        if (GlobalSetting.getLogLevel() != Level.SEVERE)
+        {
+            System.out.print("WRONG, severe level was not set to global setting========\n");
+        }
+        
+        tmpLogLevel = "Severe";
+        servlet.parseLogLevel(tmpLogLevel);
+        if (GlobalSetting.getLogLevel() != Level.SEVERE)
+        {
+            System.out.print("WRONG, severe level was not set to global setting========\n");
+        }
+        
+        tmpLogLevel = "Debug";
+        servlet.parseLogLevel(tmpLogLevel);
+        if (GlobalSetting.getLogLevel() != Level.SEVERE)
+        {
+            System.out.print("WRONG, debug level was set to global setting========\n");
+        }
+        
+        System.out.print("===========Check Torrent Expire Days==========\n");
+        String days = "20";
+        servlet.parseTorrentExpireDays(days);
+        if (GlobalSetting.getTorrentExpiredays() != 20)
+        {
+            System.out.print("WRONG, TorrentExpiredays was not set to global setting========\n");
+        }
+        
+        try
+        {
+            days = "adb";
+        }
+        catch(Exception e){}
+        if (GlobalSetting.getTorrentExpiredays() != 20)
+        {
+            System.out.print("WRONG, invalid TorrentExpiredays was set to global setting========\n");
+        }
 	}
 	
 	private static void testSeedCaptureTaskRun()
@@ -558,7 +694,7 @@ public class Test {
 	private static void testHtmlParse()
 	{
 		HtmlParser parser = new HtmlParser();
-		String sDate = "2013-07-24";
+		String sDate = "2013-07-31";
 		parser.setstartDate(sDate);
 		parser.setendDate(sDate);
 		parser.deleteCaptureLog(sDate);

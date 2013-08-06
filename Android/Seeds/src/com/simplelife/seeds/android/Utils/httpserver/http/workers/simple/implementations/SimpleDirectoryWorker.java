@@ -8,6 +8,10 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 
+import android.util.Log;
+
+import com.simplelife.seeds.android.R;
+import com.simplelife.seeds.android.SeedsHttpServiceActivity;
 import com.simplelife.seeds.android.utils.httpserver.http.Server;
 import com.simplelife.seeds.android.utils.httpserver.http.utils.HttpMethod;
 import com.simplelife.seeds.android.utils.httpserver.http.utils.HttpStatus;
@@ -63,6 +67,7 @@ public class SimpleDirectoryWorker implements SimpleWorkerInterface {
 					StringBuffer buffer = new StringBuffer();
 					
 					//buffer.append("<h1>").append(pRequest.getResource()).append("</h1>");
+					Log.i("Testing", "Name: "+SeedsHttpServiceActivity.getHttpActivityContext().getString(R.string.seeds_http_webtitlename));
 					
 					buffer.append("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<title>");
 					buffer.append(null == target ? resource.getAbsolutePath() : target);
@@ -75,11 +80,11 @@ public class SimpleDirectoryWorker implements SimpleWorkerInterface {
 					buffer.append("<script type=\"text/javascript\" src=\"/mnt/sdcard/.SeedsWebService/js/seedsWebService.js\"></script>\n");
 					buffer.append("</head>\n<body>\n<h1 id=\"header\">");
 					buffer.append(null == target ? resource.getAbsolutePath() : target);
-					buffer.append("</h1>\n<table id=\"table\">\n");
-					buffer.append("<tr class=\"header\">\n<td>$100</td>\n<td class=\"detailsColumn\">details</td>\n<td class=\"detailsColumn\">details</td>\n<td class=\"detailsColumn\">details</td>\n</tr>\n");
+					buffer.append("Seeds Http Server</h1>\n<table id=\"table\">\n");
+					buffer.append("<tr class=\"header\">\n<td>Name</td>\n<td class=\"detailsColumn\">Size</td>\n<td class=\"detailsColumn\">Date</td>\n<td class=\"detailsColumn\">Operations</td>\n</tr>\n");
 					
 					if (!isSamePath(resource.getAbsolutePath(), Server.getRoot().getAbsolutePath())) {
-						buffer.append("<tr>\n<td><a class=\"icon up\" href=\"..\">details</a></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n");
+						buffer.append("<tr>\n<td><a class=\"icon up\" href=\"..\">[BACK]</a></td>\n<td></td>\n<td></td>\n<td></td>\n</tr>\n");
 					}
 					
 					File[] files = resource.listFiles();
@@ -89,7 +94,7 @@ public class SimpleDirectoryWorker implements SimpleWorkerInterface {
 							appendRow(buffer, f);
 						}
 					}
-					buffer.append("</table>\n<hr noshade>\n<em>Welcome to <a target=\"_blank\" href=\"http://vaero.blog.51cto.com/\">Seeds App Server</a>!</em>\n</body>\n</html>");					
+					buffer.append("</table>\n<hr noshade>\n<em>Welcome to <a target=\"_blank\" href=\"http://SEEDSCLOUD.tk/\">Seeds App Server</a>!</em>\n</body>\n</html>");					
 										
 					/*
 					if (children == null || children.length == 0) {
@@ -111,7 +116,7 @@ public class SimpleDirectoryWorker implements SimpleWorkerInterface {
 					
 					String type = "text/html";
 										
-					response = new SimpleResponse(type, ByteUtils.getBytesFromString(buffer.toString()));
+					response = new SimpleResponse(type, ByteUtils.getBytesFromString(buffer.toString())); 
 				}
 			}
 
@@ -177,8 +182,8 @@ public class SimpleDirectoryWorker implements SimpleWorkerInterface {
 		sb.append("<span><a href=\"");
 		sb.append(link);
 		sb.append(Server.SUFFIX_ZIP);
-		sb.append("\">Download</a></span>");
-		if (f.canWrite() && !hasWfsDir(f)) {
+		sb.append("\">Download  </a></span>");
+		if (f.canWrite() && !haSeedsWebDir(f)) {
 			sb.append("<span><a href=\"");
 			sb.append(link);
 			sb.append(Server.SUFFIX_DEL);
@@ -190,10 +195,10 @@ public class SimpleDirectoryWorker implements SimpleWorkerInterface {
 		sb.append("</td>\n</tr>\n");
 	}
 	
-	public static boolean hasWfsDir(File f) {
+	public static boolean haSeedsWebDir(File f) {
 		String path = f.isDirectory() ? f.getAbsolutePath() + "/" : f
 				.getAbsolutePath();
-		return path.indexOf("/.wfs/") != -1;
+		return path.indexOf("/.SeedsWebService/") != -1;
 	}
 	
 	private String formatFileSize(long len) {

@@ -67,6 +67,7 @@ public class SeedCaptureServiceServlet extends HttpServlet
             parser.setPageStart(Integer.parseInt(startPage));
             parser.setPageEnd(Integer.parseInt(endPage));
 
+            // To avoid seed was removed after adding to cart by App, remove following line
             //parser.deleteCaptureLog(startDate, endDate);
 
             parser.Parse();

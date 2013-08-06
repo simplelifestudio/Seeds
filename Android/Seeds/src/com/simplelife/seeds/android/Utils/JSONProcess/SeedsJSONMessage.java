@@ -223,12 +223,9 @@ public class SeedsJSONMessage {
 			// Parse picture links
 			JSONArray tPicList  = tSeedsInfo.getJSONArray(SeedsDBAdapter.KEY_PICLINKS);
 			int numOfPicLinks = tPicList.length();
-			Log.i("SeedsJSONMessage","The size of the picArray is " + numOfPicLinks);
 			for (int index3 = 0; index3 < numOfPicLinks; index3++)
 			{
-				Log.i("SeedsJSONMessage","Pic link: " + tPicList.getString(index3));
 				tSeedsEntity.addPicLink(tPicList.getString(index3));
-				Log.i("SeedsJSONMessage","Pic link parse done! ");
 			}
 			retSeedsList.add(tSeedsEntity);	
 				

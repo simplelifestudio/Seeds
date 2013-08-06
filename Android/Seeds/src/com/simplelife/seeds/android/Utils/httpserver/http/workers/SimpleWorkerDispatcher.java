@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Vector;
 
+import com.simplelife.seeds.android.utils.httpserver.http.Server;
 import com.simplelife.seeds.android.utils.httpserver.http.utils.HttpMethod;
 import com.simplelife.seeds.android.utils.httpserver.http.utils.HttpStatus;
 import com.simplelife.seeds.android.utils.httpserver.http.utils.headers.ContentTypeHttpHeader;
@@ -13,6 +14,7 @@ import com.simplelife.seeds.android.utils.httpserver.http.workers.simple.SimpleR
 import com.simplelife.seeds.android.utils.httpserver.http.workers.simple.SimpleWorkerInterface;
 import com.simplelife.seeds.android.utils.httpserver.http.workers.simple.SimpleWorkerException;
 import com.simplelife.seeds.android.utils.httpserver.http.workers.simple.implementations.SimpleDirectoryWorker;
+import com.simplelife.seeds.android.utils.httpserver.http.workers.simple.implementations.SimpleDownloadWorker;
 import com.simplelife.seeds.android.utils.httpserver.http.workers.simple.implementations.SimpleFileWorker;
 import com.simplelife.seeds.android.utils.httpserver.utils.Logger;
 
@@ -58,7 +60,9 @@ public class SimpleWorkerDispatcher extends AbstractWorker {
 				
 				if (mRequest.getResource().endsWith("/")) {
 					sp = new SimpleDirectoryWorker();
-				} else {
+				} else if(mRequest.getResource().endsWith(Server.SUFFIX_ZIP)) {					
+					sp = new SimpleDownloadWorker();					
+				}else{
 					sp = new SimpleFileWorker();
 				}
 								

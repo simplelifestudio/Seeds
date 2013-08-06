@@ -6,6 +6,7 @@
  */
 package com.simplelife.seeds.android;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +26,10 @@ import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -57,6 +61,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 	final int RSSMESSAGETYPE_DISMISSDIALOG = 202;
 	final int RSSMESSAGETYPE_TOAST = 203;
 	final int RSSMESSAGETYPE_TOASTTEXT = 204;
+	final int RSSMESSAGETYPE_CARTIDPROCESS = 205;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +108,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 				{
 					mListView = (ListView)findViewById(R.id.seeds_list);
 				
+					@SuppressWarnings("unchecked")
 					ArrayList<HashMap<String, String>> seedsList = (ArrayList<HashMap<String, String>>)msg.obj;
 					mAdapter = new SeedsAdapter(SeedsRSSCartActivity.this, seedsList);
 					mListView.setAdapter(mAdapter);
@@ -141,6 +147,11 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
             	    toast.setGravity(Gravity.CENTER, 0, 0);
             	    toast.show();
             	    break;
+            	}
+            	case RSSMESSAGETYPE_CARTIDPROCESS:
+            	{
+            		processCartId(getCartId());
+            		break;
             	}
             	default:
             		break;
@@ -259,6 +270,10 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
             	sendRSSBookMessage();
     		    return true;
             }
+            case R.id.rss_removeall:
+            {
+            	
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -295,7 +310,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 	    bundle.putString("text", _inText);    
 		t_MsgListData.setData(bundle);
 		handler.sendMessage(t_MsgListData);		
-    } 
+    }    
 	
 	private void dismissDialog(){
 		
@@ -336,7 +351,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 	private void sendRSSBookMessage(){
 		
 		mProgressDialog = ProgressDialog.show(SeedsRSSCartActivity.this, "Loading...", 
-		          getString(R.string.seeds_rss_dialof_sendingreqmsg), true, false);
+		          getString(R.string.seeds_rss_dialog_sendingreqmsg), true, false);
 		mProgressDialog.setCanceledOnTouchOutside(true);
 		
 		// Set up a thread to communicate with server
@@ -373,11 +388,9 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 					try {
 						tSeedsToCartResp = EntityUtils.toString(tMsgResp.getEntity());
 					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						mLogger.excep(e);
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						mLogger.excep(e);
 					}
 		            mLogger.debug("Receive response msg: "+ tSeedsToCartResp);
 		            // String strsResult = strResult.replace("\r", "");            
@@ -400,16 +413,82 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 				{
 					try {
 						SeedsJSONMessage.parseSeedsToCartRespMsg(tSeedsToCartResp);
-						notifyUserViaToast(getString(R.string.seeds_rss_toast_booksuccess)+getCartId());
+						Message t_MsgListData = new Message();
+						t_MsgListData.what = RSSMESSAGETYPE_CARTIDPROCESS;
+						handler.sendMessage(t_MsgListData);	
+						//processCartId(getCartId());
+						//notifyUserViaToast(getString(R.string.seeds_rss_toast_booksuccess)+getCartId());
 					} catch (JSONException e) {
 						mLogger.excep(e);
 					}			
 				}
 				dismissDialog();		
 			}
-		}.start();	
-		
+		}.start();			
 	}
 	
+    private void processCartId(final String _inCartId){	    
+		AlertDialog.Builder builder = new Builder(SeedsRSSCartActivity.this);
+		builder.setMessage(getString(R.string.seeds_rss_dialog_message)+_inCartId);
+		builder.setTitle(getString(R.string.seeds_rss_dialog_note));
+		builder.setPositiveButton(R.string.seeds_rss_dialog_btnpos, new DialogInterface.OnClickListener() {
+		    @Override
+	        public void onClick(DialogInterface dialog, int which) {
+			    dialog.dismiss();
+	            mProgressDialog = ProgressDialog.show(SeedsRSSCartActivity.this, "Loading...", 
+  			          getString(R.string.seeds_rss_dialog_writefile), true, false);
+  	            mProgressDialog.setCanceledOnTouchOutside(true);      	
+		            new Thread() {  						
+			            @Override
+			            public void run() {
+			            	String tTime = SeedsDateManager.getDateManager().getRealTimeNow();
+			            	String tFileName = SeedsDefinitions.getDownloadDestFolder() +"/RSSCart_"+tTime+".txt";
+			            	StringBuffer tMessage = new StringBuffer();
+			            	tMessage.append("Seeds RSS Cart "+tTime+"\n\n\n");
+			            	tMessage.append("Cart ID: "+_inCartId+"\n");
+			            	tMessage.append("===========================================\n");
+			            	tMessage.append("Seeds in Cart:\n\n\n");
+			            	int tSeedsNum = mSeedsEntityList.size();
+			            	for(int index=0; index<tSeedsNum; index++)
+			            	{
+			            		SeedsEntity tSeedsEntity = mSeedsEntityList.get(index);
+			            		tMessage.append(getString(R.string.seedTitle)+tSeedsEntity.getSeedName()+"\n");
+			            		tMessage.append(getString(R.string.seedSize)+tSeedsEntity.getSeedSize()+"\n");
+			            		tMessage.append(getString(R.string.seedFormat)+tSeedsEntity.getSeedFormat()+"\n");
+			            		tMessage.append("-------------------------------------------\n");
+			            	}
+			            	writeFileSdcard(tFileName, tMessage.toString());
+			            	dismissDialog();
+			            	notifyUserViaToast(getString(R.string.seeds_rss_dialog_filecreated)
+			            			                    +tFileName+".\n"
+			            			                    +getString(R.string.seeds_rss_dialog_fileget));
+			            }				
+		            }.start();
+		    }
+		});
+
+		builder.setNegativeButton(R.string.seeds_rss_dialog_btnneg, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        dialog.dismiss();
+		    }
+		});
+
+		builder.create().show();	
+    }
+    
+    public void writeFileSdcard(String fileName,String message){ 
+
+        try{
+        	FileOutputStream fout = new FileOutputStream(fileName);        	
+            byte [] bytes = message.getBytes(); 
+
+            fout.write(bytes); 
+            fout.close(); 
+        } 
+        catch(Exception e){ 
+            mLogger.excep(e); 
+        } 
+    }    
 
 }

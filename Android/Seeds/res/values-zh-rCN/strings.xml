@@ -113,13 +113,23 @@
     <string name="seeds_rss_toast_sendreqfailed">网络错误，订阅失败</string>
     <string name="seeds_rss_toast_emptycartresp">消息错误，订阅失败</string>
     <string name="seeds_rss_toast_booksuccess">订阅成功，订阅编号： </string>
-    <string name="seeds_rss_menu_sendreqmsg">发送订阅请求</string>
-    <string name="seeds_rss_dialof_sendingreqmsg">正在发送订阅请求&#8230;</string>
+    <string name="seeds_rss_menu_sendreqmsg">订阅</string>
+    <string name="seeds_rss_menu_removeall">清空</string>
+    <string name="seeds_rss_dialog_sendingreqmsg">正在发送订阅请求&#8230;</string>
+    <string name="seeds_rss_dialog_message">订阅成功！将订阅编号写入文件吗？订阅编号：</string>
+    <string name="seeds_rss_dialog_note">提示</string>
+    <string name="seeds_rss_dialog_btnpos">确认</string>
+    <string name="seeds_rss_dialog_btnneg">取消</string>
+    <string name="seeds_rss_dialog_writefile">正在创建文件&#8230;</string>
+    <string name="seeds_rss_dialog_filecreated">订阅编号已写入文件：</string>
+    <string name="seeds_rss_dialog_fileget">请使用共享功能访问手机获取该文件</string>
     
     <string name="seeds_config_page">应用设置</string>
     <string name="seeds_config_serverpref">服务器设置</string>
     <string name="seeds_config_modifyserveraddrtitle">更改服务器地址</string>
-    <string name="seeds_config_modifyserveraddrsum">更改服务器的IP地址，默认为106.187.38.78</string>
+    <string name="seeds_config_modifyserveraddrsum">更改服务器的IP地址</string>
+    <string name="seeds_config_resetserveraddrtitle">重置服务器地址</string>
+    <string name="seeds_config_resetserveraddrsum">将服务器地址恢复到系统默认地址</string>
     <string name="seeds_config_verifyserveraddrtitle">验证服务器地址</string>
     <string name="seeds_config_verifyserveraddrsum">验证服务器通信是否正常</string>
     <string name="seeds_config_selectchantitle">选择频道</string>
@@ -146,17 +156,36 @@
     <string name="seeds_config_feedbacktitle">反馈问题</string>
     <string name="seeds_config_feedbacksum">欢迎您将使用过程中遇到的问题反馈给我们</string>
     <string name="seeds_config_abouttitle">关于</string>
-    <string name="seeds_config_aboutsum">关于Seeds和我们的团队</string>
+    <string name="seeds_config_aboutsum">关于Seeds和我们的团队</string>    
+    <string name="seeds_config_data">数据存储</string>
+    <string name="seeds_config_cleardatainfotitle">重置数据同步</string>
+    <string name="seeds_config_cleardatainfosum">重置前天／昨天／今天的数据同步状态</string>     
+    <string name="seeds_config_cleardatabasetitle">清空数据库</string>
+    <string name="seeds_config_cleardatabasesum">清空本地数据库所有种子信息，包括收藏列表</string>
         
-    <string name="seeds_config_setserveraddrfailed">服务器地址设置失败</string>
+    <string name="seeds_config_setserveraddrfailed">服务器地址设置失败，请确认IP地址是否合法</string>
+    <string name="seeds_config_setserveraddrindefault">目标服务器地址处于默认状态</string>
     <string name="seeds_config_setserveraddrsum">目标服务器地址更改为</string>
-    <string name="seeds_config_verifyserveraddrcommun">正在与服务器通信中</string>
+    <string name="seeds_config_verifyserveraddrcommun">正在验证服务器地址：</string>
     <string name="seeds_config_verifyserveraddrsucc">验证成功，服务器正常工作中</string>
     <string name="seeds_config_verifyserveraddrfail">验证失败，请确认服务器是否正确</string>
-    <string name="seeds_config_clearcachedone">缓存已清空</string>
+    <string name="seeds_config_clearcachedone">缓存已清空</string>    
+    <string name="seeds_config_clearsyncdialogmsg">确认重置数据同步信息吗？</string>
+    <string name="seeds_config_clearsyncdialognote">提示</string>
+    <string name="seeds_config_clearsyncdialogpos">确认</string>
+    <string name="seeds_config_clearsyncdialogneg">取消</string>
+    <string name="seeds_config_clearsyncdialoging">正在重置数据同步状态&#8230;</string>
+    <string name="seeds_config_clearsyncdialogdone">数据同步状态已经重置</string>    
+    <string name="seeds_config_cleardatabasedialogmsg">确认清空数据库信息吗？</string>
+    <string name="seeds_config_cleardatabasedialognote">提示</string>
+    <string name="seeds_config_cleardatabasedialogpos">确认</string>
+    <string name="seeds_config_cleardatabasedialogneg">取消</string>
+    <string name="seeds_config_cleardatabasedialoging">正在清空数据库&#8230;</string>
+    <string name="seeds_config_cleardatabasedialogdone">数据库已经清空</string>
     
     <string name="seeds_config_toast_changepwdunavail">密码保护已关闭,无法更改密码</string>
     <string name="seeds_config_toast_clearcache">正在清理缓存&#8230;</string>
+    <string name="seeds_config_toast_resetserver">服务器地址已恢复到默认地址</string>
     
     <string name="seeds_http_buttonstartserver">开启服务</string>
     <string name="seeds_http_buttonstopserver">关闭服务</string>
@@ -166,6 +195,12 @@
     <string name="seeds_http_taptostart">点击开启服务打开HTTP服务</string>
     <string name="seeds_http_stopserver">正在关闭服务&#8230;</string>
     <string name="seeds_http_serverstopped">HTTP服务已关闭。</string>
+    <string name="seeds_http_webdownloadbtn">下载</string>
+    <string name="seeds_http_webdeletebtn">删除</string>
+    <string name="seeds_http_webtitlename">名称</string>
+    <string name="seeds_http_webtitlesize">大小</string>
+    <string name="seeds_http_webtitledate">修改日期</string>
+    <string name="seeds_http_webtitleopera">处理操作</string>
     
     <string name="seeds_helpdialog_text"> 
     <i>Seeds---每天随时随地收集最新的影片信息！</i> 

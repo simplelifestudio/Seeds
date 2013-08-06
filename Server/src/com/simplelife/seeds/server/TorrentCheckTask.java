@@ -40,7 +40,7 @@ public class TorrentCheckTask extends TimerTask
      */
     public void checkExpiredRssInDb()
     {
-        String deleteDate = DateUtil.getDateStringByDayBack(GlobalSetting.torrentExpireDays);
+        String deleteDate = DateUtil.getDateStringByDayBack(GlobalSetting.getTorrentExpiredays());
         String sql = "delete from " + TableName.Cart + " where " + TableColumnName.date + " <= '" + deleteDate + "'";
         DaoWrapper.executeSql(sql);
     }
@@ -87,7 +87,7 @@ public class TorrentCheckTask extends TimerTask
             {
                 date = new Date(torrentFile.lastModified());
                 dayDiff = DateUtil.getDaysFromToday(date); 
-                if (dayDiff < -GlobalSetting.torrentExpireDays)
+                if (dayDiff < -GlobalSetting.getTorrentExpiredays())
                 {
                     torrentFile.delete();
                 }

@@ -44,7 +44,7 @@
     <string name="seedFormat">The format of the seed</string>
     <string name="seeds_details_top">Seed Details</string>
     <string name="seeds_Favorite">Favorite</string>
-    <string name="seeds_UnFavorite">取消收藏</string>
+    <string name="seeds_UnFavorite">UnFavorite</string>
     <string name="seeds_preffilename">com.simplelife.seeds.SEEDS_STATUS_BYDATE</string>
     <string name="seeds_preffilename_seedsnum">com.simplelife.seeds.SEEDS_NUMBER_BYDATE</string>
     <string name="seeds_startverify">Password Please</string>
@@ -57,9 +57,9 @@
     
     <string name="seeds_download_seed">Download Seeds</string>
     <string name="seeds_download_mgt">Download Management</string>
-    <string name="seeds_download_added">已添加至下载队列</string>
-    <string name="seeds_unfav_done">取消收藏成功</string>
-    <string name="seeds_fav_done">收藏成功</string>
+    <string name="seeds_download_added">Added to download queue</string>
+    <string name="seeds_unfav_done">Remove from favorite done</string>
+    <string name="seeds_fav_done">Favorited successfully</string>
     <string name="actionbar_activity_not_found">Failed to open intent&#8230;</string>
 
     <string name="seeds_details_to_grid">Grid Mode</string> 
@@ -115,12 +115,22 @@
     <string name="seeds_rss_toast_emptycartresp">Wrong response, book failed</string>
     <string name="seeds_rss_toast_booksuccess">Book Successed, cart id: </string>
     <string name="seeds_rss_menu_sendreqmsg">Send RSS Message</string>
-    <string name="seeds_rss_dialof_sendingreqmsg">Sending book request&#8230;</string>
+    <string name="seeds_rss_menu_removeall">Remove</string>
+    <string name="seeds_rss_dialog_sendingreqmsg">Sending book request&#8230;</string>
+    <string name="seeds_rss_dialog_message">Book successfully! Store the cart ID into file? Cart ID:</string>
+    <string name="seeds_rss_dialog_note">Note</string>
+    <string name="seeds_rss_dialog_btnpos">Confirm</string>
+    <string name="seeds_rss_dialog_btnneg">Cancel</string>
+    <string name="seeds_rss_dialog_writefile">Creating file&#8230;</string>
+    <string name="seeds_rss_dialog_filecreated">Cart ID has been stored in file: </string>
+    <string name="seeds_rss_dialog_fileget">Please use the Share Servce to get the file from smart phone.</string>
 
     <string name="seeds_config_page">Settings</string>  
     <string name="seeds_config_serverpref">Server Preference</string>
     <string name="seeds_config_modifyserveraddrtitle">Change Server Address</string>
-    <string name="seeds_config_modifyserveraddrsum">Change the IP address of server, default is 106.187.38.78</string>
+    <string name="seeds_config_modifyserveraddrsum">Change the IP address of server</string>
+    <string name="seeds_config_resetserveraddrtitle">Reset Server Address</string>
+    <string name="seeds_config_resetserveraddrsum">Reset the target server address to default</string>
     <string name="seeds_config_verifyserveraddrtitle">Verify Server Address</string>
     <string name="seeds_config_verifyserveraddrsum">Check if the server is working properly</string>    
     <string name="seeds_config_selectchantitle">Select Channel</string>
@@ -148,16 +158,35 @@
     <string name="seeds_config_feedbacksum">Please feedback the problems you encountered to us</string>
     <string name="seeds_config_abouttitle">About</string>
     <string name="seeds_config_aboutsum">About Seeds and our team</string>
+    <string name="seeds_config_data">Data Store</string>
+    <string name="seeds_config_cleardatainfotitle">Reset Sync Status</string>
+    <string name="seeds_config_cleardatainfosum">Reset data sync status of three days</string>     
+    <string name="seeds_config_cleardatabasetitle">Clear Database</string>
+    <string name="seeds_config_cleardatabasesum">Clear all the seeds info of local database, including the favorite list</string>
     
-    <string name="seeds_config_setserveraddrfailed">Server address set failed</string>
+    <string name="seeds_config_setserveraddrfailed">Server address set failed,please check if the input IP address is valid</string>
+    <string name="seeds_config_setserveraddrindefault">The target server address is in default</string>
     <string name="seeds_config_setserveraddrsum">The target server address is changed to </string>
     <string name="seeds_config_verifyserveraddrcommun">Communicating with server</string>
     <string name="seeds_config_verifyserveraddrsucc">Verification successed, server is working normally</string>
     <string name="seeds_config_verifyserveraddrfail">Verification failed, please double check the server address</string>
     <string name="seeds_config_clearcachedone">The cache has been cleaned</string>
+    <string name="seeds_config_clearsyncdialogmsg">Confirm to reset the data sync status?</string>
+    <string name="seeds_config_clearsyncdialognote">Note</string>
+    <string name="seeds_config_clearsyncdialogpos">Confirm</string>
+    <string name="seeds_config_clearsyncdialogneg">Cancel</string>
+    <string name="seeds_config_clearsyncdialoging">Resetting the data sync status&#8230;</string>
+    <string name="seeds_config_clearsyncdialogdone">The data sync status have been reset</string>    
+    <string name="seeds_config_cleardatabasedialogmsg">Confirm to clear the database?</string>
+    <string name="seeds_config_cleardatabasedialognote">Note</string>
+    <string name="seeds_config_cleardatabasedialogpos">Confirm</string>
+    <string name="seeds_config_cleardatabasedialogneg">Cancel</string>
+    <string name="seeds_config_cleardatabasedialoging">Clearing the local database&#8230;</string>
+    <string name="seeds_config_cleardatabasedialogdone">The local database has been cleared</string>
     
     <string name="seeds_config_toast_changepwdunavail">Password protect is disabled, can not change password</string>
     <string name="seeds_config_toast_clearcache">Clearing cache&#8230;</string>
+    <string name="seeds_config_toast_resetserver">The server address has been reset</string>
     
     <string name="seeds_http_buttonstartserver">Start server</string>
     <string name="seeds_http_buttonstopserver">Stop server</string>
@@ -167,6 +196,12 @@
     <string name="seeds_http_taptostart">Tap on Start Server below to start serving</string>
     <string name="seeds_http_stopserver">Stopping server&#8230;</string>
     <string name="seeds_http_serverstopped">Server stopped.</string>
+    <string name="seeds_http_webdownloadbtn">Download</string>
+    <string name="seeds_http_webdeletebtn">Delete</string>
+    <string name="seeds_http_webtitlename">Name</string>
+    <string name="seeds_http_webtitlesize">Size</string>
+    <string name="seeds_http_webtitledate">Modify Date</string>
+    <string name="seeds_http_webtitleopera">Operations</string>
     
     <string name="seeds_helpdialog_text"> 
     <i>Seeds---Collecting the latest movie info everywhere!</i> 
