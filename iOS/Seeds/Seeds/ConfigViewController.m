@@ -16,6 +16,7 @@
 #import "TorrentDownloadAgent.h"
 
 #import "CartIdViewController.h"
+#import "TCViewController.h"
 
 #import "CBFileUtils.h"
 
@@ -60,9 +61,21 @@
 #define SECTION_INDEX_PASSCODE_ITEM_INDEX_MODIFY 1
 
 #define SECTION_INDEX_ABOUT 4
+
+#if WEBSOCKET_ENABLED
+
+#define SECTION_ITEMCOUNT_ABOUT 2
+//#define SECTION_INDEX_ABOUT_ITEM_INDEX_FEEDBACK 0
+#define SECTION_INDEX_ABOUT_ITEM_INDEX_VERSION 0
+#define SECTION_INDEX_ABOUT_ITEM_INDEX_WEBSOCKET 1
+
+#else
+
 #define SECTION_ITEMCOUNT_ABOUT 1
 //#define SECTION_INDEX_ABOUT_ITEM_INDEX_FEEDBACK 0
 #define SECTION_INDEX_ABOUT_ITEM_INDEX_VERSION 0
+
+#endif
 
 typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
@@ -94,6 +107,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     
     TableViewButtonCell* _feedbackCell;
     TableViewLabelCell* _aboutCell;
+    TableViewButtonCell* _wsCell;
 
     PasscodeEnterPurpose _passcodeEnterPurpose;
 }
@@ -298,6 +312,10 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
                 {
                     cell = _aboutCell;
                     break;
+                }
+                case SECTION_INDEX_ABOUT_ITEM_INDEX_WEBSOCKET:
+                {
+                    cell = _wsCell;
                 }
                 default:
                 {
@@ -704,6 +722,11 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     
 }
 
+- (void) _refreshWSCell
+{
+    
+}
+
 - (void) _manageCartId
 {
     if (nil == _cartIdViewController)
@@ -770,6 +793,13 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     
 }
 
+- (void) _onClickWSButton
+{
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:STORYBOARD_IPHONE bundle:nil];
+    TCViewController* tcVC = [storyboard instantiateViewControllerWithIdentifier:STORYBOARD_ID_TCVIEWCONTROLLER];
+    [self.navigationController pushViewController:tcVC animated:YES];
+}
+
 - (void) _initTableCellList
 {
     [self _initRunningModeTableCell];
@@ -788,6 +818,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     
     [self _initFeedbackCell];
     [self _initAboutCell];
+    [self _initWSCell];
 }
 
 - (void) _initRunningModeTableCell
@@ -971,6 +1002,22 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         _aboutCell.minorLabel.textColor = COLOR_TEXT_INFO;
         
         [self _refreshAboutCell];
+    }
+}
+
+- (void) _initWSCell
+{
+    if (nil == _wsCell)
+    {
+        _wsCell = [CBUIUtils componentFromNib:NIB_TABLECELL_BUTTON owner:self options:nil];
+        
+        [_wsCell setSelectionStyle:UITableViewCellSelectionStyleNone];
+        _wsCell.label.text = NSLocalizedString(@"WebSocket", nil);
+        [_wsCell.button setTitle:NSLocalizedString(@"Test", nil) forState:UIControlStateNormal];
+        
+        [_wsCell.button addTarget:self action:@selector(_onClickWSButton) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self _refreshWSCell];
     }
 }
 

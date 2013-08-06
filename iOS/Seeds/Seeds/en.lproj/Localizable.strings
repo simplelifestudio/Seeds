@@ -203,3 +203,10 @@
 "Warning of Unsupported iOS Version" = "   Confined to developer's time and stamina, currently Seeds app supports iOS 6 and later versions only, sorry for inconvenience. App will be terminated automatically once countdown is end.";
 "Passcode failed attempts is too much, app will be terminated once countdown is end." = "   Passcode failed attempts is too much, app will be terminated once countdown is end.";
 "Warning of App First Launched" = "     The major purpose of Seeds is for technical learning and discussion, and it is forbidden to be published in any commercial domain. Finally, please make sure you are over 18 years old before entering. Without acknowledge, app will be terminated automatically once coutdown is end.";
+
+"WebSocket" = "WebSocket";
+"Test" = "Test";
+"Connecting" = "Connecting";
+"Connected" = "Connected";
+"Connection Failed" = "Connection Failed";
+"Connection Closed" = "Connection Closed";

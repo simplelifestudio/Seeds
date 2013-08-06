@@ -140,6 +140,8 @@
 		C55D1AC91751BE35000B3E34 /* papasscode_marker.png in Resources */ = {isa = PBXBuildFile; fileRef = C55D1ABE1751BE35000B3E34 /* papasscode_marker.png */; };
 		C55D1ACA1751BE35000B3E34 /* papasscode_marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C55D1ABF1751BE35000B3E34 /* papasscode_marker@2x.png */; };
 		C55D1ACB1751BE35000B3E34 /* PAPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55D1AC21751BE35000B3E34 /* PAPasscodeViewController.m */; };
+		C56C30CB17B1132700E665AE /* TCChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C56C30C817B1132700E665AE /* TCChatCell.m */; };
+		C56C30CC17B1132700E665AE /* TCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C56C30CA17B1132700E665AE /* TCViewController.m */; };
 		C571E0A01766145300E9AD50 /* SeedListTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C571E09F1766145200E9AD50 /* SeedListTableCell.xib */; };
 		C571E0A3176627CE00E9AD50 /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C571E0A2176627CE00E9AD50 /* AsyncImageView.m */; };
 		C571E0A7176750BF00E9AD50 /* SeedPictureCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C571E0A6176750BD00E9AD50 /* SeedPictureCollectionCell.xib */; };
@@ -466,6 +468,10 @@
 		C55D1ABF1751BE35000B3E34 /* papasscode_marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "papasscode_marker@2x.png"; sourceTree = "<group>"; };
 		C55D1AC11751BE35000B3E34 /* PAPasscodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAPasscodeViewController.h; sourceTree = "<group>"; };
 		C55D1AC21751BE35000B3E34 /* PAPasscodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PAPasscodeViewController.m; sourceTree = "<group>"; };
+		C56C30C717B1132700E665AE /* TCChatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCChatCell.h; sourceTree = "<group>"; };
+		C56C30C817B1132700E665AE /* TCChatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCChatCell.m; sourceTree = "<group>"; };
+		C56C30C917B1132700E665AE /* TCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCViewController.h; sourceTree = "<group>"; };
+		C56C30CA17B1132700E665AE /* TCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCViewController.m; sourceTree = "<group>"; };
 		C571E09F1766145200E9AD50 /* SeedListTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeedListTableCell.xib; sourceTree = "<group>"; };
 		C571E0A1176627CE00E9AD50 /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		C571E0A2176627CE00E9AD50 /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
@@ -917,6 +923,8 @@
 				C5A9440D172AA15A00D6FB85 /* SeedPictureCollectionCell.h */,
 				C5A9440E172AA15A00D6FB85 /* SeedPictureCollectionCell.m */,
 				C571E0A6176750BD00E9AD50 /* SeedPictureCollectionCell.xib */,
+				C56C30C717B1132700E665AE /* TCChatCell.h */,
+				C56C30C817B1132700E665AE /* TCChatCell.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -1172,6 +1180,8 @@
 				C5964C48172248AB00CC1C0A /* SeedPictureViewController.m */,
 				C5AB63431730A7CD00A3F1E6 /* SeedPictureScrollView.h */,
 				C5AB63441730A7CD00A3F1E6 /* SeedPictureScrollView.m */,
+				C56C30C917B1132700E665AE /* TCViewController.h */,
+				C56C30CA17B1132700E665AE /* TCViewController.m */,
 				C5964C1F1722290400CC1C0A /* MainStoryboard_iPhone.storyboard */,
 				C5964C221722290400CC1C0A /* MainStoryboard_iPad.storyboard */,
 				C531834B1723D6A900264530 /* Localizable.strings */,
@@ -1678,6 +1688,8 @@
 				C53968EB17B0942400C98451 /* NSData+SRB64Additions.m in Sources */,
 				C53968EC17B0942400C98451 /* SRWebSocket.m in Sources */,
 				C53968EF17B095AD00C98451 /* WebSocketModule.m in Sources */,
+				C56C30CB17B1132700E665AE /* TCChatCell.m in Sources */,
+				C56C30CC17B1132700E665AE /* TCViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
