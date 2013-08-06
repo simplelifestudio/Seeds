@@ -11,7 +11,7 @@
 
 // App Global
 #define APP_NAME @"Seeds"
-#define APP_VERSION @"0.1"
+#define APP_VERSION @"0.1-11"
 #define NAMESPACE_APP @"com.simplelife.Seeds.ios"
 #define NAMESPACE_APP_CONST_CHARS "com.simplelife.Seeds.ios"
 #define MODULE_DELAY usleep(300000);
@@ -85,10 +85,14 @@
 #define JSONMESSAGE_COMMAND_SEEDSTOCARTRESPONSE @"SeedsToCartResponse"
 #define JSONMESSAGE_COMMAND_EXTERNALSEEDSTOCARTREQUEST @"ExternalSeedsToCartRequest"
 #define JSONMESSAGE_COMMAND_EXTERNALSEEDSTOCARTRESPONSE @"ExternalSeedsToCartResponse"
+#define JSONMESSAGE_COMMAND_WSCHATMESSAGE @"WSChatMessage"
 
-#define BASEURL_SEEDSSERVER @"http://106.187.38.78:80"
+#define BASEURL_SEEDSSERVER @"http://192.81.135.31"
 #define REMOTEPATH_SEEDSERVICE @"/seeds/seedService"
 #define REMOTEPATH_CARTSERVICE @"/seeds/cartService"
+#define REMOTEPATH_WEBSOCKETSERVICE @"/seeds/websocket"
+
+#define WEBSOCKET_ENABLED 0
 
 #define BASEURL_TORRENTSTORE @"www.maxp2p.com"
 #define BASEURL_TORRENT @"http://www.maxp2p.com/"
@@ -175,8 +179,6 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define FILE_EXTENDNAME_DOT_HTML @".html"
 #define FILE_NAME_INDEX @"index"
 
-//#define FILE_PREFIXNAME_SEED @"seed_"
-
 #define CONSOLE_LINEINFO_DISPLAY_DELAY usleep(0);
 
 // Module: GUI
@@ -199,6 +201,7 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define STORYBOARD_ID_SEEDLISTVIWECONTROLLER_SMALLER @"sbid_seedlistviewcontroller_smaller"
 #define STORYBOARD_ID_SEEDDETAILVIEWCONTROLLER_SMALLER @"sbid_seeddetailviewcontroller_smaller"
 #define STORYBOARD_ID_DOWNLOADSEEDLISTVIEWCONTROLLER_SMALLER @"sbid_downloadseedlistviewcontroller_smaller"
+#define STORYBOARD_ID_TCVIEWCONTROLLER @"sbid_tcviewcontroller"
 
 #define SEGUE_ID_SPLASH2NAVIGATION @"splash2navigation"
 #define SEGUE_ID_HOME2SEEDLIST @"home2seedlist"
@@ -270,9 +273,10 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 #define FONT_SIZE_ZOOMRATE_CIRCULARVIEW_FOR_IPHONE4_OR_4S 0.8
 #define FONT_SIZE_ZOOMRATE_CIRCULARVIEW_FOR_IPHONE5 1
 
-#define THUMBNAIL_SIZE_SEEDLISTTABLECELL CGSizeMake(120, 72)
-#define THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL CGSizeMake(180, 204)
-#define THUMBNAIL_SIZE_SEEDPICTUREVIEW CGSizeMake(320, 480)
+#define THUMBNAIL_RATIO 1.5
+#define THUMBNAIL_SIZE_SEEDLISTTABLECELL CGSizeMake(100 * THUMBNAIL_RATIO, 60 * THUMBNAIL_RATIO)
+#define THUMBNAIL_SIZE_SEEDPICTURECOLLECTIONCELL CGSizeMake(150 * THUMBNAIL_RATIO, 170 * THUMBNAIL_RATIO)
+#define THUMBNAIL_SIZE_SEEDPICTUREVIEW CGSizeMake(320 * THUMBNAIL_RATIO, 480 * THUMBNAIL_RATIO)
 
 // Module: Notifications
 #define NOTIFICATION_ID_SEEDPICTUREPREFETCH_FINISHED @"seedPicturePrefetchFinished"

@@ -313,10 +313,12 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
                     cell = _aboutCell;
                     break;
                 }
+#if WEBSOCKET_ENABLED
                 case SECTION_INDEX_ABOUT_ITEM_INDEX_WEBSOCKET:
                 {
                     cell = _wsCell;
                 }
+#endif
                 default:
                 {
                     break;
