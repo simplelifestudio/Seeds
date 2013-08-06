@@ -177,6 +177,7 @@ X. MessageFormat
     "id": "WSChatMessage",
     "body":
     {
-    	"content":"Are you there?"
+    	"content":"Are you there?",
+    	"time":"2013-08-06 18:04:37"
     }
 }
