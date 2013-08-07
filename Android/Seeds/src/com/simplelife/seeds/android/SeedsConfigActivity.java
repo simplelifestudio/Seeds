@@ -221,8 +221,12 @@ public class SeedsConfigActivity extends Activity {
         
         public void onVerifyAddress(String _inUrl) {   	
         	        	
-        	mProgressDialog = ProgressDialog.show(getActivity(), "Verifying...", 
-        			          getString(R.string.seeds_config_verifyserveraddrcommun)+mServerUrl, true, false);
+        	if(mServerUrl.equals(SeedsDefinitions.getServerUrl()))
+        		mProgressDialog = ProgressDialog.show(getActivity(), "Verifying...", 
+        			          getString(R.string.seeds_config_verifyserveraddrcommundef), true, false);
+        	else
+        		mProgressDialog = ProgressDialog.show(getActivity(), "Verifying...", 
+  			          getString(R.string.seeds_config_verifyserveraddrcommun)+mServerUrl, true, false);        		
         	mProgressDialog.setCanceledOnTouchOutside(true);
         	
     		new Thread() {

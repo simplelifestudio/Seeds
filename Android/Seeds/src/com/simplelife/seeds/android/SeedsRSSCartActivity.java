@@ -355,6 +355,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 	private void clearSeedsCart(){
 		mSeedIdInCart.clear();
 		mSeedsEntityList.clear();
+		mAdapter.notifyDataSetChanged();
 		
 	}
 		
@@ -455,7 +456,8 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 			            	String tFileName = SeedsDefinitions.getDownloadDestFolder() +"/RSSCart_"+tTime+".txt";
 			            	StringBuffer tMessage = new StringBuffer();
 			            	tMessage.append("Seeds RSS Cart "+tTime+"\n\n\n");
-			            	tMessage.append("Cart ID: "+_inCartId+"\n");
+			            	tMessage.append("Cart ID:  "+_inCartId+"\n");
+			            	tMessage.append("RSS Link: "+SeedsDefinitions.SEEDS_SERVER_RSS_ADDRESS+_inCartId+"\n");
 			            	tMessage.append("===========================================\n");
 			            	tMessage.append("Seeds in Cart:\n\n\n");
 			            	int tSeedsNum = mSeedsEntityList.size();

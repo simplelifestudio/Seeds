@@ -34,8 +34,10 @@ public class SeedsDefinitions {
 	public static String SEEDS_SERVER_DEFAUL_IPANDPORT = "192.81.135.31:80";
 	public static String SEEDS_SERVER_ADDRESS_PREFIX = "/seeds/seedService";
 	public static String SEEDS_SERVER_DEFAULT_FULLADDR = 
-			"http://" + SEEDS_SERVER_DEFAUL_IPANDPORT + SEEDS_SERVER_ADDRESS_PREFIX;
+			 "http://" + SEEDS_SERVER_DEFAUL_IPANDPORT + SEEDS_SERVER_ADDRESS_PREFIX;
 	public static String mServerUrl = SEEDS_SERVER_DEFAULT_FULLADDR;
+	public static String SEEDS_SERVER_RSS_ADDRESS = SEEDS_SERVER_DEFAUL_IPANDPORT
+			                                      + "/seeds/cartService?cartId=";
 	
 	public static String SEEDS_DOWNLOAD_SUBFOLDER = Environment.DIRECTORY_DOWNLOADS + "/" + "Seeds";
 	public static String SEEDS_DOWNLOAD_DESTFOLDER = Environment.getExternalStorageDirectory().getPath() 

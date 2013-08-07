@@ -167,6 +167,7 @@
     <string name="seeds_config_setserveraddrindefault">目标服务器地址处于默认状态</string>
     <string name="seeds_config_setserveraddrsum">目标服务器地址更改为</string>
     <string name="seeds_config_verifyserveraddrcommun">正在验证服务器地址：</string>
+    <string name="seeds_config_verifyserveraddrcommundef">正在验证默认服务器&#8230;</string>
     <string name="seeds_config_verifyserveraddrsucc">验证成功，服务器正常工作中</string>
     <string name="seeds_config_verifyserveraddrfail">验证失败，请确认服务器是否正确</string>
     <string name="seeds_config_clearcachedone">缓存已清空</string>    
