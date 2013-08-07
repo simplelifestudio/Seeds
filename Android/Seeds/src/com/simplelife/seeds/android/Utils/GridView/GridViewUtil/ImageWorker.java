@@ -19,6 +19,7 @@ package com.simplelife.seeds.android.utils.gridview.gridviewutil;
 import com.simplelife.seeds.android.BuildConfig;
 import com.simplelife.seeds.android.R;
 import com.simplelife.seeds.android.SeedsDefinitions;
+import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageDetailFragment;
 import com.simplelife.seeds.android.utils.wirelessmanager.SeedsWirelessManager;
 
 import android.content.Context;
@@ -136,6 +137,66 @@ public abstract class ImageWorker {
         }
     }
 
+    public void loadImage(Object data, ImageView imageView, ImageDetailFragment fragment) {
+        if (data == null) {
+            return;
+        }
+
+        BitmapDrawable value = null;
+        Bitmap bitmap = null;
+
+        if (mImageCache != null) {
+            value = mImageCache.getBitmapFromMemCache(String.valueOf(data));
+        }
+
+        if (value != null) {
+            // Bitmap found in memory cache
+            imageView.setImageDrawable(value);
+            fragment.attachPhotoView(imageView);
+        }else{
+            if (mImageCache != null && !mExitTasksEarly) {
+                bitmap = mImageCache.getBitmapFromDiskCache(String.valueOf(data));
+            }
+            
+            if (bitmap != null) {
+            	Log.d(TAG, "Disk cache hit out of thread");
+                if (Utils.hasHoneycomb()) {
+                    // Running on Honeycomb or newer, so wrap in a standard BitmapDrawable
+                	value = new BitmapDrawable(mResources, bitmap);
+                } else {
+                    // Running on Gingerbread or older, so wrap in a RecyclingBitmapDrawable
+                    // which will recycle automatically
+                	value = new RecyclingBitmapDrawable(mResources, bitmap);
+                }
+
+                if (value != null) {
+                    mImageCache.addBitmapToCache(String.valueOf(data), value);
+                    imageView.setImageDrawable(value);
+                    fragment.attachPhotoView(imageView);
+                }
+            }else{ 
+    			if (SeedsDefinitions.getDownloadImageFlag()
+    				||
+    				SeedsWirelessManager.isWifiOpen(mContext))
+    			{	
+            	    if (cancelPotentialWork(data, imageView)) {
+                        final BitmapWorkerTask task = new BitmapWorkerTask(imageView, fragment);
+                        final AsyncDrawable asyncDrawable =
+                            new AsyncDrawable(mResources, mLoadingBitmap, task);
+                        imageView.setImageDrawable(asyncDrawable);
+
+                        // NOTE: This uses a custom version of AsyncTask that has been pulled from the
+                        // framework and slightly modified. Refer to the docs at the top of the class
+                        // for more info on what was changed.
+                        task.executeOnExecutor(AsyncTask.DUAL_THREAD_EXECUTOR, data);
+            	    }
+    			}else{
+    				imageView.setImageResource(R.drawable.no_image);
+    			}
+            	    
+            }
+        }
+    }
     /**
      * Set placeholder bitmap that shows when the the background thread is running.
      *
@@ -271,10 +332,17 @@ public abstract class ImageWorker {
     private class BitmapWorkerTask extends AsyncTask<Object, Void, BitmapDrawable> {
         private Object data;
         private final WeakReference<ImageView> imageViewReference;
+        private ImageDetailFragment mFragment;
+        private boolean mIsForFragment = false;
 
         public BitmapWorkerTask(ImageView imageView) {
             imageViewReference = new WeakReference<ImageView>(imageView);
-
+        }
+        
+        public BitmapWorkerTask(ImageView imageView, ImageDetailFragment fragment) {
+            imageViewReference = new WeakReference<ImageView>(imageView);
+            mFragment = fragment;
+            mIsForFragment = true;
         }
 
         /**
@@ -367,7 +435,10 @@ public abstract class ImageWorker {
                 if (BuildConfig.DEBUG) {
                     Log.d(TAG, "onPostExecute - setting bitmap");
                 }
-                setImageDrawable(imageView, value);
+                if(mIsForFragment == false)
+                    setImageDrawable(imageView, value);
+                else if(mFragment != null)
+                    setImageDrawable(imageView, value, mFragment);
             }
         }
 
@@ -423,7 +494,8 @@ public abstract class ImageWorker {
      * @param drawable
      */
     private void setImageDrawable(ImageView imageView, Drawable drawable) {
-        if (mFadeInBitmap) {
+
+    	if (mFadeInBitmap) {
             // Transition drawable with a transparent drawable and the final drawable
             final TransitionDrawable td =
                     new TransitionDrawable(new Drawable[] {
@@ -439,6 +511,28 @@ public abstract class ImageWorker {
         } else {
             imageView.setImageDrawable(drawable);
         }
+    }
+    
+    private void setImageDrawable(ImageView imageView, Drawable drawable, ImageDetailFragment fragment) {
+
+    	if (mFadeInBitmap) {
+            // Transition drawable with a transparent drawable and the final drawable
+            final TransitionDrawable td =
+                    new TransitionDrawable(new Drawable[] {
+                            new ColorDrawable(android.R.color.transparent),
+                            drawable
+                    });
+            // Set background to loading bitmap
+            imageView.setBackgroundDrawable(
+                    new BitmapDrawable(mResources, mLoadingBitmap));
+
+            imageView.setImageDrawable(td);
+            td.startTransition(FADE_IN_TIME);
+        } else {
+            imageView.setImageDrawable(drawable);
+        }
+        
+        fragment.attachPhotoView(imageView);
     }
 
     /**

@@ -26,7 +26,7 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
-public class PhotoView extends RecyclingImageView implements IPhotoView {
+public class PhotoView extends ImageView implements IPhotoView {
 
 	private final PhotoViewAttacher mAttacher;
 

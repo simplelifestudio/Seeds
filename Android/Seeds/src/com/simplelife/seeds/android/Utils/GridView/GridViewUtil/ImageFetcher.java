@@ -279,8 +279,8 @@ public class ImageFetcher extends ImageResizer {
         try {
             final URL url = new URL(urlString);
             urlConnection = (HttpURLConnection) url.openConnection();
-            //urlConnection.setConnectTimeout(30000);
-            //urlConnection.setReadTimeout(30000);
+            urlConnection.setConnectTimeout(30000);
+            urlConnection.setReadTimeout(30000);
             in = new BufferedInputStream(urlConnection.getInputStream(), IO_BUFFER_SIZE);
             out = new BufferedOutputStream(outputStream, IO_BUFFER_SIZE);
 
