@@ -42,7 +42,7 @@ public class CartServiceServlet extends HttpServlet
         try {
             String cartId = request.getParameter("cartId");
             
-            LogUtil.info("Procceed seed RSS request for cartID<" + cartId + "> from IP: " + request.getLocalAddr() );
+            LogUtil.info("Procceed seed RSS request for cartID<" + cartId + "> from IP: " + request.getRemoteAddr());
             
             if (cartId == null || cartId.length() == 0)
             {
