@@ -6,8 +6,11 @@
  */
 package com.simplelife.seeds.android;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -272,7 +275,8 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
             }
             case R.id.rss_removeall:
             {
-            	
+            	clearSeedsCart();
+            	return true;
             }
         }
         return super.onOptionsItemSelected(item);
@@ -346,6 +350,12 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 	
 	public static String getCartId(){
 		return mCartId;
+	}
+	
+	private void clearSeedsCart(){
+		mSeedIdInCart.clear();
+		mSeedsEntityList.clear();
+		
 	}
 		
 	private void sendRSSBookMessage(){
@@ -452,9 +462,9 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 			            	for(int index=0; index<tSeedsNum; index++)
 			            	{
 			            		SeedsEntity tSeedsEntity = mSeedsEntityList.get(index);
-			            		tMessage.append(getString(R.string.seedTitle)+tSeedsEntity.getSeedName()+"\n");
-			            		tMessage.append(getString(R.string.seedSize)+tSeedsEntity.getSeedSize()+"\n");
-			            		tMessage.append(getString(R.string.seedFormat)+tSeedsEntity.getSeedFormat()+"\n");
+			            		tMessage.append(getString(R.string.seedTitle)+": "+tSeedsEntity.getSeedName()+"\n");
+			            		tMessage.append(getString(R.string.seedSize)+": "+tSeedsEntity.getSeedSize()+"\n");
+			            		tMessage.append(getString(R.string.seedFormat)+": "+tSeedsEntity.getSeedFormat()+"\n");
 			            		tMessage.append("-------------------------------------------\n");
 			            	}
 			            	writeFileSdcard(tFileName, tMessage.toString());
@@ -478,17 +488,17 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
     }
     
     public void writeFileSdcard(String fileName,String message){ 
-
-        try{
-        	FileOutputStream fout = new FileOutputStream(fileName);        	
-            byte [] bytes = message.getBytes(); 
-
-            fout.write(bytes); 
-            fout.close(); 
-        } 
-        catch(Exception e){ 
-            mLogger.excep(e); 
-        } 
-    }    
-
+    	try {
+    		File f = new File(fileName);
+    		if (!f.exists()) {
+    		    f.createNewFile();
+    		}
+    		OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f),"GBK");
+    		BufferedWriter writer=new BufferedWriter(write);   
+    		writer.write(message);
+    		writer.close();
+    	} catch (Exception e) {
+    		mLogger.excep(e);
+    	}
+    }
 }
