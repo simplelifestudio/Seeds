@@ -47,6 +47,7 @@ public class SeedsHelpActivity extends Activity {
         mPage6 = (ImageView)findViewById(R.id.page6);
                
         LayoutInflater mLi = LayoutInflater.from(this);
+        /*
         View view1 = mLi.inflate(R.layout.whats_news_gallery_one, null);
         View view2 = mLi.inflate(R.layout.whats_news_gallery_two, null);
         View view3 = mLi.inflate(R.layout.whats_news_gallery_three, null);
@@ -62,7 +63,7 @@ public class SeedsHelpActivity extends Activity {
         views.add(view4);
         views.add(view5);
         views.add(view6);   
-        views.add(view7); 
+        views.add(view7); */
                 
         final ArrayList<String> titles = new ArrayList<String>();
         titles.add("tab1");
@@ -73,8 +74,8 @@ public class SeedsHelpActivity extends Activity {
         titles.add("tab6");
         titles.add("tab7");
         
-        MyPagerAdapter mPagerAdapter = new MyPagerAdapter(views,titles);
-		mViewPager.setAdapter(mPagerAdapter);
+        //MyPagerAdapter mPagerAdapter = new MyPagerAdapter(views,titles);
+		//mViewPager.setAdapter(mPagerAdapter);
     }        
 
     public class MyOnPageChangeListener implements OnPageChangeListener {

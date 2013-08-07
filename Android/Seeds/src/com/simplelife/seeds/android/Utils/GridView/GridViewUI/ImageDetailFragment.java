@@ -16,6 +16,7 @@
 
 package com.simplelife.seeds.android.utils.gridview.gridviewui;
 
+import com.simplelife.seeds.android.utils.photoview.PhotoViewAttacher;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ public class ImageDetailFragment extends Fragment {
     private String mImageUrl;
     private ImageView mImageView;
     private ImageFetcher mImageFetcher;
+    private PhotoViewAttacher mAttacher;
 
     /**
      * Factory method to generate a new instance of the fragment given an image number.
@@ -87,6 +89,7 @@ public class ImageDetailFragment extends Fragment {
         if (ImageDetailActivity.class.isInstance(getActivity())) {
             mImageFetcher = ((ImageDetailActivity) getActivity()).getImageFetcher();
             mImageFetcher.loadImage(mImageUrl, mImageView);
+            mAttacher = new PhotoViewAttacher(mImageView);
         }
 
         // Pass clicks on the ImageView to the parent activity to handle
@@ -101,7 +104,7 @@ public class ImageDetailFragment extends Fragment {
         if (mImageView != null) {
             // Cancel any pending image work
             ImageWorker.cancelWork(mImageView);
-            mImageView.setImageDrawable(null);
-        }
+            mImageView.setImageDrawable(null);            
+        }        
     }
 }
