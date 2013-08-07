@@ -28,6 +28,8 @@
 {
     SRWebSocket *_webSocket;
     NSMutableArray *_messages;
+    
+    NSTimer* _pingTimer;
 }
 
 @synthesize inputView = _inputView;
@@ -54,7 +56,27 @@
     
     self.title = NSLocalizedString(@"Connecting", nil);
     [_webSocket open];
+    
+    [_pingTimer invalidate];
+    _pingTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(_heartBeatPing) userInfo:nil repeats:YES];
+}
 
+- (void) _heartBeatPing
+{
+    if (_webSocket)
+    {
+        NSString* str = @"###Ping###";
+        NSData* data = [str dataUsingEncoding:NSASCIIStringEncoding];
+        [_webSocket sendPing:data];
+//        [_webSocket send:str];
+        
+        [CBAppUtils asyncProcessInMainThread:^(){
+            [_messages addObject:[[TCMessage alloc] initWithMessage:str fromMe:YES]];
+            
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:_messages.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+            [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
+        }];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -131,12 +153,24 @@
     [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
 }
 
+- (void)webSocket:(SRWebSocket *)webSocket didReceivePong:(NSData *)data
+{
+    DLog(@"Received Pong \"%@\"", data);
+    NSString* str = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+//    str = NSLocalizedString(@"Pong", nil);
+    [_messages addObject:[[TCMessage alloc] initWithMessage:str fromMe:NO]];
+    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:_messages.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
+}
+
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean;
 {
     DLog(@"WebSocket closed");
     self.title = NSLocalizedString(@"Connection Closed", nil);
     _webSocket = nil;
 }
+
+#pragma mark - UITextViewDelegate
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
 {

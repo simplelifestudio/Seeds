@@ -206,6 +206,8 @@
 
 "WebSocket" = "WebSocket";
 "Test" = "测试";
+"Ping" = "Ping";
+"Pong" = "Pong";
 "Connecting" = "连接中";
 "Connected" = "已连接";
 "Connection Failed" = "连接失败";
