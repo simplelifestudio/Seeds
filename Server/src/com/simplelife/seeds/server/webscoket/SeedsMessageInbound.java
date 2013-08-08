@@ -10,20 +10,13 @@
 package com.simplelife.seeds.server.webscoket;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.util.Hashtable;
 
 import net.sf.json.JSONObject;
 
-import org.apache.catalina.websocket.MessageInbound;
-import org.apache.catalina.websocket.WsOutbound;
-
-import com.simplelife.seeds.server.json.JsonRequestBase;
-import com.simplelife.seeds.server.json.JsonResponseBase;
 import com.simplelife.seeds.server.util.DateUtil;
-import com.simplelife.seeds.server.util.ErrorCode;
 import com.simplelife.seeds.server.util.JsonKey;
 import com.simplelife.seeds.server.util.JsonUtil;
 import com.simplelife.seeds.server.util.LogUtil;
@@ -60,12 +53,13 @@ public class SeedsMessageInbound extends MessageInbound
 
     @Override
     protected void onBinaryMessage(ByteBuffer message) throws IOException {
-         getWsOutbound().writeBinaryMessage(message);
+        LogUtil.info("Binary data received on websocket.");
+        getWsOutbound().writeBinaryMessage(message);
     }
 
     @Override
     protected void onTextMessage(CharBuffer message) throws IOException {
-        LogUtil.info("Message received on websocket!");
+        LogUtil.info("Text Message received on websocket.");
         echoMessage(message);
     }
     
@@ -144,6 +138,24 @@ public class SeedsMessageInbound extends MessageInbound
         }
     }
     
+    public void ping()
+    {
+        ByteBuffer pingData = ByteBuffer.allocate(5);
+        //pingData.putChar('c');
+        //pingData.putChar('h');
+        //pingData.putChar('e');
+        //pingData.putChar('n');
+        //pingData.flip();
+        try
+        {
+            getWsOutbound().ping(pingData);
+        } catch (IOException e)
+        {
+            LogUtil.printStackTrace(e);
+        }
+    }
+    
+    
     @Override
     protected void onClose(int status)
     {
@@ -159,10 +171,20 @@ public class SeedsMessageInbound extends MessageInbound
         super.onOpen(outbound);
     }
     
+    
+    @Override
+    protected void onPing(ByteBuffer payload)
+    {
+        String temp = new String(payload.array());
+        LogUtil.info("onPing triggerred, content: " + temp + ", clientID: " + this.clientId);
+        super.onPong(payload);
+    }
+    
     @Override
     protected void onPong(ByteBuffer payload)
     {
-        LogUtil.info("onPong triggerred, payload length: " + payload.capacity());
+        String temp = new String(payload.array());
+        LogUtil.info("onPong triggerred, content: " + temp+ ", clientID: " + this.clientId);
         super.onPong(payload);
     }
     
@@ -181,4 +203,5 @@ public class SeedsMessageInbound extends MessageInbound
             LogUtil.printStackTrace(e);
         }
     }
+
 }

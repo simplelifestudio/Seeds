@@ -33,6 +33,11 @@ public class ClientCollection
         return clients.size() == 0;
     }
     
+    public static SeedsMessageInbound getClient(String clientId)
+    {
+        return clients.get(clientId);
+    }
+    
     public static synchronized void addClient(String clientId, SeedsMessageInbound msgInbound)
     {
         msgInbound.setClientId(clientId);

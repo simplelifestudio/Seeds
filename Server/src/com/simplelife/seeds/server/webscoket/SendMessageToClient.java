@@ -35,6 +35,7 @@ public class SendMessageToClient extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    request.setCharacterEncoding("UTF-8");
 		LogUtil.info("Enter doPost of SendMessageToClient");
 	    String message = request.getParameter("message").trim();
 	    String clientId = request.getParameter("clientId").trim();
@@ -44,6 +45,8 @@ public class SendMessageToClient extends HttpServlet {
 		    return;
 		}
 		ClientCollection.sendMsgToClient(clientId, message);
+		LogUtil.info("Send to client: " + clientId + ", message: " + message);
+		//ClientCollection.getClient(clientId).ping();
 	}
 
 }
