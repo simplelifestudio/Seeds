@@ -128,6 +128,12 @@ public class SeedsConfigActivity extends Activity {
             mPrefChangePwd.setOnPreferenceClickListener(this);
             //mPrefFeedback.setOnPreferenceClickListener(this);
             mPrefAbout.setOnPreferenceClickListener(this);
+                        
+            if(isServerAddressChanged())
+            {
+            	String tServerAddr = mSharedPrefs.getString("config_changeserver", SeedsDefinitions.getServerUrl());
+            	mEditTextPrefServerAddr.setSummary(getString(R.string.seeds_config_setserveraddrsum) + tServerAddr);
+            }
         }
         
         @Override    
@@ -141,6 +147,7 @@ public class SeedsConfigActivity extends Activity {
         		if(isValidIp(tServerAddr)){
             		mServerUrl = "http://"+tServerAddr+SeedsDefinitions.SEEDS_SERVER_ADDRESS_PREFIX;
             		mEditTextPrefServerAddr.setSummary(getString(R.string.seeds_config_setserveraddrsum) + tServerAddr);
+            		updateServerAddrChangedFlag(true);
             	}
             	else{
         			showToast(R.string.seeds_config_setserveraddrfailed);
@@ -217,6 +224,7 @@ public class SeedsConfigActivity extends Activity {
         	mServerUrl = SeedsDefinitions.getServerUrl();
         	showToast(R.string.seeds_config_toast_resetserver);
         	mEditTextPrefServerAddr.setSummary(getString(R.string.seeds_config_setserveraddrindefault));
+        	updateServerAddrChangedFlag(false);
         }
         
         public void onVerifyAddress(String _inUrl) {   	
@@ -250,23 +258,38 @@ public class SeedsConfigActivity extends Activity {
     		}.start();
         }
         
-        public void onClearCache() {   	
-        	
-        	mProgressDialog = ProgressDialog.show(getActivity(), "Loading...", 
-        			          getString(R.string.seeds_config_toast_clearcache), true, false);
-        	mProgressDialog.setCanceledOnTouchOutside(true);
-        	
-    		new Thread() {
-    						
-    			@Override
-    			public void run() {
-    		    	ImageCache.clearImageCache(ImageCache.getExternalCacheDir(getActivity()));
-    				Message t_MsgListData = new Message();
-    				t_MsgListData.what = MEESAGE_CONFIG_CLEARCACHE;									
-    				handler.sendMessage(t_MsgListData);	
-    			}				
-    		}.start();
-        }
+        public void onClearCache() {
+    		AlertDialog.Builder builder = new Builder(getActivity());
+    		builder.setMessage(getString(R.string.seeds_config_clearcacgedialogmsg));
+    		builder.setTitle(getString(R.string.seeds_config_clearcachedialognote));
+    		builder.setPositiveButton(R.string.seeds_config_clearcachedialogpos, new DialogInterface.OnClickListener() {
+    		    @Override
+    	        public void onClick(DialogInterface dialog, int which) {
+    			    dialog.dismiss();
+    	            mProgressDialog = ProgressDialog.show(getActivity(), "Loading...", 
+      			          getString(R.string.seeds_config_clearcachedialoging), true, false);
+      	            mProgressDialog.setCanceledOnTouchOutside(true);      	
+  		            new Thread() {  						
+  			            @Override
+  			            public void run() {
+  		    		    	ImageCache.clearImageCache(ImageCache.getExternalCacheDir(getActivity()));
+  		    				Message t_MsgListData = new Message();
+  		    				t_MsgListData.what = MEESAGE_CONFIG_CLEARCACHE;									
+  		    				handler.sendMessage(t_MsgListData);	
+  			            }				
+  		            }.start();
+    		    }
+    		});
+
+    		builder.setNegativeButton(R.string.seeds_config_clearcachedialogneg, new DialogInterface.OnClickListener() {
+    		    @Override
+    		    public void onClick(DialogInterface dialog, int which) {
+    		        dialog.dismiss();
+    		    }
+    		});
+
+    		builder.create().show();
+    	}
         
     	@SuppressLint("HandlerLeak")
 		private Handler handler = new Handler(){  
@@ -388,6 +411,19 @@ public class SeedsConfigActivity extends Activity {
 
     		builder.create().show();
     	}
+    	
+        private boolean isServerAddressChanged(){
+        	
+        	// Retrieve the seeds info status by date via the shared preference file
+        	return mSharedPrefs.getBoolean("isserverchanged",false);    	
+        }
+        
+        private void updateServerAddrChangedFlag(Boolean _inTag){
+        	
+        	SharedPreferences.Editor editor = mSharedPrefs.edit();
+        	editor.putBoolean("isserverchanged", _inTag);
+        	editor.commit();    	
+        }        
         
     	private void showToast(int _messageId) {
     		if(null != getActivity())
