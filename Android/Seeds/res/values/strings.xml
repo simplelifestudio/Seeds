@@ -114,6 +114,7 @@
     <string name="seeds_rss_toast_sendreqfailed">Network failure, book failed</string>
     <string name="seeds_rss_toast_emptycartresp">Wrong response, book failed</string>
     <string name="seeds_rss_toast_booksuccess">Book Successed, cart id: </string>
+    <string name="seeds_rss_toast_cartempty">No seed is booked, the cart is empty</string>
     <string name="seeds_rss_menu_sendreqmsg">Send RSS Message</string>
     <string name="seeds_rss_menu_removeall">Remove</string>
     <string name="seeds_rss_dialog_sendingreqmsg">Sending book request&#8230;</string>

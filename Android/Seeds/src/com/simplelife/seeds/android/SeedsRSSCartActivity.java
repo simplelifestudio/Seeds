@@ -55,6 +55,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 	private static ArrayList<Integer> mBookSuccSeedIdList = new  ArrayList<Integer>();
 	private static ArrayList<Integer> mBookExistSeedIdList = new  ArrayList<Integer>();
 	private static ArrayList<Integer> mBookFailedSeedIdList = new  ArrayList<Integer>();
+	private ArrayList<HashMap<String, String>> mSeedsListForListView = new ArrayList<HashMap<String, String>>();
 	private static String mCartId;
 	private ProgressDialog mProgressDialog = null; 
 	
@@ -111,9 +112,8 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 				{
 					mListView = (ListView)findViewById(R.id.seeds_list);
 				
-					@SuppressWarnings("unchecked")
-					ArrayList<HashMap<String, String>> seedsList = (ArrayList<HashMap<String, String>>)msg.obj;
-					mAdapter = new SeedsAdapter(SeedsRSSCartActivity.this, seedsList);
+					mSeedsListForListView = (ArrayList<HashMap<String, String>>)msg.obj;
+					mAdapter = new SeedsAdapter(SeedsRSSCartActivity.this, mSeedsListForListView);
 					mListView.setAdapter(mAdapter);
 
 					// Bond the click listener
@@ -353,13 +353,20 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 	}
 	
 	private void clearSeedsCart(){
+		mSeedLocalIdInCart.clear();
 		mSeedIdInCart.clear();
 		mSeedsEntityList.clear();
-		mAdapter.notifyDataSetChanged();
-		
+		mSeedsListForListView.clear();
+		mAdapter.notifyDataSetChanged();		
 	}
 		
 	private void sendRSSBookMessage(){
+		
+		if(mSeedIdInCart.size() <= 0)
+		{
+			notifyUserViaToast(R.string.seeds_rss_toast_cartempty);
+			return;
+		}
 		
 		mProgressDialog = ProgressDialog.show(SeedsRSSCartActivity.this, "Loading...", 
 		          getString(R.string.seeds_rss_dialog_sendingreqmsg), true, false);
@@ -457,7 +464,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 			            	StringBuffer tMessage = new StringBuffer();
 			            	tMessage.append("Seeds RSS Cart "+tTime+"\n\n\n");
 			            	tMessage.append("Cart ID:  "+_inCartId+"\n");
-			            	tMessage.append("RSS Link: "+SeedsDefinitions.SEEDS_SERVER_RSS_ADDRESS+_inCartId+"\n");
+			            	tMessage.append("RSS Link: "+"http://"+SeedsDefinitions.SEEDS_SERVER_RSS_ADDRESS+_inCartId+"\n");
 			            	tMessage.append("===========================================\n");
 			            	tMessage.append("Seeds in Cart:\n\n\n");
 			            	int tSeedsNum = mSeedsEntityList.size();

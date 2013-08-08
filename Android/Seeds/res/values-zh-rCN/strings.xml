@@ -113,6 +113,7 @@
     <string name="seeds_rss_toast_sendreqfailed">网络错误，订阅失败</string>
     <string name="seeds_rss_toast_emptycartresp">消息错误，订阅失败</string>
     <string name="seeds_rss_toast_booksuccess">订阅成功，订阅编号： </string>
+    <string name="seeds_rss_toast_cartempty">订阅车为空，请先添加种子至订阅车</string>
     <string name="seeds_rss_menu_sendreqmsg">订阅</string>
     <string name="seeds_rss_menu_removeall">清空</string>
     <string name="seeds_rss_dialog_sendingreqmsg">正在发送订阅请求&#8230;</string>
