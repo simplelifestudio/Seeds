@@ -139,6 +139,10 @@ public class RssUtil
 		    TorrentDownloader dl = new TorrentDownloader(seed.getTorrentLink(), torrentFile);
 		    dl.start();
 		}
+		else
+		{
+		    LogUtil.info("Torrent is existent: " + file.getAbsolutePath());
+		}
 		
 		item.setLink(HttpUtil.getTorrentLink(seed.getSeedId()));
         Description desc = new Description();

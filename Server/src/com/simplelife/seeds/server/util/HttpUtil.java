@@ -47,7 +47,7 @@ public class HttpUtil
 	private static final int BUFFER_SIZE = 4096;
 	private static String hostIPAddress;
 	private static int httpPort = 80;
-	private static String webappsRoot;
+	//private static String webappsRoot;
 	
 	public static void setHttpPort(int port)
 	{
@@ -342,19 +342,42 @@ public class HttpUtil
 	 */
 	public static String getAbsolutePath(String relativePath)
 	{
-	    if (webappsRoot == null)
+	    File file = new File("."); 
+	    String webappsRoot = file.getAbsolutePath().replace('\\', '/');
+	    webappsRoot = webappsRoot.replaceAll("/bin/.", "/webapps");
+	    
+	    /*
+	    if (webappsRoot == null || webappsRoot.length() == 0)
 	    {
 	        webappsRoot = System.getProperty("user.dir");
 	        //String webappsRoot = new File("").getAbsolutePath();
 	        webappsRoot = webappsRoot.replaceAll("bin", "webapps");
 	    }
+	    */
 	    
-	    String absPath = webappsRoot; 
+	    String absPath;
+	    if (webappsRoot == null || webappsRoot.length() == 0)
+	    {
+	        LogUtil.severe("Failed to get tomcat path.");
+	        absPath = "";
+	    }
+	    else
+	    {
+	        absPath = webappsRoot;
+	    }
+	    
+	    absPath += "/seeds";
+
+	    if (relativePath == null || relativePath.length() == 0)
+        {
+            return absPath + "/"; 
+        }
+	    
 	    if (relativePath.charAt(0) != '/')
         {
-	        absPath += "/";
+            absPath += "/";
         }
-	    absPath += "seeds/" + relativePath;
+	    absPath += relativePath;
 	    return absPath;
 	}
 	

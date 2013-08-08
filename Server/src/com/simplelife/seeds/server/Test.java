@@ -83,9 +83,27 @@ public class Test {
 	    //testSeedCaptureTaskTimer();
 		//testTaskTrigger();
 	    //testSeedCaptureTaskRun();
-	    testGlobalSetting();
+	    //testGlobalSetting();
+	    testGetAbsolutePath();
 		
 		System.exit(0);
+	}
+	
+	private static void testGetAbsolutePath()
+	{
+	    System.out.println("null input: ");
+	    System.out.println(HttpUtil.getAbsolutePath(null));
+	    
+	    System.out.println("\n empty input: ");
+        System.out.println(HttpUtil.getAbsolutePath(""));
+        
+        String tmpPath = "1.torrent";
+        System.out.println("\n " + tmpPath + ": ");
+        System.out.println(HttpUtil.getAbsolutePath(tmpPath));
+        
+        tmpPath = "/1.torrent";
+        System.out.println("\n " + tmpPath + ": ");
+        System.out.println(HttpUtil.getAbsolutePath(tmpPath));
 	}
 	
 	private static void testGlobalSetting()
