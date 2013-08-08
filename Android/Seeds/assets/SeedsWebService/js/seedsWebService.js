@@ -2,10 +2,10 @@ var path;
 
 var confirmDelete = function(p) {
 	path = p;
-	$.prompt("纭鍒犻櫎璇ユ枃浠讹紵", {
+	$.prompt("确定删除该文件？", {
 		buttons : {
-			"纭畾" : true,
-			"鍙栨秷" : false
+			"确定" : true,
+			"取消" : false
 		},
 		callback : deleteCallback
 	});
@@ -18,7 +18,7 @@ function deleteCallback(e, v, m, f) {
 		$.post(loc, {}, function(data) {
 			$.prompt(data, {
 				buttons : {
-					"纭畾" : true
+					"确定" : true
 				},
 				callback : deletedCallback
 			});

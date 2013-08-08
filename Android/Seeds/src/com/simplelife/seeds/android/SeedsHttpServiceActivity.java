@@ -155,7 +155,7 @@ public class SeedsHttpServiceActivity extends Activity {
 		mServerThread.start();*/
 		
 		startService(mIntent);
-		updateStatus(getString(R.string.seeds_http_eventserverready));
+		updateStatus(getString(R.string.seeds_http_eventserverready)+mInterface.toString().substring(1)+":"+WebService.PORT);
     }
     
 
@@ -219,8 +219,7 @@ public class SeedsHttpServiceActivity extends Activity {
 
 		public boolean assetsCopy() {
 			try {
-				assetsCopy("SeedsWebService", Environment.getExternalStorageDirectory()
-						+ "/.SeedsWebService"); 
+				assetsCopy("SeedsWebService", SeedsDefinitions.getDownloadDestFolder() + "/.SeedsWebService"); 
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
