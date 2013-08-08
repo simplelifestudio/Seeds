@@ -221,7 +221,7 @@ public class SeedsConfigActivity extends Activity {
         
         public void onVerifyAddress(String _inUrl) {   	
         	        	
-        	if(mServerUrl.equals(SeedsDefinitions.getServerUrl()))
+        	if(mServerUrl.equals(SeedsDefinitions.SEEDS_SERVER_DEFAULT_FULLADDR))
         		mProgressDialog = ProgressDialog.show(getActivity(), "Verifying...", 
         			          getString(R.string.seeds_config_verifyserveraddrcommundef), true, false);
         	else
