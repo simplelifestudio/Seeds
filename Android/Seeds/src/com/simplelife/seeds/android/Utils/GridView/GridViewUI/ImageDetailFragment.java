@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.simplelife.seeds.android.R;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
@@ -37,6 +38,7 @@ public class ImageDetailFragment extends Fragment {
     private static final String IMAGE_DATA_EXTRA = "extra_image_data";
     private String mImageUrl;
     private ImageView mImageView;
+    private ProgressBar mProgressBar;
     private ImageFetcher mImageFetcher;
     private PhotoViewAttacher mAttacher;
 
@@ -77,6 +79,7 @@ public class ImageDetailFragment extends Fragment {
         // Inflate and locate the main ImageView
         final View v = inflater.inflate(R.layout.activity_seeds_gridview_detailfragment, container, false);
         mImageView = (ImageView) v.findViewById(R.id.imageView);
+        mProgressBar = (ProgressBar) v.findViewById(R.id.DetailsProgressBar);
         return v;
     }
 
@@ -98,7 +101,8 @@ public class ImageDetailFragment extends Fragment {
     }
     
     public void attachPhotoView(ImageView inImageView){
-    	mAttacher = new PhotoViewAttacher(mImageView);    	
+    	mAttacher = new PhotoViewAttacher(mImageView); 
+    	mProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
