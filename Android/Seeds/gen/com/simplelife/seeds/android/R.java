@@ -110,15 +110,16 @@ containing a value of this type.
         public static final int rss_management_large=0x7f02002f;
         public static final int seeds_divideline=0x7f020030;
         public static final int seeds_help_page0=0x7f020031;
-        public static final int seedsgradient_bg=0x7f020032;
-        public static final int seedsgradient_bg_hover=0x7f020033;
-        public static final int seedsgrid_photogrid_list_selector=0x7f020034;
-        public static final int seedsimage_bg=0x7f020035;
-        public static final int seedslist_selector=0x7f020036;
-        public static final int send_rss_book_request=0x7f020037;
-        public static final int sign_down=0x7f020038;
-        public static final int start=0x7f020039;
-        public static final int stop=0x7f02003a;
+        public static final int seeds_icon=0x7f020032;
+        public static final int seedsgradient_bg=0x7f020033;
+        public static final int seedsgradient_bg_hover=0x7f020034;
+        public static final int seedsgrid_photogrid_list_selector=0x7f020035;
+        public static final int seedsimage_bg=0x7f020036;
+        public static final int seedslist_selector=0x7f020037;
+        public static final int send_rss_book_request=0x7f020038;
+        public static final int sign_down=0x7f020039;
+        public static final int start=0x7f02003a;
+        public static final int stop=0x7f02003b;
     }
     public static final class id {
         public static final int DetailsProgressBar=0x7f0c001f;
