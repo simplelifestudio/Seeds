@@ -151,10 +151,10 @@ containing a value of this type.
         public static final int download_icon=0x7f0c0056;
         public static final int download_menu_sort_by_date=0x7f0c0070;
         public static final int download_menu_sort_by_size=0x7f0c006f;
-        public static final int download_mgt=0x7f0c0068;
+        public static final int download_mgt=0x7f0c0066;
         public static final int download_mgt_datelist=0x7f0c0062;
         public static final int download_progress=0x7f0c0058;
-        public static final int download_seed=0x7f0c0067;
+        public static final int download_seed=0x7f0c0065;
         public static final int download_title=0x7f0c0057;
         public static final int edit_message=0x7f0c0044;
         public static final int empty=0x7f0c0051;
@@ -191,8 +191,8 @@ containing a value of this type.
         public static final int paused_text=0x7f0c0061;
         public static final int progress_bar=0x7f0c0060;
         public static final int progress_text=0x7f0c005d;
-        public static final int rss_addtocart=0x7f0c0065;
-        public static final int rss_management=0x7f0c0066;
+        public static final int rss_addtocart=0x7f0c0067;
+        public static final int rss_management=0x7f0c0068;
         public static final int rss_management_datelist=0x7f0c0063;
         public static final int rss_removeall=0x7f0c006b;
         public static final int rss_sendreqmsg=0x7f0c006a;

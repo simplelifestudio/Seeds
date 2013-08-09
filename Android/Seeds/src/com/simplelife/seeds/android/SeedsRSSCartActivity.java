@@ -502,7 +502,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
     		if (!f.exists()) {
     		    f.createNewFile();
     		}
-    		OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f),"GBK");
+    		OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(f),"UTF-8");
     		BufferedWriter writer=new BufferedWriter(write);   
     		writer.write(message);
     		writer.close();
