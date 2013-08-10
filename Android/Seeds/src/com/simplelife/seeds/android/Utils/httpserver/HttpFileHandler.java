@@ -20,6 +20,10 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.HttpRequestHandler;
 
+import android.annotation.SuppressLint;
+
+import com.simplelife.seeds.android.R;
+import com.simplelife.seeds.android.SeedsHttpServiceActivity;
 import com.simplelife.seeds.android.utils.httpserver.utils.Logger;
 
 public class HttpFileHandler implements HttpRequestHandler {
@@ -77,16 +81,24 @@ public class HttpFileHandler implements HttpRequestHandler {
 		sb.append("<html>\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<title>");
 		sb.append(null == target ? dir.getAbsolutePath() : target);
 		sb.append("Seeds Http Server</title>\n");
-		sb.append("<link rel=\"shortcut icon\" href=\"/mnt/sdcard/.SeedsWebService/img/favicon.ico\">\n");
-		sb.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"/mnt/sdcard/.SeedsWebService/css/seedsWebService.css\">\n");
-		sb.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"/mnt/sdcard/.SeedsWebService/css/examples.css\">\n");
-		sb.append("<script type=\"text/javascript\" src=\"/mnt/sdcard/.SeedsWebService/js/jquery-1.7.2.min.js\"></script>\n");
-		sb.append("<script type=\"text/javascript\" src=\"/mnt/sdcard/.SeedsWebService/js/jquery-impromptu.4.0.min.js\"></script>\n");
-		sb.append("<script type=\"text/javascript\" src=\"/mnt/sdcard/.SeedsWebService/js/seedsWebService.js\"></script>\n");
+		sb.append("<link rel=\"shortcut icon\" href=\"/.SeedsWebService/img/favicon.ico\">\n");
+		sb.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"/.SeedsWebService/css/seedsWebService.css\">\n");
+		sb.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"/.SeedsWebService/css/examples.css\">\n");
+		sb.append("<script type=\"text/javascript\" src=\"/.SeedsWebService/js/jquery-1.7.2.min.js\"></script>\n");
+		sb.append("<script type=\"text/javascript\" src=\"/.SeedsWebService/js/jquery-impromptu.4.0.min.js\"></script>\n");
+		sb.append("<script type=\"text/javascript\" src=\"/.SeedsWebService/js/seedsWebService.js\" charset=\"gbk\"></script>\n");
 		sb.append("</head>\n<body>\n<h1 id=\"header\">");
 		sb.append(null == target ? dir.getAbsolutePath() : target);
 		sb.append("</h1>\n<table id=\"table\">\n");
-		sb.append("<tr class=\"header\">\n<td>Name</td>\n<td class=\"detailsColumn\">Size</td>\n<td class=\"detailsColumn\">Date</td>\n<td class=\"detailsColumn\">Operation</td>\n</tr>\n");
+		sb.append("<tr class=\"header\">\n<td>");
+		sb.append(SeedsHttpServiceActivity.getHttpActivityContext().getString(R.string.seeds_http_webtitlename));
+		sb.append("</td>\n<td class=\"detailsColumn\">");
+		sb.append(SeedsHttpServiceActivity.getHttpActivityContext().getString(R.string.seeds_http_webtitlesize));
+		sb.append("</td>\n<td class=\"detailsColumn\">");
+		sb.append(SeedsHttpServiceActivity.getHttpActivityContext().getString(R.string.seeds_http_webtitledate));
+		sb.append("</td>\n<td class=\"detailsColumn\">");
+		sb.append(SeedsHttpServiceActivity.getHttpActivityContext().getString(R.string.seeds_http_webtitleopera));
+		sb.append("</td>\n</tr>\n");
 		
 		Logger.debug("getAbsolutePath() : "+dir.getAbsolutePath() + " webRoot:"+this.webRoot);
 		if (!isSamePath(dir.getAbsolutePath(), this.webRoot)) {
@@ -138,6 +150,7 @@ public class HttpFileHandler implements HttpRequestHandler {
 		});
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	private SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd ahh:mm");
 
 	private void appendRow(StringBuffer sb, File f) {
@@ -166,7 +179,9 @@ public class HttpFileHandler implements HttpRequestHandler {
 		sb.append("<span><a href=\"");
 		sb.append(link);
 		sb.append(WebServer.SUFFIX_ZIP);
-		sb.append("\">Download</a></span>");
+		sb.append("\">");
+		sb.append(SeedsHttpServiceActivity.getHttpActivityContext().getString(R.string.seeds_http_webdownloadbtn));
+		sb.append("</a></span>");
 		sb.append("<span style=\"font-size:12px;\">&nbsp;&nbsp;&nbsp;</span>");
 		if (f.canWrite() && !hasSeedsWebDir(f)) {
 			sb.append("<span><a href=\"");
@@ -175,7 +190,9 @@ public class HttpFileHandler implements HttpRequestHandler {
 			sb.append("\" onclick=\"return confirmDelete('");
 			sb.append(link);
 			sb.append(WebServer.SUFFIX_DEL);
-			sb.append("')\">Delete</a></span>");
+			sb.append("')\">");
+			sb.append(SeedsHttpServiceActivity.getHttpActivityContext().getString(R.string.seeds_http_webdeletebtn));
+			sb.append("</a></span>");
 		}
 		sb.append("</td>\n</tr>\n");
 	}

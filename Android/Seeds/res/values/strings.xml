@@ -172,7 +172,12 @@
     <string name="seeds_config_verifyserveraddrcommundef">Communicating with default server&#8230;</string>
     <string name="seeds_config_verifyserveraddrsucc">Verification successed, server is working normally</string>
     <string name="seeds_config_verifyserveraddrfail">Verification failed, please double check the server address</string>
-    <string name="seeds_config_clearcachedone">The cache has been cleaned</string>
+    <string name="seeds_config_clearcachedone">The cache has been cleaned</string>    
+    <string name="seeds_config_clearcacgedialogmsg">Confirm to clear all the image cache?</string>
+    <string name="seeds_config_clearcachedialognote">Note</string>
+    <string name="seeds_config_clearcachedialogpos">Confirm</string>
+    <string name="seeds_config_clearcachedialogneg">Cancel</string>
+    <string name="seeds_config_clearcachedialoging">Clearing cache&#8230;</string>      
     <string name="seeds_config_clearsyncdialogmsg">Confirm to reset the data sync status?</string>
     <string name="seeds_config_clearsyncdialognote">Note</string>
     <string name="seeds_config_clearsyncdialogpos">Confirm</string>
@@ -187,12 +192,11 @@
     <string name="seeds_config_cleardatabasedialogdone">The local database has been cleared</string>
     
     <string name="seeds_config_toast_changepwdunavail">Password protect is disabled, can not change password</string>
-    <string name="seeds_config_toast_clearcache">Clearing cache&#8230;</string>
     <string name="seeds_config_toast_resetserver">The server address has been reset</string>
     
     <string name="seeds_http_buttonstartserver">Start server</string>
     <string name="seeds_http_buttonstopserver">Stop server</string>
-    <string name="seeds_http_eventserverready">Server ready on </string>
+    <string name="seeds_http_eventserverready">Server ready on: </string>
     <string name="seeds_http_eventserve">Served </string>
     <string name="seeds_http_eventserveerror">Server sent error response </string>
     <string name="seeds_http_taptostart">Tap on Start Server below to start serving</string>
