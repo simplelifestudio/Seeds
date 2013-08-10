@@ -156,6 +156,8 @@
     <string name="seeds_config_feedbackandhelp">反馈与帮助</string>
     <string name="seeds_config_feedbacktitle">反馈问题</string>
     <string name="seeds_config_feedbacksum">欢迎您将使用过程中遇到的问题反馈给我们</string>
+    <string name="seeds_config_welcometitle">欢迎页</string>
+    <string name="seeds_config_welcomesum">重新浏览带有帮助信息的欢迎页</string>
     <string name="seeds_config_abouttitle">关于</string>
     <string name="seeds_config_aboutsum">关于Seeds和我们的团队</string>    
     <string name="seeds_config_data">数据存储</string>
@@ -210,6 +212,20 @@
     
     <string name="seeds_helpdialog_text"> 
     <i>Seeds---每天随时随地收集最新的影片信息！</i> 
-    </string>  
+    </string>
+    <string name="seeds_help_page2title">友好的当日种子列表方式</string> 
+    <string name="seeds_help_page3title">丰富的图片查看方式</string>
+    <string name="seeds_help_page4title">方便的种子下载和共享服务</string> 
+    <string name="seeds_help_page4title2">共享</string>
+    <string name="seeds_help_page4title3">无线环境</string>
+    <string name="seeds_help_page5title">你可以订阅种子，
+        得到订阅编号并启动远程下载</string>
+    <string name="seeds_help_page5title2">RSS ID</string>
+    <string name="seeds_help_page5title3">存为文件</string>
+    <string name="seeds_help_page5title4">该RSS ID连同被订阅的种子信息，将被写入文件：
+        /mnt/sdcard/Download/Seeds/RSSCart_20130810141053418.txt，请使用共享服务访问手机获取文件</string>
+    <string name="seeds_help_page6title">马上开始</string>
+    <string name="seeds_help_page6title2">Seeds的精彩旅程吧</string>
+    <string name="seeds_help_page6title3">开始</string>     
     
 </resources>

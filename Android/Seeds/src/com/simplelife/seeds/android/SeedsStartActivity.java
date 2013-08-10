@@ -30,11 +30,15 @@ public class SeedsStartActivity extends Activity {
 	
 	private static BroadcastReceiver mReceiver = null;
 	private boolean mIsPwdProtEnabled = true;
+	private SharedPreferences mSharedPrefs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		final View startView = View.inflate(this,R.layout.activity_seeds_start,null);
+		
+		mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		//setContentView(R.layout.activity_seeds_start);
 		setContentView(startView);
 		
@@ -81,15 +85,40 @@ public class SeedsStartActivity extends Activity {
 	
 	private void redirectTo(){       
 		Intent intent;
-		if (mIsPwdProtEnabled)
+		if(isFirstStart())
 		{
-			intent = new Intent(this, SeedsPasswordActivity.class);	
-		}else{
-			intent = new Intent(this, SeedsDateListActivity.class);
-		}				
+			updateFirstStartFlag(false);
+			intent = new Intent(this, SeedsHelpActivity.class);
+		    Bundle bundle = new Bundle();
+		    bundle.putString("caller", "SeedsStartActivity");
+		    intent.putExtras(bundle);
+		}
+		else
+		{
+			if (mIsPwdProtEnabled)
+			{
+				intent = new Intent(this, SeedsPasswordActivity.class);	
+			}else{
+				intent = new Intent(this, SeedsDateListActivity.class);
+			}			
+		}		
+				
 		startActivity(intent);
 		finish();
 	}
+	
+    private boolean isFirstStart(){
+    	
+    	// Retrieve the seeds info status by date via the shared preference file
+    	return mSharedPrefs.getBoolean("isfirststart",true);    	
+    }
+    
+    private void updateFirstStartFlag(Boolean _inTag){
+    	
+    	SharedPreferences.Editor editor = mSharedPrefs.edit();
+    	editor.putBoolean("isfirststart", _inTag);
+    	editor.commit();    	
+    } 
 	
 	private void startDownloadService(){
 		// Start the download service

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" 
+    android:background="@drawable/seeds_help_page_background" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent">
+    
+    <TextView 
+        android:textSize="@dimen/Medium_TextSize" 
+        android:id="@+id/title_tv" 
+        android:text="@string/seeds_help_page5title" 
+        style="@style/whats_new_title" />
+    <LinearLayout 
+        android:orientation="horizontal" 
+        android:paddingTop="15.0dip" 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content">
+        <LinearLayout 
+            android:orientation="vertical" 
+            android:layout_width="90.0dip" 
+            android:layout_height="wrap_content">
+            <LinearLayout 
+                android:orientation="horizontal" 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/whats_new_icon_title"
+                    android:text="@string/seeds_help_page5title2" />
+
+                <TextView 
+                    android:paddingLeft="10.0dip" 
+                    android:text="@string/seeds_help_page5title3" 
+                    style="@style/whats_new_icon_msg" />
+            </LinearLayout>
+            <TextView 
+                android:text="@string/seeds_help_page5title3" 
+                style="@style/whats_new_icon_msg" />
+        </LinearLayout>
+        <ImageView 
+            android:src="@drawable/seeds_help_page5" 
+            style="@style/whats_new_icon" />
+    </LinearLayout>
+    <TextView 
+        android:textSize="12.0dip" 
+        android:textColor="#ffffffff"
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="90.0dip" 
+        android:layout_marginRight="10.0dip" 
+        android:text="@string/seeds_help_page5title4"  />
+</LinearLayout>

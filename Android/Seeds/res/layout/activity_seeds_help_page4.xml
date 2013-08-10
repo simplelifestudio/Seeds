@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/seeds_help_page_background" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/title_tv"
+            style="@style/whats_new_title"
+            android:text="@string/seeds_help_page4title" />
+
+        <ImageView
+            android:id="@+id/img_iv"
+            style="@style/whats_new_img"
+            android:src="@drawable/seeds_help_page4_download" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="50.0dip" >
+
+            <LinearLayout
+                android:layout_width="90.0dip"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    style="@style/whats_new_icon_title"
+                    android:text="@string/seeds_help_page4title2" />
+
+                <TextView
+                    style="@style/whats_new_icon_msg"
+                    android:text="@string/seeds_help_page4title3" />
+            </LinearLayout>
+
+            <ImageView
+                style="@style/whats_new_icon"
+                android:src="@drawable/seeds_help_page4_share" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:paddingTop="260.0dip" >
+
+        <TextView
+            android:id="@+id/whats_new_nickname_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/Medium_TextSize" />
+
+        <ImageView
+            android:id="@+id/whats_new_avatar_iv"
+            android:layout_width="82.0dip"
+            android:layout_height="82.0dip"
+            android:layout_marginRight="30.0dip"
+            android:padding="6.0dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/seeds_help_page4_download1" />
+    </LinearLayout>
+
+</FrameLayout>

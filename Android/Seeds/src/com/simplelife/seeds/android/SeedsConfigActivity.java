@@ -76,6 +76,7 @@ public class SeedsConfigActivity extends Activity {
     	private Preference mPrefClearDatabase;
     	private Preference mPrefChangePwd;
     	//private Preference mPrefFeedback;
+    	private Preference mPrefWelcome;
     	private Preference mPrefAbout;
     	private SharedPreferences mSharedPrefs;
     	
@@ -107,6 +108,7 @@ public class SeedsConfigActivity extends Activity {
             mPrefClearDatabase = (Preference)findPreference("config_cleardatabase");
             mPrefChangePwd  = (Preference)findPreference("config_changepwd");
             //mPrefFeedback   = (Preference)findPreference("config_feedback");
+            mPrefWelcome = (Preference)findPreference("config_welcome");
             mPrefAbout = (Preference)findPreference("config_about");
             
             try {            	
@@ -127,6 +129,7 @@ public class SeedsConfigActivity extends Activity {
             mPrefClearDatabase.setOnPreferenceClickListener(this);
             mPrefChangePwd.setOnPreferenceClickListener(this);
             //mPrefFeedback.setOnPreferenceClickListener(this);
+            mPrefWelcome.setOnPreferenceClickListener(this);
             mPrefAbout.setOnPreferenceClickListener(this);
                         
             if(isServerAddressChanged())
@@ -200,6 +203,14 @@ public class SeedsConfigActivity extends Activity {
             		startActivity(intent);        			
         		}
         	}
+        	else if(mPrefWelcome == preference)
+        	{
+        		Intent intent = new Intent(getActivity(), SeedsHelpActivity.class);
+    		    Bundle bundle = new Bundle();
+    		    bundle.putString("caller", "SeedsConfigActivity");
+    		    intent.putExtras(bundle);
+    			startActivity(intent);
+        	}        	
         	else if(mPrefAbout == preference)
         	{
         		SeedsAboutDialog tDialog = new SeedsAboutDialog(getActivity());

@@ -69,6 +69,10 @@
             android:key="config_feedback" 
             android:summary="@string/seeds_config_feedbacksum"/-->
         <Preference 
+            android:title="@string/seeds_config_welcometitle" 
+            android:key="config_welcome" 
+            android:summary="@string/seeds_config_welcomesum"/>
+        <Preference 
             android:title="@string/seeds_config_abouttitle" 
             android:key="config_about" 
             android:summary="@string/seeds_config_aboutsum"/>
