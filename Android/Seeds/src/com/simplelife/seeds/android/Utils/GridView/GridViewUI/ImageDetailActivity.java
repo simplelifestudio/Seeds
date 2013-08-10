@@ -33,7 +33,6 @@ import android.view.View.OnClickListener;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
 
-import com.simplelife.seeds.android.BuildConfig;
 import com.simplelife.seeds.android.R;
 import com.simplelife.seeds.android.SeedsDefinitions;
 import com.simplelife.seeds.android.utils.gridview.gridviewprovider.Images;
@@ -42,7 +41,7 @@ import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.Utils;
 
 public class ImageDetailActivity extends FragmentActivity implements OnClickListener {
-    private static final String IMAGE_CACHE_DIR = "images";
+    //private static final String IMAGE_CACHE_DIR = "images";
     public static final String EXTRA_IMAGE = "extra_image";
 
     private ImagePagerAdapter mAdapter;
@@ -52,9 +51,10 @@ public class ImageDetailActivity extends FragmentActivity implements OnClickList
     @TargetApi(11)
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        if (BuildConfig.DEBUG) {
+        /*
+    	if (BuildConfig.DEBUG) {
             Utils.enableStrictMode();
-        }
+        }*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seeds_gridview_detailpager);
 

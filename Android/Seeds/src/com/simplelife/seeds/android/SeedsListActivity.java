@@ -15,7 +15,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,13 +55,13 @@ public abstract class SeedsListActivity extends FragmentActivity {
 	}
 	
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
         mImageFetcher.setExitTasksEarly(false);
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
         mImageFetcher.setPauseWork(false);
         mImageFetcher.setExitTasksEarly(true);
@@ -70,9 +69,9 @@ public abstract class SeedsListActivity extends FragmentActivity {
     }
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
-        Log.i("SeedsListActivity", "Destroying image views!");
+        mLogger.debug("Destroying image views!");
         int tImageViewSize = mImageViewList.size();
         for(int index=0; index<tImageViewSize; index++)
         {

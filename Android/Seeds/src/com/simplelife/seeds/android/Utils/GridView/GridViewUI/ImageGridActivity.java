@@ -16,11 +16,8 @@
 
 package com.simplelife.seeds.android.utils.gridview.gridviewui;
 
-import com.simplelife.seeds.android.BuildConfig;
 import com.simplelife.seeds.android.SeedsEntity;
 import com.simplelife.seeds.android.utils.gridview.gridviewprovider.Images;
-import com.simplelife.seeds.android.utils.gridview.gridviewutil.Utils;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;

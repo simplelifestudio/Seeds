@@ -51,13 +51,16 @@ public class SeedsFavListActivity extends SeedsListActivity{
         // The ImageFetcher takes care of loading images into our ImageView children asynchronously
         mImageFetcher = new ImageFetcher(this, mImageThumbSize);
         mImageFetcher.setLoadingImage(R.drawable.empty_photo);
-        mImageFetcher.addImageCache(this.getSupportFragmentManager(), cacheParams, "FAVTAG");
-		
+        mImageFetcher.addImageCache(this.getSupportFragmentManager(), cacheParams, "FAVTAG");			
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
 		// Start a new thread to get the data
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				Message msg = new Message();
 				msg.what = 0;
 				
@@ -65,7 +68,7 @@ public class SeedsFavListActivity extends SeedsListActivity{
 				msg.obj = getList();
 				handler.sendMessage(msg);
 			}
-		}).start();		
+		}).start();	
 	}
 	
 	@SuppressLint("HandlerLeak")
@@ -75,6 +78,7 @@ public class SeedsFavListActivity extends SeedsListActivity{
 			case 0 :
 				mListView = (ListView)findViewById(R.id.seeds_list);
 				
+				@SuppressWarnings("unchecked")
 				ArrayList<HashMap<String, String>> seedsList = (ArrayList<HashMap<String, String>>)msg.obj;
 				mAdapter = new SeedsAdapter(SeedsFavListActivity.this, seedsList);
 				mListView.setAdapter(mAdapter);
