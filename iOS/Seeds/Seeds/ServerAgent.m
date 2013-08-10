@@ -17,6 +17,7 @@
     id<SeedDAO> _seedDAO;
     CommunicationModule* _commModule;
     SeedsDownloadAgent* _downloadAgent;
+    SeedPictureAgent* _pictureAgent;
 }
 
 @end
@@ -156,6 +157,7 @@
         
         _commModule = [CommunicationModule sharedInstance];
         _downloadAgent = _commModule.seedsDownloadAgent;
+        _pictureAgent = _commModule.seedPictureAgent;
     }
     
     return self;
@@ -438,6 +440,7 @@
     // Step 60: 再将新数据保存入数据库
     // Step 70: 删除数据库中处于这三天之前的所有记录
     // Step 80: 删除下载目录中原有的，处于这三天之前的的所有文件
+    // Step 90: 删除缓存中所有已过期的图片
     
     [self _syncSeedsInfoWithSyncInvocations];
 }
@@ -628,6 +631,10 @@
                                             
                                             // Step 80
                                             [_downloadAgent clearDownloadDirectory:last3Days];
+                                            
+                                            // Step 90
+                                            DLog(@"Clean all expired image cache in disk.");
+                                            [_pictureAgent cleanExpiredCache];
                                             
                                             if (_delegate)
                                             {

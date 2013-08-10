@@ -279,6 +279,9 @@ SINGLETON(SeedPictureAgent)
 
 -(void) setMaxCahceAge:(NSUInteger) age
 {
+    _listTableCellThumbnailCache.maxCacheAge = age;
+    _pictureCollectionCellThumbnailCache.maxCacheAge = age;
+    _pictureViewThumbnailCache.maxCacheAge = age;
     _imageCache.maxCacheAge = age;
 }
 
@@ -386,10 +389,19 @@ SINGLETON(SeedPictureAgent)
         
         [_pictureViewThumbnailCache clearMemory];
         [_pictureViewThumbnailCache clearDisk];
-        
-        [_imageCache clearMemory];
-        [_imageCache clearDisk];
     }
+    
+    [_imageCache clearMemory];
+    [_imageCache clearDisk];
+}
+
+-(void) cleanExpiredCache
+{
+    [_listTableCellThumbnailCache cleanDisk];
+    [_pictureCollectionCellThumbnailCache cleanDisk];
+    [_pictureViewThumbnailCache cleanDisk];
+    
+    [_imageCache cleanDisk];
 }
 
 - (unsigned long long) diskCacheImagesSize

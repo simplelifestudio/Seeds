@@ -20,6 +20,7 @@
     BOOL _isPullOperationDone;
     
     SeedsDownloadAgent* _downloadAgent;
+    SeedPictureAgent* _pictureAgent;
     
     GUIModule* _guiModule;
 }
@@ -135,6 +136,7 @@
     // Step 70: 更新本地KV缓存中时间标的对应数据同步状态
     // Step 80: 删除数据库中原有的，处于这三天之前的所有非收藏状态的记录
     // Step 90: 删除下载目录中原有的，处于这三天之前的的所有文件
+    // Step 100: 删除缓存中所有过期的图片
     
     @try
     {
@@ -335,6 +337,10 @@
             DLog(@"Clean all old torrents before the last 3 days.");
             [_downloadAgent clearDownloadDirectory:days];
             
+            // Step 100:
+            DLog(@"Clean all expired image cache in disk.");
+            [_pictureAgent cleanExpiredCache];
+            
             if (_seedsSpiderDelegate)
             {
                 [_seedsSpiderDelegate taskFinished:NSLocalizedString(@"Completed", nil) minorStatus:nil];
@@ -380,6 +386,7 @@
     
     CommunicationModule* _commModule = [CommunicationModule sharedInstance];
     _downloadAgent = _commModule.seedsDownloadAgent;
+    _pictureAgent = _commModule.seedPictureAgent;
     
     _guiModule = [GUIModule sharedInstance];
 }

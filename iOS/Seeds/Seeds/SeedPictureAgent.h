@@ -42,6 +42,8 @@ typedef void(^ImageDownloadFinishBlock)(UIImage* image, SeedImageType imageType,
 -(void) clearMemory;
 -(void) clearCacheBothInMemoryAndDisk;
 
+-(void) cleanExpiredCache;
+
 - (unsigned long long) diskCacheImagesSize;
 - (NSUInteger) diskCacheImagesCount;
 
