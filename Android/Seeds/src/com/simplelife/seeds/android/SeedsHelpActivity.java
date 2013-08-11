@@ -29,6 +29,7 @@ public class SeedsHelpActivity extends Activity {
 	private ImageView mPage3;
 	private ImageView mPage4;
 	private ImageView mPage5;
+	private ImageView mPage6;
 	private String mCallerName;
 	
     @Override
@@ -45,6 +46,7 @@ public class SeedsHelpActivity extends Activity {
         mPage3 = (ImageView)findViewById(R.id.page3);
         mPage4 = (ImageView)findViewById(R.id.page4);
         mPage5 = (ImageView)findViewById(R.id.page5);
+        mPage6 = (ImageView)findViewById(R.id.page6);
         
 		// Retrieve the date info parameter
 		Bundle bundle = getIntent().getExtras();
@@ -52,6 +54,7 @@ public class SeedsHelpActivity extends Activity {
                
         LayoutInflater mLi = LayoutInflater.from(this);
         
+        View view0 = mLi.inflate(R.layout.activity_seeds_help_page0, null);
         View view1 = mLi.inflate(R.layout.activity_seeds_help_page1, null);
         View view2 = mLi.inflate(R.layout.activity_seeds_help_page2, null);
         View view3 = mLi.inflate(R.layout.activity_seeds_help_page3, null);
@@ -63,6 +66,7 @@ public class SeedsHelpActivity extends Activity {
         //mStartButton.setOnClickListener(myStartBtnListener);
 
         final ArrayList<View> views = new ArrayList<View>();
+        views.add(view0);
         views.add(view1);
         views.add(view2);
         views.add(view3);
@@ -71,6 +75,7 @@ public class SeedsHelpActivity extends Activity {
         views.add(view6);    
                 
         final ArrayList<String> titles = new ArrayList<String>();
+        titles.add("tab0");
         titles.add("tab1");
         titles.add("tab2");
         titles.add("tab3");
@@ -124,6 +129,11 @@ public class SeedsHelpActivity extends Activity {
 			case 5:
 				mPage5.setImageDrawable(getResources().getDrawable(R.drawable.page_now));
 				mPage4.setImageDrawable(getResources().getDrawable(R.drawable.page));
+				mPage6.setImageDrawable(getResources().getDrawable(R.drawable.page));
+				break;
+			case 6:
+				mPage6.setImageDrawable(getResources().getDrawable(R.drawable.page_now));
+				mPage5.setImageDrawable(getResources().getDrawable(R.drawable.page));
 				break;
 			}
 		}

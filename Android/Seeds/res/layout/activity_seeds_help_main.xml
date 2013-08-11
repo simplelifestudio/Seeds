@@ -58,7 +58,14 @@
                 android:layout_height="wrap_content" 
                 android:layout_marginLeft="10dp"                    
                 android:scaleType="matrix"
-                android:src="@drawable/page" />           
+                android:src="@drawable/page" />
+            <ImageView
+                android:id="@+id/page6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_marginLeft="10dp"                    
+                android:scaleType="matrix"
+                android:src="@drawable/page" />            
         </LinearLayout>
         
        

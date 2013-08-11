@@ -41,8 +41,10 @@
     <string name="seeds_list_contextualdel">删除</string>
     <string name="seeds_list_contextualtitle">选择项目</string>
     <string name="seeds_list_contextualsubtitle1">选择了</string>
-    <string name="seeds_list_contextualsubtitle2">项</string>    
-    <string name="seeds_favlist_deletedialogmsg">确认取消收藏选中的种子吗？前天之前的种子取消收藏后将无法找回。</string>
+    <string name="seeds_list_contextualsubtitle2">项</string>
+    <string name="seeds_favlist_empty">收藏列表为空。</string>
+    <string name="seeds_rsslist_empty">订阅列表为空。</string>     
+    <string name="seeds_favlist_deletedialogmsg">确认取消收藏选中的种子吗？三天之前的种子取消收藏后将无法找回。</string>
     <string name="seeds_favlist_deletedialognote">取消收藏</string>
     <string name="seeds_favlist_deletedialogpos">确认</string>
     <string name="seeds_favlist_deletedialogneg">取消</string>

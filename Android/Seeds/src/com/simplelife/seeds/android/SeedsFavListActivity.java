@@ -35,6 +35,7 @@ public class SeedsFavListActivity extends SeedsListActivity{
 	private ProgressDialog mProgressDialog = null;
 	protected final int MESSAGE_LOAD_ADAPTER  = 300;
 	protected final int MESSAGE_LOAD_DISMISSDIALOG  = 301;
+	private View mEmptyView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,8 @@ public class SeedsFavListActivity extends SeedsListActivity{
 		
 		// setTheme(android.R.style.Theme_Translucent_NoTitleBar);
 		// Set the list view layout
-		setContentView(R.layout.activity_seeds_favlist);				
+		setContentView(R.layout.activity_seeds_favlist);
+		mEmptyView = findViewById(R.id.favlist_empty);
 				
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
@@ -88,13 +90,18 @@ public class SeedsFavListActivity extends SeedsListActivity{
 				mListView = (ListView)findViewById(R.id.seeds_list);
 				
 				mSeedsListForListView = (ArrayList<SeedsEntity>)msg.obj;
-				mAdapter = new SeedsAdapter(SeedsFavListActivity.this, mSeedsListForListView);
-				mListView.setAdapter(mAdapter);
+				if (mSeedsListForListView.size() <= 0) {
+				    mEmptyView.setVisibility(View.VISIBLE);
+				} else {
+				    mEmptyView.setVisibility(View.GONE);
+					mAdapter = new SeedsAdapter(SeedsFavListActivity.this, mSeedsListForListView);
+					mListView.setAdapter(mAdapter);
 
-				// Bond the click listener
-				mListView.setOnItemClickListener(new ListViewItemOnClickListener());
-				mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-				mListView.setMultiChoiceModeListener(new ModeCallback());				
+					// Bond the click listener
+					mListView.setOnItemClickListener(new ListViewItemOnClickListener());
+					mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+					mListView.setMultiChoiceModeListener(new ModeCallback());	
+				}			
 				break;				
 			}
 			case MESSAGE_LOAD_DISMISSDIALOG:
@@ -132,6 +139,8 @@ public class SeedsFavListActivity extends SeedsListActivity{
 			        mSeedsListForListView.remove(_intSeedsSelectedList.get(index));
 			    }
 			    mAdapter.notifyDataSetChanged();
+				if (mSeedsListForListView.size() <= 0) 
+				    mEmptyView.setVisibility(View.VISIBLE);
 			    mProgressDialog.dismiss();
 				Toast.makeText(SeedsFavListActivity.this, R.string.seeds_favlist_deletedialogdone, Toast.LENGTH_SHORT).show();
 

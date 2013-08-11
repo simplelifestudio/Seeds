@@ -43,6 +43,8 @@
     <string name="seeds_list_contextualtitle">Select Items</string>
     <string name="seeds_list_contextualsubtitle1">Selected</string>
     <string name="seeds_list_contextualsubtitle2">items</string>
+    <string name="seeds_favlist_empty">No Seed in Favorite list.</string>
+    <string name="seeds_rsslist_empty">RSS Cart is empty.</string>
     <string name="seeds_favlist_deletedialogmsg">Remove the selected seeds from favorite list? 
         Seeds with the publish date three days before will be lost.</string>
     <string name="seeds_favlist_deletedialognote">Unsubscribe</string>

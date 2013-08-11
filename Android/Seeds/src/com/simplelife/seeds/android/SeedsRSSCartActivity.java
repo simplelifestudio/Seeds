@@ -47,6 +47,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -60,6 +61,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 	
 	private static String mCartId;
 	private ProgressDialog mProgressDialog = null; 
+	private TextView mEmptyView;
 	
 	// Handler message definition
 	final int RSSMESSAGETYPE_GETLIST = 200;
@@ -75,6 +77,8 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 		
 		// Set the list view layout
 		setContentView(R.layout.activity_seeds_favlist);
+		mEmptyView = (TextView)findViewById(R.id.favlist_empty);
+		mEmptyView.setText(R.string.seeds_rsslist_empty);
 		
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
@@ -116,6 +120,11 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 					mListView = (ListView)findViewById(R.id.seeds_list);
 				
 					mSeedsListForListView = (ArrayList<SeedsEntity>)msg.obj;
+					if (mSeedsListForListView.size() <= 0) {						
+						mEmptyView.setVisibility(View.VISIBLE);
+					} else {
+					    mEmptyView.setVisibility(View.GONE);
+					}
 					mAdapter = new SeedsAdapter(SeedsRSSCartActivity.this, mSeedsListForListView);
 					mListView.setAdapter(mAdapter);
 
@@ -182,9 +191,13 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 			    int tSeedsNumInList = _intSeedsSelectedList.size();
 			    for(int index=0; index<tSeedsNumInList; index++)
 			    {
-			        mSeedsEntityList.remove(_intSeedsSelectedList.get(index));
+			    	mSeedLocalIdInCart.remove((Integer)_intSeedsSelectedList.get(index).getSeedLocalId());
+			    	mSeedIdInCart.remove((Integer)_intSeedsSelectedList.get(index).getSeedId());
+			    	mSeedsEntityList.remove(_intSeedsSelectedList.get(index));
 			        mSeedsListForListView.remove(_intSeedsSelectedList.get(index));
 			    }
+				if (mSeedsListForListView.size() <= 0) 						
+					mEmptyView.setVisibility(View.VISIBLE);
 			    mAdapter.notifyDataSetChanged();
 			    mProgressDialog.dismiss();
 				Toast.makeText(SeedsRSSCartActivity.this, R.string.seeds_rsslist_deletedialogdone, Toast.LENGTH_SHORT).show();
@@ -396,7 +409,8 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 		mSeedIdInCart.clear();
 		mSeedsEntityList.clear();
 		mSeedsListForListView.clear();
-		mAdapter.notifyDataSetChanged();		
+		mAdapter.notifyDataSetChanged();
+		mEmptyView.setVisibility(View.VISIBLE);
 	}
 		
 	private void sendRSSBookMessage(){

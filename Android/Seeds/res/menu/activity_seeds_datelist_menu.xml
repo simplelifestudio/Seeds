@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">  
 
     <item
-        android:id="@+id/download_mgt_datelist"
-        android:icon="@drawable/download_management_large"
-        android:showAsAction="ifRoom"
-        android:title="@string/seeds_download_mgt"/>  
+        android:id="@+id/download_mgt_datelist"        
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/seeds_download_mgt"/>
+    <!--android:icon="@drawable/download_management_large"  -->  
         
     <item
-        android:id="@+id/rss_management_datelist"
-        android:icon="@drawable/rss_management_large"        
-        android:showAsAction="ifRoom"
+        android:id="@+id/rss_management_datelist"                
+        android:showAsAction="ifRoom|withText"
         android:title="@string/seeds_rss_management"/>
+    <!-- android:icon="@drawable/rss_management_large" -->
                  
 </menu>

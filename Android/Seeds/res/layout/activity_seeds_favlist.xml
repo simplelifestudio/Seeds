@@ -11,6 +11,13 @@
         android:divider="#b5b5b5" 
         android:dividerHeight="1dp" 
         android:listSelector="@drawable/seedslist_selector" />     
-    
+   
+   <TextView 
+        android:id="@+id/favlist_empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="@string/seeds_favlist_empty"
+        android:gravity="center"
+        android:textStyle="bold"/>
 
 </LinearLayout>

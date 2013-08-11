@@ -8,8 +8,6 @@
 package com.simplelife.seeds.android;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
