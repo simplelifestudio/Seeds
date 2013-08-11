@@ -29,6 +29,10 @@ public class SeedsDefinitions {
 		public static final String SEEDS_ERROR_WRONGREALDATE = "Wrong Calendar Date Detected!";
 		public static final String SEEDS_ERROR_WRONGLOGICDATE = "Wrong Logic Date Detected!";
 	}
+	
+	public class SeedsGlobalNOTECode{
+		public static final String SEEDS_NOTE_NO_IMAGE = "Nothing To Show";
+	}
 		
 	public static String SEEDS_SERVER_HTTP_MIME = "application/json";
 	public static String SEEDS_SERVER_DEFAUL_IPANDPORT = "192.81.135.31:80";

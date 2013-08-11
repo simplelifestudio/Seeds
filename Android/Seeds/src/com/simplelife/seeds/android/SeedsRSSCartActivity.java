@@ -20,6 +20,8 @@ import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
+
+import com.simplelife.seeds.android.SeedsListActivity.ModeCallback;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
@@ -55,7 +57,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 	private static ArrayList<Integer> mBookSuccSeedIdList = new  ArrayList<Integer>();
 	private static ArrayList<Integer> mBookExistSeedIdList = new  ArrayList<Integer>();
 	private static ArrayList<Integer> mBookFailedSeedIdList = new  ArrayList<Integer>();
-	private ArrayList<HashMap<String, String>> mSeedsListForListView = new ArrayList<HashMap<String, String>>();
+	
 	private static String mCartId;
 	private ProgressDialog mProgressDialog = null; 
 	
@@ -106,18 +108,21 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 	
 	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler(){
+		@SuppressWarnings("unchecked")
 		public void handleMessage(Message msg) {
 			switch(msg.what){
 				case RSSMESSAGETYPE_GETLIST :
 				{
 					mListView = (ListView)findViewById(R.id.seeds_list);
 				
-					mSeedsListForListView = (ArrayList<HashMap<String, String>>)msg.obj;
+					mSeedsListForListView = (ArrayList<SeedsEntity>)msg.obj;
 					mAdapter = new SeedsAdapter(SeedsRSSCartActivity.this, mSeedsListForListView);
 					mListView.setAdapter(mAdapter);
 
 					// Bond the click listener
 					mListView.setOnItemClickListener(new ListViewItemOnClickListener());
+					mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+					mListView.setMultiChoiceModeListener(new ModeCallback());
 					break;
 				}
 				case RSSMESSAGETYPE_UPDATEDIALOG:
@@ -163,6 +168,40 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 		}
 	};
 	
+	protected void onMultiChosenProcess(final ArrayList<SeedsEntity> _intSeedsSelectedList){
+		AlertDialog.Builder builder = new Builder(SeedsRSSCartActivity.this);
+		builder.setMessage(getString(R.string.seeds_rsslist_deletedialogmsg));
+		builder.setTitle(getString(R.string.seeds_rsslist_deletedialognote));
+		builder.setPositiveButton(R.string.seeds_rsslist_deletedialogpos, new DialogInterface.OnClickListener() {
+		    @Override
+	        public void onClick(DialogInterface dialog, int which) {
+			    dialog.dismiss();
+	            mProgressDialog = ProgressDialog.show(SeedsRSSCartActivity.this, "Loading...", 
+  			          getString(R.string.seeds_rsslist_deletedialoging), true, false);
+  	            mProgressDialog.setCanceledOnTouchOutside(true);      	
+			    int tSeedsNumInList = _intSeedsSelectedList.size();
+			    for(int index=0; index<tSeedsNumInList; index++)
+			    {
+			        mSeedsEntityList.remove(_intSeedsSelectedList.get(index));
+			        mSeedsListForListView.remove(_intSeedsSelectedList.get(index));
+			    }
+			    mAdapter.notifyDataSetChanged();
+			    mProgressDialog.dismiss();
+				Toast.makeText(SeedsRSSCartActivity.this, R.string.seeds_rsslist_deletedialogdone, Toast.LENGTH_SHORT).show();
+
+			}				
+		});
+
+		builder.setNegativeButton(R.string.seeds_rsslist_deletedialogneg, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        dialog.dismiss();
+		    }
+		});
+
+		builder.create().show();							
+	}
+	
 	class ListViewItemOnClickListener implements OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view,
@@ -184,7 +223,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 		SeedsEntity tSeedsEntity;
 		
 		// Initialize the SeedsEntity List
-		mSeedsEntityList = new ArrayList<SeedsEntity>(); 
+		mSeedsEntityList.clear(); 
 		
 		// Retrieve the DB process handler to get data 
 		SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();

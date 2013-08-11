@@ -19,6 +19,7 @@ package com.simplelife.seeds.android.utils.gridview.gridviewutil;
 import com.simplelife.seeds.android.BuildConfig;
 import com.simplelife.seeds.android.R;
 import com.simplelife.seeds.android.SeedsDefinitions;
+import com.simplelife.seeds.android.SeedsDefinitions.SeedsGlobalNOTECode;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageDetailFragment;
 import com.simplelife.seeds.android.utils.wirelessmanager.SeedsWirelessManager;
 
@@ -81,6 +82,12 @@ public abstract class ImageWorker {
     public void loadImage(Object data, ImageView imageView) {
         if (data == null) {
             return;
+        }
+        
+        if(data.equals(SeedsGlobalNOTECode.SEEDS_NOTE_NO_IMAGE))
+        {
+        	imageView.setImageResource(R.drawable.empty_photo);
+        	return;
         }
 
         BitmapDrawable value = null;

@@ -11,15 +11,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
                
     <item
-        android:id="@+id/rss_sendreqmsg"
-        android:icon="@drawable/send_rss_book_request"
+        android:id="@+id/rss_sendreqmsg"        
         android:showAsAction="ifRoom|withText"
         android:title="@string/seeds_rss_menu_sendreqmsg"/>
+    <!-- android:icon="@drawable/send_rss_book_request" -->
     
     <item
-        android:id="@+id/rss_removeall"
-        android:icon="@drawable/content_discard"
+        android:id="@+id/rss_removeall"        
         android:showAsAction="ifRoom|withText"
         android:title="@string/seeds_rss_menu_removeall"/> 
+    <!-- android:icon="@drawable/content_discard" -->
 
 </menu>

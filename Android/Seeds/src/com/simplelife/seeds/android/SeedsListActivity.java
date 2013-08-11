@@ -8,14 +8,17 @@
 package com.simplelife.seeds.android;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -23,14 +26,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ListView;
 
-import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
+import com.simplelife.seeds.android.SeedsDefinitions.SeedsGlobalNOTECode;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageWorker;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 public abstract class SeedsListActivity extends FragmentActivity {
 
-	public static final String KEY_THUMB_URL = "thumb_url";
+	public static final String KEY_THUMB_URL = "thumb_url";	
 
 	protected ListView mListView;
 	protected SeedsAdapter mAdapter;
@@ -42,7 +45,10 @@ public abstract class SeedsListActivity extends FragmentActivity {
     protected ImageFetcher mImageFetcher;
 	
     protected ArrayList<SeedsEntity> mSeedsEntityList;
+    protected ArrayList<SeedsEntity> mSeedsEntityChosen;
+    protected ArrayList<View> mSeedsViewsChosen;
     protected ArrayList<ImageView> mImageViewList;
+    protected ArrayList<SeedsEntity> mSeedsListForListView;
 	
 	// For log purpose
     protected SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger(); 
@@ -51,6 +57,11 @@ public abstract class SeedsListActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		// Initialize the SeedsEntity List
+		mSeedsEntityList = new ArrayList<SeedsEntity>();
+		mSeedsListForListView = new ArrayList<SeedsEntity>();
+		mSeedsEntityChosen = new ArrayList<SeedsEntity>();
+		mSeedsViewsChosen  = new  ArrayList<View>();
 		mImageViewList = new ArrayList<ImageView>();
 	}
 	
@@ -86,57 +97,99 @@ public abstract class SeedsListActivity extends FragmentActivity {
         mImageFetcher.closeCache();
     }	
 
-	protected ArrayList<HashMap<String, String>> getList() {
-		
-		ArrayList<HashMap<String, String>> seedsList = new ArrayList<HashMap<String, String>>();
-		String tFirstImgUrl;
-		
-		// Load all the seeds info
-		loadSeedsInfo();
-		
-		// Walk through the SeedsEntity List
-		int tListSize = mSeedsEntityList.size();
-		for (int index = 0; index < tListSize; index++)
-		{
-			SeedsEntity tSeedsEntity = mSeedsEntityList.get(index);
-					
-			if(tSeedsEntity.getSeedIsPicAvail())
-				tFirstImgUrl = tSeedsEntity.getPicLinks().get(0);
-			else
-				tFirstImgUrl = "Nothing To Show";
-			
-			HashMap<String, String> map = new HashMap<String, String>();
-			map.put(SeedsDBAdapter.KEY_NAME, tSeedsEntity.getSeedName());
-			map.put(SeedsDBAdapter.KEY_SIZE, 
-					tSeedsEntity.getSeedSize()+" / "
-			       +tSeedsEntity.getPicLinks().size()
-			       +getString(R.string.seeds_listperday_seedspics));
-			map.put(SeedsDBAdapter.KEY_FORMAT, tSeedsEntity.getSeedFormat());
-			String tMosaic = (tSeedsEntity.getSeedMosaic())
-					       ? getString(R.string.seeds_listperday_withmosaic)
-					       : getString(R.string.seeds_listperday_withoutmosaic);
-			map.put(SeedsDBAdapter.KEY_MOSAIC, tMosaic);
-			map.put(KEY_THUMB_URL, tFirstImgUrl);
-			
-			// Add the instance into the array
-			seedsList.add(map);
-			
-			// Record the seedId info
-			mSeedIdList.add(tSeedsEntity.getSeedId());
-		}
-		
-		return seedsList;	
+	protected ArrayList<SeedsEntity> getList() {
+		loadSeedsInfo();				
+		return mSeedsEntityList;	
 	}
 	
 	abstract protected void loadSeedsInfo();
 	
+	protected void onMultiChosenProcess(ArrayList<SeedsEntity> _intSeedsSelectedList){		
+	}
+	
+	protected class ModeCallback implements ListView.MultiChoiceModeListener{
+        
+		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflater = SeedsListActivity.this.getMenuInflater();
+            mSeedsEntityChosen.clear();
+            mSeedsViewsChosen.clear();
+            inflater.inflate(R.menu.activity_seeds_list_contextualmenu, menu);
+            mode.setTitle(getString(R.string.seeds_list_contextualtitle));
+            setSubtitle(mode);
+            return true;
+        }
+
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return true;
+        }
+
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+            case R.id.seedslist_del:
+            	onMultiChosenProcess(mSeedsEntityChosen);
+                mode.finish();
+            break;
+            default:
+            break;
+            }
+            return true;
+        }
+
+        public void onDestroyActionMode(ActionMode mode) {
+        	int tNumOfView = mSeedsViewsChosen.size();
+        	for(int index=0; index<tNumOfView; index++)
+        	{
+        		mSeedsViewsChosen.get(index).setBackgroundResource(R.drawable.seedslist_selector);
+        	    mSeedsViewsChosen.get(index).setPadding(8, 8, 8, 8);
+        	}
+        }
+
+        public void onItemCheckedStateChanged(ActionMode mode,
+            int position, long id, boolean checked) {
+        	if (checked)
+        	{
+        		mLogger.debug("Seeds added to list " + mSeedsEntityList.get(position).getSeedLocalId());
+        		mSeedsEntityChosen.add(mSeedsEntityList.get(position));
+        		mSeedsViewsChosen.add(mListView.getChildAt(position));
+        	    mListView.getChildAt(position).setBackgroundResource(R.drawable.seedsgradient_bg_hover);
+        	}
+        	else
+        	{
+        		mSeedsEntityChosen.remove(mSeedsEntityList.get(position));
+        		mSeedsViewsChosen.remove(mListView.getChildAt(position));
+        		mListView.getChildAt(position).setBackgroundResource(R.drawable.seedslist_selector);
+        		mListView.getChildAt(position).setPadding(8, 8, 8, 8);
+        	}
+            setSubtitle(mode);
+        }
+
+        private void setSubtitle(ActionMode mode) {
+            final int checkedCount = mListView.getCheckedItemCount();
+            switch (checkedCount) {
+            case 0:
+                mode.setSubtitle(null);
+                break;
+            case 1:
+                mode.setSubtitle(getString(R.string.seeds_list_contextualsubtitle1)
+                		       +"1"
+                		       +getString(R.string.seeds_list_contextualsubtitle2));
+                break;
+            default:
+                mode.setSubtitle(getString(R.string.seeds_list_contextualsubtitle1)
+                		        +checkedCount
+                		        +getString(R.string.seeds_list_contextualsubtitle2));
+                break;
+            }
+        }
+	}
+	
 	public class SeedsAdapter extends BaseAdapter {
 
 		protected Activity activity;
-		protected ArrayList<HashMap<String, String>> data;
+		protected ArrayList<SeedsEntity> data;
 		protected LayoutInflater inflater = null;		
 
-		public SeedsAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
+		public SeedsAdapter(Activity a, ArrayList<SeedsEntity> d) {
 			activity = a;
 			data     = d;
 			inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -156,6 +209,7 @@ public abstract class SeedsListActivity extends FragmentActivity {
 
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View vi = convertView;
+			String tFirstImgUrl;
 			if (convertView == null)
 				vi = inflater.inflate(R.layout.activity_seeds_listperday_row, null);
 
@@ -163,25 +217,26 @@ public abstract class SeedsListActivity extends FragmentActivity {
 			TextView size   = (TextView) vi.findViewById(R.id.seeds_size); 
 			TextView format = (TextView) vi.findViewById(R.id.seeds_format);
 			TextView mosaic = (TextView) vi.findViewById(R.id.seeds_mosaic);
-			ImageView thumb_image = (ImageView) vi.findViewById(R.id.list_image);			
-			
-			/*int width  = 75; //thumb_image.getMaxWidth();
-			int height = 75; //thumb_image.getMaxHeight();
-			mImageFetcher.setImageSize(width, height);
-			Log.i("ListActivity", "width = "+width+" height="+height);
-			*/
+			ImageView thumb_image = (ImageView) vi.findViewById(R.id.list_image);						
 			
 			thumb_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-			HashMap<String, String> seedList = new HashMap<String, String>();
-			seedList = data.get(position);
+			SeedsEntity seedList = data.get(position);
 
 			// Set the values for the list view
-			title.setText(seedList.get(SeedsDBAdapter.KEY_NAME));
-			size.setText(seedList.get(SeedsDBAdapter.KEY_SIZE));
-			format.setText(seedList.get(SeedsDBAdapter.KEY_FORMAT));
-			mosaic.setText(seedList.get(SeedsDBAdapter.KEY_MOSAIC));
-			mImageFetcher.loadImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL), thumb_image);
+			title.setText(seedList.getSeedName());
+			size.setText(seedList.getSeedSize()+" / "
+				        +seedList.getPicLinks().size()
+				        +getString(R.string.seeds_listperday_seedspics));
+			format.setText(seedList.getSeedFormat());
+			mosaic.setText((seedList.getSeedMosaic())
+					       ? getString(R.string.seeds_listperday_withmosaic)
+					       : getString(R.string.seeds_listperday_withoutmosaic));
+			if(seedList.getSeedIsPicAvail())
+				tFirstImgUrl = seedList.getPicLinks().get(0);
+			else
+				tFirstImgUrl = SeedsGlobalNOTECode.SEEDS_NOTE_NO_IMAGE;
+			mImageFetcher.loadImage(tFirstImgUrl, thumb_image);
 			mImageViewList.add(thumb_image);
 			/*imageLoader.DisplayImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL),
 					thumb_image,0);*/

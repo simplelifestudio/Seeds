@@ -39,6 +39,24 @@
     <string name="seeds_listperday_withmosaic">Mocaic</string>
     <string name="seeds_listperday_withoutmosaic">No-Mosaic</string>
     <string name="seeds_listperday_seedspics"> Images</string>
+    <string name="seeds_list_contextualdel">Delete</string>
+    <string name="seeds_list_contextualtitle">Select Items</string>
+    <string name="seeds_list_contextualsubtitle1">Selected</string>
+    <string name="seeds_list_contextualsubtitle2">items</string>
+    <string name="seeds_favlist_deletedialogmsg">Remove the selected seeds from favorite list? 
+        Seeds with the publish date three days before will be lost.</string>
+    <string name="seeds_favlist_deletedialognote">Unsubscribe</string>
+    <string name="seeds_favlist_deletedialogpos">Confirm</string>
+    <string name="seeds_favlist_deletedialogneg">Cancel</string>
+    <string name="seeds_favlist_deletedialoging">Removing the seeds from favorite list&#8230;</string>
+    <string name="seeds_favlist_deletedialogdone">Unsubscribe successfully</string>    
+    <string name="seeds_rsslist_deletedialogmsg">Remove the selected seeds from RSS list?</string>
+    <string name="seeds_rsslist_deletedialognote">Unsubscribe</string>
+    <string name="seeds_rsslist_deletedialogpos">Confirm</string>
+    <string name="seeds_rsslist_deletedialogneg">Cancel</string>
+    <string name="seeds_rsslist_deletedialoging">Removing the seeds from RSS list&#8230;</string>
+    <string name="seeds_rsslist_deletedialogdone">Unsubscribe successfully</string> 
+    
     <string name="seedTitle">The title of the seed</string>
     <string name="seedSize">The size of the seed</string>
     <string name="seedFormat">The format of the seed</string>

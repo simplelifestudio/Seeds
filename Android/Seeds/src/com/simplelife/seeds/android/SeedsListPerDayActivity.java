@@ -76,13 +76,14 @@ public class SeedsListPerDayActivity extends SeedsListActivity {
 	
 	@SuppressLint("HandlerLeak")
 	protected Handler handler = new Handler(){
+		@SuppressWarnings("unchecked")
 		public void handleMessage(Message msg) {
 			switch(msg.what){
 			case 0 :
 				mListView = (ListView)findViewById(R.id.seeds_list);
 				
-				ArrayList<HashMap<String, String>> seedsList = (ArrayList<HashMap<String, String>>)msg.obj;
-				mAdapter = new SeedsAdapter(SeedsListPerDayActivity.this, seedsList);
+				mSeedsListForListView = (ArrayList<SeedsEntity>)msg.obj;
+				mAdapter = new SeedsAdapter(SeedsListPerDayActivity.this, mSeedsListForListView);
 				mListView.setAdapter(mAdapter);
 
 				// Bond the click listener
@@ -110,7 +111,7 @@ public class SeedsListPerDayActivity extends SeedsListActivity {
 		SeedsEntity tSeedsEntity;
 		
 		// Initialize the SeedsEntity List
-		mSeedsEntityList = new ArrayList<SeedsEntity>(); 
+		mSeedsEntityList.clear(); 
 		
 		// Retrieve the DB process handler to get data 
 		SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();

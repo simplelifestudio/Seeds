@@ -8,8 +8,6 @@
 package com.simplelife.seeds.android;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
@@ -17,6 +15,10 @@ import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache.Image
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -25,9 +27,14 @@ import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class SeedsFavListActivity extends SeedsListActivity{
+	
+	private ProgressDialog mProgressDialog = null;
+	protected final int MESSAGE_LOAD_ADAPTER  = 300;
+	protected final int MESSAGE_LOAD_DISMISSDIALOG  = 301;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +69,7 @@ public class SeedsFavListActivity extends SeedsListActivity{
 			@Override
 			public void run() {
 				Message msg = new Message();
-				msg.what = 0;
+				msg.what = MESSAGE_LOAD_ADAPTER;
 				
 				// Retrieve the seeds list
 				msg.obj = getList();
@@ -73,28 +80,78 @@ public class SeedsFavListActivity extends SeedsListActivity{
 	
 	@SuppressLint("HandlerLeak")
 	protected Handler handler = new Handler(){
+		@SuppressWarnings("unchecked")
 		public void handleMessage(Message msg) {
 			switch(msg.what){
-			case 0 :
+			case MESSAGE_LOAD_ADAPTER:
+			{
 				mListView = (ListView)findViewById(R.id.seeds_list);
 				
-				@SuppressWarnings("unchecked")
-				ArrayList<HashMap<String, String>> seedsList = (ArrayList<HashMap<String, String>>)msg.obj;
-				mAdapter = new SeedsAdapter(SeedsFavListActivity.this, seedsList);
+				mSeedsListForListView = (ArrayList<SeedsEntity>)msg.obj;
+				mAdapter = new SeedsAdapter(SeedsFavListActivity.this, mSeedsListForListView);
 				mListView.setAdapter(mAdapter);
 
 				// Bond the click listener
 				mListView.setOnItemClickListener(new ListViewItemOnClickListener());
-				break;
+				mListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+				mListView.setMultiChoiceModeListener(new ModeCallback());				
+				break;				
+			}
+			case MESSAGE_LOAD_DISMISSDIALOG:
+			{
+				mProgressDialog.dismiss();
+				Toast.makeText(SeedsFavListActivity.this, R.string.seeds_favlist_deletedialogdone, Toast.LENGTH_SHORT).show();				
+			}
+
 			}
 		}
 	};
+	
+    private void setAsUnFavorite(final int _inLocalId){
+    	// Get the DB adapter instance
+		SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();					
+		mDBAdapter.updateSeedEntryFav(_inLocalId,false);           							
+	}
+	
+	protected void onMultiChosenProcess(final ArrayList<SeedsEntity> _intSeedsSelectedList){
+		AlertDialog.Builder builder = new Builder(SeedsFavListActivity.this);
+		builder.setMessage(getString(R.string.seeds_favlist_deletedialogmsg));
+		builder.setTitle(getString(R.string.seeds_favlist_deletedialognote));
+		builder.setPositiveButton(R.string.seeds_favlist_deletedialogpos, new DialogInterface.OnClickListener() {
+		    @Override
+	        public void onClick(DialogInterface dialog, int which) {
+			    dialog.dismiss();
+	            mProgressDialog = ProgressDialog.show(SeedsFavListActivity.this, "Loading...", 
+  			          getString(R.string.seeds_favlist_deletedialoging), true, false);
+  	            mProgressDialog.setCanceledOnTouchOutside(true);      	
+			    int tSeedsNumInList = _intSeedsSelectedList.size();
+			    for(int index=0; index<tSeedsNumInList; index++)
+			    {
+			        setAsUnFavorite(_intSeedsSelectedList.get(index).getSeedLocalId());
+			        mSeedsEntityList.remove(_intSeedsSelectedList.get(index));
+			        mSeedsListForListView.remove(_intSeedsSelectedList.get(index));
+			    }
+			    mAdapter.notifyDataSetChanged();
+			    mProgressDialog.dismiss();
+				Toast.makeText(SeedsFavListActivity.this, R.string.seeds_favlist_deletedialogdone, Toast.LENGTH_SHORT).show();
+
+			}				
+		});
+
+		builder.setNegativeButton(R.string.seeds_favlist_deletedialogneg, new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        dialog.dismiss();
+		    }
+		});
+
+		builder.create().show();							
+	}
 	
 	class ListViewItemOnClickListener implements OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view,
 				int position, long id) {
-			
 			// Redirect to the details page
 			Intent intent = new Intent(SeedsFavListActivity.this, ImageGridActivity.class);
 
@@ -109,8 +166,7 @@ public class SeedsFavListActivity extends SeedsListActivity{
 		int localId;
 		SeedsEntity tSeedsEntity;
 		
-		// Initialize the SeedsEntity List
-		mSeedsEntityList = new ArrayList<SeedsEntity>(); 
+		mSeedsEntityList.clear();
 		
 		// Retrieve the DB process handler to get data 
 		SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
