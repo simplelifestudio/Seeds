@@ -1137,9 +1137,6 @@
 				C5964C101722290400CC1C0A /* InfoPlist.strings */,
 				C5964C131722290400CC1C0A /* main.m */,
 				C5964C151722290400CC1C0A /* Seeds-Prefix.pch */,
-				C5964C191722290400CC1C0A /* Default.png */,
-				C5964C1B1722290400CC1C0A /* Default@2x.png */,
-				C5964C1D1722290400CC1C0A /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1317,6 +1314,9 @@
 				C5A4E647176B1361008A391C /* xImage_pictureView.png */,
 				C5A4E648176B1361008A391C /* xImage_pictureView@2x.png */,
 				C52AD0B61797C7BF00F9D174 /* xImage_pictureView-568h@2x.png */,
+				C5964C191722290400CC1C0A /* Default.png */,
+				C5964C1B1722290400CC1C0A /* Default@2x.png */,
+				C5964C1D1722290400CC1C0A /* Default-568h@2x.png */,
 			);
 			name = Images;
 			sourceTree = "<group>";
