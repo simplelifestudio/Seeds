@@ -169,6 +169,7 @@
 		C5964C4317223A9200CC1C0A /* SeedDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5964C4217223A9200CC1C0A /* SeedDetailViewController.m */; };
 		C5964C49172248AB00CC1C0A /* SeedPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5964C48172248AB00CC1C0A /* SeedPictureViewController.m */; };
 		C5964C541722D87200CC1C0A /* SeedListTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5964C531722D87200CC1C0A /* SeedListTableCell.m */; };
+		C5A4904E17BA24B100E8CB6F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5A4904D17BA24B100E8CB6F /* Crashlytics.framework */; };
 		C5A4E64B176B1361008A391C /* xImage_collectionCell.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A4E644176B1360008A391C /* xImage_collectionCell.png */; };
 		C5A4E64C176B1361008A391C /* xImage_collectionCell@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A4E645176B1361008A391C /* xImage_collectionCell@2x.png */; };
 		C5A4E64E176B1361008A391C /* xImage_pictureView.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A4E647176B1361008A391C /* xImage_pictureView.png */; };
@@ -514,6 +515,7 @@
 		C5964C48172248AB00CC1C0A /* SeedPictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedPictureViewController.m; sourceTree = "<group>"; };
 		C5964C521722D87200CC1C0A /* SeedListTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedListTableCell.h; sourceTree = "<group>"; };
 		C5964C531722D87200CC1C0A /* SeedListTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedListTableCell.m; sourceTree = "<group>"; };
+		C5A4904D17BA24B100E8CB6F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		C5A4E644176B1360008A391C /* xImage_collectionCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xImage_collectionCell.png; sourceTree = "<group>"; };
 		C5A4E645176B1361008A391C /* xImage_collectionCell@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xImage_collectionCell@2x.png"; sourceTree = "<group>"; };
 		C5A4E647176B1361008A391C /* xImage_pictureView.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xImage_pictureView.png; sourceTree = "<group>"; };
@@ -635,6 +637,7 @@
 				C5964C081722290400CC1C0A /* UIKit.framework in Frameworks */,
 				C5964C0A1722290400CC1C0A /* Foundation.framework in Frameworks */,
 				C5964C0C1722290400CC1C0A /* CoreGraphics.framework in Frameworks */,
+				C5A4904E17BA24B100E8CB6F /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1103,6 +1106,7 @@
 				C5203DA01747B94C00D917F7 /* libz.1.2.5.dylib */,
 				C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */,
 				C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */,
+				C5A4904D17BA24B100E8CB6F /* Crashlytics.framework */,
 				C506EA54178F9E29007E9FE7 /* QuartzCore.framework */,
 				C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */,
 				C5203D5B1743BEC500D917F7 /* Security.framework */,
@@ -1414,6 +1418,7 @@
 				C5964C011722290400CC1C0A /* Frameworks */,
 				C5964C021722290400CC1C0A /* Resources */,
 				C5A9441D172AD16000D6FB85 /* ShellScript */,
+				C5A4904C17BA248B00E8CB6F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1529,6 +1534,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		C5A4904C17BA248B00E8CB6F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 592220da47f22b9cdb4a9df47ea79170d94a150a";
+		};
 		C5A9441D172AD16000D6FB85 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1805,6 +1823,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "Don't Code Sign";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Seeds/Seeds-Prefix.pch";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
@@ -1829,6 +1851,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "Don't Code Sign";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Seeds/Seeds-Prefix.pch";
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;

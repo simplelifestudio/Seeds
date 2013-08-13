@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#import <Crashlytics/Crashlytics.h>
+
 @implementation AppDelegate
 
 @synthesize moduleManager = _moduleManager;
@@ -20,12 +22,12 @@
     // Modules initialization
     _moduleManager = [CBModuleManager sharedInstance];
     
-    id<CBModule> crashReportModule = [CrashReportModule sharedInstance];
-    crashReportModule.moduleWeightFactor = 0.1;
-    [_moduleManager registerModule:crashReportModule];
+//    id<CBModule> crashReportModule = [CrashReportModule sharedInstance];
+//    crashReportModule.moduleWeightFactor = 0.1;
+//    [_moduleManager registerModule:crashReportModule];
     
     id<CBModule> databaseModule = [DatabaseModule sharedInstance];
-    databaseModule.moduleWeightFactor = 0.2;
+    databaseModule.moduleWeightFactor = 0.3;
     [_moduleManager registerModule:databaseModule];
     
     id<CBModule> userDefaultModule = [UserDefaultsModule sharedInstance];
@@ -51,6 +53,8 @@
     id<CBModule> guiModule = [GUIModule sharedInstance];
     guiModule.moduleWeightFactor = 0.1;
     [_moduleManager registerModule:guiModule];
+    
+    [Crashlytics startWithAPIKey:@"592220da47f22b9cdb4a9df47ea79170d94a150a"];      
     
     return YES;
 }
