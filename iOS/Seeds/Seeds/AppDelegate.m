@@ -30,7 +30,7 @@
     [_moduleManager registerModule:loggerModule];
     
     id<CBModule> databaseModule = [DatabaseModule sharedInstance];
-    databaseModule.moduleWeightFactor = 0.2;
+    databaseModule.moduleWeightFactor = 0.1;
     [_moduleManager registerModule:databaseModule];
     
     id<CBModule> userDefaultModule = [UserDefaultsModule sharedInstance];
@@ -46,7 +46,7 @@
     [_moduleManager registerModule:webSocketModule];
     
     id<CBModule> spiderModule = [SpiderModule sharedInstance];
-    spiderModule.moduleWeightFactor = 0.2;
+    spiderModule.moduleWeightFactor = 0.1;
     [_moduleManager registerModule:spiderModule];
     
     id<CBModule> transmissionModule = [TransmissionModule sharedInstance];
@@ -54,8 +54,12 @@
     [_moduleManager registerModule:transmissionModule];
     
     id<CBModule> guiModule = [GUIModule sharedInstance];
-    guiModule.moduleWeightFactor = 0.1;
+    guiModule.moduleWeightFactor = 0.2;
     [_moduleManager registerModule:guiModule];
+    
+    id<CBModule> securityModule = [SecurityModule sharedInstance];
+    securityModule.moduleWeightFactor = 0.1;
+    [_moduleManager registerModule:securityModule];
     
     DDLogVerbose(@"App Sandbox Path: %@", NSHomeDirectory());    
     

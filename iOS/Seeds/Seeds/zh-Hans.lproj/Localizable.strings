@@ -36,6 +36,8 @@
 "WebSocket Module Thread" = "WebSocket模块线程";
 "Logger Module" = "日志模块";
 "Logger Module Thread" = "日志模块线程";
+"Security Module" = "安全模块";
+"Security Module Thread" = "安全模块线程";
 
 "Loading: " = "加载：";
 "Mosaic" = "有码";

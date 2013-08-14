@@ -36,6 +36,8 @@
 "WebSocket Module Thread" = "WebSocket Module Thread";
 "Logger Module" = "Logger Module";
 "Logger Module Thread" = "Logger Module Thread";
+"Security Module" = "Security Module";
+"Security Module Thread" = "Security Module Thread";
 
 "Loading: " = "Loading: ";
 "Mosaic" = "Mosaic";

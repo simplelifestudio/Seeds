@@ -82,6 +82,7 @@
 		C5203DF31747D56400D917F7 /* ZipWriteStream.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DEA1747D56300D917F7 /* ZipWriteStream.m */; };
 		C5203DFC17485A8600D917F7 /* SeedsDownloadAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DFB17485A8500D917F7 /* SeedsDownloadAgent.m */; };
 		C522BA31174CF1FA001FC7BD /* GUIModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C522BA30174CF1FA001FC7BD /* GUIModule.m */; };
+		C527948617BB6C1900D10782 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = C527948417BB6C1900D10782 /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C52AD0B11796E7AB00F9D174 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AD0B01796E7AB00F9D174 /* Reachability.m */; };
 		C52AD0B41797C64F00F9D174 /* xImage_pictureView.pxm in Resources */ = {isa = PBXBuildFile; fileRef = C52AD0B21797C64F00F9D174 /* xImage_pictureView.pxm */; };
 		C52AD0B51797C64F00F9D174 /* xImage_pictureView@2x.pxm in Resources */ = {isa = PBXBuildFile; fileRef = C52AD0B31797C64F00F9D174 /* xImage_pictureView@2x.pxm */; };
@@ -226,6 +227,7 @@
 		C5C0CE94176D0F5900FA52C4 /* SeedDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C0CE93176D0F5900FA52C4 /* SeedDetailHeaderView.m */; };
 		C5C0CE96176D103300FA52C4 /* SeedDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */; };
 		C5D1D4E817BAFD2D00C5A15B /* LoggerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1D4E717BAFD2D00C5A15B /* LoggerModule.m */; };
+		C5D1D4F217BB26FD00C5A15B /* SecurityModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1D4F117BB26FD00C5A15B /* SecurityModule.m */; };
 		C5E0C1F4176AF6E30037811F /* SeedPictureAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */; };
 		C5F8AC4E174A3B72001E30D1 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = C5F8AC4D174A3B72001E30D1 /* index.html */; };
 		C5F8AC50174B9807001E30D1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */; };
@@ -363,6 +365,9 @@
 		C5203DFB17485A8500D917F7 /* SeedsDownloadAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeedsDownloadAgent.m; path = Seeds/SeedsDownloadAgent.m; sourceTree = "<group>"; };
 		C522BA2F174CF1FA001FC7BD /* GUIModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIModule.h; sourceTree = "<group>"; };
 		C522BA30174CF1FA001FC7BD /* GUIModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUIModule.m; sourceTree = "<group>"; };
+		C527948317BB6C1900D10782 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		C527948417BB6C1900D10782 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		C527948517BB6C1900D10782 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		C52AD0AF1796E7AB00F9D174 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		C52AD0B01796E7AB00F9D174 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		C52AD0B21797C64F00F9D174 /* xImage_pictureView.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = xImage_pictureView.pxm; sourceTree = "<group>"; };
@@ -611,6 +616,8 @@
 		C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeedDetailHeaderView.xib; sourceTree = "<group>"; };
 		C5D1D4E617BAFD2D00C5A15B /* LoggerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerModule.h; sourceTree = "<group>"; };
 		C5D1D4E717BAFD2D00C5A15B /* LoggerModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoggerModule.m; sourceTree = "<group>"; };
+		C5D1D4F017BB26FD00C5A15B /* SecurityModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityModule.h; sourceTree = "<group>"; };
+		C5D1D4F117BB26FD00C5A15B /* SecurityModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityModule.m; sourceTree = "<group>"; };
 		C5E0C1F2176AF6E10037811F /* SeedPictureAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SeedPictureAgent.h; path = Seeds/SeedPictureAgent.h; sourceTree = "<group>"; };
 		C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeedPictureAgent.m; path = Seeds/SeedPictureAgent.m; sourceTree = "<group>"; };
 		C5F8AC4D174A3B72001E30D1 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
@@ -886,6 +893,16 @@
 			path = "Objective-Zip";
 			sourceTree = "<group>";
 		};
+		C527948217BB6C1900D10782 /* GTMBase64 */ = {
+			isa = PBXGroup;
+			children = (
+				C527948317BB6C1900D10782 /* GTMBase64.h */,
+				C527948417BB6C1900D10782 /* GTMBase64.m */,
+				C527948517BB6C1900D10782 /* GTMDefines.h */,
+			);
+			path = GTMBase64;
+			sourceTree = "<group>";
+		};
 		C52AD0AE1796E7AB00F9D174 /* Reachability */ = {
 			isa = PBXGroup;
 			children = (
@@ -1069,6 +1086,7 @@
 		C57CF282172565100002B054 /* 3rd Libs */ = {
 			isa = PBXGroup;
 			children = (
+				C527948217BB6C1900D10782 /* GTMBase64 */,
 				C53968E217B0942400C98451 /* SocketRocket */,
 				C52AD0AE1796E7AB00F9D174 /* Reachability */,
 				C506EA3D178F9840007E9FE7 /* EGOTableViewPullRefresh */,
@@ -1249,6 +1267,7 @@
 				C53F306F179E60D60091E902 /* Environment.h */,
 				C53F3070179E60D60091E902 /* Environment.m */,
 				C531834317239FF300264530 /* Common */,
+				C5D1D4EF17BB26D900C5A15B /* Security */,
 				C5D1D4E517BAFCC000C5A15B /* Logger */,
 				C5BB1ED917A8F7FF00D0CA4E /* CrashReport */,
 				C5ADC853173A2DB5007F59D7 /* UserDefaults */,
@@ -1410,6 +1429,15 @@
 				C5D1D4E717BAFD2D00C5A15B /* LoggerModule.m */,
 			);
 			name = Logger;
+			sourceTree = "<group>";
+		};
+		C5D1D4EF17BB26D900C5A15B /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				C5D1D4F017BB26FD00C5A15B /* SecurityModule.h */,
+				C5D1D4F117BB26FD00C5A15B /* SecurityModule.m */,
+			);
+			name = Security;
 			sourceTree = "<group>";
 		};
 		C5F8AC4C174A3B60001E30D1 /* Web */ = {
@@ -1736,6 +1764,8 @@
 				C56C30CB17B1132700E665AE /* TCChatCell.m in Sources */,
 				C56C30CC17B1132700E665AE /* TCViewController.m in Sources */,
 				C5D1D4E817BAFD2D00C5A15B /* LoggerModule.m in Sources */,
+				C5D1D4F217BB26FD00C5A15B /* SecurityModule.m in Sources */,
+				C527948617BB6C1900D10782 /* GTMBase64.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

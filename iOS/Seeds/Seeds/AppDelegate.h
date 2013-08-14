@@ -19,6 +19,7 @@
 #import "TransmissionModule.h"
 #import "WebSocketModule.h"
 #import "LoggerModule.h"
+#import "SecurityModule.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
