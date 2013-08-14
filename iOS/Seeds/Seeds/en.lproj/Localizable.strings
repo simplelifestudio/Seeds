@@ -10,6 +10,8 @@
 
 "Seeds: %d" = "Seeds: %d";
 
+"Version: %@-%@" = "%@-%@";
+
 "Exception Caught" = "Exception Caught";
 "Unhandled Exception" = "Unhandled Exception";
 "You can try to continue but the application may be unstable.\n\nDebug details follow:\n%@\n%@" = "You can try to continue but the application may be unstable.\nDebug details follow:\n%@\n%@";

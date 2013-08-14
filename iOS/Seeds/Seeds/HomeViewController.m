@@ -52,6 +52,8 @@
 @synthesize helpButton = _helpButton;
 @synthesize statuLabel = _statuLabel;
 
+@synthesize versionLabel = _versionLabel;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -86,6 +88,10 @@
     _seedDAO = [DAOFactory getSeedDAO];
     
     [self _registerNotifications];
+    
+    NSString* versionStr = [[[NSBundle mainBundle] infoDictionary] valueForKey:BUNDLE_KEY_SHORTVERSION];
+    NSString* buildStr = [[[NSBundle mainBundle] infoDictionary] valueForKey:BUNDLE_KEY_BUNDLEVERSION];
+    _versionLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Version: %@-%@", nil), versionStr, buildStr];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -133,6 +139,7 @@
     [self setConfigButton:nil];
     [self setHelpButton:nil];
     [self setStatuLabel:nil];
+    [self setVersionLabel:nil];
     [super viewDidUnload];
 }
 

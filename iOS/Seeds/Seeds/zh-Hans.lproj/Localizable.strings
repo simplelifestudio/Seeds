@@ -10,6 +10,8 @@
 
 "Seeds: %d" = "种子数: %d";
 
+"Version: %@-%@" = "%@-%@";
+
 "Exception Caught" = "异常发生";
 "Unhandled Exception" = "未截获的异常";
 "You can try to continue but the application may be unstable.\n\nDebug details follow:\n%@\n%@" = "你可以尝试继续运行已处于不稳定状态的程序。\n调试信息如下:\n%@\n%@";

@@ -11,10 +11,12 @@
 
 // App Global
 #define APP_NAME @"Seeds"
-#define APP_VERSION @"0.1-13"
 #define NAMESPACE_APP @"com.simplelife.Seeds.ios"
 #define NAMESPACE_APP_CONST_CHARS "com.simplelife.Seeds.ios"
 #define MODULE_DELAY usleep(300000);
+
+#define BUNDLE_KEY_SHORTVERSION @"CFBundleShortVersionString"
+#define BUNDLE_KEY_BUNDLEVERSION @"CFBundleVersion"
 
 #define SCREEN_4INCHRETINA_ONLY 0
 

@@ -1000,7 +1000,10 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         
         [_aboutCell setSelectionStyle:UITableViewCellSelectionStyleNone];
         _aboutCell.majorLabel.text = NSLocalizedString(@"Version", nil);
-        _aboutCell.minorLabel.text = APP_VERSION;
+        
+        NSString* versionStr = [[[NSBundle mainBundle] infoDictionary] valueForKey:BUNDLE_KEY_SHORTVERSION];
+        NSString* buildStr = [[[NSBundle mainBundle] infoDictionary] valueForKey:BUNDLE_KEY_BUNDLEVERSION];
+        _aboutCell.minorLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Version: %@-%@", nil), versionStr, buildStr];;
         _aboutCell.minorLabel.textColor = COLOR_TEXT_INFO;
         
         [self _refreshAboutCell];

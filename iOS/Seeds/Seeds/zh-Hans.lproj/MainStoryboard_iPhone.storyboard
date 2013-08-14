@@ -521,10 +521,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="运行模式" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6GL-dg-MPC" userLabel="statusLabel">
-                                <rect key="frame" x="10" y="6" width="300" height="20"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <rect key="frame" x="160" y="6" width="150" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="版本: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ggv-Oz-Kq3" userLabel="statusLabel">
+                                <rect key="frame" x="10" y="6" width="150" height="20"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -548,6 +554,7 @@
                         <outlet property="todayLabel" destination="nlO-L3-jJd" id="4Ea-e5-hrf"/>
                         <outlet property="todaySyncStatusLabel" destination="RD5-3R-Azp" id="eDf-kW-yQw"/>
                         <outlet property="transButton" destination="JvW-9r-1BS" id="VSY-Xa-xsT"/>
+                        <outlet property="versionLabel" destination="Ggv-Oz-Kq3" id="0tF-fK-896"/>
                         <outlet property="yesterdayButton" destination="vx8-Kz-7QK" id="6GN-bE-TfQ"/>
                         <outlet property="yesterdayLabel" destination="t1G-4V-UlA" id="sjV-Ub-OYF"/>
                         <outlet property="yesterdaySyncStatusLabel" destination="WNG-mC-McY" id="PMn-7C-h23"/>
@@ -968,6 +975,7 @@
                 <relationship kind="outlet" name="todayLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="todaySyncStatusLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="transButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="versionLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="yesterdayButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="yesterdayLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="yesterdaySyncStatusLabel" candidateClass="UILabel"/>
@@ -1074,6 +1082,9 @@
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
         <class className="WarningViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/WarningViewController.h"/>
