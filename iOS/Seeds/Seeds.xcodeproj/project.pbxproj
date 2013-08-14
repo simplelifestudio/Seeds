@@ -83,6 +83,7 @@
 		C5203DFC17485A8600D917F7 /* SeedsDownloadAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5203DFB17485A8500D917F7 /* SeedsDownloadAgent.m */; };
 		C522BA31174CF1FA001FC7BD /* GUIModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C522BA30174CF1FA001FC7BD /* GUIModule.m */; };
 		C527948617BB6C1900D10782 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = C527948417BB6C1900D10782 /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		C527948C17BB727C00D10782 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C527948A17BB726400D10782 /* Crashlytics.framework */; };
 		C52AD0B11796E7AB00F9D174 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AD0B01796E7AB00F9D174 /* Reachability.m */; };
 		C52AD0B41797C64F00F9D174 /* xImage_pictureView.pxm in Resources */ = {isa = PBXBuildFile; fileRef = C52AD0B21797C64F00F9D174 /* xImage_pictureView.pxm */; };
 		C52AD0B51797C64F00F9D174 /* xImage_pictureView@2x.pxm in Resources */ = {isa = PBXBuildFile; fileRef = C52AD0B31797C64F00F9D174 /* xImage_pictureView@2x.pxm */; };
@@ -367,6 +368,7 @@
 		C527948317BB6C1900D10782 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
 		C527948417BB6C1900D10782 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
 		C527948517BB6C1900D10782 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		C527948A17BB726400D10782 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Seeds/Crashlytics.framework; sourceTree = "<group>"; };
 		C52AD0AF1796E7AB00F9D174 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		C52AD0B01796E7AB00F9D174 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		C52AD0B21797C64F00F9D174 /* xImage_pictureView.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = xImage_pictureView.pxm; sourceTree = "<group>"; };
@@ -631,6 +633,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C527948C17BB727C00D10782 /* Crashlytics.framework in Frameworks */,
 				C5203D5A1743BEB400D917F7 /* CFNetwork.framework in Frameworks */,
 				C53968E117B093D200C98451 /* libicucore.dylib in Frameworks */,
 				C506EA55178F9E2A007E9FE7 /* QuartzCore.framework in Frameworks */,
@@ -1120,6 +1123,7 @@
 		C5964C061722290400CC1C0A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C527948A17BB726400D10782 /* Crashlytics.framework */,
 				C53968E017B093D200C98451 /* libicucore.dylib */,
 				C5203DA01747B94C00D917F7 /* libz.1.2.5.dylib */,
 				C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */,
@@ -1583,7 +1587,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run 592220da47f22b9cdb4a9df47ea79170d94a150a";
+			shellScript = "./Seeds/Crashlytics.framework/run 592220da47f22b9cdb4a9df47ea79170d94a150a";
 		};
 		C5A9441D172AD16000D6FB85 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1880,6 +1884,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Seeds\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Seeds/Seeds-Prefix.pch";
@@ -1908,6 +1913,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Seeds\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Seeds/Seeds-Prefix.pch";
