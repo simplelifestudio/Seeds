@@ -29,4 +29,7 @@
 +(NSString*) trimString:(NSString*) string;
 +(NSString*) replaceSubString:(NSString*) newSubString oldSubString:(NSString*)oldSubString string:(NSString*) string;
 
++(NSString*) parseByte2HexString:(Byte *) bytes;
++(NSString*) parseByteArray2HexString:(Byte[]) bytes;
+
 @end

@@ -80,4 +80,56 @@
     return mainStringCopy;
 }
 
++(NSString*) parseByte2HexString:(Byte *) bytes
+{
+    NSMutableString* hexStr = [[NSMutableString alloc]init];
+    int i = 0;
+    if(bytes)
+    {
+        while (bytes[i] != '\0')
+        {
+            NSString* hexByte = [NSString stringWithFormat:@"%x", bytes[i] & 0xff];///16进制数
+            if([hexByte length] == 1)
+            {
+                [hexStr appendFormat:@"0%@", hexByte];
+            }
+            else
+            {
+                [hexStr appendFormat:@"%@", hexByte];
+            }
+            
+            i++;
+        }
+    }
+    
+    DDLogVerbose(@"bytes 的16进制数为:%@", hexStr);
+    return hexStr;
+}
+
++(NSString*) parseByteArray2HexString:(Byte[]) bytes
+{
+    NSMutableString* hexStr = [[NSMutableString alloc]init];
+    int i = 0;
+    if(bytes)
+    {
+        while (bytes[i] != '\0')
+        {
+            NSString *hexByte = [NSString stringWithFormat:@"%x", bytes[i] & 0xff];///16进制数
+            if([hexByte length] == 1)
+            {
+                [hexStr appendFormat:@"0%@", hexByte];
+            }
+            else
+            {
+                [hexStr appendFormat:@"%@", hexByte];
+            }
+            
+            i++;
+        }
+    }
+    
+    DDLogVerbose(@"bytes 的16进制数为:%@",hexStr);
+    return hexStr;
+}
+
 @end
