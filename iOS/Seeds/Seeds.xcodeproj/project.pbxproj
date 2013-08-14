@@ -229,6 +229,7 @@
 		C5C0CE96176D103300FA52C4 /* SeedDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */; };
 		C5D1D4E817BAFD2D00C5A15B /* LoggerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1D4E717BAFD2D00C5A15B /* LoggerModule.m */; };
 		C5D1D4F217BB26FD00C5A15B /* SecurityModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1D4F117BB26FD00C5A15B /* SecurityModule.m */; };
+		C5DF822F17BBA839004D2D85 /* CBGZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DF822E17BBA839004D2D85 /* CBGZipUtils.m */; };
 		C5E0C1F4176AF6E30037811F /* SeedPictureAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */; };
 		C5F8AC4E174A3B72001E30D1 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = C5F8AC4D174A3B72001E30D1 /* index.html */; };
 		C5F8AC50174B9807001E30D1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */; };
@@ -621,6 +622,8 @@
 		C5D1D4E717BAFD2D00C5A15B /* LoggerModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoggerModule.m; sourceTree = "<group>"; };
 		C5D1D4F017BB26FD00C5A15B /* SecurityModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityModule.h; sourceTree = "<group>"; };
 		C5D1D4F117BB26FD00C5A15B /* SecurityModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityModule.m; sourceTree = "<group>"; };
+		C5DF822D17BBA839004D2D85 /* CBGZipUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBGZipUtils.h; sourceTree = "<group>"; };
+		C5DF822E17BBA839004D2D85 /* CBGZipUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBGZipUtils.m; sourceTree = "<group>"; };
 		C5E0C1F2176AF6E10037811F /* SeedPictureAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SeedPictureAgent.h; path = Seeds/SeedPictureAgent.h; sourceTree = "<group>"; };
 		C5E0C1F3176AF6E20037811F /* SeedPictureAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeedPictureAgent.m; path = Seeds/SeedPictureAgent.m; sourceTree = "<group>"; };
 		C5F8AC4D174A3B72001E30D1 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
@@ -958,6 +961,8 @@
 		C531834317239FF300264530 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C5DF822D17BBA839004D2D85 /* CBGZipUtils.h */,
+				C5DF822E17BBA839004D2D85 /* CBGZipUtils.m */,
 				C5BB1ED617A8DD1C00D0CA4E /* CBUncaughtExceptionHandler.h */,
 				C5BB1ED717A8DD1C00D0CA4E /* CBUncaughtExceptionHandler.m */,
 				C58B044A178106A800F8C185 /* CBAppUtils.h */,
@@ -1772,6 +1777,7 @@
 				C5D1D4F217BB26FD00C5A15B /* SecurityModule.m in Sources */,
 				C527948617BB6C1900D10782 /* GTMBase64.m in Sources */,
 				C527949417BB785600D10782 /* CBSecurityUtils.m in Sources */,
+				C5DF822F17BBA839004D2D85 /* CBGZipUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

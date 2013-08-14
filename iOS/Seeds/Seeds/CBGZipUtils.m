@@ -10,7 +10,7 @@
 
 @implementation CBGZipUtils
 
-+(NSData*) gzipData:(NSData *)pUncompressedData
++(NSData*) gzipData:(NSData*) pUncompressedData
 {
 	if (!pUncompressedData || [pUncompressedData length] == 0)
     {
@@ -97,12 +97,11 @@
 	
 	deflateEnd(&zlibStreamStruct);
 	[compressedData setLength:zlibStreamStruct.total_out];
-	DDLogWarn(@"%s: Compressed file from %d B to %d B", __func__, [pUncompressedData length], [compressedData length]);
+	DDLogVerbose(@"%s: Compressed file from %d B to %d B", __func__, [pUncompressedData length], [compressedData length]);
 	return compressedData;
 }
 
-
-+(NSData*) uncompressZippedData:(NSData *)compressedData
++(NSData*) uncompressZippedData:(NSData*) compressedData
 {	
 	if ([compressedData length] == 0) return compressedData;  
 	

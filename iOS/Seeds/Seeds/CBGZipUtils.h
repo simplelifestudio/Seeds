@@ -11,7 +11,7 @@
 
 @interface CBGZipUtils : NSObject
 
-+(NSData*) gzipData:(NSData *)pUncompressedData;
-+(NSData*) uncompressZippedData:(NSData *)compressedData;
++(NSData*) gzipData:(NSData*) pUncompressedData;
++(NSData*) uncompressZippedData:(NSData*) compressedData;
 
 @end
