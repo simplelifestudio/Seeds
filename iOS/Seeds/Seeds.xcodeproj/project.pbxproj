@@ -1123,11 +1123,11 @@
 		C5964C061722290400CC1C0A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C527948A17BB726400D10782 /* Crashlytics.framework */,
 				C53968E017B093D200C98451 /* libicucore.dylib */,
 				C5203DA01747B94C00D917F7 /* libz.1.2.5.dylib */,
 				C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */,
 				C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */,
+				C527948A17BB726400D10782 /* Crashlytics.framework */,
 				C506EA54178F9E29007E9FE7 /* QuartzCore.framework */,
 				C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */,
 				C5203D5B1743BEC500D917F7 /* Security.framework */,
