@@ -7,6 +7,7 @@
 //
 
 #import "SecurityModule.h"
+#import "CBSecurityUtils.h"
 
 @implementation SecurityModule
 
@@ -34,6 +35,16 @@ SINGLETON(UserDefaultsModule)
 -(void) processService
 {
     MODULE_DELAY
+    
+//    NSString* securityKey = @"20130801";
+//    NSString* plainText = @"{\"id\":\"AlohaRequest\",\"body\":{\"content\":\"我是中国人\"}}";
+//    NSString* encryptedText = [CBSecurityUtils encryptByDESAndEncodeByBase64:plainText key:securityKey];
+//    encryptedText = @"Qi8iv15nOLgBASPRS1cce7BWZ9TyNb7ag0e+UzfibcTYg+0+BXnfLpYzM5t0 4K6e0s/zwpsu3RBdcV50MTqv/w==";
+//    NSString* decryptedText = [CBSecurityUtils decryptByDESAndDecodeByBase64:encryptedText key:securityKey];
+//    DDLogWarn(@"密匙：%@", securityKey);
+//    DDLogWarn(@"原文：%@", plainText);
+//    DDLogWarn(@"密文：%@", encryptedText);
+//    DDLogWarn(@"解密：%@", decryptedText);
 }
 
 @end

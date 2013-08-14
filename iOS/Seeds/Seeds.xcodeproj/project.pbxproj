@@ -84,6 +84,7 @@
 		C522BA31174CF1FA001FC7BD /* GUIModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C522BA30174CF1FA001FC7BD /* GUIModule.m */; };
 		C527948617BB6C1900D10782 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = C527948417BB6C1900D10782 /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		C527948C17BB727C00D10782 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C527948A17BB726400D10782 /* Crashlytics.framework */; };
+		C527949417BB785600D10782 /* CBSecurityUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C527949317BB785600D10782 /* CBSecurityUtils.m */; };
 		C52AD0B11796E7AB00F9D174 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AD0B01796E7AB00F9D174 /* Reachability.m */; };
 		C52AD0B41797C64F00F9D174 /* xImage_pictureView.pxm in Resources */ = {isa = PBXBuildFile; fileRef = C52AD0B21797C64F00F9D174 /* xImage_pictureView.pxm */; };
 		C52AD0B51797C64F00F9D174 /* xImage_pictureView@2x.pxm in Resources */ = {isa = PBXBuildFile; fileRef = C52AD0B31797C64F00F9D174 /* xImage_pictureView@2x.pxm */; };
@@ -369,6 +370,8 @@
 		C527948417BB6C1900D10782 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
 		C527948517BB6C1900D10782 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
 		C527948A17BB726400D10782 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Seeds/Crashlytics.framework; sourceTree = "<group>"; };
+		C527949217BB785600D10782 /* CBSecurityUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBSecurityUtils.h; sourceTree = "<group>"; };
+		C527949317BB785600D10782 /* CBSecurityUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBSecurityUtils.m; sourceTree = "<group>"; };
 		C52AD0AF1796E7AB00F9D174 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		C52AD0B01796E7AB00F9D174 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		C52AD0B21797C64F00F9D174 /* xImage_pictureView.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = xImage_pictureView.pxm; sourceTree = "<group>"; };
@@ -987,6 +990,8 @@
 				C52AD0BA1797CA7A00F9D174 /* UIImage+Retina4.h */,
 				C52AD0BB1797CA7A00F9D174 /* UIImage+Retina4.m */,
 				C52BB4761788003900BD40E7 /* CBNotificationListenable.h */,
+				C527949217BB785600D10782 /* CBSecurityUtils.h */,
+				C527949317BB785600D10782 /* CBSecurityUtils.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -1766,6 +1771,7 @@
 				C5D1D4E817BAFD2D00C5A15B /* LoggerModule.m in Sources */,
 				C5D1D4F217BB26FD00C5A15B /* SecurityModule.m in Sources */,
 				C527948617BB6C1900D10782 /* GTMBase64.m in Sources */,
+				C527949417BB785600D10782 /* CBSecurityUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
