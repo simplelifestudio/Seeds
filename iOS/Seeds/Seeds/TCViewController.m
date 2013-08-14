@@ -133,13 +133,13 @@
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket;
 {
-    DLog(@"Websocket Connected");
+    DDLogInfo(@"Websocket Connected");
     self.title = NSLocalizedString(@"Connected", nil);
 }
 
 - (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error;
 {
-    DLog(@"Websocket Failed With Error: %@", error);
+    DDLogWarn(@"Websocket Failed With Error: %@", error);
     
     self.title = NSLocalizedString(@"Connection Failed", nil);
     _webSocket = nil;
@@ -147,7 +147,7 @@
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message;
 {
-    DLog(@"Received \"%@\"", message);
+    DDLogInfo(@"Received \"%@\"", message);
     [_messages addObject:[[TCMessage alloc] initWithMessage:message fromMe:NO]];
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:_messages.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
     [self.tableView scrollRectToVisible:self.tableView.tableFooterView.frame animated:YES];
@@ -155,7 +155,7 @@
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceivePong:(NSData *)data
 {
-    DLog(@"Received Pong \"%@\"", data);
+    DDLogVerbose(@"Received Pong \"%@\"", data);
     NSString* str = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 //    str = NSLocalizedString(@"Pong", nil);
     [_messages addObject:[[TCMessage alloc] initWithMessage:str fromMe:NO]];
@@ -165,7 +165,7 @@
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean;
 {
-    DLog(@"WebSocket closed");
+    DDLogInfo(@"WebSocket closed");
     self.title = NSLocalizedString(@"Connection Closed", nil);
     _webSocket = nil;
 }

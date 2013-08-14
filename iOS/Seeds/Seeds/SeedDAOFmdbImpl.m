@@ -144,7 +144,7 @@
          BOOL hadError = [db hadError];
          if (hadError)
          {
-             DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+             DDLogError(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
          }
          
          [db close];
@@ -214,7 +214,7 @@
              BOOL hadError = [db hadError];
              if (hadError)
              {
-                 DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+                 DDLogError(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
              }
              
              [resultSet close];
@@ -348,7 +348,7 @@
          BOOL hadError = [db hadError];
          if (hadError)
          {
-             DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+             DDLogError(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
          }
          
          [db close];
@@ -458,11 +458,11 @@
             BOOL hadError = [db hadError];
             if (hadError)
             {
-                DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+                DDLogError(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
             }
             if (!flag)
             {
-                DLog(@"Fail to delete seed records with date: %@", dateStr);
+                DDLogError(@"Fail to delete seed records with date: %@", dateStr);
             }
         }
         
@@ -514,11 +514,11 @@
              BOOL hadError = [db hadError];
              if (hadError)
              {
-                 DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+                 DDLogError(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
              }
              if (!flag)
              {
-                 DLog(@"Fail to delete all un-favorite seed records.");
+                 DDLogError(@"Fail to delete all un-favorite seed records.");
              }
              
              [db close];
@@ -551,11 +551,11 @@
          BOOL hadError = [db hadError];
          if (hadError)
          {
-             DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+             DDLogError(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
          }
          if (!flag)
          {
-             DLog(@"Fail to delete all un-favorite seed records.");
+             DDLogError(@"Fail to delete all un-favorite seed records.");
          }
          
          [db close];
@@ -629,7 +629,7 @@
             BOOL hadError = [db hadError];
             if (hadError)
             {
-                DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+                DDLogError(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
             }
 
             [db close];
@@ -677,25 +677,25 @@
                                 hadError = [db hadError];
                                 if (hadError)
                                 {
-                                    DLog(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
+                                    DDLogError(@"FMDatabase error %d: %@", [db lastErrorCode], [db lastErrorMessage]);
                                 }
                             }
                             else
                             {
-                                DLog(@"Seed picture object is ignored as nil.");
+                                DDLogWarn(@"Seed picture object is ignored as nil.");
                             }
                         }
                     }
                 }
                 else
                 {
-                    DLog(@"Fail to insert seed picture record.");
+                    DDLogError(@"Fail to insert seed picture record.");
                     [db rollback];
                 }
             }
             else
             {
-                DLog(@"Fail to insert seed record with name: %@", seed.name);
+                DDLogError(@"Fail to insert seed record with name: %@", seed.name);
             }
         }
         

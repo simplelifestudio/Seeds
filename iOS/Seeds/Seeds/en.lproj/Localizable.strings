@@ -32,6 +32,8 @@
 "CrashReport Module Thread" = "CrashReport Module Thread";
 "WebSocket Module" = "WebSocket Module";
 "WebSocket Module Thread" = "WebSocket Module Thread";
+"Logger Module" = "Logger Module";
+"Logger Module Thread" = "Logger Module Thread";
 
 "Loading: " = "Loading: ";
 "Mosaic" = "Mosaic";

@@ -33,7 +33,7 @@ SINGLETON(UserDefaultsModule)
 
 -(void) startService
 {
-    DLog(@"Module:%@ is started.", self.moduleIdentity);
+    DDLogVerbose(@"Module:%@ is started.", self.moduleIdentity);
     
     [super startService];
 }

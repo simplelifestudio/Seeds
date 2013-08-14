@@ -46,8 +46,8 @@
             }
             @catch (NSException *e)
             {
-                DLog(@"Failed to add file: %@ into zip.", fileName);
-                DLog(@"Exception caught: %@ - %@", [[e class] description], [e description]);
+                DDLogError(@"Failed to add file: %@ into zip.", fileName);
+                DDLogError(@"Exception caught: %@ - %@", [[e class] description], [e description]);
                 continue;
             }
             @finally
@@ -72,8 +72,8 @@
     }
     @catch (NSException *e)
     {
-        DLog(@"Failed to read data from file : %@", filePath);
-        DLog(@"Exception caught: %@ - %@", [[e class] description], [e description]);
+        DDLogError(@"Failed to read data from file : %@", filePath);
+        DDLogError(@"Exception caught: %@ - %@", [[e class] description], [e description]);
     }
     @finally
     {
@@ -202,7 +202,7 @@
             flag = [fm removeItemAtPath:fileFullPath error:&error];
             if (!flag)
             {
-                DLog(@"Failed to delete file at path: %@ with error: %@", fileFullPath, error.localizedDescription);
+                DDLogError(@"Failed to delete file at path: %@ with error: %@", fileFullPath, error.localizedDescription);
             }
         }
     }
@@ -238,7 +238,7 @@
             flag = [fm removeItemAtPath:dirFullPath error:&error];
             if (!flag)
             {
-                DLog(@"Failed to delete file at path: %@ with error: %@", dirFullPath, error.localizedDescription);
+                DDLogError(@"Failed to delete file at path: %@ with error: %@", dirFullPath, error.localizedDescription);
             }
         }
     }

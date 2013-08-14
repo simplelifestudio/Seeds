@@ -558,19 +558,19 @@ static NSString* _downloadPath;
 
 -(void) torrentDownloadFailed:(Seed*) seed error:(NSError*) error
 {
-    DLog(@"Seed(localId=%d) download failed with error:%@", seed.localId, error.localizedDescription);
+    DDLogError(@"Seed(localId=%d) download failed with error:%@", seed.localId, error.localizedDescription);
     [_downloadQueue updateSeedStatus:seed status:SeedDownloadFailed];    
 }
 
 -(void) torrentSaveFinished:(Seed*) seed filePath:(NSString*) filePath
 {
-    DLog(@"Seed(localId=%d) save successfully.", seed.localId);
+    DDLogVerbose(@"Seed(localId=%d) save successfully.", seed.localId);
     [_downloadQueue updateSeedStatus:seed status:SeedDownloaded];
 }
 
 -(void) torrentSaveFailed:(Seed*) seed filePath:(NSString*) filePath
 {
-    DLog(@"Seed(localId=%d) save failed.", seed.localId);
+    DDLogError(@"Seed(localId=%d) save failed.", seed.localId);
     [_downloadQueue updateSeedStatus:seed status:SeedDownloadFailed];
 }
 

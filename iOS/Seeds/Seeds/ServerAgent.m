@@ -137,7 +137,7 @@
         BOOL isSeedLegal = [SeedBuilder verfiySeed:seed];
         if (!isSeedLegal)
         {
-            DLog(@"Illegal seed after parsing from dictionary: %@", seed);
+            DDLogWarn(@"Illegal seed after parsing from dictionary: %@", seed);
             
             seed = nil;
         }
@@ -177,7 +177,7 @@
         }
         failure:^(NSURLRequest* request, NSHTTPURLResponse* response, NSError* error, id JSON)
         {
-            DLog(@"Failed to receive json message with error code: %@", error.localizedDescription);
+            DDLogError(@"Failed to receive json message with error code: %@", error.localizedDescription);
             
             callbackBlock(JSON, error);
         }
@@ -199,7 +199,7 @@
         }
         failure:^(NSURLRequest* request, NSHTTPURLResponse* response, NSError* error, id JSON)
         {
-            DLog(@"Failed to receive json message with error code: %@", error.localizedDescription);
+            DDLogError(@"Failed to receive json message with error code: %@", error.localizedDescription);
             
             callbackBlock(JSON, error);
         }];
@@ -221,7 +221,7 @@
         }
         failure:^(NSURLRequest* request, NSHTTPURLResponse* response, NSError* error, id JSON)
         {
-            DLog(@"Failed to receive json message with error code: %@", error.localizedDescription);
+            DDLogError(@"Failed to receive json message with error code: %@", error.localizedDescription);
             
             callbackBlock(JSON, nil);
         }];
@@ -243,7 +243,7 @@
             }
             failure:^(NSURLRequest* request, NSHTTPURLResponse* response, NSError* error, id JSON)
             {
-                DLog(@"Failed to receive json message with error code: %@", error.localizedDescription);
+                DDLogError(@"Failed to receive json message with error code: %@", error.localizedDescription);
                 
                 callbackBlock(JSON, error);
             }
@@ -381,7 +381,7 @@
 {
     if ([[NSThread currentThread] isMainThread])
     {
-        DLog(@"Warning: This method CAN NOT be invoked in Main Thread!");
+        DDLogWarn(@"Warning: This method CAN NOT be invoked in Main Thread!");
         return nil;
     }
     
@@ -633,7 +633,7 @@
                                             [_downloadAgent clearDownloadDirectory:last3Days];
                                             
                                             // Step 90
-                                            DLog(@"Clean all expired image cache in disk.");
+                                            DDLogVerbose(@"Clean all expired image cache in disk.");
                                             [_pictureAgent cleanExpiredCache];
                                             
                                             if (_delegate)
@@ -694,7 +694,7 @@
     }
     @catch(NSException* exception)
     {
-        DLog(@"Caught an exception: %@", exception.debugDescription);
+        DDLogError(@"Caught an exception: %@", exception.debugDescription);
         
         if (_delegate)
         {

@@ -60,7 +60,7 @@
     NSError* error = nil;
     for (NSInteger pageNum = SEEDLIST_LINK_PAGENUM_START; pageNum <= SEEDLIST_LINK_PAGENUM_END; pageNum++)
     {
-        DLog(@"Start to analyze channel list page number: %d", pageNum);
+        DDLogInfo(@"Start to analyze channel list page number: %d", pageNum);
         NSMutableString* channelLink = [NSMutableString stringWithCapacity:0];
         [channelLink appendString:LINK_SEEDLIST_CHANNEL];
         [channelLink appendString:LINK_SEEDLIST_CHANNEL_PAGE];
@@ -70,7 +70,7 @@
         if (0 != error.code)
         {
             *errorPtr = error;
-            DLog(@"Access Link: %@ end error = %d", LINK_SEEDLIST_CHANNEL, [error code]);
+            DDLogError(@"Access Link: %@ end error = %d", LINK_SEEDLIST_CHANNEL, [error code]);
             return link;
         }
 
@@ -79,7 +79,7 @@
         [xql appendString:@"\""];
         [xql appendString:titleStr];
         [xql appendString:@"\"]"];
-        DLog(@"xql = %@", xql);
+        DDLogVerbose(@"xql = %@", xql);
         
         TFHppleElement* elemement = [doc peekAtSearchWithXPathQuery:xql];
         if (nil != elemement)
@@ -106,7 +106,7 @@
         NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:link] options:NSDataReadingMappedIfSafe error:&error];
         if (0 != error.code)
         {
-            DLog(@"Access Link: %@ end error = %d", link, [error code]);
+            DDLogError(@"Access Link: %@ end error = %d", link, [error code]);
             *errorPtr = error;            
             return seedList;
         }
@@ -114,7 +114,7 @@
         TFHpple* doc = [[TFHpple alloc] initWithHTMLData:data];
 
         NSString* xql = @"//text() | //a | //img";
-        DLog(@"xql = %@", xql);
+        DDLogVerbose(@"xql = %@", xql);
         
         NSArray* elements = [doc searchWithXPathQuery:xql];
         NSArray* seeds = [_visitor visitNodes:elements];
@@ -144,7 +144,7 @@
         BOOL is3GEnabled = [CBNetworkUtils is3GEnabled];
         if (!isWiFiEnabled && !is3GEnabled)
         {
-            DLog(@"No internect connection");
+            DDLogWarn(@"No internect connection");
             if (_seedsSpiderDelegate)
             {
                 [_seedsSpiderDelegate taskCanceld:NSLocalizedString(@"Internet Disconnected", nil) minorStatus:nil];
@@ -183,7 +183,7 @@
             
             BOOL isDaySyncBefore = [[UserDefaultsModule sharedInstance] isThisDaySync:day];
             BOOL isDaySyncAfter = NO;
-            DLog(@"Seeds in %@ have been synchronized yet? %@", dateStr, (isDaySyncBefore) ? @"YES" : @"NO");
+            DDLogVerbose(@"Seeds in %@ have been synchronized yet? %@", dateStr, (isDaySyncBefore) ? @"YES" : @"NO");
             if (!isDaySyncBefore)
             {
                 // Step 30:
@@ -196,7 +196,7 @@
                 NSString* channelLink = [self pullSeedListLinkByDate:day error:&error];
                 if (0 != error.code)
                 {
-                    DLog(@"Fail to pull seed list link by date: %@ with error: %@", day, error);
+                    DDLogError(@"Fail to pull seed list link by date: %@ with error: %@", day, error);
                     if (_seedsSpiderDelegate)
                     {
                         [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Fail Analyzing", nil)];
@@ -217,7 +217,7 @@
                     NSArray* seedList = [self pullSeedsFromLink:channelLink error:&error];
                     if (0 != error.code)
                     {
-                        DLog(@"Fail to pull seeds from link: %@ with error: %@", channelLink, error);
+                        DDLogError(@"Fail to pull seeds from link: %@ with error: %@", channelLink, error);
                         if (_seedsSpiderDelegate)
                         {
                             [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Fail Parsing", nil)];
@@ -259,7 +259,7 @@
                         optSuccess = [seedDAO insertSeeds:seedList];
                         if (!optSuccess)
                         {
-                            DLog(@"Fail to save seed records into table with date: %@", dateStr);
+                            DDLogError(@"Fail to save seed records into table with date: %@", dateStr);
                             if (_seedsSpiderDelegate)
                             {
                                 [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Fail Saving", nil)];
@@ -268,7 +268,7 @@
                     }
                     else
                     {
-                        DLog(@"Fail to clear seed table with date: %@", dateStr);
+                        DDLogError(@"Fail to clear seed table with date: %@", dateStr);
                         if (_seedsSpiderDelegate)
                         {
                             [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"Fail Clearing", nil)];
@@ -285,7 +285,7 @@
                 }
                 else
                 {
-                    DLog(@"Seeds channel link can't be found with date: %@", dateStr);
+                    DDLogWarn(@"Seeds channel link can't be found with date: %@", dateStr);
                     if (nil != _seedsSpiderDelegate)
                     {
                         [_seedsSpiderDelegate taskIsProcessing:nil minorStatus:NSLocalizedString(@"No Update", nil)];
@@ -305,7 +305,7 @@
             }
             else
             {
-                DLog(@"Day: %@ has been sync before.", dateStr);
+                DDLogVerbose(@"Day: %@ has been sync before.", dateStr);
                 
                 if (_seedsSpiderDelegate)
                 {
@@ -326,7 +326,7 @@
         else
         {
             // Step 80:
-            DLog(@"Clean old and unfavorited seed records.");
+            DDLogVerbose(@"Clean old and unfavorited seed records.");
             [seedDAO deleteAllExceptLastThreeDaySeeds:days];
             if (_seedsSpiderDelegate)
             {
@@ -334,11 +334,11 @@
             }
             
             // Step 90:
-            DLog(@"Clean all old torrents before the last 3 days.");
+            DDLogVerbose(@"Clean all old torrents before the last 3 days.");
             [_downloadAgent clearDownloadDirectory:days];
             
             // Step 100:
-            DLog(@"Clean all expired image cache in disk.");
+            DDLogVerbose(@"Clean all expired image cache in disk.");
             [_pictureAgent cleanExpiredCache];
             
             if (_seedsSpiderDelegate)
@@ -351,7 +351,7 @@
     }
     @catch (NSException* exception)
     {
-        DLog(@"Caught an exception: %@", exception.debugDescription);
+        DDLogError(@"Caught an exception: %@", exception.debugDescription);
         
         if (_seedsSpiderDelegate)
         {

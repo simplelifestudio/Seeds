@@ -150,7 +150,7 @@
     }
     else
     {
-        DLog(@"Invalid torrent code.");
+        DDLogError(@"Invalid torrent code.");
     }
 }
 

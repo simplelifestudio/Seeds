@@ -197,12 +197,12 @@
 
 - (void)_logRect:(CGRect)rect withName:(NSString *)name
 {
-    DLog(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+    DDLogVerbose(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 }
 
 - (void)_logLayout
 {
-    DLog(@"### SeedPictureViewController ###");
+    DDLogVerbose(@"### SeedPictureViewController ###");
     [self _logRect:self.view.window.bounds withName:@"self.view.window.bounds"];
     [self _logRect:self.view.window.frame withName:@"self.view.window.frame"];
     

@@ -18,7 +18,7 @@
     NSString* appDocumentsDir = [documentsDir stringByAppendingPathComponent:APP_NAME];
     
     _databaseFilePath = [appDocumentsDir stringByAppendingPathComponent:DATABASE_FILE_FULL_NAME];
-    DLog(@"Database File in App Sandbox: %@", _databaseFilePath);
+    DDLogVerbose(@"Database File in App Sandbox: %@", _databaseFilePath);
     
     return _databaseFilePath;
 }

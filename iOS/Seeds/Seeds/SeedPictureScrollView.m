@@ -510,19 +510,19 @@
 
 - (void)logRect:(CGRect)rect withName:(NSString *)name
 {
-    DLog(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+    DDLogVerbose(@"%@: %f, %f / %f, %f", name, rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 }
 
 - (void)logLayout
 {
-    DLog(@"#### SeedPictureScrollView ###");
+    DDLogVerbose(@"#### SeedPictureScrollView ###");
     
     [self logRect:self.bounds withName:@"self.bounds"];
     [self logRect:self.frame withName:@"self.frame"];
     
-    DLog(@"contentSize: %f, %f", self.contentSize.width, self.contentSize.height);
-    DLog(@"contentOffset: %f, %f", self.contentOffset.x, self.contentOffset.y);
-    DLog(@"contentInset: %f, %f, %f, %f", self.contentInset.top, self.contentInset.right, self.contentInset.bottom, self.contentInset.left);
+    DDLogVerbose(@"contentSize: %f, %f", self.contentSize.width, self.contentSize.height);
+    DDLogVerbose(@"contentOffset: %f, %f", self.contentOffset.x, self.contentOffset.y);
+    DDLogVerbose(@"contentInset: %f, %f, %f, %f", self.contentInset.top, self.contentInset.right, self.contentInset.bottom, self.contentInset.left);
 }
 
 @end

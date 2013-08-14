@@ -45,7 +45,7 @@ SINGLETON(TransmissionModule)
 
 -(void) startService
 {
-    DLog(@"Module:%@ is started.", self.moduleIdentity);
+    DDLogVerbose(@"Module:%@ is started.", self.moduleIdentity);
     
 	// Tell the server to broadcast its presence via Bonjour.
 	// This allows browsers such as Safari to automatically discover our service.
@@ -61,7 +61,7 @@ SINGLETON(TransmissionModule)
 	
 	// Serve files from our embedded Web folder
     NSString* webPath = [SeedsDownloadAgent downloadPath];
-	DLog(@"HTTP server document root: %@", webPath);
+	DDLogVerbose(@"HTTP server document root: %@", webPath);
 	[httpServer setDocumentRoot:webPath];
     
     [super startService];
@@ -82,11 +82,11 @@ SINGLETON(TransmissionModule)
 	if([httpServer start:&error])
 	{
         flag = YES;
-		DLog(@"Started HTTP Server on port %hu", [httpServer listeningPort]);
+		DDLogVerbose(@"Started HTTP Server on port %hu", [httpServer listeningPort]);
 	}
 	else
 	{
-		DLog(@"Error starting HTTP Server: %@", error);
+		DDLogWarn(@"Error starting HTTP Server: %@", error);
 	}
     
     return flag;
@@ -150,7 +150,7 @@ SINGLETON(TransmissionModule)
         flag = [CBFileUtils dataToFile:data filePath:indexHtmlFilePath];
         if (!flag)
         {
-            DLog(@"Failed to generate index.html file.");
+            DDLogError(@"Failed to generate index.html file.");
         }
     }
     
@@ -238,7 +238,7 @@ SINGLETON(TransmissionModule)
     flag = [CBFileUtils dataToFile:data filePath:indexHtmlFilePath];
     if (!flag)
     {
-        DLog(@"Failed to generate index.html file.");
+        DDLogError(@"Failed to generate index.html file.");
     }
     
     return flag;

@@ -55,7 +55,7 @@
             }
             else
             {
-                DLog(@"Illegal element was found: %@", element);
+                DDLogWarn(@"Illegal element was found: %@", element);
             }
         }
     }

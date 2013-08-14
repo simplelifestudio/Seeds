@@ -78,21 +78,21 @@ SINGLETON(CommunicationModule)
         {
             [guiModule showHUD:NSLocalizedString(@"Internet Disconnected", nil) delay:_HUD_DISPLAY];
             
-            DLog(@"App's reachability changed to 'NotReachable'.");
+            DDLogWarn(@"App's reachability changed to 'NotReachable'.");
             break;
         }
         case ReachableViaWiFi:
         {
             [guiModule showHUD:NSLocalizedString(@"WiFi Connected", nil) delay:_HUD_DISPLAY];
             
-            DLog(@"App's reachability changed to 'ReachableViaWiFi'.");
+            DDLogWarn(@"App's reachability changed to 'ReachableViaWiFi'.");
             break;
         }
         case ReachableViaWWAN:
         {
             [guiModule showHUD:NSLocalizedString(@"3G/GPRS Connected", nil) delay:_HUD_DISPLAY];
             
-            DLog(@"App's reachability changed to 'ReachableViaWWAN'.");
+            DDLogWarn(@"App's reachability changed to 'ReachableViaWWAN'.");
             break;
         }
         default:
@@ -116,7 +116,7 @@ SINGLETON(CommunicationModule)
 
 -(void) startService
 {
-    DLog(@"Module:%@ is started.", self.moduleIdentity);
+    DDLogVerbose(@"Module:%@ is started.", self.moduleIdentity);
     
     [super startService];
 }

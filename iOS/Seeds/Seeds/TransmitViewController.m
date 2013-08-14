@@ -230,7 +230,7 @@ if (_cancelTransmission)\
         [zipName appendString:FILE_EXTENDNAME_DOT_ZIP];
         
         NSString* zipFileFullPath = [CBFileUtils newZipFileWithFiles:zipName zipFiles:files];
-        DLog(@"New zip file created:%@", zipFileFullPath);
+        DDLogVerbose(@"New zip file created:%@", zipFileFullPath);
     }
     
     // Step 30:
@@ -320,7 +320,7 @@ if (_cancelTransmission)\
         flag = [fm createDirectoryAtPath:torrentsPath withIntermediateDirectories:YES attributes:nil error:&error];
         if (!flag)
         {
-            DLog(@"Failed to create directory at path:%@", torrentsPath);
+            DDLogError(@"Failed to create directory at path:%@", torrentsPath);
             [self _updateConsole:NSLocalizedString(@"Torrents directory failed to create.", nil)];
             return;
         }
@@ -340,7 +340,7 @@ if (_cancelTransmission)\
         [zipName appendString:FILE_EXTENDNAME_DOT_ZIP];
         NSString* zipFilePath = [torrentsPath stringByAppendingPathComponent:zipName];
         zipFilePath = [CBFileUtils newZipFileWithFiles:zipFilePath zipFiles:files];
-        DLog(@"New zip file created:%@", zipFilePath);
+        DDLogVerbose(@"New zip file created:%@", zipFilePath);
     }
     
     // Step 40:

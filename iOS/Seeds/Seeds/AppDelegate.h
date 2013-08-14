@@ -18,6 +18,7 @@
 #import "SpiderModule.h"
 #import "TransmissionModule.h"
 #import "WebSocketModule.h"
+#import "LoggerModule.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

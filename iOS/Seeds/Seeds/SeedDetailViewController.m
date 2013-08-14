@@ -572,7 +572,7 @@
         }
         @catch(NSException* exception)
         {
-            DLog(@"Caught an exception: %@", exception.debugDescription);
+            DDLogError(@"Caught an exception: %@", exception.debugDescription);
             
             HUD.labelText = NSLocalizedString(@"Exception Caught", nil);
         }

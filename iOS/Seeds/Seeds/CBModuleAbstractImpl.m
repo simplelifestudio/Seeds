@@ -82,7 +82,7 @@
 // Method of CBModule protocol
 -(void) serviceWithIndividualThread
 {
-    DLog(@"Module:%@ is in service with individual thread.", self.moduleIdentity);
+    DDLogVerbose(@"Module:%@ is in service with individual thread.", self.moduleIdentity);
     // Insert business logic here
     // ***** WARNING: Codes should release CPU control in intermittently! *****
 }
@@ -90,7 +90,7 @@
 // Method of CBModule protocol
 -(void) serviceWithCallingThread
 {
-    DLog(@"Module:%@ is in service with calling thread.", self.moduleIdentity);
+    DDLogVerbose(@"Module:%@ is in service with calling thread.", self.moduleIdentity);
     // Insert business logic here
 }
 

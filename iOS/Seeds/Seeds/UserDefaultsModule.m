@@ -30,7 +30,7 @@ SINGLETON(UserDefaultsModule)
 
 -(void) startService
 {
-    DLog(@"Module:%@ is started.", self.moduleIdentity);
+    DDLogVerbose(@"Module:%@ is started.", self.moduleIdentity);
     
     [super startService];
 }
@@ -58,7 +58,7 @@ SINGLETON(UserDefaultsModule)
         [_userDefaults removePersistentDomainForName:domain];
         NSDictionary* newDic = [NSDictionary dictionary];
         [_userDefaults setPersistentDomain:newDic forName:domain];
-        DLog(@"UserDefaults in persistent domain: %@ has been reset.", domain);
+        DDLogInfo(@"UserDefaults in persistent domain: %@ has been reset.", domain);
     }
 }
 

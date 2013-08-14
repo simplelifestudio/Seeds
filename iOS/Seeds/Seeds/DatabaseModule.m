@@ -43,14 +43,14 @@ SINGLETON(DatabaseModule)
 
 -(void) startService
 {
-    DLog(@"Module:%@ is started.", self.moduleIdentity);
+    DDLogVerbose(@"Module:%@ is started.", self.moduleIdentity);
     
     [super startService];
 }
 
 -(void) processService
 {
-    DLog(@"SQLite3 Database File Path: %@", self.databaseFilePath);
+    DDLogVerbose(@"SQLite3 Database File Path: %@", self.databaseFilePath);
     
     MODULE_DELAY   
 }
@@ -65,7 +65,7 @@ SINGLETON(DatabaseModule)
         
         NSFileManager* fileManager = [NSFileManager defaultManager];
         BOOL optCode = [fileManager fileExistsAtPath:_databaseFilePath];
-        DLog(@"Database File in App Sandbox exists: %@", (optCode) ? @"YES" : @"NO");
+        DDLogVerbose(@"Database File in App Sandbox exists: %@", (optCode) ? @"YES" : @"NO");
         
         NSError* error = nil;
         BOOL needCopy = NO;
@@ -85,9 +85,9 @@ SINGLETON(DatabaseModule)
 
         if (needCopy)
         {
-            DLog(@"Database File need re-copy: %@", (needCopy) ? @"YES" : @"NO");
+            DDLogVerbose(@"Database File need re-copy: %@", (needCopy) ? @"YES" : @"NO");
             optCode = [fileManager removeItemAtPath:_databaseFilePath error:nil];
-            DLog(@"Database File in App Sandbox removed: %@", (optCode) ? @"YES" : @"NO");
+            DDLogVerbose(@"Database File in App Sandbox removed: %@", (optCode) ? @"YES" : @"NO");
             NSString* _databaseFileDirPath = [_databaseFilePath stringByDeletingLastPathComponent];
             BOOL b = YES;
             optCode = [fileManager fileExistsAtPath:_databaseFileDirPath isDirectory:&b];
@@ -97,7 +97,7 @@ SINGLETON(DatabaseModule)
             }
             
             optCode = [fileManager copyItemAtPath:_databaseFilePathInXcodeProject toPath:_databaseFilePath error:&error];
-            DLog(@"Database File in App Sandbox copied: %@", (optCode) ? @"YES" : @"NO");
+            DDLogVerbose(@"Database File in App Sandbox copied: %@", (optCode) ? @"YES" : @"NO");
         }
     }
     

@@ -26,7 +26,7 @@
 {
     if (nil == view) 
     {
-        DLog(@"Parameter UIView* view is nil");
+        DDLogWarn(@"Parameter UIView* view is nil");
         return nil;
     }
     else
@@ -38,7 +38,7 @@
                 return (UIWindow*) nextView;
             }
         }
-        DLog(@"Can't find window for this view: %@", view);
+        DDLogWarn(@"Can't find window for this view: %@", view);
         return nil;        
     }
 }
@@ -59,7 +59,7 @@
 {
     if(nil == view)
     {
-        DLog(@"Parameter UIView* view is nil.");
+        DDLogWarn(@"Parameter UIView* view is nil.");
         return nil;
     }
     else
@@ -73,7 +73,7 @@
                 return (UIViewController*) nextResponder;
             }
         }
-        DLog(@"Can't find controller for this view: %@", view);
+        DDLogWarn(@"Can't find controller for this view: %@", view);
         return nil;
     }
 }

@@ -17,7 +17,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    DLog(@"App Sandbox Path: %@", NSHomeDirectory());
     
     // Modules initialization
     _moduleManager = [CBModuleManager sharedInstance];
@@ -26,8 +25,12 @@
 //    crashReportModule.moduleWeightFactor = 0.1;
 //    [_moduleManager registerModule:crashReportModule];
     
+    id<CBModule> loggerModule = [LoggerModule sharedInstance];
+    loggerModule.moduleWeightFactor = 0.1;
+    [_moduleManager registerModule:loggerModule];
+    
     id<CBModule> databaseModule = [DatabaseModule sharedInstance];
-    databaseModule.moduleWeightFactor = 0.3;
+    databaseModule.moduleWeightFactor = 0.2;
     [_moduleManager registerModule:databaseModule];
     
     id<CBModule> userDefaultModule = [UserDefaultsModule sharedInstance];
@@ -35,11 +38,11 @@
     [_moduleManager registerModule:userDefaultModule];
     
     id<CBModule> communicationModule = [CommunicationModule sharedInstance];
-    communicationModule.moduleWeightFactor = 0.15;
+    communicationModule.moduleWeightFactor = 0.1;
     [_moduleManager registerModule:communicationModule];
     
     id<CBModule> webSocketModule = [WebSocketModule sharedInstance];
-    webSocketModule.moduleWeightFactor = 0.05;
+    webSocketModule.moduleWeightFactor = 0.1;
     [_moduleManager registerModule:webSocketModule];
     
     id<CBModule> spiderModule = [SpiderModule sharedInstance];
@@ -54,7 +57,9 @@
     guiModule.moduleWeightFactor = 0.1;
     [_moduleManager registerModule:guiModule];
     
-    [Crashlytics startWithAPIKey:@"592220da47f22b9cdb4a9df47ea79170d94a150a"];      
+    DDLogVerbose(@"App Sandbox Path: %@", NSHomeDirectory());    
+    
+    [Crashlytics startWithAPIKey:@"592220da47f22b9cdb4a9df47ea79170d94a150a"];
     
     return YES;
 }

@@ -289,7 +289,7 @@ SINGLETON(SeedPictureAgent)
 {
     if(nil == urlPath)
     {
-        DLog(@"Null url path");
+        DDLogWarn(@"Null url path");
         return;
     }
     
@@ -341,7 +341,7 @@ SINGLETON(SeedPictureAgent)
 {
     if (nil == url)
     {
-        DLog(@"Null url");
+        DDLogWarn(@"Null url");
         return;
     }
     
