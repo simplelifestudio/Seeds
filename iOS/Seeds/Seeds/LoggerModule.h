@@ -28,6 +28,4 @@ static const int ddLogLevel = LOG_LEVEL_WARN;
 
 @interface LoggerModule : CBModuleAbstractImpl <CBSharedInstance, UIApplicationDelegate>
 
-@property (strong, nonatomic) DDFileLogger* fileLogger;
-
 @end

@@ -8,11 +8,16 @@
 
 #import "LoggerModule.h"
 
+@interface LoggerModule()
+{
+    DDFileLogger* _fileLogger;
+}
+
+@end
+
 @implementation LoggerModule
 
 SINGLETON(UserDefaultsModule)
-
-@synthesize fileLogger = _fileLogger;
 
 -(void) initModule
 {
@@ -22,6 +27,17 @@ SINGLETON(UserDefaultsModule)
     
     [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
+    if (nil == _fileLogger)
+    {
+        _fileLogger = [[DDFileLogger alloc] init];
+        _fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
+        _fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+        
+        [DDLog addLogger:_fileLogger];
+    }
+    
+    DDLogVerbose(@"Logger Level is :%d", ddLogLevel);
 }
 
 -(void) releaseModule
@@ -39,20 +55,6 @@ SINGLETON(UserDefaultsModule)
 -(void) processService
 {
     MODULE_DELAY
-}
-
--(DDFileLogger*) fileLogger
-{
-    if (nil == _fileLogger)
-    {
-        _fileLogger = [[DDFileLogger alloc] init];
-        _fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
-        _fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
-        
-        [DDLog addLogger:_fileLogger];
-    }
-    
-    return _fileLogger;
 }
 
 @end
