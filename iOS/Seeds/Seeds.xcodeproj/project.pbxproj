@@ -148,6 +148,19 @@
 		C571E0A01766145300E9AD50 /* SeedListTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C571E09F1766145200E9AD50 /* SeedListTableCell.xib */; };
 		C571E0A3176627CE00E9AD50 /* AsyncImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C571E0A2176627CE00E9AD50 /* AsyncImageView.m */; };
 		C571E0A7176750BF00E9AD50 /* SeedPictureCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C571E0A6176750BD00E9AD50 /* SeedPictureCollectionCell.xib */; };
+		C576D05717BD07390057FD77 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C071722290400CC1C0A /* UIKit.framework */; };
+		C576D05817BD07390057FD77 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C091722290400CC1C0A /* Foundation.framework */; };
+		C576D05917BD07390057FD77 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C0B1722290400CC1C0A /* CoreGraphics.framework */; };
+		C576D05F17BD07390057FD77 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C576D05D17BD07390057FD77 /* InfoPlist.strings */; };
+		C576D06117BD07390057FD77 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C576D06017BD07390057FD77 /* main.m */; };
+		C576D06717BD07390057FD77 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C576D06617BD07390057FD77 /* Default.png */; };
+		C576D06917BD07390057FD77 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C576D06817BD07390057FD77 /* Default@2x.png */; };
+		C576D06B17BD07390057FD77 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C576D06A17BD07390057FD77 /* Default-568h@2x.png */; };
+		C576D07017BD07950057FD77 /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C576D06F17BD07950057FD77 /* GHUnitIOS.framework */; };
+		C576D07117BD09760057FD77 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C506EA54178F9E29007E9FE7 /* QuartzCore.framework */; };
+		C576D07317BD09E20057FD77 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C576D07217BD09E10057FD77 /* Icon@2x.png */; };
+		C576D07517BD09F30057FD77 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C576D07417BD09F20057FD77 /* Icon.png */; };
+		C576D07F17BD0C630057FD77 /* SeedsUnitSampleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C576D07E17BD0C630057FD77 /* SeedsUnitSampleTest.m */; };
 		C57CF27F1724DB660002B054 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */; };
 		C57CF2811724DBE10002B054 /* Seeds_App_Database.db in Resources */ = {isa = PBXBuildFile; fileRef = C57CF2801724DBE10002B054 /* Seeds_App_Database.db */; };
 		C58B0440177EDD7200F8C185 /* PagingToolbar.xib in Resources */ = {isa = PBXBuildFile; fileRef = C58B043F177EDD7200F8C185 /* PagingToolbar.xib */; };
@@ -488,6 +501,19 @@
 		C571E0A1176627CE00E9AD50 /* AsyncImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncImageView.h; sourceTree = "<group>"; };
 		C571E0A2176627CE00E9AD50 /* AsyncImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncImageView.m; sourceTree = "<group>"; };
 		C571E0A6176750BD00E9AD50 /* SeedPictureCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeedPictureCollectionCell.xib; sourceTree = "<group>"; };
+		C576D05617BD07390057FD77 /* SeedsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SeedsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C576D05C17BD07390057FD77 /* SeedsTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SeedsTest-Info.plist"; sourceTree = "<group>"; };
+		C576D05E17BD07390057FD77 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		C576D06017BD07390057FD77 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C576D06217BD07390057FD77 /* SeedsTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SeedsTest-Prefix.pch"; sourceTree = "<group>"; };
+		C576D06617BD07390057FD77 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		C576D06817BD07390057FD77 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		C576D06A17BD07390057FD77 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		C576D06F17BD07950057FD77 /* GHUnitIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnitIOS.framework; path = SeedsTest/GHUnitIOS.framework; sourceTree = "<group>"; };
+		C576D07217BD09E10057FD77 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../Icon@2x.png"; sourceTree = "<group>"; };
+		C576D07417BD09F20057FD77 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
+		C576D07D17BD0C630057FD77 /* SeedsUnitSampleTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedsUnitSampleTest.h; sourceTree = "<group>"; };
+		C576D07E17BD0C630057FD77 /* SeedsUnitSampleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedsUnitSampleTest.m; sourceTree = "<group>"; };
 		C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		C57CF2801724DBE10002B054 /* Seeds_App_Database.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = Seeds_App_Database.db; sourceTree = "<group>"; };
 		C58B043F177EDD7200F8C185 /* PagingToolbar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PagingToolbar.xib; sourceTree = "<group>"; };
@@ -635,6 +661,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C576D05317BD07390057FD77 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C576D07117BD09760057FD77 /* QuartzCore.framework in Frameworks */,
+				C576D07017BD07950057FD77 /* GHUnitIOS.framework in Frameworks */,
+				C576D05717BD07390057FD77 /* UIKit.framework in Frameworks */,
+				C576D05817BD07390057FD77 /* Foundation.framework in Frameworks */,
+				C576D05917BD07390057FD77 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C5964C011722290400CC1C0A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1093,6 +1131,48 @@
 			path = PAPasscode;
 			sourceTree = "<group>";
 		};
+		C576D05A17BD07390057FD77 /* SeedsTest */ = {
+			isa = PBXGroup;
+			children = (
+				C576D07817BD0ADF0057FD77 /* Sources */,
+				C576D05B17BD07390057FD77 /* Supporting Files */,
+			);
+			path = SeedsTest;
+			sourceTree = "<group>";
+		};
+		C576D05B17BD07390057FD77 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				C576D05C17BD07390057FD77 /* SeedsTest-Info.plist */,
+				C576D05D17BD07390057FD77 /* InfoPlist.strings */,
+				C576D06017BD07390057FD77 /* main.m */,
+				C576D07417BD09F20057FD77 /* Icon.png */,
+				C576D07217BD09E10057FD77 /* Icon@2x.png */,
+				C576D06217BD07390057FD77 /* SeedsTest-Prefix.pch */,
+				C576D06617BD07390057FD77 /* Default.png */,
+				C576D06817BD07390057FD77 /* Default@2x.png */,
+				C576D06A17BD07390057FD77 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C576D07817BD0ADF0057FD77 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				C576D07917BD0AEE0057FD77 /* TestCases */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		C576D07917BD0AEE0057FD77 /* TestCases */ = {
+			isa = PBXGroup;
+			children = (
+				C576D07D17BD0C630057FD77 /* SeedsUnitSampleTest.h */,
+				C576D07E17BD0C630057FD77 /* SeedsUnitSampleTest.m */,
+			);
+			name = TestCases;
+			sourceTree = "<group>";
+		};
 		C57CF282172565100002B054 /* 3rd Libs */ = {
 			isa = PBXGroup;
 			children = (
@@ -1117,6 +1197,7 @@
 			isa = PBXGroup;
 			children = (
 				C5964C0D1722290400CC1C0A /* Seeds */,
+				C576D05A17BD07390057FD77 /* SeedsTest */,
 				C5964C061722290400CC1C0A /* Frameworks */,
 				C5964C051722290400CC1C0A /* Products */,
 			);
@@ -1126,6 +1207,7 @@
 			isa = PBXGroup;
 			children = (
 				C5964C041722290400CC1C0A /* Seeds.app */,
+				C576D05617BD07390057FD77 /* SeedsTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1137,6 +1219,7 @@
 				C5203DA01747B94C00D917F7 /* libz.1.2.5.dylib */,
 				C5AB114B1732C01C007EEE25 /* libxml2.2.dylib */,
 				C57CF27E1724DB660002B054 /* libsqlite3.0.dylib */,
+				C576D06F17BD07950057FD77 /* GHUnitIOS.framework */,
 				C527948A17BB726400D10782 /* Crashlytics.framework */,
 				C506EA54178F9E29007E9FE7 /* QuartzCore.framework */,
 				C5F8AC4F174B9807001E30D1 /* SystemConfiguration.framework */,
@@ -1461,6 +1544,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C576D05517BD07390057FD77 /* SeedsTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C576D06C17BD07390057FD77 /* Build configuration list for PBXNativeTarget "SeedsTest" */;
+			buildPhases = (
+				C576D05217BD07390057FD77 /* Sources */,
+				C576D05317BD07390057FD77 /* Frameworks */,
+				C576D05417BD07390057FD77 /* Resources */,
+				C576D07617BD0A190057FD77 /* ShellScript */,
+				C576D07717BD0A330057FD77 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SeedsTest;
+			productName = SeedsTest;
+			productReference = C576D05617BD07390057FD77 /* SeedsTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		C5964C031722290400CC1C0A /* Seeds */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C5964C2A1722290400CC1C0A /* Build configuration list for PBXNativeTarget "Seeds" */;
@@ -1504,11 +1606,25 @@
 			projectRoot = "";
 			targets = (
 				C5964C031722290400CC1C0A /* Seeds */,
+				C576D05517BD07390057FD77 /* SeedsTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C576D05417BD07390057FD77 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C576D05F17BD07390057FD77 /* InfoPlist.strings in Resources */,
+				C576D06717BD07390057FD77 /* Default.png in Resources */,
+				C576D06917BD07390057FD77 /* Default@2x.png in Resources */,
+				C576D06B17BD07390057FD77 /* Default-568h@2x.png in Resources */,
+				C576D07317BD09E20057FD77 /* Icon@2x.png in Resources */,
+				C576D07517BD09F30057FD77 /* Icon.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C5964C021722290400CC1C0A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1586,6 +1702,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		C576D07617BD0A190057FD77 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\nexport CODESIGN_ALLOCATE=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/codesign_allocate\nif [ \"${PLATFORM_NAME}\" == \"iphoneos\" ] || [ \"${PLATFORM_NAME}\" == \"ipados\" ]; then\n/Applications/Xcode.app/Contents/Developer/iphoneentitlements/gen_entitlements.py \"my.company.${PROJECT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\";\ncodesign -f -s \"iPhone Developer\" --entitlements \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\"\nfi";
+		};
+		C576D07717BD0A330057FD77 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "version=`/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" $PRODUCT_SETTINGS_PATH`\nversion=`expr $version + 1`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $version\" $PRODUCT_SETTINGS_PATH\n#/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $version\" $PRODUCT_SETTINGS_PATH 这行代码会让version也自增，一般不需要";
+		};
 		C5A4904C17BA248B00E8CB6F /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1628,6 +1770,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C576D05217BD07390057FD77 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C576D06117BD07390057FD77 /* main.m in Sources */,
+				C576D07F17BD0C630057FD77 /* SeedsUnitSampleTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C5964C001722290400CC1C0A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1793,6 +1944,14 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
+		C576D05D17BD07390057FD77 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C576D05E17BD07390057FD77 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		C5964C101722290400CC1C0A /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1823,6 +1982,62 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C576D06D17BD07390057FD77 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Don't Code Sign";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/SeedsTest\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SeedsTest/SeedsTest-Prefix.pch";
+				INFOPLIST_FILE = "SeedsTest/SeedsTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		C576D06E17BD07390057FD77 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Don't Code Sign";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "Don't Code Sign";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/SeedsTest\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SeedsTest/SeedsTest-Prefix.pch";
+				INFOPLIST_FILE = "SeedsTest/SeedsTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		C5964C281722290400CC1C0A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1948,6 +2163,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C576D06C17BD07390057FD77 /* Build configuration list for PBXNativeTarget "SeedsTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C576D06D17BD07390057FD77 /* Debug */,
+				C576D06E17BD07390057FD77 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		C5964BFF1722290400CC1C0A /* Build configuration list for PBXProject "Seeds" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
