@@ -337,10 +337,6 @@
             DDLogVerbose(@"Clean all old torrents before the last 3 days.");
             [_downloadAgent clearDownloadDirectory:days];
             
-            // Step 100:
-            DDLogVerbose(@"Clean all expired image cache in disk.");
-            [_pictureAgent cleanExpiredCache];
-            
             if (_seedsSpiderDelegate)
             {
                 [_seedsSpiderDelegate taskFinished:NSLocalizedString(@"Completed", nil) minorStatus:nil];
@@ -360,7 +356,9 @@
     }
     @finally
     {
-        
+        // Step 100:
+        DDLogVerbose(@"Clean all expired image cache in disk.");
+        [_pictureAgent cleanExpiredCache];
     }
 }
 

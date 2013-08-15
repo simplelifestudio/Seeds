@@ -632,10 +632,6 @@
                                             // Step 80
                                             [_downloadAgent clearDownloadDirectory:last3Days];
                                             
-                                            // Step 90
-                                            DDLogVerbose(@"Clean all expired image cache in disk.");
-                                            [_pictureAgent cleanExpiredCache];
-                                            
                                             if (_delegate)
                                             {
                                                 [_delegate taskFinished:NSLocalizedString(@"Completed", nil) minorStatus:nil];
@@ -703,7 +699,9 @@
     }
     @finally
     {
-    
+        // Step 90
+        DDLogVerbose(@"Clean all expired image cache in disk.");
+        [_pictureAgent cleanExpiredCache];
     }
 }
 
