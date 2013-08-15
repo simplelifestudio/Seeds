@@ -154,7 +154,7 @@
 		C58B0443177EDF1800F8C185 /* PagingToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = C58B0442177EDF1700F8C185 /* PagingToolbar.m */; };
 		C58B0449178063DB00F8C185 /* NSDictionary+JSON.m in Sources */ = {isa = PBXBuildFile; fileRef = C58B0448178063DB00F8C185 /* NSDictionary+JSON.m */; };
 		C58B044C178106A800F8C185 /* CBAppUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C58B044B178106A800F8C185 /* CBAppUtils.m */; };
-		C5964C081722290400CC1C0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C071722290400CC1C0A /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		C5964C081722290400CC1C0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C071722290400CC1C0A /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C5964C0A1722290400CC1C0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C091722290400CC1C0A /* Foundation.framework */; };
 		C5964C0C1722290400CC1C0A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5964C0B1722290400CC1C0A /* CoreGraphics.framework */; };
 		C5964C121722290400CC1C0A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C5964C101722290400CC1C0A /* InfoPlist.strings */; };

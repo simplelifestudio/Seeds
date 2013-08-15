@@ -101,6 +101,7 @@
     
     [CBAppUtils asyncProcessInBackgroundThread:^(){
         [_pictureAgent clearMemory];
+        [_pictureAgent cleanExpiredCache];
     }];
     
     [self _refreshDayAndSyncStatusLabels];
