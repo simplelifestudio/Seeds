@@ -14,7 +14,7 @@
 @interface CBModuleManager : NSObject <CBSharedInstance, UIApplicationDelegate>
 
 -(void) registerModule:(id<CBModule>) module;
--(void) unregistModule:(id<CBModule>) module;
+-(void) unregisterModule:(id<CBModule>) module;
 
 -(void) initModules;
 -(void) startModuleServices;

@@ -37,7 +37,7 @@ SINGLETON(CBModuleManager)
     }
 }
 
--(void) unregistModule:(id<CBModule>) module
+-(void) unregisterModule:(id<CBModule>) module
 {
     if (nil != module)
     {
