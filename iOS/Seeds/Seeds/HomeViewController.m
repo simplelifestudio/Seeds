@@ -95,10 +95,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated
-{    
-    [self.navigationController setNavigationBarHidden:YES];
-    [self.navigationController setToolbarHidden:YES];
-    
+{
     [CBAppUtils asyncProcessInBackgroundThread:^(){
         [_pictureAgent clearMemory];
     }];
@@ -106,11 +103,16 @@
     [self _refreshDayAndSyncStatusLabels];
 
     [super viewWillAppear:animated];    
+
+    [self.navigationController setToolbarHidden:YES animated:YES];
+	[self.navigationController setNavigationBarHidden:YES animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewWillDisappear:animated];
+	[super viewWillDisappear:animated];
+    
+	[self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
