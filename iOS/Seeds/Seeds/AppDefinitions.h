@@ -94,7 +94,7 @@
 #define REMOTEPATH_CARTSERVICE @"/seeds/cartService"
 #define REMOTEPATH_WEBSOCKETSERVICE @"/seeds/websocket"
 
-#define WEBSOCKET_ENABLED 1
+#define WEBSOCKET_ENABLED 0
 
 #define BASEURL_TORRENTSTORE @"www.maxp2p.com"
 #define BASEURL_TORRENT @"http://www.maxp2p.com/"
