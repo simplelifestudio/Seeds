@@ -9,13 +9,17 @@
 
 package com.simplelife.seeds.server.webscoket;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.util.Hashtable;
 
 import net.sf.json.JSONObject;
 
+import com.simplelife.seeds.server.json.IJsonRequest;
+import com.simplelife.seeds.server.json.JsonRequestFactory;
 import com.simplelife.seeds.server.util.DateUtil;
 import com.simplelife.seeds.server.util.JsonKey;
 import com.simplelife.seeds.server.util.JsonUtil;
@@ -53,13 +57,13 @@ public class SeedsMessageInbound extends MessageInbound
 
     @Override
     protected void onBinaryMessage(ByteBuffer message) throws IOException {
-        LogUtil.info("Binary data received on websocket.");
+        LogUtil.info("Binary data received on: " + this.clientId);
         getWsOutbound().writeBinaryMessage(message);
     }
 
     @Override
     protected void onTextMessage(CharBuffer message) throws IOException {
-        LogUtil.info("Text Message received on websocket.");
+        LogUtil.info("Text Message received on: " + this.clientId);
         echoMessage(message);
     }
     
@@ -104,14 +108,7 @@ public class SeedsMessageInbound extends MessageInbound
             return;
         }
         
-        String command = jsonObj.getString(JsonKey.id);
-        if (!command.equals("WSChatMessage"))
-        {
-            String err = "Illegal message id : " + command +" found.";
-            LogUtil.warning(err);
-            return;
-        }
-        
+        /*
         Hashtable<String, Object> response = new Hashtable<String, Object>();
         Hashtable<String, Object> body = new Hashtable<String, Object>();
         
@@ -121,13 +118,39 @@ public class SeedsMessageInbound extends MessageInbound
         body.put("content", "Are you there?");
         body.put("time", DateUtil.getNow());
         
-        String strResponse = response.toString(); 
+        */
+        
+        ByteArrayOutputStream byteArray = new ByteArrayOutputStream(); 
+        PrintWriter out = new PrintWriter(byteArray);
+        IJsonRequest jsonCmd = JsonRequestFactory.CreateJsonCommand(out, jsonObj, this.clientId);
+        
+        if (jsonCmd == null)
+        {
+            LogUtil.warning("Illegal command received from client: " + jsonObj.toString());
+            return;
+        }
+        
+        jsonCmd.Execute();
+        out.flush();
+        
+        //LogUtil.info("out: "+ out.toString());
+        //LogUtil.info("byteArray: "+ byteArray.size());
+        
+        String strResponse = byteArray.toString();
+        //LogUtil.info("strResponse: "+ strResponse);
+        
         CharBuffer buffer = CharBuffer.allocate(strResponse.length());
         buffer.put(strResponse);
         buffer.flip();
-        LogUtil.info("Response: "+ strResponse);
-        //LogUtil.info("buffer: " + buffer.toString());
-        //getWsOutbound().writeTextMessage(buffer);
+        
+        if (strResponse.length() > 100)
+        {
+            LogUtil.info("Response: "+ strResponse.substring(0, 100));
+        }
+        else
+        {
+            LogUtil.info("Response: "+ strResponse);
+        }
         try
         {
             getWsOutbound().writeTextMessage(buffer);
@@ -151,7 +174,7 @@ public class SeedsMessageInbound extends MessageInbound
             getWsOutbound().ping(pingData);
         } catch (IOException e)
         {
-            LogUtil.printStackTrace(e);
+            LogUtil.printStackTrace(e); 
         }
     }
     
