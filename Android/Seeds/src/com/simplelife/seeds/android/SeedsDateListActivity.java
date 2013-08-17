@@ -96,18 +96,27 @@ public class SeedsDateListActivity extends Activity {
 	final int MESSAGETYPE_SETTEXTSTRING = 108;
 	
 	// For log purpose
-	private SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
+	private SeedsLoggerUtil mLogger;
 	
 	// To record the operation status which needs to be handed between threads
 	private boolean opeStatus = false;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);		
+		super.onCreate(savedInstanceState);
+		
+		mLogger = SeedsLoggerUtil.getSeedsLogger(SeedsDateListActivity.this);
 		
 		// Start the DateList View
 		setContentView(R.layout.activity_seeds_datelist);
 		
+		// Check if Wifi is connected
+		checkNetworkStatus();
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
 		mLayoutBefYesterday = (LinearLayout)findViewById(R.id.layout_befyesterday);
 		mLayoutYesterday = (LinearLayout)findViewById(R.id.layout_yesterday);
 		mLayoutToday = (LinearLayout)findViewById(R.id.layout_today);
@@ -136,8 +145,6 @@ public class SeedsDateListActivity extends Activity {
 		// Set the progress style as spinner
 		mUpdateBtn.setOnClickListener(myUpdateBtnListener);		
 		
-		// Check if Wifi is connected
-		checkNetworkStatus();
 	}
 	
 	@Override
@@ -611,7 +618,7 @@ public class SeedsDateListActivity extends Activity {
 			
 			mLogger.debug("Parsing SeedsByDateResp DONE, seeds count = "+tSeedsList.size());
 			// Retrieve the DB process handler to get data 
-		    SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
+		    SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter(SeedsDateListActivity.this);
 		    
 		    // Store the seeds info into database 
 		    updateDialogStatus(getString(R.string.seeds_datelist_saveseedsinfo));

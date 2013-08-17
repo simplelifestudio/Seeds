@@ -239,7 +239,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 		mSeedsEntityList.clear(); 
 		
 		// Retrieve the DB process handler to get data 
-		SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();
+		SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter(SeedsRSSCartActivity.this);
 		
 		int tSeedLocalIdSize = mSeedLocalIdInCart.size();
 		for(int index = 0; index < tSeedLocalIdSize; index++)

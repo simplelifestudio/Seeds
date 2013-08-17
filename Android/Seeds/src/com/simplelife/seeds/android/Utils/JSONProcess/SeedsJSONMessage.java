@@ -28,8 +28,6 @@ public class SeedsJSONMessage {
 	public static String SeedsByDatesResponse = "SeedsByDatesResponse";
 	public static String SeedsToCartRequest   = "SeedsToCartRequest";
 	public static String SeedsToCartResponse  = "SeedsToCartResponse";
-	// For log purpose
-	private static SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
 	
 	public SeedsJSONMessage(){
 		
@@ -62,7 +60,6 @@ public class SeedsJSONMessage {
 		// Convert the String to JSON object
 		JSONObject tMsgInJSON = new JSONObject(inStringMsg);  
 		String msgType = (String) tMsgInJSON.get("id");
-		mLogger.info("Parsing msg " + msgType);
 	    
 		// Parse the paramList part
 		JSONObject tParamList = tMsgInJSON.getJSONObject("body");
@@ -86,7 +83,6 @@ public class SeedsJSONMessage {
 		// Convert the String to JSON object
 		JSONObject tMsgInJSON = new JSONObject(inStringMsg);  
 		String msgType = (String) tMsgInJSON.get("id");
-		mLogger.info("Parsing msg " + msgType);
 	    
 		// Parse the paramList part
 		JSONObject tParamList = tMsgInJSON.getJSONObject("body");
@@ -178,8 +174,6 @@ public class SeedsJSONMessage {
 		// Convert the String to JSON object
 		JSONObject tMsgInJSON = new JSONObject(inStringMsg);  
 		String msgType = (String) tMsgInJSON.get("id");
-		mLogger.debug("Parsing msg " + msgType);
-		mLogger.debug(inStringMsg);
 		
 		// Prepare the return Seeds List
 		ArrayList<SeedsEntity> retSeedsList = new ArrayList<SeedsEntity>();
@@ -190,7 +184,6 @@ public class SeedsJSONMessage {
 	    JSONArray tSeedsArray = tParamList.getJSONArray(inDate);
 			
 		int numOfSeeds = tSeedsArray.length();
-		mLogger.debug("The size of the seedsArray is " + numOfSeeds);
 		for (int index2 = 0; index2 < numOfSeeds; index2++)
 		{
 			// Construct single seed info
@@ -257,7 +250,6 @@ public class SeedsJSONMessage {
 		
 		JSONObject tMsgInJSON = new JSONObject(_inRespMsg);  
 		String msgType = (String) tMsgInJSON.get("id");
-		mLogger.info("Parsing msg " + msgType);
 	    
 		// Parse the paramList part
 		JSONObject tParamList = tMsgInJSON.getJSONObject("body");

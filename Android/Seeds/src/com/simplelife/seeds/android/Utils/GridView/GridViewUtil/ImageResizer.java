@@ -25,8 +25,10 @@ import android.os.Build;
 import android.util.Log;
 
 import com.simplelife.seeds.android.BuildConfig;
+import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 import java.io.FileDescriptor;
+import java.io.IOException;
 
 /**
  * A simple subclass of {@link ImageWorker} that resizes images from resources given a target width
@@ -37,6 +39,8 @@ public class ImageResizer extends ImageWorker {
     private static final String TAG = "ImageResizer";
     protected int mImageWidth;
     protected int mImageHeight;
+    
+    protected static SeedsLoggerUtil mLogger; 
 
     /**
      * Initialize providing a single target image size (used for both width and height);
@@ -47,6 +51,7 @@ public class ImageResizer extends ImageWorker {
      */
     public ImageResizer(Context context, int imageWidth, int imageHeight) {
         super(context);
+        mLogger = SeedsLoggerUtil.getSeedsLogger(context);
         setImageSize(imageWidth, imageHeight);
     }
 
@@ -58,6 +63,7 @@ public class ImageResizer extends ImageWorker {
      */
     public ImageResizer(Context context, int imageSize) {
         super(context);
+        mLogger = SeedsLoggerUtil.getSeedsLogger(context);
         setImageSize(imageSize);
     }
 
@@ -177,7 +183,8 @@ public class ImageResizer extends ImageWorker {
     public static Bitmap decodeSampledBitmapFromDescriptor(
             FileDescriptor fileDescriptor, int reqWidth, int reqHeight, ImageCache cache) {
 
-        // First decode with inJustDecodeBounds=true to check dimensions
+    	Bitmap rtnBitmap = null;
+    	// First decode with inJustDecodeBounds=true to check dimensions
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options);
@@ -192,8 +199,14 @@ public class ImageResizer extends ImageWorker {
         if (Utils.hasHoneycomb()) {
             addInBitmapOptions(options, cache);
         }
+        
+        try{
+        	rtnBitmap = BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options);
+        }catch(Exception e) {
+			mLogger.excep(e);
+		}
 
-        return BitmapFactory.decodeFileDescriptor(fileDescriptor, null, options);
+        return rtnBitmap;
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)

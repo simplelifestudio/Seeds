@@ -81,7 +81,7 @@ public class SeedsDetailsActivity extends Activity{
 		mSeedLocalId = mSeedsEntity.getSeedLocalId(); 
 		
 		// Retrieve the adapter instance
-		mDBAdapter = SeedsDBAdapter.getAdapter();
+		mDBAdapter = SeedsDBAdapter.getAdapter(SeedsDetailsActivity.this);
 		
 		// Initialization
 		initViews();
@@ -295,7 +295,7 @@ public class SeedsDetailsActivity extends Activity{
 			public void run() {
 				try {
 					// Get the DB adapter instance
-					SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();
+					SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter(SeedsDetailsActivity.this);
 					
 					// Set the favorite key 
 					if (tFavTag)

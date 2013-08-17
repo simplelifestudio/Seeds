@@ -51,11 +51,13 @@ public abstract class SeedsListActivity extends FragmentActivity {
     protected ArrayList<SeedsEntity> mSeedsListForListView;
 	
 	// For log purpose
-    protected SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger(); 
+    protected SeedsLoggerUtil mLogger; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		mLogger = SeedsLoggerUtil.getSeedsLogger(SeedsListActivity.this);
 		
 		// Initialize the SeedsEntity List
 		mSeedsEntityList = new ArrayList<SeedsEntity>();
