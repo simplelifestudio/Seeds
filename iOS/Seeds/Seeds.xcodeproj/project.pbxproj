@@ -17,6 +17,8 @@
 		C506EA52178F9841007E9FE7 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA49178F9841007E9FE7 /* whiteArrow.png */; };
 		C506EA53178F9841007E9FE7 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C506EA4A178F9841007E9FE7 /* whiteArrow@2x.png */; };
 		C506EA55178F9E2A007E9FE7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C506EA54178F9E29007E9FE7 /* QuartzCore.framework */; };
+		C509391417BF2556005148D4 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C509391317BF2556005148D4 /* Icon-Small@2x.png */; };
+		C509391517BF2556005148D4 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C509391317BF2556005148D4 /* Icon-Small@2x.png */; };
 		C510FB4517A2A68200AAF51F /* control in Resources */ = {isa = PBXBuildFile; fileRef = C510FB4217A2A68200AAF51F /* control */; };
 		C510FB4617A2A68200AAF51F /* deb_scripts.txt in Resources */ = {isa = PBXBuildFile; fileRef = C510FB4317A2A68200AAF51F /* deb_scripts.txt */; };
 		C510FB4717A2A68200AAF51F /* postrm in Resources */ = {isa = PBXBuildFile; fileRef = C510FB4417A2A68200AAF51F /* postrm */; };
@@ -262,6 +264,7 @@
 		C506EA49178F9841007E9FE7 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
 		C506EA4A178F9841007E9FE7 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 		C506EA54178F9E29007E9FE7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C509391317BF2556005148D4 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		C50FD40A174FBC1600E5D316 /* AppDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDefinitions.h; sourceTree = "<group>"; };
 		C510FB4217A2A68200AAF51F /* control */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = control; sourceTree = "<group>"; };
 		C510FB4317A2A68200AAF51F /* deb_scripts.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = deb_scripts.txt; sourceTree = "<group>"; };
@@ -1405,6 +1408,7 @@
 				C514A65617A15CAC009D57A1 /* Icon-72.png */,
 				C514A65717A15CAD009D57A1 /* Icon-Small-50.png */,
 				C514A65817A15CAD009D57A1 /* Icon-Small.png */,
+				C509391317BF2556005148D4 /* Icon-Small@2x.png */,
 				C514A65B17A15CB2009D57A1 /* iTunesArtwork */,
 				C5AD7C0417A01E7200D51E4E /* help_01.JPG */,
 				C5AD7C0517A01E7200D51E4E /* help_02.JPG */,
@@ -1618,6 +1622,7 @@
 				C576D06B17BD07390057FD77 /* Default-568h@2x.png in Resources */,
 				C5B9450217BE4FE700625041 /* Icon.png in Resources */,
 				C5B9450417BE4FE700625041 /* Icon@2x.png in Resources */,
+				C509391517BF2556005148D4 /* Icon-Small@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1692,6 +1697,7 @@
 				C510FB4C17A2B39000AAF51F /* SeedListTableSmallerCell.xib in Resources */,
 				C5B9450117BE4FE700625041 /* Icon.png in Resources */,
 				C5B9450317BE4FE700625041 /* Icon@2x.png in Resources */,
+				C509391417BF2556005148D4 /* Icon-Small@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
