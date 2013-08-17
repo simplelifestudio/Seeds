@@ -1,8 +1,6 @@
 package com.simplelife.seeds.android.utils.dbprocess;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.simplelife.seeds.android.SeedsDateManager;
 import com.simplelife.seeds.android.SeedsEntity;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
@@ -11,7 +9,6 @@ import android.content.ContentValues;
 import android.content.Context;  
 import android.database.*;  
 import android.database.sqlite.*;  
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;  
 
 /** 
@@ -80,19 +77,22 @@ public class SeedsDBAdapter {
  	private static SQLiteDatabase mSQLiteDatabase = null;
  	 
  	// Context of the application using the database.  
- 	private final Context context; 
+ 	private static Context context; 
  	
     // Singleton Pattern  
     private static SeedsDBAdapter adpInstance = null; 
     
-    private SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
+    private static SeedsLoggerUtil mLogger;
       
     /** 
      * Initialize SeedsDBManager 
      * @param context, context of application 
      */  
     public static void initAdapter(Context context){  
-    	Log.i("SeedsDBAdapter", "Initialize the DB Adapter!");
+    	
+    	mLogger = SeedsLoggerUtil.getSeedsLogger(context);
+    	
+    	mLogger.info("Initialize the DB Adapter!");
     	if(adpInstance == null){  
         	adpInstance = new SeedsDBAdapter(context);  
         }  
@@ -112,8 +112,10 @@ public class SeedsDBAdapter {
 		adpInstance.syncDataBase();
     }  
       
-    public static SeedsDBAdapter getAdapter(){  
-        return adpInstance;  
+    public static SeedsDBAdapter getAdapter(Context _context){  
+        if(null == adpInstance)
+        	initAdapter(_context);
+    	return adpInstance;  
     } 
   
  	public SeedsDBAdapter (Context _context) { 		

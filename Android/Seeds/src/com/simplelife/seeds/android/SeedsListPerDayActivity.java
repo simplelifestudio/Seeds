@@ -27,6 +27,7 @@ import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache.Image
 
 public class SeedsListPerDayActivity extends SeedsListActivity {
 	
+	private String mDateBackup;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,29 +49,50 @@ public class SeedsListPerDayActivity extends SeedsListActivity {
 		// Initialize the tSeedIdList
 		mSeedIdList = new ArrayList<Integer>();
 		
-        mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
+        if(null == mDate)
+        {
+        	mLogger.error("The data info is empty!");
+        	mDate = mDateBackup; 
+        }
+        
+        if (null != mDate)
+        {
+            mImageThumbSize = getResources().getDimensionPixelSize(R.dimen.image_thumbnail_size);
 
-        ImageCacheParams cacheParams = new ImageCacheParams(this, SeedsDefinitions.SEEDS_THUMBS_CACHE_DIR);
+            ImageCacheParams cacheParams = new ImageCacheParams(this, SeedsDefinitions.SEEDS_THUMBS_CACHE_DIR);
 
-        // The ImageFetcher takes care of loading images into our ImageView children asynchronously
-        mImageFetcher = new ImageFetcher(this, mImageThumbSize);
-        mImageFetcher.setLoadingImage(R.drawable.empty_photo);
-        mImageFetcher.addImageCache(this.getSupportFragmentManager(), cacheParams, mDate);
-		
-		// Start a new thread to get the data
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				Message msg = new Message();
-				msg.what = 0;
-				
-				// Retrieve the seeds list
-				msg.obj = getList();
-				handler.sendMessage(msg);
-			}
-		}).start();		
+            // The ImageFetcher takes care of loading images into our ImageView children asynchronously
+            mImageFetcher = new ImageFetcher(this, mImageThumbSize);
+            mImageFetcher.setLoadingImage(R.drawable.empty_photo);
+        	mImageFetcher.addImageCache(this.getSupportFragmentManager(), cacheParams, mDate);
+            
+    		// Start a new thread to get the data
+    		new Thread(new Runnable() {
+    			@Override
+    			public void run() {
+    				// TODO Auto-generated method stub
+    				Message msg = new Message();
+    				msg.what = 0;
+    				
+    				// Retrieve the seeds list
+    				msg.obj = getList();
+    				handler.sendMessage(msg);
+    			}
+    		}).start();	        	
+        }
+			
 	}
+	
+    @Override  
+    protected void onPause() {  
+        super.onPause(); 
+        mDateBackup = mDate;
+    }
+    
+    protected void onRestart() {  
+        super.onRestart();
+        mDate = mDateBackup;  
+    }  
 	
 	@SuppressLint("HandlerLeak")
 	protected Handler handler = new Handler(){
@@ -112,7 +134,7 @@ public class SeedsListPerDayActivity extends SeedsListActivity {
 		mSeedsEntityList.clear(); 
 		
 		// Retrieve the DB process handler to get data 
-		SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
+		SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter(SeedsListPerDayActivity.this);
 		
 		// Query the Seed table first
 		Cursor tResult = tDBAdapter.getSeedEntryViaPublishDate(mDate);		

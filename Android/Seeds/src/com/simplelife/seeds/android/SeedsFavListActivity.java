@@ -45,6 +45,7 @@ public class SeedsFavListActivity extends SeedsListActivity{
 		// Set the list view layout
 		setContentView(R.layout.activity_seeds_favlist);
 		mEmptyView = findViewById(R.id.favlist_empty);
+		mEmptyView.setVisibility(View.GONE);
 				
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
@@ -116,7 +117,7 @@ public class SeedsFavListActivity extends SeedsListActivity{
 	
     private void setAsUnFavorite(final int _inLocalId){
     	// Get the DB adapter instance
-		SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();					
+		SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter(SeedsFavListActivity.this);					
 		mDBAdapter.updateSeedEntryFav(_inLocalId,false);           							
 	}
 	
@@ -178,7 +179,7 @@ public class SeedsFavListActivity extends SeedsListActivity{
 		mSeedsEntityList.clear();
 		
 		// Retrieve the DB process handler to get data 
-		SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
+		SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter(SeedsFavListActivity.this);
 		
 		// Get the seeds entries according to the favorite tag
 		Cursor tResult = tDBAdapter.getSeedEntryViaFavTag();	

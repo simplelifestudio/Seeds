@@ -18,10 +18,7 @@ import com.simplelife.seeds.android.SeedsDefinitions.SeedsGlobalErrorCode;
 import android.content.Context;
 import android.util.Log;
 
-public class SeedsDateManager {
-	
- 	// Context of the application using the database.  
- 	private final Context context;
+public class SeedsDateManager {	
  	
 	// Date in string format
 	private String mDateBefYesterday;
@@ -31,8 +28,7 @@ public class SeedsDateManager {
     // Singleton Pattern  
     private static SeedsDateManager mInstance = null;  
 	
- 	public SeedsDateManager (Context _context) { 		
- 		context = _context;
+ 	public SeedsDateManager () { 		
  		
  		// Calculate the date
  		Calendar tCal = Calendar.getInstance();
@@ -41,16 +37,19 @@ public class SeedsDateManager {
  		mDateYesterday = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());
  		tCal.add(Calendar.DATE, -1);
  		mDateBefYesterday = new SimpleDateFormat("yyyy-MM-dd").format(tCal.getTime());
- 	}  
+ 	}
 	
-    public static SeedsDateManager getDateManager(){  
+    public static SeedsDateManager getDateManager(){
+    	if(mInstance == null){  
+    		mInstance = new SeedsDateManager();  
+        } 
         return mInstance;  
     } 
     
     public static void initDateManager(Context _context){  
     	Log.i("SeedsDBAdapter", "Initialize the Date Manager!");
     	if(mInstance == null){  
-    		mInstance = new SeedsDateManager(_context);  
+    		mInstance = new SeedsDateManager();  
         }     	
     }
     

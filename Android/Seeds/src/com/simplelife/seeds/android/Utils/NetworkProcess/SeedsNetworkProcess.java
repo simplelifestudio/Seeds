@@ -23,10 +23,7 @@ import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
 public class SeedsNetworkProcess {
 	
-	private static String mServerUrl = "http://106.187.38.52:80/seeds/messageListener";
-	
-	// For log purpose
-	private static SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
+	private static String mServerUrl = "http://106.187.38.52:80/seeds/messageListener";	
 	
 	public SeedsNetworkProcess(){
 		
@@ -39,7 +36,6 @@ public class SeedsNetworkProcess {
 	    new BasicResponseHandler();
 	    HttpPost postMethod = new HttpPost(mServerUrl);
 	    
-	    mLogger.info("Sending AlohaRequest Message!");
 	    // Create Aloha Message
 		JSONObject paramList = new JSONObject();
 		paramList.put("content","Hello Seeds Server!");
@@ -114,7 +110,6 @@ public class SeedsNetworkProcess {
 	    //HttpPost postMethod = new HttpPost(mServerUrl);
 	    HttpPost postMethod = new HttpPost(SeedsDefinitions.getServerUrl());
 	    postMethod.addHeader("Content-Type", "application/json");
-	    mLogger.info("Sending UpdateStatus Message!");
 		
 	    // Create UpdateStatusReq Message
 		JSONObject paramList = new JSONObject();
@@ -131,7 +126,6 @@ public class SeedsNetworkProcess {
 		
 	    // Send the request
 		postMethod.setEntity(new StringEntity(updateStatusReq.toString()));		
-		mLogger.debug("UpdateStatusReq Message "+updateStatusReq.toString());
 		
 		// Retrieve the response
 		HttpResponse response = httpClient.execute(postMethod);
@@ -147,7 +141,6 @@ public class SeedsNetworkProcess {
 	    //HttpPost postMethod = new HttpPost(mServerUrl);
 	    HttpPost postMethod = new HttpPost(SeedsDefinitions.getServerUrl());
 	    postMethod.addHeader("Content-Type", "application/json");
-	    mLogger.info("Sending UpdateStatus Message!");
 		
 	    // Create UpdateStatusReq Message
 		JSONObject paramList = new JSONObject();
@@ -159,7 +152,6 @@ public class SeedsNetworkProcess {
 		
 	    // Send the request
 		postMethod.setEntity(new StringEntity(updateStatusReq.toString()));		
-		mLogger.debug("UpdateStatusReq Message "+updateStatusReq.toString());
 		
 		// Retrieve the response
 		HttpResponse response = httpClient.execute(postMethod);
@@ -173,7 +165,6 @@ public class SeedsNetworkProcess {
 	    //HttpPost postMethod = new HttpPost(mServerUrl);
 		HttpPost postMethod = new HttpPost(SeedsDefinitions.getServerUrl());
 		postMethod.addHeader("Content-Type", "application/json");
-	    mLogger.info("Sending SeedsByDate Message!");
 		
 	    // Create UpdateStatusReq Message
 		JSONObject paramList = new JSONObject();
@@ -205,7 +196,6 @@ public class SeedsNetworkProcess {
 	    //HttpPost postMethod = new HttpPost(mServerUrl);
 		HttpPost postMethod = new HttpPost(SeedsDefinitions.getServerUrl());
 		postMethod.addHeader("Content-Type", "application/json");
-	    mLogger.info("Sending SeedsByDate Message!");
 		
 	    // Create UpdateStatusReq Message
 		JSONObject paramList = new JSONObject();
@@ -219,7 +209,7 @@ public class SeedsNetworkProcess {
 	    // Send the request
 		postMethod.setEntity(new StringEntity(updateStatusReq.toString()));
 		
-		mLogger.debug("SeedsByDate Message: "+updateStatusReq.toString());
+		//mLogger.debug("SeedsByDate Message: "+updateStatusReq.toString());
 		
 		// Retrieve the response
 		HttpResponse response = httpClient.execute(postMethod);
@@ -231,7 +221,7 @@ public class SeedsNetworkProcess {
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		HttpPost postMethod = new HttpPost(SeedsDefinitions.getServerUrl());
 		postMethod.addHeader("Content-Type", SeedsDefinitions.SEEDS_SERVER_HTTP_MIME);
-	    mLogger.info("Sending SeedsToCartRequest Message!");
+	    //mLogger.info("Sending SeedsToCartRequest Message!");
 		
 		JSONObject paramList = new JSONObject();
 		JSONArray  seedIdList  = new JSONArray();
@@ -250,7 +240,7 @@ public class SeedsNetworkProcess {
 	    // Send the request
 		postMethod.setEntity(new StringEntity(updateStatusReq.toString()));
 		
-		mLogger.debug("SeedsToCartRequest Message: "+updateStatusReq.toString());
+		//mLogger.debug("SeedsToCartRequest Message: "+updateStatusReq.toString());
 		
 		// Retrieve the response
 		HttpResponse response = httpClient.execute(postMethod);

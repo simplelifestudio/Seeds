@@ -47,11 +47,13 @@ import android.widget.Toast;
 public class SeedsConfigActivity extends Activity {
 
 	// For log purpose
-	private static SeedsLoggerUtil mLogger = SeedsLoggerUtil.getSeedsLogger();
+	private static SeedsLoggerUtil mLogger;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		mLogger = SeedsLoggerUtil.getSeedsLogger(SeedsConfigActivity.this);
 		
 		getFragmentManager()
 		.beginTransaction()
@@ -366,7 +368,7 @@ public class SeedsConfigActivity extends Activity {
   			            @Override
   			            public void run() {
   			            SeedsDateListActivity.clearSeedsInfoStatus();
-  			            SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
+  			            SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter(getActivity());
   			            // Leave the seeds that are saved as favorite
   			            tDBAdapter.clearDataBase(true);
   				        Message t_MsgListData = new Message();
@@ -401,7 +403,7 @@ public class SeedsConfigActivity extends Activity {
   		            new Thread() {  						
   			            @Override
   			            public void run() {
-  			            SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter();
+  			            SeedsDBAdapter tDBAdapter = SeedsDBAdapter.getAdapter(getActivity());
   			            // Do not leave the seeds that are saved as favorite
   			            tDBAdapter.clearDataBase(false);
   			            SeedsDateListActivity.clearSeedsInfoStatus();

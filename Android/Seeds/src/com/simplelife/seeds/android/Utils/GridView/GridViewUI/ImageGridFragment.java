@@ -103,7 +103,7 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
         mAdapter = new ImageAdapter(getActivity());        
 		
 		// Retrieve the adapter instance
-		mDBAdapter = SeedsDBAdapter.getAdapter();
+		mDBAdapter = SeedsDBAdapter.getAdapter(getActivity());
 
         ImageCacheParams cacheParams = new ImageCacheParams(getActivity(), SeedsDefinitions.SEEDS_THUMBS_CACHE_DIR);
 
@@ -248,7 +248,7 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
 			public void run() {
 				try {
 					// Get the DB adapter instance
-					SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter();
+					SeedsDBAdapter mDBAdapter = SeedsDBAdapter.getAdapter(getActivity());
 					
 					// Set the favorite key 
 					if (mFavTag)

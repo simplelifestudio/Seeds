@@ -30,13 +30,15 @@ public class SeedsLoggerUtil {
     private static Logger mMicroLog = null;
     
  	// Context of the application using the database.  
- 	private final Context mContext; 
+ 	private static Context mContext; 
     
     public static void initSeedsLogger(Context _context){      	
     	
     	if(mInstance == null){  
     		mInstance = new SeedsLoggerUtil(_context);  
         }
+    	
+    	mContext = _context;
     	
     	// Start the micro4android instance
     	PropertyConfigurator.getConfigurator(_context).configure();
@@ -48,8 +50,10 @@ public class SeedsLoggerUtil {
     	judgeLoggerType();
     }  
       
-    public static SeedsLoggerUtil getSeedsLogger(){  
-        return mInstance;  
+    public static SeedsLoggerUtil getSeedsLogger(Context _context){  
+        if(null == mInstance)
+        	initSeedsLogger(_context);
+    	return mInstance;  
     } 
   
  	public SeedsLoggerUtil (Context _context) { 		
