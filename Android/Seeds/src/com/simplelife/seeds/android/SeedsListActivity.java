@@ -49,6 +49,8 @@ public abstract class SeedsListActivity extends FragmentActivity {
     protected ArrayList<View> mSeedsViewsChosen;
     protected ArrayList<ImageView> mImageViewList;
     protected ArrayList<SeedsEntity> mSeedsListForListView;
+    
+    protected ArrayList<Integer> mSelectedList; 
 	
 	// For log purpose
     protected SeedsLoggerUtil mLogger; 
@@ -65,6 +67,7 @@ public abstract class SeedsListActivity extends FragmentActivity {
 		mSeedsEntityChosen = new ArrayList<SeedsEntity>();
 		mSeedsViewsChosen  = new  ArrayList<View>();
 		mImageViewList = new ArrayList<ImageView>();
+		mSelectedList  = new ArrayList<Integer>();
 	}
 	
     @Override
@@ -144,23 +147,26 @@ public abstract class SeedsListActivity extends FragmentActivity {
         		mSeedsViewsChosen.get(index).setBackgroundResource(R.drawable.seedslist_selector);
         	    mSeedsViewsChosen.get(index).setPadding(8, 8, 8, 8);
         	}
+        	mSeedsViewsChosen.clear();        	
         }
 
         public void onItemCheckedStateChanged(ActionMode mode,
             int position, long id, boolean checked) {
+        	View tItemSelected = mListView.getChildAt(position - mListView.getFirstVisiblePosition());
         	if (checked)
         	{
         		mLogger.debug("Seeds added to list " + mSeedsEntityList.get(position).getSeedLocalId());
         		mSeedsEntityChosen.add(mSeedsEntityList.get(position));
-        		mSeedsViewsChosen.add(mListView.getChildAt(position));
-        	    mListView.getChildAt(position).setBackgroundResource(R.drawable.seedsgradient_bg_hover);
+        		mSeedsViewsChosen.add(tItemSelected);
+        		tItemSelected.setBackgroundResource(R.drawable.seedsgradient_bg_hover);
         	}
         	else
         	{
+        		mLogger.debug("Remove seeds " + mSeedsEntityList.get(position).getSeedLocalId());
         		mSeedsEntityChosen.remove(mSeedsEntityList.get(position));
-        		mSeedsViewsChosen.remove(mListView.getChildAt(position));
-        		mListView.getChildAt(position).setBackgroundResource(R.drawable.seedslist_selector);
-        		mListView.getChildAt(position).setPadding(8, 8, 8, 8);
+        		mSeedsViewsChosen.remove(tItemSelected);
+        		tItemSelected.setBackgroundResource(R.drawable.seedslist_selector);
+        		tItemSelected.setPadding(8, 8, 8, 8);
         	}
             setSubtitle(mode);
         }
@@ -183,7 +189,7 @@ public abstract class SeedsListActivity extends FragmentActivity {
                 break;
             }
         }
-	}
+	}	
 	
 	public class SeedsAdapter extends BaseAdapter {
 
@@ -213,8 +219,8 @@ public abstract class SeedsListActivity extends FragmentActivity {
 			View vi = convertView;
 			String tFirstImgUrl;
 			if (convertView == null)
-				vi = inflater.inflate(R.layout.activity_seeds_listperday_row, null);
-
+				vi = inflater.inflate(R.layout.activity_seeds_listperday_row, null);							
+				
 			TextView title  = (TextView) vi.findViewById(R.id.seeds_title); 
 			TextView size   = (TextView) vi.findViewById(R.id.seeds_size); 
 			TextView format = (TextView) vi.findViewById(R.id.seeds_format);
@@ -224,6 +230,16 @@ public abstract class SeedsListActivity extends FragmentActivity {
 			thumb_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 			SeedsEntity seedList = data.get(position);
+			
+			if(mSeedsEntityChosen.contains(seedList))
+			{
+				vi.setBackgroundResource(R.drawable.seedsgradient_bg_hover);
+			}
+			else
+			{
+				vi.setBackgroundResource(R.drawable.seedslist_selector);
+				vi.setPadding(8, 8, 8, 8);
+			}
 
 			// Set the values for the list view
 			title.setText(seedList.getSeedName());
@@ -239,7 +255,8 @@ public abstract class SeedsListActivity extends FragmentActivity {
 			else
 				tFirstImgUrl = SeedsGlobalNOTECode.SEEDS_NOTE_NO_IMAGE;
 			mImageFetcher.loadImage(tFirstImgUrl, thumb_image);
-			mImageViewList.add(thumb_image);
+			mImageViewList.add(thumb_image);			
+				
 			/*imageLoader.DisplayImage(seedList.get(SeedsListPerDayActivity.KEY_THUMB_URL),
 					thumb_image,0);*/
 			return vi;
