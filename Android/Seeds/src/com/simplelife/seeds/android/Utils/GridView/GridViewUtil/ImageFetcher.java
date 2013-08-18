@@ -198,14 +198,14 @@ public class ImageFetcher extends ImageResizer {
         FileDescriptor fileDescriptor = null;
         FileInputStream fileInputStream = null;
         DiskLruCache.Snapshot snapshot;
-        synchronized (mHttpDiskCacheLock) {
+        //synchronized (mHttpDiskCacheLock) {
         	// Wait for disk cache to initialize
-            while (mHttpDiskCacheStarting) {
+            /*while (mHttpDiskCacheStarting) {
                 try {
                 	Log.d(TAG, "processBitmap2 - waiting...");
                 	mHttpDiskCacheLock.wait();
                 } catch (InterruptedException e) {}
-            }
+            }*/
             
             Log.d(TAG, "processBitmap2 - " + data);
 
@@ -244,7 +244,7 @@ public class ImageFetcher extends ImageResizer {
                     }
                 }
             }
-        }
+        //}
 
         Bitmap bitmap = null;
         if (fileDescriptor != null) {

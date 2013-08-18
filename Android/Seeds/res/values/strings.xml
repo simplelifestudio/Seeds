@@ -236,21 +236,28 @@
     </string>
     
     <string name="seeds_help_page2title">
-    <i>友好的当日种子
-       列表查看方式</i>
+    <i>Friendly image list view</i>
     </string>
-    <string name="seeds_help_page3title">丰富的图片查看方式</string>
-    <string name="seeds_help_page4title">方便的种子下载和共享服务</string>
-    <string name="seeds_help_page4title2">共享</string>
-    <string name="seeds_help_page4title3">无线环境</string>
-    <string name="seeds_help_page5title">你可以订阅种子，
-        得到订阅编号并启动远程下载</string>
+    <string name="seeds_help_page3title">Flexible image review mode</string>
+    <string name="seeds_help_page4title">Convenient seeds download and share service</string>
+    <string name="seeds_help_page4title2">Share</string>
+    <string name="seeds_help_page4title3">Wireless Enviroment</string>
+    <string name="seeds_help_page5title">You can book the seeds, and start the remote download</string>
     <string name="seeds_help_page5title2">RSS ID</string>
-    <string name="seeds_help_page5title3">存为文件</string>
-    <string name="seeds_help_page5title4">该RSS ID连同被订阅的种子信息，将被写入文件：
-        /mnt/sdcard/Download/Seeds/RSSCart_20130810141053418.txt，请使用共享服务访问手机获取文件</string>
-    <string name="seeds_help_page6title">马上开始</string>
-    <string name="seeds_help_page6title2">Seeds的精彩旅程吧</string>
-    <string name="seeds_help_page6title3">开始</string>                
+    <string name="seeds_help_page5title3">Store into file</string>
+    <string name="seeds_help_page5title4">The RSS ID will be stored into file with the info of the seeds booked,
+        please use share service to retrieve the file</string>
+    <string name="seeds_help_page6title">Now Start</string>
+    <string name="seeds_help_page6title2">The journey of Seeds</string>
+    <string name="seeds_help_page6title3">Start</string>
+    
+    <string name="pull_to_refresh_pull_label">Pull to refresh</string>
+    <string name="pull_to_refresh_release_label">Release to refresh</string>
+    <string name="pull_to_refresh_refreshing_label">Refreshing&#8230;</string>
+    <string name="pull_to_refresh_footer_release_label">Release to load</string>
+    <string name="pull_to_refresh_footer_pull_label">Up pull to get more</string>
+    <string name="pull_to_refresh_footer_refreshing_label">Loading&#8230;</string>
+    <string name="pull_to_refresh_footer_refreshing_date_first">Updated</string>
+    <string name="pull_to_refresh_footer_refreshing_date">Updated at: </string>
        
 </resources>

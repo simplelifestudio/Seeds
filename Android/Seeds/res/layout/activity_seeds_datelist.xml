@@ -9,7 +9,7 @@
      	android:layout_width="fill_parent"
      	android:layout_height="100dp"
      	android:orientation="vertical"
-	    android:background="#F5F5F5"
+	    android:background="@drawable/seedslist_selector"
 	    android:layout_marginTop="@dimen/seeds_datalist_topmargin"
 	    android:layout_marginLeft="8dp"
 	    android:layout_marginRight="8dp">
@@ -50,7 +50,7 @@
      	android:layout_width="fill_parent"
      	android:layout_height="100dp"
      	android:orientation="vertical"
-	    android:background="#F5F5F5"
+	    android:background="@drawable/seedslist_selector"
 	    android:layout_marginTop="@dimen/seeds_datalist_interval"
 	    android:layout_marginLeft="8dp"
 	    android:layout_marginRight="8dp">
@@ -92,7 +92,7 @@
      	android:layout_width="fill_parent"
      	android:layout_height="100dp"
      	android:orientation="vertical"
-	    android:background="#F5F5F5"
+	    android:background="@drawable/seedslist_selector"
 	    android:layout_marginTop="@dimen/seeds_datalist_interval"
 	    android:layout_marginLeft="8dp"
 	    android:layout_marginRight="8dp">
@@ -135,7 +135,7 @@
         android:orientation="horizontal" >
         <Button
             android:id="@+id/update_btn"
-            android:background="#F5F5F5"                     
+            android:background="@drawable/seedslist_selector"                     
             android:layout_width="100dip"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -148,7 +148,7 @@
         	android:id="@+id/httpserver_btn"  
         	android:layout_width="100dip"
         	android:layout_height="wrap_content"
-        	android:background="#F5F5F5"
+        	android:background="@drawable/seedslist_selector"
         	android:layout_marginRight="35dip"
         	android:layout_marginTop="15dp"
         	android:gravity="center"
@@ -165,7 +165,7 @@
         	android:id="@+id/favlist_btn"
         	android:layout_width="100dip"
         	android:layout_height="wrap_content"
-        	android:background="#F5F5F5"
+        	android:background="@drawable/seedslist_selector"
         	android:gravity="center"
         	android:layout_marginLeft="35dip"
         	android:layout_alignParentLeft="true"
@@ -176,7 +176,7 @@
         	android:id="@+id/config_btn"
         	android:layout_width="100dip"
         	android:layout_height="wrap_content"
-        	android:background="#F5F5F5"
+        	android:background="@drawable/seedslist_selector"
         	android:layout_marginRight="35dip"
         	android:layout_marginTop="15dp"
         	android:gravity="center"

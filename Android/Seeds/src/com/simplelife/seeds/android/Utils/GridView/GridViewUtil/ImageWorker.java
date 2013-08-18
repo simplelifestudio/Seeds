@@ -311,6 +311,9 @@ public abstract class ImageWorker {
                 }
             } else {
                 // The same work is already in progress.
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG, "cancelPotentialWork - same work under working for " + data);
+                }
                 return false;
             }
         }
