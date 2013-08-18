@@ -23,11 +23,15 @@
     SeedPictureAgent* _pictureAgent;
     
     GUIModule* _guiModule;
+    
+    NSMutableData* _receivedData;
+    NSCondition* _lock;
+    NSURLConnection* _urlConnection;
 }
 
 @end
 
-@implementation SeedsSpider
+@implementation SeedsSpider 
 
 @synthesize seedsSpiderDelegate = _seedsSpiderDelegate;
 
@@ -56,7 +60,6 @@
     [titleStr appendString:@"]"];
     [titleStr appendString:@"最新BT合集"];
 
-    #warning http://stackoverflow.com/questions/9584663/datawithcontentsofurl-and-http-302-redirects
     NSError* error = nil;
     for (NSInteger pageNum = SEEDLIST_LINK_PAGENUM_START; pageNum <= SEEDLIST_LINK_PAGENUM_END; pageNum++)
     {
@@ -66,14 +69,21 @@
         [channelLink appendString:LINK_SEEDLIST_CHANNEL_PAGE];
         [channelLink appendString: [NSString stringWithFormat: @"%d", pageNum]];
         NSURL* channelUrl = [NSURL URLWithString:channelLink];
-        NSData* data = [NSData dataWithContentsOfURL:channelUrl options:NSDataReadingMappedIfSafe error:&error];
+//        NSData* data = [NSData dataWithContentsOfURL:channelUrl options:NSDataReadingMappedIfSafe error:&error];
+//        if (0 != error.code)
+//        {
+//            *errorPtr = error;
+//            DDLogError(@"Access Link: %@ end error = %d", LINK_SEEDLIST_CHANNEL, [error code]);
+//            return link;
+//        }
+        NSData* data = [self _readHtmlPageFromInternet:channelUrl error:&error];
         if (0 != error.code)
         {
-            *errorPtr = error;
             DDLogError(@"Access Link: %@ end error = %d", LINK_SEEDLIST_CHANNEL, [error code]);
+            *errorPtr = error;
             return link;
         }
-
+        
         TFHpple* doc = [[TFHpple alloc] initWithHTMLData:data];
         NSMutableString* xql = [NSMutableString stringWithString:@"//a[text()="];
         [xql appendString:@"\""];
@@ -102,12 +112,21 @@
     
     if (nil != link && 0 < link.length)
     {
-        NSError* __autoreleasing error = nil;
-        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:link] options:NSDataReadingMappedIfSafe error:&error];
+//        NSError* __autoreleasing error = nil;
+//        NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:link] options:NSDataReadingMappedIfSafe error:&error];
+//        if (0 != error.code)
+//        {
+//            DDLogError(@"Access Link: %@ end error = %d", link, [error code]);
+//            *errorPtr = error;            
+//            return seedList;
+//        }
+        NSURL* url = [NSURL URLWithString:link];
+        NSError* error = nil;
+        NSData* data = [self _readHtmlPageFromInternet:url error:&error];
         if (0 != error.code)
         {
             DDLogError(@"Access Link: %@ end error = %d", link, [error code]);
-            *errorPtr = error;            
+            *errorPtr = error;
             return seedList;
         }
         
@@ -387,6 +406,47 @@
     _pictureAgent = _commModule.seedPictureAgent;
     
     _guiModule = [GUIModule sharedInstance];
+    
+    _receivedData = [[NSMutableData alloc] initWithData:nil];
+    _lock = [[NSCondition alloc] init];
+}
+
+-(NSData*) _readHtmlPageFromInternet:(NSURL*) url error:(NSError**)errorPtr
+{
+    [_receivedData setLength:0];
+    
+    NSMutableURLRequest* req = [[NSMutableURLRequest alloc]
+                                    initWithURL:url
+                                    cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                    timeoutInterval:TIMEOUT_LINKPARSE];
+    [req setHTTPMethod: @"GET"];
+    
+    __block NSError* blockError = nil;
+    NSOperationQueue* queue = [[NSOperationQueue alloc] init];
+    [NSURLConnection sendAsynchronousRequest:req queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
+    {
+        if (nil != data)
+        {
+            [_receivedData appendData:data];
+        }
+        
+        if (nil != error)
+        {
+            blockError = error;
+        }
+        
+        [_lock lock];
+        [_lock signal];
+        [_lock unlock];
+    }];
+    
+    [_lock lock];
+    [_lock wait];
+    [_lock unlock];
+    
+    *errorPtr = blockError;    
+    
+    return _receivedData;
 }
 
 @end

@@ -136,6 +136,7 @@
 #define DATE_HOLDER @"$DATE$"
 #define SEEDLIST_LINK_TITLE @"["DATE_HOLDER"]BT合集"
 
+#define TIMEOUT_LINKPARSE 10.0f
 
 // Module: Database
 typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
