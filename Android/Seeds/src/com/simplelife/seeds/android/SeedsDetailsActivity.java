@@ -374,7 +374,7 @@ public class SeedsDetailsActivity extends Activity{
             case R.id.download_seed:
             {
             	// Fetch the download manager to start the download
-            	DownloadManager tDownloadMgr = DownloadManager.getDownloadMgr();
+            	DownloadManager tDownloadMgr = DownloadManager.getDownloadMgr(getContentResolver(),getPackageName());
             	tDownloadMgr.startDownload(mSeedsEntity.getSeedTorrentLink()
             			                  ,mSeedsEntity.getSeedPublishDate()
             			                  ,mSeedsEntity.getSeedName());            	

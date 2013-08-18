@@ -312,7 +312,9 @@ public class DownloadManager {
         }    	
     }
     
-    public static DownloadManager getDownloadMgr(){  
+    public static DownloadManager getDownloadMgr(ContentResolver resolver, String packageName){
+    	if(null == mDownloadMgr)
+    		initDownloadMgr(resolver,packageName);
         return mDownloadMgr;  
     }
     
