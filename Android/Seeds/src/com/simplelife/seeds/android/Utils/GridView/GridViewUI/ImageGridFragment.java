@@ -352,7 +352,8 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
         case R.id.download_seed:
         {
         	// Fetch the download manager to start the download
-        	DownloadManager tDownloadMgr = DownloadManager.getDownloadMgr();
+        	DownloadManager tDownloadMgr = DownloadManager.getDownloadMgr(getActivity().getContentResolver(),
+        			                                                      getActivity().getPackageName());
         	tDownloadMgr.startDownload(Images.getSeedsEntity().getSeedTorrentLink(),
         			                   Images.getSeedsEntity().getSeedPublishDate(),
         			                   Images.getSeedsEntity().getSeedName());            	
