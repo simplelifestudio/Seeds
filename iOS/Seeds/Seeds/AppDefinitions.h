@@ -236,6 +236,10 @@ typedef enum {TheDayBefore = 0, Yesterday = 1, Today = 2} DayIndex;
 
 #define PAGE_SIZE_SEEDLISTTABLE ((IS_IPHONE5) ? 7 : 6)
 #define PAGE_SIZE_SEEDDETAILCOLLECTION 4
+#define PAGE_ANIMATION_PERIOD 0.4f
+#define PAGE_TIMINGFUNCTION kCAMediaTimingFunctionEaseInEaseOut
+#define PAGE_ANIMATION_TYPE kCATransitionReveal
+#define PAGE_ANIMATION_KEY @"Reveal"
 
 #define CELL_ID_SEEDPICTURECOLLECTIONCELL @"SeedPictureCollectionCell"
 

@@ -336,8 +336,13 @@
 
 -(void) gotoPage:(NSUInteger)pageNum
 {
+    BOOL isTurningRight = (_currentPage < pageNum) ? YES : NO;
+    NSString* animationSubType = (isTurningRight) ? kCATransitionFromRight : kCATransitionFromLeft;
+    
     [_pagingToolbar setCurrentPage:pageNum];
     _currentPage = pageNum;
+    
+    [self _anmicateView:animationSubType];    
     
     [self _constructTableDataByPage];
     
@@ -428,9 +433,9 @@
 {
     NSUInteger x = _pagingToolbar.currentPage;
     x++;
-    x = (x <= _pagingToolbar.pageCount) ? x : 1;
-    
-    if (x != _pagingToolbar.currentPage)
+    //    x = (x <= _pagingToolbar.pageCount) ? x : 1;
+    //    if (x != _pagingToolbar.currentPage)
+    if (x <= _pagingToolbar.pageCount)
     {
         [self gotoPage:x];
     }
@@ -646,6 +651,16 @@
 	_isHeaderViewRefreshing = NO;
 	
     [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+}
+
+- (void) _anmicateView:(NSString*) animationSubType
+{
+    CATransition* animation = [CATransition animation];
+    [animation setDuration:PAGE_ANIMATION_PERIOD];
+    [animation setTimingFunction:[CAMediaTimingFunction functionWithName:PAGE_TIMINGFUNCTION]];
+    [animation setType:PAGE_ANIMATION_TYPE];
+    [animation setSubtype: animationSubType];
+    [self.tableView.layer addAnimation:animation forKey:PAGE_ANIMATION_KEY];
 }
 
 #pragma mark - CBNotificationListenable
