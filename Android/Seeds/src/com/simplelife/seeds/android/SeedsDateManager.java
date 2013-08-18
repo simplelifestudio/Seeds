@@ -70,6 +70,11 @@ public class SeedsDateManager {
     	return tTime;
     }
     
+    public String getRealTimeNow2(){
+    	String tTime = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+    	return tTime;
+    }
+    
     public String realDateToLogicDate(String _inRealDate){
     	
     	if(_inRealDate.equals(mDateBefYesterday))

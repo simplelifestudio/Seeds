@@ -20,12 +20,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.simplelife.seeds.android.SeedsPullToRefreshView.OnHeaderRefreshListener;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache.ImageCacheParams;
 
-public class SeedsListPerDayActivity extends SeedsListActivity {
+public class SeedsListPerDayActivity extends SeedsListActivity implements OnHeaderRefreshListener{
+	SeedsPullToRefreshView mPullToRefreshView;
 	
 	private String mDateBackup;
 	
@@ -36,6 +38,8 @@ public class SeedsListPerDayActivity extends SeedsListActivity {
 		// setTheme(android.R.style.Theme_Translucent_NoTitleBar);
 		// Set the list view layout
 		setContentView(R.layout.activity_seeds_listperday);
+		mPullToRefreshView = (SeedsPullToRefreshView)findViewById(R.id.main_pull_refresh_view);
+		mPullToRefreshView.setOnHeaderRefreshListener(this);
 				
 		// Retrieve the date info parameter
 		Bundle bundle = getIntent().getExtras();
@@ -92,7 +96,22 @@ public class SeedsListPerDayActivity extends SeedsListActivity {
     protected void onRestart() {  
         super.onRestart();
         mDate = mDateBackup;  
-    }  
+    }
+    
+	@Override
+	public void onHeaderRefresh(SeedsPullToRefreshView view) {
+		mPullToRefreshView.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				SeedsDateManager tDateMgr = SeedsDateManager.getDateManager();
+				mPullToRefreshView.onHeaderRefreshComplete(getString(R.string.pull_to_refresh_footer_refreshing_date) 
+						                                  +tDateMgr.getRealTimeNow2());
+				//mPullToRefreshView.onHeaderRefreshComplete();
+			}
+		},500);
+		
+	}
 	
 	@SuppressLint("HandlerLeak")
 	protected Handler handler = new Handler(){

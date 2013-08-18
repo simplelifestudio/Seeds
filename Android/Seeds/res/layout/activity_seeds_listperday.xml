@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.simplelife.seeds.android.SeedsPullToRefreshView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_pull_refresh_view"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" 
     android:orientation="vertical" >
@@ -12,4 +13,4 @@
         android:dividerHeight="1dp" 
         android:listSelector="@drawable/seedslist_selector" />          
     
-</LinearLayout>
+</com.simplelife.seeds.android.SeedsPullToRefreshView>

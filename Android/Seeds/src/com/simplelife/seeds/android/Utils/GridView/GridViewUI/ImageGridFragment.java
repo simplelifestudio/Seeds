@@ -53,7 +53,10 @@ import com.simplelife.seeds.android.utils.gridview.gridviewprovider.Images;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageDetailActivity;
 import com.simplelife.seeds.android.BuildConfig;
 import com.simplelife.seeds.android.R;
+import com.simplelife.seeds.android.SeedsDateManager;
 import com.simplelife.seeds.android.SeedsDefinitions;
+import com.simplelife.seeds.android.SeedsPullToRefreshView;
+import com.simplelife.seeds.android.SeedsPullToRefreshView.OnHeaderRefreshListener;
 import com.simplelife.seeds.android.SeedsRSSCartActivity;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache.ImageCacheParams;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
@@ -66,7 +69,7 @@ import com.simplelife.seeds.android.utils.gridview.gridviewutil.Utils;
  * cache is retained over configuration changes like orientation change so the images are populated
  * quickly if, for example, the user rotates the device.
  */
-public class ImageGridFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class ImageGridFragment extends Fragment implements AdapterView.OnItemClickListener, OnHeaderRefreshListener {
     private static final String TAG = "ImageGridFragment";
     //private static final String IMAGE_CACHE_DIR = "thumbs";
 
@@ -74,6 +77,7 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
     private int mImageThumbSpacing;
     private ImageAdapter mAdapter;
     private ImageFetcher mImageFetcher;
+    private SeedsPullToRefreshView mPullToRefreshView;
     
 	// The menuItem favorite
 	private MenuItem mFavItem = null;
@@ -121,8 +125,10 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
 
         final View v = inflater.inflate(R.layout.activity_seeds_gridview_gridfragment, container, false);
         final GridView mGridView = (GridView) v.findViewById(R.id.gridView);
+        mPullToRefreshView = (SeedsPullToRefreshView)v.findViewById(R.id.main_pull_refresh_view_grid);
         mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(this);
+        mPullToRefreshView.setOnHeaderRefreshListener(this);
         mGridView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int scrollState) {
@@ -192,6 +198,21 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
         
         return v;
     }
+    
+	@Override
+	public void onHeaderRefresh(SeedsPullToRefreshView view) {
+		mPullToRefreshView.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				SeedsDateManager tDateMgr = SeedsDateManager.getDateManager();
+				mPullToRefreshView.onHeaderRefreshComplete(getString(R.string.pull_to_refresh_footer_refreshing_date) 
+						                                  +tDateMgr.getRealTimeNow2());
+				//mPullToRefreshView.onHeaderRefreshComplete();
+			}
+		},1000);
+		
+	}
 
     @Override
     public void onResume() {
