@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+    <!-- The main area showing the list of downloads -->
+    <FrameLayout android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:layout_weight="1">
+        <ExpandableListView android:id="@+id/rss_date_ordered_list"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"/>
+        <ListView android:id="@+id/size_ordered_list"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"/>
+        <TextView 
+                  android:id="@+id/rss_empty"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:text="@string/seeds_rsslist_empty"
+                  android:gravity="center"
+                  android:textStyle="bold"/>
+    </FrameLayout>
+
+</LinearLayout>

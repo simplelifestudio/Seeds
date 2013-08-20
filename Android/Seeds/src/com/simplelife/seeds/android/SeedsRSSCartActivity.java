@@ -12,8 +12,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.ParseException;
@@ -21,13 +19,13 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 
-import com.simplelife.seeds.android.SeedsListActivity.ModeCallback;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache.ImageCacheParams;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
 import com.simplelife.seeds.android.utils.networkprocess.SeedsNetworkProcess;
+import com.simplelife.seeds.android.utils.slidingmenu.lib.SlidingMenu;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -72,7 +70,7 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 	final int RSSMESSAGETYPE_CARTIDPROCESS = 205;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		// Set the list view layout
@@ -82,7 +80,17 @@ public class SeedsRSSCartActivity extends SeedsListActivity{
 		
 		// Set a title for this page
 		ActionBar tActionBar = getActionBar();
-		tActionBar.setTitle(R.string.seeds_rss_management);					
+		tActionBar.setTitle(R.string.seeds_rss_management);	
+		
+        SlidingMenu menu = new SlidingMenu(this);
+        menu.setMode(SlidingMenu.LEFT);
+        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        //menu.setShadowWidthRes(R.dimen.shadow_width);
+        //menu.setShadowDrawable(R.drawable.shadow);
+        //menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        menu.setFadeDegree(0.35f);
+        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+        //menu.setMenu(R.layout.menu);
 		
 		// Initialize the tSeedIdList
 		mSeedIdList = new ArrayList<Integer>();
