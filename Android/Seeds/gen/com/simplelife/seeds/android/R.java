@@ -264,35 +264,35 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int NavigateTitle=0x7f060021;
         public static final int Seeds_FullScreen_ProgressBar=0x7f06001e;
         public static final int Seeds_LinearLayout_ViewArea=0x7f06001f;
-        public static final int actionbar_actions=0x7f06005e;
-        public static final int actionbar_home=0x7f060059;
-        public static final int actionbar_home_bg=0x7f06005b;
-        public static final int actionbar_home_btn=0x7f06005c;
-        public static final int actionbar_home_is_back=0x7f06005d;
-        public static final int actionbar_home_logo=0x7f06005a;
-        public static final int actionbar_item=0x7f060061;
-        public static final int actionbar_progress=0x7f06005f;
-        public static final int actionbar_title=0x7f060060;
+        public static final int actionbar_actions=0x7f06005d;
+        public static final int actionbar_home=0x7f060058;
+        public static final int actionbar_home_bg=0x7f06005a;
+        public static final int actionbar_home_btn=0x7f06005b;
+        public static final int actionbar_home_is_back=0x7f06005c;
+        public static final int actionbar_home_logo=0x7f060059;
+        public static final int actionbar_item=0x7f060060;
+        public static final int actionbar_progress=0x7f06005e;
+        public static final int actionbar_title=0x7f06005f;
         public static final int address=0x7f060043;
         public static final int appIcon=0x7f06006e;
-        public static final int clear_cache=0x7f060085;
+        public static final int clear_cache=0x7f060084;
         public static final int config_btn=0x7f060014;
         public static final int date_befyesterday=0x7f060006;
-        public static final int date_ordered_list=0x7f060062;
+        public static final int date_ordered_list=0x7f060061;
         public static final int date_today=0x7f06000e;
         public static final int date_yesterday=0x7f06000a;
         public static final int description=0x7f060071;
         public static final int deselect_all=0x7f060066;
         public static final int download_checkbox=0x7f060067;
         public static final int download_icon=0x7f060068;
-        public static final int download_menu_sort_by_date=0x7f06008d;
-        public static final int download_menu_sort_by_size=0x7f06008c;
-        public static final int download_mgt=0x7f060082;
-        public static final int download_mgt_datelist=0x7f06007e;
+        public static final int download_menu_sort_by_date=0x7f06008c;
+        public static final int download_menu_sort_by_size=0x7f06008b;
+        public static final int download_mgt=0x7f060081;
+        public static final int download_mgt_datelist=0x7f06007d;
         public static final int download_progress=0x7f06006a;
-        public static final int download_seed=0x7f060081;
+        public static final int download_seed=0x7f060080;
         public static final int download_title=0x7f060069;
-        public static final int edit_message=0x7f060057;
+        public static final int edit_message=0x7f060056;
         public static final int empty=0x7f060063;
         public static final int favlist_btn=0x7f060013;
         public static final int favlist_empty=0x7f060024;
@@ -317,10 +317,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int main_pull_refresh_view=0x7f060045;
         public static final int main_pull_refresh_view_grid=0x7f06002f;
         public static final int margin=0x7f060002;
-        public static final int menu_addto_fav=0x7f060080;
+        public static final int menu_addto_fav=0x7f06007f;
         public static final int menu_frame=0x7f060074;
-        public static final int menu_settings=0x7f060089;
-        public static final int menu_to_grid=0x7f06008b;
+        public static final int menu_settings=0x7f060088;
+        public static final int menu_to_grid=0x7f06008a;
         public static final int name_befyesterday=0x7f060007;
         public static final int name_today=0x7f06000f;
         public static final int name_yesterday=0x7f06000b;
@@ -344,14 +344,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int pull_to_refresh_text=0x7f06007b;
         public static final int pull_to_refresh_updated_at=0x7f06007c;
         public static final int right=0x7f060001;
-        public static final int rss_addtocart=0x7f060083;
-        public static final int rss_date_ordered_list=0x7f060053;
-        public static final int rss_empty=0x7f060055;
-        public static final int rss_management=0x7f060084;
-        public static final int rss_management_datelist=0x7f06007f;
-        public static final int rss_removeall=0x7f060088;
-        public static final int rss_sendreqmsg=0x7f060087;
-        public static final int screen=0x7f060058;
+        public static final int rss_addtocart=0x7f060082;
+        public static final int rss_id=0x7f060054;
+        public static final int rss_management=0x7f060083;
+        public static final int rss_management_datelist=0x7f06007e;
+        public static final int rss_pager=0x7f060053;
+        public static final int rss_removeall=0x7f060087;
+        public static final int rss_sendreqmsg=0x7f060086;
+        public static final int screen=0x7f060057;
         public static final int seed_grid_info_backgroud=0x7f060028;
         public static final int seed_grid_info_divider1=0x7f06002a;
         public static final int seed_grid_info_divider2=0x7f06002d;
@@ -368,8 +368,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int seeds_mosaic=0x7f06004b;
         public static final int seeds_size=0x7f06004a;
         public static final int seeds_title=0x7f060048;
-        public static final int seeds_verify_menu_settings=0x7f06008a;
-        public static final int seedslist_del=0x7f060086;
+        public static final int seeds_verify_menu_settings=0x7f060089;
+        public static final int seedslist_del=0x7f060085;
         public static final int seedsnumber_befyesterday=0x7f060008;
         public static final int seedsnumber_today=0x7f060010;
         public static final int seedsnumber_yesterday=0x7f06000c;
@@ -379,14 +379,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int setpwd_reset=0x7f060051;
         public static final int setpwd_save=0x7f060052;
         public static final int setpwd_title=0x7f06004f;
-        public static final int size_ordered_list=0x7f060054;
+        public static final int size_ordered_list=0x7f060062;
         public static final int size_text=0x7f06006d;
-        public static final int slidingmenumain=0x7f06007d;
         public static final int start=0x7f060041;
         public static final int status=0x7f060044;
         public static final int status_text=0x7f06006c;
         public static final int stop=0x7f060042;
-        public static final int textView1=0x7f060056;
+        public static final int textView1=0x7f060055;
         public static final int thumbnail=0x7f060046;
         public static final int title=0x7f060070;
         public static final int title_tv=0x7f060039;
@@ -425,20 +424,20 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_seeds_listperday_row=0x7f030014;
         public static final int activity_seeds_login_password=0x7f030015;
         public static final int activity_seeds_login_setpassword=0x7f030016;
-        public static final int activity_seeds_rssid_management=0x7f030017;
-        public static final int activity_seeds_start=0x7f030018;
-        public static final int activity_seeds_start_display_message=0x7f030019;
-        public static final int activity_seeds_start_verify=0x7f03001a;
-        public static final int seeds_actionbar=0x7f03001b;
-        public static final int seeds_actionbar_item=0x7f03001c;
-        public static final int seeds_download_list=0x7f03001d;
-        public static final int seeds_download_list_group_header=0x7f03001e;
-        public static final int seeds_download_list_item=0x7f03001f;
-        public static final int seeds_download_status_bar_ongoing_event_progress_bar=0x7f030020;
-        public static final int seeds_menu_frame=0x7f030021;
-        public static final int seeds_refresh_footer=0x7f030022;
-        public static final int seeds_refresh_header=0x7f030023;
-        public static final int seeds_slidingmenu_main=0x7f030024;
+        public static final int activity_seeds_rssid_main=0x7f030017;
+        public static final int activity_seeds_rssid_management=0x7f030018;
+        public static final int activity_seeds_start=0x7f030019;
+        public static final int activity_seeds_start_display_message=0x7f03001a;
+        public static final int activity_seeds_start_verify=0x7f03001b;
+        public static final int seeds_actionbar=0x7f03001c;
+        public static final int seeds_actionbar_item=0x7f03001d;
+        public static final int seeds_download_list=0x7f03001e;
+        public static final int seeds_download_list_group_header=0x7f03001f;
+        public static final int seeds_download_list_item=0x7f030020;
+        public static final int seeds_download_status_bar_ongoing_event_progress_bar=0x7f030021;
+        public static final int seeds_menu_frame=0x7f030022;
+        public static final int seeds_refresh_footer=0x7f030023;
+        public static final int seeds_refresh_header=0x7f030024;
     }
     public static final class menu {
         public static final int activity_seeds_datelist_menu=0x7f0c0000;
@@ -1180,7 +1179,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.simplelife.seeds.android:title
+          @attr name android:title
         */
         public static final int ActionBar_title = 0;
         /** Attributes that can be used with a SlidingMenu.
@@ -1238,7 +1237,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.simplelife.seeds.android:behindOffset
+          @attr name android:behindOffset
         */
         public static final int SlidingMenu_behindOffset = 3;
         /**
@@ -1252,7 +1251,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.simplelife.seeds.android:behindScrollScale
+          @attr name android:behindScrollScale
         */
         public static final int SlidingMenu_behindScrollScale = 5;
         /**
@@ -1268,7 +1267,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.simplelife.seeds.android:behindWidth
+          @attr name android:behindWidth
         */
         public static final int SlidingMenu_behindWidth = 4;
         /**
@@ -1282,7 +1281,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.simplelife.seeds.android:fadeDegree
+          @attr name android:fadeDegree
         */
         public static final int SlidingMenu_fadeDegree = 11;
         /**
@@ -1296,7 +1295,7 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.simplelife.seeds.android:fadeEnabled
+          @attr name android:fadeEnabled
         */
         public static final int SlidingMenu_fadeEnabled = 10;
         /**
@@ -1313,7 +1312,7 @@ containing a value of this type.
 <tr><td><code>left</code></td><td>0</td><td></td></tr>
 <tr><td><code>right</code></td><td>1</td><td></td></tr>
 </table>
-          @attr name com.simplelife.seeds.android:mode
+          @attr name android:mode
         */
         public static final int SlidingMenu_mode = 0;
         /**
@@ -1323,7 +1322,7 @@ containing a value of this type.
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.simplelife.seeds.android:selectorDrawable
+          @attr name android:selectorDrawable
         */
         public static final int SlidingMenu_selectorDrawable = 13;
         /**
@@ -1337,7 +1336,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.simplelife.seeds.android:selectorEnabled
+          @attr name android:selectorEnabled
         */
         public static final int SlidingMenu_selectorEnabled = 12;
         /**
@@ -1347,7 +1346,7 @@ containing a value of this type.
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.simplelife.seeds.android:shadowDrawable
+          @attr name android:shadowDrawable
         */
         public static final int SlidingMenu_shadowDrawable = 8;
         /**
@@ -1363,7 +1362,7 @@ in (inches), mm (millimeters).
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name com.simplelife.seeds.android:shadowWidth
+          @attr name android:shadowWidth
         */
         public static final int SlidingMenu_shadowWidth = 9;
         /**
@@ -1380,7 +1379,7 @@ containing a value of this type.
 <tr><td><code>margin</code></td><td>0</td><td></td></tr>
 <tr><td><code>fullscreen</code></td><td>1</td><td></td></tr>
 </table>
-          @attr name com.simplelife.seeds.android:touchModeAbove
+          @attr name android:touchModeAbove
         */
         public static final int SlidingMenu_touchModeAbove = 6;
         /**
@@ -1397,7 +1396,7 @@ containing a value of this type.
 <tr><td><code>margin</code></td><td>0</td><td></td></tr>
 <tr><td><code>fullscreen</code></td><td>1</td><td></td></tr>
 </table>
-          @attr name com.simplelife.seeds.android:touchModeBehind
+          @attr name android:touchModeBehind
         */
         public static final int SlidingMenu_touchModeBehind = 7;
         /**
@@ -1407,7 +1406,7 @@ containing a value of this type.
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.simplelife.seeds.android:viewAbove
+          @attr name android:viewAbove
         */
         public static final int SlidingMenu_viewAbove = 1;
         /**
@@ -1417,7 +1416,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          @attr name com.simplelife.seeds.android:viewBehind
+          @attr name android:viewBehind
         */
         public static final int SlidingMenu_viewBehind = 2;
     };

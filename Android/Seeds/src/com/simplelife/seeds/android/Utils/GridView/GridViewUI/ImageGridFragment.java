@@ -58,6 +58,7 @@ import com.simplelife.seeds.android.SeedsDefinitions;
 import com.simplelife.seeds.android.SeedsPullToRefreshView;
 import com.simplelife.seeds.android.SeedsPullToRefreshView.OnHeaderRefreshListener;
 import com.simplelife.seeds.android.SeedsRSSCartActivity;
+import com.simplelife.seeds.android.SeedsRSSCartActivity.SeedsRSSList;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageCache.ImageCacheParams;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.Utils;
@@ -353,7 +354,7 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
         case R.id.rss_addtocart:
         {
         	int tShowId;
-        	if(!SeedsRSSCartActivity.addSeedToCart(mSeedLocalId))
+        	if(!SeedsRSSList.addSeedToCart(mSeedLocalId))
         		tShowId = R.string.seeds_rss_toast_addtocartnonecc;
         	else
         		tShowId = R.string.seeds_rss_toast_addtocartdone;

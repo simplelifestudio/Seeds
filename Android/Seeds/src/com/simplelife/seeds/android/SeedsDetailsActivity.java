@@ -34,6 +34,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.simplelife.seeds.android.SeedsRSSCartActivity.SeedsRSSList;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.downloadprocess.DownloadManager;
 import com.simplelife.seeds.android.utils.downloadprocess.ui.DownloadList;
@@ -354,7 +355,7 @@ public class SeedsDetailsActivity extends Activity{
             case R.id.rss_addtocart:
             {
             	int tShowId;
-            	if(!SeedsRSSCartActivity.addSeedToCart(mSeedLocalId))
+            	if(!SeedsRSSList.addSeedToCart(mSeedLocalId))
             		tShowId = R.string.seeds_rss_toast_addtocartnonecc;
             	else
             		tShowId = R.string.seeds_rss_toast_addtocartdone;
