@@ -1,13 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:orientation="vertical" >
 
+    <TextView
+        android:id="@+id/rss_idtitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/seeds_rss_idmgt_idtitle"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_divider1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rss_idtitle"
+        android:background="@drawable/divider_horizontal_line"
+        android:orientation="vertical" >
+    </LinearLayout>
+    
     <TextView
         android:id="@+id/rss_id"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:textStyle="bold"/>
+        android:layout_height="wrap_content"            
+        android:longClickable="true"
+        android:layout_below="@id/linearLayout_divider1"
+        android:text="@string/seeds_rss_idmgt_id"
+        android:textSize="22sp"
+        android:textStyle="bold" />
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout_divider2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rss_id"
+        android:background="@drawable/divider_horizontal_line"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/rss_linktitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/linearLayout_divider2"
+        android:layout_marginTop="20dp"
+        android:text="@string/seeds_rss_idmgt_linktitle"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_divider3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rss_linktitle"
+        android:background="@drawable/divider_horizontal_line"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/rss_link"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:longClickable="true"
+        android:layout_below="@id/linearLayout_divider3"
+        android:text="@string/seeds_rss_idmgt_link"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_divider4"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rss_link"
+        android:background="@drawable/divider_horizontal_line"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rss_idmgtlatout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/rss_definenewid"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            android:background="@drawable/actionbar_btn"
+            android:gravity="center_vertical|center"
+            android:text="@string/seeds_rss_menu_define"
+            android:textColor="#FFFFFF" >
+        </TextView>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="3dip"
+            android:layout_marginTop="3dip"
+            android:background="#FFFFFFFF" />
+
+        <TextView
+            android:id="@+id/rss_reqnewid"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            android:background="@drawable/actionbar_btn"
+            android:gravity="center_vertical|center"
+            android:text="@string/seeds_rss_menu_change"
+            android:textColor="#FFFFFF" >
+        </TextView>
+    </LinearLayout>
+
+</RelativeLayout>

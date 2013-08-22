@@ -135,6 +135,8 @@
     <string name="seeds_rss_toast_cartempty">订阅车为空，请先添加种子至订阅车</string>
     <string name="seeds_rss_menu_sendreqmsg">订阅</string>
     <string name="seeds_rss_menu_removeall">清空</string>
+    <string name="seeds_rss_menu_change">请求新编号</string>
+    <string name="seeds_rss_menu_define">自定义编号</string>    
     <string name="seeds_rss_dialog_sendingreqmsg">正在发送订阅请求&#8230;</string>
     <string name="seeds_rss_dialog_message">订阅成功！将订阅编号写入文件吗？订阅编号：</string>
     <string name="seeds_rss_dialog_note">提示</string>
@@ -142,7 +144,21 @@
     <string name="seeds_rss_dialog_btnneg">取消</string>
     <string name="seeds_rss_dialog_writefile">正在创建文件&#8230;</string>
     <string name="seeds_rss_dialog_filecreated">订阅编号已写入文件：</string>
-    <string name="seeds_rss_dialog_fileget">请使用共享功能访问手机获取该文件</string>
+    <string name="seeds_rss_dialog_fileget">请使用共享功能访问手机获取该文件</string>    
+    <string name="seeds_rss_tabbar_title1">订阅列表</string>
+    <string name="seeds_rss_tabbar_title2">订阅ID管理</string>
+    <string name="seeds_rss_idmgt_idtitle">当前订阅编号（长按复制）：</string>
+    <string name="seeds_rss_idmgt_id">尚无可用订阅编号。</string>
+    <string name="seeds_rss_idmgt_linktitle">当前订阅链接（长按复制）：</string>
+    <string name="seeds_rss_idmgt_link">尚无可用订阅链接。</string>
+    <string name="seeds_rss_idmgt_contextmenutitle">选项</string> 
+    <string name="seeds_rss_idmgt_contextmenu1">复制</string>
+    <string name="seeds_rss_idmgt_reqnewid_toast">原有订阅编号已清除，新的编号将在下次订阅请求时生成</string>
+    <string name="seeds_rss_idmgt_defnewid_dialogtitle">自定义订阅编号</string>
+    <string name="seeds_rss_idmgt_defnewid_dialogpos">确定</string>
+    <string name="seeds_rss_idmgt_defnewid_dialogneg">取消</string>
+    <string name="seeds_rss_idmgt_defnewid_dialogprocess">正在更改订阅编号</string>
+    <string name="seeds_rss_idmgt_defnewid_toast">自定义订阅编号成功，编号将在下次订阅时生效</string>     
     
     <string name="seeds_config_page">应用设置</string>
     <string name="seeds_config_serverpref">服务器设置</string>

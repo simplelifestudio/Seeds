@@ -403,21 +403,6 @@ public class ImageGridFragment extends Fragment implements AdapterView.OnItemCli
 		return true;
     }
     
-    @Override 
-    public void onPrepareOptionsMenu(Menu menu){ 
-     
-        super.onPrepareOptionsMenu(menu); 
-     
-        MenuItem tFavItem = menu.findItem(R.id.menu_addto_fav); 
-     
-	    // Check if this seed has already been saved to favorite
-	    if(mDBAdapter.isSeedSaveToFavorite(mSeedLocalId))
-	    {
-            if(null != tFavItem)
-                tFavItem.setIcon(R.drawable.rating_not_important_large);
-        }     
-        return;      
-    } 
 
     /**
      * The main adapter that backs the GridView. This is fairly standard except the number of

@@ -137,6 +137,8 @@
     <string name="seeds_rss_toast_cartempty">No seed is booked, the cart is empty</string>
     <string name="seeds_rss_menu_sendreqmsg">Send RSS Message</string>
     <string name="seeds_rss_menu_removeall">Remove</string>
+    <string name="seeds_rss_menu_change">Request New ID</string>
+    <string name="seeds_rss_menu_define">Define New ID</string>
     <string name="seeds_rss_dialog_sendingreqmsg">Sending book request&#8230;</string>
     <string name="seeds_rss_dialog_message">Book successfully! Store the cart ID into file? Cart ID:</string>
     <string name="seeds_rss_dialog_note">Note</string>
@@ -145,7 +147,16 @@
     <string name="seeds_rss_dialog_writefile">Creating file&#8230;</string>
     <string name="seeds_rss_dialog_filecreated">Cart ID has been stored in file: </string>
     <string name="seeds_rss_dialog_fileget">Please use the Share Servce to get the file from smart phone.</string>
-
+    <string name="seeds_rss_tabbar_title1">Book List</string>
+    <string name="seeds_rss_tabbar_title2">RSS ID</string>
+    <string name="seeds_rss_idmgt_idtitle">Current RSS ID (Long press to copy):</string>
+    <string name="seeds_rss_idmgt_id">No RSS ID available.</string>
+    <string name="seeds_rss_idmgt_linktitle">Current RSS Link (Long press to copy):</string>
+    <string name="seeds_rss_idmgt_link">No RSS link available.</string>
+    <string name="seeds_rss_idmgt_contextmenutitle">Options</string> 
+    <string name="seeds_rss_idmgt_contextmenu1">Copy</string>
+    <string name="seeds_rss_idmgt_reqnewid_toast">The original RSS ID is cleared, new ID will be generated during next booking</string> 
+    
     <string name="seeds_config_page">Settings</string>  
     <string name="seeds_config_serverpref">Server Preference</string>
     <string name="seeds_config_modifyserveraddrtitle">Change Server Address</string>

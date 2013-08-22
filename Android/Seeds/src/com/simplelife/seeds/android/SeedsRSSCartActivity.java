@@ -22,7 +22,6 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 
 import com.simplelife.seeds.android.SeedsDefinitions.SeedsGlobalNOTECode;
-import com.simplelife.seeds.android.SeedsListActivity.SeedsAdapter;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.gridview.gridviewui.ImageGridActivity;
 import com.simplelife.seeds.android.utils.gridview.gridviewutil.ImageFetcher;
@@ -39,13 +38,16 @@ import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -53,6 +55,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.view.ActionMode;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -62,6 +66,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -75,14 +80,18 @@ public class SeedsRSSCartActivity extends FragmentActivity implements ActionBar.
     
     protected int mImageThumbSize;
     protected static ImageFetcher mImageFetcher;
-    
-	// For log purpose
     protected static SeedsLoggerUtil mLogger; 
+    
+    public static boolean isSeedsRSSListTab = true;
+    public static String SEEDSTAG_RSSID = "rss_id";
+    public static SharedPreferences mSharedPref;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seeds_rssid_main);
+        
+        mSharedPref = PreferenceManager.getDefaultSharedPreferences(SeedsRSSCartActivity.this);
 
         mLogger = SeedsLoggerUtil.getSeedsLogger(SeedsRSSCartActivity.this);
         // Create the adapter that will return a fragment for each of the three primary sections
@@ -112,9 +121,16 @@ public class SeedsRSSCartActivity extends FragmentActivity implements ActionBar.
             // Create a tab with text corresponding to the page title defined by the adapter.
             // Also specify this Activity object, which implements the TabListener interface, as the
             // listener for when this tab is selected.
+        	String tTabTitle;
+        	if (i == 0)
+        		tTabTitle = getString(R.string.seeds_rss_tabbar_title1);
+        	else if(i == 1)
+        		tTabTitle = getString(R.string.seeds_rss_tabbar_title2);
+        	else
+        		tTabTitle = mAppSectionsPagerAdapter.getPageTitle(i).toString();
         	tActionBar.addTab(
         			tActionBar.newTab()
-                            .setText(mAppSectionsPagerAdapter.getPageTitle(i))
+                            .setText(tTabTitle)
                             .setTabListener(this));
         }
         
@@ -136,10 +152,37 @@ public class SeedsRSSCartActivity extends FragmentActivity implements ActionBar.
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
+        if(0 == tab.getPosition())
+        	SeedsRSSCartActivity.isSeedsRSSListTab = true;
+        else
+        {
+        	SeedsRSSCartActivity.isSeedsRSSListTab = false;
+        	((SeedsRSSCartIDMgt)mAppSectionsPagerAdapter.getItem(1)).updateView(getApplication());
+        }
+                
     }
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+    
+    public static String getCurrentRSSID(String _inTag, String _inDef){
+    	
+    	// Retrieve the seeds info status by date via the shared preference file 
+    	return mSharedPref.getString(_inTag, _inDef);	
+    }
+    
+    public static void storeRSSID(String _inTag, String _inRSSID){
+    	
+    	SharedPreferences.Editor editor = mSharedPref.edit();
+    	editor.putString(_inTag, _inRSSID);
+    	editor.commit();    	
+    }
+    
+    public static void clearRSSID(){
+    	SharedPreferences.Editor editor = mSharedPref.edit();
+    	editor.clear();
+    	editor.commit();
     }
     
 	@Override
@@ -159,21 +202,26 @@ public class SeedsRSSCartActivity extends FragmentActivity implements ActionBar.
             }
             case R.id.rss_sendreqmsg:
             {
-            	//sendRSSBookMessage();
+            	if(isSeedsRSSListTab)
+            		((SeedsRSSList)mAppSectionsPagerAdapter.getItem(0)).sendRSSBookMessage();
     		    return true;
             }
             case R.id.rss_removeall:
             {
-            	//clearSeedsCart();
+            	if(isSeedsRSSListTab)
+            		((SeedsRSSList)mAppSectionsPagerAdapter.getItem(0)).clearSeedsCart();
             	return true;
             }
         }
         return super.onOptionsItemSelected(item);
-    }
+    }    
     
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public AppSectionsPagerAdapter(FragmentManager fm) {
+        public SeedsRSSList mSeedsRSSList = null;
+        public SeedsRSSCartIDMgt mSeedsRSSCartIDMgt = null;
+        
+    	public AppSectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -181,25 +229,25 @@ public class SeedsRSSCartActivity extends FragmentActivity implements ActionBar.
         public Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    // The first section of the app is the most interesting -- it offers
-                    // a launchpad into the other demonstrations in this example application.
-                    return new SeedsRSSList();
+                    if (null == mSeedsRSSList)
+                    	mSeedsRSSList = new SeedsRSSList();                    
+                    return mSeedsRSSList;
 
                 default:
-                    // The other sections of the app are dummy placeholders.
-                    Fragment fragment = new SeedsRSSCartIDMgt();
-                    return fragment;
+                    if (null == mSeedsRSSCartIDMgt)
+                    	mSeedsRSSCartIDMgt = new SeedsRSSCartIDMgt();
+                    return mSeedsRSSCartIDMgt;
             }
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Section " + (position + 1);
+        	return "Section " + (position + 1);          
         }
     }
 
@@ -237,7 +285,7 @@ public class SeedsRSSCartActivity extends FragmentActivity implements ActionBar.
 	
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
+			super.onCreate(savedInstanceState);			
 				
 			// Initialize the SeedsEntity List
 			mSeedsEntityList = new ArrayList<SeedsEntity>();
@@ -279,7 +327,7 @@ public class SeedsRSSCartActivity extends FragmentActivity implements ActionBar.
     		mEmptyView.setText(R.string.seeds_rsslist_empty);
     		mListView = (ListView)rootView.findViewById(R.id.seeds_list);
     		    		
-            Bundle args = getArguments();
+            //Bundle args = getArguments();
             return rootView;
         }        
 	
@@ -539,6 +587,7 @@ public class SeedsRSSCartActivity extends FragmentActivity implements ActionBar.
 		
 		public static void setCartId(String _inCartId){
 			mCartId = _inCartId;
+			SeedsRSSCartActivity.storeRSSID(SeedsRSSCartActivity.SEEDSTAG_RSSID, _inCartId);
 		}
 		
 		public static String getCartId(){
@@ -863,15 +912,135 @@ public class SeedsRSSCartActivity extends FragmentActivity implements ActionBar.
 	}    
    
     public static class SeedsRSSCartIDMgt extends Fragment {
+    	
+    	private TextView mRSSID;
+    	private TextView mRSSLink;
+    	private TextView mDefineNewID;
+    	private TextView mReqNewID;
+    	private View mView;
+    	private String mTextToCopy;
+    	private ProgressDialog mProgressDialog = null; 
+    	
+        private static final int ITEM1 = Menu.FIRST;
+        //private static final int ITEM2 = Menu.FIRST+1;
+        //private static final int ITEM3 = Menu.FIRST+2;
+    	
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);	
+		}
+		
+		
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
         	
-            View rootView = inflater.inflate(R.layout.activity_seeds_rssid_management, container, false);            
-    		    		
-            Bundle args = getArguments();
-            return rootView;
-        	
-        }    	
+        	View rootView = inflater.inflate(R.layout.activity_seeds_rssid_management, container, false); 
+        	mView = rootView;
+            mRSSID = (TextView)rootView.findViewById(R.id.rss_id);
+            mRSSLink = (TextView)rootView.findViewById(R.id.rss_link);
+            mDefineNewID = (TextView)rootView.findViewById(R.id.rss_definenewid);
+            mReqNewID = (TextView)rootView.findViewById(R.id.rss_reqnewid);
+            
+            this.registerForContextMenu(mRSSID);
+            this.registerForContextMenu(mRSSLink);
+            mDefineNewID.setOnClickListener(mDefineNewIDListener);
+            mReqNewID.setOnClickListener(mRequestNewIDListener);
+            
+            updateView(getActivity());
+            
+            return rootView;        	
+        }
+        
+    	private View.OnClickListener mDefineNewIDListener = new View.OnClickListener() {
+
+    		@Override
+    		public void onClick(View v) {
+    			
+    			final EditText tEditTextView = new EditText(getActivity());
+    			tEditTextView.setText(SeedsRSSCartActivity.getCurrentRSSID(SeedsRSSCartActivity.SEEDSTAG_RSSID, ""));    			
+        		AlertDialog.Builder builder = new Builder(getActivity());
+        		builder.setTitle(getActivity().getString(R.string.seeds_rss_idmgt_defnewid_dialogtitle));
+        		builder.setView(tEditTextView);
+        		builder.setPositiveButton(R.string.seeds_rss_idmgt_defnewid_dialogpos, new DialogInterface.OnClickListener() {
+        		    @Override
+        	        public void onClick(DialogInterface dialog, int which) {
+        			    dialog.dismiss();
+        	            mProgressDialog = ProgressDialog.show(getActivity(), "Loading...", 
+          			          getString(R.string.seeds_rss_idmgt_defnewid_dialogprocess), true, false);
+          	            mProgressDialog.setCanceledOnTouchOutside(true);
+			            String tNewID = tEditTextView.getText().toString();
+			            SeedsRSSCartActivity.storeRSSID(SeedsRSSCartActivity.SEEDSTAG_RSSID, tNewID);
+			            updateView(getActivity());
+			            mProgressDialog.dismiss();
+						Toast toast = Toast.makeText(getActivity(), 
+			                     getActivity().getString(R.string.seeds_rss_idmgt_defnewid_toast), 
+			                     Toast.LENGTH_SHORT);
+	                    toast.setGravity(Gravity.CENTER, 0, 0);
+	                    toast.show();	
+        		    }
+        		});
+
+        		builder.setNegativeButton(R.string.seeds_rss_idmgt_defnewid_dialogneg, new DialogInterface.OnClickListener() {
+        		    @Override
+        		    public void onClick(DialogInterface dialog, int which) {
+        		        dialog.dismiss();
+        		    }
+        		});
+
+        		builder.create().show();						
+    		}
+    		
+    	};
+
+    	private View.OnClickListener mRequestNewIDListener = new View.OnClickListener() {
+
+    		@Override
+    		public void onClick(View v) {    			
+    			SeedsRSSCartActivity.clearRSSID();
+    			updateView(getActivity());
+				Toast toast = Toast.makeText(getActivity(), 
+						                     getActivity().getString(R.string.seeds_rss_idmgt_reqnewid_toast), 
+						                     Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();						
+    		}
+    	};
+    	
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v,
+                                        ContextMenuInfo menuInfo) {
+            super.onCreateContextMenu(menu, v, menuInfo);
+            //menu.setHeaderTitle(getActivity().getString(R.string.seeds_rss_idmgt_contextmenutitle));
+            menu.add(0, ITEM1, 0, getActivity().getString(R.string.seeds_rss_idmgt_contextmenu1));
+            mTextToCopy = ((TextView)v).getText().toString();
+        }
+        
+        @SuppressWarnings("deprecation")
+		@Override
+        public boolean onContextItemSelected(MenuItem item){
+        	//AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+            switch(item.getItemId()){
+            case ITEM1:
+            	ClipboardManager cmb = (ClipboardManager)getActivity().getSystemService(CLIPBOARD_SERVICE);
+            	cmb.setText(mTextToCopy);
+                break;
+            default:
+                break;    
+            }
+            return true;
+        }
+        
+		public void updateView(Context _context) {
+			
+            String tCurrentRSSID = SeedsRSSCartActivity.getCurrentRSSID(SeedsRSSCartActivity.SEEDSTAG_RSSID, 
+            		_context.getString(R.string.seeds_rss_idmgt_id));
+
+            mRSSID.setText(tCurrentRSSID);
+            if(!tCurrentRSSID.equals(getActivity().getString(R.string.seeds_rss_idmgt_id)))
+            	mRSSLink.setText("http://"+SeedsDefinitions.SEEDS_SERVER_RSS_ADDRESS+tCurrentRSSID);
+            else
+            	mRSSLink.setText(_context.getString(R.string.seeds_rss_idmgt_link));
+		}
     }
 }

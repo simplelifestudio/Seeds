@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.simplelife.seeds.android.SeedsDefinitions;
+import com.simplelife.seeds.android.SeedsRSSCartActivity;
 import com.simplelife.seeds.android.utils.jsonprocess.SeedsJSONMessage;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
@@ -232,7 +233,7 @@ public class SeedsNetworkProcess {
 			seedIdList.put(_inSeedIdList.get(index));
 		}
 		
-		paramList.put("cartId","");
+		paramList.put("cartId",SeedsRSSCartActivity.getCurrentRSSID(SeedsRSSCartActivity.SEEDSTAG_RSSID, ""));
 		paramList.put("seedIdList",seedIdList);
 		
 		JSONObject updateStatusReq = SeedsJSONMessage.SeedsConstructMsg(SeedsJSONMessage.SeedsToCartRequest, paramList);
