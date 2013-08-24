@@ -11,6 +11,7 @@ import com.simplelife.seeds.android.R;
 import com.simplelife.seeds.android.SeedsDefinitions;
 import com.simplelife.seeds.android.SeedsEntity;
 import com.simplelife.seeds.android.SeedsRSSCartActivity;
+import com.simplelife.seeds.android.SeedsRSSCartActivity.SeedsRSSList;
 import com.simplelife.seeds.android.utils.dbprocess.SeedsDBAdapter;
 import com.simplelife.seeds.android.utils.seedslogger.SeedsLoggerUtil;
 
@@ -254,7 +255,7 @@ public class SeedsJSONMessage {
 		// Parse the paramList part
 		JSONObject tParamList = tMsgInJSON.getJSONObject("body");
 		String tCartId = (String) tParamList.get("cartId");
-		SeedsRSSCartActivity.setCartId(tCartId);
+		SeedsRSSList.setCartId(tCartId);
 		JSONArray tSuccIdList   = tParamList.getJSONArray("successSeedIdList");
 		JSONArray tExistIdList  = tParamList.getJSONArray("existSeedIdList");
 		JSONArray tFailedIdList = tParamList.getJSONArray("failedSeedIdList");

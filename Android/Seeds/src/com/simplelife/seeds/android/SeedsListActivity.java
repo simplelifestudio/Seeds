@@ -46,6 +46,7 @@ public abstract class SeedsListActivity extends FragmentActivity {
 	
     protected ArrayList<SeedsEntity> mSeedsEntityList;
     protected ArrayList<SeedsEntity> mSeedsEntityChosen;
+    protected ArrayList<SeedsEntity> mSeedsEntityChosenToDel;
     protected ArrayList<View> mSeedsViewsChosen;
     protected ArrayList<ImageView> mImageViewList;
     protected ArrayList<SeedsEntity> mSeedsListForListView;
@@ -65,6 +66,7 @@ public abstract class SeedsListActivity extends FragmentActivity {
 		mSeedsEntityList = new ArrayList<SeedsEntity>();
 		mSeedsListForListView = new ArrayList<SeedsEntity>();
 		mSeedsEntityChosen = new ArrayList<SeedsEntity>();
+		mSeedsEntityChosenToDel = new ArrayList<SeedsEntity>();
 		mSeedsViewsChosen  = new  ArrayList<View>();
 		mImageViewList = new ArrayList<ImageView>();
 		mSelectedList  = new ArrayList<Integer>();
@@ -117,6 +119,7 @@ public abstract class SeedsListActivity extends FragmentActivity {
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             MenuInflater inflater = SeedsListActivity.this.getMenuInflater();
             mSeedsEntityChosen.clear();
+            mSeedsEntityChosenToDel.clear();
             mSeedsViewsChosen.clear();
             inflater.inflate(R.menu.activity_seeds_list_contextualmenu, menu);
             mode.setTitle(getString(R.string.seeds_list_contextualtitle));
@@ -131,7 +134,7 @@ public abstract class SeedsListActivity extends FragmentActivity {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
             case R.id.seedslist_del:
-            	onMultiChosenProcess(mSeedsEntityChosen);
+            	onMultiChosenProcess(mSeedsEntityChosenToDel);
                 mode.finish();
             break;
             default:
@@ -140,14 +143,17 @@ public abstract class SeedsListActivity extends FragmentActivity {
             return true;
         }
 
-        public void onDestroyActionMode(ActionMode mode) {
+        public void onDestroyActionMode(ActionMode mode) {        	
         	int tNumOfView = mSeedsViewsChosen.size();
+        	mLogger.debug("Destroying the action mode, list size:" + tNumOfView);
         	for(int index=0; index<tNumOfView; index++)
         	{
+        		mLogger.debug("Setting back the backgound");
         		mSeedsViewsChosen.get(index).setBackgroundResource(R.drawable.seedslist_selector);
         	    mSeedsViewsChosen.get(index).setPadding(8, 8, 8, 8);
         	}
-        	mSeedsViewsChosen.clear();        	
+        	mSeedsViewsChosen.clear();
+        	mSeedsEntityChosen.clear();
         }
 
         public void onItemCheckedStateChanged(ActionMode mode,
@@ -157,6 +163,7 @@ public abstract class SeedsListActivity extends FragmentActivity {
         	{
         		mLogger.debug("Seeds added to list " + mSeedsEntityList.get(position).getSeedLocalId());
         		mSeedsEntityChosen.add(mSeedsEntityList.get(position));
+        		mSeedsEntityChosenToDel.add(mSeedsEntityList.get(position));
         		mSeedsViewsChosen.add(tItemSelected);
         		tItemSelected.setBackgroundResource(R.drawable.seedsgradient_bg_hover);
         	}
@@ -164,6 +171,7 @@ public abstract class SeedsListActivity extends FragmentActivity {
         	{
         		mLogger.debug("Remove seeds " + mSeedsEntityList.get(position).getSeedLocalId());
         		mSeedsEntityChosen.remove(mSeedsEntityList.get(position));
+        		mSeedsEntityChosenToDel.remove(mSeedsEntityList.get(position));
         		mSeedsViewsChosen.remove(tItemSelected);
         		tItemSelected.setBackgroundResource(R.drawable.seedslist_selector);
         		tItemSelected.setPadding(8, 8, 8, 8);
