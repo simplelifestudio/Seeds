@@ -244,6 +244,7 @@
 		C5C0CE96176D103300FA52C4 /* SeedDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */; };
 		C5D02F4C17C882DB00CAFFB3 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D02F4B17C882DB00CAFFB3 /* SSKeychain.m */; };
 		C5D02F4D17C882DB00CAFFB3 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D02F4B17C882DB00CAFFB3 /* SSKeychain.m */; };
+		C5D02F4E17C894A500CAFFB3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5203D5B1743BEC500D917F7 /* Security.framework */; };
 		C5D1D4E817BAFD2D00C5A15B /* LoggerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1D4E717BAFD2D00C5A15B /* LoggerModule.m */; };
 		C5D1D4F217BB26FD00C5A15B /* SecurityModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1D4F117BB26FD00C5A15B /* SecurityModule.m */; };
 		C5DF822F17BBA839004D2D85 /* CBGZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DF822E17BBA839004D2D85 /* CBGZipUtils.m */; };
@@ -670,6 +671,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5D02F4E17C894A500CAFFB3 /* Security.framework in Frameworks */,
 				C576D07117BD09760057FD77 /* QuartzCore.framework in Frameworks */,
 				C576D07017BD07950057FD77 /* GHUnitIOS.framework in Frameworks */,
 				C576D05717BD07390057FD77 /* UIKit.framework in Frameworks */,
