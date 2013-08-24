@@ -187,7 +187,7 @@
     [self _registerGestureRecognizers];
     
     // set auto display timer
-    [self _activateDisplayTimer:TRUE];
+    [self _activateDisplayTimer:NO];
 }
 
 - (void) _registerGestureRecognizers
