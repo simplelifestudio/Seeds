@@ -24,6 +24,12 @@
 #define IS_IPHONE4_OR_4S ([UIDevice currentResolution] == UIDevice_iPhoneHiRes)
 #define IS_IPHONE5 ([UIDevice currentResolution] == UIDevice_iPhoneTallerHiRes)
 
+
+// Module: Security
+#define KEYCHAIN_SERVICE_DEVICE NAMESPACE_APP
+#define KEYCHAIN_ACCOUNT_IDFV @"idfv"
+
+
 // Module: UserDefaults
 #define USERDEFAULTS_KEY_SYNCSTATUSBYDAY @"syncStatusByDay:"
 #define PERSISTENTDOMAIN_SYNCSTATUSBYDAY @"com.simplelife.Seeds.ios.userdefaults.syncStatusByDay"
@@ -45,6 +51,7 @@
 
 #define USERDEFAULTS_KEY_THUMBNAILCACHEKEYS @"thumbnailCacheKeys"
 #define PERSISTENTDOMAIN_IMAGECACHE @"com.simplelife.Seeds.ios.userdefaults.imageCache"
+
 
 // Module: Communication
 #define RACHABILITY_HOST @"www.apple.com"
