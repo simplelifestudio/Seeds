@@ -39,4 +39,6 @@ typedef NSUInteger UIDeviceResolution;
 
 + (BOOL)isRunningOniOS6AndLater;
 
++ (NSString*) deviceModel;
+
 @end

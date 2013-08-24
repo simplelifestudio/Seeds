@@ -46,6 +46,11 @@ SINGLETON(UserDefaultsModule)
         [SSKeychain setPassword:idfv forService:KEYCHAIN_SERVICE_DEVICE account:KEYCHAIN_ACCOUNT_IDFV];
     }
     DDLogCInfo(@"Device Unique Identifier for Vendor: %@", idfv);
+    
+    UIDevice* device = [UIDevice currentDevice];
+    DDLogCInfo(@"Device Model: %@", [UIDevice deviceModel]);
+    DDLogCInfo(@"System Name: %@", device.systemName);
+    DDLogCInfo(@"System Version: %@", device.systemVersion);
 }
 
 @end
