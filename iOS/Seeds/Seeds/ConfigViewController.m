@@ -397,8 +397,8 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     _userDefaults = [UserDefaultsModule sharedInstance];
     
     _commModule = [CommunicationModule sharedInstance];
-    _pictureAgent = _commModule.seedPictureAgent;
-    _downloadAgent = _commModule.seedsDownloadAgent;
+    _pictureAgent = _commModule.serverAgent.pictureAgent;
+    _downloadAgent = _commModule.serverAgent.downloadAgent;
     
     _guiModule = [GUIModule sharedInstance];
     _HUDAgent = _guiModule.HUDAgent;

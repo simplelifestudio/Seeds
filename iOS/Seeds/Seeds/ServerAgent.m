@@ -16,8 +16,6 @@
     UserDefaultsModule* _userDefaults;
     id<SeedDAO> _seedDAO;
     CommunicationModule* _commModule;
-    SeedsDownloadAgent* _downloadAgent;
-    SeedPictureAgent* _pictureAgent;
 }
 
 @end
@@ -25,6 +23,9 @@
 @implementation ServerAgent
 
 @synthesize delegate = _delegate;
+
+@synthesize downloadAgent = _downloadAgent;
+@synthesize pictureAgent = _pictureAgent;
 
 +(NSMutableURLRequest*) constructURLRequest:(JSONMessage*) message serverServiceType:(ServerServiceType)serverServiceType
 {
@@ -155,9 +156,12 @@
         _userDefaults = [UserDefaultsModule sharedInstance];
         _seedDAO = [DAOFactory getSeedDAO];
         
-        _commModule = [CommunicationModule sharedInstance];
-        _downloadAgent = _commModule.seedsDownloadAgent;
-        _pictureAgent = _commModule.seedPictureAgent;
+        _pictureAgent = [SeedPictureAgent sharedInstance];
+        [_pictureAgent setMaxConcurrentDownloads:SEEDPICTURE_MAX_CONCURRENT_DOWNLOADS];
+        [_pictureAgent setDownloadOptions:SDWebImageLowPriority];// | SDWebImageRetryFailed];
+        [_pictureAgent setMaxCahceAge:CACHE_EXPIRE_PERIOD];
+        
+        _downloadAgent = [[SeedsDownloadAgent alloc] init];
     }
     
     return self;

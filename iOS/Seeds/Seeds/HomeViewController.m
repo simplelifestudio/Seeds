@@ -78,7 +78,7 @@
     _commModule = [CommunicationModule sharedInstance];
     _serverAgent = _commModule.serverAgent;
     _serverAgent.delegate = self;
-    _pictureAgent = _commModule.seedPictureAgent;
+    _pictureAgent = _commModule.serverAgent.pictureAgent;
     
     _guiModule = [GUIModule sharedInstance];
     _guiModule.homeViewController = self;

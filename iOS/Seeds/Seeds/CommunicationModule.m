@@ -28,8 +28,6 @@ SINGLETON(CommunicationModule)
 
 @synthesize spider = _spider;
 @synthesize serverAgent = _serverAgent;
-@synthesize seedPictureAgent = _seedPictureAgent;
-@synthesize seedsDownloadAgent = _seedsDownloadAgent;
 
 -(void) initModule
 {
@@ -39,12 +37,6 @@ SINGLETON(CommunicationModule)
     
     _spider = [[SeedsSpider alloc] init];
     _serverAgent = [[ServerAgent alloc] init];
-    _seedPictureAgent = [SeedPictureAgent sharedInstance];
-    [_seedPictureAgent setMaxConcurrentDownloads:SEEDPICTURE_MAX_CONCURRENT_DOWNLOADS];
-    [_seedPictureAgent setDownloadOptions:SDWebImageLowPriority];// | SDWebImageRetryFailed];
-    [_seedPictureAgent setMaxCahceAge:CACHE_EXPIRE_PERIOD];
-    
-    _seedsDownloadAgent = [[SeedsDownloadAgent alloc] init];
 }
 
 - (void)registerReachability
@@ -106,7 +98,7 @@ SINGLETON(CommunicationModule)
 {
     [self unregisterReachability];
     
-    [_seedPictureAgent saveThumbnailCacheKeys];
+    [_serverAgent.pictureAgent saveThumbnailCacheKeys];
     
     [self setSpider:nil];
     [self setServerAgent:nil];
@@ -137,10 +129,8 @@ SINGLETON(CommunicationModule)
 -(void)applicationDidEnterBackground:(UIApplication *)application
 {
     [CBAppUtils asyncProcessInBackgroundThread:^(){
-        [_seedPictureAgent clearMemory];
+        [_serverAgent.pictureAgent clearMemory];
     }];
-    
-
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

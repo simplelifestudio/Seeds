@@ -366,8 +366,8 @@
     _pageFirstSeedPictureList = [NSMutableArray array];
     
     _commModule = [CommunicationModule sharedInstance];
-    _downloadAgent = _commModule.seedsDownloadAgent;
-    _pictureAgent = _commModule.seedPictureAgent;
+    _downloadAgent = _commModule.serverAgent.downloadAgent;
+    _pictureAgent = _commModule.serverAgent.pictureAgent;
     
     [self _registerGestureRecognizers];
 }

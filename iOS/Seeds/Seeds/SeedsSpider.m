@@ -402,8 +402,8 @@
     _isPullOperationDone = NO;
     
     CommunicationModule* _commModule = [CommunicationModule sharedInstance];
-    _downloadAgent = _commModule.seedsDownloadAgent;
-    _pictureAgent = _commModule.seedPictureAgent;
+    _downloadAgent = _commModule.serverAgent.downloadAgent;
+    _pictureAgent = _commModule.serverAgent.pictureAgent;
     
     _guiModule = [GUIModule sharedInstance];
     

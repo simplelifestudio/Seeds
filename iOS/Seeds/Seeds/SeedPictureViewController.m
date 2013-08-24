@@ -190,7 +190,7 @@
 - (void) _setupView
 {
     _commModule = [CommunicationModule sharedInstance];
-    _agent = _commModule.seedPictureAgent;
+    _agent = _commModule.serverAgent.pictureAgent;
     
     _guiModule = [GUIModule sharedInstance];
 }

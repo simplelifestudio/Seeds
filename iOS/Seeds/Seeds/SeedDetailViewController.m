@@ -370,8 +370,8 @@
     _userDefaults = [UserDefaultsModule sharedInstance];
     
     _commModule = [CommunicationModule sharedInstance];
-    _downloadAgent = _commModule.seedsDownloadAgent;
-    _pictureAgent = _commModule.seedPictureAgent;
+    _downloadAgent = _commModule.serverAgent.downloadAgent;
+    _pictureAgent = _commModule.serverAgent.pictureAgent;
     _serverAgent = _commModule.serverAgent;
     
     _guiModule = [GUIModule sharedInstance];

@@ -12,9 +12,15 @@
 #import "JSONMessage.h"
 #import "JSONMessageDelegate.h"
 
+#import "SeedPictureAgent.h"
+#import "SeedsDownloadAgent.h"
+
 typedef void(^JSONMessageCallBackBlock)(id JSON, NSError* error);
 
 @interface ServerAgent : NSObject <JSONMessageDelegate>
+
+@property (nonatomic, strong) SeedPictureAgent* pictureAgent;
+@property (nonatomic, strong) SeedsDownloadAgent* downloadAgent;
 
 @property (nonatomic, strong) id<CBLongTaskStatusHUDDelegate> delegate;
 
