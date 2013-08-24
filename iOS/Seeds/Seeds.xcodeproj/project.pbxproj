@@ -242,6 +242,8 @@
 		C5BB1EDC17A8F82800D0CA4E /* CrashReportModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BB1EDB17A8F82800D0CA4E /* CrashReportModule.m */; };
 		C5C0CE94176D0F5900FA52C4 /* SeedDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C0CE93176D0F5900FA52C4 /* SeedDetailHeaderView.m */; };
 		C5C0CE96176D103300FA52C4 /* SeedDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */; };
+		C5D02F4C17C882DB00CAFFB3 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D02F4B17C882DB00CAFFB3 /* SSKeychain.m */; };
+		C5D02F4D17C882DB00CAFFB3 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D02F4B17C882DB00CAFFB3 /* SSKeychain.m */; };
 		C5D1D4E817BAFD2D00C5A15B /* LoggerModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1D4E717BAFD2D00C5A15B /* LoggerModule.m */; };
 		C5D1D4F217BB26FD00C5A15B /* SecurityModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1D4F117BB26FD00C5A15B /* SecurityModule.m */; };
 		C5DF822F17BBA839004D2D85 /* CBGZipUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = C5DF822E17BBA839004D2D85 /* CBGZipUtils.m */; };
@@ -645,6 +647,8 @@
 		C5C0CE92176D0F5900FA52C4 /* SeedDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedDetailHeaderView.h; sourceTree = "<group>"; };
 		C5C0CE93176D0F5900FA52C4 /* SeedDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedDetailHeaderView.m; sourceTree = "<group>"; };
 		C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeedDetailHeaderView.xib; sourceTree = "<group>"; };
+		C5D02F4A17C882DB00CAFFB3 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		C5D02F4B17C882DB00CAFFB3 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		C5D1D4E617BAFD2D00C5A15B /* LoggerModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoggerModule.h; sourceTree = "<group>"; };
 		C5D1D4E717BAFD2D00C5A15B /* LoggerModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoggerModule.m; sourceTree = "<group>"; };
 		C5D1D4F017BB26FD00C5A15B /* SecurityModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityModule.h; sourceTree = "<group>"; };
@@ -1175,6 +1179,7 @@
 		C57CF282172565100002B054 /* 3rd Libs */ = {
 			isa = PBXGroup;
 			children = (
+				C5D02F4917C882DB00CAFFB3 /* SSKeychain */,
 				C527948217BB6C1900D10782 /* GTMBase64 */,
 				C53968E217B0942400C98451 /* SocketRocket */,
 				C52AD0AE1796E7AB00F9D174 /* Reachability */,
@@ -1515,6 +1520,15 @@
 			name = CrashReport;
 			sourceTree = "<group>";
 		};
+		C5D02F4917C882DB00CAFFB3 /* SSKeychain */ = {
+			isa = PBXGroup;
+			children = (
+				C5D02F4A17C882DB00CAFFB3 /* SSKeychain.h */,
+				C5D02F4B17C882DB00CAFFB3 /* SSKeychain.m */,
+			);
+			path = SSKeychain;
+			sourceTree = "<group>";
+		};
 		C5D1D4E517BAFCC000C5A15B /* Logger */ = {
 			isa = PBXGroup;
 			children = (
@@ -1750,6 +1764,7 @@
 			files = (
 				C576D06117BD07390057FD77 /* main.m in Sources */,
 				C576D07F17BD0C630057FD77 /* SeedsUnitSampleTest.m in Sources */,
+				C5D02F4D17C882DB00CAFFB3 /* SSKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1903,6 +1918,7 @@
 				C527948617BB6C1900D10782 /* GTMBase64.m in Sources */,
 				C527949417BB785600D10782 /* CBSecurityUtils.m in Sources */,
 				C5DF822F17BBA839004D2D85 /* CBGZipUtils.m in Sources */,
+				C5D02F4C17C882DB00CAFFB3 /* SSKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
