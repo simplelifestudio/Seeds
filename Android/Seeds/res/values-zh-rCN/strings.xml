@@ -65,6 +65,7 @@
     <string name="seeds_UnFavorite">取消收藏</string>
     <string name="seeds_preffilename">com.simplelife.seeds.SEEDS_STATUS_BYDATE</string>
     <string name="seeds_preffilename_seedsnum">com.simplelife.seeds.SEEDS_NUMBER_BYDATE</string>
+    <string name="seeds_preffilename_seedsrss">com.simplelife.seeds.SEEDS_RSS_ID</string>
     <string name="seeds_startverify">请输入密码</string>
     <string name="seeds_pwdmessage">请输入密码</string>
     <string name="seeds_pwdsend">发送</string>
