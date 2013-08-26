@@ -84,14 +84,17 @@ public class SeedsRSSCartActivity extends FragmentActivity implements ActionBar.
     
     public static boolean isSeedsRSSListTab = true;
     public static String SEEDSTAG_RSSID = "rss_id";
-    public static SharedPreferences mSharedPref;
+    public static SharedPreferences mRSSSharedPref;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seeds_rssid_main);
         
-        mSharedPref = PreferenceManager.getDefaultSharedPreferences(SeedsRSSCartActivity.this);
+        //mSharedPref = PreferenceManager.getDefaultSharedPreferences(SeedsRSSCartActivity.this);        
+		// Get the shared preference file instance
+        mRSSSharedPref = getSharedPreferences(
+		        getString(R.string.seeds_preffilename_seedsrss), Context.MODE_PRIVATE);
 
         mLogger = SeedsLoggerUtil.getSeedsLogger(SeedsRSSCartActivity.this);
         // Create the adapter that will return a fragment for each of the three primary sections
@@ -169,18 +172,18 @@ public class SeedsRSSCartActivity extends FragmentActivity implements ActionBar.
     public static String getCurrentRSSID(String _inTag, String _inDef){
     	
     	// Retrieve the seeds info status by date via the shared preference file 
-    	return mSharedPref.getString(_inTag, _inDef);	
+    	return mRSSSharedPref.getString(_inTag, _inDef);	
     }
     
     public static void storeRSSID(String _inTag, String _inRSSID){
     	
-    	SharedPreferences.Editor editor = mSharedPref.edit();
+    	SharedPreferences.Editor editor = mRSSSharedPref.edit();
     	editor.putString(_inTag, _inRSSID);
     	editor.commit();    	
     }
     
     public static void clearRSSID(){
-    	SharedPreferences.Editor editor = mSharedPref.edit();
+    	SharedPreferences.Editor editor = mRSSSharedPref.edit();
     	editor.clear();
     	editor.commit();
     }
