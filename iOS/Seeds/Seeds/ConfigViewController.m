@@ -1093,7 +1093,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     {
         WarningViewController* warningVC = [_guiModule getWarningViewController:WARNING_ID_PASSCODEFAILEDATTEMPTS delegate:self];
         
-        [self presentViewController:warningVC animated:NO completion:nil];
+        [controller presentViewController:warningVC animated:NO completion:nil];
         
         [warningVC setAgreeButtonVisible:NO];
         [warningVC setDeclineButtonVisible:NO];
