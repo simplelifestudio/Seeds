@@ -193,4 +193,99 @@
     return [UIColor colorWithHexCode:@"778899"];
 }
 
++(UIColor*) Grey
+{
+    return [UIColor colorWithHexCode:@"BEBEBE"];
+}
+
++(UIColor*) LightGray
+{
+    return [UIColor colorWithHexCode:@"D3D3D3"];
+}
+
++(UIColor*) MidnightBlue
+{
+    return [UIColor colorWithHexCode:@"191970"];
+}
+
++(UIColor*) NavyBlue
+{
+    return [UIColor colorWithHexCode:@"000080"];
+}
+
++(UIColor*) CornflowerBlue
+{
+    return [UIColor colorWithHexCode:@"6495ED"];
+}
+
++(UIColor*) DarkSlateBlue
+{
+    return [UIColor colorWithHexCode:@"483D8B"];
+}
+
++(UIColor*) SlateBlue
+{
+    return [UIColor colorWithHexCode:@"6A5ACD"];
+}
+
++(UIColor*) MediumSlateBlue
+{
+    return [UIColor colorWithHexCode:@"7B68EE"];
+}
+
++(UIColor*) LightSlateBlue
+{
+    return [UIColor colorWithHexCode:@"8470FF"];
+}
+
++(UIColor*) MediumBlue
+{
+    return [UIColor colorWithHexCode:@"0000CD"];
+}
+
++(UIColor*) RoyalBlue
+{
+    return [UIColor colorWithHexCode:@"4169E1"];
+}
+
++(UIColor*) Blue
+{
+    return [UIColor colorWithHexCode:@"0000FF"];
+}
+
++(UIColor*) DodgerBlue
+{
+    return [UIColor colorWithHexCode:@"1E90FF"];
+}
+
++(UIColor*) DeepSkyBlue
+{
+    return [UIColor colorWithHexCode:@"00BFFF"];
+}
+
++(UIColor*) SkyBlue
+{
+    return [UIColor colorWithHexCode:@"87CEEB"];
+}
+
++(UIColor*) LightSkyBlue
+{
+    return [UIColor colorWithHexCode:@"87CEFA"];
+}
+
++(UIColor*) SteelBlue
+{
+    return [UIColor colorWithHexCode:@"4682B4"];
+}
+
++(UIColor*) LightSteelBlue
+{
+    return [UIColor colorWithHexCode:@"B0C4DE"];
+}
+
++(UIColor*) LightBlue
+{
+    return [UIColor colorWithHexCode:@"ADD8E6"];
+}
+
 @end
