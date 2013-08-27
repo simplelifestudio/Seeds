@@ -333,53 +333,60 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         }
     }
     
+    [cell configureFlatCellWithColor:FLATUI_COLOR_TABLECELL selectedColor:FLATUI_COLOR_TABLECELL_SELECTED];
+    
     return cell;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    NSString *sectionName;
-    switch (section)
-    {
-        case SECTION_INDEX_MODE:
-        {
-            sectionName = NSLocalizedString(@"Running", nil);
-            break;
-        }
-        case SECTION_INDEX_IMAGE:
-        {
-            sectionName = NSLocalizedString(@"Images", nil);
-            break;
-        }
-        case SECTION_INDEX_DATA:
-        {
-            sectionName = NSLocalizedString(@"Data", nil);
-            break;
-        }
-        case SECTION_INDEX_PASSCODE:
-        {
-            sectionName = NSLocalizedString(@"Passcode", nil);
-            break;
-        }
-        case SECTION_INDEX_ABOUT:
-        {
-            sectionName = NSLocalizedString(@"Others", nil);
-            break;
-        }
-        default:
-        {
-            sectionName = @"";
-            break;
-        }
-    }
-    return sectionName;
-}
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+//{
+//    NSString *sectionName;
+//    switch (section)
+//    {
+//        case SECTION_INDEX_MODE:
+//        {
+//            sectionName = NSLocalizedString(@"Running", nil);
+//            break;
+//        }
+//        case SECTION_INDEX_IMAGE:
+//        {
+//            sectionName = NSLocalizedString(@"Images", nil);
+//            break;
+//        }
+//        case SECTION_INDEX_DATA:
+//        {
+//            sectionName = NSLocalizedString(@"Data", nil);
+//            break;
+//        }
+//        case SECTION_INDEX_PASSCODE:
+//        {
+//            sectionName = NSLocalizedString(@"Passcode", nil);
+//            break;
+//        }
+//        case SECTION_INDEX_ABOUT:
+//        {
+//            sectionName = NSLocalizedString(@"Others", nil);
+//            break;
+//        }
+//        default:
+//        {
+//            sectionName = @"";
+//            break;
+//        }
+//    }
+//    return sectionName;
+//}
 
-#pragma mark - Table view delegate
+#pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 10;
 }
 
 #pragma mark - Private Methods
@@ -404,6 +411,10 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     _HUDAgent = _guiModule.HUDAgent;
     
     [self _initTableCellList];
+    
+    self.tableView.backgroundView = nil;    
+    self.tableView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
+    self.tableView.separatorColor = FLATUI_COLOR_TABLE_SEPERATOR;
 }
 
 - (void) _registerGestureRecognizers
@@ -512,7 +523,7 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
 
 - (void) _on3GDownloadImagesSwitched
 {
-    UISwitch* switcher = _3GDownloadImagesCell.switcher;
+    FUISwitch* switcher = _3GDownloadImagesCell.switcher;
     [self _set3GDownloadImages:switcher.isOn];
 }
 
@@ -528,12 +539,10 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     if (isServerMode)
     {
         [_cartIdCell.button setEnabled:YES];
-        [_cartIdCell.button setTitleColor:COLOR_TEXT_INFO forState:UIControlStateNormal];
     }
     else
     {
         [_cartIdCell.button setEnabled:NO];
-        [_cartIdCell.button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     }
 }
 
@@ -705,12 +714,10 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
     if (isPasscodeSet)
     {
         [_changePasscodeCell.button setEnabled:YES];
-        [_changePasscodeCell.button setTitleColor:COLOR_TEXT_INFO forState:UIControlStateNormal];
     }
     else
     {        
         [_changePasscodeCell.button setEnabled:NO];
-        [_changePasscodeCell.button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     }
 }
 
@@ -1004,7 +1011,6 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         NSString* versionStr = [[[NSBundle mainBundle] infoDictionary] valueForKey:BUNDLE_KEY_SHORTVERSION];
         NSString* buildStr = [[[NSBundle mainBundle] infoDictionary] valueForKey:BUNDLE_KEY_BUNDLEVERSION];
         _aboutCell.minorLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Version: %@-%@", nil), versionStr, buildStr];;
-        _aboutCell.minorLabel.textColor = COLOR_TEXT_INFO;
         
         [self _refreshAboutCell];
     }

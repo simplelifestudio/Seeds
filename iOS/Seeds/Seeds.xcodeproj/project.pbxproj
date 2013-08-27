@@ -240,6 +240,10 @@
 		C5B9450417BE4FE700625041 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5B9450017BE4FE700625041 /* Icon@2x.png */; };
 		C5BB1ED817A8DD1C00D0CA4E /* CBUncaughtExceptionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BB1ED717A8DD1C00D0CA4E /* CBUncaughtExceptionHandler.m */; };
 		C5BB1EDC17A8F82800D0CA4E /* CrashReportModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BB1EDB17A8F82800D0CA4E /* CrashReportModule.m */; };
+		C5BE96B017CCB9E70033C9FC /* UIColor+CBColors.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BE96AF17CCB9E70033C9FC /* UIColor+CBColors.m */; };
+		C5BE96B117CCB9E70033C9FC /* UIColor+CBColors.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BE96AF17CCB9E70033C9FC /* UIColor+CBColors.m */; };
+		C5BE96B517CCE74F0033C9FC /* FUISwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BE96B417CCE74F0033C9FC /* FUISwitch.m */; };
+		C5BE96B617CCE74F0033C9FC /* FUISwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = C5BE96B417CCE74F0033C9FC /* FUISwitch.m */; };
 		C5C0CE94176D0F5900FA52C4 /* SeedDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C0CE93176D0F5900FA52C4 /* SeedDetailHeaderView.m */; };
 		C5C0CE96176D103300FA52C4 /* SeedDetailHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */; };
 		C5D02F4C17C882DB00CAFFB3 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D02F4B17C882DB00CAFFB3 /* SSKeychain.m */; };
@@ -255,8 +259,6 @@
 		C5D0302517CB55A100CAFFB3 /* FUIPopoverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D0300117CB55A100CAFFB3 /* FUIPopoverBackgroundView.m */; };
 		C5D0302617CB55A100CAFFB3 /* FUISegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D0300317CB55A100CAFFB3 /* FUISegmentedControl.m */; };
 		C5D0302717CB55A100CAFFB3 /* FUISegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D0300317CB55A100CAFFB3 /* FUISegmentedControl.m */; };
-		C5D0302817CB55A100CAFFB3 /* FUISwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D0300517CB55A100CAFFB3 /* FUISwitch.m */; };
-		C5D0302917CB55A100CAFFB3 /* FUISwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D0300517CB55A100CAFFB3 /* FUISwitch.m */; };
 		C5D0302A17CB55A100CAFFB3 /* UIBarButtonItem+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D0300717CB55A100CAFFB3 /* UIBarButtonItem+FlatUI.m */; };
 		C5D0302B17CB55A100CAFFB3 /* UIBarButtonItem+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D0300717CB55A100CAFFB3 /* UIBarButtonItem+FlatUI.m */; };
 		C5D0302C17CB55A100CAFFB3 /* UIColor+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D0300917CB55A100CAFFB3 /* UIColor+FlatUI.m */; };
@@ -682,6 +684,10 @@
 		C5BB1ED717A8DD1C00D0CA4E /* CBUncaughtExceptionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBUncaughtExceptionHandler.m; sourceTree = "<group>"; };
 		C5BB1EDA17A8F82800D0CA4E /* CrashReportModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrashReportModule.h; sourceTree = "<group>"; };
 		C5BB1EDB17A8F82800D0CA4E /* CrashReportModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrashReportModule.m; sourceTree = "<group>"; };
+		C5BE96AE17CCB9E70033C9FC /* UIColor+CBColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CBColors.h"; sourceTree = "<group>"; };
+		C5BE96AF17CCB9E70033C9FC /* UIColor+CBColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CBColors.m"; sourceTree = "<group>"; };
+		C5BE96B317CCE74F0033C9FC /* FUISwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUISwitch.h; sourceTree = "<group>"; };
+		C5BE96B417CCE74F0033C9FC /* FUISwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUISwitch.m; sourceTree = "<group>"; };
 		C5C0CE92176D0F5900FA52C4 /* SeedDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeedDetailHeaderView.h; sourceTree = "<group>"; };
 		C5C0CE93176D0F5900FA52C4 /* SeedDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeedDetailHeaderView.m; sourceTree = "<group>"; };
 		C5C0CE95176D103300FA52C4 /* SeedDetailHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeedDetailHeaderView.xib; sourceTree = "<group>"; };
@@ -698,8 +704,6 @@
 		C5D0300117CB55A100CAFFB3 /* FUIPopoverBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUIPopoverBackgroundView.m; sourceTree = "<group>"; };
 		C5D0300217CB55A100CAFFB3 /* FUISegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUISegmentedControl.h; sourceTree = "<group>"; };
 		C5D0300317CB55A100CAFFB3 /* FUISegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUISegmentedControl.m; sourceTree = "<group>"; };
-		C5D0300417CB55A100CAFFB3 /* FUISwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FUISwitch.h; sourceTree = "<group>"; };
-		C5D0300517CB55A100CAFFB3 /* FUISwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FUISwitch.m; sourceTree = "<group>"; };
 		C5D0300617CB55A100CAFFB3 /* UIBarButtonItem+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+FlatUI.h"; sourceTree = "<group>"; };
 		C5D0300717CB55A100CAFFB3 /* UIBarButtonItem+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+FlatUI.m"; sourceTree = "<group>"; };
 		C5D0300817CB55A100CAFFB3 /* UIColor+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+FlatUI.h"; sourceTree = "<group>"; };
@@ -1118,6 +1122,8 @@
 				C52BB4761788003900BD40E7 /* CBNotificationListenable.h */,
 				C527949217BB785600D10782 /* CBSecurityUtils.h */,
 				C527949317BB785600D10782 /* CBSecurityUtils.m */,
+				C5BE96AE17CCB9E70033C9FC /* UIColor+CBColors.h */,
+				C5BE96AF17CCB9E70033C9FC /* UIColor+CBColors.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -1617,14 +1623,14 @@
 				C5D02FFB17CB55A100CAFFB3 /* FUIAlertView.m */,
 				C5D02FFC17CB55A100CAFFB3 /* FUIButton.h */,
 				C5D02FFD17CB55A100CAFFB3 /* FUIButton.m */,
+				C5BE96B317CCE74F0033C9FC /* FUISwitch.h */,
+				C5BE96B417CCE74F0033C9FC /* FUISwitch.m */,
 				C5D02FFE17CB55A100CAFFB3 /* FUICellBackgroundView.h */,
 				C5D02FFF17CB55A100CAFFB3 /* FUICellBackgroundView.m */,
 				C5D0300017CB55A100CAFFB3 /* FUIPopoverBackgroundView.h */,
 				C5D0300117CB55A100CAFFB3 /* FUIPopoverBackgroundView.m */,
 				C5D0300217CB55A100CAFFB3 /* FUISegmentedControl.h */,
 				C5D0300317CB55A100CAFFB3 /* FUISegmentedControl.m */,
-				C5D0300417CB55A100CAFFB3 /* FUISwitch.h */,
-				C5D0300517CB55A100CAFFB3 /* FUISwitch.m */,
 				C5D0300617CB55A100CAFFB3 /* UIBarButtonItem+FlatUI.h */,
 				C5D0300717CB55A100CAFFB3 /* UIBarButtonItem+FlatUI.m */,
 				C5D0300817CB55A100CAFFB3 /* UIColor+FlatUI.h */,
@@ -1894,7 +1900,6 @@
 				C5D0302317CB55A100CAFFB3 /* FUICellBackgroundView.m in Sources */,
 				C5D0302517CB55A100CAFFB3 /* FUIPopoverBackgroundView.m in Sources */,
 				C5D0302717CB55A100CAFFB3 /* FUISegmentedControl.m in Sources */,
-				C5D0302917CB55A100CAFFB3 /* FUISwitch.m in Sources */,
 				C5D0302B17CB55A100CAFFB3 /* UIBarButtonItem+FlatUI.m in Sources */,
 				C5D0302D17CB55A100CAFFB3 /* UIColor+FlatUI.m in Sources */,
 				C5D0302F17CB55A100CAFFB3 /* UIFont+FlatUI.m in Sources */,
@@ -1907,6 +1912,8 @@
 				C5D0303D17CB55A100CAFFB3 /* UITabBar+FlatUI.m in Sources */,
 				C5D0303F17CB55A100CAFFB3 /* UITableViewCell+FlatUI.m in Sources */,
 				C5D0304117CB55A100CAFFB3 /* UIToolbar+FlatUI.m in Sources */,
+				C5BE96B117CCB9E70033C9FC /* UIColor+CBColors.m in Sources */,
+				C5BE96B617CCE74F0033C9FC /* FUISwitch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2066,7 +2073,6 @@
 				C5D0302217CB55A100CAFFB3 /* FUICellBackgroundView.m in Sources */,
 				C5D0302417CB55A100CAFFB3 /* FUIPopoverBackgroundView.m in Sources */,
 				C5D0302617CB55A100CAFFB3 /* FUISegmentedControl.m in Sources */,
-				C5D0302817CB55A100CAFFB3 /* FUISwitch.m in Sources */,
 				C5D0302A17CB55A100CAFFB3 /* UIBarButtonItem+FlatUI.m in Sources */,
 				C5D0302C17CB55A100CAFFB3 /* UIColor+FlatUI.m in Sources */,
 				C5D0302E17CB55A100CAFFB3 /* UIFont+FlatUI.m in Sources */,
@@ -2079,6 +2085,8 @@
 				C5D0303C17CB55A100CAFFB3 /* UITabBar+FlatUI.m in Sources */,
 				C5D0303E17CB55A100CAFFB3 /* UITableViewCell+FlatUI.m in Sources */,
 				C5D0304017CB55A100CAFFB3 /* UIToolbar+FlatUI.m in Sources */,
+				C5BE96B017CCB9E70033C9FC /* UIColor+CBColors.m in Sources */,
+				C5BE96B517CCE74F0033C9FC /* FUISwitch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2216,6 +2224,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -2244,6 +2253,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = "";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;

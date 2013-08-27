@@ -12,6 +12,8 @@
 
 @property (nonatomic, weak) IBOutlet UILabel *progressLabel;
 @property (nonatomic, weak) IBOutlet UIProgressView *progressView;
+@property (weak, nonatomic) IBOutlet UILabel *appTitle;
+@property (weak, nonatomic) IBOutlet UILabel *appSlogan;
 
 -(void) loadAnyNecessaryStuff;
 -(void) startFadingSplashScreen;

@@ -152,6 +152,8 @@ if (_cancelTransmission)\
     [self.navigationItem setHidesBackButton:YES];
     
     [self _registerNotifiations];
+    
+    _consoleView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
 }
 
 - (void) _registerNotifiations

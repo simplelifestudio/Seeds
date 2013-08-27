@@ -18,14 +18,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
-        
+        [self _formatFlatUI];
     }
     return self;
-}
-
-- (void) awakeFromNib
-{
-    [super awakeFromNib];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -33,7 +28,19 @@
     [super setSelected:selected animated:animated];
 }
 
+- (void) awakeFromNib
+{
+    [self _formatFlatUI];
+    
+    [super awakeFromNib];
+}
+
 #pragma mark - Private Methods
 
+-(void) _formatFlatUI
+{
+//    [GUIStyle formatFlatUILabel:_minorLabel];
+//    _minorLabel.backgroundColor = FLATUI_COLOR_BUTTON;
+}
 
 @end

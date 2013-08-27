@@ -357,6 +357,8 @@
     _refreshHeaderView.delegate = self;
     [self.collectionView addSubview:_refreshHeaderView];
     
+    _refreshHeaderView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
+    
 	[_refreshHeaderView refreshLastUpdatedDate];
 }
 
@@ -379,6 +381,9 @@
     [self _setupBarButtonItems];
     
     _headerView = [CBUIUtils componentFromNib:VIEW_ID_SEEDDETAILHEADERVIEW owner:self options:nil];
+    
+    _headerView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
+    self.collectionView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
     
     _pagePictureList = [NSMutableArray array];
     

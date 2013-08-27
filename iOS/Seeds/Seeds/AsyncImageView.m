@@ -69,7 +69,7 @@
     CGFloat y = halfHeight - radius / 2;
     NSInteger lineWidth = radius / 8;
     
-    _circularProgressView = [[CircularProgressView alloc] initWithFrame:CGRectMake(x, y, radius, radius) backColor:COLOR_CIRCULAR_PROGRESS_BACKGROUND progressColor:COLOR_CIRCULAR_PROGRESS lineWidth:lineWidth];
+    _circularProgressView = [[CircularProgressView alloc] initWithFrame:CGRectMake(x, y, radius, radius) backColor:FLATUI_COLOR_PROGRESS_TRACK progressColor:FLATUI_COLOR_PROGRESS lineWidth:lineWidth];
     
     _circularProgressDelegate = self;
     

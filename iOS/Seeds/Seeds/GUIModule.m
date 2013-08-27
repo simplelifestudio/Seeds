@@ -72,6 +72,16 @@ SINGLETON(GUIModule)
 #warning Forbid auto sleep
     [UIApplication sharedApplication].idleTimerDisabled = YES;
     
+    [UIBarButtonItem configureFlatButtonsWithColor:FLATUI_COLOR_BARBUTTONITEM
+                                  highlightedColor:FLATUI_COLOR_BARBUTTONITEM_HIGHLIGHTED
+                                      cornerRadius:FLATUI_CORNER_RADIUS
+                                   whenContainedIn:[UINavigationBar class], nil];
+    
+    [UIBarButtonItem configureFlatButtonsWithColor:FLATUI_COLOR_BARBUTTONITEM
+                                  highlightedColor:FLATUI_COLOR_BARBUTTONITEM_HIGHLIGHTED
+                                      cornerRadius:FLATUI_CORNER_RADIUS
+                                   whenContainedIn:[UIToolbar class], nil];
+    
     MODULE_DELAY    
 }
 

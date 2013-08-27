@@ -12,8 +12,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 
-@property (weak, nonatomic) IBOutlet UIButton *changeButton;
-@property (weak, nonatomic) IBOutlet UIButton *clipboardButton;
+@property (weak, nonatomic) IBOutlet FUIButton *changeButton;
+@property (weak, nonatomic) IBOutlet FUIButton *clipboardButton;
 
 +(NSString*) composeFullCartLink:(NSString*) cartId;
 +(NSString*) decomposeCartIdFromFullCartLink:(NSString*) fullCartLink;

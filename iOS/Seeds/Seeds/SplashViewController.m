@@ -52,6 +52,8 @@
     [self setProgressLabel:nil];
     [self setProgressView:nil];
     
+    [self setAppTitle:nil];
+    [self setAppSlogan:nil];
     [super viewDidUnload];
 }
 
@@ -287,6 +289,18 @@
     
     _loadStuffThread = [[NSThread alloc] initWithTarget:self selector:@selector(loadAnyNecessaryStuff)  object:nil];
     [_loadStuffThread start];
+    
+    [self _formatFlatUI];
+}
+
+-(void) _formatFlatUI
+{
+    [GUIStyle formatFlatUIProgressView:self.progressView];
+    
+    self.view.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
+    
+    _appTitle.textColor = FLATUI_COLOR_BUTTON;
+    _appSlogan.textColor = FLATUI_COLOR_BUTTON;
 }
 
 - (void) _enterInApp

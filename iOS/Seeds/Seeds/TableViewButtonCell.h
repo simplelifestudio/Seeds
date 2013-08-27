@@ -11,6 +11,6 @@
 @interface TableViewButtonCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *label;
-@property (weak, nonatomic) IBOutlet UIButton *button;
+@property (weak, nonatomic) IBOutlet FUIButton *button;
 
 @end

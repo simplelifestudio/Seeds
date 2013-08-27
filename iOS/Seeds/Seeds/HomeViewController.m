@@ -68,7 +68,7 @@
 {
     [super viewDidLoad];
     
-    [self _formatButtons];
+    [self _formatFlatUI];
     
     _userDefaults = [UserDefaultsModule sharedInstance];
     
@@ -142,6 +142,7 @@
     [self setHelpButton:nil];
     [self setStatuLabel:nil];
     [self setVersionLabel:nil];
+    [self setSyncButton:nil];
     [super viewDidUnload];
 }
 
@@ -482,15 +483,35 @@
     _HUD.detailsLabelText = minorStatus;
 }
 
--(void) _formatButtons
+-(void) _formatFlatUI
 {
-    _todayButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
-    _yesterdayButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
-    _theDayBeforeButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
-    _downloadsButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
-    _transButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
-    _configButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
-    _helpButton.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
+    self.view.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;    
+    
+    [GUIStyle formatFlatUIButton:_syncButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    
+    [GUIStyle formatFlatUIButton:_todayButton buttonColor:FLATUI_COLOR_LABEL shadowColor:FLATUI_COLOR_LABEL_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_yesterdayButton buttonColor:FLATUI_COLOR_LABEL shadowColor:FLATUI_COLOR_LABEL_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_theDayBeforeButton buttonColor:FLATUI_COLOR_LABEL shadowColor:FLATUI_COLOR_LABEL_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    
+    [GUIStyle formatFlatUIButton:_downloadsButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_transButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_configButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_helpButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    
+    [GUIStyle formatFlatUILabel:_todayLabel];
+    [GUIStyle formatFlatUILabel:_yesterdayLabel];
+    [GUIStyle formatFlatUILabel:_theDayBeforeLabel];
+    
+    [GUIStyle formatFlatUILabel:_todaySyncStatusLabel];
+    [GUIStyle formatFlatUILabel:_yesterdaySyncStatusLabel];
+    [GUIStyle formatFlatUILabel:_theDayBeforeSyncStatusLabel];
+    
+    [GUIStyle formatFlatUINavigationBar:self.navigationController.navigationBar];
+    
+    [GUIStyle formatFlatUIBarButtonItem:_stopBarItem];
+    [GUIStyle formatFlatUIBarButtonItem:_backBarItem];
+    
+    _statuLabel.textColor = FLATUI_COLOR_BUTTON;
 }
 
 - (void)_syncSeedsInfoTask

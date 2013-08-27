@@ -21,8 +21,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *warningTextView;
 @property (weak, nonatomic) IBOutlet UILabel *countdownLabel;
-@property (weak, nonatomic) IBOutlet UIButton *agreeButton;
-@property (weak, nonatomic) IBOutlet UIButton *declineButton;
+@property (weak, nonatomic) IBOutlet FUIButton *agreeButton;
+@property (weak, nonatomic) IBOutlet FUIButton *declineButton;
 @property (weak, nonatomic) IBOutlet UINavigationItem *warningNavigationItem;
 
 @property (weak, nonatomic) id<WarningDelegate> warningDelegate;

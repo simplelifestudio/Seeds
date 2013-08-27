@@ -43,7 +43,7 @@
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUITextView" id="1061927158">
 								<reference key="NSNextResponder" ref="223885616"/>
-								<int key="NSvFlags">1315</int>
+								<int key="NSvFlags">1318</int>
 								<string key="NSFrame">{{118, -6}, {200, 38}}</string>
 								<reference key="NSSuperview" ref="223885616"/>
 								<reference key="NSWindow"/>

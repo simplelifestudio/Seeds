@@ -18,6 +18,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
+        [self _formatFlatUI];
     }
     return self;
 }
@@ -25,6 +26,18 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
+}
+
+- (void)awakeFromNib
+{
+    [self _formatFlatUI];
+    
+    [super awakeFromNib];
+}
+
+- (void)_formatFlatUI
+{
+    [GUIStyle formatFlatUIButton:_button buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:3 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
 }
 
 @end

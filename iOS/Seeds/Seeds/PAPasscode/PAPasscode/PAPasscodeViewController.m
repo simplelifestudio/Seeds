@@ -78,14 +78,17 @@
 
     UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, view.bounds.size.width, NAVBAR_HEIGHT)];
     navigationBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    _titleItem = [[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Seeds", nil)];
+    _titleItem = [[UINavigationItem alloc] initWithTitle:NSLocalizedString(@"Privacy", nil)];
     [navigationBar setItems:@[_titleItem]];
     [view addSubview:navigationBar];
     
     contentView = [[UIView alloc] initWithFrame:CGRectMake(0, NAVBAR_HEIGHT, view.bounds.size.width, view.bounds.size.height-NAVBAR_HEIGHT)];
     contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    
     // Updated by Seeds
-    contentView.backgroundColor = COLOR_BACKGROUND;//[UIColor colorWithWhite:0.9 alpha:1.0];
+    contentView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;//[UIColor colorWithWhite:0.9 alpha:1.0];
+    [GUIStyle formatFlatUINavigationBar:navigationBar];
+    
     [view addSubview:contentView];
     
     CGFloat panelWidth = DIGIT_WIDTH*4+DIGIT_SPACING*3;

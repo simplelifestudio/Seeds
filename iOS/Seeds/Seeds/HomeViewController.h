@@ -11,6 +11,8 @@
 #import "MBProgressHUD.h"
 #import "CBUIUtils.h"
 
+#import "FlatUIKit.h"
+
 @interface HomeViewController : UIViewController <MBProgressHUDDelegate, CBLongTaskStatusHUDDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *todayLabel;
@@ -21,19 +23,19 @@
 @property (weak, nonatomic) IBOutlet UILabel *yesterdaySyncStatusLabel;
 @property (weak, nonatomic) IBOutlet UILabel *theDayBeforeSyncStatusLabel;
 
-@property (weak, nonatomic) IBOutlet UIButton *todayButton;
-@property (weak, nonatomic) IBOutlet UIButton *yesterdayButton;
-@property (weak, nonatomic) IBOutlet UIButton *theDayBeforeButton;
+@property (weak, nonatomic) IBOutlet FUIButton *todayButton;
+@property (weak, nonatomic) IBOutlet FUIButton *yesterdayButton;
+@property (weak, nonatomic) IBOutlet FUIButton *theDayBeforeButton;
 
 - (IBAction)onClickTodayButton:(id)sender;
 - (IBAction)onClickYesterdayButton:(id)sender;
 - (IBAction)onClickTheDayBeforeButton:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UIButton *syncButton;
-@property (weak, nonatomic) IBOutlet UIButton *transButton;
-@property (weak, nonatomic) IBOutlet UIButton *downloadsButton;
-@property (weak, nonatomic) IBOutlet UIButton *configButton;
-@property (weak, nonatomic) IBOutlet UIButton *helpButton;
+@property (weak, nonatomic) IBOutlet FUIButton *syncButton;
+@property (weak, nonatomic) IBOutlet FUIButton *transButton;
+@property (weak, nonatomic) IBOutlet FUIButton *downloadsButton;
+@property (weak, nonatomic) IBOutlet FUIButton *configButton;
+@property (weak, nonatomic) IBOutlet FUIButton *helpButton;
 @property (weak, nonatomic) IBOutlet UILabel *statuLabel;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 

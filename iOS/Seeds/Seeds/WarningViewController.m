@@ -138,6 +138,18 @@
     [_navigationBar setItems:@[_warningNavigationItem]];
     
     [self.view addSubview:_navigationBar];
+    
+    [self _formatFlatUI];
+}
+
+- (void) _formatFlatUI
+{
+    _warningTextView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
+    self.view.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
+    [GUIStyle formatFlatUINavigationBar:_navigationBar];
+    
+    [GUIStyle formatFlatUIButton:_agreeButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:3 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_declineButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:3 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
 }
 
 - (void) _clockStart

@@ -131,6 +131,7 @@
         {
             cell = [CBUIUtils componentFromNib:CELL_ID_SEEDLISTTABLECELL owner:self options:nil];
         }
+        [cell configureFlatCellWithColor:FLATUI_COLOR_TABLECELL selectedColor:FLATUI_COLOR_TABLECELL_SELECTED];
         
         Seed* seed = [_pageSeedList objectAtIndex:indexPath.row];
         SeedPicture* picture = [_pageFirstSeedPictureList objectAtIndex:indexPath.row];
@@ -151,6 +152,7 @@
         {
             cell = [CBUIUtils componentFromNib:CELL_ID_SEEDLISTTABLESMALLERCELL owner:self options:nil];
         }
+        [cell configureFlatCellWithColor:FLATUI_COLOR_TABLECELL selectedColor:FLATUI_COLOR_TABLECELL_SELECTED];        
         
         Seed* seed = [_pageSeedList objectAtIndex:indexPath.row];
         SeedPicture* picture = [_pageFirstSeedPictureList objectAtIndex:indexPath.row];
@@ -229,6 +231,8 @@
     [self _setupTableHeaderView];
     [self _setupTableView];
     [self _setupPagingToolbar];
+    
+    [self _formatFlatUI];
 }
 
 - (void) _setupTableHeaderView
@@ -338,7 +342,8 @@
 
 - (void) _initTableView
 {
-    
+    self.tableView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
+    self.tableView.separatorColor = FLATUI_COLOR_TABLE_SEPERATOR;
 }
 
 -(void) _constructTableDataByPage
@@ -502,6 +507,11 @@
     [animation setType:PAGE_ANIMATION_TYPE];
     [animation setSubtype: animationSubType];
     [self.tableView.layer addAnimation:animation forKey:PAGE_ANIMATION_KEY];
+}
+
+- (void) _formatFlatUI
+{
+    [GUIStyle formatFlatUIToolbar:_pagingToolbar];
 }
 
 #pragma mark - CBNotificationListenable

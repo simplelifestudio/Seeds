@@ -10,7 +10,7 @@
 
 @interface TableViewSwitcherCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UISwitch *switcher;
+@property (nonatomic, weak) IBOutlet FUISwitch *switcher;
 @property (nonatomic, weak) IBOutlet UILabel *switcherLabel;
 
 @end

@@ -213,7 +213,7 @@
     [_userDefaults setCartId:cartId];
     
     [_textView setEditable:NO];
-    _textView.backgroundColor = COLOR_BACKGROUND;
+    _textView.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
     _isSaveNeed = NO;
     
     MBProgressHUD* HUD = [_guiModule.HUDAgent sharedHUD];
@@ -229,7 +229,7 @@
     _textView.text = cartId;
     
     [_textView setEditable:NO];
-    _textView.backgroundColor = COLOR_BACKGROUND;
+    _textView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
     _isSaveNeed = NO;
 }
 
@@ -237,7 +237,6 @@
 {
     [_textView setEditable:YES];
     [_textView becomeFirstResponder];
-    _textView.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
 }
 
 -(void) _setupViewController
@@ -255,9 +254,20 @@
     _textView.returnKeyType = UIReturnKeyDone;
     _textView.textColor = COLOR_TEXT_INFO;
     
+    [self _formatFlatUI];
+    
     [self _setupBarButtonItems];
     
     [self _registerGestureRecognizers];
+}
+
+-(void) _formatFlatUI
+{
+    _textView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
+    self.view.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
+    
+    [GUIStyle formatFlatUIButton:_clipboardButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:3 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_changeButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:3 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
 }
 
 -(void) _refereshTextView

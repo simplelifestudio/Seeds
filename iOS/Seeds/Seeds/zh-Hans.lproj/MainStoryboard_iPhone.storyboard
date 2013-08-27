@@ -49,6 +49,8 @@
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="appSlogan" destination="4gj-mh-gZP" id="JSe-b6-x5q"/>
+                        <outlet property="appTitle" destination="CAr-4F-O2I" id="URU-hz-NDJ"/>
                         <outlet property="progressLabel" destination="usa-WX-uJE" id="O5a-L3-bep"/>
                         <outlet property="progressView" destination="Wmi-Wq-KA2" id="wTW-0G-YNk"/>
                         <segue destination="AaN-p7-sLL" kind="modal" identifier="splash2navigation" modalTransitionStyle="crossDissolve" animates="NO" id="WaV-gg-BTe"/>
@@ -62,10 +64,10 @@
         <scene sceneID="piX-Tb-65d">
             <objects>
                 <viewController storyboardIdentifier="sbid_configviewcontroller" id="ubv-3y-Moj" customClass="ConfigViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="32" sectionHeaderHeight="22" sectionFooterHeight="22" id="5wz-wb-nxj" userLabel="tableView">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="36" sectionHeaderHeight="10" sectionFooterHeight="10" id="5wz-wb-nxj" userLabel="tableView">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <inset key="contentInset" minX="0.0" minY="5" maxX="0.0" maxY="5"/>
                     </tableView>
                     <navigationItem key="navigationItem" title="配置" id="m7V-ZD-z6m"/>
@@ -90,7 +92,7 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="IWt-Hg-2Wt" userLabel="declineButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="IWt-Hg-2Wt" userLabel="declineButton" customClass="FUIButton">
                                 <rect key="frame" x="185" y="441" width="55" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -105,7 +107,7 @@
                                     <action selector="onClickDeclineButton:" destination="YP2-em-uxU" eventType="touchUpInside" id="wTA-XG-aL9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0n6-qq-ZYe" userLabel="agreeButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0n6-qq-ZYe" userLabel="agreeButton" customClass="FUIButton">
                                 <rect key="frame" x="80" y="441" width="55" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -292,7 +294,7 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="U5e-0D-ayj" userLabel="clipboardButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="U5e-0D-ayj" userLabel="clipboardButton" customClass="FUIButton">
                                 <rect key="frame" x="80" y="441" width="55" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -307,7 +309,7 @@
                                     <action selector="onClickClipboardButton:" destination="MoR-Xb-206" eventType="touchUpInside" id="o5A-Yn-MdS"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8Vd-f2-u9b" userLabel="changeButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8Vd-f2-u9b" userLabel="changeButton" customClass="FUIButton">
                                 <rect key="frame" x="185" y="441" width="55" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -358,7 +360,7 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oV6-If-2kQ" userLabel="todayButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="oV6-If-2kQ" userLabel="todayButton" customClass="FUIButton">
                                 <rect key="frame" x="10" y="31" width="300" height="121"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
@@ -373,7 +375,7 @@
                                     <action selector="onClickTodayButton:" destination="Zgz-l6-5CC" eventType="touchUpInside" id="eUW-bf-YkK"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="vx8-Kz-7QK" userLabel="yesterdayButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="vx8-Kz-7QK" userLabel="yesterdayButton" customClass="FUIButton">
                                 <rect key="frame" x="10" y="160" width="300" height="121"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
@@ -388,7 +390,7 @@
                                     <action selector="onClickYesterdayButton:" destination="Zgz-l6-5CC" eventType="touchUpInside" id="cUq-MI-Dh9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="XCs-Ez-vjP" userLabel="theDayBeforeButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="XCs-Ez-vjP" userLabel="theDayBeforeButton" customClass="FUIButton">
                                 <rect key="frame" x="10" y="290" width="300" height="121"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
@@ -403,7 +405,7 @@
                                     <action selector="onClickTheDayBeforeButton:" destination="Zgz-l6-5CC" eventType="touchUpInside" id="rBL-sd-vAj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="b1w-gg-9xD" userLabel="syncButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="b1w-gg-9xD" userLabel="syncButton" customClass="FUIButton">
                                 <rect key="frame" x="110" y="440" width="100" height="80"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
@@ -418,7 +420,7 @@
                                     <action selector="onClickSyncButton:" destination="Zgz-l6-5CC" eventType="touchUpInside" id="lRd-tH-eyq"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="aYR-KQ-Lhr" userLabel="aboutButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="aYR-KQ-Lhr" userLabel="aboutButton" customClass="FUIButton">
                                 <rect key="frame" x="240" y="485" width="70" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -433,7 +435,7 @@
                                     <segue destination="7hw-IL-nAs" kind="modal" identifier="home2help" modalTransitionStyle="coverVertical" id="7hA-hs-KQE"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KwN-3D-h2d" userLabel="downloadsButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="KwN-3D-h2d" userLabel="downloadsButton" customClass="FUIButton">
                                 <rect key="frame" x="10" y="423" width="70" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -448,7 +450,7 @@
                                     <action selector="onClickDownloadButton:" destination="Zgz-l6-5CC" eventType="touchUpInside" id="Okx-Cy-OZG"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JvW-9r-1BS" userLabel="transmitButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JvW-9r-1BS" userLabel="transmitButton" customClass="FUIButton">
                                 <rect key="frame" x="10" y="485" width="70" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -463,7 +465,7 @@
                                     <segue destination="ypD-in-EEl" kind="push" identifier="home2transmit" id="DsB-e3-6ZR"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="AVa-EW-U7W" userLabel="configButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="AVa-EW-U7W" userLabel="configButton" customClass="FUIButton">
                                 <rect key="frame" x="240" y="423" width="70" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" size="button"/>
@@ -523,8 +525,8 @@
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="运行模式" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6GL-dg-MPC" userLabel="statusLabel">
                                 <rect key="frame" x="160" y="6" width="150" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="版本: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ggv-Oz-Kq3" userLabel="statusLabel">
@@ -921,6 +923,186 @@
             <point key="canvasLocation" x="-1153" y="1524"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="AsyncImageView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AsyncImageView.h"/>
+        </class>
+        <class className="CartIdViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CartIdViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="onClickChangeButton:"/>
+                <relationship kind="action" name="onClickClipboardButton:"/>
+                <relationship kind="outlet" name="changeButton" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="clipboardButton" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="ConfigViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ConfigViewController.h"/>
+        </class>
+        <class className="DownloadSeedListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DownloadSeedListViewController.h"/>
+        </class>
+        <class className="FUIButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FUIButton.h"/>
+        </class>
+        <class className="FavoriteSeedListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FavoriteSeedListViewController.h"/>
+        </class>
+        <class className="HelpViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HelpViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="onClickExitButton:"/>
+                <relationship kind="action" name="pageTurn:" candidateClass="UIPageControl"/>
+                <relationship kind="outlet" name="exitButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="helpView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="pageControl" candidateClass="UIPageControl"/>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="HomeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/HomeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="onClickDownloadButton:"/>
+                <relationship kind="action" name="onClickSyncButton:"/>
+                <relationship kind="action" name="onClickTheDayBeforeButton:"/>
+                <relationship kind="action" name="onClickTodayButton:"/>
+                <relationship kind="action" name="onClickYesterdayButton:"/>
+                <relationship kind="outlet" name="configButton" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="downloadsButton" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="helpButton" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="statuLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="syncButton" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="theDayBeforeButton" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="theDayBeforeLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="theDayBeforeSyncStatusLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="todayButton" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="todayLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="todaySyncStatusLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="transButton" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="versionLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="yesterdayButton" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="yesterdayLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="yesterdaySyncStatusLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="NavigationViewController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NavigationViewController.h"/>
+        </class>
+        <class className="SeedDetailHeaderView" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SeedDetailHeaderView.h"/>
+            <relationships>
+                <relationship kind="outlet" name="downloadLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="favoriteLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="formatLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mosaicLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nameLabel" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="pictureCountLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="sizeLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="SeedDetailViewController" superclassName="UICollectionViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SeedDetailViewController.h"/>
+        </class>
+        <class className="SeedListTableCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SeedListTableCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="asyncImageView" candidateClass="AsyncImageView"/>
+                <relationship kind="outlet" name="downloadLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="favoriteLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="formatLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mosaicLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nameLabel" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="pictureCountLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="sizeLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="SeedListTableSmallerCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SeedListTableSmallerCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="asyncImageView" candidateClass="AsyncImageView"/>
+                <relationship kind="outlet" name="downloadLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="favoriteLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="formatLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="mosaicLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nameLabel" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="pictureCountLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="sizeLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="SeedListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SeedListViewController.h"/>
+        </class>
+        <class className="SeedPictureCollectionCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SeedPictureCollectionCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="asyncImageView" candidateClass="AsyncImageView"/>
+                <relationship kind="outlet" name="label" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="SeedPictureScrollView" superclassName="UIScrollView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SeedPictureScrollView.h"/>
+        </class>
+        <class className="SeedPictureViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SeedPictureViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="SeedPictureScrollView"/>
+            </relationships>
+        </class>
+        <class className="SplashViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SplashViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="appSlogan" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="appTitle" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="progressLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="progressView" candidateClass="UIProgressView"/>
+            </relationships>
+        </class>
+        <class className="TCChatCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TCChatCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="textView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="TCViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TCViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="reconnect:"/>
+                <relationship kind="outlet" name="inputView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="TransmitViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TransmitViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="consoleView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewController.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="WarningViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/WarningViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="onClickAgreeButton:"/>
+                <relationship kind="action" name="onClickDeclineButton:"/>
+                <relationship kind="outlet" name="agreeButton" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="countdownLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="declineButton" candidateClass="FUIButton"/>
+                <relationship kind="outlet" name="warningNavigationItem" candidateClass="UINavigationItem"/>
+                <relationship kind="outlet" name="warningTextView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
@@ -928,7 +1110,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="4bg-U6-ICF"/>
-        <segue reference="pki-Uv-CYs"/>
         <segue reference="jKm-Mf-P9D"/>
+        <segue reference="pki-Uv-CYs"/>
     </inferredMetricsTieBreakers>
 </document>
