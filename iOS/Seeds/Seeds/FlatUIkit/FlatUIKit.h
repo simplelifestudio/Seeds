@@ -35,3 +35,5 @@
 #import "UISlider+FlatUI.h"
 #import "UITabBar+FlatUI.h"
 #import "UITableViewCell+FlatUI.h"
+// Updated by Seeds
+#import "UIToolbar+FlatUI.h"
