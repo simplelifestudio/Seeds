@@ -1,0 +1,196 @@
+//
+//  UIColor+CBColors.m
+//  Seeds
+//
+//  Created by Patrick Deng on 13-8-27.
+//  Copyright (c) 2013年 SimpleLife Studio. All rights reserved.
+//
+
+#import "UIColor+CBColors.h"
+
+@implementation UIColor (CBColors)
+
+// Thanks to http://stackoverflow.com/questions/3805177/how-to-convert-hex-rgb-color-codes-to-uicolor
++(UIColor*) colorWithHexCode:(NSString *)hexString
+{
+    NSString *cleanString = [hexString stringByReplacingOccurrencesOfString:@"#" withString:@""];
+    if([cleanString length] == 3)
+    {
+        cleanString = [NSString stringWithFormat:@"%@%@%@%@%@%@",
+                       [cleanString substringWithRange:NSMakeRange(0, 1)],[cleanString substringWithRange:NSMakeRange(0, 1)],
+                       [cleanString substringWithRange:NSMakeRange(1, 1)],[cleanString substringWithRange:NSMakeRange(1, 1)],
+                       [cleanString substringWithRange:NSMakeRange(2, 1)],[cleanString substringWithRange:NSMakeRange(2, 1)]];
+    }
+    
+    if([cleanString length] == 6)
+    {
+        cleanString = [cleanString stringByAppendingString:@"ff"];
+    }
+    
+    unsigned int baseValue;
+    [[NSScanner scannerWithString:cleanString] scanHexInt:&baseValue];
+    
+    float red = ((baseValue >> 24) & 0xFF)/255.0f;
+    float green = ((baseValue >> 16) & 0xFF)/255.0f;
+    float blue = ((baseValue >> 8) & 0xFF)/255.0f;
+    float alpha = ((baseValue >> 0) & 0xFF)/255.0f;
+    
+    return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+}
+
++(UIColor*) Snow
+{
+    return [UIColor colorWithHexCode:@"FFFAFA"];
+}
+
++(UIColor*) GhostWhite
+{
+    return [UIColor colorWithHexCode:@"F8F8FF"];
+}
+
++(UIColor*) WhiteSmoke
+{
+    return [UIColor colorWithHexCode:@"F5F5F5"];
+}
+
++(UIColor*) Gainsboro
+{
+    return [UIColor colorWithHexCode:@"DCDCDC"];
+}
+
++(UIColor*) FloralWhite
+{
+    return [UIColor colorWithHexCode:@"FFFAF0"];
+}
+
++(UIColor*) OldLace
+{
+    return [UIColor colorWithHexCode:@"FDF5E6"];
+}
+
++(UIColor*) Line
+{
+    return [UIColor colorWithHexCode:@"FAF0E6"];
+}
+
++(UIColor*) AntiqueWhite
+{
+    return [UIColor colorWithHexCode:@"FAEBD7"];
+}
+
++(UIColor*) PapayaWhip
+{
+    return [UIColor colorWithHexCode:@"FFEFD5"];
+}
+
++(UIColor*) BlancedAlmond
+{
+    return [UIColor colorWithHexCode:@"FFEBCD"];
+}
+
++(UIColor*) Bisque
+{
+    return [UIColor colorWithHexCode:@"FFE4C4"];
+}
+
++(UIColor*) PeachPuff
+{
+    return [UIColor colorWithHexCode:@"FFDAB9"];
+}
+
++(UIColor*) NavajoWhite
+{
+    return [UIColor colorWithHexCode:@"FFDEAD"];
+}
+
++(UIColor*) Moccasin
+{
+    return [UIColor colorWithHexCode:@"FFE4B5"];
+}
+
++(UIColor*) Cornsilk
+{
+    return [UIColor colorWithHexCode:@"FFF8DC"];
+}
+
++(UIColor*) Ivory
+{
+    return [UIColor colorWithHexCode:@"FFFFF0"];
+}
+
++(UIColor*) LemonChiffon
+{
+    return [UIColor colorWithHexCode:@"FFFACD"];
+}
+
++(UIColor*) Seashell
+{
+    return [UIColor colorWithHexCode:@"FFF5EE"];
+}
+
++(UIColor*) Honeydew
+{
+    return [UIColor colorWithHexCode:@"F0FFF0"];
+}
+
++(UIColor*) MintCream
+{
+    return [UIColor colorWithHexCode:@"F5FFFA"];
+}
+
++(UIColor*) Azure
+{
+    return [UIColor colorWithHexCode:@"F0FFFF"];
+}
+
++(UIColor*) AliceBlue
+{
+    return [UIColor colorWithHexCode:@"F0F8FF"];
+}
+
++(UIColor*) Lavender
+{
+    return [UIColor colorWithHexCode:@"E6E6FA"];
+}
+
++(UIColor*) LavenderBlush
+{
+    return [UIColor colorWithHexCode:@"FFF0F5"];
+}
+
++(UIColor*) MistyRose
+{
+    return [UIColor colorWithHexCode:@"FFE4E1"];
+}
+
++(UIColor*) White
+{
+    return [UIColor colorWithHexCode:@"FFFFFF"];
+}
+
++(UIColor*) Black
+{
+    return [UIColor colorWithHexCode:@"000000"];
+}
+
++(UIColor*) DarkSlateGray
+{
+    return [UIColor colorWithHexCode:@"2F4F4F"];
+}
+
++(UIColor*) DimGrey
+{
+    return [UIColor colorWithHexCode:@"696969"];
+}
+
++(UIColor*) SlateGrey
+{
+    return [UIColor colorWithHexCode:@"708090"];
+}
+
++(UIColor*) LightSlateGray
+{
+    return [UIColor colorWithHexCode:@"778899"];
+}
+
+@end
