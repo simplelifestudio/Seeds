@@ -319,6 +319,8 @@
     [self _setupRefreshHeaderView];
     [self _setupCollectionView];
     [self _setupPagingToolbar];
+    
+    [self _formatFlatUI];
 }
 
 -(void) _scrollToTableViewTop
@@ -381,9 +383,6 @@
     [self _setupBarButtonItems];
     
     _headerView = [CBUIUtils componentFromNib:VIEW_ID_SEEDDETAILHEADERVIEW owner:self options:nil];
-    
-    _headerView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
-    self.collectionView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
     
     _pagePictureList = [NSMutableArray array];
     
@@ -660,6 +659,14 @@
     [animation setSubtype: animationSubType];
 
     [self.collectionView.layer addAnimation:animation forKey:PAGE_ANIMATION_KEY];
+}
+
+-(void) _formatFlatUI
+{
+    _headerView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
+    self.collectionView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
+    
+    [GUIStyle formatFlatUIToolbar:_pagingToolbar];
 }
 
 #pragma mark - CBNotificationListenable

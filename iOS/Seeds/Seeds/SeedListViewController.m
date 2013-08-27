@@ -342,8 +342,7 @@
 
 - (void) _initTableView
 {
-    self.tableView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
-    self.tableView.separatorColor = FLATUI_COLOR_TABLE_SEPERATOR;
+
 }
 
 -(void) _constructTableDataByPage
@@ -511,6 +510,9 @@
 
 - (void) _formatFlatUI
 {
+    self.tableView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
+    self.tableView.separatorColor = FLATUI_COLOR_TABLE_SEPERATOR;
+    
     [GUIStyle formatFlatUIToolbar:_pagingToolbar];
 }
 
