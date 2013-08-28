@@ -82,6 +82,8 @@ SINGLETON(GUIModule)
                                       cornerRadius:FLATUI_CORNER_RADIUS
                                    whenContainedIn:[UIToolbar class], nil];
     
+//    [[UIBarButtonItem appearance] setTitleColor:FLATUI_COLOR_BUTTON_TEXT forState:UIControlStateNormal];
+    
     MODULE_DELAY    
 }
 

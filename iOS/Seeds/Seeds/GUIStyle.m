@@ -19,31 +19,6 @@
 {
 }
 
-+(void) formatUIImageView:(UIImageView *)imageView
-{
-    if (nil != imageView)
-    {
-//        UIImageView* _imageView = imageView;
-        
-//        _imageView.contentMode = UIViewContentModeScaleAspectFit;
-//        _imageView.backgroundColor = COLOR_IMAGEVIEW_BACKGROUND;
-//        //添加边框
-//        CALayer * layer = [_imageView layer];
-//        layer.borderColor = [[UIColor whiteColor] CGColor];
-//        layer.borderWidth = 2.0f;
-//        //添加四个边阴影
-//        _imageView.layer.shadowColor = [UIColor blackColor].CGColor;
-//        _imageView.layer.shadowOffset = CGSizeMake(0, 0);
-//        _imageView.layer.shadowOpacity = 0.5;
-//        _imageView.layer.shadowRadius = 10.0;//给iamgeview添加阴影 < wbr > 和边框
-//        //添加两个边阴影
-//        _imageView.layer.shadowColor = [UIColor blackColor].CGColor;
-//        _imageView.layer.shadowOffset = CGSizeMake(4, 4);
-//        _imageView.layer.shadowOpacity = 0.5;
-//        _imageView.layer.shadowRadius = 2.0;
-    }
-}
-
 +(void) formatFlatUIButton:(FUIButton*) button buttonColor:(UIColor*) buttonColor shadowColor:(UIColor*) shadowColor shadowHeight:(CGFloat) shadowHeight cornerRadius:(CGFloat) cornerRadius titleColor:(UIColor*) titleColor highlightedTitleColor:(UIColor*) highlightedTitleColor
 {
     if (button)
@@ -59,11 +34,11 @@
     }
 }
 
-+(void) formatFlatUILabel:(UILabel*) label
++(void) formatFlatUILabel:(UILabel*) label textColor:(UIColor *)textColor
 {
     if (label)
     {
-        label.textColor = FLATUI_COLOR_BUTTON_TEXT;
+        label.textColor = textColor;
     }
 }
 
@@ -81,7 +56,7 @@
     {
         [navigationBar configureFlatNavigationBarWithColor:FLATUI_COLOR_NAVIGATIONBAR];
         navigationBar.titleTextAttributes = @{//UITextAttributeFont: [UIFont boldFlatFontOfSize:18],
-                                                                        UITextAttributeTextColor: [UIColor whiteColor]};
+                                                                        UITextAttributeTextColor: FLATUI_COLOR_BUTTON_TEXT};
     }
 }
 

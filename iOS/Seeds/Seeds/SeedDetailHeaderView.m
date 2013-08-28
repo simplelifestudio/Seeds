@@ -12,6 +12,11 @@
 
 @synthesize downloadLabel = _downloadLabel;
 @synthesize favoriteLabel = _favoriteLabel;
+@synthesize nameLabel = _nameLabel;
+@synthesize formatLabel = _formatLabel;
+@synthesize mosaicLabel = _mosaicLabel;
+@synthesize pictureCountLabel = _pictureCountLabel;
+@synthesize sizeLabel = _sizeLabel;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -70,7 +75,7 @@
         case SeedDownloaded:
         {
             [_downloadLabel setText:NSLocalizedString(@"Downloaded", nil)];
-            [_downloadLabel setTextColor:COLOR_TEXT_INFO];
+            [_downloadLabel setTextColor:COLOR_TEXT_LOG];
             [_downloadLabel setHidden:NO];
             break;
         }
@@ -112,7 +117,13 @@
 
 - (void) _setupView
 {
-    
+    _nameLabel.textColor = COLOR_TEXT_INFO;
+    [GUIStyle formatFlatUILabel:_sizeLabel textColor:COLOR_TEXT_INFO];
+    [GUIStyle formatFlatUILabel:_formatLabel textColor:COLOR_TEXT_INFO];
+    [GUIStyle formatFlatUILabel:_mosaicLabel textColor:COLOR_TEXT_INFO];
+    [GUIStyle formatFlatUILabel:_downloadLabel textColor:COLOR_TEXT_INFO];
+    [GUIStyle formatFlatUILabel:_favoriteLabel textColor:COLOR_TEXT_INFO];
+    [GUIStyle formatFlatUILabel:_pictureCountLabel textColor:COLOR_TEXT_INFO];
 }
 
 @end

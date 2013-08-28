@@ -39,8 +39,8 @@
 
 -(void) _formatFlatUI
 {
-//    [GUIStyle formatFlatUILabel:_minorLabel];
-//    _minorLabel.backgroundColor = FLATUI_COLOR_BUTTON;
+    [GUIStyle formatFlatUILabel:_majorLabel textColor:COLOR_TEXT_INFO];
+    [GUIStyle formatFlatUILabel:_minorLabel textColor:COLOR_TEXT_INFO];
 }
 
 @end

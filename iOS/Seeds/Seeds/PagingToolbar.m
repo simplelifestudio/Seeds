@@ -140,7 +140,7 @@
     
     _pageNumLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 20)];
     _pageNumLabel.font = [UIFont boldSystemFontOfSize:16];
-    _pageNumLabel.textColor = [UIColor whiteColor];
+    _pageNumLabel.textColor = FLATUI_COLOR_BUTTON_TEXT;
     _pageNumLabel.backgroundColor = [UIColor clearColor];
     _pageNumLabel.textAlignment = UITextAlignmentCenter;
     [_pageNumBarButton setCustomView:_pageNumLabel];

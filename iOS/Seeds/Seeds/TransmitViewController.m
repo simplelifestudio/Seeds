@@ -153,6 +153,12 @@ if (_cancelTransmission)\
     
     [self _registerNotifiations];
     
+    [self _formatFlatUI];
+}
+
+- (void) _formatFlatUI
+{
+    _consoleView.textColor = COLOR_TEXT_INFO;
     _consoleView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
 }
 

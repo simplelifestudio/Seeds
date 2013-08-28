@@ -117,8 +117,6 @@
         _imageView = [[UIImageView alloc] initWithImage:image];
         _imageView.contentMode = UIViewContentModeScaleAspectFit;// UIViewContentModeScaleToFill;
         _imageView.autoresizingMask = ( UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight );
-        
-        [GUIStyle formatUIImageView:_imageView];
     }
     else
     {

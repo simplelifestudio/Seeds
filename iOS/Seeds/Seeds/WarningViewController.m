@@ -144,6 +144,7 @@
 
 - (void) _formatFlatUI
 {
+    _warningTextView.textColor = COLOR_TEXT_INFO;
     _warningTextView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
     self.view.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
     [GUIStyle formatFlatUINavigationBar:_navigationBar];

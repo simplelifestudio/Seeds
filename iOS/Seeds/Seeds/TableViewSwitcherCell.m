@@ -44,6 +44,8 @@
     [_switcher setSwitchCornerRadius:3];
 //    self.offLabel.font = [UIFont boldFlatFontOfSize:14];
 //    self.onLabel.font = [UIFont boldFlatFontOfSize:14];
+    
+    [GUIStyle formatFlatUILabel:_switcherLabel textColor:COLOR_TEXT_INFO];
 }
 
 @end

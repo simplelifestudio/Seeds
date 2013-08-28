@@ -435,7 +435,8 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	label.textAlignment = MBLabelAlignmentCenter;
 	label.opaque = NO;
 	label.backgroundColor = [UIColor clearColor];
-	label.textColor = [UIColor whiteColor];
+    // Updated by Seeds
+	label.textColor = FLATUI_COLOR_BUTTON_TEXT;
 	label.font = self.labelFont;
 	label.text = self.labelText;
 	[self addSubview:label];
@@ -446,7 +447,8 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	detailsLabel.textAlignment = MBLabelAlignmentCenter;
 	detailsLabel.opaque = NO;
 	detailsLabel.backgroundColor = [UIColor clearColor];
-	detailsLabel.textColor = [UIColor whiteColor];
+    // Updated by Seeds
+	detailsLabel.textColor = FLATUI_COLOR_BUTTON_TEXT;
 	detailsLabel.numberOfLines = 0;
 	detailsLabel.font = self.detailsLabelFont;
 	detailsLabel.text = self.detailsLabelText;
@@ -855,8 +857,10 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
     self = [super initWithFrame:frame];
     if (self) {
 		_progress = 0.f;
-		_lineColor = [UIColor whiteColor];
-		_progressColor = [UIColor whiteColor];
+        // Updated by Seeds
+		_lineColor = FLATUI_COLOR_BUTTON_TEXT;
+        // Updated by Seeds
+		_progressColor = FLATUI_COLOR_BUTTON_TEXT;
 		_progressRemainingColor = [UIColor clearColor];
 		self.backgroundColor = [UIColor clearColor];
 		self.opaque = NO;

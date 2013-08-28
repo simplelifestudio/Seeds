@@ -900,9 +900,10 @@ typedef enum {DISABLE_PASSCODE, CHANGE_PASSCODE} PasscodeEnterPurpose;
         
         [_clearImagesCacheCell setSelectionStyle:UITableViewCellSelectionStyleNone];
         _clearImagesCacheCell.label.text = NSLocalizedString(@"Clear Images Cache", nil);
+        
         [_clearImagesCacheCell.button setTitle:NSLocalizedString(@"Counting", nil) forState:UIControlStateNormal];
         [self _refreshClearImagesCacheCell];
-        
+ 
         [_clearImagesCacheCell.button addTarget:self action:@selector(_clearImageCache) forControlEvents:UIControlEventTouchUpInside];
     }
 }

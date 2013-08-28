@@ -37,7 +37,9 @@
 
 - (void)_formatFlatUI
 {
-    [GUIStyle formatFlatUIButton:_button buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:3 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_button buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:3 titleColor:FLATUI_COLOR_LABEL highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    
+    [GUIStyle formatFlatUILabel:_label textColor:COLOR_TEXT_INFO];
 }
 
 @end

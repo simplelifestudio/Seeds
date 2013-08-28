@@ -121,11 +121,13 @@
         passcodePanel.layer.borderColor = [UIColor colorWithRed:0.65 green:0.67 blue:0.70 alpha:1.0].CGColor;
         passcodePanel.layer.borderWidth = 1.0;
         passcodePanel.layer.cornerRadius = 5.0;
-        passcodePanel.layer.shadowColor = [UIColor whiteColor].CGColor;
+        // Updated by Seeds
+        passcodePanel.layer.shadowColor = FLATUI_COLOR_BUTTON_TEXT.CGColor;
         passcodePanel.layer.shadowOffset = CGSizeMake(0, 1);
         passcodePanel.layer.shadowOpacity = 1.0;
         passcodePanel.layer.shadowRadius = 1.0;
-        passcodePanel.backgroundColor = [UIColor whiteColor];
+        // Updated by Seeds
+        passcodePanel.backgroundColor = FLATUI_COLOR_BUTTON_TEXT;
         [contentView addSubview:passcodePanel];
         passcodeTextField = [[UITextField alloc] initWithFrame:CGRectInset(passcodePanel.frame, 6, 6)];
     }
@@ -142,7 +144,8 @@
     promptLabel.backgroundColor = [UIColor clearColor];
     promptLabel.textColor = [UIColor colorWithRed:0.30 green:0.34 blue:0.42 alpha:1.0];
     promptLabel.font = [UIFont boldSystemFontOfSize:17];
-    promptLabel.shadowColor = [UIColor whiteColor];
+    // Updated by Seeds
+    promptLabel.shadowColor = FLATUI_COLOR_BUTTON_TEXT;
     promptLabel.shadowOffset = CGSizeMake(0, 1);
     promptLabel.textAlignment = UITextAlignmentCenter;
     promptLabel.numberOfLines = 0;
@@ -153,7 +156,8 @@
     messageLabel.backgroundColor = [UIColor clearColor];
     messageLabel.textColor = [UIColor colorWithRed:0.30 green:0.34 blue:0.42 alpha:1.0];
     messageLabel.font = [UIFont systemFontOfSize:14];
-    messageLabel.shadowColor = [UIColor whiteColor];
+    // Updated by Seeds
+    messageLabel.shadowColor = FLATUI_COLOR_BUTTON_TEXT;
     messageLabel.shadowOffset = CGSizeMake(0, 1);
     messageLabel.textAlignment = UITextAlignmentCenter;
     messageLabel.numberOfLines = 0;
@@ -169,7 +173,8 @@
     failedAttemptsLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     failedAttemptsLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
     failedAttemptsLabel.backgroundColor = [UIColor clearColor];
-    failedAttemptsLabel.textColor = [UIColor whiteColor];
+    // Updated by Seeds
+    failedAttemptsLabel.textColor = FLATUI_COLOR_BUTTON_TEXT;
     failedAttemptsLabel.font = [UIFont boldSystemFontOfSize:15];
     failedAttemptsLabel.shadowColor = [UIColor blackColor];
     failedAttemptsLabel.shadowOffset = CGSizeMake(0, -1);

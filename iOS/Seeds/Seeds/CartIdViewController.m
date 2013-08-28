@@ -252,7 +252,6 @@
     _textView.delegate = self;
     _textView.keyboardType = UIKeyboardTypeASCIICapable;
     _textView.returnKeyType = UIReturnKeyDone;
-    _textView.textColor = COLOR_TEXT_INFO;
     
     [self _formatFlatUI];
     
@@ -263,6 +262,7 @@
 
 -(void) _formatFlatUI
 {
+    _textView.textColor = COLOR_TEXT_INFO;
     _textView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
     self.view.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
     

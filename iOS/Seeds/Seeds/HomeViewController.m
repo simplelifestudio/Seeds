@@ -487,24 +487,24 @@
 {
     self.view.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;    
     
-    [GUIStyle formatFlatUIButton:_syncButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_syncButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_LABEL highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
     
-    [GUIStyle formatFlatUIButton:_todayButton buttonColor:FLATUI_COLOR_LABEL shadowColor:FLATUI_COLOR_LABEL_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
-    [GUIStyle formatFlatUIButton:_yesterdayButton buttonColor:FLATUI_COLOR_LABEL shadowColor:FLATUI_COLOR_LABEL_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
-    [GUIStyle formatFlatUIButton:_theDayBeforeButton buttonColor:FLATUI_COLOR_LABEL shadowColor:FLATUI_COLOR_LABEL_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_todayButton buttonColor:FLATUI_COLOR_LABEL shadowColor:FLATUI_COLOR_LABEL_SHADOW shadowHeight:0 cornerRadius:6 titleColor:COLOR_TEXT_INFO highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_yesterdayButton buttonColor:FLATUI_COLOR_LABEL shadowColor:FLATUI_COLOR_LABEL_SHADOW shadowHeight:0 cornerRadius:6 titleColor:COLOR_TEXT_INFO highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_theDayBeforeButton buttonColor:FLATUI_COLOR_LABEL shadowColor:FLATUI_COLOR_LABEL_SHADOW shadowHeight:0 cornerRadius:6 titleColor:COLOR_TEXT_INFO highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
     
-    [GUIStyle formatFlatUIButton:_downloadsButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
-    [GUIStyle formatFlatUIButton:_transButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
-    [GUIStyle formatFlatUIButton:_configButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
-    [GUIStyle formatFlatUIButton:_helpButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_BUTTON_TEXT highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_downloadsButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_LABEL highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_transButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_LABEL highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_configButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_LABEL highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
+    [GUIStyle formatFlatUIButton:_helpButton buttonColor:FLATUI_COLOR_BUTTON shadowColor:FLATUI_COLOR_BUTTON_SHADOW shadowHeight:0 cornerRadius:6 titleColor:FLATUI_COLOR_LABEL highlightedTitleColor:FLATUI_COLOR_BUTTON_TEXT_HIGHLIGHTED];
     
-    [GUIStyle formatFlatUILabel:_todayLabel];
-    [GUIStyle formatFlatUILabel:_yesterdayLabel];
-    [GUIStyle formatFlatUILabel:_theDayBeforeLabel];
+    [GUIStyle formatFlatUILabel:_todayLabel textColor:COLOR_TEXT_INFO];
+    [GUIStyle formatFlatUILabel:_yesterdayLabel textColor:COLOR_TEXT_INFO];
+    [GUIStyle formatFlatUILabel:_theDayBeforeLabel textColor:COLOR_TEXT_INFO];
     
-    [GUIStyle formatFlatUILabel:_todaySyncStatusLabel];
-    [GUIStyle formatFlatUILabel:_yesterdaySyncStatusLabel];
-    [GUIStyle formatFlatUILabel:_theDayBeforeSyncStatusLabel];
+    [GUIStyle formatFlatUILabel:_todaySyncStatusLabel textColor:COLOR_TEXT_INFO];
+    [GUIStyle formatFlatUILabel:_yesterdaySyncStatusLabel textColor:COLOR_TEXT_INFO];
+    [GUIStyle formatFlatUILabel:_theDayBeforeSyncStatusLabel textColor:COLOR_TEXT_INFO];
     
     [GUIStyle formatFlatUINavigationBar:self.navigationController.navigationBar];
     
