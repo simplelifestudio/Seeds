@@ -12,8 +12,8 @@
 
 // UI Style Definitions based on FlatUIKit
 
-#define COLOR_DEEP [UIColor colorFromHexCode:@"363636"]
-#define COLOR_MID [UIColor colorFromHexCode:@"009ACD"]
+#define COLOR_DEEP [UIColor colorFromHexCode:@"1C1C1C"]
+#define COLOR_MID [UIColor colorFromHexCode:@"4682B4"]
 #define COLOR_LIGHT [UIColor colorFromHexCode:@"DCDCDC"]
 
 #define COLOR_B_DEEP [UIColor colorFromHexCode:@"4F4F4F"]
