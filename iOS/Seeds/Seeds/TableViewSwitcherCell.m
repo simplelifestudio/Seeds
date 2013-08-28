@@ -42,8 +42,8 @@
     _switcher.onBackgroundColor = FLATUI_COLOR_BUTTON_SHADOW;
     _switcher.offBackgroundColor = FLATUI_COLOR_LABEL_SHADOW;
     [_switcher setSwitchCornerRadius:3];
-//    self.offLabel.font = [UIFont boldFlatFontOfSize:14];
-//    self.onLabel.font = [UIFont boldFlatFontOfSize:14];
+//    _switcher.offLabel.font = [UIFont boldFlatFontOfSize:14];
+//    _switcher.onLabel.font = [UIFont boldFlatFontOfSize:14];
     
     [GUIStyle formatFlatUILabel:_switcherLabel textColor:COLOR_TEXT_INFO];
 }

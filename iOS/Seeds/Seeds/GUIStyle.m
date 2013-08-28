@@ -27,7 +27,6 @@
         button.shadowColor = shadowColor;
         button.shadowHeight = shadowHeight;
         button.cornerRadius = cornerRadius;
-        #warning FlatUIKit Issue?
         // button.titleLabel.font = [UIFont flatFontOfSize:24];
         [button setTitleColor:titleColor forState:UIControlStateNormal];
         [button setTitleColor:highlightedTitleColor forState:UIControlStateHighlighted];

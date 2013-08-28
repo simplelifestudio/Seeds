@@ -60,7 +60,7 @@
 -(void) startService
 {    
     self.keepAlive = TRUE;
-    
+
     if (self.isIndividualThreadNecessary) 
     {
         self.serviceThread = [[NSThread alloc] initWithTarget:self selector:@selector(processService) object:nil];
@@ -76,7 +76,7 @@
 // Method of CBModule protocol
 -(void) pauseService
 {
-    
+
 }
 
 // Method of CBModule protocol
