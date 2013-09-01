@@ -54,7 +54,7 @@
 
 
 // Module: Communication
-#define RACHABILITY_HOST @"www.apple.com"
+#define REACHABILITY_HOST @"www.apple.com"
 
 #define JSONMESSAGE_KEY_ID @"id"
 #define JSONMESSAGE_KEY_BODY @"body"

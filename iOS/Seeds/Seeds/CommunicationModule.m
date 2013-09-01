@@ -46,7 +46,7 @@ SINGLETON(CommunicationModule)
                                                  name:kReachabilityChangedNotification
                                                object:nil];
     
-    Reachability* hostReach = [Reachability reachabilityWithHostname:RACHABILITY_HOST];
+    Reachability* hostReach = [Reachability reachabilityWithHostname:REACHABILITY_HOST];
     [hostReach startNotifier];    
 }
 
