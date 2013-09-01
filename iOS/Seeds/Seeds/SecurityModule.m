@@ -14,7 +14,7 @@
 
 @implementation SecurityModule
 
-SINGLETON(UserDefaultsModule)
+SINGLETON(SecurityModule)
 
 -(void) initModule
 {

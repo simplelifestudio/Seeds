@@ -17,7 +17,7 @@
 
 @implementation LoggerModule
 
-SINGLETON(UserDefaultsModule)
+SINGLETON(LoggerModule)
 
 -(void) initModule
 {
