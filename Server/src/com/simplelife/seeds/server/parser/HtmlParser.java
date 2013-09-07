@@ -114,7 +114,7 @@ public class HtmlParser implements ISourceParser {
 	public HtmlParser()
 	{
 		baseLink = "http://174.123.15.31/forumdisplay.php?fid=55&page={page}";
-		keyWordList.add("最新BT合集");
+		keyWordList.add("最新BT");
 		pageStart = 1;
 		pageEnd = 1;
 		startDate = DateUtil.getDateStringByDayBack(parseDays);
