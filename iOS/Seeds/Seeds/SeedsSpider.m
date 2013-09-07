@@ -58,7 +58,7 @@
     [titleStr appendString:@"["];
     [titleStr appendString:dateStr];
     [titleStr appendString:@"]"];
-    [titleStr appendString:@"最新BT合集"];
+    [titleStr appendString:@"最新BT"];
 
     NSError* error = nil;
     for (NSInteger pageNum = SEEDLIST_LINK_PAGENUM_START; pageNum <= SEEDLIST_LINK_PAGENUM_END; pageNum++)
@@ -85,10 +85,10 @@
         }
         
         TFHpple* doc = [[TFHpple alloc] initWithHTMLData:data];
-        NSMutableString* xql = [NSMutableString stringWithString:@"//a[text()="];
+        NSMutableString* xql = [NSMutableString stringWithString:@"//a[contains(text(),"];
         [xql appendString:@"\""];
         [xql appendString:titleStr];
-        [xql appendString:@"\"]"];
+        [xql appendString:@"\")]"];
         DDLogVerbose(@"xql = %@", xql);
         
         TFHppleElement* elemement = [doc peekAtSearchWithXPathQuery:xql];
