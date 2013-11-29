@@ -66,34 +66,67 @@
 }
 
 - (void)setupFonts {
-    NSDictionary * selectedAttributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                   self.selectedFontColor,
-                                                   UITextAttributeTextColor,
-                                                   [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0],
-                                                   UITextAttributeTextShadowColor,
-                                                   [NSValue valueWithUIOffset:UIOffsetMake(0, 0)],
-                                                   UITextAttributeTextShadowOffset,
-                                                   self.selectedFont,
-                                                   UITextAttributeFont,
-                                                   nil];
+    
+    NSDictionary *selectedAttributesDictionary;
+    if (&NSShadowAttributeName != NULL) {
+        // iOS6 methods
+        NSShadow *shadow = [[NSShadow alloc] init];
+        [shadow setShadowOffset:CGSizeZero];
+        [shadow setShadowColor:[UIColor clearColor]];
+        selectedAttributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        self.selectedFontColor,
+                                        NSForegroundColorAttributeName,
+                                        shadow,
+                                        NSShadowAttributeName,
+                                        self.selectedFont,
+                                        NSFontAttributeName,
+                                        nil];
+    } else {
+        // Pre-iOS6 methods
+        selectedAttributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        self.selectedFontColor,
+                                        UITextAttributeTextColor,
+                                        [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0],
+                                        UITextAttributeTextShadowColor,
+                                        [NSValue valueWithUIOffset:UIOffsetMake(0, 0)],
+                                        UITextAttributeTextShadowOffset,
+                                        self.selectedFont,
+                                        UITextAttributeFont,
+                                        nil];
+    }
     [self setTitleTextAttributes:selectedAttributesDictionary forState:UIControlStateSelected];
     
-    
-    NSDictionary * deselectedAttributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                   self.deselectedFontColor,
-                                                   UITextAttributeTextColor,
-                                                   [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0],
-                                                   UITextAttributeTextShadowColor,
-                                                   [NSValue valueWithUIOffset:UIOffsetMake(0, 0)],
-                                                   UITextAttributeTextShadowOffset,
-                                                   self.deselectedFont,
-                                                   UITextAttributeFont,
-                                                   nil];
+    NSDictionary *deselectedAttributesDictionary;
+    if (&NSShadowAttributeName != NULL) {
+        // iOS6 methods
+        NSShadow *shadow = [[NSShadow alloc] init];
+        [shadow setShadowOffset:CGSizeZero];
+        [shadow setShadowColor:[UIColor clearColor]];
+        deselectedAttributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          self.deselectedFontColor,
+                                          NSForegroundColorAttributeName,
+                                          shadow,
+                                          NSShadowAttributeName,
+                                          self.deselectedFont,
+                                          NSFontAttributeName,
+                                          nil];
+    } else {
+        // Pre-iOS6 methods
+        deselectedAttributesDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          self.deselectedFontColor,
+                                          UITextAttributeTextColor,
+                                          [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.0],
+                                          UITextAttributeTextShadowColor,
+                                          [NSValue valueWithUIOffset:UIOffsetMake(0, 0)],
+                                          UITextAttributeTextShadowOffset,
+                                          self.deselectedFont,
+                                          UITextAttributeFont,
+                                          nil];
+    }
     [self setTitleTextAttributes:deselectedAttributesDictionary forState:UIControlStateNormal];
 }
 
 - (void)configureFlatSegmentedControl {
-    
     UIImage *selectedBackgroundImage = [UIImage buttonImageWithColor:self.selectedColor
                                                       cornerRadius:self.cornerRadius
                                                        shadowColor:[UIColor clearColor]

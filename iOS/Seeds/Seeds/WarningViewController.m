@@ -155,6 +155,8 @@
 
 - (void) _clockStart
 {
+    [self _clockCancel];
+    
     NSTimeInterval interval = 1.0;
     _timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(_clockClick) userInfo:nil repeats:YES];
 }
@@ -175,7 +177,10 @@
 
 - (void) _clockCancel
 {
-    [_timer invalidate];
+    if (nil != _timer)
+    {
+        [_timer invalidate];        
+    }
 }
 
 @end

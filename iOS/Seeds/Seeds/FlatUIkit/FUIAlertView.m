@@ -113,7 +113,7 @@
         self.messageLabel.frame = messageFrame;
         [self.messageLabel sizeToFit];
         messageFrame = self.messageLabel.frame;
-        CGPoint messageOrigin = CGPointMake((self.alertContentContainer.frame.size.width - self.messageLabel.frame.size.width)/2, CGRectGetMaxY(titleFrame) + 10);
+        CGPoint messageOrigin = CGPointMake(floorf((self.alertContentContainer.frame.size.width - self.messageLabel.frame.size.width)/2), CGRectGetMaxY(titleFrame) + 10);
         messageFrame.origin = messageOrigin;
         self.messageLabel.frame = messageFrame;
 
@@ -149,8 +149,28 @@
 
 - (CGSize) calculateSize {
     CGFloat contentWidth = 250;
-    CGFloat titleHeight = [self.titleLabel.text sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(contentWidth, CGFLOAT_MAX)].height;
-    CGFloat messageHeight = [self.messageLabel.text sizeWithFont:self.messageLabel.font constrainedToSize:CGSizeMake(contentWidth, CGFLOAT_MAX)].height;
+    
+    CGFloat titleHeight;
+    CGFloat messageHeight;
+    
+    if ([self.titleLabel.text respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)]) {
+        // iOS7 methods
+        CGRect titleRect = [self.titleLabel.text boundingRectWithSize:CGSizeMake(contentWidth, CGFLOAT_MAX)
+                                                              options:NSStringDrawingUsesLineFragmentOrigin
+                                                           attributes:@{NSFontAttributeName:self.titleLabel.font}
+                                                              context:nil];
+        CGRect messageRect = [self.messageLabel.text boundingRectWithSize:CGSizeMake(contentWidth, CGFLOAT_MAX)
+                                                                  options:NSStringDrawingUsesLineFragmentOrigin
+                                                               attributes:@{NSFontAttributeName:self.messageLabel.font}
+                                                                  context:nil];
+        titleHeight = titleRect.size.height;
+        messageHeight = messageRect.size.height;
+    } else {
+        // Pre-iOS7 methods
+        titleHeight = [self.titleLabel.text sizeWithFont:self.titleLabel.font constrainedToSize:CGSizeMake(contentWidth, CGFLOAT_MAX)].height;
+        messageHeight = [self.messageLabel.text sizeWithFont:self.messageLabel.font constrainedToSize:CGSizeMake(contentWidth, CGFLOAT_MAX)].height;
+    }
+    
     CGFloat buttonHeight = [self totalButtonHeight];
     return CGSizeMake(contentWidth, titleHeight + 10 + messageHeight + 10 + buttonHeight);
 }
@@ -160,7 +180,8 @@
 }
 
 - (void)show {
-    self.alertContainer.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    self.alertContainer.alpha = 0;
+    self.alertContainer.transform = CGAffineTransformMakeScale(1.3, 1.3);
     UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
     
     while (topController.presentedViewController && !topController.presentedViewController.isBeingDismissed) {
@@ -174,24 +195,16 @@
     if ([self.delegate respondsToSelector:@selector(willPresentAlertView:)]) {
         [self.delegate willPresentAlertView:self];
     }
-    [UIView animateWithDuration:self.animationDuration/1.5 animations:^{
-        self.backgroundOverlay.alpha = 1.0f;
-        self.alertContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.0, 1.0);}
-                     completion:^(BOOL finished) {
-                         
-                         [UIView animateWithDuration:self.animationDuration/2 animations:^{
-                             self.alertContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.9f, 0.9f);} completion:^(BOOL finished0) {
-                                 
-                                 [UIView animateWithDuration:self.animationDuration/2 animations:^{
-                                     self.alertContainer.transform = CGAffineTransformIdentity;
-                                 } completion:^(BOOL finished1) {
-                                     _visible = YES;
-                                     if ([self.delegate respondsToSelector:@selector(didPresentAlertView:)]) {
-                                         [self.delegate didPresentAlertView:self];
-                                     }
-                                 }];
-                             }];
-                     }];
+    [UIView animateWithDuration:self.animationDuration animations:^{
+        self.backgroundOverlay.alpha = 1;
+        self.alertContainer.alpha = 1;
+        self.alertContainer.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished0) {
+        _visible = YES;
+        if ([self.delegate respondsToSelector:@selector(didPresentAlertView:)]) {
+            [self.delegate didPresentAlertView:self];
+        }
+    }];
 }
 
 - (NSString *)buttonTitleAtIndex:(NSInteger)buttonIndex {
@@ -209,8 +222,9 @@
         [self.delegate alertView:self willDismissWithButtonIndex:buttonIndex];
     }
     [UIView animateWithDuration:self.animationDuration animations:^{
-        self.backgroundOverlay.alpha = 0.0f;
-        self.alertContainer.transform = CGAffineTransformMakeScale(0.01, 0.01);
+        self.backgroundOverlay.alpha = 0;
+        self.alertContainer.alpha = 0;
+        self.alertContainer.transform = CGAffineTransformMakeScale(0.7, 0.7);
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
         _visible = NO;

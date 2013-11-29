@@ -14,15 +14,12 @@
 - (void) configureFlatButtonWithColor:(UIColor *)color
                      highlightedColor:(UIColor *)highlightedColor
                          cornerRadius:(CGFloat) cornerRadius {
-  
   [UIBarButtonItem configureItemOrProxy:self forFlatButtonWithColor:color highlightedColor:highlightedColor cornerRadius:cornerRadius];
-  
 }
 
 + (void) configureFlatButtonsWithColor:(UIColor *) color
                       highlightedColor:(UIColor *)highlightedColor
                           cornerRadius:(CGFloat) cornerRadius {
-  
   [self configureFlatButtonsWithColor:color highlightedColor:highlightedColor cornerRadius:cornerRadius whenContainedIn:[UINavigationBar class], [UINavigationController class], [UIToolbar class], nil];
 }
 
@@ -39,27 +36,36 @@
 
 
 - (void) removeTitleShadow {
-  NSArray *states = @[@(UIControlStateNormal), @(UIControlStateHighlighted)];
-  
-  for (NSNumber *state in states) {
-    UIControlState controlState = [state unsignedIntegerValue];
-    NSMutableDictionary *titleTextAttributes = [[self titleTextAttributesForState:controlState] mutableCopy];
-    if (!titleTextAttributes) {
-      titleTextAttributes = [NSMutableDictionary dictionary];
+    NSArray *states = @[@(UIControlStateNormal), @(UIControlStateHighlighted)];
+    
+    for (NSNumber *state in states) {
+        UIControlState controlState = [state unsignedIntegerValue];
+        NSMutableDictionary *titleTextAttributes = [[self titleTextAttributesForState:controlState] mutableCopy];
+        if (!titleTextAttributes) {
+            titleTextAttributes = [NSMutableDictionary dictionary];
+        }
+        
+        /*** UNEXPECTED ***
+         UITextAttributeShadowOffset is deprecated in 5.0 - replaced with NSShadow
+         - tried using NSShadow, but the shadow on the title remained
+         - shadowOffset <== {0,0}, shadowColor <== nil (shadow not drawn according to docs)
+         ******************/
+        
+        if (&NSShadowAttributeName != NULL) {
+            // iOS6 methods
+            NSShadow *shadow = [[NSShadow alloc] init];
+            [shadow setShadowOffset:CGSizeZero];
+            [shadow setShadowColor:[UIColor clearColor]];
+            [titleTextAttributes setObject:shadow forKey:NSShadowAttributeName];
+        } else {
+            // Pre-iOS6 methods
+            [titleTextAttributes setValue:[UIColor clearColor] forKey:UITextAttributeTextShadowColor];
+            [titleTextAttributes setValue:[NSValue valueWithUIOffset:UIOffsetZero] forKey:UITextAttributeTextShadowOffset];
+        }
+        
+        [self setTitleTextAttributes:titleTextAttributes forState:controlState];
     }
-
-    /*** UNEXPECTED ***
-     UITextAttributeShadowOffset is deprecated in 5.0 - replaced with NSShadow
-     - tried using NSShadow, but the shadow on the title remained
-     - shadowOffset <== {0,0}, shadowColor <== nil (shadow not drawn according to docs)
-     ******************/
-    [titleTextAttributes setValue:[NSValue valueWithUIOffset:UIOffsetZero] forKey:UITextAttributeTextShadowOffset];
-    [titleTextAttributes setObject:[UIColor clearColor] forKey:UITextAttributeTextShadowColor];
-    [self setTitleTextAttributes:titleTextAttributes forState:controlState];
-  }
 }
-
-
 
 //helper method, basically a wrapper to allow creating a custom UIAppearance method that doesn't conform to the usual naming style
 + (void) configureItemOrProxy:(id)appearance
