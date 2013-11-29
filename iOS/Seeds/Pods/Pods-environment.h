@@ -48,11 +48,29 @@
 #define COCOAPODS_VERSION_MINOR_EGOTableViewPullRefresh 1
 #define COCOAPODS_VERSION_PATCH_EGOTableViewPullRefresh 0
 
+// KXKiOS7ColorsAndGradients
+#define COCOAPODS_POD_AVAILABLE_KXKiOS7ColorsAndGradients
+#define COCOAPODS_VERSION_MAJOR_KXKiOS7ColorsAndGradients 1
+#define COCOAPODS_VERSION_MINOR_KXKiOS7ColorsAndGradients 0
+#define COCOAPODS_VERSION_PATCH_KXKiOS7ColorsAndGradients 0
+
+// LTHPasscodeViewController
+#define COCOAPODS_POD_AVAILABLE_LTHPasscodeViewController
+#define COCOAPODS_VERSION_MAJOR_LTHPasscodeViewController 1
+#define COCOAPODS_VERSION_MINOR_LTHPasscodeViewController 2
+#define COCOAPODS_VERSION_PATCH_LTHPasscodeViewController 1
+
 // MBProgressHUD
 #define COCOAPODS_POD_AVAILABLE_MBProgressHUD
 #define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 8
 #define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
+
+// OBShapedButton
+#define COCOAPODS_POD_AVAILABLE_OBShapedButton
+#define COCOAPODS_VERSION_MAJOR_OBShapedButton 1
+#define COCOAPODS_VERSION_MINOR_OBShapedButton 0
+#define COCOAPODS_VERSION_PATCH_OBShapedButton 2
 
 // PAPasscode
 #define COCOAPODS_POD_AVAILABLE_PAPasscode
