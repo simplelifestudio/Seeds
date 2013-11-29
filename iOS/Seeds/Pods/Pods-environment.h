@@ -6,6 +6,12 @@
 // project.
 
 
+// AFNetworking
+#define COCOAPODS_POD_AVAILABLE_AFNetworking
+#define COCOAPODS_VERSION_MAJOR_AFNetworking 1
+#define COCOAPODS_VERSION_MINOR_AFNetworking 3
+#define COCOAPODS_VERSION_PATCH_AFNetworking 3
+
 // CocoaAsyncSocket
 #define COCOAPODS_POD_AVAILABLE_CocoaAsyncSocket
 #define COCOAPODS_VERSION_MAJOR_CocoaAsyncSocket 7
@@ -47,6 +53,12 @@
 #define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 8
 #define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
+
+// PAPasscode
+#define COCOAPODS_POD_AVAILABLE_PAPasscode
+#define COCOAPODS_VERSION_MAJOR_PAPasscode 0
+#define COCOAPODS_VERSION_MINOR_PAPasscode 3
+#define COCOAPODS_VERSION_PATCH_PAPasscode 0
 
 // Reachability
 #define COCOAPODS_POD_AVAILABLE_Reachability
