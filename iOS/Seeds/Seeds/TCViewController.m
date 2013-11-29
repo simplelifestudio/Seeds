@@ -67,7 +67,7 @@
     {
         NSString* str = @"###Ping###";
         NSData* data = [str dataUsingEncoding:NSASCIIStringEncoding];
-        [_webSocket sendPing:data];
+//        [_webSocket sendPing:data];
 //        [_webSocket send:str];
         
         [CBAppUtils asyncProcessInMainThread:^(){

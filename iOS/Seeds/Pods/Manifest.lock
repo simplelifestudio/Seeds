@@ -1,0 +1,36 @@
+PODS:
+  - CocoaAsyncSocket (7.3.2)
+  - CocoaHTTPServer (2.3):
+    - CocoaAsyncSocket
+    - CocoaLumberjack
+  - CocoaLumberjack (1.6.4):
+    - CocoaLumberjack/Core
+    - CocoaLumberjack/Extensions
+  - CocoaLumberjack/Core (1.6.4)
+  - CocoaLumberjack/Extensions (1.6.4):
+    - CocoaLumberjack/Core
+  - hpple (0.2.0)
+  - objective-zip (0.8.3)
+  - Reachability (3.1.1)
+  - SocketRocket (0.3.1-beta2)
+  - SSKeychain (1.2.1)
+
+DEPENDENCIES:
+  - CocoaHTTPServer (~> 2.3)
+  - hpple (~> 0.2.0)
+  - objective-zip (~> 0.8.3)
+  - Reachability (~> 3.1.1)
+  - SocketRocket (~> 0.3.1-beta2)
+  - SSKeychain (~> 1.2.1)
+
+SPEC CHECKSUMS:
+  CocoaAsyncSocket: 977404129ec8505fee1c3701956b769e3bb10ea7
+  CocoaHTTPServer: 7c2fce6617f7fda0e3f4fc34f96e562caa7c7bd8
+  CocoaLumberjack: 006187e7e3c52f505aab43d7b5ba6af35838bf23
+  hpple: dde62f905f482bbec50186280d1a1be2c881241b
+  objective-zip: 123a6e88ac89578a2e200885bb1b3561d6ffd05c
+  Reachability: be4883bb93f31e38266ae3365e5600a317aae735
+  SocketRocket: 7ac946bcce46287a791dfff3c1f8daa692821dae
+  SSKeychain: d18926838c2e7cd342e2a49e9f869858e49f035a
+
+COCOAPODS: 0.27.1

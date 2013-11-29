@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>AC14E31F-8D06-4D01-AD77-721C73C5798E</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Seeds</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>B846E97C-5099-4E0D-985C-3D957DC55B8E</key>
+		<string>https://github.com/simplelifestudio/Seeds.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>iOS/Seeds/Seeds.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>B846E97C-5099-4E0D-985C-3D957DC55B8E</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/simplelifestudio/Seeds.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>B846E97C-5099-4E0D-985C-3D957DC55B8E</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B846E97C-5099-4E0D-985C-3D957DC55B8E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Seeds</string>
+		</dict>
+	</array>
+</dict>
+</plist>
