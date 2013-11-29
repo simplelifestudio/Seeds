@@ -60,7 +60,5 @@
 +(void) formatFlatUIProgressView:(UIProgressView*) progress;
 +(void) formatFlatUINavigationBar:(UINavigationBar*) navigationBar;
 +(void) formatFlatUIBarButtonItem:(UIBarButtonItem*) buttonItem;
-+(void) formatFlatUIToolbar:(UIToolbar*) toolbar;
-+(void) formatFlatUITableViewCell:(UITableViewCell*) cell backColor:(UIColor*) backColor selectedBackColor:(UIColor*) selectedBackColor;
 
 @end

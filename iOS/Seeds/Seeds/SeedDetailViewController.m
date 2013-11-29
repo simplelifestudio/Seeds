@@ -8,6 +8,9 @@
 
 #import "SeedDetailViewController.h"
 
+#import "FlatUIKit.h"
+#import "UIToolbar+FlatUI.h"
+
 #import "CBFileUtils.h"
 #import "CBNotificationListenable.h"
 
@@ -668,7 +671,7 @@
     _headerView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
     self.collectionView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
     
-    [GUIStyle formatFlatUIToolbar:_pagingToolbar];
+    [_pagingToolbar configureFlatToolbarWithColor:FLATUI_COLOR_TOOLBAR];
 }
 
 #pragma mark - CBNotificationListenable

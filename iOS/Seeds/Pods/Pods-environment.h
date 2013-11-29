@@ -36,6 +36,18 @@
 #define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Extensions 6
 #define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Extensions 4
 
+// EGOTableViewPullRefresh
+#define COCOAPODS_POD_AVAILABLE_EGOTableViewPullRefresh
+#define COCOAPODS_VERSION_MAJOR_EGOTableViewPullRefresh 0
+#define COCOAPODS_VERSION_MINOR_EGOTableViewPullRefresh 1
+#define COCOAPODS_VERSION_PATCH_EGOTableViewPullRefresh 0
+
+// MBProgressHUD
+#define COCOAPODS_POD_AVAILABLE_MBProgressHUD
+#define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0
+#define COCOAPODS_VERSION_MINOR_MBProgressHUD 8
+#define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
+
 // Reachability
 #define COCOAPODS_POD_AVAILABLE_Reachability
 #define COCOAPODS_VERSION_MAJOR_Reachability 3

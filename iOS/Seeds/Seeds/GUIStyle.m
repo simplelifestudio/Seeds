@@ -10,8 +10,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "FlatUIKit.h"
-
 @implementation GUIStyle
 
 // Static block
@@ -65,22 +63,6 @@
     {
         [buttonItem configureFlatButtonWithColor:FLATUI_COLOR_BARBUTTONITEM highlightedColor:FLATUI_COLOR_BARBUTTONITEM_HIGHLIGHTED cornerRadius:FLATUI_CORNER_RADIUS];
         [buttonItem removeTitleShadow];
-    }
-}
-
-+(void) formatFlatUIToolbar:(UIToolbar*) toolbar
-{
-    if (toolbar)
-    {
-        [toolbar configureFlatToolbarWithColor:FLATUI_COLOR_TOOLBAR];
-    }
-}
-
-+(void) formatFlatUITableViewCell:(UITableViewCell*) cell backColor:(UIColor*) backColor selectedBackColor:(UIColor*) selectedBackColor
-{
-    if (cell)
-    {
-        [cell configureFlatCellWithColor:backColor selectedColor:selectedBackColor];
     }
 }
 

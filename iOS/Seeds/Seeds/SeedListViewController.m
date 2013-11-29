@@ -8,6 +8,9 @@
 
 #import "SeedListViewController.h"
 
+#import "FlatUIKit.h"
+#import "UIToolbar+FlatUI.h"
+
 #import "SeedListTableCell.h"
 #import "SeedListTableSmallerCell.h"
 
@@ -131,7 +134,8 @@
         {
             cell = [CBUIUtils componentFromNib:CELL_ID_SEEDLISTTABLECELL owner:self options:nil];
         }
-        [cell configureFlatCellWithColor:FLATUI_COLOR_TABLECELL selectedColor:FLATUI_COLOR_TABLECELL_SELECTED];
+        
+
         
         Seed* seed = [_pageSeedList objectAtIndex:indexPath.row];
         SeedPicture* picture = [_pageFirstSeedPictureList objectAtIndex:indexPath.row];
@@ -152,7 +156,6 @@
         {
             cell = [CBUIUtils componentFromNib:CELL_ID_SEEDLISTTABLESMALLERCELL owner:self options:nil];
         }
-        [cell configureFlatCellWithColor:FLATUI_COLOR_TABLECELL selectedColor:FLATUI_COLOR_TABLECELL_SELECTED];        
         
         Seed* seed = [_pageSeedList objectAtIndex:indexPath.row];
         SeedPicture* picture = [_pageFirstSeedPictureList objectAtIndex:indexPath.row];
@@ -513,7 +516,7 @@
     self.tableView.backgroundColor = FLATUI_COLOR_VIEW_BACKGROUND;
     self.tableView.separatorColor = FLATUI_COLOR_TABLE_SEPERATOR;
     
-    [GUIStyle formatFlatUIToolbar:_pagingToolbar];
+    [_pagingToolbar configureFlatToolbarWithColor:FLATUI_COLOR_TOOLBAR];
 }
 
 #pragma mark - CBNotificationListenable

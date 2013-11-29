@@ -8,8 +8,6 @@
 
 #import "SecurityModule.h"
 
-#import "CBSecurityUtils.h"
-
 #import "SSKeychain.h"
 
 @implementation SecurityModule

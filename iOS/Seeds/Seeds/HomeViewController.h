@@ -11,8 +11,6 @@
 #import "MBProgressHUD.h"
 #import "CBUIUtils.h"
 
-#import "FlatUIKit.h"
-
 @interface HomeViewController : UIViewController <MBProgressHUDDelegate, CBLongTaskStatusHUDDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *todayLabel;
