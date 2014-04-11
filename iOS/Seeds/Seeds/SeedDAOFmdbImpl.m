@@ -707,7 +707,7 @@
 
 -(BOOL) insertSeeds:(NSArray*) seeds
 {
-    BOOL flag = NO;
+    BOOL flag = (nil != seeds && 0 < seeds.count) ? NO : YES;
     
     for (Seed* seed in seeds)
     {

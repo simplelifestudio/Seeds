@@ -35,7 +35,9 @@
     
     if (nil != seed && nil != seed.torrentLink)
     {
-        // link sample: http://www.maxp2p.com/link.php?ref=LCOqeYLdky        
+        // link sample: http://www.maxp2p.com/link.php?ref=LCOqeYLdky
+        // _torrentLink	__NSCFString *	@"http://www.downp2p.com/link.php?ref=vB9TCRbt6X"	0x08a3bb20
+        // #define BASEURL_TORRENTCODE @"http://www.maxp2p.com/link.php?ref="
         NSRange range = [seed.torrentLink rangeOfString:BASEURL_TORRENTCODE];
         if (0 < range.length)
         {
